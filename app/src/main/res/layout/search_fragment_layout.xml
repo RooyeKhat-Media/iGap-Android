@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:elevation="999dp"
+    android:orientation="vertical"
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layoutDirection="ltr"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:orientation="vertical"
+        app:elevation="8dp"
+        >
+
+      <LinearLayout
+          android:id="@+id/sfl_ll_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:background="@color/green"
+          android:orientation="horizontal"
+          >
+
+        <com.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/sfl_ripple_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp"
+            rv_centered="true"
+            >
+
+          <com.iGap.module.MaterialDesignTextView
+              android:id="@+id/sfl_btn_back"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentTop="true"
+              android:background="@null"
+              android:gravity="center"
+
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@android:color/white"
+              />
+        </com.iGap.libs.rippleeffect.RippleView>
+
+        <EditText
+            android:id="@+id/sfl_edt_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoText="false"
+            android:background="@null"
+            android:hint="@string/search"
+            android:paddingEnd="@dimen/dp8"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingStart="@dimen/dp8"
+            android:textColor="@color/white"
+            android:textColorHint="#dededd"
+            android:textCursorDrawable="@drawable/white_cursor_color"
+            android:textSize="@dimen/sp15"
+            />
+
+        <com.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/sfl_ripple_done"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="100"
+            app:rv_ripplePadding="5dp"
+            rv_centered="true"
+            >
+
+          <com.iGap.module.MaterialDesignTextView
+              android:id="@+id/sfl_btn_close"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:background="@null"
+              android:gravity="center"
+              android:text="@string/md_close_button"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="#dededd"
+              android:textSize="@dimen/sp26"
+              />
+
+        </com.iGap.libs.rippleeffect.RippleView>
+
+      </LinearLayout>
+
+
+    </LinearLayout>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <View
+      android:id="@+id/sfl_view_line"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#34a49f"
+      />
+
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sfl_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+      <ImageView
+          android:layout_width="@dimen/dp160"
+          android:layout_height="@dimen/dp160"
+          android:layout_margin="@dimen/dp20"
+          app:srcCompat="@mipmap/find"
+          android:layout_gravity="top|center"
+          android:visibility="gone"
+          android:id="@+id/sfl_imv_nothing_found"
+          />
+
+
+      <TextView
+          android:id="@+id/sfl_txt_empty_nothing"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp8"
+          android:layout_gravity="center"
+          android:textColor="@color/black90"
+          android:textSize="@dimen/sp22"
+          android:visibility="gone"
+          android:text="Nothing"
+          />
+
+      <TextView
+          android:id="@+id/sfl_txt_empty_list_comment"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp8"
+          android:padding="@dimen/dp16"
+          android:layout_gravity="center"
+          android:textSize="@dimen/sp16"
+          android:visibility="gone"
+          android:text="@string/empty_message"
+          />
+
+
+    </LinearLayout>
+
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/sfl_progress_loading"
+        android:layout_width="64dp"
+        android:layout_gravity="center"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        />
+
+
+  </FrameLayout>
+
+
+</LinearLayout>
+
+
+

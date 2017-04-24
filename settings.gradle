@@ -1,0 +1,2 @@
+include ':app', ':messageprogress', ':proto', ':emoji', ':audioplayerview', ':websocket', ':compress', ':k4l-video-trimmer'
+include ':lvl'

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:elevation="999dp"
+    android:layoutDirection="ltr"
+    >
+
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/asi_view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      />
+
+  <LinearLayout
+      android:id="@+id/toolbarShowImage"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="#55000000"
+      android:gravity="center"
+      android:orientation="horizontal"
+      >
+
+    <com.iGap.libs.rippleeffect.RippleView
+        android:id="@+id/asi_ripple_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="0"
+        app:rv_ripplePadding="5dp"
+        rv_centered="true"
+        >
+
+      <com.iGap.module.MaterialDesignTextView
+          android:id="@+id/asi_btn_back"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:background="@null"
+          android:gravity="center"
+          android:text="@string/md_back_arrow"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@android:color/white"
+          />
+    </com.iGap.libs.rippleeffect.RippleView>
+
+    <TextView
+        android:id="@+id/asi_txt_image_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="2 of 10"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp18"
+        />
+
+    <com.iGap.libs.rippleeffect.RippleView
+        android:id="@+id/asi_ripple_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="100"
+        app:rv_ripplePadding="5dp"
+        rv_centered="true"
+        >
+
+      <com.iGap.module.MaterialDesignTextView
+          android:id="@+id/asi_btn_menu"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:background="@null"
+          android:gravity="center"
+          android:text="@string/md_show_more_button"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@android:color/white"
+          />
+    </com.iGap.libs.rippleeffect.RippleView>
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/asi_layout_image_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="#55000000"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp32"
+      android:paddingRight="@dimen/dp32"
+      >
+
+    <io.github.meness.emoji.EmojiTextView
+        android:id="@+id/asi_txt_image_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:ellipsize="end"
+        android:textColor="@android:color/white"
+        android:maxLines="10"
+        android:textSize="@dimen/sp14"
+        style="@style/ChatMessages.EmojiTextView"
+        />
+
+    <TextView
+        android:id="@+id/asi_txt_image_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"
+        android:textSize="@dimen/sp14"
+        />
+
+    <TextView
+        android:id="@+id/asi_txt_image_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp14"
+        />
+  </LinearLayout>
+
+
+</RelativeLayout>

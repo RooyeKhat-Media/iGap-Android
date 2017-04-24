@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whit_background"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ap_ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:background="@color/toolbar_background"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <TextView
+            android:id="@+id/pu_titleToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/sp18" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line1_background" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pu_txt_title_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="@string/pu_title_profileUser"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/dp110"
+            android:layout_marginRight="@dimen/dp110"
+            android:layout_marginTop="0dp"
+            android:background="@color/line2_background" />
+
+        <TextView
+            android:id="@+id/pu_txt_title_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginRight="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp4"
+            android:gravity="center"
+            android:text="@string/pu_desc_profileUser"
+            android:textColor="@color/confirm_country"
+            android:textSize="@dimen/sp14"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight=".37"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/pu_layout_twoCircleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp4">
+
+            <com.iGap.module.CircleImageView
+                android:id="@+id/pu_profile_circle_image"
+                android:layout_width="@dimen/dp70"
+                android:layout_height="@dimen/dp70"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp12"
+                android:background="@drawable/circle_color_notificatin_setting"
+                android:gravity="center"
+                android:padding="@dimen/dp16"
+                android:src="@mipmap/plus_icon" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/pu_txt_addPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pu_layout_twoCircleImage"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginRight="@dimen/dp52"
+            android:gravity="center"
+            android:text="@string/pu_addPhoto_profileUser"
+            android:textColor="@color/text_dark_verify"
+            android:textSize="@dimen/sp14" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp52"
+        android:layout_marginRight="@dimen/dp52"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/pu_txtInput_nikeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.iGap.module.EditTextAdjustPan
+                android:id="@+id/pu_edt_nikeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:hint="@string/pu_nikname_profileUser"
+                android:lines="1"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:minWidth="104dp"
+                android:singleLine="true"
+                android:textColor="@color/black_register"
+                android:textColorHint="@color/pu_edtHintText"
+                android:textSize="@dimen/sp14"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View
+            android:id="@+id/pu_line_below_editText"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/pu_txtInput_nikeName"
+            android:background="@color/border_editText" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".17"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/pu_btn_letsGo"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp32"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="@drawable/pu_background_button_start_register"
+            android:gravity="center"
+            android:text="Lets Go"
+            android:textAllCaps="false"
+            android:textSize="@dimen/sp14"
+            android:textColor="@color/whit_background" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+

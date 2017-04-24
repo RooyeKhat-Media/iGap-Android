@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.iGap">
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <!-- required for drawer contacts fragment -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    <application
+        android:name=".G"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:configChanges="locale"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <receiver android:name=".module.MusicPlayer$customButtonListener"/>
+        <receiver android:name=".helper.HelperNotificationAndBadge$RemoteActionReciver"/>
+
+        <activity
+            android:name=".activities.ActivityChat"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
+
+        <activity
+            android:name=".activities.ActivityChatBackground"
+            android:configChanges="keyboard|keyboardHidden|screenSize|locale" />
+
+        <activity
+            android:name=".activities.ActivityShearedMedia"
+            android:configChanges="keyboard|keyboardHidden|screenSize|locale"/>
+        <activity
+            android:name=".activities.ActivityPaint"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+
+        <activity
+            android:name=".activities.ActivityMediaPlayer"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.ActivityPopUpNotification"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity
+            android:name=".activities.ActivityExplorer"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.ActivityGroupProfile"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.ActivityComment"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity android:name=".activities.ActivityTrimVideo" />
+
+        <activity
+            android:name=".activities.Activity_QrPayment"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale">
+
+            <intent-filter>
+                <action android:name="com.company.package.FOO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.Activity_charge_balance"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+
+        <activity
+            android:name=".activities.Activity_Transfer_mony"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+
+        <activity
+            android:name=".activities.Activity_CreateQRCode"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.Activity_ChargeOut"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.Activity_payViaQRCode"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+        <activity
+            android:name=".activities.Activity_transactionHistory"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"/>
+
+        <activity
+            android:name=".activities.ActivityMain"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"
+            android:theme="@style/AppThemeTranslucent">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="igap.net"
+                    android:scheme="http" />
+                <data
+                    android:host="igap.net"
+                    android:scheme="https" />
+                <data
+                    android:host="resolve"
+                    android:scheme="igap" />
+            </intent-filter>
+
+            <!-- this part add app logo to list of share -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="video/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="*/*"/>
+            </intent-filter>
+            <!-- this part add app logo to list of share -->
+        </activity>
+        <activity
+            android:name=".activities.ActivityIntroduce"
+            android:configChanges="keyboard|keyboardHidden|screenSize|locale">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ActivityProfile"
+            android:configChanges="keyboard|keyboardHidden|screenSize|locale"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+        </activity>
+        <activity android:name=".activities.ActivityCrop"/>
+        <activity android:name=".activities.ActivitySettingNotification"/>
+        <activity
+            android:name=".activities.ActivityRegister"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|screenSize|locale"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/AppTheme22"/>
+
+        <activity android:name=".activities.ActivitySetting" />
+        <activity
+            android:name=".activities.ActivityContactsProfile"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ActivitySelectChat"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"
+            android:label="@string/select_room"
+            android:theme="@style/AppThemeTranslucent" />
+
+        <receiver android:name=".module.IncomingSms"/>
+        <receiver
+            android:name=".module.ReceiverBootPhone"
+            android:label="ReceiverBootPhone">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activities.ActivityWebView"/>
+        <activity android:name=".activities.ActivityNewChanelFinish"/>
+        <activity android:name=".activities.ActivityChannelProfile"/>
+
+        <service android:name=".helper.ServiceContact"/>
+        <service android:name=".module.UploadService"/>
+        <service
+            android:name=".helper.MyService"
+            android:enabled="true"
+            android:exported="true" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="@see https://fabric.io/kits/android/crashlytics/install"/>
+
+        <!--
+          The API key for Google Maps-based APIs is defined as a string resource.
+          (See the file "res/values/google_maps_api.xml").
+          Note that the API key is linked to the encryption key used to sign the APK.
+          You need a different API key for each encryption key, including the release key that is used to
+          sign the APK for publishing.
+          You can define the keys for the debug and release targets in src/debug/ and src/release/.
+     -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+    </application>
+
+</manifest>

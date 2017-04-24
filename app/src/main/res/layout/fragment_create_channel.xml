@@ -1,0 +1,261 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fch_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whit_background"
+    android:elevation="999dp"
+    tools:context="com.iGap.fragments.FragmentCreateChannel"
+    tools:ignore="MissingPrefix"
+    >
+
+  <View
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_below="@+id/fch_backgroundToolbar"
+      android:background="#34a49f"
+      />
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/fch_backgroundToolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:background="@color/toolbar_background"
+      android:layoutDirection="ltr"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
+      app:layout_collapseMode="pin"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_centerInParent="true"
+          android:gravity="center"
+          android:text="@string/new_chanel"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/sp18"
+          android:textStyle="bold"
+          android:visibility="visible"
+          />
+
+      <com.iGap.libs.rippleeffect.RippleView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp"
+          rv_centered="true"
+          >
+
+        <com.iGap.module.MaterialDesignTextView
+            android:id="@+id/fch_txt_back"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/md_back_arrow"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background"
+            />
+
+      </com.iGap.libs.rippleeffect.RippleView>
+
+    </RelativeLayout>
+  </android.support.v7.widget.Toolbar>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/view"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+      <com.iGap.module.HeaderTextview
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_Info"
+          android:textColor="@color/green"
+          android:textSize="@dimen/sp18"
+          android:textStyle="bold"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          />
+
+      <RadioGroup
+          android:id="@+id/fch_radioGroup"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:paddingEnd="@dimen/dp12"
+          android:paddingLeft="@dimen/dp12"
+          android:paddingRight="@dimen/dp12"
+          android:paddingStart="@dimen/dp12"
+          >
+
+        <RadioButton
+            android:id="@+id/fch_radioButton_Public"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:text="@string/public_channel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp15"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:text="@string/desc_public_channel"
+            android:textSize="@dimen/sp14"
+            />
+
+        <RadioButton
+            android:id="@+id/fch_radioButton_private"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:gravity="start|center"
+            android:text="@string/private_channel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp15"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp8"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:text="@string/desc_private_channel"
+            android:textSize="@dimen/sp14"
+            />
+      </RadioGroup>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/fch_radioGroup"
+          android:background="@color/background_editText"
+          android:orientation="vertical"
+          android:padding="@dimen/dp8"
+          >
+
+        <com.iGap.module.HeaderTextview
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingTop="@dimen/dp12"
+            android:text="@string/st_Info"
+            android:textColor="@color/green"
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+          <android.support.design.widget.TextInputLayout
+              android:id="@+id/fch_txtInput_nikeName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              app:errorTextAppearance="@style/error_appearance"
+              app:hintTextAppearance="@style/Hint_appearance"
+              >
+
+            <EditText
+                android:id="@+id/fch_edt_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/your_link"
+                android:singleLine="true"
+                android:textColorHint="@color/default_shadow_color"
+                android:textSize="@dimen/sp15"
+                />
+
+          </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp8"
+          android:gravity="right|center_horizontal"
+          android:padding="@dimen/dp20"
+          >
+
+        <TextView
+            android:id="@+id/fch_txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:text="@string/B_cancel"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/sp15"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/fch_txt_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:text="@string/chi_NEXT_STEP"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/sp15"
+            android:textStyle="bold"
+            />
+
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
+
+  <ProgressBar
+      android:id="@+id/fch_prgWaiting_addContact"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_gravity="center"
+      android:background="@drawable/pu_circle_dialog_give_image_gallery"
+      android:indeterminate="true"
+      android:visibility="gone"
+      />
+
+</RelativeLayout>

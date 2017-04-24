@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cslr_replay_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/messageBox_replyBoxBackgroundSend"
+              android:clickable="true"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/messageContainerPadding"
+              android:paddingLeft="@dimen/messageContainerPaddingLeftRight"
+              android:paddingRight="@dimen/messageContainerPaddingLeftRight"
+              android:paddingTop="@dimen/messageContainerPadding"
+              android:textDirection="firstStrong">
+
+    <View
+        android:id="@+id/verticalLine"
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/dp8"
+        android:background="@color/colorOldBlack"/>
+
+    <ImageView
+        android:id="@+id/chslr_imv_replay_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp8"
+        android:adjustViewBounds="true"
+        app:srcCompat="@mipmap/empty"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="vertical">
+
+        <io.github.meness.emoji.EmojiTextView
+            android:id="@+id/chslr_txt_replay_from"
+            style="@style/ChatMessages.EmojiTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=""
+            android:singleLine="true"
+            android:textColor="@color/colorOldBlack"
+            android:textSize="@dimen/sp12"
+            android:textStyle="bold"
+            android:padding="0dp"/>
+
+        <io.github.meness.emoji.EmojiTextView
+            android:id="@+id/chslr_txt_replay_message"
+            style="@style/ChatMessages.EmojiTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:padding="0dp"/>
+    </LinearLayout>
+</LinearLayout>

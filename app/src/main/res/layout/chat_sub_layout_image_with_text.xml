@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/chatSubLayoutImageWithText"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/dp4"
+             android:maxWidth="@dimen/chatBoxMaxWidth"
+             android:textDirection="firstStrong">
+
+    <LinearLayout
+        android:id="@+id/mainContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:id="@+id/vote_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/contentContainer"
+                style="@style/ChatMessages.CardView">
+
+                <LinearLayout
+                    android:id="@+id/m_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.iGap.module.ReserveSpaceRoundedImageView
+                            android:id="@+id/thumbnail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:riv_border_color="#9e9e9e"
+                            app:riv_border_width="1px"
+                            app:riv_corner_radius="@dimen/messageBox_cornerRadius"/>
+
+                        <include
+                            android:id="@+id/progress"
+                            layout="@layout/msg_progress_item"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <io.github.meness.emoji.EmojiTextView
+                            android:id="@+id/messageText"
+                            style="@style/ChatMessages.EmojiTextView"
+                            android:text="SAMPLE TEXT"/>
+                    </LinearLayout>
+
+                    <include layout="@layout/chat_sub_layout_messages_time"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

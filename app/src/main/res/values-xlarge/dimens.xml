@@ -1,0 +1,73 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <bool name="isTablet">true</bool>
+
+    <dimen name="messageContainerPadding">12dp</dimen>
+    <dimen name="messageContainerPaddingBottom">8dp</dimen>
+    <dimen name="messageContainerPaddingLeftRight">20dp</dimen>
+
+    <dimen name="chatBoxMaxWidth">540dp</dimen>
+
+    <dimen name="design_fab_size_mini">28pt</dimen>
+    <dimen name="design_fab_size_normal">60pt</dimen>
+
+    <dimen name="messageBox_cornerRadius">40dp</dimen>
+    <dimen name="messageBox_elevation">8dp</dimen>
+
+    <dimen name="messageBox_minusLeftRightMargin">-10dp</dimen>
+
+    <dimen name="sp14_Popup">14sp</dimen>
+    <dimen name="sp10">20sp</dimen>
+    <dimen name="sp12">24sp</dimen>
+    <dimen name="sp13">26sp</dimen>
+    <dimen name="sp14">28sp</dimen>
+    <dimen name="sp15">30sp</dimen>
+    <dimen name="sp16">32sp</dimen>
+    <dimen name="sp18">36sp</dimen>
+    <dimen name="sp20">40sp</dimen>
+    <dimen name="sp22">44sp</dimen>
+    <dimen name="sp26">52sp</dimen>
+    <dimen name="sp28">56sp</dimen>
+    <dimen name="sp32">64sp</dimen>
+    <dimen name="sp36">72sp</dimen>
+    <dimen name="sp48">96sp</dimen>
+
+    <dimen name="dp4">8dp</dimen>
+    <dimen name="dp6">12dp</dimen>
+    <dimen name="dp8">16dp</dimen>
+    <dimen name="dp12">24dp</dimen>
+    <dimen name="dp16">32dp</dimen>
+    <dimen name="dp18">36dp</dimen>
+    <dimen name="dp20">40dp</dimen>
+    <dimen name="dp24">48dp</dimen>
+    <dimen name="dp28">56dp</dimen>
+    <dimen name="dp32">64dp</dimen>
+    <dimen name="dp36">72dp</dimen>
+    <dimen name="dp40">80dp</dimen>
+    <dimen name="dp44">88dp</dimen>
+    <dimen name="dp48">96dp</dimen>
+    <dimen name="dp52">104dp</dimen>
+    <dimen name="dp60">120dp</dimen>
+    <dimen name="dp68">136dp</dimen>
+    <dimen name="dp80">160dp</dimen>
+    <dimen name="dp88">196dp</dimen>
+    <dimen name="dp100">200dp</dimen>
+    <dimen name="dp120">240dp</dimen>
+    <dimen name="dp140">280dp</dimen>
+    <dimen name="dp160">320dp</dimen>
+    <dimen name="dp180">360dp</dimen>
+    <dimen name="dp200">400dp</dimen>
+    <dimen name="dp220">440dp</dimen>
+    <dimen name="dp240">480dp</dimen>
+    <dimen name="dp260">520dp</dimen>
+    <dimen name="dp280">560dp</dimen>
+    <dimen name="dp300">600dp</dimen>
+
+
+    <dimen name="dp70">140dp</dimen>
+    <dimen name="dp105">210dp</dimen>
+    <dimen name="dp110">220dp</dimen>
+    <dimen name="dp95">190dp</dimen>
+
+</resources>

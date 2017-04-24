@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_margin="@dimen/dp4"
+              android:layoutDirection="ltr"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        app:cardElevation="@dimen/dp4"
+        android:padding="0dp">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
+
+
+            <ImageView
+                android:id="@+id/imgBackground"
+                android:layout_width="@dimen/dp120"
+                android:layout_height="@dimen/dp200"
+                android:scaleType="centerCrop"
+                />
+
+
+            <include
+                android:id="@+id/progress"
+                layout="@layout/msg_progress_item"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                />
+
+        </FrameLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,14 @@
+<script type="text/javascript">
+          var s = document.createElement('script');
+          s.innerHTML = window.android.getFileContents('js/jquery.min.js');
+          document.head.appendChild(s);
+
+          //check if jquery is loaded now...
+          if(typeof $ != "undefined") {
+              $(document).ready(function() {
+                    alert("jQuery is loaded!");
+             });
+          } else {
+                alert("jQuery is NOT loaded!");
+          }
+       </script>

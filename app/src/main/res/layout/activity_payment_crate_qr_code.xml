@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:layoutDirection="ltr"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/apcac_ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@color/green"
+        android:orientation="horizontal">
+
+
+        <com.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/acqc_ripple_back_Button"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
+
+            <com.iGap.module.MaterialDesignTextView
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textColor="@color/white"
+                />
+
+        </com.iGap.libs.rippleeffect.RippleView>
+
+        <TextView
+            android:id="@+id/acqc_txt_create_qr_code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/create_qr_code"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/sp18"/>
+
+
+        <com.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/acqc_ripple_plus"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="150"
+            app:rv_ripplePadding="5dp">
+
+            <com.iGap.module.MaterialDesignTextView
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_add_plus_button"
+                android:textColor="@color/white"
+                android:textSize="32sp"/>
+
+        </com.iGap.libs.rippleeffect.RippleView>
+
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dp20">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/acqc_txtInput_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/description_optional"
+                >
+
+                <EditText
+                    android:id="@+id/acqc_edt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="@dimen/dp4"
+                    android:paddingTop="@dimen/dp8"
+                    android:singleLine="true"
+                    android:inputType="textWebEmailAddress"
+                    android:textSize="@dimen/sp16"/>
+
+                <View
+                    android:id="@+id/acqc_view_bottom_line_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_edit_text"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/acqc_txtInput_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:paddingBottom="@dimen/dp6"
+                    android:layout_weight="1"
+                    android:hint="@string/price">
+
+                    <EditText
+                        android:id="@+id/acqc_edt_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+
+                        android:paddingTop="@dimen/dp8"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:textSize="@dimen/sp16"/>
+
+                    <View
+                        android:id="@+id/acqc_view_bottom_line_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/line_edit_text"
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <Spinner
+                    android:id="@+id/acqc_spinner_price_type"
+                    android:layout_width="wrap_content"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="@dimen/dp12"
+                    android:layout_gravity="bottom"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/ThemeSpinner"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp8"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp6"
+            app:cardCornerRadius="@dimen/dp8">
+
+            <TextView
+                android:id="@+id/acqc_txt_cancel"
+                android:layout_width="@dimen/dp88"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp8"
+                android:text="@string/cancel"/>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/green"
+            app:cardCornerRadius="@dimen/dp8">
+
+            <TextView
+                android:id="@+id/acqc_txt_create"
+                android:layout_width="@dimen/dp88"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp8"
+                android:text="@string/create"
+                android:textColor="@color/white"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/dp120"
+        android:layout_height="@dimen/dp120"
+        android:id="@+id/acqc_iv_barcode"/>
+
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+
+  <FrameLayout
+      android:id="@+id/mf_fragment_map_view"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      ></FrameLayout>
+
+
+  <Button
+      android:id="@+id/mf_btn_send_position"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@color/white"
+      android:textSize="@dimen/sp18"
+      android:background="@color/iGapColor"
+      android:text="@string/send_position"
+      />
+
+
+</LinearLayout>

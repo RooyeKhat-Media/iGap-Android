@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chatSubLayoutAudio"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp4"
+    android:layoutDirection="ltr"
+    >
+
+  <LinearLayout
+      android:id="@+id/mainContainer"
+      android:layout_width="@dimen/dp260"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      tools:ignore="UselessParent"
+      >
+
+
+    <LinearLayout
+        android:id="@+id/vote_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+      <android.support.v7.widget.CardView
+          android:id="@+id/contentContainer"
+          android:layout_width="match_parent"
+          style="@style/ChatMessages.CardView"
+          >
+
+        <LinearLayout
+            android:id="@+id/m_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <LinearLayout
+              android:id="@+id/audioBox"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layoutDirection="ltr"
+              android:minHeight="@dimen/dp110"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/messageContainerPaddingBottom"
+              android:paddingLeft="@dimen/messageContainerPaddingLeftRight"
+              android:paddingRight="@dimen/messageContainerPaddingLeftRight"
+              android:paddingTop="@dimen/messageContainerPadding"
+              >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+
+              <FrameLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  >
+
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/green_music_note"
+                    />
+
+                <include
+                    layout="@layout/msg_progress_item"
+                    android:id="@+id/progress"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    />
+              </FrameLayout>
+
+              <TextView
+                  android:id="@+id/fileSize"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="bottom"
+                  android:maxLines="1"
+                  android:text="3.2 mb"
+                  android:singleLine="true"
+                  android:textAllCaps="true"
+                  android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                  android:textColor="@color/black90"
+                  android:textSize="12sp"
+                  />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp8"
+                android:orientation="vertical"
+                >
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  >
+
+                <TextView
+                    android:id="@+id/fileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:gravity="left"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxWidth="@dimen/dp160"
+                    android:text="file_name.ext"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    />
+
+                <TextView
+                    android:id="@+id/songArtist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Artist"
+                    android:singleLine="true"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:textColor="@color/black90"
+                    />
+
+              </LinearLayout>
+
+              <LinearLayout
+                  android:id="@+id/audioPlayerViewContainer"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    >
+
+
+                  <com.iGap.module.MaterialDesignTextView
+                      android:id="@+id/csla_btn_play_music"
+                      android:layout_width="@dimen/dp32"
+                      android:layout_height="match_parent"
+                      android:background="@null"
+                      android:gravity="center"
+                      android:text="@string/md_play_arrow"
+                      android:textAppearance="@style/TextIconAppearance_toolbar"
+                      android:textColor="@color/green"
+                      android:textSize="@dimen/sp32"
+                      />
+
+
+                  <SeekBar
+                      android:id="@+id/csla_seekBar1"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/csla_txt_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="@dimen/dp52"
+                    android:singleLine="true"
+                    android:text="00:00"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/sp12"
+                    />
+
+
+              </LinearLayout>
+
+
+            </LinearLayout>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              >
+
+            <io.github.meness.emoji.EmojiTextView
+                android:id="@+id/messageText"
+                android:text="SAMPLE TEXT"
+                style="@style/ChatMessages.EmojiTextView"
+                />
+
+          </LinearLayout>
+
+          <include layout="@layout/chat_sub_layout_messages_time" />
+        </LinearLayout>
+      </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+  </LinearLayout>
+
+</FrameLayout>

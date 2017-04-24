@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp16"
+    >
+
+  <TextView
+      android:id="@+id/textRemindTime"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:text="@string/Toast_time_wait"
+      android:textColor="@color/black_register"
+      android:textSize="@dimen/sp18"
+      />
+
+  <com.iGap.module.HeaderTextview
+      android:id="@+id/remindTime"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp16"
+      android:gravity="center_horizontal"
+      android:text="356 secend"
+      android:textColor="@color/green"
+      android:textSize="@dimen/sp18"
+      />
+
+</LinearLayout>

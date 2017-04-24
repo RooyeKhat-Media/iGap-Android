@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootMenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix"
+    android:fitsSystemWindows="false"
+    >
+
+
+  <ScrollView
+      android:id="@+id/scrollView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp180"
+          android:orientation="horizontal"
+          >
+        <LinearLayout
+            android:id="@+id/lm_layout_user_picture"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+
+          <com.iGap.module.CircleImageView
+              android:id="@+id/lm_imv_user_picture"
+              android:layout_width="@dimen/dp80"
+              android:layout_height="@dimen/dp80"
+              android:layout_margin="@dimen/dp16"
+              android:src="@mipmap/empty"
+              />
+
+          <TextView
+              android:id="@+id/lm_txt_user_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp8"
+              android:layout_marginLeft="@dimen/dp16"
+              android:layout_marginStart="@dimen/dp16"
+              android:singleLine="true"
+              android:text="Domenika faniz"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/sp18"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+
+          <TextView
+              android:id="@+id/lm_txt_phone_number"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp16"
+              android:layout_marginStart="@dimen/dp16"
+              android:singleLine="true"
+              android:text="+98 9125544669"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/sp14"
+              />
+        </LinearLayout>
+        <com.iGap.module.MaterialDesignTextView
+            android:id="@+id/lm_txt_cloud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="@string/md_cloud"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/green"
+            android:textSize="45sp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dp8"
+            />
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:layout_marginLeft="@dimen/dp8"
+          android:layout_marginRight="@dimen/dp8"
+          android:background="@color/gray"
+          />
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/white"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/dp8"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingStart="@dimen/dp8"
+            >
+
+
+          <LinearLayout
+              android:id="@+id/lm_ll_new_chat"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp16"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_new_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_user_shape"
+                android:textAppearance="@style/TextIconAppearance.menu"
+                android:textSize="@dimen/sp22"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/New_Chat"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+                />
+
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/lm_ll_new_group"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_group"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_users_social_symbol"
+                android:textAppearance="@style/TextIconAppearance.menu"
+
+                android:textSize="@dimen/sp22"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/New_Group"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+
+          <LinearLayout
+              android:id="@+id/lm_ll_new_channle"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <TextView
+                android:id="@+id/lm_txt_icon_channel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_channel_icon"
+                android:textColor="@color/gray_4c"
+                android:textSize="@dimen/sp18"
+                fontPath="fonts/iGap_font.ttf"
+                />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:layout_marginTop="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/New_Chanel"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/lm_ll_igap_search"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/amr_btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:minWidth="@dimen/dp32"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/md_searching_magnifying_glass"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/gray_4c"
+                android:textSize="@dimen/sp28"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:layout_marginTop="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/igap_search"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:layout_margin="@dimen/dp8"
+              android:background="@color/gray"
+              />
+
+
+          <LinearLayout
+              android:id="@+id/lm_ll_contacts"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_user_account_box"
+                android:textAppearance="@style/TextIconAppearance.menu"
+                android:textSize="@dimen/sp22"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/contacts"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/lm_ll_invite_friends"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_invite_friends"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:paddingRight="@dimen/dp4"
+                android:text="@string/md_add_user_button"
+                android:textAppearance="@style/TextIconAppearance.menu"
+                android:textSize="@dimen/sp22"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/Invite_Friends"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/lm_ll_setting"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              style="@style/NavigationDrawer.Item"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_settings_cogwheel_button"
+                android:textAppearance="@style/TextIconAppearance.menu"
+                android:textSize="@dimen/sp22"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/chi_title_setting"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+
+                />
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/lm_ll_igap_faq"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/dp6"
+              android:layout_marginTop="@dimen/dp4"
+              android:orientation="horizontal"
+              >
+
+            <com.iGap.module.MaterialDesignTextView
+                android:id="@+id/lm_txt_icon_igap_faq"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minWidth="@dimen/dp32"
+                android:text="@string/md_exit_app"
+                android:textAppearance="@style/TextIconAppearance.menu"
+                android:textSize="@dimen/sp22"
+
+                />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginStart="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/log_out"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp14"
+                />
+
+          </LinearLayout>
+        </LinearLayout>
+      </FrameLayout>
+    </LinearLayout>
+  </ScrollView>
+
+
+</LinearLayout>

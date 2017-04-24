@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="bottom|right"
+    android:layout_marginTop="1dp"
+    android:gravity="center_vertical|right"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/messageContainerPaddingBottom"
+    android:paddingLeft="@dimen/messageContainerPaddingLeftRight"
+    android:paddingRight="@dimen/messageContainerPaddingLeftRight"
+    >
+
+    <TextView
+        android:id="@+id/txtEditedIndicator"
+        style="@style/ChatMessages.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp4"
+        android:gravity="center"
+        android:text="@string/edited"/>
+
+    <TextView
+        android:id="@+id/cslr_txt_time"
+        style="@style/ChatMessages.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="10:21"/>
+
+    <ImageView
+        android:id="@+id/cslr_txt_tic"
+        style="@style/ChatMessages.MaterialDesignTextView.Tick"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp4"
+        app:srcCompat="@drawable/ic_double_check"
+        android:tint="@color/colorOldBlack"/>
+
+    <LinearLayout
+        android:id="@+id/lyt_right"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="gone">
+    </LinearLayout>
+</LinearLayout>

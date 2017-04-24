@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/fcg_layoutRoot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="999dp"
+                android:background="@android:color/white"
+                android:layoutDirection="ltr">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/fcg_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:orientation="vertical"
+            app:elevation="8dp">
+
+            <RelativeLayout
+                android:id="@+id/fcg_ll_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:orientation="horizontal">
+
+                <com.iGap.libs.rippleeffect.RippleView
+                    android:id="@+id/fcg_ripple_back"
+                    rv_centered="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rv_alpha="200"
+                    app:rv_centered="true"
+                    app:rv_rippleDuration="0"
+                    app:rv_ripplePadding="5dp">
+
+                    <com.iGap.module.MaterialDesignTextView
+                        android:id="@+id/fcg_btn_back"
+                        android:textAppearance="@style/TextIconAppearance_toolbar"
+                        android:layout_width="@dimen/dp52"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@string/md_back_arrow"
+                        android:textColor="@android:color/white"/>
+                </com.iGap.libs.rippleeffect.RippleView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/dp4">
+
+                    <TextView
+                        android:id="@+id/fcg_txt_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"
+                        android:text="w"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp18"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/fcg_txt_number_of_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:singleLine="true"
+                        android:text="0/5000 member"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp18"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <com.iGap.libs.rippleeffect.RippleView
+                    android:id="@+id/fcg_ripple_done"
+                    rv_centered="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rv_alpha="200"
+                    android:layout_alignParentRight="true"
+                    app:rv_centered="true"
+                    app:rv_rippleDuration="100"
+                    app:rv_ripplePadding="5dp">
+
+                    <com.iGap.module.MaterialDesignTextView
+                        android:id="@+id/fcg_btn_done"
+                        android:textAppearance="@style/TextIconAppearance.all"
+                        android:layout_width="@dimen/dp52"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@string/md_check_symbol"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp26"/>
+                </com.iGap.libs.rippleeffect.RippleView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/fcg_view_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#34a49f"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/fcg_layout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fcg_appbar"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/fcg_edt_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:autoText="false"
+            android:hint="@string/search"
+            android:maxLines="5"
+            android:padding="@dimen/dp20"
+            android:textSize="@dimen/sp15"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fcg_recycler_view_add_item_to_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fcg_layout_search"
+        android:paddingBottom="@dimen/dp8"
+        android:scrollbars="vertical"/>
+
+
+    <LinearLayout
+        android:id="@+id/acs_ll_replay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginLeft="@dimen/dp8"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/dp4"
+            android:src="@mipmap/reply"
+            android:visibility="visible"/>
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginLeft="@dimen/dp8"
+            android:background="@color/green"/>
+
+
+        <com.iGap.module.CircleImageView
+            android:id="@+id/acs_imv_replay_pic"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginLeft="@dimen/dp8"
+            android:src="@mipmap/empty"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/acs_txt_replay_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="@dimen/dp280"
+                android:singleLine="true"
+                android:text="New Text"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp14"/>
+
+            <TextView
+                android:id="@+id/acs_txt_replay_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp4"
+                android:maxWidth="@dimen/dp280"
+                android:singleLine="true"
+                android:text="New Text"
+                android:textSize="@dimen/sp14"/>
+        </LinearLayout>
+
+        <com.iGap.module.MaterialDesignTextView
+            android:id="@+id/acs_btn_close"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:text="@string/md_close_button"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/sp22"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/fcg_prgWaiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+
+
+

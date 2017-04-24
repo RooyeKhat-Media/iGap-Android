@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "132364457498",
+    "project_id": "igap-messenger"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132364457498:android:69c59b7595e50096",
+        "android_client_info": {
+          "package_name": "net.iGap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCC20H7heNcUEgRD3nsdOOq1hojHI-tSs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-89789834-5"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

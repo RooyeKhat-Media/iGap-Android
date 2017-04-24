@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="@dimen/dp80"
+    android:orientation="horizontal"
+    >
+
+
+  <com.iGap.module.CircleImageView
+      android:id="@+id/daj_img_room_picture"
+      android:layout_width="@dimen/dp60"
+      android:layout_margin="@dimen/dp12"
+      android:layout_height="@dimen/dp60"
+      android:src="@mipmap/difaultimage"
+
+      />
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+    <TextView
+        android:text="hame khoba"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/black90"
+        android:textSize="@dimen/sp18"
+        android:id="@+id/daj_txt_room_name"
+        />
+    <TextView
+        android:text="12 member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:id="@+id/daj_txt_member_count"
+        />
+  </LinearLayout>
+
+
+</LinearLayout>
