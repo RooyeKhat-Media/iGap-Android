@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/dp16"
         android:orientation="horizontal">
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
@@ -37,7 +37,7 @@
             android:layout_marginStart="@dimen/dp8"
             android:orientation="vertical">
 
-            <com.iGap.module.CustomTextViewMedium
+          <net.iGap.module.CustomTextViewMedium
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/sp16" />
 
-            <com.iGap.module.CustomTextViewMedium
+          <net.iGap.module.CustomTextViewMedium
                 android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

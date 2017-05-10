@@ -35,7 +35,7 @@
             />
 
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/acs_imv_replay_pic"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -76,7 +76,7 @@
                 />
         </LinearLayout>
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/acs_btn_close"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"
@@ -128,7 +128,7 @@
                     android:background="@color/green"
                     android:orientation="horizontal">
 
-                    <com.iGap.libs.rippleeffect.RippleView
+                  <net.iGap.libs.rippleeffect.RippleView
                         android:id="@+id/acs_ripple_back"
                         rv_centered="true"
                         android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
                         app:rv_rippleDuration="0"
                         app:rv_ripplePadding="5dp">
 
-                        <com.iGap.module.MaterialDesignTextView
+                    <net.iGap.module.MaterialDesignTextView
                             android:id="@+id/acs_btn_back"
                             android:textAppearance="@style/TextIconAppearance_toolbar"
                             android:layout_width="@dimen/dp52"
@@ -149,7 +149,7 @@
                             android:textColor="@android:color/white"
                             />
 
-                    </com.iGap.libs.rippleeffect.RippleView>
+                  </net.iGap.libs.rippleeffect.RippleView>
 
                     <TextView
                         android:id="@+id/acs_txt_number_of_comment"
@@ -164,7 +164,7 @@
                         android:textSize="@dimen/sp18"
                         android:textStyle="bold" />
 
-                    <com.iGap.libs.rippleeffect.RippleView
+                  <net.iGap.libs.rippleeffect.RippleView
                         android:id="@+id/acs_ripple_menu"
                         rv_centered="true"
                         android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                         app:rv_rippleDuration="150"
                         app:rv_ripplePadding="5dp">
 
-                        <com.iGap.module.MaterialDesignTextView
+                    <net.iGap.module.MaterialDesignTextView
                             android:id="@+id/acs_btn_menu"
                             android:textAppearance="@style/TextIconAppearance_toolbar"
                             android:layout_width="@dimen/dp52"
@@ -185,7 +185,7 @@
                             android:textSize="@dimen/sp22"
                             />
 
-                    </com.iGap.libs.rippleeffect.RippleView>
+                  </net.iGap.libs.rippleeffect.RippleView>
                 </LinearLayout>
             </LinearLayout>
 
@@ -213,7 +213,7 @@
             android:background="@color/gray_f2"
             android:orientation="horizontal">
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/acs_btn_smile"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                 android:textAppearance="@style/TextIconAppearance.all"
@@ -222,7 +222,7 @@
                 android:padding="@dimen/dp8"
                 android:text="@string/md_emoticon_with_happy_face"/>
 
-            <io.github.meness.emoji.EmojiEditText
+          <net.iGap.emoji.EmojiEditText
                 android:id="@+id/acs_edt_chat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

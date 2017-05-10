@@ -77,7 +77,7 @@
                     android:textSize="@dimen/sp14" />
 
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/lmr_btn_mic_layout"
                     style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                     android:layout_width="@dimen/dp68"

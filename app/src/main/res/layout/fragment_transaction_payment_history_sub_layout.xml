@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:text="pending"/>
 
-    <com.iGap.module.MaterialDesignTextView
+  <net.iGap.module.MaterialDesignTextView
         android:id="@+id/ftphs_txt_icon_right_arrow"
         android:textAppearance="@style/TextIconAppearance.all"
         android:layout_width="wrap_content"

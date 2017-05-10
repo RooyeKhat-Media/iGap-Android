@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/stcb_ripple_back"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/stcb_txt_back"
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="@dimen/dp52"
@@ -48,7 +48,7 @@
                     android:textColor="@color/whit_background"
                     />
 
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
             <TextView
                 android:id="@+id/st_txt_titleToolbar"

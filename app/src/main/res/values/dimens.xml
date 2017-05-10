@@ -1,6 +1,7 @@
 <resources>
 
     <item name="messageSenderAvatar" type="id" />
+  <item name="messageSenderName" type="id" />
 
     <bool name="isTablet">false</bool>
 

@@ -156,7 +156,7 @@
                     >
 
 
-                  <com.iGap.module.MaterialDesignTextView
+                  <net.iGap.module.MaterialDesignTextView
                       android:id="@+id/csla_btn_play_music"
                       android:layout_width="@dimen/dp32"
                       android:layout_height="match_parent"
@@ -205,7 +205,7 @@
               android:orientation="vertical"
               >
 
-            <io.github.meness.emoji.EmojiTextView
+            <net.iGap.emoji.EmojiTextView
                 android:id="@+id/messageText"
                 android:text="SAMPLE TEXT"
                 style="@style/ChatMessages.EmojiTextView"

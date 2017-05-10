@@ -32,7 +32,7 @@
       android:paddingRight="@dimen/dp6"
       >
 
-    <io.github.meness.emoji.EmojiTextView
+    <net.iGap.emoji.EmojiTextView
         android:id="@+id/cslhf_txt_forward_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:textStyle="bold"
         />
 
-    <io.github.meness.emoji.EmojiTextView
+    <net.iGap.emoji.EmojiTextView
         android:id="@+id/cslhf_txt_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         />
   </LinearLayout>
 
-  <com.iGap.module.MaterialDesignTextView
+  <net.iGap.module.MaterialDesignTextView
       android:id="@+id/cslhf_imv_cansel"
       android:layout_width="@dimen/dp40"
       android:layout_height="match_parent"

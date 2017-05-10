@@ -29,7 +29,7 @@
             android:minHeight="@dimen/dp48"
             android:orientation="horizontal">
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/chl_imv_smile_button"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:textSize="@dimen/sp28"/>
 
 
-            <io.github.meness.emoji.EmojiEditText
+          <net.iGap.emoji.EmojiEditText
                 android:id="@+id/chl_edt_chat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:emojiSize="26sp"
                 />
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/chl_imv_send_button"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/chl_imv_attach_button"
                     style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                     android:layout_width="0dp"
@@ -95,7 +95,7 @@
                     android:textSize="@dimen/sp28"/>
 
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/chl_imv_mic_button"
                     style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                     android:layout_width="0dp"

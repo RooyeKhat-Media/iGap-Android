@@ -84,7 +84,7 @@
             android:layout_gravity="center"
             android:padding="@dimen/dp4">
 
-            <com.iGap.module.CircleImageView
+          <net.iGap.module.CircleImageView
                 android:id="@+id/pu_profile_circle_image"
                 android:layout_width="@dimen/dp70"
                 android:layout_height="@dimen/dp70"
@@ -128,7 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.iGap.module.EditTextAdjustPan
+          <net.iGap.module.EditTextAdjustPan
                 android:id="@+id/pu_edt_nikeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

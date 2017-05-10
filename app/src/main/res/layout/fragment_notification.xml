@@ -7,7 +7,8 @@
               android:background="@android:color/white"
               android:orientation="vertical"
               android:elevation="999dp"
-              tools:context="com.iGap.fragments.FragmentNotification">
+    tools:context="net.iGap.fragments.FragmentNotification"
+    >
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 rv_centered="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ntg_txt_back"
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="@dimen/dp52"
@@ -40,7 +41,7 @@
                     android:gravity="center"
                     android:text="@string/md_back_arrow"
                     android:textColor="@color/whit_background"/>
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -88,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|top"
-            android:text="@string/st_sound"
+            android:text="@string/array_Default"
             android:textColor="@color/cardview_dark_background"
             android:textSize="@dimen/sp14"
             android:textStyle="normal" />
@@ -125,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|top"
-            android:text="@string/st_sound"
+            android:text="@string/array_Default"
             android:textColor="@color/cardview_dark_background"
             android:textSize="@dimen/sp14"
             android:textStyle="normal" />

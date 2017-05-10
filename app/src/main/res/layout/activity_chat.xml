@@ -18,7 +18,7 @@
         >
 
 
-        <com.iGap.module.MyAppBarLayout
+      <net.iGap.module.MyAppBarLayout
             android:id="@+id/ac_appBarLayout"
             android:layout_width="match_parent"
             android:background="@color/iGapColor"
@@ -42,7 +42,7 @@
                     >
 
 
-                    <com.iGap.libs.rippleeffect.RippleView
+                  <net.iGap.libs.rippleeffect.RippleView
                         android:id="@+id/chl_ripple_back_Button"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -54,7 +54,7 @@
                         rv_centered="true"
                         >
 
-                        <com.iGap.module.MaterialDesignTextView
+                    <net.iGap.module.MaterialDesignTextView
                             android:id="@+id/chl_imv_back_Button"
                             android:layout_width="@dimen/dp52"
                             android:layout_height="match_parent"
@@ -64,7 +64,7 @@
                             android:textColor="@color/whit_background"
                             />
 
-                    </com.iGap.libs.rippleeffect.RippleView>
+                  </net.iGap.libs.rippleeffect.RippleView>
 
                     <LinearLayout
                         android:id="@+id/lyt_user"
@@ -101,7 +101,7 @@
                                 android:textSize="@dimen/sp14"
                                 />
 
-                            <com.iGap.module.MaterialDesignTextView
+                          <net.iGap.module.MaterialDesignTextView
                                 android:id="@+id/imgMutedRoom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <com.iGap.module.CircleImageView
+                  <net.iGap.module.CircleImageView
                         android:id="@+id/chl_imv_user_picture"
                         android:layout_width="@dimen/dp60"
                         android:layout_height="match_parent"
@@ -162,7 +162,7 @@
                         android:src="@mipmap/empty"
                         />
 
-                    <com.iGap.libs.rippleeffect.RippleView
+                  <net.iGap.libs.rippleeffect.RippleView
                         android:id="@+id/chl_ripple_menu_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                         rv_centered="true"
                         >
 
-                        <com.iGap.module.MaterialDesignTextView
+                    <net.iGap.module.MaterialDesignTextView
                             android:id="@+id/chl_imv_menu_button"
                             android:layout_width="@dimen/dp52"
                             android:layout_height="match_parent"
@@ -184,7 +184,7 @@
                             android:textColor="@color/whit_background"
                             />
 
-                    </com.iGap.libs.rippleeffect.RippleView>
+                  </net.iGap.libs.rippleeffect.RippleView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -205,7 +205,7 @@
                         >
 
 
-                        <com.iGap.libs.rippleeffect.RippleView
+                      <net.iGap.libs.rippleeffect.RippleView
                             android:id="@+id/chl_ripple_close_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
                             rv_centered="true"
                             >
 
-                            <com.iGap.module.MaterialDesignTextView
+                        <net.iGap.module.MaterialDesignTextView
                                 android:id="@+id/chl_btn_close_layout"
                                 android:layout_width="@dimen/dp48"
                                 android:layout_height="match_parent"
@@ -228,9 +228,9 @@
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/sp26"
                                 />
-                        </com.iGap.libs.rippleeffect.RippleView>
+                      </net.iGap.libs.rippleeffect.RippleView>
 
-                        <com.iGap.module.MaterialDesignTextView
+                      <net.iGap.module.MaterialDesignTextView
                             android:id="@+id/chl_txt_number_of_selected"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -252,7 +252,7 @@
                             android:orientation="horizontal"
                             >
 
-                            <com.iGap.libs.rippleeffect.RippleView
+                          <net.iGap.libs.rippleeffect.RippleView
                                 android:id="@+id/chl_ripple_replay_selected"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
                                 rv_centered="true"
                                 >
 
-                                <com.iGap.module.MaterialDesignTextView
+                            <net.iGap.module.MaterialDesignTextView
                                     android:id="@+id/chl_btn_replay_selected"
                                     android:layout_width="@dimen/dp60"
                                     android:layout_height="match_parent"
@@ -275,9 +275,9 @@
                                     android:textColor="@color/gray"
                                     android:textSize="@dimen/sp26"
                                     />
-                            </com.iGap.libs.rippleeffect.RippleView>
+                          </net.iGap.libs.rippleeffect.RippleView>
 
-                            <com.iGap.libs.rippleeffect.RippleView
+                          <net.iGap.libs.rippleeffect.RippleView
                                 android:id="@+id/chl_ripple_copy_selected"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -289,7 +289,7 @@
                                 rv_centered="true"
                                 >
 
-                                <com.iGap.module.MaterialDesignTextView
+                            <net.iGap.module.MaterialDesignTextView
                                     android:id="@+id/chl_btn_copy_selected"
                                     android:layout_width="@dimen/dp60"
                                     android:layout_height="match_parent"
@@ -300,9 +300,9 @@
                                     android:textColor="@color/gray"
                                     android:textSize="@dimen/sp26"
                                     />
-                            </com.iGap.libs.rippleeffect.RippleView>
+                          </net.iGap.libs.rippleeffect.RippleView>
 
-                            <com.iGap.libs.rippleeffect.RippleView
+                          <net.iGap.libs.rippleeffect.RippleView
                                 android:id="@+id/chl_ripple_forward_selected"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -314,7 +314,7 @@
                                 rv_centered="true"
                                 >
 
-                                <com.iGap.module.MaterialDesignTextView
+                            <net.iGap.module.MaterialDesignTextView
                                     android:id="@+id/chl_btn_forward_selected"
                                     android:layout_width="@dimen/dp60"
                                     android:layout_height="match_parent"
@@ -325,10 +325,10 @@
                                     android:textColor="@color/gray"
                                     android:textSize="@dimen/sp26"
                                     />
-                            </com.iGap.libs.rippleeffect.RippleView>
+                          </net.iGap.libs.rippleeffect.RippleView>
                         </LinearLayout>
 
-                        <com.iGap.libs.rippleeffect.RippleView
+                      <net.iGap.libs.rippleeffect.RippleView
                             android:id="@+id/chl_ripple_delete_selected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -341,7 +341,7 @@
 
                             >
 
-                            <com.iGap.module.MaterialDesignTextView
+                        <net.iGap.module.MaterialDesignTextView
                                 android:id="@+id/chl_btn_delete_selected"
                                 android:layout_width="@dimen/dp60"
                                 android:layout_height="match_parent"
@@ -352,7 +352,7 @@
                                 android:textColor="@color/gray"
                                 android:textSize="@dimen/sp26"
                                 />
-                        </com.iGap.libs.rippleeffect.RippleView>
+                      </net.iGap.libs.rippleeffect.RippleView>
 
                     </LinearLayout>
 
@@ -383,7 +383,7 @@
                 android:visibility="gone"
                 >
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/chl_ripple_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -394,7 +394,7 @@
                     rv_centered="true"
                     >
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:layout_width="@dimen/dp52"
                         android:layout_height="match_parent"
                         android:background="@null"
@@ -405,7 +405,7 @@
 
 
                         />
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
                 <EditText
                     android:id="@+id/chl_edt_search_message"
@@ -419,7 +419,7 @@
                     android:textCursorDrawable="@drawable/white_cursor_color"
                     />
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/chl_btn_close_ripple_search_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -430,7 +430,7 @@
                     rv_centered="true"
                     >
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/ac_btn_clear_message_search"
                         android:layout_width="@dimen/dp52"
                         android:layout_height="match_parent"
@@ -440,7 +440,7 @@
                         android:textAppearance="@style/TextIconAppearance.all"
                         android:textColor="#dededd"
                         />
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
 
             </LinearLayout>
@@ -453,7 +453,7 @@
                 android:visibility="gone"
                 />
 
-        </com.iGap.module.MyAppBarLayout>
+      </net.iGap.module.MyAppBarLayout>
 
         <include
             layout="@layout/chat_sub_layout_block_user"
@@ -492,7 +492,7 @@
                 android:layout_gravity="bottom|right"
                 >
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ac_txt_down_navigation"
                     android:layout_width="@dimen/dp44"
                     android:layout_height="@dimen/dp44"
@@ -549,7 +549,7 @@
                 android:text="New Text"
                 />
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ac_btn_cancel_sending_file"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="match_parent"
@@ -573,7 +573,7 @@
             android:visibility="gone"
             >
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ac_btn_message_up"
                 android:layout_width="@dimen/dp48"
                 android:layout_height="match_parent"
@@ -598,7 +598,7 @@
                 android:textSize="@dimen/sp16"
                 />
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ac_btn_message_down"
                 android:layout_width="@dimen/dp48"
                 android:layout_height="match_parent"
@@ -622,7 +622,7 @@
             android:visibility="gone"
             >
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ac_btn_hash_up"
                 android:layout_width="@dimen/dp48"
                 android:gravity="center"
@@ -648,7 +648,7 @@
                 />
 
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ac_btn_hash_down"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="match_parent"
@@ -667,7 +667,7 @@
                 android:layout_weight="1"
                 >
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ac_btn_hash_close"
                     android:layout_width="@dimen/dp52"
                     android:layout_height="match_parent"
@@ -757,7 +757,7 @@
                 android:orientation="horizontal"
                 >
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:id="@+id/chl_btn_up"
                     android:layout_width="@dimen/dp60"
@@ -782,7 +782,7 @@
                     android:textSize="@dimen/sp20"
                     />
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/chl_btn_down"
                     android:layout_width="@dimen/dp60"
                     android:layout_height="match_parent"

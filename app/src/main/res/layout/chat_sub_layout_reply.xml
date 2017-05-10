@@ -35,7 +35,7 @@
         android:gravity="left"
         android:orientation="vertical">
 
-        <io.github.meness.emoji.EmojiTextView
+      <net.iGap.emoji.EmojiTextView
             android:id="@+id/chslr_txt_replay_from"
             style="@style/ChatMessages.EmojiTextView"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:textStyle="bold"
             android:padding="0dp"/>
 
-        <io.github.meness.emoji.EmojiTextView
+      <net.iGap.emoji.EmojiTextView
             android:id="@+id/chslr_txt_replay_message"
             style="@style/ChatMessages.EmojiTextView"
             android:layout_width="match_parent"

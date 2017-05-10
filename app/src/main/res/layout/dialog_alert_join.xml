@@ -7,7 +7,7 @@
     >
 
 
-  <com.iGap.module.CircleImageView
+  <net.iGap.module.CircleImageView
       android:id="@+id/daj_img_room_picture"
       android:layout_width="@dimen/dp60"
       android:layout_margin="@dimen/dp12"

@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/dp8">
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/sfsl_imv_contact_avatar"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
@@ -44,7 +44,7 @@
                     android:textSize="@dimen/sp18" />
 
 
-                <com.iGap.module.CustomTextViewMedium
+              <net.iGap.module.CustomTextViewMedium
                     android:id="@+id/sfsl_txt_contact_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             </LinearLayout>
 
 
-            <io.github.meness.emoji.EmojiTextView
+          <net.iGap.emoji.EmojiTextView
                 android:id="@+id/sfsl_txt_contact_lastseen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

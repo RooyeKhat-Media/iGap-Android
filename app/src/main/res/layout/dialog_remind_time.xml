@@ -16,7 +16,7 @@
       android:textSize="@dimen/sp18"
       />
 
-  <com.iGap.module.HeaderTextview
+  <net.iGap.module.HeaderTextview
       android:id="@+id/remindTime"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

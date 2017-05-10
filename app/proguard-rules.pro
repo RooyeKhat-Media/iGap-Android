@@ -18,14 +18,14 @@
 
 
 ########## My Tricks
--keep class io.github.meness.**, io.meness.github.** , com.iGap.proto.** , com.neovisionaries.ws.client.** { *; }
--keep class com.iGap.helper.HelperFillLookUpClass { *; }
--keep public class * extends com.iGap.response.MessageHandler
+-keep class io.github.meness.**, io.meness.github.** , net.iGap.proto.** , com.neovisionaries.ws.client.** { *; }
+-keep class net.iGap.helper.HelperFillLookUpClass { *; }
+-keep public class * extends net.iGap.response.MessageHandler
 -keepclasseswithmembers class * {
    public <init>(int, java.lang.Object, java.lang.String);
 }
 
--keep class * extends com.iGap.response.MessageHandler {
+-keep class * extends net.iGap.response.MessageHandler {
     *;
 }
 ###

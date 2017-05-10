@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.iGap.activities.ActivitySettingNotification"
+    tools:context="net.iGap.activities.ActivitySettingNotification"
     tools:ignore="MissingPrefix"
     >
 
@@ -27,7 +27,7 @@
         android:orientation="horizontal"
         >
 
-      <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
           android:id="@+id/stns_ripple_back"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
           rv_centered="true"
           >
 
-        <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
             android:id="@+id/stns_txt_back"
             android:layout_width="@dimen/dp52"
             android:layout_height="match_parent"
@@ -47,7 +47,7 @@
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textColor="@color/whit_background"
             />
-      </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
       <TextView
           android:layout_width="match_parent"
@@ -86,7 +86,7 @@
           android:visibility="visible"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -363,7 +363,7 @@
           android:visibility="visible"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -637,7 +637,7 @@
           android:visibility="visible"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -944,7 +944,7 @@
           android:visibility="visible"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -986,7 +986,7 @@
             >
 
 
-          <TextView
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
               android:id="@+id/stns_txt_keep_alive_service"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -994,7 +994,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_text_keep_alive_service"
               android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/sp16"
+              android:textSize="@dimen/sp13"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1191,7 +1191,7 @@
           android:visibility="visible"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

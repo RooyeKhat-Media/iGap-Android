@@ -7,7 +7,8 @@
                 android:orientation="vertical"
                 android:id="@+id/stas_rootActiveSession"
                 android:elevation="999dp"
-                tools:context="com.iGap.fragments.FragmentActiveSessions">
+    tools:context="net.iGap.fragments.FragmentActiveSessions"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/acs_toolbar"
@@ -36,7 +37,7 @@
                 android:textStyle="bold"
                 android:visibility="visible"/>
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/stas_ripple_back"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/stas_txt_back"
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="@dimen/dp52"
@@ -56,7 +57,7 @@
                     android:text="@string/md_back_arrow"
                     android:textColor="@color/whit_background"
                     />
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

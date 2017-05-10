@@ -39,7 +39,7 @@
                 android:textStyle="bold"
                 android:visibility="visible"/>
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/ng_ripple_back"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ng_txt_back"
                     android:layout_width="@dimen/dp52"
                     android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:textColor="@color/whit_background"
                     />
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/ng_ripple_circle_image"
                 rv_centered="true"
                 android:layout_width="@dimen/dp105"
@@ -90,7 +90,7 @@
                 app:rv_centered="true"
                 app:rv_rippleDuration="150">
 
-                <com.iGap.module.CircleImageView
+            <net.iGap.module.CircleImageView
                     android:id="@+id/ng_profile_circle_image"
                     android:layout_width="@dimen/dp105"
                     android:layout_height="@dimen/dp105"
@@ -100,7 +100,7 @@
                     android:padding="@dimen/dp32"
                     android:src="@mipmap/plus"
                     app:civ_border_width="0dp"/>
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
 
             <RelativeLayout
@@ -147,7 +147,7 @@
                 android:layout_marginTop="@dimen/dp12"
                 android:hint="@string/desc">
 
-                <com.iGap.module.LinedEditText
+              <net.iGap.module.LinedEditText
                     android:id="@+id/ng_edt_description"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp140"

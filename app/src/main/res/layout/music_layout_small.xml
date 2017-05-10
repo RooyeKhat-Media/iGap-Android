@@ -11,7 +11,7 @@
         android:gravity="left|center">
 
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:id="@+id/mls_btn_play_music"
             android:layout_width="@dimen/dp40"
@@ -54,7 +54,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/sp12" />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/mls_btn_close"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"

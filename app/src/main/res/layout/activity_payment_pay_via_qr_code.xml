@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
 
-        <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/apvq_ripple_back_Button"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             app:rv_rippleDuration="0"
             app:rv_ripplePadding="5dp">
 
-            <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:text="@string/md_back_arrow"
                 android:textColor="@color/white"/>
 
-        </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
         <MultiAutoCompleteTextView
 
@@ -47,7 +47,7 @@
             android:textSize="@dimen/sp18"/>
 
 
-        <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/apvq_ripple_plus"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             app:rv_rippleDuration="100"
             app:rv_ripplePadding="5dp">
 
-            <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
@@ -68,7 +68,7 @@
                 android:textSize="@dimen/sp32"
                 />
 
-        </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
 
     </LinearLayout>

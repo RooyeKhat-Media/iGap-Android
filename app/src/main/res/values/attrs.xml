@@ -22,7 +22,7 @@
     </declare-styleable>
 
     <declare-styleable name="ArcMenu">
-        <attr name="menu_scr" format="reference" />
+        <attr name="menu_scr" format="integer" />
         <attr name="menu_color" format="reference|color" />
         <attr name="menu_ripple_color" format="color" />
         <attr name="menu_radius" format="dimension" />

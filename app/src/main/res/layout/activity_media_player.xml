@@ -13,7 +13,7 @@
         android:background="@color/white"
         android:gravity="left|center">
 
-        <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/ml_ripple_back"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             app:rv_rippleDuration="0"
             app:rv_ripplePadding="5dp">
 
-            <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ml_btn_back"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@android:color/darker_gray"
                 />
-        </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -64,7 +64,7 @@
                 android:textSize="@dimen/sp14"/>
         </LinearLayout>
 
-        <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/amp_ripple_menu"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
             app:rv_rippleDuration="150"
             app:rv_ripplePadding="5dp">
 
-            <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ml_btn_music_menu"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
@@ -84,7 +84,7 @@
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@android:color/darker_gray"
                 />
-        </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
 
     </LinearLayout>
@@ -177,7 +177,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ml_btn_shuffel_music"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="match_parent"
@@ -192,7 +192,7 @@
         </LinearLayout>
 
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/ml_btn_Previous_music"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"
@@ -203,7 +203,7 @@
             android:textColor="#444"
             android:textSize="@dimen/sp22"/>
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/ml_btn_play_music"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"
@@ -216,7 +216,7 @@
             android:textColor="@color/green"
             android:textSize="@dimen/sp36"/>
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/ml_btn_forward_music"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"
@@ -233,7 +233,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/ml_btn_replay_music"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="match_parent"

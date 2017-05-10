@@ -11,7 +11,7 @@
       android:layout_width="@dimen/dp160"
       android:layout_height="@dimen/dp160"
       android:layout_gravity="center"
-      app:srcCompat="@mipmap/no_msg"
+      app:srcCompat="@drawable/empty_chat"
       android:id="@+id/imageView3"
       />
   <TextView

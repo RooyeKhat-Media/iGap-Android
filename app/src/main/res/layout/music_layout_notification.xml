@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="@color/notification_music_background"
+    android:background="@color/notification_music_icons"
     android:layoutDirection="ltr"
     android:gravity="left"
     android:orientation="horizontal">
@@ -30,7 +30,7 @@
             android:gravity="left"
             android:singleLine="true"
             android:text="@string/music_name"
-            android:textColor="@color/notification_music_icons"
+            android:textColor="@color/notification_music_background"
             android:textSize="16sp" />
 
 
@@ -42,7 +42,7 @@
             android:gravity="left"
             android:singleLine="true"
             android:text="hamid asgari"
-            android:textColor="@color/notification_music_icons"
+            android:textColor="@color/notification_music_background"
             android:textSize="12sp" />
 
 
@@ -57,7 +57,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="6dp"
-                android:tint="@color/notification_music_icons"
+                android:tint="@color/notification_music_background"
                 android:src="@mipmap/previous_track" />
 
             <ImageView
@@ -68,7 +68,7 @@
                 android:layout_marginRight="40dp"
                 android:gravity="center"
                 android:padding="6dp"
-                android:tint="@color/notification_music_icons"
+                android:tint="@color/notification_music_background"
                 android:src="@mipmap/play_button" />
 
             <ImageView
@@ -78,7 +78,7 @@
                 android:gravity="center"
                 android:padding="6dp"
                 android:src="@mipmap/play_next_button"
-                android:tint="@color/notification_music_icons"
+                android:tint="@color/notification_music_background"
                 />
 
 
@@ -90,7 +90,7 @@
     <ImageView
         android:id="@+id/mln_btn_close"
         android:layout_width="40dp"
-        android:tint="@color/notification_music_icons"
+        android:tint="@color/notification_music_background"
         android:layout_height="match_parent"
         android:gravity="top|center"
         android:paddingBottom="24dp"

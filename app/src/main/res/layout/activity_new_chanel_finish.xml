@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iGap.activities.ActivityNewChanelFinish"
+    tools:context="net.iGap.activities.ActivityNewChanelFinish"
     tools:ignore="MissingPrefix"
     >
 
@@ -37,7 +37,7 @@
           android:visibility="visible"
           />
 
-      <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
           android:id="@+id/nclf_ripple_back"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
           rv_centered="true"
           >
 
-        <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
             android:id="@+id/nclf_txt_back"
             android:layout_width="@dimen/dp52"
             android:layout_height="match_parent"
@@ -59,7 +59,7 @@
             android:textColor="@color/whit_background"
             />
 
-      </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
     </RelativeLayout>
   </android.support.v7.widget.Toolbar>
@@ -86,7 +86,7 @@
         >
 
 
-      <com.iGap.module.HeaderTextview
+      <net.iGap.module.HeaderTextview
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center"
@@ -160,7 +160,7 @@
           android:padding="@dimen/dp8"
           >
 
-        <com.iGap.module.HeaderTextview
+        <net.iGap.module.HeaderTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

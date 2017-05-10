@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_register"
-    tools:context="com.iGap.fragments.FragmentVideoTrime"
+    tools:context="net.iGap.fragments.FragmentVideoTrime"
 
     >
 
@@ -40,7 +40,7 @@
           android:orientation="horizontal"
           >
 
-        <com.iGap.libs.rippleeffect.RippleView
+        <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/pu_ripple_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             rv_centered="true"
             >
 
-          <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
               android:id="@+id/pu_txt_agreeImage"
               android:layout_width="@dimen/dp52"
               android:layout_height="match_parent"
@@ -60,7 +60,7 @@
               android:textAppearance="@style/TextIconAppearance_toolbar"
               android:textColor="@color/whit_background"
               />
-        </com.iGap.libs.rippleeffect.RippleView>
+        </net.iGap.libs.rippleeffect.RippleView>
 
         <LinearLayout
             android:layout_width="wrap_content"

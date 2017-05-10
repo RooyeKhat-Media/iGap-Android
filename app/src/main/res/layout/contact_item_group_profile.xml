@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/dp8">
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/cigp_imv_contact_avatar"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.iGap.module.CustomTextViewMedium
+                  <net.iGap.module.CustomTextViewMedium
                         android:id="@+id/cigp_txt_contact_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                         android:textColor="#000000"
                         android:textSize="@dimen/sp16"/>
 
-                    <com.iGap.module.MaterialDesignTextView
+                  <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/cigp_txt_member_role"
                         style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                         android:textAppearance="@style/TextIconAppearance.all"
@@ -69,7 +69,7 @@
                 </LinearLayout>
 
 
-                <com.iGap.module.CustomTextViewMedium
+              <net.iGap.module.CustomTextViewMedium
                     android:id="@+id/cigp_txt_contact_lastseen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:textColor="#bbbbbb" />
             </RelativeLayout>
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/cigp_moreButton"
                 android:textAppearance="@style/TextIconAppearance.all"
                 android:layout_width="@dimen/dp48"

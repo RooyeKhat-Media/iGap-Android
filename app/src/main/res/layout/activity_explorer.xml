@@ -35,7 +35,7 @@
                 android:background="@color/green"
                 android:orientation="horizontal">
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/ae_ripple_back"
                     rv_centered="true"
                     android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                     app:rv_rippleDuration="0"
                     app:rv_ripplePadding="5dp">
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/ae_btn_back"
                         android:textAppearance="@style/TextIconAppearance_toolbar"
                         android:layout_width="@dimen/dp52"
@@ -53,7 +53,7 @@
                         android:gravity="center"
                         android:text="@string/md_back_arrow"
                         android:textColor="@color/whit_background"/>
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
                 <TextView
                     android:id="@+id/ae_txt_file_path"
@@ -67,7 +67,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/sp12"/>
 
-                <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/asm_btn_menu"
                     android:layout_width="@dimen/dp60"
                     android:textAppearance="@style/TextIconAppearance_toolbar"

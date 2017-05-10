@@ -5,10 +5,10 @@
     <string name="emojiLibrary_emoji_libraryName">Emoji</string>
     <string name="emojiLibrary_emoji_libraryDescription">A simple library to add Emoji support to your Android Application.</string>
     <string name="emojiLibrary_emoji_libraryVersion">0.3.0</string>
-    <string name="emojiLibrary_emoji_libraryWebsite">https://github.com/vanniktech/Emoji</string>
+  <string name="emojiLibrary_emoji_libraryWebsite">https://github.net.iGap.emoji</string>
     <string name="emojiLibrary_emoji_licenseId">apache_2_0</string>
     <string name="emojiLibrary_emoji_isOpenSource">true</string>
-    <string name="emojiLibrary_emoji_repositoryLink">https://github.com/vanniktech/Emoji</string>
+  <string name="emojiLibrary_emoji_repositoryLink">https://github.net.iGap.emoji</string>
     <!-- Custom variables section -->
     <string name="emojiLibrary_emoji_owner">Niklas Baudy</string>
     <string name="emojiLibrary_emoji_year">2016</string>

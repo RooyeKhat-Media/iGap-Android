@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/apn_ripple_back_Button"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="@dimen/dp40"
                     android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                     android:textColor="@color/whit_background"
                     />
 
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
 
             <Button
@@ -98,7 +98,7 @@
 
             </LinearLayout>
 
-            <com.iGap.module.CircleImageView
+          <net.iGap.module.CircleImageView
                 android:id="@+id/apn_imv_user_picture"
                 android:layout_width="@dimen/dp60"
                 android:layout_height="match_parent"
@@ -129,7 +129,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/apn_btn_smile_button"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                 android:textAppearance="@style/TextIconAppearance.all"
@@ -139,7 +139,7 @@
                 android:text="@string/md_emoticon_with_happy_face"
                 android:textColor="@color/gray" />
 
-            <io.github.meness.emoji.EmojiEditText
+          <net.iGap.emoji.EmojiEditText
                 android:id="@+id/apn_edt_chat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -152,7 +152,7 @@
                 android:textColor="@color/gray"
                 android:textColorHint="@color/light_gray" />
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/apn_btn_send"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
                 android:layout_width="wrap_content"
@@ -163,7 +163,7 @@
                 android:visibility="gone" />
 
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/apn_btn_mic"
                 style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
                 android:textAppearance="@style/TextIconAppearance.all"

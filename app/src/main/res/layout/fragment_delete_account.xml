@@ -7,7 +7,8 @@
               android:background="@color/white"
               android:elevation="999dp"
               android:orientation="vertical"
-              tools:context="com.iGap.fragments.FragmentDeleteAccount">
+    tools:context="net.iGap.fragments.FragmentDeleteAccount"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/fda_ll_toolbar"
@@ -34,7 +35,7 @@
                 android:textStyle="bold"
                 android:visibility="visible"/>
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/stda_ripple_back"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -44,7 +45,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:layout_width="@dimen/dp52"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
@@ -53,9 +54,9 @@
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:textColor="@color/whit_background"
                     />
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/stda_ripple_set"
                 rv_centered="true"
                 android:layout_width="@dimen/dp48"
@@ -66,7 +67,7 @@
                 app:rv_rippleDuration="100"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
@@ -77,7 +78,7 @@
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:textColor="@color/whit_background"
                     android:textSize="@dimen/sp26"/>
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -119,7 +120,7 @@
         android:layout_margin="@dimen/dp20"
         >
 
-        <com.iGap.module.EditTextAdjustPan
+      <net.iGap.module.EditTextAdjustPan
             android:id="@+id/stda_edt_dleteAccount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

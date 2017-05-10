@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.meness.github.messageprogress.MessageProgress xmlns:android="http://schemas.android.com/apk/res/android"
+<net.iGap.messageprogress.MessageProgress xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/progress"
     android:layout_width="56dp"
     android:layout_height="56dp"
@@ -17,4 +17,4 @@
       />
 
 
-</io.meness.github.messageprogress.MessageProgress>
+</net.iGap.messageprogress.MessageProgress>

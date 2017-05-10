@@ -29,7 +29,7 @@
                 android:background="@color/green"
                 android:orientation="horizontal">
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/fcg_ripple_back"
                     rv_centered="true"
                     android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                     app:rv_rippleDuration="0"
                     app:rv_ripplePadding="5dp">
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/fcg_btn_back"
                         android:textAppearance="@style/TextIconAppearance_toolbar"
                         android:layout_width="@dimen/dp52"
@@ -48,7 +48,7 @@
                         android:gravity="center"
                         android:text="@string/md_back_arrow"
                         android:textColor="@android:color/white"/>
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,7 +84,7 @@
 
                 </LinearLayout>
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/fcg_ripple_done"
                     rv_centered="true"
                     android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                     app:rv_rippleDuration="100"
                     app:rv_ripplePadding="5dp">
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/fcg_btn_done"
                         android:textAppearance="@style/TextIconAppearance.all"
                         android:layout_width="@dimen/dp52"
@@ -105,7 +105,7 @@
                         android:text="@string/md_check_symbol"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/sp26"/>
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
             </RelativeLayout>
 
@@ -174,7 +174,7 @@
             android:background="@color/green"/>
 
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/acs_imv_replay_pic"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
@@ -211,7 +211,7 @@
                 android:textSize="@dimen/sp14"/>
         </LinearLayout>
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/acs_btn_close"
             android:layout_width="@dimen/dp40"
             android:layout_height="match_parent"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.iGap.module.HeaderTextview
+  <net.iGap.module.HeaderTextview
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp52"
         android:gravity="center"

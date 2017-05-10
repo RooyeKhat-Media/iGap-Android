@@ -57,7 +57,7 @@
             android:textSize="@dimen/sp26"
             />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_paintsize"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -69,7 +69,7 @@
             android:textColor="@color/green"
             android:textSize="@dimen/sp26" />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_color"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -81,7 +81,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/sp26" />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_sience"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -93,7 +93,7 @@
             android:textColor="@android:color/holo_purple"
             android:textSize="@dimen/sp26" />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_camera"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -115,7 +115,7 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_close"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -128,7 +128,7 @@
             android:textSize="@dimen/sp32"
             />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_new"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -141,7 +141,7 @@
             android:textSize="@dimen/sp32"
             />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_save"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -154,7 +154,7 @@
             android:textSize="@dimen/sp32"
             />
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_send"
             android:layout_width="0dp"
             android:layout_height="match_parent"
