@@ -4,7 +4,7 @@ iGap is a messaging application and has been created using all latest modern tec
 ## Creating your iGap Application
 We welcome all developers to use our API and source code to create applications on our platform. There are several things we require from all developers for the moment.
 
-* Assign your own api_id (Random integer between 1000-100000 ) for your application. [userLoginRequestBuilder.setIgpAppId(your_api_id)](https://github.com/RooyeKhat-Media/iGap-Android/blob/master/app/src/main/java/com/iGap/request/RequestUserLogin.java#L42)
+* Assign your own api_id (Random integer between 1000-100000 ) for your application. [userLoginRequestBuilder.setIgpAppId(your_api_id)](https://github.com/RooyeKhat-Media/iGap-Android/blob/master/app/src/main/java/net/iGap/request/RequestUserLogin.java#L42)
 * Please do not use the name iGap for your app — or make sure your users understand that it is unofficial.
 * Kindly do not use our standard logo as your app's logo.
 * Please remember to publish your code too in order to comply with the licences.
