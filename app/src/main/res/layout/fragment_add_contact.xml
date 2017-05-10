@@ -36,7 +36,7 @@
                 android:textStyle="bold"
                 android:visibility="visible" />
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/ac_ripple_back"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 app:rv_rippleDuration="0"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ac_txt_back"
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="@dimen/dp52"
@@ -56,9 +56,9 @@
                     android:text="@string/md_back_arrow"
                     android:textColor="@color/whit_background"
                     />
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/ac_ripple_set"
                 rv_centered="true"
                 android:layout_width="@dimen/dp52"
@@ -69,7 +69,7 @@
                 app:rv_rippleDuration="100"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/ac_txt_set"
                     android:textAppearance="@style/TextIconAppearance_toolbar"
                     android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"/>
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

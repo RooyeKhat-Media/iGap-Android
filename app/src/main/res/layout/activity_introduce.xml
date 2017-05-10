@@ -355,7 +355,7 @@
         app:layout_heightPercent="8%"
         >
 
-        <com.iGap.module.CustomCircleImage
+      <net.iGap.module.CustomCircleImage
             android:id="@+id/int_circleButton_introduce"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

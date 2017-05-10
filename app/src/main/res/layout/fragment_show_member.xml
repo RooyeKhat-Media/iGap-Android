@@ -17,7 +17,7 @@
       >
 
 
-    <com.iGap.libs.rippleeffect.RippleView
+    <net.iGap.libs.rippleeffect.RippleView
         android:id="@+id/fcg_ripple_back"
         rv_centered="true"
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         app:rv_ripplePadding="5dp"
         >
 
-      <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
           android:id="@+id/fcg_btn_back"
           android:textAppearance="@style/TextIconAppearance_toolbar"
           android:layout_width="@dimen/dp52"
@@ -38,7 +38,7 @@
           android:text="@string/md_back_arrow"
           android:textColor="@android:color/white"
           />
-    </com.iGap.libs.rippleeffect.RippleView>
+    </net.iGap.libs.rippleeffect.RippleView>
 
 
     <TextView
@@ -67,9 +67,13 @@
     <co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView
         android:id="@+id/fcm_recycler_view_show_member"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:rrvLayoutType="LinearLayout"
         android:overScrollMode="never"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@color/toolbar_background"
+        android:scrollbarSize="5dp"
         />
 
     <ProgressBar
@@ -77,7 +81,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="@dimen/dp20"
         android:visibility="gone"
         />
 

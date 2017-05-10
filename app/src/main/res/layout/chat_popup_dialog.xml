@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:id="@+id/cm_icon_mute_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         >
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:textAppearance="@style/TextIconAppearance.all"
             android:id="@+id/cm_icon_clear_history"
             android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.iGap.module.MaterialDesignTextView
+      <net.iGap.module.MaterialDesignTextView
             android:textAppearance="@style/TextIconAppearance.all"
             android:id="@+id/cm_icon_delete_chat"
             android:layout_width="wrap_content"

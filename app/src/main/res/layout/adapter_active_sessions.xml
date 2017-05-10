@@ -23,7 +23,7 @@
         >
 
 
-      <com.iGap.module.HeaderTextview
+      <net.iGap.module.HeaderTextview
           android:id="@+id/adp_currentSession"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

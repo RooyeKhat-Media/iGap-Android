@@ -11,7 +11,7 @@
         android:background="@color/white"
         android:text="@string/terminate_all"
         android:textColor="@color/red"
-        android:textSize="@dimen/dp20"
+        android:textSize="@dimen/sp15"
         android:gravity="center"
         android:textStyle="bold"/>
 </LinearLayout>

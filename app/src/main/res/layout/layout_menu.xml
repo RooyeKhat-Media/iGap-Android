@@ -39,7 +39,7 @@
             >
 
 
-          <com.iGap.module.CircleImageView
+          <net.iGap.module.CircleImageView
               android:id="@+id/lm_imv_user_picture"
               android:layout_width="@dimen/dp80"
               android:layout_height="@dimen/dp80"
@@ -51,13 +51,13 @@
               android:id="@+id/lm_txt_user_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/dp8"
+              android:layout_marginBottom="@dimen/dp4"
               android:layout_marginLeft="@dimen/dp16"
               android:layout_marginStart="@dimen/dp16"
               android:singleLine="true"
-              android:text="Domenika faniz"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/sp18"
+              android:text="iGap User"
+              android:textColor="@color/black90"
+              android:textSize="@dimen/sp22"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
 
@@ -69,11 +69,11 @@
               android:layout_marginStart="@dimen/dp16"
               android:singleLine="true"
               android:text="+98 9125544669"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/sp14"
+              android:textColor="@color/gray"
+              android:textSize="@dimen/sp12"
               />
         </LinearLayout>
-        <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
             android:id="@+id/lm_txt_cloud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
               style="@style/NavigationDrawer.Item"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_new_chat"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -132,10 +132,13 @@
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_user_shape"
                 android:textAppearance="@style/TextIconAppearance.menu"
-                android:textSize="@dimen/sp22"
+                android:textSize="@dimen/sp26"
+                android:textStyle="bold"
+                android:textColor="@color/grayNew"
 
                 />
             <TextView
+                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp4"
@@ -143,10 +146,12 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/New_Chat"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+
                 />
 
 
@@ -161,7 +166,7 @@
               style="@style/NavigationDrawer.Item"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_group"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -169,11 +174,12 @@
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_users_social_symbol"
                 android:textAppearance="@style/TextIconAppearance.menu"
-
-                android:textSize="@dimen/sp22"
+                android:textColor="@color/grayNew"
+                android:textSize="@dimen/sp26"
                 />
 
             <TextView
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp4"
@@ -181,10 +187,11 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/New_Group"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
 
                 />
 
@@ -208,25 +215,27 @@
                 android:gravity="center"
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_channel_icon"
-                android:textColor="@color/gray_4c"
-                android:textSize="@dimen/sp18"
+                android:textColor="@color/grayNew"
+                android:textSize="@dimen/sp26"
                 fontPath="fonts/iGap_font.ttf"
+
                 />
 
             <TextView
-
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp4"
                 android:layout_marginStart="@dimen/dp4"
                 android:layout_marginTop="@dimen/dp4"
-                android:paddingBottom="@dimen/dp8"
+                android:paddingBottom="@dimen/dp4"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/New_Chanel"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
+
 
                 />
 
@@ -236,14 +245,12 @@
               android:id="@+id/lm_ll_igap_search"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/dp6"
-              android:layout_marginTop="@dimen/dp4"
               android:orientation="horizontal"
               style="@style/NavigationDrawer.Item"
               >
 
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/amr_btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -252,12 +259,13 @@
                 android:gravity="center"
                 android:text="@string/md_searching_magnifying_glass"
                 android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/gray_4c"
-                android:textSize="@dimen/sp28"
+                android:textColor="@color/grayNew"
+                android:textSize="@dimen/sp32"
                 />
 
 
             <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp4"
@@ -266,11 +274,13 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp4"
                 android:text="@string/igap_search"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
+                android:gravity="center"
 
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 />
 
           </LinearLayout>
@@ -293,7 +303,7 @@
               style="@style/NavigationDrawer.Item"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_contacts"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -301,7 +311,8 @@
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_user_account_box"
                 android:textAppearance="@style/TextIconAppearance.menu"
-                android:textSize="@dimen/sp22"
+                android:textSize="@dimen/sp26"
+                android:textColor="@color/grayNew"
 
                 />
 
@@ -313,11 +324,12 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/contacts"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
 
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 />
 
           </LinearLayout>
@@ -332,7 +344,7 @@
               style="@style/NavigationDrawer.Item"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_invite_friends"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -341,7 +353,8 @@
                 android:paddingRight="@dimen/dp4"
                 android:text="@string/md_add_user_button"
                 android:textAppearance="@style/TextIconAppearance.menu"
-                android:textSize="@dimen/sp22"
+                android:textSize="@dimen/sp26"
+                android:textColor="@color/grayNew"
                 />
 
             <TextView
@@ -353,11 +366,12 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/Invite_Friends"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
 
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 />
 
           </LinearLayout>
@@ -372,7 +386,7 @@
               style="@style/NavigationDrawer.Item"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -380,8 +394,8 @@
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_settings_cogwheel_button"
                 android:textAppearance="@style/TextIconAppearance.menu"
-                android:textSize="@dimen/sp22"
-
+                android:textSize="@dimen/sp26"
+                android:textColor="@color/grayNew"
                 />
 
             <TextView
@@ -392,11 +406,12 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/chi_title_setting"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
 
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 />
 
           </LinearLayout>
@@ -410,7 +425,7 @@
               android:orientation="horizontal"
               >
 
-            <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/lm_txt_icon_igap_faq"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -418,8 +433,8 @@
                 android:minWidth="@dimen/dp32"
                 android:text="@string/md_exit_app"
                 android:textAppearance="@style/TextIconAppearance.menu"
-                android:textSize="@dimen/sp22"
-
+                android:textSize="@dimen/sp26"
+                android:textColor="@color/grayNew"
                 />
 
             <TextView
@@ -431,10 +446,11 @@
                 android:paddingBottom="@dimen/dp8"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
-                android:paddingTop="@dimen/dp12"
+                android:paddingTop="@dimen/dp8"
                 android:text="@string/log_out"
-                android:textColor="@android:color/black"
+                android:textColor="@color/black90"
                 android:textSize="@dimen/sp14"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 />
 
           </LinearLayout>

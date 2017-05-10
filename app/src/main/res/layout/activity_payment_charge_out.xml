@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
 
-        <com.iGap.libs.rippleeffect.RippleView
+      <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/aco_ripple_back_Button"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             app:rv_rippleDuration="0"
             app:rv_ripplePadding="5dp">
 
-            <com.iGap.module.MaterialDesignTextView
+        <net.iGap.module.MaterialDesignTextView
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
@@ -36,7 +36,7 @@
                 android:textColor="@color/white"
                 />
 
-        </com.iGap.libs.rippleeffect.RippleView>
+      </net.iGap.libs.rippleeffect.RippleView>
 
         <TextView
             android:id="@+id/aco_txt_charge_out"

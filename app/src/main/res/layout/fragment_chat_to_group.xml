@@ -2,7 +2,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.iGap.fragments.FragmentChatToGroup">
+    tools:context="net.iGap.fragments.FragmentChatToGroup"
+    >
 
     <TextView
         android:layout_width="match_parent"

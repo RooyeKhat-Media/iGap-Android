@@ -11,7 +11,8 @@
         android:paddingTop="@dimen/dp8"
         android:text="@string/Re_dialog_verify_number_part1"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp15"/>
+        android:textSize="@dimen/sp14"
+        />
 
     <TextView
         android:id="@+id/rg_dialog_txt_number"
@@ -30,6 +31,7 @@
         android:paddingTop="@dimen/dp8"
         android:text="@string/Re_dialog_verify_number_part2"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp15"/>
+        android:textSize="@dimen/sp14"
+        />
 
 </LinearLayout>

@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/asm_ripple_back"
                     rv_centered="true"
                     android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                     app:rv_rippleDuration="150"
                     app:rv_ripplePadding="5dp">
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/asm_btn_back"
                         android:layout_width="@dimen/dp60"
                         android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                         />
 
 
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/sp18" />
 
-                <com.iGap.libs.rippleeffect.RippleView
+              <net.iGap.libs.rippleeffect.RippleView
                     android:id="@+id/asm_ripple_menu"
                     rv_centered="true"
                     android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                     app:rv_ripplePadding="5dp">
 
 
-                    <com.iGap.module.MaterialDesignTextView
+                <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/asm_btn_menu"
                         android:layout_width="@dimen/dp48"
                         android:layout_height="match_parent"
@@ -95,7 +95,7 @@
                         />
 
 
-                </com.iGap.libs.rippleeffect.RippleView>
+              </net.iGap.libs.rippleeffect.RippleView>
 
             </LinearLayout>
 
@@ -133,7 +133,7 @@
             android:orientation="horizontal">
 
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/asm_ripple_close_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -145,7 +145,7 @@
                 rv_centered="true"
                 >
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/asm_btn_close_layout"
                     android:layout_width="@dimen/dp52"
                     android:layout_height="match_parent"
@@ -158,7 +158,7 @@
                     />
 
 
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
 
 
             <TextView
@@ -172,7 +172,7 @@
                 android:text="0"
                 android:textSize="@dimen/sp20" />
 
-            <com.iGap.module.MaterialDesignTextView
+          <net.iGap.module.MaterialDesignTextView
                 android:id="@+id/asm_btn_forward_selected"
                 android:layout_width="@dimen/dp60"
                 android:layout_height="match_parent"
@@ -186,7 +186,7 @@
 
                 />
 
-            <com.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/asm_riple_delete_selected"
                 rv_centered="true"
                 android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                 app:rv_rippleDuration="100"
                 app:rv_ripplePadding="5dp">
 
-                <com.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
                     android:layout_width="@dimen/dp52"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -207,7 +207,7 @@
                     android:textSize="@dimen/sp26"
                     />
 
-            </com.iGap.libs.rippleeffect.RippleView>
+          </net.iGap.libs.rippleeffect.RippleView>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -215,5 +215,15 @@
             android:background="#34a49f"/>
     </LinearLayout>
 
+
+    <ProgressBar
+        android:id="@+id/asm_progress_bar_waiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:indeterminate="true"
+        android:padding="@dimen/dp4"
+        android:visibility="gone"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -38,7 +38,7 @@
                         android:layout_height="wrap_content"
                         >
 
-                        <com.iGap.module.ReserveSpaceRoundedImageView
+                      <net.iGap.module.ReserveSpaceRoundedImageView
                             android:id="@+id/thumbnail"
                             android:layout_width="match_parent"
                             android:scaleType="center"

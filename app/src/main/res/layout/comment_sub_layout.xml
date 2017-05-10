@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:background="#e1dfdf" />
 
-            <com.iGap.module.CircleImageView
+          <net.iGap.module.CircleImageView
                 android:id="@+id/csl_img_comment_sender_picture"
                 android:layout_width="@dimen/dp48"
                 android:layout_height="@dimen/dp48"

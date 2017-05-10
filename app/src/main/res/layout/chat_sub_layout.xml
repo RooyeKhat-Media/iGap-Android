@@ -9,7 +9,7 @@
         android:layout_width="@dimen/dp68"
         android:layout_height="match_parent">
 
-        <com.iGap.module.CircleImageView
+      <net.iGap.module.CircleImageView
             android:id="@+id/cs_img_contact_picture"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
@@ -57,9 +57,10 @@
                         android:layout_marginEnd="@dimen/dp8"
                         android:paddingBottom="2dp"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/sp14"/>
+                        android:textSize="@dimen/sp18"
+                        />
 
-                    <io.github.meness.emoji.EmojiTextView
+                  <net.iGap.emoji.EmojiTextView
                         android:id="@+id/cs_txt_contact_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,9 +68,10 @@
                         android:paddingBottom="1dp"
                         android:singleLine="true"
                         android:text="Name"
-                        android:textColor="@android:color/black"
+                      android:textColor="@color/black90"
                         android:textSize="@dimen/sp15"
-                        android:textStyle="bold"/>
+                      fontPath="fonts/IRANSansMobile_Bold.ttf"
+                      />
 
 
                 </LinearLayout>
@@ -79,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <io.github.meness.emoji.EmojiTextView
+                  <net.iGap.emoji.EmojiTextView
                         android:id="@+id/cs_txt_last_message_sender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,7 +90,7 @@
                         android:textColor="#2bbfbd"
                         android:textSize="@dimen/sp13"/>
 
-                    <io.github.meness.emoji.EmojiTextView
+                  <net.iGap.emoji.EmojiTextView
                         android:id="@+id/cs_txt_last_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <com.iGap.module.MaterialDesignTextView
+                  <net.iGap.module.MaterialDesignTextView
                         android:id="@+id/cs_txt_mute"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -139,8 +141,8 @@
                         android:layout_marginEnd="@dimen/dp4"
                         android:text="@string/md_muted"
                         android:textAppearance="@style/TextIconAppearance_toolbar"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp14"
+                      android:textColor="@color/grayNew"
+                      android:textSize="@dimen/sp16"
                         />
 
                     <ImageView

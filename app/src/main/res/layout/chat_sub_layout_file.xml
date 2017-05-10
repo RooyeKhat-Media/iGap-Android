@@ -108,7 +108,7 @@
                         android:orientation="vertical"
                         >
 
-                        <io.github.meness.emoji.EmojiTextView
+                      <net.iGap.emoji.EmojiTextView
                             android:id="@+id/messageText"
                             style="@style/ChatMessages.EmojiTextView"
                             android:text="SAMPLE TEXT"/>

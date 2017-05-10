@@ -3,16 +3,16 @@
   <!-- Check connect to internet Page introduce app -->
   <string name="text_i_introduce_page1">"گپ"</string>
   <string name="text_line_1_introduce_page1">"آی"</string>
-  <string name="text_line_2_introduce_page1">"بی حد و مرز"</string>
+  <string name="text_line_2_introduce_page1">"ارتباطی بی حد و مرز"</string>
   <string name="text_line_3_introduce_page1">"هم اکنون دنیای خود را با آی گپ بسازید."</string>
 
   <!-- Page 2 introduce app -->
   <string name="text_line_1_introduce_page2">"امنیت در آی گپ"</string>
-  <string name="text_line_2_introduce_page2">"آی گپ ارتباط امن و مطمئن را بین شما ، دوستان و خانواده را تضمین میکند ، آی گپ با استفاده از الگوریتم های رمزنگاری منحصربفرد حریم خصوصی را برای کاربران خود فراهم کرده است. "</string>
+  <string name="text_line_2_introduce_page2">"آی گپ ارتباط امن و مطمئن را بین شما ، دوستان و خانواده، تضمین میکند. آی گپ با استفاده از الگوریتم های رمزنگاری منحصربفرد خود،حداکثر امنیت در حریم خصوصی را برای کاربران خود فراهم کرده است. "</string>
 
   <!-- Page 3 introduce app -->
   <string name="text_line_1_introduce_page3">"گفتگو"</string>
-  <string name="text_line_2_introduce_page3">"شما میتوانید بصورت شخصی و یا گروهی به گفتگو بپردازید و یا کانال ساخته و در آن عضو بگیرید."</string>
+  <string name="text_line_2_introduce_page3">"شما میتوانید بصورت شخصی و یا گروهی به گفتگو پرداخته و یا کانال ساخته و در آن عضو بگیرید."</string>
 
   <!-- Page 4 introduce app -->
   <string name="text_line_1_introduce_page4">"انتقال فایل"</string>
@@ -20,33 +20,34 @@
 
   <!-- Page 5 introduce app -->
   <string name="btn_start_page5">"همین حالا شروع کنید"</string>
-  <string name="text_line_1_introduce_page5">"همه چیز رایگان است!"</string>
-  <string name="text_line_2_introduce_page5">"بیش از این شما را خسته نکنیم! آی ‌گپ کاملاْ رایگان است! همین حالا دنیای خود را بسازید."</string>
+  <string name="text_line_1_introduce_page5">"همه چیز رایگان در آی گپ!"</string>
+  <string name="text_line_2_introduce_page5">"بیش از این شما را خسته نمی کنیم! آی ‌گپ کاملاْ رایگان است! همین حالا دنیای خود را رایگان بسازید."</string>
 
-  <!-- Fill Profile User -->
-  <string name="pu_title_profileUser">"تکمیل پروفایل"</string>
-  <string name="pu_desc_profileUser">"نام مستعار خود را وارد کنید و برای خود عکس پروفایلی انتخاب کنید"</string>
+  <!-- Fill Profile User  -->
+  <string name="pu_title_profileUser">"پروفایل خود را تکمیل کنید"</string>
+  <string name="pu_desc_profileUser">"نام مستعار خود را وارد کرده و برای خود عکس پروفایل انتخاب نمایید"</string>
   <string name="pu_addPhoto_profileUser">"عکس پروفایل"</string>
   <string name="pu_nikname_profileUser">"نام مستعار"</string>
   <string name="pu_Lets_Go">"ادامه"</string>
 
   <!-- Register Page -->
   <string name="rg_title_register">"ثبت نام"</string>
-  <string name="rg_confirm_text_register">"لطفا کشور ، کد کشور خود را تایید کنید و سپس تلفن خود را بدون صفر ابتدایی وارد کنید"</string>
+  <string name="rg_confirm_text_register">"لطفا نام و کد کشور خود را تایید کرده سپس شماره تلفن همراه خود را بدون صفر ابتدای آن وارد نمایید."</string>
   <string name="rg_Start">"بزن بریم"</string>
   <string name="rg_Select_Country">"کشور خود را انتخاب کنید"</string>
-  <string name="rg_agreement_text_register">"تایید نهایی تلفن شما ، ما قصد داریم کد فعال سازی را برای این شماره ارسال کنیم"</string>
+  <string name="rg_agreement_text_register">"تایید نهایی شماره تلفن شما، ما قصد داریم کد فعال سازی را برای این شماره ارسال کنیم."</string>
   <string name="rg_verify_register1">"در حال اتصال"</string>
-  <string name="rg_verify_register2">"منتظر کد تایید"</string>
-  <string name="rg_verify_register3">"تولید کلید امنیتی"</string>
-  <string name="rg_verify_register4">"ثبت نام نهایی"</string>
+  <string name="rg_verify_register2">"منتظر دریافت کد تایید"</string>
+  <string name="rg_verify_register3">"در حال تولید کلید امنیتی"</string>
+  <string name="rg_verify_register4">"نهایی سازی ثبت نام"</string>
   <string name="rg_verify_dialog_try_code">"دستی وارد کردم"</string>
   <string name="rg_verify_dialog_resend_code">"ارسال مجدد کد تایید"</string>
   <string name="Re_dialog_verify_number_part1">"شما شماره زیر را وارد کردید:</string>
   <string name="Re_dialog_verify_number_part2">"اگر شماره تلفن صحیح است تایید کرده و در غیر اینصورت براحتی تغییرش دهید"</string>
   <string name="Re_Enter_Verify_Code_Please">"لطفا کد تایید را دستی وارد کنید"</string>
   <string name="verify_socket_message">‫شما با دستگاه دیگری در حساب خود هستید ، آی گپ کد فعال سازی را توسط سیستم اطلاع رسانی خود به اکانت شما ارسال کرد ، لطفا دستگاه دیگر را چک کرده و کد را بصورت دستی وارد کنید.</string>
-  <string name="verify_time_out_message">"آی گپ بصورت خودکار پیام تایید را تشخیص میدهد یا شاید دریافت شده و شما میخواهید دستی وارد کنید، لطفا کد را دستی وارد کرده و یا در صورتی که دریافت نکردید درخواست ارسال مجدد کنید."</string>
+  ‬‬‬‬‬‬
+  <string name="verify_time_out_message">"آی گپ بصورت خودکار پیام تایید را تشخیص میدهد و یا ممکن است شما آن را دریافت کرده و میخواهید به صورت دستی وارد نمایید، لطفا کد را دستی وارد کرده و یا در صورتی که دریافت نکردید درخواست ارسال مجدد کنید."</string>
   <string name="verify_invalid_code_message">متاسفیم ، کد تایید شما نامعتبر است ، لطفا کد صحیح را مجدد وارد نمایید.</string>
   <string name="resend_message">"ارسال مجدد کد فعال سازی"</string>
   <string name="phone_number">"شماره تلفن"</string>
@@ -56,7 +57,7 @@
   <string name="Toast_waiting_fot_get_info">"در انتظار اتصال و موقعیت یابی"</string>
   <string name="Toast_Location_Not_Found">"موقعیت شما یافت نشد"</string>
   <string name="Toast_First_0">"در ابتدای شماره نیاز به 0 نیست"</string>
-  <string name="Toast_Enter_Phone_Number">"لطفا شماره تلفن خود را بدون صفر ابتدایی وارد کنید"</string>
+  <string name="Toast_Enter_Phone_Number">"لطفا شماره تلفن خود را بدون صفر ابتدای آن وارد کنید"</string>
   <string name="Toast_Enter_Code">"لطفا کد تایید را وارد نمایید"</string>
   <string name="Toast_Number_Block">"شماره وارد شده مسدود شده است"</string>
   <string name="Toast_Invalid_nickname">"نام مستعار نامعتبر است. لطفاً نام مستعار را تغییر دهید."</string>
@@ -66,7 +67,7 @@
   <string name="sure_delete_account">آیا شما از حذف اکانت خود اطمینان دارید ؟</string>
   <string name="Destruction_Code">تخریب</string>
   <string name="Destruction_Des">شما اکنون در حال تلاش برای تخریب اکانت خود هستید ، شماره تلفن شما برابر است با : </string>
-  <string name="iGap_autofill_Destruction_Code">آی گپ بصورت خودکار کد را تشخیص داده و جای خالی را پر میکند در صورتی که نتوانست دستی وارد کنید.</string>
+  <string name="iGap_autofill_Destruction_Code">آی گپ بصورت خودکار کد را تشخیص داده و جای خالی را پر میکند در صورتی که نتوانست به صورت دستی وارد کنید.</string>
 
   <!-- Message Type and Status -->
   <string name="video_message">پیام ویدئویی</string>
@@ -130,14 +131,14 @@
   <string name="am_file">"فایل"</string>
   <string name="am_contact">"مخاطب"</string>
 
-  <string name="clear_history_content">"آیا مطمئنید که می‌خواهید تاریخچهٔ گفتگو را پاک کنید؟"</string>
+  <string name="clear_history_content">"آیا از پاکسازی تاریخچه گفتگو مطمئن هستید؟"</string>
 
-  <string name="delete_chat_content">"آیا مطمئنید که می‌خواهید گفتگو را حذف کنید؟"</string>
+  <string name="delete_chat_content">"آیا از حذف کامل این گفتگو مطمئنید؟"</string>
   <string name="to_delete_contact">"حذف مخاطب"</string>
-  <string name="delete_text">"آیا مطمئنید که می خواهید این مخاطب را حذف کنید؟"</string>
+  <string name="delete_text">"آیا از حذف این مخاطب مطمئنید؟"</string>
 
 
-  <string name="just_wait_en">"منتظر باشید."</string>
+  <string name="just_wait_en">"لطفا منتظر باشید."</string>
   <string name="device_dosenot_camera_en">"این دستگاه دوربین ندارد."</string>
   <string name="do_you_want_to_turn_on_gps">"سیستم مکان‌یاب جهانی (GPS) شما خاموش است، آیا مایلید آن را روشن کنید؟"</string>
   <string name="picture_is_saved_en">"تصویر ذخیره شده است."</string>
@@ -160,33 +161,33 @@
   <string name="st_title_info">"اطلاعات"</string>
   <string name="st_title_notification_sounds">"اعلانات و صداها"</string>
   <string name="st_title_Clear_Cache">"پاک کردن حافظهٔ نهان"</string>
-  <string name="st_title_Privacy_Security">"حریم خصوصی و امنیت"</string>
-  <string name="st_title_message">"اتاق های پیام"</string>
+  <string name="st_title_Privacy_Security">"امنیت و حریم خصوصی"</string>
+  <string name="st_title_message">"اتاق پیام"</string>
   <string name="st_title_message_textSize">"اندازهٔ پیام متنی"</string>
-  <string name="st_stickers">"برچسب‌ها و تصویر"</string>
-  <string name="st_chatBackground">"پس زمينهٔ گفتگو"</string>
-  <string name="st_Enable_Animation">"فعال ساختن انیمیشن"</string>
+  <string name="st_stickers">"برچسب‌ها و تصاویر"</string>
+  <string name="st_chatBackground">"پس زمينهٔ صفحه گفتگو"</string>
+  <string name="st_Enable_Animation">"فعال کردن انیمیشن"</string>
   <string name="st_inApp_Browser">"مرورگر درون برنامه‌ای"</string>
   <string name="st_crop">"بریدن و بهبود حجم تصویر"</string>
   <string name="st_send_by_enter">"با زدن کلید اینتر ارسال کن"</string>
   <string name="st_title_Media">"چند رسانه ای"</string>
-  <string name="st_auto_download_data">"بارگیری خودکار در حالت داده سیم کارت"</string>
-  <string name="st_auto_download_wifi">"بارگیری خودکار در حالت بیسیم"</string>
-  <string name="st_auto_download_roaming">"بارگیری خودکار در حالت رومینگ"</string>
+  <string name="st_auto_download_data">"بارگیری خودکار سیم کارت"</string>
+  <string name="st_auto_download_wifi">"بارگیری خودکار وای فای"</string>
+  <string name="st_auto_download_roaming">"بارگیری خودکار رومینگ داده"</string>
   <string name="st_auto_gif">"اجرای خودکار تصاویر متحرک"</string>
   <string name="st_save_to_gallery">"ذخیره‌ کردن در گالری"</string>
-  <string name="st_title_support">"بخش پشتیبانی سرویس"</string>
+  <string name="st_title_support">"بخش پشتیبانی برنامه"</string>
   <string name="st_ask_question">"سؤالی بپرسید."</string>
   <string name="st_About_iGap">"دربارهٔ آی‌گپ"</string>
-  <string name="st_privacy_policy">"اصل حریم خصوصی"</string>
+  <string name="st_privacy_policy">"سیاست های حریم خصوصی"</string>
   <string name="st_keepMedia">"فایل‌های چند رسانه‌ای را نگه دار"</string>
-<string name="st_dialog_content_keepMedia">"‫تصاویر، ویدئوها و دیگر فایل‌های ذخیره شده در فضای ابری که شما به آنها دسترسی داشته اید، به منظور  ایجاد فضای خالی از دستگاه پاک می شوند. همه ی رسانه ها در بخش ذخیره سازی فضای ابری نگه داری می شوند و در صورت نیاز می توان آن را مجدداً دانلود کرد.
+  <string name="st_dialog_content_keepMedia">"‫تصاویر، ویدئوها و دیگر فایل‌های ذخیره شده در فضای ابری که شما به آنها دسترسی داشته اید، به منظور ایجاد فضای خالی از دستگاه پاک می شوند. همه ی رسانه ها در بخش ذخیره سازی فضای ابری نگه داری می شوند و در صورت نیاز می توان آنها را مجدداً دانلود کرد.‬‬‬‬‬‬
 "</string>
   <string name="st_titleToolbar_page_Notification_and_sounds">"اعلانات پیام"</string>
   <string name="st_title_messageNotification">"اعلانات پیام"</string>
   <string name="st_alert">"هشدار"</string>
   <string name="st_messagePreview">"پیش نمایش پیام"</string>
-  <string name="st_led_color">"رنگ چراغ اِل ئی دی"</string>
+  <string name="st_led_color">"رنگ چراغ اِل ای دی"</string>
   <string name="st_vibrate">"ویبره"</string>
   <string name="st_popupNotification">"اعلانات فرعی"</string>
   <string name="st_sound">"صدا"</string>
@@ -198,18 +199,18 @@
   <string name="st_in_chat_sound">"صداهای درون گفتگو"</string>
   <string name="st_title_Events">"رویدادها"</string>
   <string name="st_Contact_joined_igap">"مخاطبی اخیراً عضو آی‌‌گپ شده است."</string>
-  <string name="st_pinned_message">"پیام‌های چسبان"</string>
+  <string name="st_pinned_message">"پیام‌های چسبیده شده"</string>
   <string name="st_title_other">"سایر"</string>
-  <string name="st_text_keep_alive_service">"اگر اپلیکیشن توسط کاربر یا سیستم  از حالت اجرا خارج شده‌ بود، باید دوباره اجرا شود. این کار اطمینان می‌دهد که شما تمام اعلانات را خواهید دید."</string>
+  <string name="st_text_keep_alive_service">"اگر اپلیکیشن توسط کاربر یا سیستم از حالت اجرا خارج شده‌ بود، باید دوباره اجرا شود. این کار اطمینان می‌دهد که شما تمام اعلانات را خواهید دید."</string>
   <string name="st_keep_alive_service">"سرویس همیشه در حال اجرا"</string>
   <string name="st_background_connection">"اتصال پس زمینه"</string>
   <string name="st_text_background_connection"></string>
-  <string name="st_badge_counter">"پیام‌های چسبان"</string>
-  <string name="st_Repeat_Notifications">"پیام‌های چسبان"</string>
+  <string name="st_badge_counter">"پیام‌های چسبیده شده"</string>
+  <string name="st_Repeat_Notifications">"پیام‌های چسبیده شده"</string>
   <string name="st_title_reset">"بازنشانی"</string>
   <string name="st_reset_all_notification">"بازنشانی همهٔ اعلانات"</string>
-  <string name="st_text_reset_all_notification">"تمامی تنظیمات معمول اعلانات را برای همهٔ مخاطبین و گروه های خود خنثی سازی کنید."</string>
-  <string name="st_dialog_reset_all_notification">"آیا مطئنید که می‌خواهید تمامی تنظیمات معمول اعلانات را خنثی سازی کنید؟"</string>
+  <string name="st_text_reset_all_notification">"تمامی تنظیمات معمول اعلانات را برای همهٔ مخاطبین و گروه های خود به حالت اولیه برگردانید."</string>
+  <string name="st_dialog_reset_all_notification">"آیا مطئنید که می‌خواهید تمامی تنظیمات معمول اعلانات را به حالت اولیه برگردانید؟"</string>
   <string name="st_dialog_reset_all_notification_yes">"بلی"</string>
   <string name="st_dialog_reset_all_notification_no">"خیر"</string>
   <string name="st_title_Background">"پس زمينهٔ گفتگو"</string>
@@ -217,7 +218,7 @@
 
   <!-- privacy and security -->
   <string name="privacy">"حریم خصوصی"</string>
-  <string name="Block_Users">"کاربران مسدود‌ شده"</string>
+  <string name="Block_Users">"لیست مسدود‌ شده"</string>
   <string name="Last_Seen">"آخرین مشاهده"</string>
   <string name="Groups">"گروه‌ها"</string>
   <string name="Security">"امنیت"</string>
@@ -233,7 +234,7 @@
   <string name="ntg_smart_notifications">"اعلانات هوشمند"</string>
 
   <!-- chanel_info -->
-  <string name="chi_shared_Media">"رسانه‌های مشترک"</string>
+  <string name="chi_shared_Media">"رسانه‌های به اشتراک گذاشته شده"</string>
   <string name="chi_clearChat">"پاک کردن تاریخچهٔ گفتگو"</string>
   <string name="chi_blockContact">"مسدود کردن این مخاطب"</string>
   <string name="chi_title_setting">"تنظیمات"</string>
@@ -251,10 +252,10 @@
   <string name="fac_Open_in_Chrome">"باز کردن در مرورگر کروم"</string>
   <string name="fac_Powered_by_iGap">"قدرت گرفته توسط آی‌گپ"</string>
   <string name="menu_add_contact">"افزودن مخاطب"</string>
-  <string name="shared_media">"رسانه‌های مشترک"</string>
-  <string name="shared_files">"فایل‌های مشترک"</string>
-  <string name="shared_links">"پیوندهای مشترک"</string>
-  <string name="shared_music">"موسیقی مشترک"</string>
+  <string name="shared_media">"رسانه‌های به اشتراک گذاشته شده"</string>
+  <string name="shared_files">"فایل‌های به اشتراک گذاشته شده"</string>
+  <string name="shared_links">"پیوندهای به اشتراک گذاشته شده"</string>
+  <string name="shared_music">"موسیقی به اشتراک گذاشته شده"</string>
   <string name="save_to_Music">"ذخیره کردن در بخش موسیقی"</string>
   <string name="show_all_media">"نمایش همهٔ رسانه‌ها"</string>
   <string name="save_to_gallery">"ذخیره‌ کردن در گالری"</string>
@@ -269,16 +270,16 @@
   <string name="array_Voice_Message">"پیام صوتی"</string>
   <string name="array_Video">"ویدئو"</string>
   <string name="array_File">"فایل"</string>
-  <string name="array_Music">"عکس"</string>
+  <string name="array_Music">"صوت"</string>
   <string name="array_GIF">"تصویر متحرک"</string>
   <string name="array_Add_to_Contact">"افزودن به فهرست مخاطبین"</string>
   <string name="array_Call">"تماس"</string>
   <string name="array_Copy">"کپی"</string>
   <string name="array_Off">"خاموش"</string>
-  <string name="array_No_popup">"بدون پاپ‌آپ"</string>
-  <string name="array_Only_when_screen_on">"‫تنها زمانی که صفحهٔ نمایشگر روشن است"</string>
+  <string name="array_No_popup">"بدون پنجره های تبلیغاتی"</string>
+  <string name="array_Only_when_screen_on">"‫تنها زمانی که صفحهٔ نمایشگر روشن است"</string>‬‬‬‬‬‬
   <string name="array_Only_when_screen_off">"تنها زمانی که صفحهٔ نمایشگر خاموش است"</string>
-  <string name="array_Always_show_popup">"نمایش پیوستهٔ پاپ‌آپ"</string>
+  <string name="array_Always_show_popup">"نمایش همیشگی پنجره های تبلیغاتی"</string>
   <string name="array_Disable">"غیرفعال"</string>
   <string name="array_enable">"فعال"</string>
   <string name="array_Default">"پیش‌فرض"</string>
@@ -294,7 +295,7 @@
   <string name="array_1_hour">"۱ ساعت"</string>
   <string name="array_2_hour">"۲ ساعت"</string>
   <string name="array_4_hour">"۴ ساعت"</string>
-  <string name="array_Default_Notification_tone">"آهنگ اعلانات پیش‌فرض"</string>
+  <string name="array_Default_Notification_tone">"آهنگ پیش‌فرض اعلانات "</string>
   <string name="replay_item_dialog">"پاسخ"</string>
   <string name="copy_item_dialog">"کپی"</string>
   <string name="share_item_dialog">"اشتراک"</string>
@@ -331,7 +332,7 @@
   <string name="waiting_for_network">"در انتظار اتصال به اینترنت"</string>
   <string name="connecting">"در حال برقراری ارتباط"</string>
   <string name="updating">"در حال به‌روزرسانی"</string>
-  <string name="last_seen_recently">"اخیراً"</string>
+  <string name="last_seen_recently">"به تازگی"</string>
   <string name="member">"اعضا"</string>
   <string name="exception">"خطا:"</string>
   <string name="please_enter_phone_number">"لطفاً شماره تماس را وارد کنید."</string>
@@ -356,12 +357,12 @@
   <string name="set_admin">"تعیین مدیر"</string>
   <string name="set_modereator">"تعیین ناظر"</string>
   <string name="set_kick">"بیرون انداختن"</string>
-  <string name="member_can_add_new_member">"اعضا می‌توانند عضوهای جدید بیافزایند."</string>
+  <string name="member_can_add_new_member">"اعضا می‌توانند عضوهای جدید اضافه کنند."</string>
   <string name="notificaion_and_sound">"اعلانات و صدا"</string>
   <string name="your_link">"پیوند شما"</string>
   <string name="public_channel">"کانال عمومی"</string>
   <string name="private_channel">"کانال خصوصی"</string>
-  <string name="desc_private_channel">"برای پیوستن به کانال‌های خصوصی باید از طریق پیوند دعوت اقدام کرد."</string>
+  <string name="desc_private_channel">"برای پیوستن به کانال‌های عمومی باید از طریق پیوند دعوت اقدام کرد."</string>
   <string name="desc_public_channel">"کانال‌های عمومی ممکن است در نتایج جستجو ظاهر شوند، هرکس می‌تواند عضو آنها شود."</string>
   <string formatted="false" name="last_msg_format_chat">"%s"</string>
 
@@ -456,14 +457,14 @@
   <string name="E_157">تخریب اکانت : کد اعتبار ندارد</string>
   <string name="E_158">تخریب اکانت : تلاش بیش از اندازه</string>
   <string name="time_out">عدم امکان اتصال به سرور</string>
-  <string name="resend_all_messages">"‫ارسال دوبارهٔ %d پیام"</string>
-  <string name="resend_chat_message">"‫ارسال دوبارهٔ پیام"</string>
+  <string name="resend_all_messages">"‫ارسال دوبارهٔ %d پیام"</string>‬‬‬‬‬‬
+  <string name="resend_chat_message">"‫ارسال دوبارهٔ پیام"</string>‬‬‬‬‬‬
   <string name="if_you_are_away_for">"اگر دور باشید"</string>
   <string name="st_Gander">"جنسیت:"</string>
   <string name="st_email">"ایمیل:"</string>
-  <string name="month_1">"۱ ماه"</string>
-  <string name="month_3">"۳ ماه"</string>
-  <string name="month_6">"۶ ماه"</string>
+  <string name="month_1">"یک ماه"</string>
+  <string name="month_3">"سه ماه"</string>
+  <string name="month_6">"شش ماه"</string>
   <string name="year_1">"یک سال"</string>
   <string name="E_114">"خطایی از سمت کلاینت: ایمیل اشتباه است."</string>
   <string name="E_115">"خطای درونی سرور"</string>
@@ -477,7 +478,7 @@
   <string name="please_wait">منتظر باشید.</string>
   <string name="New_Chat">گفتگوی جدید</string>
   <string name="Invite_Friends">دعوت کردن دوستان</string>
-  <string name="iGap_FAQ">‫پرسش‌های متداول آی‌گپ</string>
+  <string name="iGap_FAQ">‫پرسش‌های متداول آی‌گپ</string>‬‬‬‬‬‬
   <string name="Documents">اسناد</string>
   <string name="remove_admin">حذف مدیر</string>
   <string name="remove_moderator">حذف ناظر</string>
@@ -485,7 +486,7 @@
   <string name="Female">خانم</string>
   <string name="from_beginning">از ابتدا</string>
   <string name="from_Now">از حالا</string>
-  <string name="last_50_Messages">50 پیام آخر</string>
+  <string name="last_50_Messages">۵۰ پیام آخر</string>
   <string name="customs">سفارشی</string>
   <string name="image_selected_for_send">تصویر انتخاب شده برای ارسال</string>
   <string name="video_selected_for_send">ویدئوی انتخاب شده برای ارسال</string>
@@ -532,10 +533,10 @@
   <string name="delete_contact">حذف مخاطب</string>
   <string name="error_email">نشانی ایمیل نامعتبر</string>
   <string name="do_you_want_delete_this">آیا از حذف آیتم انتخاب شده اطمینان دارید ؟</string>
-  <string name="active_session_title">بستن جلسه</string>
-  <string name="active_session_all_title"> بستن تمام جلسه ها</string>
-  <string name="active_session_content">آیا مطمئنید که می‌خواهید جلسه را ببندید؟</string>
-  <string name="active_session_all_content">آیا مطمئنید که می‌خواهید تمام جلسه ها را ببندید؟</string>
+  <string name="active_session_title">بستن و غیرفعال کردن جلسه</string>
+  <string name="active_session_all_title"> غیرفعال کردن تمام جلسه ها</string>
+  <string name="active_session_content">آیا مطمئنید که می‌خواهید این جلسه را غیرفعال کنید؟</string>
+  <string name="active_session_all_content">آیا مطمئنید که می‌خواهید تمام جلسه ها را غیرفعال کنید؟</string>
   <string name="USER_VERIFY_GIVEN_USERNAME">هیچ کاربری با نام کابری ارائه شده ثبت نام نکرده است.</string>
   <string name="USER_VERIFY_MANY_TRIES">کد تأییدیه به دلیل چندین مرتبه وارد کردن برای مدتی مسدود می‌باشد.</string>
   <string name="USER_VERIFY_MANY_TRIES_SEND">کد تأییدیه چندین مرتبه ارسال شده است.</string>
@@ -550,8 +551,8 @@
   <string name="ip">شناسه</string>
   <string name="current_session">جلسهٔ فعلی</string>
   <string name="Active_session">جلسهٔ فعال</string>
-  <string name="terminate">بستن</string>
-  <string name="terminate_all">بستن تمامی جلسات دیگر</string>
+  <string name="terminate">غیرفعال کردن</string>
+  <string name="terminate_all">غیرفعال کردن تمامی جلسات دیگر</string>
   <string name="forwarded_from">ارسال شده از</string>
   <string name="more">بیشتر...</string>
   <string name="do_you_want_to_delet_this_chat">آیا می‌خواهید این گفتگو را حذف کنید؟</string>
@@ -591,12 +592,12 @@
   <string name="nick_name_not_exist">این نام مستعار وجود ندارد.</string>
   <string name="first_name">نام</string>
   <string name="last_name">نام خانوادگی</string>
-  <string name="block_this_contact">این مخاطب مسدود شود؟</string>
+  <string name="block_this_contact">ارتباط این مخاطب مسدود شود؟</string>
   <string name="block">مسدود</string>
   <string name="clear_this_chat">این گفتگو پاک شود؟</string>
   <string name="clear">پاک کردن</string>
   <string name="can_not_save_image">عدم امکان ذخیرهٔ تصویر</string>
-  <string name="just_owner_can_delete">فقط دارندهٔ گروه می‌تواند حذف کند.</string>
+  <string name="just_owner_can_delete">فقط مالک گروه می‌تواند حذف کند.</string>
 
   <string name="shate_audio_file">به اشتراک گذاشتن فایل صوتی</string>
   <string name="last_seen">آخرین مشاهده</string>
@@ -629,17 +630,17 @@
   <string name="total_balance">میزان کل</string>
   <string name="rials">ریال</string>
   <string name="unverified">تشخیص داده نشده/</string>
-  <string name="send_documents">ارسال مدراک</string>
+  <string name="send_documents">ارسال اسناد و مدراک</string>
   <string name="charge">شارژ</string>
   <string name="transaction_history">تاریخچهٔ معاملات</string>
   <string name="transfer_mony">انتقال پول</string>
   <string name="create_qr_code">ایجاد کد کیو آر</string>
   <string name="pay_via_qr_code">پرداخت از طریق کد کیو آر</string>
   <string name="charge_out">شارژ کردن</string>
-  <string name="e_commerce">خدمات الکترونیکی</string>
+  <string name="e_commerce">تجارت الکترونیک</string>
   <string name="agrement">توافق</string>
   <string name="payment_charge_out_text">پیغام شارژ کردن</string>
-  <string name="description_optional">توضیحات (اختیاری)</string>
+  <string name="description_optional">توضیح (اختیاری)</string>
   <string name="enter_the_code_here">کد را اینجا وارد کنید.</string>
   <string name="transfer_to">انتقال به</string>
   <string name="price">قیمت</string>
@@ -666,7 +667,7 @@
   <string name="group_link_revoke">ابطال لینک</string>
   <string name="group_link">لینک گروه</string>
   <string name="normal_error">can\'t do it please try later</string>
-  <string name="channel_description">توضیح مختصر گروه</string>
+  <string name="channel_description">توضیح گروه</string>
   <string name="channel_name">نام کانال</string>
   <string name="delete_and_leave_channel">حذف و خارج شدن از گروه</string>
   <string name="channel_delete">حذف کانال</string>
@@ -675,6 +676,7 @@
   <string name="channel_left">"ترک کانال"</string>
   <string name="please_enter_channel_description">"لطفاً توضیح مختصری برای کانال وارد کنید."</string>
   <string name="txt_you">"شما: "</string>
+  <string name="you">"شما"</string>
   <string name="farvardin">فروردین</string>
   <string name="ordibehst">اردیبهشت</string>
   <string name="khordad">خرداد</string>
@@ -688,28 +690,28 @@
   <string name="bahman">بهمن</string>
   <string name="esfand">اسفند</string>
   <string name="join">عضویت</string>
-  <string name="do_you_want_to_join_to_this">"ایا میخواهید عضو شوید در این  "</string>
+  <string name="do_you_want_to_join_to_this">"آیا میخواهید عضو شوید در این  "</string>
   <string name="txt_draft">پیش نویس: </string>
   <string name="st_signature">امضا</string>
   <string name="spam">Spam</string>
 
   <string name="sunday">"یک شنبه"</string>
-  <string name="monday">دو شنبه</string>
+  <string name="monday">دوشنبه</string>
   <string name="tuesday">"سه شنبه"</string>
-  <string name="wednesday">"چهار شنبه"</string>
+  <string name="wednesday">"چهارشنبه"</string>
   <string name="thursday">"پنج شنبه"</string>
   <string name="friday">"جمعه"</string>
   <string name="saturday">"شنبه"</string>
 
-  <string name="block_user">مسدود کردن مخاطب </string>
-  <string name="un_block_user">"رفع مسدودیت مخاطب"</string>
+  <string name="block_user">مسدود کردن ارتباط مخاطب </string>
+  <string name="un_block_user">"رفع مسدودیت ارتباط مخاطب"</string>
 
 
   <string name="prefix">"توسط"</string>
   <string name="USER_JOINED">"به آی گپ پیوست"</string>
   <string name="USER_DELETED">" آی گپ را ترک کرد"</string>
-  <string name="ROOM_CREATED">"ایجاد"</string>
-  <string name="MEMBER_ADDED">"اضافه شدن"</string>
+  <string name="ROOM_CREATED">"ایجاد شد"</string>
+  <string name="MEMBER_ADDED">"اضافه شد"</string>
   <string name="MEMBER_KICKED">"بیرون انداخته شدن"</string>
   <string name="MEMBER_LEFT">"را ترک کرد"</string>
   <string name="ROOM_CONVERTED_TO_PUBLIC">"از خصوصی به عمومی تبدیل شد"</string>
@@ -718,7 +720,7 @@
   <string name="MEMBER_JOINED_BY_INVITE_LINK_2">"اضافه شد"</string>
   <string name="Room_Deleted">"حذف"</string>
   <string name="revoke">ابطال</string>
-  <string name="conversation">گفتگو</string>
+  <string name="conversation">صفحه</string>
 
 
   <string name="send_position">ارسال موقعیت</string>
@@ -752,19 +754,19 @@
 
   <string name="Toast_time_wait">لطفا منتظر بمانید تا :</string>
   <string name="array_delete_photo_group">حذف عکس</string>
-  <string name="group_link_hint_revoke">Group Invite Link</string>
-  <string name="channel_title_convert_to_private">Convert channel to private</string>
-  <string name="channel_text_convert_to_private">Do you want Convert channel to private?</string>
-  <string name="channel_title_convert_to_public">Convert channel to public</string>
-  <string name="channel_text_convert_to_public">Do you want Convert channel to public?</string>
+  <string name="group_link_hint_revoke">لینک دعوت گروه</string>
+  <string name="channel_title_convert_to_private">تبدیل به کانال خصوصی</string>
+  <string name="channel_text_convert_to_private">آیا می خواهید این گروه را به حالت خصوصی درآورید?</string>
+  <string name="channel_title_convert_to_public">تبدیل به کانال عمومی</string>
+  <string name="channel_text_convert_to_public">آیا می خواهید این کانال را به حالت عمومی درآورید?</string>
   <string name="channel_title_channel_set_username">تخصیص لینک عمومی کانال</string>
-  <string name="group_title_convert_to_private">Convert group to private</string>
-  <string name="group_text_convert_to_private">Do you want Convert group to private?</string>
+  <string name="group_title_convert_to_private">تبدیل به گروه خصوصی</string>
+  <string name="group_text_convert_to_private">آیا می خواهید این گروه را به حالت خصوصی درآورید?</string>
   <string name="group_title_convert_to_public">تبدیل به گروه عمومی</string>
-  <string name="group_text_convert_to_public">Do you want Convert group to public?</string>
+  <string name="group_text_convert_to_public">آیا می خواهید این گروه را به حالت عمومی درآورید?</string>
   <string name="group_title_set_username">تخصیص نام کاربری</string>
-  <string name="permission_storage">Storage</string>
-  <string name="you_have_to_get_storage_permision_for_continue">you have to get storage permision for continue</string>
+  <string name="permission_storage">محل ذخیره سازی را بدهید</string>
+  <string name="you_have_to_get_storage_permision_for_continue">برای ادامه کار نیاز به مجوز ذخیره سازی می باشد</string>
   <string name="clean_up_chat_rooms">پاک سازی چت روم ها</string>
   <string name="clean_up">پاک سازی چت روم</string>
   <string name="do_you_want_to_clean_all_data_in_chat_rooms">آیا مطمئن هستید که میخواهید کلیه اطلاعات چت ها را از دیتابیس داخلی حذف کنید ؟</string>
@@ -773,7 +775,7 @@
   <string name="forward_message">ارسال پیام</string>
   <string name="message_selected">پیام انتخاب شده است</string>
   <string name="messages_selected">پیام انتخاب شده است</string>
-  <string name="file_not_download_yet">فایل دانلود نشده است</string>
+  <string name="file_not_download_yet">فایل هنوز دانلود نشده است</string>
   <string name="navigation_drawer_close">بستن</string>
   <string name="chat_with_yourself">فضای ابری من</string>
   <string name="can_not_connent_to_server">اتصال با سرور برقرار نشد.</string>
@@ -797,24 +799,33 @@
   <string name="no_body">هیچکس</string>
   <string name="my_contacts">مخاطبین من</string>
   <string name="privacy_setting">تنظیمات خصوصی </string>
-  <string name="igap_search">Look and Find</string>
-  <string name="set_color_to_default">Set Color To Default</string>
-  <string name="empty_message">enter text</string>
-  <string name="there_is_no_any_result">there is no any result</string>
-  <string name="there_is_no_connection_to_server">There Is No Connection To Server</string>
-  <string name="empty_room">Empty Room</string>
-  <string name="show_member">show member</string>
-  <string name="show_vote_layout_in_channel">show vote layout in channel</string>
-  <string name="close">close</string>
+  <string name="igap_search">‫بگرد و کشف کن</string>‬‬‬‬‬‬
+  <string name="set_color_to_default">انتخاب رنگ پیش فرض برنامه</string>
+  <string name="empty_message">‫چیزی پیدا نشد، لطفا 5 کاراکتر ابتدایی نام کاربری را وارد کنید</string>‬‬‬‬‬‬
+  <string name="there_is_no_any_result">نتیجه ای یافت نشد</string>
+  <string name="there_is_no_connection_to_server">ارتباط با سرور برقرار نیست</string>
+  <string name="empty_room">هنوز پیامی ندارید</string>
+  <string name="show_member">نمایش اعضا</string>
+  <string name="show_vote_layout_in_channel">نمایش لایه ثبت رای در کانال</string>
+  <string name="close">بستن</string>
+  <string name="INVALID">نامعتبر</string>
+  <string name="TAKEN">ثبت شده</string>
+  <string name="OCCUPYING_LIMIT_EXCEEDED">محدودیت دریافت</string>
+  <string name="st_trim">بریدن بخشی از ویدیو</string>
+  <string name="st_compress">فشرده سازی ویدیو</string>
   <string name="compressing"> فشرده سازی...</string>
   <string name="selected_color_can_not_set_on_yout_device">رنگ انتخاب شده قابل نمایش در دستگاه شما نیست</string>
   <string name="keep_media_forever">برای همیشه</string>
   <string name="keep_media_1week">یک هفته</string>
-  <string name="file_save_to_download_folder">"File save to download folder"</string>
-  <string name="first_download_file">First download file</string>
-  <string name="file_save_to_galary_folder">File save to galary folder</string>
-  <string name="file_can_not_save_to_selected_folder">File can not save to selected folder</string>
-  <string name="file_save_to_video_folder">File save to video folder</string>
-  <string name="file_save_to_picture_folder">File save to picture folder</string>
-
+  <string name="file_save_to_download_folder">"فایل در پوشه دانلود ذخیره شد"</string>
+  <string name="first_download_file">ابتدا فایل را دانلود کنید</string>
+  <string name="file_save_to_galary_folder">فایل در پوشه گالری ذخیره شد</string>
+  <string name="file_can_not_save_to_selected_folder">فایل در پوشه انتخاب شده ذخیره نشد.</string>
+  <string name="file_save_to_video_folder">فایل در پوشه ویدیو ذخیره شد.</string>
+  <string name="file_save_to_picture_folder">فایل در پوشه تصاویر ذخیره شد.</string>
+  <string name="title_limit_chat_to_unknown_contact">Limit Chat</string>
+  <string name="text_limit_chat_to_unknown_contact">you have wait until time is finish</string>
+  <string name="text_limit_Create_Group">you just create 25 Group or Channel</string>
+  <string name="title_limit_Create_Group">Limit Create Room</string>
+  <string name="show_sender_name_in_group">Show sender name in group</string>
 </resources>

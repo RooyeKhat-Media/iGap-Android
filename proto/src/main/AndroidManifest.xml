@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iGap.proto">
+    package="net.iGap.proto">
 
   <application
       android:allowBackup="true"

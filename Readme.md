@@ -20,8 +20,8 @@ iGap API manuals: https://github.com/RooyeKhat-Media/iGap-API
 Protocol buffers files : https://github.com/RooyeKhat-Media/iGap-API/tree/master/app/assets/proto
 
 
-## Charge 
-Using the iGap infrastructure and utilizing it in personal and/or organizational projects are thoroughly free of charge. 
+## Charge
+Using the iGap infrastructure and utilizing it in personal and/or organizational projects are thoroughly free of charge.
 
 ## Supports
 
@@ -30,7 +30,7 @@ Using the iGap infrastructure and utilizing it in personal and/or organizational
     Issues: https://github.com/RooyeKhat-Media/iGap-Android/issues
 
 ## Partner
-**[RooyeKhat Media](https://rooyekhat.co/en)** was founded in 2015 aiming to create communicative and informative platforms supported by Internet and network on the basis of modern technology. We focus on the fields of designing, programming, supporting communicative and media software on mobile phones and tablets. 
+**[RooyeKhat Media](https://rooyekhat.co/en)** was founded in 2015 aiming to create communicative and informative platforms supported by Internet and network on the basis of modern technology. We focus on the fields of designing, programming, supporting communicative and media software on mobile phones and tablets.
 
 ## Licence
 iGap is released under the [GNU Affero General Public License](LICENSE) . This Free Software Foundation license is fairly new, and thus we wanted to talk about how this license differs from GPL.

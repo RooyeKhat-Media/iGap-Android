@@ -6,7 +6,7 @@
 
   <!-- Pretty hint text, and maxLines -->
 
-  <com.iGap.module.HeaderTextview
+  <net.iGap.module.HeaderTextview
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp60"
       android:layout_marginLeft="@dimen/dp24"
@@ -14,8 +14,9 @@
       android:gravity="start|center_vertical"
       android:text="@string/Re_Phone_Verification"
       android:textColor="@color/toolbar_background"
-      android:textSize="@dimen/sp16"
+      android:textSize="@dimen/sp15"
       android:textStyle="bold"
+      android:layout_marginTop="@dimen/dp12"
       />
 
 

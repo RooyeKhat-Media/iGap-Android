@@ -63,7 +63,7 @@
                 android:visibility="gone"
                 />
 
-            <com.iGap.libs.rippleeffect.RippleView
+            <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/pch_ripple_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 rv_centered="true"
                 >
 
-              <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                   android:id="@+id/pch_txt_back"
                   android:layout_width="@dimen/dp52"
                   android:layout_height="match_parent"
@@ -84,9 +84,9 @@
                   android:textAppearance="@style/TextIconAppearance_toolbar"
                   android:textColor="@color/whit_background"
                   />
-            </com.iGap.libs.rippleeffect.RippleView>
+            </net.iGap.libs.rippleeffect.RippleView>
 
-            <com.iGap.libs.rippleeffect.RippleView
+            <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/pch_ripple_menuPopup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 rv_centered="true"
                 >
 
-              <com.iGap.module.MaterialDesignTextView
+              <net.iGap.module.MaterialDesignTextView
                   android:id="@+id/pch_img_menuPopup"
                   android:layout_width="@dimen/dp52"
                   android:layout_height="match_parent"
@@ -107,7 +107,7 @@
                   android:textAppearance="@style/TextIconAppearance_toolbar"
                   android:textColor="@color/whit_background"
                   />
-            </com.iGap.libs.rippleeffect.RippleView>
+            </net.iGap.libs.rippleeffect.RippleView>
           </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -122,7 +122,7 @@
             app:layout_collapseMode="parallax"
             >
 
-          <com.iGap.module.CircleImageView
+          <net.iGap.module.CircleImageView
               android:id="@+id/pch_img_circleImage"
               android:layout_width="@dimen/dp88"
               android:layout_height="@dimen/dp88"
@@ -173,7 +173,7 @@
             >
 
 
-          <com.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
@@ -355,7 +355,7 @@
             android:visibility="visible"
             >
 
-          <com.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
@@ -405,7 +405,13 @@
 
 
           </LinearLayout>
-
+          <View
+              android:id="@+id/topLine"
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:layout_marginBottom="@dimen/dp4"
+              android:background="@color/gray"
+              />
 
           <LinearLayout
               android:layout_width="match_parent"
@@ -454,7 +460,7 @@
             android:orientation="vertical"
             >
 
-          <com.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center"
