@@ -32,8 +32,8 @@
           android:gravity="center"
           android:text="@string/new_chanel"
           android:textColor="@color/whit_background"
-          android:textSize="@dimen/sp18"
-          android:textStyle="bold"
+          android:textSize="@dimen/dp18"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
           android:visibility="visible"
           />
 
@@ -94,7 +94,7 @@
           android:paddingTop="@dimen/dp12"
           android:text="@string/st_Info"
           android:textColor="@color/green"
-          android:textSize="@dimen/sp18"
+          android:textSize="@dimen/dp18"
           android:textStyle="bold"
           fontPath="fonts/IRANSansMobile_Bold.ttf"
           />
@@ -117,7 +117,7 @@
             android:gravity="start|center"
             android:text="@string/public_channel"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             />
 
         <TextView
@@ -137,7 +137,7 @@
             android:gravity="start|center"
             android:text="@string/private_channel"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             />
 
         <TextView
@@ -168,7 +168,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_Info"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -187,7 +187,7 @@
               android:gravity="center"
               android:paddingLeft="@dimen/dp8"
               android:text="@string/igapChanel"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               />
 
           <EditText
@@ -197,7 +197,7 @@
               android:layout_gravity="center_horizontal"
               android:hint="@string/your_link"
               android:textColorHint="@color/default_shadow_color"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               />
 
         </LinearLayout>
@@ -219,7 +219,7 @@
             android:layout_marginRight="@dimen/dp20"
             android:text="@string/B_cancel"
             android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="bold"
             />
 
@@ -231,7 +231,7 @@
             android:layout_marginRight="@dimen/dp20"
             android:text="@string/B_finish"
             android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="bold"
             />
 

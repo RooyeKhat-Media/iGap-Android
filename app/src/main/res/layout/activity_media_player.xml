@@ -51,7 +51,8 @@
                 android:singleLine="true"
                 android:text="@string/music_name"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <TextView
                 android:id="@+id/ml_txt_music_place"
@@ -61,7 +62,8 @@
                 android:singleLine="true"
                 android:text="@string/place"
                 android:textColor="@color/gray_4c"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
         </LinearLayout>
 
       <net.iGap.libs.rippleeffect.RippleView
@@ -129,7 +131,8 @@
             android:text=""
             android:textColor="@color/white"
 
-            android:textSize="@dimen/sp16"/>
+            android:textSize="@dimen/dp16"
+            />
 
 
     </FrameLayout>
@@ -186,7 +189,8 @@
                 android:text="@string/md_shuffle_mode"
                 android:textAppearance="@style/TextIconAppearance.all"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp20"/>
+              android:textSize="@dimen/dp20"
+              />
 
 
         </LinearLayout>
@@ -201,7 +205,8 @@
             android:text="@string/md_previous_track"
             android:textAppearance="@style/TextIconAppearance.all"
             android:textColor="#444"
-            android:textSize="@dimen/sp22"/>
+          android:textSize="@dimen/dp22"
+          />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/ml_btn_play_music"
@@ -214,7 +219,8 @@
             android:text="@string/md_play_rounded_button"
             android:textAppearance="@style/TextIconAppearance.all"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp36"/>
+          android:textSize="@dimen/dp36"
+          />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/ml_btn_forward_music"
@@ -225,7 +231,8 @@
             android:text="@string/md_play_next_button"
             android:textAppearance="@style/TextIconAppearance.all"
             android:textColor="#444"
-            android:textSize="@dimen/sp22"/>
+          android:textSize="@dimen/dp22"
+          />
 
 
         <FrameLayout
@@ -243,7 +250,8 @@
                 android:text="@string/md_synchronization_arrows"
                 android:textAppearance="@style/TextIconAppearance.all"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp28"/>
+              android:textSize="@dimen/dp28"
+              />
 
             <ImageView
                 android:id="@+id/ml_img_repead_one"

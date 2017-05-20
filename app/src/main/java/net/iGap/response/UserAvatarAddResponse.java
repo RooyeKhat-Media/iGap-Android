@@ -14,7 +14,6 @@ import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserAvatarAdd;
 import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmUserInfo;
 
 public class UserAvatarAddResponse extends MessageHandler {
 
@@ -37,15 +36,13 @@ public class UserAvatarAddResponse extends MessageHandler {
         new Thread(new Runnable() {
             @Override public void run() {
                 Realm realm = Realm.getDefaultInstance();
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (realmUserInfo != null) {
-                    final long userId = realmUserInfo.getUserInfo().getId();
+
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override public void execute(Realm realm) {
-                            RealmAvatar.put(userId, userAvatarAddResponse.getAvatar(), true);
+                            RealmAvatar.put(G.userId, userAvatarAddResponse.getAvatar(), true);
                         }
                     });
-                }
+
                 realm.close();
             }
         }).start();

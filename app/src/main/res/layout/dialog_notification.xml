@@ -14,7 +14,8 @@
         android:gravity="center"
         android:text="@string/do_you_want_to_delet_this_chat"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp14"/>
+        android:textSize="@dimen/dp14"
+        />
 
     <View
         android:layout_width="match_parent"
@@ -37,7 +38,8 @@
             android:background="@android:color/white"
             android:text="@string/cancel"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp14"/>
+            android:textSize="@dimen/dp14"
+            />
 
         <View
             android:layout_width="1dp"
@@ -52,7 +54,8 @@
             android:background="@null"
             android:text="@string/ok"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp14"/>
+            android:textSize="@dimen/dp14"
+            />
 
 
     </LinearLayout>

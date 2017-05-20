@@ -40,6 +40,7 @@ import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnChannelCheckUsername;
 import net.iGap.interfaces.OnChannelUpdateUsername;
 import net.iGap.interfaces.OnClientGetRoomResponse;
+import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoChannelCheckUsername;
 import net.iGap.proto.ProtoClientGetRoom;
 import net.iGap.proto.ProtoGlobal;
@@ -93,6 +94,8 @@ public class FragmentCreateChannel extends Fragment implements OnChannelCheckUse
         view.findViewById(R.id.view).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         prgWaiting = (ProgressBar) view.findViewById(R.id.fch_prgWaiting_addContact);
+        AppUtils.setProgresColler(prgWaiting);
+
         prgWaiting.setVisibility(View.GONE);
 
         ViewGroup vgRoot = (ViewGroup) view.findViewById(R.id.fch_root);

@@ -14,7 +14,7 @@
       android:gravity="start|center_vertical"
       android:text="@string/Re_Phone_Verification"
       android:textColor="@color/toolbar_background"
-      android:textSize="@dimen/sp15"
+      android:textSize="@dimen/dp15"
       android:textStyle="bold"
       android:layout_marginTop="@dimen/dp12"
       />
@@ -31,7 +31,7 @@
       android:lineSpacingExtra="0dp"
       android:text="@string/verify_time_out_message"
       android:textColor="@color/rg_border_editText"
-      android:textSize="@dimen/sp14"
+      android:textSize="@dimen/dp14"
       />
 
 
@@ -48,7 +48,7 @@
       android:inputType="number"
       android:maxLength="6"
       android:paddingBottom="@dimen/dp20"
-      android:textSize="@dimen/sp14"
+      android:textSize="@dimen/dp14"
       android:theme="@style/Setting_editText"
       />
 
@@ -71,7 +71,7 @@
         android:gravity="center"
         android:text="@string/rg_verify_dialog_resend_code"
         android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         android:textStyle="bold"
         />
 
@@ -86,7 +86,7 @@
         android:gravity="center"
         android:text="@string/rg_verify_dialog_try_code"
         android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         android:textStyle="bold"
         />
 

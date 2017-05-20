@@ -408,6 +408,7 @@ public final class ProtoClientCondition {
         MUTED(1),
         /**
          * <pre>
+         *
          * </pre>
          *
          * <code>UNMUTED = 2;</code>
@@ -425,6 +426,7 @@ public final class ProtoClientCondition {
         public static final int MUTED_VALUE = 1;
         /**
          * <pre>
+         *
          * </pre>
          *
          * <code>UNMUTED = 2;</code>

@@ -14,9 +14,10 @@ import net.iGap.proto.ProtoSignalingAccept;
 
 public class RequestSignalingAccept {
 
-    public void signalingAccept() {
-        ProtoSignalingAccept.SignalingAccept.Builder builder = ProtoSignalingAccept.SignalingAccept.newBuilder();
+    public void signalingAccept(String called_sdp) {
 
+        ProtoSignalingAccept.SignalingAccept.Builder builder = ProtoSignalingAccept.SignalingAccept.newBuilder();
+        builder.setCalledSdp(called_sdp);
 
         RequestWrapper requestWrapper = new RequestWrapper(903, builder);
         try {

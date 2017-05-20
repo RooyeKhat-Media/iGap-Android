@@ -55,7 +55,6 @@ import net.iGap.realm.RealmGroupRoom;
 import net.iGap.realm.RealmMember;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestChannelAddMember;
 import net.iGap.request.RequestGroupAddMember;
 
@@ -328,7 +327,7 @@ public class ContactGroupFragment extends Fragment {
     private void addOwnerToDatabase(Long roomId, ProtoGlobal.Room.Type type) {
 
         Realm realm = Realm.getDefaultInstance();
-        final Long userId = realm.where(RealmUserInfo.class).findFirst().getUserId();
+
         RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
         if (realmRoom != null) {
@@ -341,7 +340,7 @@ public class ContactGroupFragment extends Fragment {
 
                     final RealmMember realmMember = new RealmMember();
                     realmMember.setId(SUID.id().get());
-                    realmMember.setPeerId(userId);
+                    realmMember.setPeerId(G.userId);
                     realmMember.setRole(ProtoGlobal.ChannelRoom.Role.OWNER.toString());
 
                     realm.executeTransaction(new Realm.Transaction() {
@@ -357,7 +356,7 @@ public class ContactGroupFragment extends Fragment {
 
                     final RealmMember realmMember = new RealmMember();
                     realmMember.setId(SUID.id().get());
-                    realmMember.setPeerId(userId);
+                    realmMember.setPeerId(G.userId);
                     realmMember.setRole(ProtoGlobal.GroupRoom.Role.OWNER.toString());
 
                     realm.executeTransaction(new Realm.Transaction() {
@@ -368,6 +367,8 @@ public class ContactGroupFragment extends Fragment {
                 }
             }
         }
+
+        realm.close();
     }
 
     private void refreshView() {

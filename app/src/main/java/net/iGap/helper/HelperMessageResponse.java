@@ -27,23 +27,9 @@ import static net.iGap.G.authorHash;
  */
 public class HelperMessageResponse {
 
-    private static long latestMessageTime;
-    private static int delay;
 
     public static void handleMessage(final long roomId, final ProtoGlobal.RoomMessage roomMessage, final ProtoResponse.Response response, final String identity) {
 
-        /**
-         * if from latest message was time out don't need delay otherwise set delay
-         */
-        //if (HelperTimeOut.timeoutChecking(0, latestMessageTime, 500)) {
-        //    delay = 0;
-        //} else {
-        //    delay++;
-        //}
-        //latestMessageTime = System.currentTimeMillis();
-
-        //new Handler(Looper.getMainLooper()).post(new Runnable() {
-        //    @Override public void run() {
         final Realm realm = Realm.getDefaultInstance();
 
         realm.executeTransaction(new Realm.Transaction() {
@@ -140,7 +126,6 @@ public class HelperMessageResponse {
             roomType = room.getType();
         }
 
-
         if (response.getId().isEmpty()) {
             /**
              * invoke following callback when i'm not the sender, because i already done everything after sending message
@@ -154,10 +139,5 @@ public class HelperMessageResponse {
         }
 
         realm.close();
-        //    }
-        //});
     }
-
-
-
 }

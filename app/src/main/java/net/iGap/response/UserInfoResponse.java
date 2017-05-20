@@ -23,7 +23,6 @@ import net.iGap.proto.ProtoUserInfo;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
-import net.iGap.realm.RealmUserInfo;
 
 public class UserInfoResponse extends MessageHandler {
 
@@ -71,8 +70,7 @@ public class UserInfoResponse extends MessageHandler {
                     }
                 });
 
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (realmUserInfo != null && (builder.getUser().getId() == realmUserInfo.getUserId())) {
+                if ((builder.getUser().getId() == G.userId)) {
                     canGetInfo = true;
                 }
 

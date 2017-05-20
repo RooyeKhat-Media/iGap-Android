@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingAccept;
 
 public class SignalingAcceptResponse extends MessageHandler {
@@ -30,6 +31,13 @@ public class SignalingAcceptResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoSignalingAccept.SignalingAcceptResponse.Builder builder = (ProtoSignalingAccept.SignalingAcceptResponse.Builder) message;
+
+        String called_sdp = builder.getCalledSdp();
+
+        if (G.iSignalingAccept != null) {
+            G.iSignalingAccept.onAccept(called_sdp);
+        }
+
     }
 
     @Override

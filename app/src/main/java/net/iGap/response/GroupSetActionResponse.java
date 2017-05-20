@@ -15,7 +15,6 @@ import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.helper.HelperGetAction;
 import net.iGap.proto.ProtoGroupSetAction;
-import net.iGap.realm.RealmUserInfo;
 
 public class GroupSetActionResponse extends MessageHandler {
 
@@ -39,12 +38,12 @@ public class GroupSetActionResponse extends MessageHandler {
         new Thread(new Runnable() {
             @Override public void run() {
                 final Realm realm = Realm.getDefaultInstance();
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (realmUserInfo != null && realmUserInfo.getUserId() != builder.getUserId()) {
+
+                if (G.userId != builder.getUserId()) {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override public void execute(Realm realm) {
-                            RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                            if (realmUserInfo.getUserInfo().getId() != builder.getUserId()) {
+
+                            if (G.userId != builder.getUserId()) {
                                 HelperGetAction.fillOrClearAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
                             }
                         }

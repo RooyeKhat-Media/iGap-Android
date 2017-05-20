@@ -59,7 +59,8 @@
                 android:maxWidth="@dimen/dp120"
                 android:text="1/1"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -83,7 +84,8 @@
                     android:singleLine="true"
                     android:text="New Text"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp16" />
+                    android:textSize="@dimen/dp16"
+                    />
 
 
                 <TextView
@@ -94,7 +96,8 @@
                     android:singleLine="true"
                     android:text="New Text"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp12" />
+                    android:textSize="@dimen/dp12"
+                    />
 
             </LinearLayout>
 

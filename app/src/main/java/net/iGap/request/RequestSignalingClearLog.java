@@ -14,8 +14,11 @@ import net.iGap.proto.ProtoSignalingClearLog;
 
 public class RequestSignalingClearLog {
 
-    public void signalingClearLog() {
+    public void signalingClearLog(long clearId) {
+
         ProtoSignalingClearLog.SignalingClearLog.Builder builder = ProtoSignalingClearLog.SignalingClearLog.newBuilder();
+        builder.setClearId(clearId);
+
         RequestWrapper requestWrapper = new RequestWrapper(908, builder);
         try {
             RequestQueue.sendRequest(requestWrapper);

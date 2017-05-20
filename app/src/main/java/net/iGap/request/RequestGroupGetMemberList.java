@@ -14,11 +14,11 @@ import net.iGap.proto.ProtoGroupGetMemberList;
 
 public class RequestGroupGetMemberList {
 
-    public void getMemberList(long roomId, int offset, int limit) {
+    public void getMemberList(long roomId, int offset, int limit, ProtoGroupGetMemberList.GroupGetMemberList.FilterRole role) {
 
         ProtoGroupGetMemberList.GroupGetMemberList.Builder builder = ProtoGroupGetMemberList.GroupGetMemberList.newBuilder();
         builder.setRoomId(roomId);
-        builder.setFilterRole(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.ALL);
+        builder.setFilterRole(role);
         builder.setPagination(new RequestPagination().pagination(offset, limit));
 
         RequestWrapper requestWrapper = new RequestWrapper(317, builder, roomId + "");

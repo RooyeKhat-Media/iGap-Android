@@ -40,11 +40,11 @@
     <style name="ChatMessages.EmojiTextView" parent="ChatMessages">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp16</item>
+        <item name="android:textSize">@dimen/dp16</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textDirection">firstStrong</item>
         <item name="android:layoutDirection">locale</item>
-        <item name="emojiSize">@dimen/sp16</item>
+        <item name="emojiSize">@dimen/dp16</item>
 
         <item name="android:paddingLeft">@dimen/messageContainerPaddingLeftRight</item>
         <item name="android:paddingRight">@dimen/messageContainerPaddingLeftRight</item>
@@ -125,7 +125,7 @@
 
     <style name="ChatMessages.Time">
         <item name="android:textColor">@color/colorChatMessageTime</item>
-        <item name="android:textSize">@dimen/sp10</item>
+        <item name="android:textSize">@dimen/dp10</item>
     </style>
 
     <style name="ChatMessages.MaterialDesignTextView.Tick">
@@ -133,7 +133,7 @@
     </style>
 
     <style name="ChatMessages.MaterialDesignTextView.BottomIcon">
-        <item name="android:textSize">@dimen/sp22</item>
+        <item name="android:textSize">@dimen/dp22</item>
     </style>
 
     <style name="ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn" parent="ChatMessages.MaterialDesignTextView.BottomIcon">
@@ -143,17 +143,17 @@
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/red</item>
         <item name="android:textColorHint">@color/red</item>
-        <item name="android:textSize">@dimen/sp12</item>
+        <item name="android:textSize">@dimen/dp12</item>
     </style>
 
     <style name="remove_error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/hint_edit_text</item>
         <item name="android:textColorHint">@color/hint_edit_text</item>
-        <item name="android:textSize">@dimen/sp12</item>
+        <item name="android:textSize">@dimen/dp12</item>
     </style>
 
     <style name="Hint_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/sp12</item>
+        <item name="android:textSize">@dimen/dp12</item>
         <item name="android:textColorHint">@color/green</item>
     </style>
 
@@ -198,12 +198,12 @@
 
     <style name="TextIconAppearance.all" parent="android:TextAppearance">
         <item name="fontPath">fonts/MaterialIcons-Regular.ttf</item>
-        <item name="android:textSize">@dimen/sp32</item>
+        <item name="android:textSize">@dimen/dp32</item>
     </style>
 
     <style name="TextIconAppearance_toolbar" parent="android:TextAppearance">
         <item name="fontPath">fonts/MaterialIcons-Regular.ttf</item>
-        <item name="android:textSize">@dimen/sp32</item>
+        <item name="android:textSize">@dimen/dp32</item>
     </style>
 
   <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
@@ -211,4 +211,13 @@
   <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.Title" />
 
 
+  <style name="DialogAnimationUp">
+    <item name="android:windowEnterAnimation">@anim/translate_enter_up</item>
+    <item name="android:windowExitAnimation">@anim/translate_exit_up</item>
+  </style>
+
+  <style name="DialogAnimationDown">
+    <item name="android:windowEnterAnimation">@anim/translate_enter_down</item>
+    <item name="android:windowExitAnimation">@anim/translate_exit_down</item>
+  </style>
 </resources>

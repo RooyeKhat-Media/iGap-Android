@@ -12,14 +12,9 @@ package net.iGap.realm;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import net.iGap.module.SerializationUtils;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
 
@@ -96,67 +91,7 @@ public class RealmWallpaper extends RealmObject {
         realm.close();
     }
 
-    //****************************************************************************************************
 
-    public static class SerializationUtils {
 
-        /**
-         * @param obj - object to serialize to a byte array
-         * @return byte array containing the serialized obj
-         */
-        public static byte[] serialize(Object obj) {
-            byte[] result = null;
-            ByteArrayOutputStream fos = null;
 
-            try {
-                fos = new ByteArrayOutputStream();
-                ObjectOutputStream o = new ObjectOutputStream(fos);
-                o.writeObject(obj);
-                result = fos.toByteArray();
-            } catch (IOException e) {
-                System.err.println(e);
-            } finally {
-                try {
-                    fos.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return result;
-        }
-
-        /**
-         * @param arr - the byte array that holds the serialized object
-         * @return the deserialized object
-         */
-        public static Object deserialize(byte[] arr) {
-            InputStream fis = null;
-
-            try {
-                fis = new ByteArrayInputStream(arr);
-                ObjectInputStream o = new ObjectInputStream(fis);
-                return o.readObject();
-            } catch (IOException e) {
-                System.err.println(e);
-            } catch (ClassNotFoundException e) {
-                System.err.println(e);
-            } finally {
-                try {
-                    fis.close();
-                } catch (Exception e) {
-                }
-            }
-
-            return null;
-        }
-
-        /**
-         * @param obj - object to be cloned
-         * @return a clone of obj
-         */
-        @SuppressWarnings("unchecked") public static <T> T cloneObject(T obj) {
-            return (T) deserialize(serialize(obj));
-        }
-    }
 }

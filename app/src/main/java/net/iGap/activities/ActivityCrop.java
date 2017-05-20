@@ -35,6 +35,7 @@ import net.iGap.helper.HelperString;
 import net.iGap.helper.ImageHelper;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.HelperCopyFile;
 
@@ -60,6 +61,7 @@ public class ActivityCrop extends ActivityEnhanced {
         attachFile = new AttachFile(this);
 
         ProgressBar prgWaiting = (ProgressBar) findViewById(R.id.crop_prgWaiting);
+        AppUtils.setProgresColler(prgWaiting);
         imgPic = (ImageView) findViewById(R.id.pu_img_imageBefore);
         TextView txtAgreeImage = (TextView) findViewById(R.id.pu_txt_agreeImage);
 

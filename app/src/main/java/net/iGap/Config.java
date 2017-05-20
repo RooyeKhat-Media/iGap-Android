@@ -51,6 +51,7 @@ public class Config {
     public static String default_toggleButtonColor = "#31bdb6";
     public static String default_attachmentColor = "#31bdb6";
     public static String default_headerTextColor = "#31bdb6";
+    public static String default_progressColor = "#41c6c4";
 
     public static final String URL_WEBSOCKET = "wss://secure.igap.net/hybrid/";
 

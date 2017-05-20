@@ -21,7 +21,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
@@ -48,6 +47,8 @@ import net.iGap.helper.HelperSaveFile;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.TouchImageView;
 import net.iGap.module.structs.StructMessageInfo;
@@ -82,7 +83,6 @@ public class FragmentShowImage extends Fragment {
 
     private Long mRoomId;
     private Long selectedFileToken;
-    private Realm mRealm;
     private MediaPlayer mMediaPlayer;
     public static ArrayList<String> downloadedList = new ArrayList<>();
 
@@ -111,7 +111,6 @@ public class FragmentShowImage extends Fragment {
 
         if (appBarLayout != null) appBarLayout.setVisibility(View.VISIBLE);
 
-        if (mRealm != null) mRealm.close();
     }
 
     @Override public void onAttach(Context context) {
@@ -134,9 +133,9 @@ public class FragmentShowImage extends Fragment {
                 return false;
             }
 
-            mRealm = Realm.getDefaultInstance();
+            Realm realm = Realm.getDefaultInstance();
 
-            mRealmList = mRealm.where(RealmRoomMessage.class)
+            mRealmList = realm.where(RealmRoomMessage.class)
                 .equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId)
                 .equalTo(RealmRoomMessageFields.DELETED, false)
                 .findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.ASCENDING);
@@ -186,11 +185,14 @@ public class FragmentShowImage extends Fragment {
                 }
             }
 
+            realm.close();
+
             return true;
         } else {
             getActivity().getSupportFragmentManager().beginTransaction().remove(FragmentShowImage.this).commit();
             return false;
         }
+
     }
 
     private void initComponent(View view) {
@@ -240,6 +242,10 @@ public class FragmentShowImage extends Fragment {
         if (HelperCalander.isLanguagePersian) {
             txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
         }
+        if (selectedFile >= mFList.size()) {
+            return;
+        }
+
         showImageInfo(mFList.get(selectedFile));
 
         viewPager.setOnClickListener(new View.OnClickListener() {
@@ -276,7 +282,8 @@ public class FragmentShowImage extends Fragment {
             txtImageDesc.setVisibility(View.GONE);
         }
 
-        RealmRegisteredInfo realmRegisteredInfo = mRealm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmRoomMessageFinal.getUserId()).findFirst();
+        Realm realm = Realm.getDefaultInstance();
+        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmRoomMessageFinal.getUserId()).findFirst();
 
         if (realmRegisteredInfo != null) {
             txtImageName.setText(realmRegisteredInfo.getDisplayName());
@@ -284,7 +291,7 @@ public class FragmentShowImage extends Fragment {
             txtImageName.setText("");
         }
 
-        if (G.authorHash.equals(realmRoomMessageFinal.getAuthorHash())) {
+        if (realmRoomMessageFinal.getAuthorHash() != null && G.authorHash.equals(realmRoomMessageFinal.getAuthorHash())) {
 
             txtImageName.setText(R.string.you);
         }
@@ -300,6 +307,8 @@ public class FragmentShowImage extends Fragment {
             txtImageDate.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageDate.getText().toString()));
         }
 
+        realm.close();
+
     }
 
     public void popUpMenuShowImage() {
@@ -312,13 +321,16 @@ public class FragmentShowImage extends Fragment {
                     saveToGalary();
                 }
             }
-        }).show();
+        }).build();
 
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = (int) getResources().getDimension(R.dimen.dp200);
-        layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
-        dialog.getWindow().setAttributes(layoutParams);
+
+        DialogAnimation.animationUp(dialog);
+        dialog.show();
+        //WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        //layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        //layoutParams.width = (int) getResources().getDimension(R.dimen.dp200);
+        //layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
+        //dialog.getWindow().setAttributes(layoutParams);
     }
 
     /**
@@ -391,7 +403,10 @@ public class FragmentShowImage extends Fragment {
             final TextureView mTextureView = (TextureView) layout.findViewById(R.id.textureView);
             final ImageView imgPlay = (ImageView) layout.findViewById(R.id.imgPlay);
             final TouchImageView touchImageView = (TouchImageView) layout.findViewById(R.id.sisl_touch_image_view);
+
             final MessageProgress progress = (MessageProgress) layout.findViewById(R.id.progress);
+            AppUtils.setProgresColor(progress.progressBar);
+
 
             final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) layout.findViewById(R.id.ch_progress_loadingContent);
             contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -471,7 +486,7 @@ public class FragmentShowImage extends Fragment {
                                                     G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
                                                 }
                                             });
-                                        }
+                                    }
                                     }
 
                                     @Override public void OnError(String token) {
@@ -619,13 +634,13 @@ public class FragmentShowImage extends Fragment {
                                         if (rm.getMessageType() == ProtoGlobal.RoomMessageType.VIDEO) {
                                             imgPlay.setVisibility(View.VISIBLE);
                                             //if (position == viewPager.getCurrentItem()) playVideo(position, mTextureView, imgPlay, touchImageView);
-                                        }
+                                    }
 
                                         G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
                                     }
-                                }
-                            });
-                        }
+                            }
+                        });
+                    }
                     }
 
                     @Override public void OnError(String token) {

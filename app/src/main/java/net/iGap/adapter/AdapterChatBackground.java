@@ -30,6 +30,7 @@ import net.iGap.fragments.FragmentFullChatBackground;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
@@ -205,6 +206,8 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             img = (ImageView) itemView.findViewById(R.id.imgBackground);
 
             messageProgress = (MessageProgress) itemView.findViewById(R.id.progress);
+            AppUtils.setProgresColor(messageProgress.progressBar);
+
             messageProgress.withDrawable(R.drawable.ic_download, true);
 
             contentLoading = (ContentLoadingProgressBar) itemView.findViewById(R.id.ch_progress_loadingContent);

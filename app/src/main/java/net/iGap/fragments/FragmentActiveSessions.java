@@ -40,6 +40,7 @@ import net.iGap.interfaces.OnUserSessionGetActiveList;
 import net.iGap.interfaces.OnUserSessionLogout;
 import net.iGap.interfaces.OnUserSessionTerminate;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.module.AppUtils;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.SUID;
 import net.iGap.module.structs.StructSessions;
@@ -79,6 +80,8 @@ public class FragmentActiveSessions extends Fragment {
         view.findViewById(R.id.acs_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         prgWaiting = (ProgressBar) view.findViewById(R.id.stas_prgWaiting);
+        AppUtils.setProgresColler(prgWaiting);
+
         prgWaiting.setVisibility(View.VISIBLE);
         MaterialDesignTextView btnBack = (MaterialDesignTextView) view.findViewById(R.id.stas_txt_back);
         RippleView rippleBack = (RippleView) view.findViewById(R.id.stas_ripple_back);

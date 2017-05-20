@@ -10,12 +10,22 @@
 
 package net.iGap.request;
 
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoSignalingGetLog;
 
 public class RequestSignalingGetLog {
 
-    public void signalingGetLog() {
+    public void signalingGetLog(int offcet, int limit) {
+
         ProtoSignalingGetLog.SignalingGetLog.Builder builder = ProtoSignalingGetLog.SignalingGetLog.newBuilder();
+
+        ProtoGlobal.Pagination.Builder pagination = ProtoGlobal.Pagination.newBuilder();
+        pagination.setOffset(offcet);
+        pagination.setLimit(limit);
+
+        builder.setPagination(pagination);
+
+
         RequestWrapper requestWrapper = new RequestWrapper(907, builder);
         try {
             RequestQueue.sendRequest(requestWrapper);

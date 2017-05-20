@@ -82,7 +82,7 @@
                                 android:text="file_name.ext"
                                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                                 android:textColor="@color/black90"
-                                android:textSize="@dimen/sp14"
+                                android:textSize="@dimen/dp14"
                                 android:textStyle="bold"/>
 
                             <TextView

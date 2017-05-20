@@ -123,7 +123,7 @@
                     android:text="file_name.ext"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/dp14"
                     android:textStyle="bold"
                     />
 
@@ -165,7 +165,7 @@
                       android:text="@string/md_play_arrow"
                       android:textAppearance="@style/TextIconAppearance_toolbar"
                       android:textColor="@color/green"
-                      android:textSize="@dimen/sp32"
+                      android:textSize="@dimen/dp32"
                       />
 
 
@@ -188,7 +188,7 @@
                     android:singleLine="true"
                     android:text="00:00"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/sp12"
+                    android:textSize="@dimen/dp12"
                     />
 
 

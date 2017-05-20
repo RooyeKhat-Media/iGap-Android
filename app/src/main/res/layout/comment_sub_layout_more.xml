@@ -13,6 +13,7 @@
         android:gravity="center"
         android:padding="@dimen/dp4"
         android:text="@string/more"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 
 </LinearLayout>

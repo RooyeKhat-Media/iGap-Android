@@ -39,6 +39,7 @@ public class UserProfileSetNicknameResponse extends MessageHandler {
         realm.executeTransaction(new Realm.Transaction() {
             @Override public void execute(Realm realm) {
                 realm.where(RealmUserInfo.class).findFirst().getUserInfo().setDisplayName(userProfileNickNameResponse.getNickname());
+                G.displayName = userProfileNickNameResponse.getNickname();
             }
         });
 

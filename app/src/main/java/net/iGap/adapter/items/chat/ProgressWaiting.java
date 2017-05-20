@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import java.util.List;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
+import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
 
 public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat.ProgressWaiting, net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder> {
@@ -47,6 +48,7 @@ public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat
         public ViewHolder(View view) {
             super(view);
             progressBar = (ProgressBar) view.findViewById(R.id.cslp_progress_bar_waiting);
+            AppUtils.setProgresColler(progressBar);
         }
     }
 

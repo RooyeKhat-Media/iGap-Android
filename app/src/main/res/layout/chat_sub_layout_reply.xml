@@ -44,7 +44,7 @@
             android:text=""
             android:singleLine="true"
             android:textColor="@color/colorOldBlack"
-            android:textSize="@dimen/sp12"
+          android:textSize="@dimen/dp12"
             android:textStyle="bold"
             android:padding="0dp"/>
 
@@ -58,7 +58,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
+          android:textSize="@dimen/dp16"
             android:padding="0dp"/>
     </LinearLayout>
 </LinearLayout>

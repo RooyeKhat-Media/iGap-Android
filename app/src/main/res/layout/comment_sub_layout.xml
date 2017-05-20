@@ -53,7 +53,8 @@
                 android:paddingBottom="@dimen/dp8"
                 android:text="New Text"
                 android:textColor="@color/gray_4c"
-                android:textSize="@dimen/sp14" />
+                android:textSize="@dimen/dp14"
+                />
 
 
             <LinearLayout
@@ -70,7 +71,8 @@
                     android:singleLine="true"
                     android:text="Agu 23"
                     android:textColor="@color/gray_9d"
-                    android:textSize="@dimen/sp10" />
+                    android:textSize="@dimen/dp10"
+                    />
 
                 <TextView
                     android:id="@+id/csl_txt_clock"
@@ -80,7 +82,8 @@
                     android:singleLine="true"
                     android:text="23:14"
                     android:textColor="@color/gray_9d"
-                    android:textSize="@dimen/sp10" />
+                    android:textSize="@dimen/dp10"
+                    />
             </LinearLayout>
 
 
@@ -102,7 +105,8 @@
                 android:padding="@dimen/dp4"
                 android:text="Replay"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp18" />
+                android:textSize="@dimen/dp18"
+                />
 
             <ImageView
                 android:layout_width="wrap_content"

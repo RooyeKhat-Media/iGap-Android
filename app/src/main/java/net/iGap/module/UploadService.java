@@ -15,13 +15,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import io.realm.Realm;
+import net.iGap.G;
 import net.iGap.helper.HelperUploadFile;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmUserInfo;
 
 public class UploadService extends Service {
 
@@ -52,7 +52,7 @@ public class UploadService extends Service {
 
         final long messageId = SUID.id().get();
         final long updateTime = System.currentTimeMillis();
-        final long senderID = realm.where(RealmUserInfo.class).findFirst().getUserId();
+
         final long duration = AndroidUtils.getAudioDuration(getApplicationContext(), savedPath);
 
         realm.executeTransaction(new Realm.Transaction() {
@@ -64,7 +64,7 @@ public class UploadService extends Service {
                 roomMessage.setRoomId(mRoomId);
                 roomMessage.setStatus(ProtoGlobal.RoomMessageStatus.SENDING.toString());
                 roomMessage.setAttachment(messageId, savedPath, 0, 0, 0, null, duration, LocalFileType.FILE);
-                roomMessage.setUserId(senderID);
+                roomMessage.setUserId(G.userId);
                 roomMessage.setCreateTime(updateTime);
             }
         });

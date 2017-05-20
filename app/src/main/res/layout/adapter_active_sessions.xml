@@ -29,7 +29,7 @@
           android:layout_height="wrap_content"
           android:text="@string/current_session"
           android:textColor="@color/toolbar_background"
-          android:textSize="@dimen/sp14"
+          android:textSize="@dimen/dp14"
           />
 
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/device"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_marginLeft="@dimen/dp4"
             android:text="pc"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text=" , "
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:text="windows"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
       </LinearLayout>
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/country"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -101,7 +101,7 @@
             android:layout_marginLeft="@dimen/dp4"
             android:text="Iran"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
 
             />
 
@@ -112,7 +112,7 @@
             android:gravity="right|end"
             android:text="@string/TERMINATE"
             android:textColor="@color/red"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
       </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:text="@string/create_time"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -140,7 +140,7 @@
             android:layout_marginLeft="@dimen/dp4"
             android:text=" 17 Nov 2016"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
       </LinearLayout>
@@ -158,7 +158,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ip"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <TextView
@@ -168,7 +168,7 @@
             android:layout_marginLeft="@dimen/dp4"
             android:text=" 192.168.1.1"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
       </LinearLayout>

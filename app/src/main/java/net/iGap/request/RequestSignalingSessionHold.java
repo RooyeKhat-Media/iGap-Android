@@ -14,8 +14,11 @@ import net.iGap.proto.ProtoSignalingSessionHold;
 
 public class RequestSignalingSessionHold {
 
-    public void signalingSessionHold() {
+    public void signalingSessionHold(boolean hold) {
+
         ProtoSignalingSessionHold.SignalingSessionHold.Builder builder = ProtoSignalingSessionHold.SignalingSessionHold.newBuilder();
+        builder.setHold(hold);
+
         RequestWrapper requestWrapper = new RequestWrapper(906, builder);
         try {
             RequestQueue.sendRequest(requestWrapper);

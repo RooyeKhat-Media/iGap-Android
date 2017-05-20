@@ -7,6 +7,7 @@
                 android:orientation="vertical"
                 android:id="@+id/stas_rootActiveSession"
                 android:elevation="999dp"
+    tools:ignore="MissingPrefix"
     tools:context="net.iGap.fragments.FragmentActiveSessions"
     >
 
@@ -33,8 +34,8 @@
                 android:gravity="center"
                 android:text="@string/Active_Sessions"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp18"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:visibility="visible"/>
 
           <net.iGap.libs.rippleeffect.RippleView

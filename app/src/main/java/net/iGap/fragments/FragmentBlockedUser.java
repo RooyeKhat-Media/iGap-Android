@@ -47,17 +47,12 @@ import net.iGap.request.RequestUserContactsUnblock;
 
 public class FragmentBlockedUser extends Fragment {
 
-    private Realm realm;
+
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_blocked_user, container, false);
     }
 
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-
-        if (realm != null) realm.close();
-    }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -68,8 +63,6 @@ public class FragmentBlockedUser extends Fragment {
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override public void onComplete(RippleView rippleView) {
                 getActivity().getSupportFragmentManager().beginTransaction().remove(FragmentBlockedUser.this).commit();
-
-                if (realm != null) realm.close();
             }
         });
 
@@ -102,13 +95,17 @@ public class FragmentBlockedUser extends Fragment {
             }
         });
 
-        realm = Realm.getDefaultInstance();
+
         RealmRecyclerView realmRecyclerView = (RealmRecyclerView) view.findViewById(R.id.fbu_realm_recycler_view);
+
+        Realm realm = Realm.getDefaultInstance();
 
         RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
 
         BlockListAdapter blockListAdapter = new BlockListAdapter(getActivity(), results);
         realmRecyclerView.setAdapter(blockListAdapter);
+
+        realm.close();
     }
 
     private void openDialogToggleBlock(final long userId) {

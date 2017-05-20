@@ -65,6 +65,7 @@
 
   <!-- Destruction -->
   <string name="sure_delete_account">آیا شما از حذف اکانت خود اطمینان دارید ؟</string>
+  <string name="delete_account_text_desc">( در صورتیکه اکانت خود را حذف دائم (پاک) کنید، همه فایل هایی که به صورت پیام دریافت کرده اید نیز به طور دائم پاک (حذف) خواهند شد. )</string>
   <string name="Destruction_Code">تخریب</string>
   <string name="Destruction_Des">شما اکنون در حال تلاش برای تخریب اکانت خود هستید ، شماره تلفن شما برابر است با : </string>
   <string name="iGap_autofill_Destruction_Code">آی گپ بصورت خودکار کد را تشخیص داده و جای خالی را پر میکند در صورتی که نتوانست به صورت دستی وارد کنید.</string>
@@ -186,13 +187,13 @@
   <string name="st_keepMedia">"فایل‌های چند رسانه‌ای را نگه دار"</string>
   <string name="st_dialog_content_keepMedia">"‫تصاویر، ویدئوها و دیگر فایل‌های ذخیره شده در فضای ابری که شما به آنها دسترسی داشته اید، به منظور ایجاد فضای خالی از دستگاه پاک می شوند. همه ی رسانه ها در بخش ذخیره سازی فضای ابری نگه داری می شوند و در صورت نیاز می توان آنها را مجدداً دانلود کرد.‬‬‬‬‬‬
 "</string>
-  <string name="st_titleToolbar_page_Notification_and_sounds">"اعلانات پیام"</string>
+  <string name="st_titleToolbar_page_Notification_and_sounds">"اعلانات و صداها"</string>
   <string name="st_title_messageNotification">"اعلانات پیام"</string>
   <string name="st_alert">"هشدار"</string>
   <string name="st_messagePreview">"پیش نمایش پیام"</string>
   <string name="st_led_color">"رنگ چراغ اِل ای دی"</string>
   <string name="st_vibrate">"ویبره"</string>
-  <string name="st_popupNotification">"اعلانات فرعی"</string>
+  <string name="st_popupNotification">"پنجره اعلان پیام"</string>
   <string name="st_sound">"صدا"</string>
   <string name="st_title_groupNotification">"اعلانات گروهی"</string>
   <string name="st_title_in_app_notification">"اعلانات درون برنامه‌ای"</string>
@@ -536,6 +537,7 @@
   <string name="delete_contact">حذف مخاطب</string>
   <string name="error_email">نشانی ایمیل نامعتبر</string>
   <string name="do_you_want_delete_this">آیا از حذف آیتم انتخاب شده اطمینان دارید ؟</string>
+  <string name="do_you_want_clear_history_this">آیا از پاک کردن تاریخچه آیتم انتخاب شده اطمینان دارید ؟</string>
   <string name="active_session_title">بستن و غیرفعال کردن جلسه</string>
   <string name="active_session_all_title"> غیرفعال کردن تمام جلسه ها</string>
   <string name="active_session_content">آیا مطمئنید که می‌خواهید این جلسه را غیرفعال کنید؟</string>
@@ -770,8 +772,8 @@
   <string name="group_title_set_username">تخصیص نام کاربری</string>
   <string name="permission_storage">محل ذخیره سازی را بدهید</string>
   <string name="you_have_to_get_storage_permision_for_continue">برای ادامه کار نیاز به مجوز ذخیره سازی می باشد</string>
-  <string name="clean_up_chat_rooms">پاک سازی چت روم ها</string>
-  <string name="clean_up">پاک سازی چت روم</string>
+  <string name="clean_up_chat_rooms">پاک سازی کلی</string>
+  <string name="clean_up">پاک سازی</string>
   <string name="do_you_want_to_clean_all_data_in_chat_rooms">آیا مطمئن هستید که میخواهید کلیه اطلاعات چت ها را از دیتابیس داخلی حذف کنید ؟</string>
   <string name="pm">ب ظ</string>
   <string name="am">ق ظ</string>
@@ -795,7 +797,7 @@
   <string name="toggle_botton_color">رنگ دکمه های ضامنی</string>
   <string name="send_and_attach_botton_color">رنگ آیکن ارسال و پیوست ها</string>
   <string name="default_header_font_color">رنگ تیتر نوشته ها</string>
-
+  <string name="default_progress_color">رنگ پروگرس بار</string>
   <string name="who_can_see_my_avatar">چه کسی آواتارهای من را ببیند؟</string>
   <string name="who_can_invite_you_to_channel_s">چه کسی من را به کانال دعوت کند ؟</string>
   <string name="who_can_invite_you_to_group_s">چه کسی من را به گروه دعوت کند ؟</string>
@@ -804,7 +806,8 @@
   <string name="privacy_setting">تنظیمات خصوصی </string>
   <string name="igap_search">‫بگرد و کشف کن</string>‬‬‬‬‬‬
   <string name="set_color_to_default">انتخاب رنگ پیش فرض برنامه</string>
-  <string name="empty_message">‫چیزی پیدا نشد، لطفا 5 کاراکتر ابتدایی نام کاربری را وارد کنید</string>‬‬‬‬‬‬
+  <string name="empty_message"> لطفا 5 کاراکتر ابتدایی نام کاربری را وارد کنید</string>‬‬‬‬‬‬
+  <string name="empty_message3"> برای جستجو حداقل 3 کاراکتر وارد کنید</string>‬‬‬‬‬‬
   <string name="there_is_no_any_result">نتیجه ای یافت نشد</string>
   <string name="there_is_no_connection_to_server">ارتباط با سرور برقرار نیست</string>
   <string name="empty_room">هنوز پیامی ندارید</string>
@@ -831,4 +834,11 @@
   <string name="title_limit_Create_Group">محدودیت در تعداد ساخت اتاق های گفتگو یا اطلاع رسانی</string>
   <string name="text_limit_Create_Group">شما اجازه دارید نهایتاً ۲۵ گروه و یا کانال بسازید</string>
   <string name="show_sender_name_in_group">نمایش نام فرستنده پیام در گروه</string>
+  <string name="calls">تماس</string>
+  <string name="igap_call">تماس آی گپ</string>
+  <string name="No_messages_here_yet">در حال حاضر پیامی وجود ندارد</string>
+  <string name="clean_log">حذف گزارشات</string>
+  <string name="mandatory">(اجباری)</string>
+  <string name="optional">اختیاری</string>
+  <string name="desc_group_chanel">توضیحات (اختیاری)</string>
 </resources>

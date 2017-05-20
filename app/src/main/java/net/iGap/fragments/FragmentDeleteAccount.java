@@ -39,6 +39,7 @@ import net.iGap.interfaces.OnSmsReceive;
 import net.iGap.interfaces.OnUserDelete;
 import net.iGap.interfaces.OnUserGetDeleteToken;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.module.AppUtils;
 import net.iGap.module.EditTextAdjustPan;
 import net.iGap.module.IncomingSms;
 import net.iGap.proto.ProtoUserDelete;
@@ -172,6 +173,8 @@ public class FragmentDeleteAccount extends Fragment {
         });
 
         prgWaiting = (ProgressBar) view.findViewById(R.id.stda_prgWaiting_addContact);
+        AppUtils.setProgresColler(prgWaiting);
+
         ltTime = (ViewGroup) view.findViewById(R.id.stda_layout_time);
 
         TextView txtPhoneNumber = (TextView) view.findViewById(R.id.stda_txt_phoneNumber);

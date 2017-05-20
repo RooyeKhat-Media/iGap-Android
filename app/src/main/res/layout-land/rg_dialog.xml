@@ -37,7 +37,7 @@
             android:paddingLeft="@dimen/dp24"
             android:text="@string/rg_Select_Country"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp20"
+            android:textSize="@dimen/dp20"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -95,7 +95,7 @@
             android:gravity="center"
             android:text="@string/B_cancel"
             android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="bold" />
 
     </LinearLayout>

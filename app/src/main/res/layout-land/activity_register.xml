@@ -29,7 +29,8 @@
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/toolbar_title_register"
-                android:textSize="@dimen/sp26" />
+                android:textSize="@dimen/dp26"
+                />
 
         </android.support.v7.widget.Toolbar>
 
@@ -53,7 +54,8 @@
                 android:gravity="center"
                 android:text="@string/rg_title_register"
                 android:textColor="@color/rg_black_register"
-                android:textSize="@dimen/sp22" />
+                android:textSize="@dimen/dp22"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -72,7 +74,8 @@
                 android:layout_marginTop="@dimen/dp8"
                 android:text="@string/rg_confirm_text_register"
                 android:textColor="@color/rg_confirm_country"
-                android:textSize="@dimen/sp16" />
+                android:textSize="@dimen/dp16"
+                />
 
             <Button
                 android:id="@+id/rg_btn_choseCountry"
@@ -123,7 +126,7 @@
                     android:inputType="phone"
                     android:padding="@dimen/dp8"
                     android:textColor="@color/rg_black_register"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/dp14"
                     app:mask="###-###-####" />
 
             </LinearLayout>
@@ -136,7 +139,7 @@
                 android:layout_marginTop="@dimen/dp20"
                 android:background="@drawable/rg_background_button_start_register"
                 android:text="@string/rg_Start"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:textColor="@color/rg_whit_background" />
 
             <LinearLayout
@@ -163,7 +166,8 @@
                     android:paddingRight="@dimen/dp12"
                     android:text="@string/rg_agreement_text_register"
                     android:textColor="@color/rg_border_editText"
-                    android:textSize="@dimen/sp14" />
+                    android:textSize="@dimen/dp14"
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -57,7 +57,7 @@
         android:text="2 of 10"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp18"
+        android:textSize="@dimen/dp18"
         />
 
     <net.iGap.libs.rippleeffect.RippleView
@@ -105,7 +105,7 @@
         android:ellipsize="end"
         android:textColor="@android:color/white"
         android:maxLines="10"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         style="@style/ChatMessages.EmojiTextView"
         />
 
@@ -116,7 +116,7 @@
         android:text="name"
         android:textColor="@android:color/white"
         android:visibility="visible"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         />
 
     <TextView
@@ -125,7 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         />
 
     <TextView
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sp14"
+        android:textSize="@dimen/dp14"
         />
   </LinearLayout>
 

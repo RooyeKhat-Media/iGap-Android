@@ -63,7 +63,7 @@
         android:text="@string/md_visibility"
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/gray_6c"
-        android:textSize="@dimen/sp20"
+        android:textSize="@dimen/dp20"
         />
 
   </LinearLayout>
@@ -98,7 +98,7 @@
         android:text="@string/md_thumb_down"
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/gray_6c"
-        android:textSize="@dimen/sp20"
+        android:textSize="@dimen/dp20"
         />
 
   </LinearLayout>
@@ -133,7 +133,7 @@
         android:text="@string/md_thumb_up"
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/gray_6c"
-        android:textSize="@dimen/sp20"
+        android:textSize="@dimen/dp20"
         />
 
   </LinearLayout>

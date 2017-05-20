@@ -76,7 +76,8 @@
                                 android:gravity="center"
                                 android:text="10:21"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/sp10"/>
+                                android:textSize="@dimen/dp10"
+                                />
 
                             <ImageView
                                 android:id="@+id/cslr_txt_tic"

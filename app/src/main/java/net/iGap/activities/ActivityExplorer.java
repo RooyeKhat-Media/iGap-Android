@@ -95,6 +95,7 @@ public class ActivityExplorer extends ActivityEnhanced {
         int size = node.size();
         if (size == rootcount) {
             super.onBackPressed();
+            finish();
         } else if (size == rootcount + 1) {
             firstfill();
         } else {

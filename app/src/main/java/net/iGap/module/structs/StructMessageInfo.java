@@ -14,6 +14,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
 import io.realm.Realm;
+import net.iGap.G;
 import net.iGap.module.MyType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmChannelExtra;
@@ -23,7 +24,6 @@ import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.realm.RealmRoomMessageLocation;
-import net.iGap.realm.RealmUserInfo;
 import org.parceler.Parcels;
 
 /**
@@ -293,8 +293,7 @@ public class StructMessageInfo implements Parcelable {
 
     public static StructMessageInfo convert(RealmRoomMessage roomMessage) {
         Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-        long userId = realmUserInfo.getUserId();
+
         StructMessageInfo messageInfo = new StructMessageInfo();
         messageInfo.roomId = roomMessage.getRoomId();
         messageInfo.status = roomMessage.getStatus();
@@ -322,9 +321,9 @@ public class StructMessageInfo implements Parcelable {
         messageInfo.messageText = roomMessage.getMessage();
         messageInfo.senderID = Long.toString(roomMessage.getUserId());
         messageInfo.authorHash = roomMessage.getAuthorHash();
-        if (roomMessage.getUserId() == userId) {
+        if (roomMessage.getUserId() == G.userId) {
             messageInfo.sendType = MyType.SendType.send;
-        } else if (roomMessage.getUserId() != userId) {
+        } else if (roomMessage.getUserId() != G.userId) {
             messageInfo.sendType = MyType.SendType.recvive;
         }
         if (roomMessage.getMessageType() == ProtoGlobal.RoomMessageType.CONTACT) {
@@ -357,26 +356,30 @@ public class StructMessageInfo implements Parcelable {
 
         messageInfo.showTime = roomMessage.isShowTime();
 
+        realm.close();
         return messageInfo;
     }
 
     public boolean isSenderMe() {
-        Realm realm = Realm.getDefaultInstance();
+
+        boolean result = false;
+
         try {
-            return Long.parseLong(senderID) == realm.where(RealmUserInfo.class).findFirst().getUserId();
-        } finally {
-            realm.close();
+            result = Long.parseLong(senderID) == G.userId;
+        } catch (Exception e) {
+
         }
+
+        return result;
     }
 
     public boolean isAuthorMe() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+
         boolean output = false;
-        if (realmUserInfo != null && authorHash != null) {
-            output = authorHash.equals(realmUserInfo.getAuthorHash());
+        if (authorHash != null) {
+            output = authorHash.equals(G.authorHash);
         }
-        realm.close();
+
         return output;
     }
 

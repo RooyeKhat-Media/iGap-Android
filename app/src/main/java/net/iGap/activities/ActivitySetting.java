@@ -18,7 +18,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -33,9 +32,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -90,7 +87,9 @@ import net.iGap.interfaces.OnUserProfileUpdateUsername;
 import net.iGap.interfaces.OnUserSessionLogout;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.FileUploadStructure;
 import net.iGap.module.FileUtils;
 import net.iGap.module.IntentRequests;
@@ -102,6 +101,7 @@ import net.iGap.proto.ProtoResponse;
 import net.iGap.proto.ProtoUserProfileCheckUsername;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
+import net.iGap.realm.RealmPrivacy;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserAvatarAdd;
@@ -157,6 +157,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
     private ImageView imgToggleBottomColor;
     private ImageView imgSendAndAttachColor;
     private ImageView imgHeaderTextColor;
+    private ImageView imgHeaderProgressColor;
     private long idAvatar;
     private FloatingActionButton fab;
     private net.iGap.module.CircleImageView circleImageView;
@@ -169,7 +170,8 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
     private TextView txtEmail;
     TextView txtNickNameTitle;
 
-    private Realm mRealm;
+    Realm mRealm;
+
     RealmChangeListener<RealmModel> userInfoListener;
     RealmUserInfo realmUserInfo;
 
@@ -183,12 +185,12 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
     }
 
     private void showInitials() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+
+        RealmUserInfo realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
         circleImageView.setImageBitmap(
             HelperImageBackColor.drawAlphabetOnPicture((int) circleImageView.getContext().getResources().getDimension(R.dimen.dp100), realmUserInfo.getUserInfo().getInitials(),
                 realmUserInfo.getUserInfo().getColor()));
-        realm.close();
+
 
         if (G.onChangeUserPhotoListener != null) {
             G.onChangeUserPhotoListener.onChangePhoto(null);
@@ -224,18 +226,32 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         }
     }
 
+    private Realm getRealm() {
+
+        if (mRealm != null && !mRealm.isClosed()) {
+            return mRealm;
+        }
+
+        mRealm = Realm.getDefaultInstance();
+        return mRealm;
+    }
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        mRealm = Realm.getDefaultInstance();
-
-        realmUserInfo = mRealm.where(RealmUserInfo.class).findFirst();
+        realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
         userInfoListener = new RealmChangeListener<RealmModel>() {
             @Override public void onChange(RealmModel element) {
                 updateUserInfoUI((RealmUserInfo) element);
             }
         };
+
+        RealmPrivacy realmPrivacy = getRealm().where(RealmPrivacy.class).findFirst();
+
+        if (realmPrivacy == null) {
+            RealmPrivacy.updatePrivacy("", "", "", "");
+        }
 
         sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
 
@@ -246,7 +262,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         txtGander = (TextView) findViewById(R.id.st_txt_gander);
         txtEmail = (TextView) findViewById(R.id.st_txt_email);
         prgWait = (ProgressBar) findViewById(R.id.st_prgWaiting_addContact);
-        prgWait.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        AppUtils.setProgresColler(prgWait);
 
         updateUserInfoUI(realmUserInfo);
 
@@ -422,11 +438,11 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         layoutGander.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 int position = -1;
-                Realm realm1 = Realm.getDefaultInstance();
+
                 try {
-                    if (realm1.where(RealmUserInfo.class).findFirst().getGender().getNumber() == 1) {
+                    if (getRealm().where(RealmUserInfo.class).findFirst().getGender().getNumber() == 1) {
                         position = 0;
-                    } else if (realm1.where(RealmUserInfo.class).findFirst().getGender().getNumber() == 2) {
+                    } else if (getRealm().where(RealmUserInfo.class).findFirst().getGender().getNumber() == 2) {
                         position = 1;
                     } else {
                         position = -1;
@@ -434,7 +450,6 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
-                realm1.close();
 
                 G.onUserProfileSetGenderResponse = new OnUserProfileSetGenderResponse() {
                     @Override public void onUserProfileGenderResponse(final ProtoGlobal.Gender gender, ProtoResponse.Response response) {
@@ -792,165 +807,172 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         /*
           set layout for popup menu
          */
-
-        final int screenWidth = (int) (getResources().getDisplayMetrics().widthPixels / 1.7);
-        // button popupMenu in toolbar
         RippleView rippleMore = (RippleView) findViewById(R.id.st_ripple_more);
         rippleMore.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
             @Override public void onComplete(RippleView rippleView) {
 
-                LinearLayout layoutDialog = new LinearLayout(ActivitySetting.this);
-                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutDialog.setOrientation(LinearLayout.VERTICAL);
-                layoutDialog.setBackgroundColor(getResources().getColor(android.R.color.white));
+                final MaterialDialog dialog = new MaterialDialog.Builder(ActivitySetting.this).customView(R.layout.chat_popup_dialog_custom, true).build();
+                View v = dialog.getCustomView();
 
-                TextView txtLogOut = new TextView(ActivitySetting.this);
-                TextView txtDeleteAccount = new TextView(ActivitySetting.this);
+                DialogAnimation.animationUp(dialog);
+                dialog.show();
+
+                ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+                ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+
+                TextView txtLogOut = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+                TextView txtDeleteAccount = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+
+                TextView iconLogOut = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+                iconLogOut.setText(getResources().getString(R.string.md_exit_app));
+                TextView iconDeleteAccount = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+                iconDeleteAccount.setText(getResources().getString(R.string.md_delete_acc));
+
+                root1.setVisibility(View.VISIBLE);
+                root2.setVisibility(View.VISIBLE);
 
                 txtLogOut.setText(getResources().getString(log_out));
                 txtDeleteAccount.setText(getResources().getString(R.string.delete_account));
 
-                txtLogOut.setTextColor(getResources().getColor(android.R.color.black));
-                txtDeleteAccount.setTextColor(getResources().getColor(android.R.color.black));
 
-                int dim20 = (int) getResources().getDimension(R.dimen.dp20);
-                int dim12 = (int) getResources().getDimension(R.dimen.dp12);
-                int dim16 = (int) getResources().getDimension(R.dimen.dp16);
-                int sp14_Popup = 14;
 
-                /**
-                 * change dpi tp px
-                 */
-                DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-                int width = displayMetrics.widthPixels;
-                int widthDpi = Math.round(width / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+                root1.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        dialog.dismiss();
 
-                if (widthDpi >= 720) {
-                    sp14_Popup = 30;
-                } else if (widthDpi >= 600) {
-                    sp14_Popup = 22;
-                } else {
-                    sp14_Popup = 15;
-                }
-                txtLogOut.setTextSize(sp14_Popup);
-                txtDeleteAccount.setTextSize(sp14_Popup);
+                        final MaterialDialog inDialog = new MaterialDialog.Builder(ActivitySetting.this).customView(R.layout.dialog_content_custom, true).build();
+                        View v = inDialog.getCustomView();
 
-                txtLogOut.setPadding(dim20, dim12, dim12, dim20);
-                txtDeleteAccount.setPadding(dim20, 0, dim12, dim16);
-                layoutDialog.addView(txtLogOut, params);
-                layoutDialog.addView(txtDeleteAccount, params);
+                        inDialog.show();
 
-                popupWindow = new PopupWindow(layoutDialog, screenWidth, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                popupWindow.setOutsideTouchable(true);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    popupWindow.setBackgroundDrawable(getResources().getDrawable(R.mipmap.shadow3, ActivitySetting.this.getTheme()));
-                } else {
-                    popupWindow.setBackgroundDrawable((getResources().getDrawable(R.mipmap.shadow3)));
-                }
-                if (popupWindow.isOutsideTouchable()) {
-                    popupWindow.dismiss();
-                }
-                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override public void onDismiss() {
+                        TextView txtTitle = (TextView) v.findViewById(R.id.txtDialogTitle);
+                        txtTitle.setText(getResources().getString(R.string.log_out));
+
+                        TextView iconTitle = (TextView) v.findViewById(R.id.iconDialogTitle);
+                        iconTitle.setText(R.string.md_exit_app);
+
+                        TextView txtContent = (TextView) v.findViewById(R.id.txtDialogContent);
+                        txtContent.setText(R.string.content_log_out);
+
+                        TextView txtCancel = (TextView) v.findViewById(R.id.txtDialogCancel);
+                        TextView txtOk = (TextView) v.findViewById(R.id.txtDialogOk);
+
+                        txtOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                inDialog.dismiss();
+
+                                showProgressBar();
+
+                                G.onUserSessionLogout = new OnUserSessionLogout() {
+                                    @Override
+                                    public void onUserSessionLogout() {
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                HelperLogout.logout();
+                                                hideProgressBar();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                hideProgressBar();
+                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        snack.dismiss();
+                                                    }
+                                                });
+                                                snack.show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onTimeOut() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                hideProgressBar();
+                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        snack.dismiss();
+                                                    }
+                                                });
+                                                snack.show();
+                                            }
+                                        });
+                                    }
+                                };
+
+                                new RequestUserSessionLogout().userSessionLogout();
+                            }
+                        });
+
+                        txtCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                inDialog.dismiss();
+                            }
+                        });
+
                     }
                 });
 
-                popupWindow.setAnimationStyle(android.R.style.Animation_InputMethod);
-                popupWindow.showAtLocation(layoutDialog, Gravity.RIGHT | Gravity.TOP, (int) getResources().getDimension(R.dimen.dp16), (int) getResources().getDimension(R.dimen.dp32));
-                //                popupWindow.showAsDropDown(v);
-
-                txtLogOut.setOnClickListener(new View.OnClickListener() {
+                root2.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
 
-                        new MaterialDialog.Builder(ActivitySetting.this).title(getResources().getString(R.string.log_out))
-                            .content(R.string.content_log_out)
-                            .positiveText(getResources().getString(R.string.B_ok))
-                            .negativeText(getResources().getString(R.string.B_cancel))
-                            .iconRes(R.mipmap.exit_to_app_button)
-                            .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    popupWindow.dismiss();
-                                    showProgressBar();
+                        dialog.dismiss();
 
-                                    G.onUserSessionLogout = new OnUserSessionLogout() {
-                                        @Override public void onUserSessionLogout() {
+                        final MaterialDialog inDialog = new MaterialDialog.Builder(ActivitySetting.this).customView(R.layout.dialog_content_custom, true).build();
+                        View v = inDialog.getCustomView();
 
-                                            runOnUiThread(new Runnable() {
-                                                @Override public void run() {
-                                                    HelperLogout.logout();
-                                                    hideProgressBar();
-                                                }
-                                            });
-                                        }
+                        inDialog.show();
 
-                                        @Override public void onError() {
-                                            runOnUiThread(new Runnable() {
-                                                @Override public void run() {
-                                                    hideProgressBar();
-                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                        @Override public void onClick(View view) {
-                                                            snack.dismiss();
-                                                        }
-                                                    });
-                                                    snack.show();
-                                                }
-                                            });
-                                        }
+                        TextView txtTitle = (TextView) v.findViewById(R.id.txtDialogTitle);
+                        txtTitle.setText(getResources().getString(R.string.delete_account));
 
-                                        @Override public void onTimeOut() {
-                                            runOnUiThread(new Runnable() {
-                                                @Override public void run() {
-                                                    hideProgressBar();
-                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                        @Override public void onClick(View view) {
-                                                            snack.dismiss();
-                                                        }
-                                                    });
-                                                    snack.show();
-                                                }
-                                            });
-                                        }
-                                    };
+                        TextView iconTitle = (TextView) v.findViewById(R.id.iconDialogTitle);
+                        iconTitle.setText(R.string.md_remove_circle);
 
-                                    new RequestUserSessionLogout().userSessionLogout();
-                                }
-                            })
+                        TextView txtContent = (TextView) v.findViewById(R.id.txtDialogContent);
+                        String text = getResources().getString(R.string.delete_account_text) + "\n" + getResources().getString(R.string.delete_account_text_desc);
+                        txtContent.setText(text);
 
-                            .show();
-                    }
-                });
+                        TextView txtCancel = (TextView) v.findViewById(R.id.txtDialogCancel);
+                        TextView txtOk = (TextView) v.findViewById(R.id.txtDialogOk);
 
-                txtDeleteAccount.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View view) {
 
-                        new MaterialDialog.Builder(ActivitySetting.this).title(getResources().getString(R.string.delete_account))
-                            .content(getResources().getString(R.string.delete_account_text))
-                            .positiveText(getResources().getString(R.string.B_ok))
-                            .iconRes(R.mipmap.round_delete_button)
-                            .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
-                            .negativeText(getResources().getString(R.string.B_cancel))
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        txtOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                inDialog.dismiss();
+                                FragmentDeleteAccount fragmentDeleteAccount = new FragmentDeleteAccount();
 
-                                    FragmentDeleteAccount fragmentDeleteAccount = new FragmentDeleteAccount();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("PHONE", phoneName);
+                                fragmentDeleteAccount.setArguments(bundle);
+                                getSupportFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.st_layoutParent, fragmentDeleteAccount, null).commit();
+                            }
+                        });
 
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("PHONE", phoneName);
-                                    fragmentDeleteAccount.setArguments(bundle);
-                                    getSupportFragmentManager().beginTransaction()
-                                        .addToBackStack(null)
-                                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
-                                        .replace(R.id.st_layoutParent, fragmentDeleteAccount, null)
-                                        .commit();
-                                }
-                            })
-                            .show();
-                        popupWindow.dismiss();
+                        txtCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                inDialog.dismiss();
+                            }
+                        });
                     }
                 });
             }
@@ -1003,8 +1025,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
 
             @Override public void onComplete(RippleView rippleView) {
 
-                Realm realm = Realm.getDefaultInstance();
-                if (realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).count() > 0) {
+                if (getRealm().where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).count() > 0) {
                     FragmentShowAvatars.appBarLayout = fab;
                     FragmentShowAvatars fragment = FragmentShowAvatars.newInstance(userId, FragmentShowAvatars.From.setting);
                     ActivitySetting.this.getSupportFragmentManager()
@@ -1014,7 +1035,6 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                         .replace(R.id.st_layoutParent, fragment, null)
                         .commit();
                 }
-                realm.close();
             }
         });
 
@@ -1100,19 +1120,38 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         lyCleanUp.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
 
-                MaterialDialog dialog = new MaterialDialog.Builder(G.currentActivity).title(R.string.do_you_want_to_clean_all_data_in_chat_rooms)
-                    .positiveText(R.string.ok)
-                    .cancelable(true)
-                    .negativeText(android.R.string.cancel)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                final MaterialDialog inDialog = new MaterialDialog.Builder(ActivitySetting.this).customView(R.layout.dialog_content_custom, true).build();
+                View view = inDialog.getCustomView();
 
-                            RealmRoomMessage.ClearAllMessage(true, 0);
-                        }
-                    })
-                    .build();
+                inDialog.show();
 
-                dialog.show();
+                TextView txtTitle = (TextView) view.findViewById(R.id.txtDialogTitle);
+                txtTitle.setText(getResources().getString(R.string.clean_up_chat_rooms));
+
+                TextView iconTitle = (TextView) view.findViewById(R.id.iconDialogTitle);
+                iconTitle.setText(R.string.md_clean_up);
+
+                TextView txtContent = (TextView) view.findViewById(R.id.txtDialogContent);
+                txtContent.setText(R.string.do_you_want_to_clean_all_data_in_chat_rooms);
+
+                TextView txtCancel = (TextView) view.findViewById(R.id.txtDialogCancel);
+                TextView txtOk = (TextView) view.findViewById(R.id.txtDialogOk);
+
+                txtOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        inDialog.dismiss();
+                        RealmRoomMessage.ClearAllMessage(true, 0);
+                    }
+                });
+
+                txtCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        inDialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -1574,6 +1613,26 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         });
 
         //***********************
+
+        imgHeaderProgressColor = (ImageView) findViewById(R.id.asn_img_default_progress_color);
+        GradientDrawable bgShapeProgressColor = (GradientDrawable) imgHeaderProgressColor.getBackground();
+        bgShapeProgressColor.setColor(Color.parseColor(G.progressColor));
+
+        imgHeaderProgressColor.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                showSelectAppColorDialog(R.string.default_progress_color);
+            }
+        });
+
+        TextView txtProgressColor = (TextView) findViewById(R.id.asn_txt_default_progress_color);
+        txtProgressColor.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                showSelectAppColorDialog(R.string.default_progress_color);
+            }
+        });
+
+
+        //***********************
          /*
           open browser
          */
@@ -1659,7 +1718,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(SHP_SETTING.KEY_KEEP_MEDIA, true);
+                            editor.putBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
                             editor.apply();
                             txtSubKeepMedia.setText(getResources().getString(R.string.keep_media_forever));
                         }
@@ -1668,7 +1727,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
+                            editor.putBoolean(SHP_SETTING.KEY_KEEP_MEDIA, true);
                             editor.apply();
                             txtSubKeepMedia.setText(getResources().getString(R.string.keep_media_1week));
                         }
@@ -2053,6 +2112,10 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                         case R.string.default_header_font_color:
                             headerColorClick(picker.getColor(), true);
                             break;
+                        case R.string.default_progress_color:
+                            progressColorClick(picker.getColor(), true);
+                            break;
+
                     }
                 } catch (IllegalArgumentException e) {
 
@@ -2075,6 +2138,7 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
                     //  toggleBottomClick(Color.parseColor(Config.default_toggleButtonColor));
                     sendAndAttachColorClick(Color.parseColor(Config.default_attachmentColor));
                     appBarColorClick(Color.parseColor(Config.default_appBarColor));
+                    progressColorClick(Color.parseColor(Config.default_appBarColor), false);
                 }
             })
             .negativeText(R.string.st_dialog_reset_all_notification_no)
@@ -2108,6 +2172,20 @@ public class ActivitySetting extends ActivityEnhanced implements OnUserAvatarRes
         G.notificationColor = "#" + Integer.toHexString(color);
         bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, G.notificationColor);
+        editor.apply();
+
+        if (updateUi && G.onRefreshActivity != null) {
+            G.onRefreshActivity.refresh(G.selectedLanguage);
+        }
+    }
+
+    private void progressColorClick(int color, boolean updateUi) {
+
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        GradientDrawable bgShape = (GradientDrawable) imgHeaderProgressColor.getBackground();
+        G.progressColor = "#" + Integer.toHexString(color);
+        bgShape.setColor(color);
+        editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, G.progressColor);
         editor.apply();
 
         if (updateUi && G.onRefreshActivity != null) {

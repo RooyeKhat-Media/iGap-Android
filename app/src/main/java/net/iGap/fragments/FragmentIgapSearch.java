@@ -275,6 +275,7 @@ public class FragmentIgapSearch extends Fragment {
                                         @Override public void execute(Realm realm) {
                                             realmRoom[0] = RealmRoom.putOrUpdate(item.getRoom());
                                             realmRoom[0].setDeleted(true);
+                                            G.deletedRoomList.add(realmRoom[0].getId());
                                         }
                                     });
                                 }
@@ -284,6 +285,9 @@ public class FragmentIgapSearch extends Fragment {
                         }
 
                         itemAdapter.add(items);
+
+                        realm.close();
+
                     }
                 });
             }

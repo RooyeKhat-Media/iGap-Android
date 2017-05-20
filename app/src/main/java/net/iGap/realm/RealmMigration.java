@@ -101,6 +101,14 @@ public class RealmMigration implements io.realm.RealmMigration {
             if (realmRoomMessageSchema != null) {
                 realmRoomMessageSchema.addField("futureMessageId", long.class, FieldAttribute.REQUIRED);
             }
+            oldVersion++;
+        }
+
+        if (oldVersion == 9) {
+            schema.create(RealmCallConfig.class.getSimpleName()).addField(RealmCallConfigFields.VOICE_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.VIDEO_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.SCREEN_SHARING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.ICE_SERVER, byte[].class);
+
+            RealmObjectSchema realmCallLog = schema.create(RealmCallLog.class.getSimpleName()).addField(RealmCallLogFields.ID, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.NAME, String.class).addField(RealmCallLogFields.TIME, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.LOG_PROTO, byte[].class);
+            realmCallLog.addPrimaryKey(RealmCallLogFields.ID);
         }
     }
 }

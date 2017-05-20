@@ -30,12 +30,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -70,6 +68,7 @@ import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.structs.StructMessageInfo;
@@ -112,8 +111,6 @@ public class ActivityShearedMedia extends ActivityEnhanced {
     private int changesize = 0;
     ProgressBar progressBar;
 
-    private Realm mRealm;
-
     private boolean isChangeSelectType = false;
 
     private RecyclerView.OnScrollListener onScrollListener;
@@ -144,14 +141,6 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
     private int offset;
 
-    private Realm getRealm() {
-        if (mRealm == null || mRealm.isClosed()) {
-
-            mRealm = Realm.getDefaultInstance();
-        }
-
-        return mRealm;
-    }
 
     @Override
     protected void onResume() {
@@ -169,10 +158,6 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
         if (mRealmList != null) {
             mRealmList.removeAllChangeListeners();
-        }
-
-        if (mRealm != null) {
-            mRealm.close();
         }
     }
 
@@ -272,13 +257,14 @@ public class ActivityShearedMedia extends ActivityEnhanced {
             FragmentShowImage.downloadedList.clear();
         } else if (!adapter.resetSelected()) {
             super.onBackPressed();
+            finish();
         }
     }
 
     private void initComponent() {
 
         progressBar = (ProgressBar) findViewById(R.id.asm_progress_bar_waiting);
-        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        AppUtils.setProgresColler(progressBar);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.asm_appbar_shared_media);
 
@@ -416,7 +402,8 @@ public class ActivityShearedMedia extends ActivityEnhanced {
             @Override
             public void onComplete(RippleView rippleView) {
 
-                final RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                Realm realm = Realm.getDefaultInstance();
+                final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
                 if (realmRoom != null) {
                     ActivityChat.deleteSelectedMessages(roomId, adapter.SelectedList, realmRoom.getType());
@@ -450,7 +437,7 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
                 adapter.resetSelected();
 
-
+                realm.close();
             }
         });
 
@@ -478,42 +465,127 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
     public void popUpMenuSharedMedai() {
 
-        MaterialDialog dialog = new MaterialDialog.Builder(this).items(R.array.pop_up_shared_media).contentColor(Color.BLACK).itemsCallback(new MaterialDialog.ListCallback() {
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(ActivityShearedMedia.this).customView(R.layout.chat_popup_dialog_custom, true).build();
+        View v = dialog.getCustomView();
+
+        DialogAnimation.animationUp(dialog);
+        dialog.show();
+
+        ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+        ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+        ViewGroup root3 = (ViewGroup) v.findViewById(R.id.dialog_root_item3_notification);
+        ViewGroup root4 = (ViewGroup) v.findViewById(R.id.dialog_root_item4_notification);
+        ViewGroup root5 = (ViewGroup) v.findViewById(R.id.dialog_root_item5_notification);
+        ViewGroup root6 = (ViewGroup) v.findViewById(R.id.dialog_root_item6_notification);
+        ViewGroup root7 = (ViewGroup) v.findViewById(R.id.dialog_root_item7_notification);
+
+        TextView txtImage = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+        TextView txtVideo = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+        TextView txtAudio = (TextView) v.findViewById(R.id.dialog_text_item3_notification);
+        TextView txtVoice = (TextView) v.findViewById(R.id.dialog_text_item4_notification);
+        TextView txtGif = (TextView) v.findViewById(R.id.dialog_text_item5_notification);
+        TextView txtFile = (TextView) v.findViewById(R.id.dialog_text_item6_notification);
+        TextView txtLink = (TextView) v.findViewById(R.id.dialog_text_item7_notification);
+
+        TextView iconImage = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+        iconImage.setText(getResources().getString(R.string.md_photo));
+
+        TextView iconVideo = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+        iconVideo.setText(getResources().getString(R.string.md_video_library));
+
+        TextView iconAudio = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
+        iconAudio.setText(getResources().getString(R.string.md_library_music));
+
+        TextView iconVoice = (TextView) v.findViewById(R.id.dialog_icon_item4_notification);
+        iconVoice.setText(getResources().getString(R.string.md_perm_camera));
+
+        TextView iconGif = (TextView) v.findViewById(R.id.dialog_icon_item5_notification);
+        iconGif.setText(getResources().getString(R.string.md_gif));
+
+        TextView iconFile = (TextView) v.findViewById(R.id.dialog_icon_item6_notification);
+        iconFile.setText(getResources().getString(R.string.md_file_library));
+
+        TextView iconLink = (TextView) v.findViewById(R.id.dialog_icon_item7_notification);
+        iconLink.setText(getResources().getString(R.string.md_link));
+
+        root1.setVisibility(View.VISIBLE);
+        root2.setVisibility(View.VISIBLE);
+        root3.setVisibility(View.VISIBLE);
+        root4.setVisibility(View.VISIBLE);
+        root5.setVisibility(View.VISIBLE);
+        root6.setVisibility(View.VISIBLE);
+        root7.setVisibility(View.VISIBLE);
+
+        txtImage.setText(getResources().getString(R.string.shared_image));
+        txtVideo.setText(getResources().getString(R.string.shared_video));
+        txtAudio.setText(getResources().getString(R.string.shared_audio));
+        txtVoice.setText(getResources().getString(R.string.shared_voice));
+        txtGif.setText(getResources().getString(R.string.shared_gif));
+        txtFile.setText(getResources().getString(R.string.shared_file));
+        txtLink.setText(getResources().getString(R.string.shared_links));
+
+
+        root1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-
-                switch (which) {
-                    case 0:
-                        fillListImage();
-                        break;
-                    case 1:
-                        fillListVideo();
-                        break;
-                    case 2:
-                        fillListAudio();
-                        break;
-                    case 3:
-                        fillListVoice();
-                        break;
-                    case 4:
-                        fillListGif();
-                        break;
-                    case 5:
-                        fillListFile();
-                        break;
-                    case 6:
-                        fillListLink();
-                        break;
-                }
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListImage();
             }
-        }).show();
+        });
+        root2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListVideo();
+                }
+        });
+        root3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListAudio();
+            }
+        });
+        root4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListVoice();
+            }
+        });
+        root5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListGif();
+            }
+        });
+        root6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListFile();
+            }
+        });
+        root7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fillListLink();
+            }
+        });
 
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = (int) getResources().getDimension(R.dimen.dp260);
-        layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
 
-        dialog.getWindow().setAttributes(layoutParams);
+        //WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        //layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        //layoutParams.width = (int) getResources().getDimension(R.dimen.dp260);
+        //layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
+
+        //dialog.getWindow().setAttributes(layoutParams);
+
+        DialogAnimation.animationUp(dialog);
+        dialog.show();
     }
 
     //********************************************************************************************
@@ -662,7 +734,8 @@ public class ActivityShearedMedia extends ActivityEnhanced {
             mRealmList.removeAllChangeListeners();
         }
 
-        mRealmList = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
+        Realm realm = Realm.getDefaultInstance();
+        mRealmList = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
                 equalTo(RealmRoomMessageFields.MESSAGE_TYPE, ProtoGlobal.RoomMessageType.TEXT.toString()).
                 equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.HAS_MESSAGE_LINK, true).
                 findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.DESCENDING);
@@ -683,6 +756,8 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
         isChangeSelectType = false;
 
+        realm.close();
+
     }
 
     //********************************************************************************************
@@ -693,7 +768,9 @@ public class ActivityShearedMedia extends ActivityEnhanced {
             mRealmList.removeAllChangeListeners();
         }
 
-        mRealmList = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
+        Realm realm = Realm.getDefaultInstance();
+
+        mRealmList = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
                 contains(RealmRoomMessageFields.MESSAGE_TYPE, type).equalTo(RealmRoomMessageFields.DELETED, false).findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.DESCENDING);
 
         setListener();
@@ -704,6 +781,8 @@ public class ActivityShearedMedia extends ActivityEnhanced {
         mListcount = mRealmList.size();
 
         ArrayList<StructShearedMedia> list = addTimeToList(mRealmList);
+
+        realm.close();
 
         return list;
     }
@@ -1005,6 +1084,10 @@ public class ActivityShearedMedia extends ActivityEnhanced {
                 });
 
                 messageProgress = (MessageProgress) itemView.findViewById(R.id.progress);
+                AppUtils.setProgresColor(messageProgress.progressBar);
+
+
+
                 messageProgress.withDrawable(R.drawable.ic_download, true);
 
                 contentLoading = (ContentLoadingProgressBar) itemView.findViewById(R.id.ch_progress_loadingContent);
@@ -1155,26 +1238,27 @@ public class ActivityShearedMedia extends ActivityEnhanced {
         private void updateViewAfterDownload(String cashId) {
             for (int j = mNewList.size() - 1; j >= 0; j--) {
                 try {
-                    String mCashId = mNewList.get(j).item.getForwardMessage() != null ? mNewList.get(j).item.getForwardMessage().getAttachment().getCacheId() : mNewList.get(j).item.getAttachment().getCacheId();
-                    if (mCashId.equals(cashId)) {
+                    if (mNewList.get(j).item.isValid() && !mNewList.get(j).item.isDeleted()) {
+                        String mCashId = mNewList.get(j).item.getForwardMessage() != null ? mNewList.get(j).item.getForwardMessage().getAttachment().getCacheId()
+                            : mNewList.get(j).item.getAttachment().getCacheId();
+                        if (mCashId.equals(cashId)) {
+                            needDownloadList.remove(mNewList.get(j).item.getMessageId());
 
-                        needDownloadList.remove(mNewList.get(j).item.getMessageId());
+                            final int finalJ = j;
+                            runOnUiThread(new Runnable() {
+                                @Override public void run() {
 
-                        final int finalJ = j;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                recyclerView.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        recyclerView.getAdapter().notifyItemChanged(finalJ);
-                                    }
-                                });
-                            }
-                        });
+                                    recyclerView.post(new Runnable() {
+                                        @Override public void run() {
+                                            recyclerView.getAdapter().notifyItemChanged(finalJ);
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     }
                 } catch (NullPointerException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -1202,7 +1286,6 @@ public class ActivityShearedMedia extends ActivityEnhanced {
 
                 SelectedList.clear();
                 notifyDataSetChanged();
-
                 numberOfSelected = 0;
             }
             complete.complete(false, "1", "0");//

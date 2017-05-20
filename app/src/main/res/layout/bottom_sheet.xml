@@ -60,7 +60,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_folder"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -73,7 +73,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/am_document"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 
@@ -95,7 +95,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_music"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -109,7 +109,7 @@
               android:singleLine="true"
               android:text="@string/am_music"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
         <LinearLayout
@@ -129,7 +129,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_video_camera"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -143,7 +143,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/am_video"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
         <LinearLayout
@@ -162,7 +162,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_photo"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -177,7 +177,7 @@
               android:singleLine="true"
               android:text="@string/am_picture"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
         <LinearLayout
@@ -198,7 +198,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_camera"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -211,7 +211,7 @@
               android:singleLine="true"
               android:text="@string/am_camera"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               android:id="@+id/textView5"
               />
         </LinearLayout>
@@ -242,7 +242,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_user"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -255,7 +255,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/am_contact"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 
@@ -277,7 +277,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_location"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -291,7 +291,7 @@
               android:singleLine="true"
               android:text="@string/am_location"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 
@@ -311,7 +311,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_brush"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -326,7 +326,7 @@
               android:singleLine="true"
               android:text="@string/am_paint"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 
@@ -346,7 +346,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_file_empty"
-              android:textSize="@dimen/sp26"
+              android:textSize="@dimen/dp26"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -360,7 +360,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/am_file"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 
@@ -381,7 +381,7 @@
               android:layout_width="@dimen/dp52"
               android:layout_height="@dimen/dp52"
               android:text="@string/icon_keyboard_arrow_down"
-              android:textSize="@dimen/sp32"
+              android:textSize="@dimen/dp32"
               android:gravity="center"
               android:textColor="@color/green"
               android:layout_gravity="center_horizontal"
@@ -395,7 +395,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/navigation_drawer_close"
               android:textColor="@color/gray_4c"
-              android:textSize="@dimen/sp10"
+              android:textSize="@dimen/dp10"
               />
         </LinearLayout>
 

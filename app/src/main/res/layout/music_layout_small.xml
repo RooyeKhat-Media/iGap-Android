@@ -22,7 +22,7 @@
             android:paddingRight="@dimen/dp8"
             android:text="@string/md_play_arrow"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp32"
+          android:textSize="@dimen/dp32"
             />
 
         <TextView
@@ -34,7 +34,8 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/dp14"
+            />
 
         <TextView
             android:id="@+id/mls_txt_music_time_counter"
@@ -43,7 +44,8 @@
             android:layout_marginLeft="5dp"
             android:text=""
             android:textColor="#888"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/dp12"
+            />
 
         <TextView
             android:id="@+id/mls_txt_music_time"
@@ -52,7 +54,8 @@
             android:layout_marginRight="@dimen/dp4"
             android:text="time"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/dp12"
+            />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/mls_btn_close"
@@ -64,7 +67,7 @@
             android:text="@string/md_close_button"
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp22"
+          android:textSize="@dimen/dp22"
             />
 
     </LinearLayout>

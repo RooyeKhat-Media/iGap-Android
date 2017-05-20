@@ -37,7 +37,8 @@
                 android:text="@string/md_camera_alt"
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp12"/>
+                android:textSize="@dimen/dp12"
+                />
 
             <TextView
                 android:id="@+id/smsl_txt_video_time"
@@ -47,7 +48,8 @@
                 android:padding="2dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp12"/>
+                android:textSize="@dimen/dp12"
+                />
 
 
             <TextView
@@ -60,7 +62,8 @@
                 android:padding="2dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp12"/>
+                android:textSize="@dimen/dp12"
+                />
 
         </LinearLayout>
 

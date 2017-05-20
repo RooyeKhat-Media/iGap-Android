@@ -17,11 +17,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +41,8 @@ import net.iGap.interfaces.OnUserAvatarDelete;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.TouchImageView;
 import net.iGap.module.enums.ChannelChatRole;
@@ -106,7 +106,6 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
     private RealmResults<RealmAvatar> avatarList;
     public static OnComplete onComplete;
 
-    private Realm mRealm;
     public static View appBarLayout;
 
     public static FragmentShowAvatars newInstance(long peerId, FragmentShowAvatars.From from) {
@@ -144,9 +143,6 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
             appBarLayout.setVisibility(View.VISIBLE);
         }
 
-        if (mRealm != null) {
-            mRealm.close();
-        }
     }
 
     @Override public void onAttach(Context context) {
@@ -165,8 +161,6 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
             From result = (From) getArguments().getSerializable(ARG_Type);
 
             if (result != null) from = result;
-
-            mRealm = Realm.getDefaultInstance();
 
             fillListAvatar(from);
 
@@ -235,19 +229,21 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
 
     private void fillListAvatar(From from) {
 
+        Realm realm = Realm.getDefaultInstance();
+
         boolean isRoomExist = false;
 
         switch (from) {
             case chat:
             case setting:
-                RealmRegisteredInfo user = mRealm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mPeerId).findFirst();
+                RealmRegisteredInfo user = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mPeerId).findFirst();
                 if (user != null) {
                     new RequestUserAvatarGetList().userAvatarGetList(mPeerId);
                     isRoomExist = true;
                 }
                 break;
             case group:
-                RealmRoom roomGroup = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mPeerId).findFirst();
+                RealmRoom roomGroup = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mPeerId).findFirst();
                 if (roomGroup != null) {
                     new RequestGroupAvatarGetList().groupAvatarGetList(mPeerId);
                     isRoomExist = true;
@@ -255,7 +251,7 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
                 }
                 break;
             case channel:
-                RealmRoom roomChannel = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mPeerId).findFirst();
+                RealmRoom roomChannel = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mPeerId).findFirst();
                 if (roomChannel != null) {
                     new RequestChannelAvatarGetList().channelAvatarGetList(mPeerId);
                     isRoomExist = true;
@@ -266,7 +262,7 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
 
         if (isRoomExist) {
 
-            avatarList = mRealm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, mPeerId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING);
+            avatarList = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, mPeerId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING);
             avatarList.addChangeListener(new RealmChangeListener<RealmResults<RealmAvatar>>() {
                 @Override public void onChange(RealmResults<RealmAvatar> element) {
 
@@ -291,6 +287,8 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
 
             avatarListSize = avatarList.size();
         }
+
+        realm.close();
     }
 
     //***************************************************************************************
@@ -349,10 +347,10 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
     private void showPopupMenu(int r) {
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity()).items(r).contentColor(Color.BLACK).itemsCallback(new MaterialDialog.ListCallback() {
             @Override public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                if (which == 0) {
-                    saveToGallery();
-                } else if (which == 1) {
 
+                if (text.equals(getResources().getString(R.string.save_to_gallery))) {
+                    saveToGallery();
+                } else if (text.equals(getResources().getString(R.string.array_Delete_photo))) {
                     switch (from) {
                         case setting:
                             deletePhotoSetting();
@@ -368,14 +366,18 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
                             break;
                     }
                 }
-            }
-        }).show();
 
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = (int) getResources().getDimension(R.dimen.dp200);
-        layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
-        dialog.getWindow().setAttributes(layoutParams);
+            }
+        }).build();
+
+        DialogAnimation.animationUp(dialog);
+
+        dialog.show();
+        //WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        //layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        //layoutParams.width = (int) getResources().getDimension(R.dimen.dp200);
+        //layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
+        //dialog.getWindow().setAttributes(layoutParams);
     }
 
     //private void shareImage() {
@@ -433,7 +435,9 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
             final TouchImageView touchImageView = (TouchImageView) layout.findViewById(R.id.sisl_touch_image_view);
             final ImageView imgPlay = (ImageView) layout.findViewById(R.id.imgPlay);
             imgPlay.setVisibility(View.GONE);
+
             final MessageProgress progress = (MessageProgress) layout.findViewById(R.id.progress);
+            AppUtils.setProgresColor(progress.progressBar);
 
             final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) layout.findViewById(R.id.ch_progress_loadingContent);
             contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -558,10 +562,10 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
                                         contentLoading.setVisibility(View.GONE);
 
                                         G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
-                                    }
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
                     }
 
                     @Override public void OnError(String token) {
@@ -600,6 +604,10 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
             }
         };
 
+        if (viewPager.getCurrentItem() >= avatarList.size()) {
+            return;
+        }
+
         new RequestChannelAvatarDelete().channelAvatarDelete(mPeerId, avatarList.get(viewPager.getCurrentItem()).getId());
     }
 
@@ -625,6 +633,10 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
             }
         };
 
+        if (viewPager.getCurrentItem() >= avatarList.size()) {
+            return;
+        }
+
         new RequestGroupAvatarDelete().groupAvatarDelete(mPeerId, avatarList.get(viewPager.getCurrentItem()).getId());
     }
 
@@ -639,6 +651,10 @@ public class FragmentShowAvatars extends android.support.v4.app.Fragment {
 
             }
         };
+
+        if (viewPager.getCurrentItem() >= avatarList.size()) {
+            return;
+        }
 
         new RequestUserAvatarDelete().userAvatarDelete(avatarList.get(viewPager.getCurrentItem()).getId());
     }

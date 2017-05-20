@@ -30,6 +30,8 @@ public class MessageProgress extends FrameLayout implements IMessageProgress, Vi
     private Drawable mProgressFinishedDrawable;
     private boolean mProgressFinishedHide;
 
+    public CircularProgressView progressBar;
+
     public MessageProgress(Context context) {
         super(context);
 
@@ -74,7 +76,7 @@ public class MessageProgress extends FrameLayout implements IMessageProgress, Vi
         setForegroundGravity(Gravity.CENTER);
 
         // init progress bar
-        CircularProgressView progressBar = new CircularProgressView(context);
+        progressBar = new CircularProgressView(context);
         progressBar.setMaxProgress(100);
         progressBar.setProgress(0);
         progressBar.setVisibility(INVISIBLE);

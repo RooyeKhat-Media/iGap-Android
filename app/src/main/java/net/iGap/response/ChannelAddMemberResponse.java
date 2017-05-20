@@ -65,6 +65,8 @@ public class ChannelAddMemberResponse extends MessageHandler {
                 }
             }
         }
+
+        realm.close();
     }
 
     @Override public void timeOut() {

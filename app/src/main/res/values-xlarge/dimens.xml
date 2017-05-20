@@ -17,30 +17,21 @@
 
     <dimen name="messageBox_minusLeftRightMargin">-10dp</dimen>
 
-    <dimen name="sp14_Popup">14sp</dimen>
-    <dimen name="sp10">20sp</dimen>
-    <dimen name="sp12">24sp</dimen>
-    <dimen name="sp13">26sp</dimen>
-    <dimen name="sp14">28sp</dimen>
-    <dimen name="sp15">30sp</dimen>
-    <dimen name="sp16">32sp</dimen>
-    <dimen name="sp18">36sp</dimen>
-    <dimen name="sp20">40sp</dimen>
-    <dimen name="sp22">44sp</dimen>
-    <dimen name="sp26">52sp</dimen>
-    <dimen name="sp28">56sp</dimen>
-    <dimen name="sp32">64sp</dimen>
-    <dimen name="sp36">72sp</dimen>
-    <dimen name="sp48">96sp</dimen>
-
+  <dimen name="dp14_Popup">14dp</dimen>
     <dimen name="dp4">8dp</dimen>
     <dimen name="dp6">12dp</dimen>
     <dimen name="dp8">16dp</dimen>
+  <dimen name="dp10">20dp</dimen>
     <dimen name="dp12">24dp</dimen>
+  <dimen name="dp13">26dp</dimen>
+  <dimen name="dp14">28dp</dimen>
+  <dimen name="dp15">30dp</dimen>
     <dimen name="dp16">32dp</dimen>
     <dimen name="dp18">36dp</dimen>
     <dimen name="dp20">40dp</dimen>
+  <dimen name="dp22">44dp</dimen>
     <dimen name="dp24">48dp</dimen>
+  <dimen name="dp26">52dp</dimen>
     <dimen name="dp28">56dp</dimen>
     <dimen name="dp32">64dp</dimen>
     <dimen name="dp36">72dp</dimen>

@@ -19,6 +19,7 @@ import java.util.List;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.messageprogress.MessageProgress;
+import net.iGap.module.AppUtils;
 import net.iGap.module.ReserveSpaceGifImageView;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.enums.LocalFileType;
@@ -36,7 +37,10 @@ public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
     @Override public void onPlayPauseGIF(ViewHolder holder, String localPath) {
         super.onPlayPauseGIF(holder, localPath);
 
-        ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.photogif, true);
+        MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        AppUtils.setProgresColor(progress.progressBar);
+
+        progress.withDrawable(R.drawable.photogif, true);
 
         GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
         if (gifDrawable != null) {

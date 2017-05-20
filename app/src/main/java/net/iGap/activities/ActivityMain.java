@@ -10,9 +10,7 @@
 
 package net.iGap.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -70,6 +68,7 @@ import net.iGap.R;
 import net.iGap.WebSocketClient;
 import net.iGap.emoji.EmojiTextView;
 import net.iGap.fragments.ContactGroupFragment;
+import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentCreateChannel;
 import net.iGap.fragments.FragmentIgapSearch;
 import net.iGap.fragments.FragmentNewGroup;
@@ -118,7 +117,6 @@ import net.iGap.module.MusicPlayer;
 import net.iGap.module.MyAppBarLayout;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.ShouldScrolledBehavior;
-import net.iGap.module.StartupActions;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.ConnectionState;
 import net.iGap.module.enums.GroupChatRole;
@@ -162,8 +160,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     FloatingActionButton btnCreateNewChannel;
     LinearLayout mediaLayout;
     MusicPlayer musicPlayer;
-    public static boolean needUpdateSortList = false;
     ProgressBar progressBar;
+
+    Realm mRealm;
+
 
     public static MyAppBarLayout appBarLayout;
 
@@ -186,17 +186,27 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     boolean isThereAnyMoreItemToLoad = false;
 
     private RealmRecyclerView mRecyclerView;
-    private Realm mRealm;
     private RoomAdapter roomAdapter;
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (mRealm != null) {
             mRealm.close();
         }
     }
+
+    private Realm getRealm() {
+
+        if (mRealm != null && !mRealm.isClosed()) {
+            return mRealm;
+        }
+
+        mRealm = Realm.getDefaultInstance();
+        return mRealm;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -204,9 +214,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         setContentView(R.layout.activity_main);
 
         progressBar = (ProgressBar) findViewById(R.id.ac_progress_bar_waiting);
-        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        AppUtils.setProgresColler(progressBar);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+
         G application = (G) getApplication();
         Tracker mTracker = application.getDefaultTracker();
         mTracker.setScreenName("RoomList");
@@ -252,7 +263,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 e.printStackTrace();
             }
 
-            checkPermission();
         }
 
         G.helperNotificationAndBadge.cancelNotification();
@@ -295,8 +305,27 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         initDrawerMenu();
 
         keepMedia = sharedPreferences.getBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
-        if (keepMedia) {// if Was selected keep media at 1week
-            new HelperCalculateKeepMedia().calculateTime();
+        if (keepMedia && G.isCalculatKeepMedia) {// if Was selected keep media at 1week
+            G.isCalculatKeepMedia = false;
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    long last;
+                    long currentTime = G.currentTime;
+                    long saveTime = sharedPreferences.getLong(SHP_SETTING.KEY_KEEP_MEDIA_TIME, -1);
+                    if (saveTime == -1) {
+                        last = 7;
+                    } else {
+                        long oneWeeks = (24L * 60L * 60L * 1000L);
+
+                        long b = currentTime - saveTime;
+                        last = b / oneWeeks;
+                    }
+                    if (last >= 7) {
+                        new HelperCalculateKeepMedia().calculateTime();
+                    }
+                }
+            }, 5000);
         }
     }
 
@@ -317,14 +346,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
     }
 
-    private Realm getRealm() {
-
-        if (mRealm == null) {
-            mRealm = Realm.getDefaultInstance();
-        }
-
-        return mRealm;
-    }
 
     @Override
     protected void onStart() {
@@ -397,6 +418,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             setImage(realmUserInfo.getUserId());
         }
 
+
+
+
         final ViewGroup navBackGround = (ViewGroup) findViewById(R.id.lm_layout_user_picture);
         navBackGround.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,13 +431,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 G.handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Realm realm = Realm.getDefaultInstance();
-                        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                        if (realmUserInfo != null) {
-                            long username = realmUserInfo.getUserId();
-                            chatGetRoom(username);
-                        }
-                        realm.close();
+
+                        chatGetRoom(G.userId);
+
                     }
                 }, 225);
             }
@@ -579,6 +599,35 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
 
+        ViewGroup itemNavCall = (ViewGroup) findViewById(R.id.lm_ll_call);
+        itemNavCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawer.closeDrawer(GravityCompat.START);
+                    }
+                });
+
+                G.handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Fragment fragment = FragmentCall.newInstance();
+                        try {
+                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+                    }
+                }, 256);
+            }
+        });
+
+
+
+
         ViewGroup itemNavSend = (ViewGroup) findViewById(R.id.lm_ll_invite_friends);
         itemNavSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -657,64 +706,64 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                     public void run() {
 
                         new MaterialDialog.Builder(ActivityMain.this).title(getResources().getString(R.string.log_out))
-                                .content(R.string.content_log_out)
-                                .positiveText(getResources().getString(R.string.B_ok))
-                                .negativeText(getResources().getString(R.string.B_cancel))
-                                .iconRes(R.mipmap.exit_to_app_button)
-                                .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        G.onUserSessionLogout = new OnUserSessionLogout() {
-                                            @Override
-                                            public void onUserSessionLogout() {
+                            .content(R.string.content_log_out)
+                            .positiveText(getResources().getString(R.string.B_ok))
+                            .negativeText(getResources().getString(R.string.B_cancel))
+                            .iconRes(R.mipmap.exit_to_app_button)
+                            .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    G.onUserSessionLogout = new OnUserSessionLogout() {
+                                        @Override
+                                        public void onUserSessionLogout() {
 
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        HelperLogout.logout();
-                                                    }
-                                                });
-                                            }
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    HelperLogout.logout();
+                                                }
+                                            });
+                                        }
 
-                                            @Override
-                                            public void onError() {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-                                                                snack.dismiss();
-                                                            }
-                                                        });
-                                                        snack.show();
-                                                    }
-                                                });
-                                            }
+                                        @Override
+                                        public void onError() {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            snack.dismiss();
+                                                        }
+                                                    });
+                                                    snack.show();
+                                                }
+                                            });
+                                        }
 
-                                            @Override
-                                            public void onTimeOut() {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-                                                                snack.dismiss();
-                                                            }
-                                                        });
-                                                        snack.show();
-                                                    }
-                                                });
-                                            }
-                                        };
-                                        new RequestUserSessionLogout().userSessionLogout();
-                                    }
-                                })
-                                .show();
+                                        @Override
+                                        public void onTimeOut() {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            snack.dismiss();
+                                                        }
+                                                    });
+                                                    snack.show();
+                                                }
+                                            });
+                                        }
+                                    };
+                                    new RequestUserSessionLogout().userSessionLogout();
+                                }
+                            })
+                            .show();
                     }
                 }, 256);
             }
@@ -757,54 +806,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
     }
 
-    private void checkPermission() {
-        try {
-            HelperPermision.getStoragePermision(this, new OnGetPermission() {
-                @Override
-                public void Allow() {
-                    StartupActions.makeFolder();
-                }
-
-                @Override
-                public void deny() {
-
-                    DialogInterface.OnClickListener onOkListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            try {
-                                HelperPermision.getStoragePermision(ActivityMain.this, new OnGetPermission() {
-                                    @Override
-                                    public void Allow() {
-                                        StartupActions.makeFolder();
-                                    }
-
-                                    @Override
-                                    public void deny() {
-                                        finish();
-                                    }
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    };
-
-                    DialogInterface.OnClickListener onCancelListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    };
-
-                    new AlertDialog.Builder(ActivityMain.this).setMessage(R.string.you_have_to_get_storage_permision_for_continue).setCancelable(false).
-                            setPositiveButton(ActivityMain.this.getString(R.string.ok), onOkListener).setNegativeButton(ActivityMain.this.getString(R.string.cancel), onCancelListener).create().show();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void connectionState() {
         final TextView txtIgap = (TextView) findViewById(R.id.cl_txt_igap);
@@ -1100,7 +1101,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         preCachingLayoutManager.setExtraLayoutSpace(DeviceUtils.getScreenHeight(ActivityMain.this));
 
-        RealmResults<RealmRoom> results = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAllSorted(RealmRoomFields.UPDATED_TIME, Sort.DESCENDING);
+        RealmResults<RealmRoom> results = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
+            equalTo(RealmRoomFields.IS_DELETED, false).findAllSorted(RealmRoomFields.UPDATED_TIME, Sort.DESCENDING);
         roomAdapter = new RoomAdapter(this, results, this);
         mRecyclerView.setAdapter(roomAdapter);
 
@@ -1176,7 +1178,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 }
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.green, R.color.room_message_blue, R.color.accent);
+
+        //   swipeRefreshLayout.setColorSchemeResources(R.color.green, R.color.room_message_blue, R.color.accent);
+
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor(G.progressColor));
 
         mRecyclerView.getRecycleView().addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -1208,12 +1213,16 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     private void muteNotification(final Long id, final boolean mute) {
 
-        getRealm().executeTransaction(new Realm.Transaction() {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst().setMute(!mute);
             }
         });
+
+        realm.close();
     }
 
     private void clearHistory(Long id) {
@@ -1300,33 +1309,33 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             testIsSecure();
         }
 
+        if (G.deletedRoomList.size() > 0) {
+            cleanDeletedRooms();
+        }
+    }
+
+    private void cleanDeletedRooms() {
+
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
+
                 final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
 
-                        // delete messages and rooms in the deleted room
-                        RealmResults<RealmRoom> deletedRoomsList = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).findAll();
-                        for (RealmRoom item : deletedRoomsList) {
-                            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, item.getId()).findAll().deleteAllFromRealm();
-                            item.deleteFromRealm();
-                        }
+                        for (int i = 0; i < G.deletedRoomList.size(); i++) {
 
-                        if (needUpdateSortList) {
+                            RealmRoom _RealmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).
+                                equalTo(RealmRoomFields.ID, G.deletedRoomList.get(i)).findFirst();
 
-                            for (RealmRoom Room : realm.where(RealmRoom.class).findAll()) {
-                                if (Room.getLastMessage() != null) {
-                                    if (Room.getLastMessage().getUpdateTime() > 0) {
-                                        Room.setUpdatedTime(Room.getLastMessage().getUpdateOrCreateTime());
-                                    }
-                                }
+                            // delete messages and rooms in the deleted room
+                            if (_RealmRoom != null) {
+                                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, _RealmRoom.getId()).findAll().deleteAllFromRealm();
+                                _RealmRoom.deleteFromRealm();
                             }
-
-                            needUpdateSortList = false;
                         }
 
                         swipeRefreshLayout.setRefreshing(false);
@@ -1344,6 +1353,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 });
             }
         });
+
+        G.deletedRoomList.clear();
     }
 
     @Override
@@ -1376,7 +1387,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             } catch (Exception e) {
                 e.getStackTrace();
             }
-            ;
         } else if (fragmentIgapSearch != null && fragmentIgapSearch.isVisible()) {
             try {
                 getSupportFragmentManager().beginTransaction().remove(fragmentIgapSearch).commit();
@@ -1393,6 +1403,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             this.drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -1710,7 +1721,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
             RealmRoom mInfo = holder.mInfo = realmResults.get(i);
 
-            if (mInfo != null && mInfo.isValid() && !mInfo.isDeleted()) {
+            if (mInfo != null && mInfo.isValid()) {
                 if (mInfo.getActionState() != null && ((mInfo.getType() == GROUP || mInfo.getType() == CHANNEL) || ((RealmRoom.isCloudRoom(mInfo.getId()) || (!RealmRoom.isCloudRoom(mInfo.getId()) && mInfo.getActionStateUserId() != userId))))) {
                     //holder.messageStatus.setVisibility(GONE);
                     holder.lastMessageSender.setVisibility(View.GONE);
@@ -1760,7 +1771,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                                 lastMessageSender = holder.itemView.getResources().getString(R.string.txt_you);
                             } else {
 
-                                RealmRegisteredInfo realmRegisteredInfo = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mInfo.getLastMessage().getUserId()).findFirst();
+                                Realm realm = Realm.getDefaultInstance();
+
+                                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mInfo.getLastMessage().getUserId()).findFirst();
                                 if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName() != null) {
 
                                     String _name = realmRegisteredInfo.getDisplayName();
@@ -1781,6 +1794,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                                         }
                                     }
                                 }
+
+                                realm.close();
                             }
 
                             if (mInfo.getType() == ProtoGlobal.Room.Type.GROUP) {
@@ -1889,7 +1904,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                     @Override
                     public void onShowInitials(String initials, String color) {
-                        holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+                        holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp52), initials, color));
                     }
                 });
 

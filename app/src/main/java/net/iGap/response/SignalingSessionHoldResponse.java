@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingSessionHold;
 
 public class SignalingSessionHoldResponse extends MessageHandler {
@@ -29,7 +30,15 @@ public class SignalingSessionHoldResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+
         ProtoSignalingSessionHold.SignalingSessionHoldResponse.Builder builder = (ProtoSignalingSessionHold.SignalingSessionHoldResponse.Builder) message;
+
+        boolean hold = builder.getHold();
+
+        if (G.iSignalingSesionHold != null) {
+            G.iSignalingSesionHold.onHold(hold);
+        }
+
     }
 
     @Override

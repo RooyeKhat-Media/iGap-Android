@@ -53,7 +53,8 @@
             android:text="@string/d_of_d"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
 
       <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/menu"
@@ -92,13 +93,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/dp14"
+            />
 
         <TextView
             android:id="@+id/messageTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/dp14"
+            />
     </LinearLayout>
 </RelativeLayout>

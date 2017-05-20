@@ -52,7 +52,8 @@
                     android:ellipsize="middle"
                     android:singleLine="true"
                     android:text="file name"
-                    android:textSize="@dimen/sp14" />
+                    android:textSize="@dimen/dp14"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -70,7 +71,8 @@
                         android:ellipsize="end"
                         android:maxWidth="@dimen/dp300"
                         android:text="file info"
-                        android:textSize="@dimen/sp14"/>
+                        android:textSize="@dimen/dp14"
+                        />
 
 
                     <TextView
@@ -81,7 +83,8 @@
                         android:gravity="right"
                         android:singleLine="true"
                         android:text="3mb"
-                        android:textSize="@dimen/sp14" />
+                        android:textSize="@dimen/dp14"
+                        />
 
 
                 </LinearLayout>

@@ -54,7 +54,7 @@
             android:textAlignment="gravity"
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textColor="@color/layout_background_top_connectivity"
-            android:textSize="@dimen/sp26"
+            android:textSize="@dimen/dp26"
             />
 
       <net.iGap.module.MaterialDesignTextView
@@ -67,7 +67,8 @@
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textAlignment="gravity"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp26" />
+          android:textSize="@dimen/dp26"
+          />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_color"
@@ -79,7 +80,8 @@
             android:textAlignment="gravity"
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp26" />
+          android:textSize="@dimen/dp26"
+          />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_sience"
@@ -91,7 +93,8 @@
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:textAlignment="gravity"
             android:textColor="@android:color/holo_purple"
-            android:textSize="@dimen/sp26" />
+          android:textSize="@dimen/dp26"
+          />
 
       <net.iGap.module.MaterialDesignTextView
             android:id="@+id/textView_camera"
@@ -103,7 +106,8 @@
             android:text="@string/md_camera_alt"
             android:textAlignment="gravity"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp26" />
+          android:textSize="@dimen/dp26"
+          />
     </LinearLayout>
 
     <LinearLayout
@@ -125,7 +129,7 @@
             android:text="@string/md_arrow_down"
             android:textAlignment="gravity"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp32"
+          android:textSize="@dimen/dp32"
             />
 
       <net.iGap.module.MaterialDesignTextView
@@ -138,7 +142,7 @@
             android:text="@string/md_refresh_button"
             android:textAlignment="gravity"
             android:textColor="@color/red"
-            android:textSize="@dimen/sp32"
+          android:textSize="@dimen/dp32"
             />
 
       <net.iGap.module.MaterialDesignTextView
@@ -151,7 +155,7 @@
             android:textAlignment="gravity"
             android:textColor="@color/colorPrimary"
             android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textSize="@dimen/sp32"
+          android:textSize="@dimen/dp32"
             />
 
       <net.iGap.module.MaterialDesignTextView
@@ -164,7 +168,7 @@
             android:text="@string/md_send_button"
             android:textAlignment="gravity"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp32"
+          android:textSize="@dimen/dp32"
             />
     </LinearLayout>
 

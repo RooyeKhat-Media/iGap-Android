@@ -83,7 +83,7 @@
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
                                 android:text=""
-                                android:textSize="@dimen/sp14"
+                                android:textSize="@dimen/dp14"
                                 />
 
                             <LinearLayout
@@ -104,7 +104,7 @@
                                     android:gravity="center"
                                     android:text="@string/md_play_arrow"
                                     android:textColor="@color/green"
-                                    android:textSize="@dimen/sp32"
+                                    android:textSize="@dimen/dp32"
                                     />
 
 
@@ -126,7 +126,7 @@
                                 android:layout_marginLeft="@dimen/dp52"
                                 android:text="00:00"
                                 android:textColor="@color/green"
-                                android:textSize="@dimen/sp12"
+                                android:textSize="@dimen/dp12"
                                 />
 
 

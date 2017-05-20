@@ -17,7 +17,8 @@
             android:layout_marginRight="@dimen/dp12"
             android:text="@string/sound_at_most"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
 
         <NumberPicker
             android:id="@+id/dialog_np_times"
@@ -33,7 +34,8 @@
             android:layout_marginStart="@dimen/dp12"
             android:text="@string/times"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +51,8 @@
             android:layout_marginRight="@dimen/dp12"
             android:text=" within"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
 
         <NumberPicker
             android:id="@+id/dialog_np_minutes"
@@ -65,7 +68,8 @@
             android:layout_marginStart="@dimen/dp12"
             android:text="@string/minutes"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
     </LinearLayout>
 
 </LinearLayout>

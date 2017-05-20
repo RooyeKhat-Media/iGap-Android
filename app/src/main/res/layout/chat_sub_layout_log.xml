@@ -20,7 +20,7 @@
         android:singleLine="false"
         android:text="Today"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp12"
+        android:textSize="@dimen/dp12"
         android:textAllCaps="false"
         />
 </FrameLayout>

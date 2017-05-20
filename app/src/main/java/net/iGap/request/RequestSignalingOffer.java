@@ -14,9 +14,12 @@ import net.iGap.proto.ProtoSignalingOffer;
 
 public class RequestSignalingOffer {
 
-    public void signalingOffer() {
+    public void signalingOffer(long called_userId, net.iGap.proto.ProtoSignalingOffer.SignalingOffer.Type type, String callerSdp) {
         ProtoSignalingOffer.SignalingOffer.Builder builder = ProtoSignalingOffer.SignalingOffer.newBuilder();
 
+        builder.setCalledUserId(called_userId);
+        builder.setType(type);
+        builder.setCallerSdp(callerSdp);
 
 
         RequestWrapper requestWrapper = new RequestWrapper(901, builder);
@@ -27,3 +30,4 @@ public class RequestSignalingOffer {
         }
     }
 }
+

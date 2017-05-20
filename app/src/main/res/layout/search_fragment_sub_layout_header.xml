@@ -12,6 +12,6 @@
         android:layout_gravity="center_horizontal"
         android:padding="@dimen/dp4"
         android:text="@string/contacts"
-        android:textSize="@dimen/sp18"
+        android:textSize="@dimen/dp18"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>

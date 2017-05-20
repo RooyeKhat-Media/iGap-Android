@@ -22,6 +22,7 @@ import net.iGap.helper.HelperRadius;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
@@ -96,8 +97,12 @@ public class VideoWithTextItem extends AbstractMessage<VideoWithTextItem, VideoW
 
             holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
         } else {
-            holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-            ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.ic_play, true);
+
+            MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+            AppUtils.setProgresColor(progress.progressBar);
+
+            progress.setVisibility(View.VISIBLE);
+            progress.withDrawable(R.drawable.ic_play, true);
         }
     }
 
