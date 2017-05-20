@@ -45,7 +45,8 @@
             android:background="@color/green"
             android:text="@string/ok"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
 
         <Button
             android:id="@+id/button_cancel"
@@ -55,7 +56,8 @@
             android:background="@color/red"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/dp18"
+            />
 
     </LinearLayout>
 

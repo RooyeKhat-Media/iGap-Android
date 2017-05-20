@@ -7,6 +7,7 @@
               android:background="@android:color/white"
               android:orientation="vertical"
               android:elevation="999dp"
+    tools:ignore="MissingPrefix"
     tools:context="net.iGap.fragments.FragmentNotification"
     >
 
@@ -49,8 +50,8 @@
                 android:gravity="center"
                 android:text="@string/ntg_title_toolbar"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp18"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:visibility="visible" />
 
         </RelativeLayout>
@@ -70,9 +71,9 @@
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp16"
-        android:paddingEnd="@dimen/sp16"
-        android:paddingStart="@dimen/sp16"
-        android:paddingRight="@dimen/sp16"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
         android:layout_marginTop="@dimen/dp8">
 
         <TextView
@@ -81,7 +82,7 @@
             android:gravity="center_vertical"
             android:text="@string/ntg_notifications"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
         <TextView
@@ -91,7 +92,7 @@
             android:gravity="center_vertical|top"
             android:text="@string/array_Default"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="normal" />
     </LinearLayout>
 
@@ -108,9 +109,10 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp16"
-        android:paddingEnd="@dimen/sp16"
-        android:paddingStart="@dimen/sp16"
-        android:paddingRight="@dimen/sp16">
+        android:paddingEnd="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        >
 
         <TextView
             android:layout_width="match_parent"
@@ -118,7 +120,7 @@
             android:gravity="center_vertical"
             android:text="@string/st_vibrate"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
         <TextView
@@ -128,7 +130,7 @@
             android:gravity="center_vertical|top"
             android:text="@string/array_Default"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -145,9 +147,10 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp16"
-        android:paddingEnd="@dimen/sp16"
-        android:paddingStart="@dimen/sp16"
-        android:paddingRight="@dimen/sp16">
+        android:paddingEnd="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        >
 
         <TextView
             android:layout_width="match_parent"
@@ -155,7 +158,7 @@
             android:gravity="center_vertical"
             android:text="@string/ntg_Sound"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
         <TextView
@@ -165,7 +168,7 @@
             android:gravity="center_vertical|top"
             android:text="@string/st_sound"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -183,9 +186,9 @@
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp16"
-        android:paddingEnd="@dimen/sp16"
-        android:paddingStart="@dimen/sp16"
-        android:paddingRight="@dimen/sp16"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingStart="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
         android:visibility="gone">
 
         <TextView
@@ -194,7 +197,7 @@
             android:gravity="center_vertical"
             android:text="@string/ntg_smart_notifications"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
         <TextView
@@ -204,7 +207,7 @@
             android:gravity="center_vertical|top"
             android:text="@string/st_sound"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="normal" />
 
     </LinearLayout>
@@ -233,7 +236,7 @@
             android:paddingStart="@dimen/dp16"
             android:text="@string/st_led_color"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
         <ImageView
@@ -242,9 +245,9 @@
             android:layout_height="@dimen/dp24"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dp16"
-            android:layout_marginEnd="@dimen/sp16"
-            android:layout_marginStart="@dimen/sp16"
-            android:layout_marginLeft="@dimen/sp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginLeft="@dimen/dp16"
             android:background="@drawable/circle_color_notificatin_setting"
             android:gravity="center" />
 

@@ -65,7 +65,8 @@
                             android:text="3:48 (4.5 MB)"
                             android:textAllCaps="true"
                             android:textColor="@color/gray10"
-                            android:textSize="@dimen/sp10"/>
+                            android:textSize="@dimen/dp10"
+                            />
 
                         <include
                             android:id="@+id/progress"

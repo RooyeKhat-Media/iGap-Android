@@ -57,10 +57,10 @@
                 android:gravity="center"
                 android:text="@string/st_title_Background"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp18"
                 android:visibility="visible"
                 android:layout_alignParentTop="true"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

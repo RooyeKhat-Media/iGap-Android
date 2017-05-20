@@ -18,7 +18,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,8 +30,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,6 +50,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentNotification;
 import net.iGap.fragments.FragmentShowAvatars;
 import net.iGap.helper.HelperAvatar;
@@ -69,6 +67,7 @@ import net.iGap.interfaces.OnUserUpdateStatus;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.SUID;
@@ -116,7 +115,6 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
     private String enterFrom;
     private String userStatus;
     private boolean isBlockUser = false;
-    private Realm mRealm;
     RealmRegisteredInfo rrg;
     private long sheardId = -2;
 
@@ -152,18 +150,16 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
     private RealmChangeListener<RealmModel> changeListener;
     private RealmRoom mRoom;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mRealm != null) mRealm.close();
-    }
+
 
     @Override
     protected void onResume() {
 
         super.onResume();
 
-        mRoom = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, sheardId).findFirst();
+        Realm realm = Realm.getDefaultInstance();
+
+        mRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, sheardId).findFirst();
         if (mRoom != null) {
 
             if (changeListener == null) {
@@ -199,6 +195,8 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
         } else {
             txtCountOfShearedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
         }
+
+        realm.close();
     }
 
     @Override
@@ -209,18 +207,14 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
             rrg.removeAllChangeListeners();
         }
 
-        if (mRealm != null) {
-            mRealm.close();
-        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_profile);
-        final Realm realm = Realm.getDefaultInstance();
 
-        mRealm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
 
         G.onUserUpdateStatus = this;
 
@@ -238,7 +232,7 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
             sheardId = roomId;
         }
 
-        rrg = mRealm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        rrg = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
 
         if (rrg != null) {
 
@@ -683,13 +677,21 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
         imgMenu = (MaterialDesignTextView) findViewById(R.id.chi_img_menuPopup);
 
         RippleView rippleMenu = (RippleView) findViewById(R.id.chi_ripple_menuPopup);
-
         rippleMenu.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
                 showPopUp();
             }
         });
+
+        RippleView rippleCall = (RippleView) findViewById(R.id.chi_ripple_call);
+        rippleCall.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override public void onComplete(RippleView rippleView) {
+
+                FragmentCall.call(userId, false);
+            }
+        });
+
         vgPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -937,89 +939,58 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
     }
 
     private void showPopUp() {
-        LinearLayout layoutDialog = new LinearLayout(ActivityContactsProfile.this);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutDialog.setOrientation(LinearLayout.VERTICAL);
-        layoutDialog.setBackgroundColor(getResources().getColor(android.R.color.white));
-        TextView text1 = new TextView(ActivityContactsProfile.this);
-        TextView text2 = new TextView(ActivityContactsProfile.this);
-        TextView text3 = new TextView(ActivityContactsProfile.this);
 
-        text1.setTextColor(getResources().getColor(android.R.color.black));
-        text2.setTextColor(getResources().getColor(android.R.color.black));
-        text3.setTextColor(getResources().getColor(android.R.color.black));
+        final MaterialDialog dialog = new MaterialDialog.Builder(ActivityContactsProfile.this).customView(R.layout.chat_popup_dialog_custom, true).build();
+        View v = dialog.getCustomView();
+
+        DialogAnimation.animationUp(dialog);
+        dialog.show();
+
+        ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+        ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+        ViewGroup root3 = (ViewGroup) v.findViewById(R.id.dialog_root_item3_notification);
+
+        TextView txtBlockUser = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+        TextView txtClearHistory = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+        TextView txtDeleteContact = (TextView) v.findViewById(R.id.dialog_text_item3_notification);
+
+        TextView iconBlockUser = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+
+        TextView iconClearHistory = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+        iconClearHistory.setText(getResources().getString(R.string.md_clearHistory));
+
+        TextView iconDeleteContact = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
+        iconDeleteContact.setText(getResources().getString(R.string.md_rubbish_delete_file));
+
+        root1.setVisibility(View.VISIBLE);
+        root2.setVisibility(View.VISIBLE);
+        root3.setVisibility(View.VISIBLE);
+        if (G.userId == userId) {
+            root1.setVisibility(View.GONE);
+            root3.setVisibility(View.GONE);
+        }
+
         if (isBlockUser) {
-            text1.setText(getString(R.string.un_block_user));
+            txtBlockUser.setText(getString(R.string.un_block_user));
+            iconBlockUser.setText(getResources().getString(R.string.md_unblock));
         } else {
-            text1.setText(getString(R.string.block_user));
+            txtBlockUser.setText(getString(R.string.block_user));
+            iconBlockUser.setText(getResources().getString(R.string.md_block));
         }
-        text2.setText(getResources().getString(R.string.clear_history));
-        text3.setText(getResources().getString(R.string.delete_contact));
+        txtClearHistory.setText(getResources().getString(R.string.clear_history));
+        txtDeleteContact.setText(getResources().getString(R.string.delete_contact));
 
-        int dim20 = (int) getResources().getDimension(R.dimen.dp20);
-        int dim12 = (int) getResources().getDimension(R.dimen.dp12);
-        int sp14_Popup = 14;
-
-        /**
-         * change dpi tp px
-         */
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int width = displayMetrics.widthPixels;
-        int widthDpi = Math.round(width / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-
-        if (widthDpi >= 720) {
-            sp14_Popup = 30;
-        } else if (widthDpi >= 600) {
-            sp14_Popup = 22;
-        } else {
-            sp14_Popup = 15;
-        }
-
-        text1.setTextSize(sp14_Popup);
-        text2.setTextSize(sp14_Popup);
-        text3.setTextSize(sp14_Popup);
-
-        text1.setPadding(dim20, dim12, dim12, 0);
-        text2.setPadding(dim20, dim12, dim20, dim12);
-        text3.setPadding(dim20, 0, dim20, dim12);
-
-        layoutDialog.addView(text1, params);
-        layoutDialog.addView(text2, params);
-        layoutDialog.addView(text3, params);
-
-        popupWindow = new PopupWindow(layoutDialog, screenWidth, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            popupWindow.setBackgroundDrawable(getResources().getDrawable(R.mipmap.shadow3, ActivityContactsProfile.this.getTheme()));
-        } else {
-            popupWindow.setBackgroundDrawable((getResources().getDrawable(R.mipmap.shadow3)));
-        }
-        if (popupWindow.isOutsideTouchable()) {
-            popupWindow.dismiss();
-        }
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-
-            }
-        });
-
-        popupWindow.setAnimationStyle(android.R.style.Animation_InputMethod);
-        popupWindow.showAtLocation(layoutDialog, Gravity.RIGHT | Gravity.TOP, (int) getResources().getDimension(R.dimen.dp16), (int) getResources().getDimension(R.dimen.dp32));
-        //                popupWindow.showAsDropDown(v);
-
-        text1.setOnClickListener(new View.OnClickListener() {
+        root1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
                 blockOrUnblockUser();
-                popupWindow.dismiss();
             }
         });
-        text2.setOnClickListener(new View.OnClickListener() {
+        root2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.dismiss();
                 new MaterialDialog.Builder(ActivityContactsProfile.this).title(R.string.clear_history).content(R.string.clear_history_content).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -1027,13 +998,12 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
                     }
                 }).negativeText(R.string.B_cancel).show();
 
-                popupWindow.dismiss();
             }
         });
-        text3.setOnClickListener(new View.OnClickListener() {
+        root3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                dialog.dismiss();
                 new MaterialDialog.Builder(ActivityContactsProfile.this).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -1042,7 +1012,6 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
                     }
                 }).negativeText(R.string.B_cancel).show();
 
-                popupWindow.dismiss();
             }
         });
     }
@@ -1116,46 +1085,35 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
         final Realm realm = Realm.getDefaultInstance();
 
         final RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirstAsync();
-        realmClientCondition.addChangeListener(new RealmChangeListener<RealmClientCondition>() {
-            @Override
-            public void onChange(final RealmClientCondition element) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
 
-                        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
-                        if (realmRoom != null && realmRoom.getLastMessage() != null) {
-                            element.setClearId(realmRoom.getLastMessage().getMessageId());
-                            G.clearMessagesUtil.clearMessages(realmRoom.getType(), roomId, realmRoom.getLastMessage().getMessageId());
-                        }
+        if (realmRoom != null && realmRoom.getLastMessage() != null) {
+            realmClientCondition.setClearId(realmRoom.getLastMessage().getMessageId());
+            G.clearMessagesUtil.clearMessages(realmRoom.getType(), roomId, realmRoom.getLastMessage().getMessageId());
+        }
 
-                        RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll();
-                        for (RealmRoomMessage realmRoomMessage : realmRoomMessages) {
-                            if (realmRoomMessage != null) {
-                                // delete chat history message
-                                realmRoomMessage.deleteFromRealm();
-                            }
-                        }
-
-                        RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                        if (room != null) {
-                            room.setUnreadCount(0);
-                            room.setLastMessage(null);
-                        }
-                        // finally delete whole chat history
-                        realmRoomMessages.deleteAllFromRealm();
-                    }
-                });
-
-                element.removeAllChangeListeners();
-                realm.close();
+        RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll();
+        for (RealmRoomMessage realmRoomMessage : realmRoomMessages) {
+            if (realmRoomMessage != null) {
+                // delete chat history message
+                realmRoomMessage.deleteFromRealm();
             }
-        });
+        }
+
+        RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        if (room != null) {
+            room.setUnreadCount(0);
+            room.setLastMessage(null);
+        }
+        // finally delete whole chat history
+        realmRoomMessages.deleteAllFromRealm();
 
         if (G.onClearChatHistory != null) {
             G.onClearChatHistory.onClearChatHistory();
         }
+
+        realm.close();
     }
 
     private void deleteContact() {
@@ -1217,35 +1175,26 @@ public class ActivityContactsProfile extends ActivityEnhanced implements OnUserU
         };
         final Realm realm = Realm.getDefaultInstance();
         final RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirstAsync();
-        realmClientCondition.addChangeListener(new RealmChangeListener<RealmClientCondition>() {
-            @Override
-            public void onChange(final RealmClientCondition element) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(final Realm realm) {
-                        if (realm.where(RealmOfflineDelete.class).equalTo(RealmOfflineDeleteFields.OFFLINE_DELETE, roomId).findFirst() == null) {
-                            RealmOfflineDelete realmOfflineDelete = realm.createObject(RealmOfflineDelete.class, SUID.id().get());
-                            realmOfflineDelete.setOfflineDelete(userId);
 
-                            element.getOfflineDeleted().add(realmOfflineDelete);
+        if (realm.where(RealmOfflineDelete.class).equalTo(RealmOfflineDeleteFields.OFFLINE_DELETE, roomId).findFirst() == null) {
+            RealmOfflineDelete realmOfflineDelete = realm.createObject(RealmOfflineDelete.class, SUID.id().get());
+            realmOfflineDelete.setOfflineDelete(userId);
 
-                            realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst().deleteFromRealm();
-                            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll().deleteAllFromRealm();
+            realmClientCondition.getOfflineDeleted().add(realmOfflineDelete);
 
-                            new RequestChatDelete().chatDelete(roomId);
-                        }
-                    }
-                });
+            realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst().deleteFromRealm();
+            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll().deleteAllFromRealm();
 
-                element.removeAllChangeListeners();
-                realm.close();
-                finish();
-                // call this for finish activity chat when delete chat
-                if (G.onDeleteChatFinishActivity != null) {
-                    G.onDeleteChatFinishActivity.onFinish();
-                }
+            new RequestChatDelete().chatDelete(roomId);
+
+            realm.close();
+            finish();
+            // call this for finish activity chat when delete chat
+            if (G.onDeleteChatFinishActivity != null) {
+                G.onDeleteChatFinishActivity.onFinish();
             }
-        });
+        }
+
     }
 
     @Override

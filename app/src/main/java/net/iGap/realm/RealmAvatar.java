@@ -43,6 +43,9 @@ public class RealmAvatar extends RealmObject {
         Realm realm = Realm.getDefaultInstance();
         if (!input.hasFile()) {
             deleteAllAvatars(ownerId, realm);
+
+            realm.close();
+
             return null;
         }
 

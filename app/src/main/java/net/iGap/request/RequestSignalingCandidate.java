@@ -14,9 +14,10 @@ import net.iGap.proto.ProtoSignalingCandidate;
 
 public class RequestSignalingCandidate {
 
-    public void signalingCandidate() {
-        ProtoSignalingCandidate.SignalingCandidate.Builder builder = ProtoSignalingCandidate.SignalingCandidate.newBuilder();
+    public void signalingCandidate(String candidate) {
 
+        ProtoSignalingCandidate.SignalingCandidate.Builder builder = ProtoSignalingCandidate.SignalingCandidate.newBuilder();
+        builder.setCandidate(candidate);
 
         RequestWrapper requestWrapper = new RequestWrapper(904, builder);
         try {

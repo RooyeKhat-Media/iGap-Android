@@ -10,19 +10,16 @@
 
 package net.iGap.activities;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.OnComplete;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.proto.ProtoGlobal;
 
@@ -30,34 +27,43 @@ public class MyDialog {
 
     public static void showDialogMenuItemRooms(final Context context, final ProtoGlobal.Room.Type mType, boolean isMute, final String role, final OnComplete complete) {
 
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.chat_popup_dialog);
-        dialog.setCancelable(true);
+        //final Dialog dialog = new Dialog(context);
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //dialog.setContentView(R.layout.chat_popup_dialog);
+        //dialog.setCancelable(true);
 
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        // layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.gravity = Gravity.CENTER;
+        final MaterialDialog dialog = new MaterialDialog.Builder(context).customView(R.layout.chat_popup_dialog, true).build();
+
+        View v = dialog.getCustomView();
+
+        //WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        //layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        //// layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //layoutParams.gravity = Gravity.CENTER;
+
+        DialogAnimation.animationDown(dialog);
 
         dialog.show();
-        dialog.getWindow().setAttributes(layoutParams);
+        //dialog.getWindow().setAttributes(layoutParams);
 
-        TextView txtMuteNotification = (TextView) dialog.findViewById(R.id.cm_txt_mute_notification);
-        MaterialDesignTextView iconMuteNotification = (MaterialDesignTextView) dialog.findViewById(R.id.cm_icon_mute_notification);
+        TextView txtMuteNotification = null;
+
+        txtMuteNotification = (TextView) v.findViewById(R.id.cm_txt_mute_notification);
+        MaterialDesignTextView iconMuteNotification = (MaterialDesignTextView) v.findViewById(R.id.cm_icon_mute_notification);
         //        iconMuteNotification.setTypeface();
-        TextView txtClearHistory = (TextView) dialog.findViewById(R.id.cm_txt_clear_history);
-        MaterialDesignTextView iconClearHistory = (MaterialDesignTextView) dialog.findViewById(R.id.cm_icon_clear_history);
-        TextView txtDeleteChat = (TextView) dialog.findViewById(R.id.cm_txt_delete_chat);
-        MaterialDesignTextView iconDeleteChat = (MaterialDesignTextView) dialog.findViewById(R.id.cm_icon_delete_chat);
-        TextView txtCancel = (TextView) dialog.findViewById(R.id.cm_txt_cancle);
+        TextView txtClearHistory = (TextView) v.findViewById(R.id.cm_txt_clear_history);
+        MaterialDesignTextView iconClearHistory = (MaterialDesignTextView) v.findViewById(R.id.cm_icon_clear_history);
+        TextView txtDeleteChat = (TextView) v.findViewById(R.id.cm_txt_delete_chat);
+        MaterialDesignTextView iconDeleteChat = (MaterialDesignTextView) v.findViewById(R.id.cm_icon_delete_chat);
+        //TextView txtCancel = (TextView) dialog.findViewById(R.id.cm_txt_cancle);
 
         if (isMute) {
             txtMuteNotification.setText(context.getString(R.string.unmute));
-            iconMuteNotification.setText(context.getString(R.string.md_muted));
+            iconMuteNotification.setText(context.getString(R.string.md_unMuted));
+
         } else {
             txtMuteNotification.setText(context.getString(R.string.mute));
-            iconMuteNotification.setText(context.getString(R.string.md_unMuted));
+            iconMuteNotification.setText(context.getString(R.string.md_muted));
         }
 
         //        txtMuteNotification.setText(isMute ? context.getString(R.string.unmute_notification)
@@ -66,14 +72,34 @@ public class MyDialog {
         txtMuteNotification.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 if (complete != null) complete.complete(true, "txtMuteNotification", "");
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
         txtClearHistory.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                if (complete != null) complete.complete(true, "txtClearHistory", "");
-                dialog.cancel();
+                dialog.dismiss();
+
+                new MaterialDialog.Builder(context).title(G.context.getResources().getString(R.string.igap))
+                    .titleColor(G.context.getResources().getColor(R.color.toolbar_background))
+                    .content(context.getString(R.string.do_you_want_clear_history_this))
+                    .positiveText(G.context.getResources().getString(R.string.B_ok))
+                    .negativeText(G.context.getResources().getString(R.string.B_cancel))
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (complete != null) complete.complete(true, "txtClearHistory", "");
+                            dialog.dismiss();
+                        }
+                    })
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+
             }
         });
 
@@ -128,15 +154,15 @@ public class MyDialog {
 
                 showDialogNotification(context, str0, complete, "txtDeleteChat");
 
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
 
-        txtCancel.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
+        //txtCancel.setOnClickListener(new View.OnClickListener() {
+        //    @Override public void onClick(View view) {
+        //         dialog.dismiss();
+        //    }
+        //});
     }
 
     public static void showDialogNotification(Context context, String Message, final OnComplete complete, final String result) {
@@ -150,12 +176,12 @@ public class MyDialog {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     if (complete != null) complete.complete(true, result, "yes");
 
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             })
             .onNegative(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    dialog.cancel();
+                    dialog.dismiss();
                 }
             })
             .show();

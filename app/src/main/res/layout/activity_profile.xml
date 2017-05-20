@@ -36,7 +36,9 @@
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp20"/>
+                android:textSize="@dimen/dp20"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                />
 
         </android.support.v7.widget.Toolbar>
 
@@ -61,7 +63,7 @@
                 android:gravity="center"
                 android:text="@string/pu_title_profileUser"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp18"
+                android:textSize="@dimen/dp18"
                 android:textStyle="bold"/>
 
             <View
@@ -82,7 +84,8 @@
                 android:gravity="center"
                 android:text="@string/pu_desc_profileUser"
                 android:textColor="@color/confirm_country"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
         </LinearLayout>
 
 
@@ -118,7 +121,8 @@
                 android:gravity="center"
                 android:text="@string/pu_addPhoto_profileUser"
                 android:textColor="@color/text_dark_verify"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
         </LinearLayout>
 
@@ -159,7 +163,8 @@
                     app:errorTextAppearance="@style/remove_error_appearance"
                     android:textColor="@color/black_register"
                     android:textColorHint="@color/pu_edtHintText"
-                    android:textSize="@dimen/sp14"/>
+                  android:textSize="@dimen/dp14"
+                  />
 
                 <View
                     android:id="@+id/pu_line_below_editText"
@@ -193,7 +198,8 @@
                 android:text="@string/pu_Lets_Go"
                 android:textAllCaps="false"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
         </RelativeLayout>
 

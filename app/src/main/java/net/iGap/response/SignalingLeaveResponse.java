@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingLeave;
 
 public class SignalingLeaveResponse extends MessageHandler {
@@ -29,7 +30,13 @@ public class SignalingLeaveResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+
         ProtoSignalingLeave.SignalingLeaveResponse.Builder builder = (ProtoSignalingLeave.SignalingLeaveResponse.Builder) message;
+        net.iGap.proto.ProtoSignalingLeave.SignalingLeaveResponse.Type type = builder.getType();
+
+        if (G.iSignalingLeave != null) {
+            G.iSignalingLeave.onLeave(type);
+        }
     }
 
     @Override

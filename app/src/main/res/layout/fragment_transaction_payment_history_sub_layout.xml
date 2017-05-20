@@ -79,5 +79,6 @@
         android:layout_marginRight="@dimen/dp12"
         android:layout_marginTop="@dimen/dp4"
         android:text="@string/md_right_arrow_button1"
-        android:textSize="@dimen/sp18"/>
+      android:textSize="@dimen/dp18"
+      />
 </LinearLayout>

@@ -53,10 +53,10 @@
               android:gravity="center"
               android:text="@string/st_titleToolbar"
               android:textColor="@color/whit_background"
-              android:textSize="@dimen/sp18"
+              android:textSize="@dimen/dp18"
               android:textStyle="bold"
               android:visibility="gone"
-              fontPath="fonts/IRANSansMobile.ttf"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
 
           <net.iGap.libs.rippleeffect.RippleView
@@ -147,7 +147,7 @@
             android:singleLine="true"
             android:text="AM"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -198,7 +198,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_Info"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -225,7 +225,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_nickname"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -241,7 +241,7 @@
                 android:singleLine="true"
                 android:text="Alexander Smith"
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -271,7 +271,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_Gander"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -286,7 +286,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/set_gender"
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -316,7 +316,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_username"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -332,7 +332,7 @@
                 android:singleLine="true"
                 android:text="Alexander Smith:"
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -361,7 +361,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_email"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -377,7 +377,7 @@
                 android:singleLine="true"
                 android:text="@string/set_email"
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -393,7 +393,7 @@
             android:paddingStart="@dimen/dp4"
             android:text="@string/st_phoneNumber"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -414,7 +414,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="09121234567"
               android:textColor="@color/gray_5c"
-              android:textSize="@dimen/sp14"
+              android:textSize="@dimen/dp14"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -442,7 +442,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_general"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
 
@@ -458,7 +458,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_title_notification_sounds"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -488,7 +488,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_Language"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -502,7 +502,7 @@
               android:paddingRight="@dimen/dp16"
               android:text="English"
               android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -535,7 +535,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_data_shams"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -577,7 +577,7 @@
               android:paddingTop="@dimen/dp8"
               android:text="@string/st_title_Clear_Cache"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -592,7 +592,7 @@
               android:paddingRight="@dimen/dp16"
               android:text="0 KB"
               android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -626,7 +626,7 @@
               android:paddingTop="@dimen/dp8"
               android:text="@string/clean_up_chat_rooms"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -650,7 +650,7 @@
             android:paddingTop="@dimen/dp8"
             android:text="@string/st_title_Privacy_Security"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -676,7 +676,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_message"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -699,7 +699,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_title_message_textSize"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -715,7 +715,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="16"
               android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -736,7 +736,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_chatBackground"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -764,7 +764,7 @@
               android:gravity="center_vertical"
               android:text="@string/show_vote_layout_in_channel"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               />
 
@@ -803,7 +803,7 @@
               android:gravity="center_vertical"
               android:text="@string/show_sender_name_in_group"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               />
 
@@ -848,7 +848,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_send_by_enter"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -882,7 +882,7 @@
               android:paddingTop="@dimen/dp12"
               android:text="@string/theme"
               android:textColor="@color/green"
-              android:textSize="@dimen/sp18"
+              android:textSize="@dimen/dp18"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
@@ -914,7 +914,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/app_theme"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -958,7 +958,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/app_notif_color"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -1004,7 +1004,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/toggle_botton_color"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -1048,7 +1048,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/send_and_attach_botton_color"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -1092,13 +1092,59 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/default_header_font_color"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
 
             <ImageView
                 android:id="@+id/asn_img_default_header_font_color"
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:background="@drawable/circle_color_notificatin_setting"
+                android:gravity="center"
+                />
+
+          </LinearLayout>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_centerInParent="true"
+              android:orientation="horizontal"
+              >
+
+
+            <TextView
+                android:id="@+id/asn_txt_default_progress_color"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp48"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/default_progress_color"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <ImageView
+                android:id="@+id/asn_img_default_progress_color"
                 android:layout_width="@dimen/dp24"
                 android:layout_height="@dimen/dp24"
                 android:layout_gravity="center_vertical"
@@ -1136,7 +1182,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/set_color_to_default"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />
@@ -1195,7 +1241,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_inApp_Browser"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1230,7 +1276,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_Media"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -1255,7 +1301,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_keepMedia"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               android:visibility="visible"
               android:singleLine="true"
@@ -1271,7 +1317,7 @@
               android:paddingRight="@dimen/dp16"
               android:text="1Week"
               android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1294,7 +1340,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_auto_download_data"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1314,7 +1360,7 @@
             android:paddingRight="@dimen/dp16"
             android:text="@string/st_auto_download_wifi"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1334,7 +1380,7 @@
             android:paddingRight="@dimen/dp16"
             android:text="@string/st_auto_download_roaming"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1385,7 +1431,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_Enable_Animation"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1420,7 +1466,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_auto_gif"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1461,7 +1507,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_save_to_gallery"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1503,7 +1549,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_compress"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1548,7 +1594,7 @@
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_trim"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
@@ -1588,7 +1634,7 @@
               android:gravity="center_vertical"
               android:text="@string/st_crop"
               android:textColor="@color/black_register"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="normal"
               />
 
@@ -1624,7 +1670,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_support"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -1639,7 +1685,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_ask_question"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             android:visibility="gone"
             fontPath="fonts/IRANSansMobile.ttf"
@@ -1663,7 +1709,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_privacy_iGap_home"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1684,7 +1730,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_privacy_blog"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1706,7 +1752,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/st_privacy_create_ticket"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />
@@ -1729,7 +1775,7 @@
             android:paddingTop="@dimen/dp4"
             android:text="@string/iGap_version"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp13"
+            android:textSize="@dimen/dp13"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf"
             />

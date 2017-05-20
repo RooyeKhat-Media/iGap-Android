@@ -27,7 +27,8 @@
             android:layout_alignParentRight="true"
             android:text="@string/photo"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp16" />
+            android:textSize="@dimen/dp16"
+            />
     </RelativeLayout>
 
     <!--VIDEO-->
@@ -54,7 +55,8 @@
             android:layout_alignParentRight="true"
             android:text="@string/photo"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp16" />
+            android:textSize="@dimen/dp16"
+            />
     </RelativeLayout>
 
     <!--NEXT2-->
@@ -80,7 +82,8 @@
             android:layout_alignParentRight="true"
             android:text="@string/photo"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp16" />
+            android:textSize="@dimen/dp16"
+            />
     </RelativeLayout>
     <!--NEXT3-->
     <!--NEXT2-->
@@ -107,6 +110,7 @@
             android:gravity="right"
             android:text="photo"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp16" />
+            android:textSize="@dimen/dp16"
+            />
     </RelativeLayout>
 </LinearLayout>

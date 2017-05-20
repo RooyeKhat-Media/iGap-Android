@@ -14,7 +14,8 @@
         android:layout_marginBottom="@dimen/dp20"
         android:text="New Text"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 
     <TextView
         android:id="@+id/popup_txtItem2"
@@ -23,7 +24,8 @@
         android:layout_marginBottom="@dimen/dp20"
         android:text="New Text"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 
     <TextView
         android:id="@+id/popup_txtItem3"
@@ -32,7 +34,8 @@
         android:layout_marginBottom="@dimen/dp20"
         android:text="New Text"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 
     <TextView
         android:id="@+id/popup_txtItem4"
@@ -41,5 +44,6 @@
         android:layout_marginBottom="@dimen/dp8"
         android:text="New Text"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 </LinearLayout>

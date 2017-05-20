@@ -21,7 +21,9 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -529,4 +531,30 @@ public final class AppUtils {
 
         return output;
     }
+
+    public static void setProgresColler(ProgressBar progressBar) {
+
+        try {
+
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(G.progressColor), android.graphics.PorterDuff.Mode.MULTIPLY);
+
+            //  getResources().getColor(R.color.toolbar_background)
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static void setProgresColor(CircularProgressView progressBar) {
+
+        try {
+
+            progressBar.setColor(Color.parseColor(G.progressColor));
+        } catch (Exception e) {
+
+        }
+    }
+
+
+
 }

@@ -12,5 +12,6 @@
         android:layout_margin="@dimen/dp4"
         android:paddingLeft="@dimen/dp20"
         android:text="New Text"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 </LinearLayout>

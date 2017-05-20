@@ -95,7 +95,6 @@ public class TimeLineView extends View {
 
                     for (int i = 0; i < numThumbs; ++i) {
                         Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(i * interval, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-                        // TODO: bitmap might be null here, hence throwing NullPointerException. You were right
                         try {
                             bitmap = Bitmap.createScaledBitmap(bitmap, thumbWidth, thumbHeight, false);
                         } catch (Exception e) {

@@ -44,7 +44,7 @@
                 android:text="New Text"
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/dp16"
                 />
 
 
@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:text="10:52"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>
@@ -70,7 +70,7 @@
             android:singleLine="true"
             android:text="New Text"
             android:textAppearance="@style/NotificationText"
-            android:textSize="@dimen/sp12"
+            android:textSize="@dimen/dp12"
             />
 
 

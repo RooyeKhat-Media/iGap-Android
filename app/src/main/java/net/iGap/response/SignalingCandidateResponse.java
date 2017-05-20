@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingCandidate;
 
 public class SignalingCandidateResponse extends MessageHandler {
@@ -29,7 +30,14 @@ public class SignalingCandidateResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+
         ProtoSignalingCandidate.SignalingCandidateResponse.Builder builder = (ProtoSignalingCandidate.SignalingCandidateResponse.Builder) message;
+
+        String peer_candidate = builder.getPeerCandidate();
+
+        if (G.iSignalingCondidate != null) {
+            G.iSignalingCondidate.onCondidate(peer_candidate);
+        }
     }
 
     @Override

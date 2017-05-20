@@ -10,7 +10,7 @@
         android:gravity="center"
         android:text="@string/Re_Phone_Verification"
         android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/sp22"
+      android:textSize="@dimen/dp22"
         android:textStyle="bold" />
 
     <View
@@ -95,7 +95,8 @@
                 android:singleLine="true"
                 android:text="@string/rg_verify_register2"
                 android:textColor="@color/rg_text_verify"
-                android:textSize="@dimen/sp14" />
+                android:textSize="@dimen/dp14"
+                />
 
             <TextView
                 android:id="@+id/rg_txt_verify_timer_DialogLand"
@@ -106,7 +107,8 @@
                 android:singleLine="true"
                 android:text="05:00"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp14" />
+                android:textSize="@dimen/dp14"
+                />
 
         </LinearLayout>
 

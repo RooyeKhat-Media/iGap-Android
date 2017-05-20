@@ -75,7 +75,7 @@
               android:gravity="left|center_vertical"
               android:text="@string/photo"
               android:textColor="@color/whit_background"
-              android:textSize="@dimen/sp16"
+              android:textSize="@dimen/dp16"
               android:textStyle="bold"
               android:visibility="visible"
               />
@@ -93,7 +93,7 @@
                 android:gravity="left|center_vertical"
                 android:text="360x640 "
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:textStyle="bold"
                 android:visibility="visible"
                 />
@@ -104,7 +104,7 @@
                 android:gravity="left|center_vertical"
                 android:text=" time"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:textStyle="bold"
                 android:visibility="visible"
                 />
@@ -115,7 +115,7 @@
                 android:gravity="left|center_vertical"
                 android:text=" 457.7 KB"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:textStyle="bold"
                 android:visibility="visible"
                 />

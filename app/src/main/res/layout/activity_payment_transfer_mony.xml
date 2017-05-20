@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:layoutDirection="ltr"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layoutDirection="ltr"
+    tools:ignore="MissingPrefix"
+    android:orientation="vertical"
+    >
 
 
     <LinearLayout
@@ -47,7 +50,9 @@
             android:paddingRight="@dimen/dp60"
             android:text="@string/transfer_mony"
             android:textColor="@color/whit_background"
-            android:textSize="@dimen/sp18"/>
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:textSize="@dimen/dp18"
+            />
 
     </LinearLayout>
 
@@ -109,7 +114,8 @@
                 android:paddingTop="@dimen/dp8"
                 android:singleLine="true"
                 android:inputType="textWebEmailAddress"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <View
                 android:id="@+id/atm_view_bottom_line_transfer_to"
@@ -143,7 +149,8 @@
                     android:paddingTop="@dimen/dp8"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textSize="@dimen/sp16"/>
+                    android:textSize="@dimen/dp16"
+                    />
 
                 <View
                     android:id="@+id/atm_view_bottom_line_amount"
@@ -185,7 +192,8 @@
                 android:paddingTop="@dimen/dp8"
                 android:singleLine="true"
                 android:inputType="textWebEmailAddress"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <View
                 android:id="@+id/atm_view_bottom_line_description"

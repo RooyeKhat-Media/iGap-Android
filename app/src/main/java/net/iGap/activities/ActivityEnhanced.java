@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import net.iGap.Config;
@@ -25,12 +26,16 @@ import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperSetStatusBarColor;
+import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.AttachFile;
+import net.iGap.module.StartupActions;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.request.RequestUserUpdateStatus;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityEnhanced extends AppCompatActivity {
+
+    private boolean isOnGetPermistion = false;
 
     @Override protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -39,12 +44,16 @@ public class ActivityEnhanced extends AppCompatActivity {
     @Override protected void onResume() {
         super.onResume();
 
+        makeDirectoriesIfNotExist();
+
         G.currentActivity = this;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         checkLanguage(this);
         super.onCreate(savedInstanceState);
+
+        makeDirectoriesIfNotExist();
 
         HelperSetStatusBarColor.setColor(this);
 
@@ -126,4 +135,46 @@ public class ActivityEnhanced extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void makeDirectoriesIfNotExist() {
+
+        if (isOnGetPermistion) {
+            return;
+        }
+
+        if (this instanceof ActivityIntroduce) {
+            return;
+        }
+
+        isOnGetPermistion = true;
+
+        try {
+            HelperPermision.getStoragePermision(this, new OnGetPermission() {
+                @Override public void Allow() throws IOException {
+                    checkIsDirectoryExist();
+                }
+
+                @Override public void deny() {
+                    finish();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkIsDirectoryExist() {
+
+        isOnGetPermistion = false;
+
+        if (new File(G.DIR_APP).exists() && new File(G.DIR_IMAGES).exists() && new File(G.DIR_VIDEOS).exists() && new File(G.DIR_AUDIOS).exists() && new File(G.DIR_DOCUMENT).exists() && new File(
+            G.DIR_CHAT_BACKGROUND).exists() && new File(G.DIR_IMAGE_USER).exists() && new File(G.DIR_TEMP).exists()) {
+            return;
+        } else {
+            StartupActions.makeFolder();
+        }
+    }
+
+
+
 }

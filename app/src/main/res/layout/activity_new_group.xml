@@ -8,20 +8,22 @@
                 android:background="@color/white"
                 android:elevation="999dp"
                 android:fitsSystemWindows="false"
-                tools:ignore="MissingPrefix">
+    tools:ignore="MissingPrefix"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/ng_backgroundToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp60"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@color/toolbar_background"
         android:layoutDirection="ltr"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
-        app:layout_collapseMode="pin">
+        app:layout_collapseMode="pin"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,8 +37,8 @@
                 android:gravity="center"
                 android:text="@string/new_group"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp18"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:visibility="visible"/>
 
           <net.iGap.libs.rippleeffect.RippleView
@@ -128,7 +130,8 @@
                         android:layout_gravity="start"
                         android:paddingTop="@dimen/dp8"
                         android:singleLine="true"
-                        android:textSize="@dimen/sp15"/>
+                        android:textSize="@dimen/dp15"
+                        />
 
                     <View
                         android:id="@+id/ng_view_newGroup"
@@ -145,7 +148,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ng_root_newGroup"
                 android:layout_marginTop="@dimen/dp12"
-                android:hint="@string/desc">
+                android:hint="@string/desc_group_chanel"
+                >
 
               <net.iGap.module.LinedEditText
                     android:id="@+id/ng_edt_description"
@@ -163,7 +167,8 @@
                     android:maxLines="4"
                     android:paddingBottom="@dimen/dp8"
                     android:paddingTop="@dimen/dp8"
-                    android:textSize="@dimen/sp15"/>
+                  android:textSize="@dimen/dp15"
+                  />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -180,7 +185,7 @@
                 android:singleLine="false"
                 android:text="@string/chi_NEXT_STEP"
                 android:textColor="@color/toolbar_background"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
 
                 />
@@ -198,7 +203,7 @@
                 android:padding="@dimen/dp12"
                 android:text="@string/B_cancel"
                 android:textColor="@color/toolbar_background"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"/>
         </RelativeLayout>
     </ScrollView>

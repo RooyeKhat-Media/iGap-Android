@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="ltr"
-    android:orientation="vertical">
+    tools:ignore="MissingPrefix"
+    android:orientation="vertical"
+    >
 
 
     <android.support.v7.widget.RecyclerView
@@ -65,7 +68,9 @@
                     android:maxLines="3"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp12"/>
+                    fontPath="fonts/IRANSansMobile_Bold.ttf"
+                    android:textSize="@dimen/dp12"
+                    />
 
               <net.iGap.module.MaterialDesignTextView
                     android:id="@+id/asm_btn_menu"
@@ -76,7 +81,7 @@
                     android:paddingTop="@dimen/dp12"
                     android:text="@string/md_show_more_button"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/sp20"
+                  android:textSize="@dimen/dp20"
                     android:visibility="gone" />
 
 

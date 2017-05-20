@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
+    tools:ignore="MissingPrefix"
     >
 
   <net.iGap.module.MyAppBarLayout
@@ -78,7 +80,7 @@
                 android:text="@string/md_searching_magnifying_glass"
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp28"
+                android:textSize="@dimen/dp28"
                 />
 
           </net.iGap.libs.rippleeffect.RippleView>
@@ -94,7 +96,8 @@
           android:text="@string/igap"
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:textColor="@android:color/white"
-          android:textSize="@dimen/sp18"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:textSize="@dimen/dp18"
           />
     </RelativeLayout>
 

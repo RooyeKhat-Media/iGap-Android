@@ -10,22 +10,26 @@
 
 package net.iGap.helper;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.io.File;
 import net.iGap.G;
+import net.iGap.module.SHP_SETTING;
 import net.iGap.realm.RealmRoomMessage;
 
 public class HelperCalculateKeepMedia {
-    private RealmResults<RealmRoomMessage> mRealmList;
 
     public void calculateTime() { // calculate time for delete media in after 7 days
-
-        Realm realm = Realm.getDefaultInstance();
-        mRealmList = realm.where(RealmRoomMessage.class).findAll();
-
         new Thread(new Runnable() {
             @Override public void run() {
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<RealmRoomMessage> mRealmList = realm.where(RealmRoomMessage.class).findAll();
+                SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong(SHP_SETTING.KEY_KEEP_MEDIA_TIME, G.currentTime);
+                editor.apply();
                 for (int i = 0; i < mRealmList.size(); i++) {
                     if (mRealmList.get(i).getAttachment() != null) {
                         long timeMedia = mRealmList.get(i).getUpdateTime() / 1000;
@@ -46,6 +50,7 @@ public class HelperCalculateKeepMedia {
                         }
                     }
                 }
+                realm.close();
             }
         }).start();
     }

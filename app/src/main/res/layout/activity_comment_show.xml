@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="ltr"
-    android:orientation="vertical">
+    tools:ignore="MissingPrefix"
+    android:orientation="vertical"
+    >
 
 
     <LinearLayout
@@ -61,7 +64,7 @@
                 android:singleLine="true"
                 android:text="New Text"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 />
 
             <TextView
@@ -72,7 +75,7 @@
                 android:maxWidth="@dimen/dp280"
                 android:singleLine="true"
                 android:text="New Text"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 />
         </LinearLayout>
 
@@ -84,7 +87,7 @@
             android:textAppearance="@style/TextIconAppearance_toolbar"
             android:text="@string/md_close_button"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/sp22"
+          android:textSize="@dimen/dp22"
             android:visibility="visible"
             />
 
@@ -161,7 +164,8 @@
                         android:text="23 Comments"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp18"
+                        android:textSize="@dimen/dp18"
+                        fontPath="fonts/IRANSansMobile_Bold.ttf"
                         android:textStyle="bold" />
 
                   <net.iGap.libs.rippleeffect.RippleView
@@ -182,7 +186,7 @@
                             android:gravity="center"
                             android:text="@string/md_check_box"
                             android:textColor="@android:color/white"
-                            android:textSize="@dimen/sp22"
+                        android:textSize="@dimen/dp22"
                             />
 
                   </net.iGap.libs.rippleeffect.RippleView>
@@ -243,7 +247,7 @@
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/send_button_gray"
                 android:gravity="center"
-                android:textSize="@dimen/sp26"
+                android:textSize="@dimen/dp26"
                 android:visibility="visible" />
 
 

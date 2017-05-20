@@ -10,7 +10,9 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingGetConfiguration;
+import net.iGap.realm.RealmCallConfig;
 
 public class SignalingGetConfigurationResponse extends MessageHandler {
 
@@ -29,16 +31,24 @@ public class SignalingGetConfigurationResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-        ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.Builder builder = (ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.Builder) message;
-        for (ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.IceServer ice : builder.getIceServerList()) {
-            ice.getUrl();
-            ice.getCredential();
-            ice.getUsername();
-        }
 
-        builder.getVoiceCalling();
-        builder.getVideoCalling();
-        builder.getScreenSharing();
+        G.needGetSignalingConfiguration = false;
+
+        ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.Builder builder = (ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.Builder) message;
+
+        RealmCallConfig.updateSignalingConfiguration(builder);
+
+        //for (ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.IceServer ice : builder.getIceServerList()) {
+        //    ice.getUrl();
+        //    ice.getCredential();
+        //    ice.getUsername();
+        //}
+        //
+        //builder.getVoiceCalling();
+        //builder.getVideoCalling();
+        //builder.getScreenSharing();
+
+
     }
 
     @Override

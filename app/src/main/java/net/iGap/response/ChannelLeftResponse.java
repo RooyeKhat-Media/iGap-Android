@@ -23,7 +23,6 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
-import net.iGap.realm.RealmUserInfo;
 
 public class ChannelLeftResponse extends MessageHandler {
 
@@ -47,8 +46,8 @@ public class ChannelLeftResponse extends MessageHandler {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override public void execute(Realm realm) {
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (realmUserInfo != null && realmUserInfo.getUserId() == builder.getMemberId()) {
+
+                if (G.userId == builder.getMemberId()) {
                     RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
                     if (realmRoom != null) {
                         realmRoom.deleteFromRealm();

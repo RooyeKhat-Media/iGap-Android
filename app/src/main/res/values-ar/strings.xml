@@ -792,7 +792,7 @@
   <string name="toggle_botton_color">رنگ دکمه های ضامنی</string>
   <string name="send_and_attach_botton_color">رنگ آیکن ارسال و پیوست ها</string>
   <string name="default_header_font_color">رنگ تیتر نوشته ها</string>
-
+  <string name="default_progress_color">رنگ تیتر پروگرس بار</string>
   <string name="who_can_see_my_avatar">چه کسی آواتارهای من را ببیند؟</string>
   <string name="who_can_invite_you_to_channel_s">چه کسی من را به کانال دعوت کند ؟</string>
   <string name="who_can_invite_you_to_group_s">چه کسی من را به گروه دعوت کند ؟</string>
@@ -802,6 +802,7 @@
   <string name="igap_search">‫بگرد و کشف کن</string>‬‬‬‬‬‬
   <string name="set_color_to_default">انتخاب رنگ پیش فرض برنامه</string>
   <string name="empty_message">‫چیزی پیدا نشد، لطفا 5 کاراکتر ابتدایی نام کاربری را وارد کنید</string>‬‬‬‬‬‬
+  <string name="empty_message3">برای جستجو حداقل سه حرف نیاز است</string>‬‬‬‬‬‬
   <string name="there_is_no_any_result">نتیجه ای یافت نشد</string>
   <string name="there_is_no_connection_to_server">ارتباط با سرور برقرار نیست</string>
   <string name="empty_room">هنوز پیامی ندارید</string>
@@ -828,4 +829,8 @@
   <string name="text_limit_Create_Group">you just create 25 Group or Channel</string>
   <string name="title_limit_Create_Group">Limit Create Room</string>
   <string name="show_sender_name_in_group">Show sender name in group</string>
+  <string name="calls">Calls</string>
+  <string name="igap_call">iGap Call</string>
+  <string name="clean_log">Clean logs</string>
+
 </resources>

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/rg_agreement_background"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/rg_agreement_background"
+    tools:ignore="MissingPrefix"
+    android:orientation="vertical"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/ar_toolbar"
@@ -12,7 +15,8 @@
         android:layout_height="@dimen/dp60"
         android:background="@color/toolbar_background"
         app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp">
+        app:contentInsetStart="0dp"
+        >
 
         <TextView
             android:id="@+id/rg_txt_titleToolbar"
@@ -21,11 +25,14 @@
             android:gravity="center"
             android:text="@string/igap"
             android:textColor="@color/rg_whit_background"
-            android:textSize="@dimen/sp20"/>
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:textSize="@dimen/dp20"
+            />
 
     </android.support.v7.widget.Toolbar>
 
     <View
+        android:id="@+id/ar_view_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/rg_line1_background"/>
@@ -47,7 +54,8 @@
             android:gravity="center"
             android:text="@string/rg_title_register"
             android:textColor="@color/rg_black_register"
-            android:textSize="@dimen/sp18"/>
+            android:textSize="@dimen/dp18"
+            />
 
         <View
             android:layout_width="match_parent"
@@ -70,7 +78,7 @@
             android:gravity="center"
             android:text="@string/rg_confirm_text_register"
             android:textColor="@color/rg_confirm_country"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
 
             />
     </RelativeLayout>
@@ -97,7 +105,8 @@
             android:paddingRight="@dimen/dp28"
             android:paddingTop="@dimen/dp4"
             android:text="Iran"
-            android:textSize="@dimen/sp14"/>
+            android:textSize="@dimen/dp14"
+            />
 
         <LinearLayout
             android:id="@+id/rg_layout_center"
@@ -125,7 +134,8 @@
                 android:text="+98"
                 android:textColor="@color/rg_black_register"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
             <com.vicmikhailau.maskededittext.MaskedEditText
                 android:id="@+id/rg_edt_PhoneNumber"
@@ -137,7 +147,7 @@
                 android:inputType="phone"
                 android:padding="@dimen/dp4"
                 android:textColor="@color/rg_black_register"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 app:mask="###-###-####"/>
 
         </LinearLayout>
@@ -156,7 +166,7 @@
             android:paddingBottom="@dimen/dp4"
             android:paddingTop="@dimen/dp4"
             android:text="@string/rg_Start"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textColor="@color/rg_whit_background"/>
 
     </RelativeLayout>
@@ -222,7 +232,8 @@
                     android:gravity="center_vertical"
                     android:text="@string/rg_verify_register1"
                     android:textColor="@color/rg_text_dark_verify"
-                    android:textSize="@dimen/sp13"/>
+                    android:textSize="@dimen/dp13"
+                    />
 
             </LinearLayout>
             <!--2-->
@@ -260,7 +271,8 @@
                     android:singleLine="true"
                     android:text="@string/rg_verify_register2"
                     android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/sp13"/>
+                    android:textSize="@dimen/dp13"
+                    />
 
                 <TextView
                     android:id="@+id/rg_txt_verify_timer"
@@ -272,7 +284,7 @@
                     android:singleLine="true"
                     android:text="05:00"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/dp14"
                     android:visibility="invisible"/>
 
             </LinearLayout>
@@ -310,7 +322,8 @@
                     android:gravity="center_vertical"
                     android:text="@string/rg_verify_register3"
                     android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/sp13"/>
+                    android:textSize="@dimen/dp13"
+                    />
 
             </LinearLayout>
 
@@ -348,7 +361,8 @@
                     android:gravity="center_vertical"
                     android:text="@string/rg_verify_register4"
                     android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/sp13"/>
+                    android:textSize="@dimen/dp13"
+                    />
 
             </LinearLayout>
         </LinearLayout>
@@ -373,7 +387,8 @@
             android:scrollbarThumbVertical="@color/rg_start_background"
             android:scrollbars="vertical"
             android:text="@string/rg_agreement_text_register"
-            android:textSize="@dimen/sp14"/>
+            android:textSize="@dimen/dp14"
+            />
     </LinearLayout>
 </LinearLayout>
 

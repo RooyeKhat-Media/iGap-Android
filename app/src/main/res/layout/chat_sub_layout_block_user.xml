@@ -19,7 +19,8 @@
         android:paddingStart="@dimen/dp20"
         android:text="@string/block_user"
         android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/sp16"/>
+        android:textSize="@dimen/dp16"
+        />
 
   <net.iGap.module.MaterialDesignTextView
         android:id="@+id/chat_txt_close"
@@ -35,7 +36,7 @@
         android:text="@string/md_close_button"
         android:textAppearance="@style/TextIconAppearance.all"
         android:textColor="@color/red"
-        android:textSize="@dimen/sp22"
+      android:textSize="@dimen/dp22"
         />
 
 </RelativeLayout>

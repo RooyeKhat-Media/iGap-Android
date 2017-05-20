@@ -61,8 +61,8 @@
                 android:gravity="center|bottom"
                 android:text="@string/st_titleToolbar"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp16"
-                android:textStyle="bold"
+                android:textSize="@dimen/dp16"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:visibility="gone"
                 />
 
@@ -75,7 +75,7 @@
                 android:gravity="center|top"
                 android:text="@string/last_seen_at"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 android:textStyle="normal"
                 android:visibility="gone"
                 />
@@ -103,6 +103,34 @@
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@color/whit_background"
                 />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/chi_ripple_call"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="@dimen/dp52"
+              android:visibility="gone"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="150"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/chi_btn_call"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_phone"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+
           </net.iGap.libs.rippleeffect.RippleView>
 
           <net.iGap.libs.rippleeffect.RippleView
@@ -160,7 +188,7 @@
             android:maxLength="24"
             android:text="Last Seen at 14:20 "
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             android:textStyle="bold"
             />
 
@@ -206,7 +234,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_info"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -228,7 +256,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="@string/st_contactName"
               android:textColor="@android:color/secondary_text_light"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="bold"
               />
 
@@ -244,7 +272,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="Alexander Smith"
               android:textColor="@color/gray_5c"
-              android:textSize="@dimen/sp13"
+              android:textSize="@dimen/dp13"
               />
 
         </LinearLayout>
@@ -267,7 +295,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="@string/st_username"
               android:textColor="@android:color/secondary_text_light"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="bold"
               />
 
@@ -285,7 +313,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="Alexander Smith:"
               android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/sp13"
+              android:textSize="@dimen/dp13"
               />
 
         </LinearLayout>
@@ -309,7 +337,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="@string/st_phoneNumber"
               android:textColor="@android:color/secondary_text_light"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="bold"
               />
 
@@ -325,7 +353,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="09125554433"
               android:textColor="@color/gray_5c"
-              android:textSize="@dimen/sp13"
+              android:textSize="@dimen/dp13"
               />
         </LinearLayout>
 
@@ -347,7 +375,7 @@
               android:paddingStart="@dimen/dp4"
               android:text="@string/chi_shared_Media"
               android:textColor="@android:color/secondary_text_light"
-              android:textSize="@dimen/sp15"
+              android:textSize="@dimen/dp15"
               android:textStyle="bold"
               />
 
@@ -363,7 +391,7 @@
               android:paddingStart="@dimen/dp4"
               android:text=""
               android:textColor="@color/gray_5c"
-              android:textSize="@dimen/sp13"
+              android:textSize="@dimen/dp13"
               android:theme="@style/Setting_editText"
               />
 
@@ -388,7 +416,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/chi_title_setting"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -402,7 +430,7 @@
             android:paddingRight="@dimen/dp16"
             android:text="@string/st_title_notification_sounds"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             />
 
@@ -421,7 +449,7 @@
             android:paddingRight="@dimen/dp16"
             android:text="@string/chi_clearChat"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             />
 
@@ -443,7 +471,7 @@
             android:paddingRight="@dimen/dp16"
             android:text="@string/chi_blockContact"
             android:textColor="@color/black_register"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="normal"
             android:visibility="gone"
             />

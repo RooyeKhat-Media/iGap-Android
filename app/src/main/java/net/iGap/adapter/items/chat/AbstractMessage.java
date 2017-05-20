@@ -880,7 +880,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         if (sharedPreferences.getInt(key, ((key.equals(SHP_SETTING.KEY_AD_DATA_GIF) || key.equals(SHP_SETTING.KEY_AD_WIFI_GIF)) ? 5 : -1)) != -1) {
             autoDownload(holder, attachment);
         } else {
-            ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withOnMessageProgress(new OnMessageProgressClick() {
+
+            MessageProgress _Progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+            AppUtils.setProgresColor(_Progress.progressBar);
+
+            _Progress.withOnMessageProgress(new OnMessageProgressClick() {
                 @Override
                 public void onMessageProgressClick(MessageProgress progress) {
                     forOnCLick(holder, attachment);
@@ -964,7 +968,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 }
                 break;
             default:
-                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withOnMessageProgress(new OnMessageProgressClick() {
+
+                MessageProgress _Progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+                AppUtils.setProgresColor(_Progress.progressBar);
+
+                _Progress.withOnMessageProgress(new OnMessageProgressClick() {
                     @Override
                     public void onMessageProgressClick(MessageProgress progress) {
                         forOnCLick(holder, attachment);
@@ -1066,7 +1074,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             }
 
             if (hasProgress(holder.itemView)) {
-                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withOnMessageProgress(new OnMessageProgressClick() {
+
+                final MessageProgress _Progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+                AppUtils.setProgresColor(_Progress.progressBar);
+
+                _Progress.withOnMessageProgress(new OnMessageProgressClick() {
                     @Override
                     public void onMessageProgressClick(MessageProgress progress) {
                         forOnCLick(holder, attachment);
@@ -1082,17 +1094,17 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                     }
                 }
 
-                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withOnProgress(new OnProgress() {
+                _Progress.withOnProgress(new OnProgress() {
                     @Override
                     public void onProgressFinished() {
                         holder.itemView.findViewById(R.id.thumbnail).setOnClickListener(null);
-                        ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(null, true);
+                        _Progress.withDrawable(null, true);
 
                         switch (messageType) {
                             case VIDEO:
                             case VIDEO_TEXT:
                                 holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.ic_play, true);
+                                _Progress.withDrawable(R.drawable.ic_play, true);
                                 break;
                             case AUDIO:
                             case AUDIO_TEXT:
@@ -1122,7 +1134,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                                 SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
                                 if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 0) {
                                     holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                                    ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.photogif, true);
+                                    _Progress.withDrawable(R.drawable.photogif, true);
                                 } else {
                                     holder.itemView.findViewById(R.id.progress).setVisibility(View.INVISIBLE);
                                 }
@@ -1148,7 +1160,10 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
     }
 
     private void forOnCLick(VH holder, RealmAttachment attachment) {
-        MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+
+        final MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        AppUtils.setProgresColor(progress.progressBar);
+
         View thumbnail = holder.itemView.findViewById(R.id.thumbnail);
 
         //if (mMessage.messageType == ProtoGlobal.RoomMessageType.FILE || mMessage.messageType == ProtoGlobal.RoomMessageType.FILE_TEXT) {
@@ -1163,7 +1178,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 if (G.userLogin) {
                     HelperUploadFile.reUpload(mMessage.messageID);
 
-                    ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.ic_cancel, false);
+                    progress.withDrawable(R.drawable.ic_cancel, false);
                     holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
                     final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) holder.itemView.findViewById(R.id.ch_progress_loadingContent);
                     contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -1247,10 +1262,9 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 public void OnProgress(final String path, int progress) {
 
                     if (progress == 100) {
-                        G.currentActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
 
+                        G.handler.post(new Runnable() {
+                            @Override public void run() {
                                 String type;
                                 if (mMessage.forwardedFrom != null) {
                                     type = mMessage.forwardedFrom.getMessageType().toString().toLowerCase();
@@ -1278,7 +1292,9 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             return;
         }
 
+
         final MessageProgress progressBar = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        AppUtils.setProgresColor(progressBar.progressBar);
 
         final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) holder.itemView.findViewById(R.id.ch_progress_loadingContent);
         contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -1307,9 +1323,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 @Override
                 public void OnProgress(final String path, final int progress) {
 
-                    G.currentActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    G.handler.post(new Runnable() {
+                        @Override public void run() {
                             if (progress == 100) {
                                 progressBar.setVisibility(View.GONE);
                                 contentLoading.setVisibility(View.GONE);
@@ -1322,19 +1337,20 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                             }
                         }
                     });
+
                 }
 
                 @Override
                 public void OnError(String token) {
 
-                    G.currentActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    G.handler.post(new Runnable() {
+                        @Override public void run() {
                             progressBar.withProgress(0);
                             progressBar.withDrawable(R.drawable.ic_download, true);
                             contentLoading.setVisibility(View.GONE);
                         }
                     });
+
                 }
             });
         }
@@ -1355,7 +1371,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         }
 
         if (mMessage.sendType == MyType.SendType.send) {
-            ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.ic_cancel, false);
+
+            final MessageProgress progressBar = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+            AppUtils.setProgresColor(progressBar.progressBar);
+
+            progressBar.withDrawable(R.drawable.ic_cancel, false);
 
             final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) holder.itemView.findViewById(R.id.ch_progress_loadingContent);
             contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -1372,14 +1392,12 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                     @Override
                     public void OnProgress(final int progress, FileUploadStructure struct) {
 
-                        G.currentActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withProgress(progress);
+                        G.handler.post(new Runnable() {
+                            @Override public void run() {
+                                progressBar.withProgress(progress);
 
                                 if (progress == 100) {
-                                    ((MessageProgress) holder.itemView.findViewById(R.id.progress)).performProgress();
+                                    progressBar.performProgress();
                                     contentLoading.setVisibility(View.GONE);
                                 }
                             }
@@ -1389,8 +1407,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                     @Override
                     public void OnError() {
 
-                        ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withProgress(0);
-                        ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withDrawable(R.drawable.upload, true);
+                        progressBar.withProgress(0);
+                        progressBar.withDrawable(R.drawable.upload, true);
 
                         contentLoading.setVisibility(View.GONE);
 
@@ -1400,7 +1418,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
                 holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
                 contentLoading.setVisibility(View.VISIBLE);
-                ((MessageProgress) holder.itemView.findViewById(R.id.progress)).withProgress(HelperUploadFile.getUploadProgress(mMessage.messageID));
+                progressBar.withProgress(HelperUploadFile.getUploadProgress(mMessage.messageID));
             } else {
                 checkForDownloading(holder, attachment);
             }
@@ -1416,7 +1434,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
     private void onFaildUpload(VH holder) {
 
-        final MessageProgress progressBar = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        MessageProgress progressBar = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        AppUtils.setProgresColor(progressBar.progressBar);
 
         final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) holder.itemView.findViewById(R.id.ch_progress_loadingContent);
         // contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -1439,6 +1458,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
     private void checkForDownloading(VH holder, RealmAttachment attachment) {
 
         MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+        AppUtils.setProgresColor(progress.progressBar);
+
         if (HelperDownloadFile.isDownLoading(attachment.getCacheId())) {
             hideThumbnailIf(holder);
 

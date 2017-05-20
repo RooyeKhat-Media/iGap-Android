@@ -11,10 +11,10 @@
 package net.iGap.module.structs;
 
 import io.realm.Realm;
+import net.iGap.G;
 import net.iGap.realm.RealmChannelExtra;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmUserInfo;
 import org.parceler.Parcel;
 
 @Parcel public class StructChannelExtra {
@@ -54,13 +54,6 @@ import org.parceler.Parcel;
         return signature;
     }
 
-    private static String getName() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-        String name = realmUserInfo.getUserInfo().getDisplayName();
-        realm.close();
-        return name;
-    }
 
     public static StructChannelExtra makeDefaultStructure(long messageId, long roomId) {
         StructChannelExtra structChannelExtra = new StructChannelExtra();
@@ -71,7 +64,7 @@ import org.parceler.Parcel;
         Realm realm = Realm.getDefaultInstance();
         RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom != null && realmRoom.getChannelRoom() != null && realmRoom.getChannelRoom().isSignature()) {
-            structChannelExtra.signature = realm.where(RealmUserInfo.class).findFirst().getUserInfo().getDisplayName();
+            structChannelExtra.signature = G.displayName;
         } else {
             structChannelExtra.signature = "";
         }

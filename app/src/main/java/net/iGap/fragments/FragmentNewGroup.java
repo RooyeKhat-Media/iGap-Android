@@ -64,6 +64,7 @@ import net.iGap.interfaces.OnGroupAvatarResponse;
 import net.iGap.interfaces.OnGroupCreate;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
@@ -76,6 +77,7 @@ import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmChannelRoom;
 import net.iGap.realm.RealmRoom;
+import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestChannelAvatarAdd;
 import net.iGap.request.RequestChannelCreate;
@@ -163,7 +165,7 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
                                             intent.setType("image/*");
                                             startActivityForResult(Intent.createChooser(intent, context.getString(R.string.select_picture_en)), request_code_image_from_gallery_single_select);
                                             isInAttach = true;
-                                        }
+                                    }
                                     }
 
                                     @Override public void deny() {
@@ -172,7 +174,7 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
                                 });
                             } catch (IOException e) {
                                 e.printStackTrace();
-                            }
+                        }
                             break;
                         }
                         case 1: {
@@ -188,7 +190,7 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
 
                                                     if (isAdded()) {
                                                         useCamera();
-                                                    }
+                                                }
                                                     dialog.dismiss();
                                                 }
 
@@ -204,13 +206,13 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
                                     });
                                 } catch (IOException e) {
                                     e.printStackTrace();
-                                }
+                            }
                             } else {
                                 Toast.makeText(context, R.string.please_check_your_camera, Toast.LENGTH_SHORT).show();
-                            }
-                            break;
                         }
+                            break;
                     }
+                }
                 }
             })
             .show();
@@ -260,7 +262,7 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
         G.onChannelAvatarAdd = this;
 
         prgWaiting = (ProgressBar) view.findViewById(R.id.ng_prgWaiting);
-        prgWaiting.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        AppUtils.setProgresColler(prgWaiting);
 
         view.findViewById(R.id.ng_backgroundToolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
         view.findViewById(R.id.ang_view_line).setBackgroundColor(Color.parseColor(G.appBarColor));
@@ -343,13 +345,13 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
 
         switch (prefix) {
             case "NewChanel":
-                txtInputNewGroup.setHint(getResources().getString(R.string.new_channel));
+                txtInputNewGroup.setHint(getResources().getString(R.string.channel_name) + " " + getResources().getString(R.string.mandatory));
                 break;
             case "ConvertToGroup":
-                txtInputNewGroup.setHint(getResources().getString(R.string.group_name));
+                txtInputNewGroup.setHint(getResources().getString(R.string.group_name) + " " + getResources().getString(R.string.mandatory));
                 break;
             default:
-                txtInputNewGroup.setHint(getResources().getString(R.string.group_name));
+                txtInputNewGroup.setHint(getResources().getString(R.string.group_name) + " " + getResources().getString(R.string.mandatory));
                 break;
         }
 
@@ -450,7 +452,10 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override public void execute(Realm realm) {
-                RealmRoom realmRoom = realm.createObject(RealmRoom.class, roomId);
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (realmRoom == null) {
+                    realmRoom = realm.createObject(RealmRoom.class, roomId);
+                }
 
                 RealmChannelRoom realmChannelRoom = realm.createObject(RealmChannelRoom.class);
                 realmChannelRoom.setInviteLink(inviteLink);
@@ -705,6 +710,8 @@ public class FragmentNewGroup extends Fragment implements OnGroupAvatarResponse,
             showInitials();
             imgCircleImageView.setPadding(0, 0, 0, 0);
         }
+
+        realm.close();
     }
 
     private boolean avatarExist = false;

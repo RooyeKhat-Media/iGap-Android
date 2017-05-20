@@ -23,7 +23,6 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
-import net.iGap.realm.RealmUserInfo;
 
 public class GroupLeftResponse extends MessageHandler {
 
@@ -49,9 +48,7 @@ public class GroupLeftResponse extends MessageHandler {
         realm.executeTransaction(new Realm.Transaction() {
             @Override public void execute(Realm realm) {
 
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-
-                if (realmUserInfo != null && realmUserInfo.getUserId() == memberId) {
+                if (G.userId == memberId) {
                     RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                     if (realmRoom != null) {
                         realmRoom.deleteFromRealm();

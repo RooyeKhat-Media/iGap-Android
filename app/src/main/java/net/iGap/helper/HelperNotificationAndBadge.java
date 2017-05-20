@@ -200,6 +200,8 @@ public class HelperNotificationAndBadge {
                     mBitmapIcon = bitmap;
                 }
             }
+
+            realm.close();
         }
     }
 

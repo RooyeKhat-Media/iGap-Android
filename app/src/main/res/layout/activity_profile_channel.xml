@@ -58,8 +58,9 @@
                 android:gravity="center"
                 android:text="@string/st_titleToolbar"
                 android:textColor="@color/whit_background"
-                android:textSize="@dimen/sp18"
+                android:textSize="@dimen/dp18"
                 android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
                 android:visibility="gone"
                 />
 
@@ -138,7 +139,7 @@
               android:maxLength="24"
               android:text="svsavhispfauhvipushvfiuhvihvsvs"
               android:textColor="@android:color/white"
-              android:textSize="@dimen/sp16"
+              android:textSize="@dimen/dp16"
               android:textStyle="normal"
               />
 
@@ -183,7 +184,7 @@
               android:paddingTop="@dimen/dp12"
               android:text="@string/info"
               android:textColor="@color/green"
-              android:textSize="@dimen/sp18"
+              android:textSize="@dimen/dp18"
               android:textStyle="bold"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
@@ -215,7 +216,7 @@
                   android:singleLine="true"
                   android:text="@string/channel_name"
                   android:textColor="@color/black_register"
-                  android:textSize="@dimen/sp15"
+                  android:textSize="@dimen/dp15"
                   />
 
               <TextView
@@ -229,7 +230,7 @@
                   android:singleLine="true"
                   android:text=""
                   android:textColor="@color/gray_5c"
-                  android:textSize="@dimen/sp13"
+                  android:textSize="@dimen/dp13"
                   />
             </LinearLayout>
           </LinearLayout>
@@ -252,7 +253,7 @@
                 android:singleLine="true"
                 android:text="@string/channel_link"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
             <TextView
@@ -266,7 +267,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp13"
+                android:textSize="@dimen/dp13"
                 />
 
           </LinearLayout>
@@ -290,7 +291,7 @@
                 android:singleLine="true"
                 android:text="@string/channel_description"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
             <TextView
@@ -303,7 +304,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text=""
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp13"
+                android:textSize="@dimen/dp13"
                 />
 
           </LinearLayout>
@@ -325,7 +326,7 @@
                 android:singleLine="true"
                 android:text="@string/shared_media"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
             <TextView
@@ -338,7 +339,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text=""
                 android:textColor="@color/gray_5c"
-                android:textSize="@dimen/sp13"
+                android:textSize="@dimen/dp13"
                 />
           </LinearLayout>
 
@@ -365,7 +366,7 @@
               android:paddingTop="@dimen/dp12"
               android:text="@string/members"
               android:textColor="@color/green"
-              android:textSize="@dimen/sp18"
+              android:textSize="@dimen/dp18"
               android:textStyle="bold"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
@@ -400,7 +401,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/dp8"
                 android:text="@string/add_new_member"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/dp16"
                 />
 
 
@@ -445,7 +446,7 @@
                 android:layout_margin="@dimen/dp8"
                 android:gravity=""
                 android:text="@string/show_member"
-                android:textSize="@dimen/sp16"
+                android:textSize="@dimen/dp16"
                 />
           </LinearLayout>
 
@@ -471,7 +472,7 @@
               android:paddingTop="@dimen/dp12"
               android:text="@string/settings"
               android:textColor="@color/green"
-              android:textSize="@dimen/sp18"
+              android:textSize="@dimen/dp18"
               android:textStyle="bold"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
 
@@ -490,14 +491,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/sp16"
+                android:paddingEnd="@dimen/dp16"
                 android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/sp16"
-                android:paddingStart="@dimen/sp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_admin"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
 
@@ -521,14 +522,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/sp16"
+                android:paddingEnd="@dimen/dp16"
                 android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/sp16"
-                android:paddingStart="@dimen/sp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_modereator"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
 
@@ -565,7 +566,7 @@
                   android:singleLine="true"
                   android:text="@string/member_can_add_new_member"
                   android:textColor="@android:color/black"
-                  android:textSize="@dimen/sp15"
+                  android:textSize="@dimen/dp15"
                   />
 
               <ToggleButton
@@ -602,14 +603,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/sp16"
+                android:paddingEnd="@dimen/dp16"
                 android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/sp16"
-                android:paddingStart="@dimen/sp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/notificaion_and_sound"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
           </LinearLayout>
@@ -632,14 +633,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/sp16"
+                android:paddingEnd="@dimen/dp16"
                 android:paddingLeft="@dimen/dp16"
-                android:paddingRight="@dimen/sp16"
-                android:paddingStart="@dimen/sp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/delete_and_leave_channel"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
           </LinearLayout>
 
@@ -670,7 +671,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/st_signature"
                 android:textColor="@color/black_register"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 android:textStyle="normal"
                 fontPath="fonts/IRANSansMobile.ttf"
                 />

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="@color/black90"
-        android:textSize="@dimen/sp18"
+        android:textSize="@dimen/dp18"
         android:id="@+id/daj_txt_room_name"
         />
     <TextView

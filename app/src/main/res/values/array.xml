@@ -209,7 +209,12 @@
         <item>@string/share_item_dialog</item>
     </string-array>
 
-    <string-array name="pop_up_menu_show_image">
+  <string-array name="pop_up_call_log_menu">
+    <item>@string/clean_log</item>
+  </string-array>
+
+
+  <string-array name="pop_up_menu_show_image">
         <item>@string/share_image</item>
         <item>@string/save_to_gallery</item>
     </string-array>
@@ -218,7 +223,7 @@
         <item>@string/save_to_gallery</item>
     </string-array>
     <string-array name="pop_up_menu_show_avatar_setting">
-        <item>@string/save_to_gallery</item>
+      <!--<item>@string/save_to_gallery</item>-->
         <item>@string/array_Delete_photo</item>
     </string-array>
 

@@ -10,7 +10,10 @@
 
 package net.iGap.response;
 
+import java.util.List;
+import net.iGap.G;
 import net.iGap.proto.ProtoSignalingGetLog;
+import net.iGap.realm.RealmCallLog;
 
 public class SignalingGetLogResponse extends MessageHandler {
 
@@ -31,6 +34,25 @@ public class SignalingGetLogResponse extends MessageHandler {
         super.handler();
 
         ProtoSignalingGetLog.SignalingGetLogResponse.Builder builder = (ProtoSignalingGetLog.SignalingGetLogResponse.Builder) message;
+        List<ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> list = builder.getSignalingLogList();
+
+        RealmCallLog.addLogList(list);
+
+        if (G.iSignalingGetCallLog != null) {
+            G.iSignalingGetCallLog.onGetList(list.size());
+        }
+
+        //for (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item : list) {
+        //
+        //    item.getId();
+        //    item.getType();
+        //    item.getStatus();
+        //    item.getPeer();
+        //    item.getOfferTime();
+        //    item.getDuration();
+        //}
+
+
     }
 
     @Override
@@ -41,6 +63,12 @@ public class SignalingGetLogResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
+
+        if (G.iSignalingGetCallLog != null) {
+            G.iSignalingGetCallLog.onGetList(0);
+        }
+
+
     }
 }
 

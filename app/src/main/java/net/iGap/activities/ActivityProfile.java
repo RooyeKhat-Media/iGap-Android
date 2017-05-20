@@ -48,6 +48,7 @@ import net.iGap.interfaces.OnUserAvatarResponse;
 import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.interfaces.OnUserProfileSetNickNameResponse;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.EditTextAdjustPan;
 import net.iGap.module.FileUploadStructure;
@@ -98,7 +99,7 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
 
         txtAddPhoto = (TextView) findViewById(R.id.pu_txt_addPhoto);
         prgWait = (ProgressBar) findViewById(R.id.prg);
-
+        AppUtils.setProgresColler(prgWait);
         findViewById(R.id.ap_ll_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         txtTitle = (TextView) findViewById(R.id.pu_titleToolbar);
@@ -164,7 +165,7 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
                             setNickName();
                         }
                     });
-                    realm.close();
+
                 } else {
                     runOnUiThread(new Runnable() {
                         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN) @Override public void run() {
@@ -177,6 +178,8 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
                         }
                     });
                 }
+
+                realm.close();
             }
         });
     }
@@ -221,6 +224,8 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
                             @Override public void execute(Realm realm) {
                                 RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
                                 realmUserInfo.getUserInfo().setDisplayName(user.getDisplayName());
+                                G.displayName = user.getDisplayName();
+
                                 realmUserInfo.getUserInfo().setInitials(user.getInitials());
                                 realmUserInfo.getUserInfo().setColor(user.getColor());
 
@@ -261,10 +266,8 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
             }
         };
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-        new RequestUserInfo().userInfo(realmUserInfo.getUserId());
-        realm.close();
+        new RequestUserInfo().userInfo(G.userId);
+
     }
 
     public void useCamera() {
@@ -454,8 +457,8 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
         Realm realm = Realm.getDefaultInstance();
         RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
         if (realmUserInfo != null) {
-            final long userId = realm.where(RealmUserInfo.class).findFirst().getUserId();
-            final RealmResults<RealmAvatar> realmAvatars = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAll();
+
+            final RealmResults<RealmAvatar> realmAvatars = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, G.userId).findAll();
             if (!realmAvatars.isEmpty()) {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override public void execute(Realm realm) {
@@ -469,9 +472,7 @@ public class ActivityProfile extends ActivityEnhanced implements OnUserAvatarRes
 
     @Override public void onAvatarAdd(final ProtoGlobal.Avatar avatar) {
 
-        Realm realm = Realm.getDefaultInstance();
-        long userId = realm.where(RealmUserInfo.class).findFirst().getUserId();
-        HelperAvatar.avatarAdd(userId, pathImageUser, avatar, new OnAvatarAdd() {
+        HelperAvatar.avatarAdd(G.userId, pathImageUser, avatar, new OnAvatarAdd() {
             @Override public void onAvatarAdd(final String avatarPath) {
 
                 runOnUiThread(new Runnable() {

@@ -122,6 +122,8 @@ import org.parceler.Parcel;
             }
         }
 
+        realm.close();
+
         return realmAttachment;
     }
 

@@ -13,7 +13,7 @@
       android:gravity="center_horizontal"
       android:text="@string/Toast_time_wait"
       android:textColor="@color/black_register"
-      android:textSize="@dimen/sp18"
+      android:textSize="@dimen/dp18"
       />
 
   <net.iGap.module.HeaderTextview
@@ -24,7 +24,7 @@
       android:gravity="center_horizontal"
       android:text="356 secend"
       android:textColor="@color/green"
-      android:textSize="@dimen/sp18"
+      android:textSize="@dimen/dp18"
       />
 
 </LinearLayout>

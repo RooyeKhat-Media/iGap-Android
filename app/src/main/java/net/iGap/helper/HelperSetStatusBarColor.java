@@ -22,24 +22,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.lang.reflect.Field;
+import net.iGap.Config;
 import net.iGap.G;
 
 public class HelperSetStatusBarColor {
 
     public static void setColor(Activity activity) {
-
-        //
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        //    Window window = activity.getWindow();
-        //    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //    window.setStatusBarColor(activity.getResources().getColor((R.color.iGapColor)));
-        //}else {
-        //
-        //    hackStatusBarColor(activity, R.color.iGapColor);
-        //
-        //}
-
+        if (G.appBarColor == null) {
+            G.appBarColor = Config.default_appBarColor;
+        }
         hackStatusBarColor(activity, G.appBarColor);
     }
 

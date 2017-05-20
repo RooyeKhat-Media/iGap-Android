@@ -19,8 +19,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -40,7 +38,6 @@ import android.text.InputType;
 import android.text.Selection;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -98,15 +95,18 @@ import net.iGap.interfaces.OnMenuClick;
 import net.iGap.interfaces.OnSelectedList;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.Contacts;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.FileUploadStructure;
 import net.iGap.module.SUID;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupCheckUsername;
+import net.iGap.proto.ProtoGroupGetMemberList;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmGroupRoom;
@@ -117,7 +117,6 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
-import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestGroupAddAdmin;
 import net.iGap.request.RequestGroupAddMember;
 import net.iGap.request.RequestGroupAddModerator;
@@ -172,7 +171,7 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
     private String participantsCountLabel;
 
     public static OnMenuClick onMenuClick;
-    private Long userID = 0l;
+
     private boolean isPrivate;
     private TextView txtLinkTitle;
     private TextView txtGroupLink;
@@ -186,7 +185,6 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
 
     private boolean isNeedgetContactlist = true;
 
-    private Realm mRealm;
     private RealmChangeListener<RealmModel> changeListener;
     private RealmRoom mRoom;
 
@@ -198,37 +196,36 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         }
     }
 
-    @Override protected void onDestroy() {
-        super.onDestroy();
-        if (mRealm != null) mRealm.close();
-    }
-
     @Override protected void onResume() {
 
         super.onResume();
 
-        mRoom = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        Realm realm = Realm.getDefaultInstance();
+
+        mRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (mRoom != null) {
 
             if (changeListener == null) {
 
                 changeListener = new RealmChangeListener<RealmModel>() {
                     @Override public void onChange(final RealmModel element) {
-                        runOnUiThread(new Runnable() {
-                            @Override public void run() {
-                                String countText = ((RealmRoom) element).getSharedMediaCount();
+                        if (((RealmRoom) element).isValid() && !((RealmRoom) element).isDeleted()) {
+                            runOnUiThread(new Runnable() {
+                                @Override public void run() {
+                                    String countText = ((RealmRoom) element).getSharedMediaCount();
 
-                                if (countText == null || countText.length() == 0) {
-                                    txtNumberOfSharedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
-                                } else {
-                                    if (HelperCalander.isLanguagePersian) {
-                                        txtNumberOfSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
+                                    if (countText == null || countText.length() == 0) {
+                                        txtNumberOfSharedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
                                     } else {
-                                        txtNumberOfSharedMedia.setText(countText);
+                                        if (HelperCalander.isLanguagePersian) {
+                                            txtNumberOfSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
+                                        } else {
+                                            txtNumberOfSharedMedia.setText(countText);
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 };
             }
@@ -240,8 +237,9 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(reciverOnGroupChangeName, new IntentFilter("Intent_filter_on_change_group_name"));
-    }
 
+        realm.close();
+    }
 
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,10 +247,10 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         Bundle extras = getIntent().getExtras();
         roomId = extras.getLong("RoomId");
 
-        mRealm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
 
         //group info
-        RealmRoom realmRoom = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom == null || realmRoom.getGroupRoom() == null) {
             //HelperError.showSnackMessage(getClientErrorCode(-2, 0));
             finish();
@@ -285,10 +283,7 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
             e.getStackTrace();
         }
 
-        RealmUserInfo userInfo = mRealm.where(RealmUserInfo.class).findFirst();
-        if (userInfo != null) userID = userInfo.getUserId();
 
-        //realm.close(); // in fillItem when make iterator with members client will be have error . This Realm instance has already been closed, making it unusable.
         initComponent();
 
         attachFile = new AttachFile(this);
@@ -297,6 +292,8 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         G.onGroupRevokeLink = this;
 
         ActivityShearedMedia.getCountOfSharedMedia(roomId);
+
+        realm.close();
     }
 
     @Override protected void onPause() {
@@ -395,85 +392,47 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
                 text2.setTextColor(getResources().getColor(android.R.color.black));
                 text3.setTextColor(getResources().getColor(android.R.color.black));
 
-                //text1.setText(getResources().getString(R.string.Search));
-                text2.setText(getResources().getString(R.string.clear_history));
+                final MaterialDialog dialog = new MaterialDialog.Builder(ActivityGroupProfile.this).customView(R.layout.chat_popup_dialog_custom, true).build();
+                View v = dialog.getCustomView();
+
+                DialogAnimation.animationUp(dialog);
+                dialog.show();
+
+                ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+                ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+
+                TextView txtClearHistory = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+                TextView txtConvert = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+
+                TextView iconClearHistory = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+                iconClearHistory.setText(getResources().getString(R.string.md_clearHistory));
+                TextView iconConvert = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+
+                root1.setVisibility(View.VISIBLE);
+                root2.setVisibility(View.VISIBLE);
+
+                txtClearHistory.setText(getResources().getString(R.string.clear_history));
                 if (role == GroupChatRole.OWNER || role == GroupChatRole.ADMIN) {
 
-                    text3.setVisibility(View.VISIBLE);
+                    root2.setVisibility(View.VISIBLE);
                     if (isPrivate) {
-                        text3.setText(getResources().getString(R.string.group_title_convert_to_public));
+                        txtConvert.setText(getResources().getString(R.string.group_title_convert_to_public));
+                        iconConvert.setText(getResources().getString(R.string.md_convert_to_public));
                     } else {
-                        text3.setText(getResources().getString(R.string.group_title_convert_to_private));
+                        txtConvert.setText(getResources().getString(R.string.group_title_convert_to_private));
+                        iconConvert.setText(getResources().getString(R.string.md_convert_to_private));
                     }
                 } else {
-                    text3.setVisibility(View.GONE);
+                    root2.setVisibility(View.GONE);
                 }
 
-                int dim20 = (int) getResources().getDimension(R.dimen.dp20);
-                int dim12 = (int) getResources().getDimension(R.dimen.dp12);
-                int sp14_Popup = 14;
-
-                /**
-                 * change dpi tp px
-                 */
-                DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-                int width = displayMetrics.widthPixels;
-                int widthDpi = Math.round(width / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-
-                if (widthDpi >= 720) {
-                    sp14_Popup = 30;
-                } else if (widthDpi >= 600) {
-                    sp14_Popup = 22;
-                } else {
-                    sp14_Popup = 15;
-                }
-
-                //text1.setTextSize(16);
-                text2.setTextSize(sp14_Popup);
-                text3.setTextSize(sp14_Popup);
-
-                //text1.setPadding(dim20, dim12, dim12, dim20);
-                text2.setPadding(dim20, dim12, dim12, dim12);
-                text3.setPadding(dim20, 0, dim12, dim20);
-
-                text3.setVisibility(View.GONE);
                 if (role == GroupChatRole.OWNER) {
-                    text3.setVisibility(View.VISIBLE);
+                    root2.setVisibility(View.VISIBLE);
                 }
-
-                //layoutDialog.addView(text1, params);
-                layoutDialog.addView(text2, params);
-                layoutDialog.addView(text3, params);
-
-                popupWindow = new PopupWindow(layoutDialog, screenWidth, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                popupWindow.setOutsideTouchable(true);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    popupWindow.setBackgroundDrawable(getResources().getDrawable(R.mipmap.shadow3, ActivityGroupProfile.this.getTheme()));
-                } else {
-                    popupWindow.setBackgroundDrawable((getResources().getDrawable(R.mipmap.shadow3)));
-                }
-                if (popupWindow.isOutsideTouchable()) {
-                    popupWindow.dismiss();
-                }
-                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override public void onDismiss() {
-                    }
-                });
-
-                popupWindow.setAnimationStyle(android.R.style.Animation_InputMethod);
-                popupWindow.showAtLocation(layoutDialog, Gravity.RIGHT | Gravity.TOP, (int) getResources().getDimension(R.dimen.dp16), (int) getResources().getDimension(R.dimen.dp32));
-                //                popupWindow.showAsDropDown(v);
-
-                //text1.setOnClickListener(new View.OnClickListener() {
-                //    @Override public void onClick(View view) {
-                //
-                //        popupWindow.dismiss();
-                //    }
-                //});
-                text2.setOnClickListener(new View.OnClickListener() {
+                root1.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
 
+                        dialog.dismiss();
                         new MaterialDialog.Builder(ActivityGroupProfile.this).title(R.string.clear_history)
                             .content(R.string.clear_history_content)
                             .positiveText(R.string.B_ok)
@@ -488,13 +447,13 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
                             .negativeText(R.string.B_cancel)
                             .show();
 
-                        popupWindow.dismiss();
+                        dialog.dismiss();
                     }
                 });
 
-                text3.setOnClickListener(new View.OnClickListener() {
+                root2.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-
+                        dialog.dismiss();
                         isPopup = true;
 
                         if (isPrivate) {
@@ -502,7 +461,7 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
                         } else {
                             convertToPrivate();
                         }
-                        popupWindow.dismiss();
+                        dialog.dismiss();
                     }
                 });
             }
@@ -517,8 +476,8 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         layoutNotificatin = (LinearLayout) findViewById(R.id.agp_ll_notification);
         layoutDeleteAndLeftGroup = (LinearLayout) findViewById(R.id.agp_ll_delete_and_left_group);
         prgWait = (ProgressBar) findViewById(R.id.agp_prgWaiting_addContact);
+        AppUtils.setProgresColler(prgWait);
         ltLink = (ViewGroup) findViewById(R.id.agp_ll_link);
-        prgWait.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), PorterDuff.Mode.MULTIPLY);
         imvGroupAvatar = (CircleImageView) findViewById(R.id.agp_imv_group_avatar);
         TextView txtDeleteGroup = (TextView) findViewById(R.id.agp_txt_str_delete_and_leave_group);
         txtGroupNameTitle = (TextView) findViewById(R.id.agp_txt_group_name_title);
@@ -643,15 +602,8 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         TextView txtShowMember = (TextView) findViewById(R.id.agp_txt_show_member);
         txtShowMember.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
+                showListForCustomRole(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.ALL.toString());
 
-                FragmentShowMember fragment = FragmentShowMember.newInstance(roomId, role.toString(), userID, "", isNeedgetContactlist);
-                getSupportFragmentManager().beginTransaction()
-                    .addToBackStack("null")
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
-                    .replace(R.id.fragmentContainer_group_profile, fragment, "Show_member")
-                    .commit();
-
-                isNeedgetContactlist = false;
             }
         });
 
@@ -666,14 +618,14 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
         txtSetAdmin.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
 
-                showListForCustomRole(ProtoGlobal.GroupRoom.Role.ADMIN.toString());
+                showListForCustomRole(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.ADMIN.toString());
             }
         });
 
         TextView txtAddModerator = (TextView) findViewById(R.id.agp_txt_add_modereator);
         txtAddModerator.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                showListForCustomRole(ProtoGlobal.GroupRoom.Role.MODERATOR.toString());
+                showListForCustomRole(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.MODERATOR.toString());
             }
         });
 
@@ -1342,9 +1294,11 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
 
     private void addMemberToGroup() {
 
+        Realm realm = Realm.getDefaultInstance();
+
         List<StructContactInfo> userList = Contacts.retrieve(null);
 
-        RealmRoom realmRoom = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         RealmList<RealmMember> memberList = realmRoom.getGroupRoom().getMembers();
 
         for (int i = 0; i < memberList.size(); i++) {
@@ -1373,6 +1327,8 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
             .addToBackStack(null)
             .replace(fragmentContainer_group_profile, fragment)
             .commit();
+
+        realm.close();
     }
 
     @Override public void onGroupRevokeLink(long roomId, final String inviteLink, final String inviteToken) {
@@ -1745,7 +1701,7 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
                     } else {
                         positive.setClickable(false);
                         positive.setAlpha(0.5f);
-                    }
+                }
                 }
             })
             .show();
@@ -1943,7 +1899,7 @@ public class ActivityGroupProfile extends ActivityEnhanced implements OnGroupAva
     }
 
     private void showListForCustomRole(String SelectedRole) {
-        FragmentShowMember fragment = FragmentShowMember.newInstance(roomId, role.toString(), userID, SelectedRole, isNeedgetContactlist);
+        FragmentShowMember fragment = FragmentShowMember.newInstance(roomId, role.toString(), G.userId, SelectedRole, isNeedgetContactlist);
         getSupportFragmentManager().beginTransaction()
             .addToBackStack("null")
             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)

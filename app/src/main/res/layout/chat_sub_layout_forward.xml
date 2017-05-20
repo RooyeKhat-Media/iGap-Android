@@ -32,7 +32,7 @@
             android:singleLine="true"
             android:text="@string/forwarded_from"
             android:textColor="@color/newBlack"
-            android:textSize="@dimen/sp12"
+            android:textSize="@dimen/dp12"
             android:textStyle="bold"/>
 
         <TextView
@@ -42,7 +42,7 @@
             android:singleLine="true"
             android:minWidth="@dimen/dp100"
             android:textColor="@color/newBlack"
-            android:textSize="@dimen/sp12"
+            android:textSize="@dimen/dp12"
             android:maxLength="20"
             android:textStyle="bold"/>
     </LinearLayout>

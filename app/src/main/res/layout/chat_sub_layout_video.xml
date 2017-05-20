@@ -75,7 +75,8 @@
                             android:text="3:48 (4.5 MB)"
                             android:textAllCaps="true"
                             android:textColor="@color/gray10"
-                            android:textSize="@dimen/sp10"/>
+                            android:textSize="@dimen/dp10"
+                            />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -100,7 +101,8 @@
                                 android:gravity="center"
                                 android:text="10:21"
                                 android:textColor="@android:color/white"
-                                android:textSize="@dimen/sp10"/>
+                                android:textSize="@dimen/dp10"
+                                />
 
                             <ImageView
                                 android:id="@+id/cslr_txt_tic"

@@ -247,6 +247,8 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
                         if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
                             G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
                         }
+
+                        realm.close();
                     }
                 });
             }

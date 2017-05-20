@@ -17,6 +17,7 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestClientGetRoomList;
 import net.iGap.request.RequestQueue;
+import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserContactsGetBlockedList;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserLogin;
@@ -24,6 +25,7 @@ import net.iGap.request.RequestWrapper;
 
 import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
+import static net.iGap.G.displayName;
 import static net.iGap.G.firstEnter;
 import static net.iGap.G.firstTimeEnterToApp;
 import static net.iGap.G.isAppInFg;
@@ -85,6 +87,12 @@ public class LoginActions extends Application {
                         }
                         getUserInfo();
                         //sendWaitingRequestWrappers();
+
+                        //get Signaling Configuration
+                        if (G.needGetSignalingConfiguration) {
+                            new RequestSignalingGetConfiguration().signalingGetConfiguration();
+                        }
+
                     }
                 });
 
@@ -106,8 +114,17 @@ public class LoginActions extends Application {
                     RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
 
                     if (userInfo != null) {
+
                         userId = userInfo.getUserId();
-                        authorHash = userInfo.getAuthorHash();
+
+                        if (userInfo.getAuthorHash() != null) {
+                            authorHash = userInfo.getAuthorHash();
+                        }
+
+                        if (userInfo.getUserInfo().getDisplayName() != null) {
+                            displayName = userInfo.getUserInfo().getDisplayName();
+                        }
+
                     }
 
                     if (!G.userLogin && userInfo != null && userInfo.getUserRegistrationState()) {

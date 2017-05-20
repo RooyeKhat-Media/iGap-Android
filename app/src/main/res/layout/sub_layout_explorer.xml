@@ -20,7 +20,8 @@
         android:gravity="left|center"
         android:paddingLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/dp16"
+        />
 
 </LinearLayout>
 

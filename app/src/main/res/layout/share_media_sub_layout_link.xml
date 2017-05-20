@@ -14,7 +14,7 @@
             android:text="h"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp16"
+            android:textSize="@dimen/dp16"
             android:padding="@dimen/dp8"
             android:id="@+id/smsll_txt_shared_link"/>
 

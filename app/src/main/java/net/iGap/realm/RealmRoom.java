@@ -153,7 +153,7 @@ public class RealmRoom extends RealmObject {
         realmRoom.setType(RoomType.convert(room.getType()));
         realmRoom.setUnreadCount(room.getUnreadCount());
         realmRoom.setReadOnly(room.getReadOnly());
-        //realmRoom.setMute(false);
+        //realmRoom.setMute(false); //
         realmRoom.setActionState(null, 0);
         switch (room.getType()) {
             case CHANNEL:
@@ -350,13 +350,12 @@ public class RealmRoom extends RealmObject {
 
     public static boolean isCloudRoom(long roomId) {
         Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-        if (realmUserInfo != null) {
-            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-            if (realmRoom != null && realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == realmUserInfo.getUserId()) {
+
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        if (realmRoom != null && realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == G.userId) {
                 return true;
             }
-        }
+
         realm.close();
         return false;
     }
@@ -370,22 +369,25 @@ public class RealmRoom extends RealmObject {
      * @param authorHash updater author hash
      */
     public static void clearUnreadCount(long roomId, String authorHash, ProtoGlobal.RoomMessageStatus messageStatus) {
-        Realm realm = Realm.getDefaultInstance();
-        if (realm.where(RealmUserInfo.class).findFirst().isAuthorMe(authorHash) && messageStatus == ProtoGlobal.RoomMessageStatus.SEEN) {
+
+        if (G.authorHash.equals(authorHash) && messageStatus == ProtoGlobal.RoomMessageStatus.SEEN) {
+
+            Realm realm = Realm.getDefaultInstance();
+
             RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
             if (realmRoom != null) {
-                //  realmRoom.setUnreadCount(0);
+                realmRoom.setUnreadCount(0);
             }
+
+            realm.close();
         }
-        realm.close();
     }
 
     public static void updateRole(final ProtoGlobal.Room.Type type, long roomId, long memberId, final String role) {
 
         Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
 
-        if (memberId == realmUserInfo.getUserId()) {
+        if (memberId == G.userId) {
             final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
             realm.executeTransaction(new Realm.Transaction() {
@@ -416,6 +418,8 @@ public class RealmRoom extends RealmObject {
                 }
             });
         }
+
+        realm.close();
     }
 
     public long getId() {

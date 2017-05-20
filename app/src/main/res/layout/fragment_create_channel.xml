@@ -45,9 +45,9 @@
           android:gravity="center"
           android:text="@string/new_chanel"
           android:textColor="@color/whit_background"
-          android:textSize="@dimen/sp18"
-          android:textStyle="bold"
+          android:textSize="@dimen/dp18"
           android:visibility="visible"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
           />
 
       <net.iGap.libs.rippleeffect.RippleView
@@ -99,7 +99,7 @@
           android:paddingTop="@dimen/dp12"
           android:text="@string/st_Info"
           android:textColor="@color/green"
-          android:textSize="@dimen/sp18"
+          android:textSize="@dimen/dp18"
           android:textStyle="bold"
           fontPath="fonts/IRANSansMobile_Bold.ttf"
           />
@@ -122,7 +122,7 @@
             android:gravity="start|center"
             android:text="@string/public_channel"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             />
 
         <TextView
@@ -131,7 +131,7 @@
             android:paddingLeft="@dimen/dp8"
             android:paddingRight="@dimen/dp8"
             android:text="@string/desc_public_channel"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
 
         <RadioButton
@@ -142,7 +142,7 @@
             android:gravity="start|center"
             android:text="@string/private_channel"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             />
 
         <TextView
@@ -152,7 +152,7 @@
             android:paddingLeft="@dimen/dp8"
             android:paddingRight="@dimen/dp8"
             android:text="@string/desc_private_channel"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/dp14"
             />
       </RadioGroup>
 
@@ -173,7 +173,7 @@
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_Info"
             android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
+            android:textSize="@dimen/dp18"
             android:textStyle="bold"
             fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
@@ -201,7 +201,7 @@
                 android:hint="@string/your_link"
                 android:singleLine="true"
                 android:textColorHint="@color/default_shadow_color"
-                android:textSize="@dimen/sp15"
+                android:textSize="@dimen/dp15"
                 />
 
           </android.support.design.widget.TextInputLayout>
@@ -216,6 +216,7 @@
           android:layout_marginTop="@dimen/dp8"
           android:gravity="right|center_horizontal"
           android:padding="@dimen/dp20"
+          android:layoutDirection="ltr"
           >
 
         <TextView
@@ -226,7 +227,7 @@
             android:layout_marginRight="@dimen/dp20"
             android:text="@string/B_cancel"
             android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="bold"
             />
 
@@ -238,7 +239,7 @@
             android:layout_marginRight="@dimen/dp20"
             android:text="@string/chi_NEXT_STEP"
             android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/sp15"
+            android:textSize="@dimen/dp15"
             android:textStyle="bold"
             />
 

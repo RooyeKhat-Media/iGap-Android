@@ -40,7 +40,8 @@
                 android:textAppearance="@style/NotificationText"
                 android:text="hasan : "
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_a2"
@@ -52,7 +53,8 @@
                 android:text="how are you"
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_a3"
@@ -63,7 +65,7 @@
                 android:singleLine="true"
                 android:text="10:52"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>
@@ -83,7 +85,8 @@
                 android:text="hasan : "
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_b2"
@@ -95,7 +98,8 @@
                 android:text="how are you"
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_b3"
@@ -106,7 +110,7 @@
                 android:singleLine="true"
                 android:text="10:52"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>
@@ -126,7 +130,8 @@
                 android:text="hasan : "
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_c2"
@@ -138,7 +143,8 @@
                 android:text="how are you"
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_c3"
@@ -149,7 +155,7 @@
                 android:singleLine="true"
                 android:text="10:52"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>
@@ -169,7 +175,8 @@
                 android:text="hasan : "
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp16"/>
+                android:textSize="@dimen/dp16"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_d2"
@@ -181,7 +188,8 @@
                 android:text="how are you"
                 android:textAppearance="@style/NotificationText"
                 android:textDirection="ltr"
-                android:textSize="@dimen/sp14"/>
+                android:textSize="@dimen/dp14"
+                />
 
             <TextView
                 android:id="@+id/ln_txt_d3"
@@ -192,7 +200,7 @@
                 android:singleLine="true"
                 android:text="10:52"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>
@@ -204,7 +212,7 @@
             android:layout_marginBottom="@dimen/dp8"
             android:text="..."
             android:textAppearance="@style/NotificationText"
-            android:textSize="@dimen/sp12"
+            android:textSize="@dimen/dp12"
             android:visibility="visible"/>
 
         <LinearLayout
@@ -234,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/replay"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/dp14"
                 />
 
             <TextView
@@ -247,7 +255,7 @@
                 android:singleLine="true"
                 android:text="you have 10 new message"
                 android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/sp12"
+                android:textSize="@dimen/dp12"
                 />
 
         </LinearLayout>

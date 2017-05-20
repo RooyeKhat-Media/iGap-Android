@@ -34,6 +34,14 @@ import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.interfaces.IClientSearchUserName;
+import net.iGap.interfaces.ISignalingAccept;
+import net.iGap.interfaces.ISignalingCallBack;
+import net.iGap.interfaces.ISignalingCondidate;
+import net.iGap.interfaces.ISignalingGetCallLog;
+import net.iGap.interfaces.ISignalingLeave;
+import net.iGap.interfaces.ISignalingOffer;
+import net.iGap.interfaces.ISignalingRinging;
+import net.iGap.interfaces.ISignalingSesionHold;
 import net.iGap.interfaces.OnChangeUserPhotoListener;
 import net.iGap.interfaces.OnChannelAddAdmin;
 import net.iGap.interfaces.OnChannelAddMember;
@@ -163,6 +171,7 @@ public class G extends MultiDexApplication {
     public static ProtoClientCondition.ClientCondition.Builder clientConditionGlobal;
     public static HelperCheckInternetConnection.ConnectivityType latestConnectivityType;
     public static ImageLoader imageLoader;
+    public static ArrayList<Long> deletedRoomList = new ArrayList<>();
 
     public static ArrayList<String> unSecure = new ArrayList<>();
     public static ArrayList<String> unLogin = new ArrayList<>();// list of actionId that can be doing without secure
@@ -196,15 +205,17 @@ public class G extends MultiDexApplication {
     public static String notificationColor;
     public static String toggleButtonColor;
     public static String attachmentColor;
+    public static String progressColor;
     public static String headerTextColor;
     public static String authorHash;
+    public static String displayName;
 
     public static boolean isAppInFg = false;
     public static boolean isScrInFg = false;
     public static boolean isChangeScrFg = false;
     public static boolean isUserStatusOnline = false;
     public static boolean isSecure = false;
-    public static boolean allowForConnect = true;
+    public static boolean allowForConnect = true; //
     public static boolean userLogin = false;
     public static boolean socketConnection = false;
     public static boolean canRunReceiver = false;
@@ -216,10 +227,13 @@ public class G extends MultiDexApplication {
     public static boolean latestMobileDataState;
     public static boolean showVoteChannelLayout = true;
     public static boolean showSenderNameInGroup = false;
+    public static boolean needGetSignalingConfiguration = true;
+    public static boolean isInCall = false;
 
     public static int ivSize;
     public static int userTextSize = 0;
     public static int COPY_BUFFER_SIZE = 1024;
+    public static boolean isCalculatKeepMedia = true;
 
     public static long currentTime;
     public static long userId;
@@ -338,6 +352,15 @@ public class G extends MultiDexApplication {
     public static OnClientCondition onClientCondition;
     public static OnGetWallpaper onGetWallpaper;
     public static IClientSearchUserName onClientSearchUserName;
+
+    public static ISignalingOffer iSignalingOffer;
+    public static ISignalingRinging iSignalingRinging;
+    public static ISignalingAccept iSignalingAccept;
+    public static ISignalingCondidate iSignalingCondidate;
+    public static ISignalingLeave iSignalingLeave;
+    public static ISignalingSesionHold iSignalingSesionHold;
+    public static ISignalingGetCallLog iSignalingGetCallLog;
+    public static ISignalingCallBack iSignalingCallBack;
 
     @Override
     public void onCreate() {

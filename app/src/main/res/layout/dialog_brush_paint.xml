@@ -27,7 +27,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:text="  "
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/dp14"
+            />
 
         <SeekBar
             android:id="@+id/seekBar_brush_size"

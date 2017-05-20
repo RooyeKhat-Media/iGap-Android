@@ -104,6 +104,8 @@ public class ResendMessage implements IResendMessage {
                                 }
                             }
                         }
+
+                        realm.close();
                     }
                 }, 1000 * j);
             } else {

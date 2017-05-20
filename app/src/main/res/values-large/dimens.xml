@@ -1,72 +1,63 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+  <!-- Default screen margins, per the Android Design guidelines. -->
 
-    <bool name="isTablet">false</bool>
+  <bool name="isTablet">false</bool>
 
-    <dimen name="messageContainerPadding">9dp</dimen>
-    <dimen name="messageContainerPaddingBottom">6dp</dimen>
-    <dimen name="messageContainerPaddingLeftRight">15dp</dimen>
+  <dimen name="messageContainerPadding">9dp</dimen>
+  <dimen name="messageContainerPaddingBottom">6dp</dimen>
+  <dimen name="messageContainerPaddingLeftRight">15dp</dimen>
 
-    <dimen name="chatBoxMaxWidth">405dp</dimen>
+  <dimen name="chatBoxMaxWidth">405dp</dimen>
 
-    <dimen name="design_fab_size_mini">36pt</dimen>
-    <dimen name="design_fab_size_normal">45pt</dimen>
+  <dimen name="design_fab_size_mini">36pt</dimen>
+  <dimen name="design_fab_size_normal">45pt</dimen>
 
-    <dimen name="messageBox_cornerRadius">30dp</dimen>
-    <dimen name="messageBox_elevation">6dp</dimen>
+  <dimen name="messageBox_cornerRadius">30dp</dimen>
+  <dimen name="messageBox_elevation">6dp</dimen>
 
-    <dimen name="messageBox_minusLeftRightMargin">-8dp</dimen>
+  <dimen name="messageBox_minusLeftRightMargin">-8dp</dimen>
 
-    <dimen name="sp14_Popup">10.5sp</dimen>
-    <dimen name="sp10">15sp</dimen>
-    <dimen name="sp12">18sp</dimen>
-    <dimen name="sp13">19.5sp</dimen>
-    <dimen name="sp14">21sp</dimen>
-    <dimen name="sp15">22.5sp</dimen>
-    <dimen name="sp16">24sp</dimen>
-    <dimen name="sp18">27sp</dimen>
-    <dimen name="sp20">30sp</dimen>
-    <dimen name="sp22">33sp</dimen>
-    <dimen name="sp26">39sp</dimen>
-    <dimen name="sp28">42sp</dimen>
-    <dimen name="sp32">48sp</dimen>
-    <dimen name="sp36">54sp</dimen>
-    <dimen name="sp48">72sp</dimen>
-
-    <dimen name="dp4">6dp</dimen>
-    <dimen name="dp6">9dp</dimen>
-    <dimen name="dp8">12dp</dimen>
-    <dimen name="dp12">18dp</dimen>
-    <dimen name="dp16">24dp</dimen>
-    <dimen name="dp18">27dp</dimen>
-    <dimen name="dp20">30dp</dimen>
-    <dimen name="dp24">36dp</dimen>
-    <dimen name="dp28">42dp</dimen>
-    <dimen name="dp32">48dp</dimen>
-    <dimen name="dp36">54dp</dimen>
-    <dimen name="dp40">60dp</dimen>
-    <dimen name="dp44">66dp</dimen>
-    <dimen name="dp48">72dp</dimen>
-    <dimen name="dp52">78dp</dimen>
-    <dimen name="dp60">90dp</dimen>
-    <dimen name="dp68">102dp</dimen>
-    <dimen name="dp80">120dp</dimen>
-    <dimen name="dp88">132dp</dimen>
-    <dimen name="dp100">150dp</dimen>
-    <dimen name="dp120">180dp</dimen>
-    <dimen name="dp140">210dp</dimen>
-    <dimen name="dp160">240dp</dimen>
-    <dimen name="dp180">270dp</dimen>
-    <dimen name="dp200">300dp</dimen>
-    <dimen name="dp220">330dp</dimen>
-    <dimen name="dp240">360dp</dimen>
-    <dimen name="dp260">390dp</dimen>
-    <dimen name="dp280">420dp</dimen>
-    <dimen name="dp300">450dp</dimen>
+  <dimen name="dp14_Popup">10.5dp</dimen>
+  <dimen name="dp4">6dp</dimen>
+  <dimen name="dp6">9dp</dimen>
+  <dimen name="dp8">12dp</dimen>
+  <dimen name="dp10">15dp</dimen>
+  <dimen name="dp12">18dp</dimen>
+  <dimen name="dp13">19.5dp</dimen>
+  <dimen name="dp14">21dp</dimen>
+  <dimen name="dp15">22.5dp</dimen>
+  <dimen name="dp16">24dp</dimen>
+  <dimen name="dp18">27dp</dimen>
+  <dimen name="dp20">30dp</dimen>
+  <dimen name="dp22">33dp</dimen>
+  <dimen name="dp24">36dp</dimen>
+  <dimen name="dp26">39dp</dimen>
+  <dimen name="dp28">42dp</dimen>
+  <dimen name="dp32">48dp</dimen>
+  <dimen name="dp36">54dp</dimen>
+  <dimen name="dp40">60dp</dimen>
+  <dimen name="dp44">66dp</dimen>
+  <dimen name="dp48">72dp</dimen>
+  <dimen name="dp52">78dp</dimen>
+  <dimen name="dp60">90dp</dimen>
+  <dimen name="dp68">102dp</dimen>
+  <dimen name="dp80">120dp</dimen>
+  <dimen name="dp88">132dp</dimen>
+  <dimen name="dp100">150dp</dimen>
+  <dimen name="dp120">180dp</dimen>
+  <dimen name="dp140">210dp</dimen>
+  <dimen name="dp160">240dp</dimen>
+  <dimen name="dp180">270dp</dimen>
+  <dimen name="dp200">300dp</dimen>
+  <dimen name="dp220">330dp</dimen>
+  <dimen name="dp240">360dp</dimen>
+  <dimen name="dp260">390dp</dimen>
+  <dimen name="dp280">420dp</dimen>
+  <dimen name="dp300">450dp</dimen>
 
 
-    <dimen name="dp70">105dp</dimen>
-    <dimen name="dp105">165dp</dimen>
-    <dimen name="dp110">156dp</dimen>
-    <dimen name="dp95">143dp</dimen>
+  <dimen name="dp70">105dp</dimen>
+  <dimen name="dp105">165dp</dimen>
+  <dimen name="dp110">156dp</dimen>
+  <dimen name="dp95">143dp</dimen>
 </resources>

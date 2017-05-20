@@ -45,7 +45,8 @@
                     android:layout_marginLeft="5dp"
                     android:text="00:00"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/sp14" />
+                    android:textSize="@dimen/dp14"
+                    />
 
                 <TextView
                     android:id="@+id/txt_time_mili_secend"
@@ -55,7 +56,8 @@
                     android:gravity="left"
                     android:text="99"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/sp14" />
+                    android:textSize="@dimen/dp14"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +76,8 @@
                     android:gravity="right|center"
                     android:text="@string/slide_to_cancel_en"
                     android:textColor="@color/gray"
-                    android:textSize="@dimen/sp14" />
+                    android:textSize="@dimen/dp14"
+                    />
 
 
               <net.iGap.module.MaterialDesignTextView
@@ -88,7 +91,8 @@
                     android:padding="@dimen/dp8"
                     android:text="@string/md_voice_message_microphone_button"
                     android:textColor="@color/black_register"
-                    android:textSize="@dimen/sp26" />
+                  android:textSize="@dimen/dp26"
+                  />
 
 
             </LinearLayout>

@@ -14,7 +14,10 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.activities.ActivityIntroduce;
 import net.iGap.activities.ActivityMain;
+import net.iGap.activities.ActivityProfile;
+import net.iGap.activities.ActivityRegister;
 import net.iGap.module.enums.ConnectionState;
 
 /**
@@ -41,7 +44,7 @@ public class HelperConnectionState {
             G.latestConnectionState = ConnectionState.UPDATING;
         }
 
-        if (G.currentActivity instanceof ActivityMain || connectionState == ConnectionState.IGAP || connectionState == ConnectionState.UPDATING) {
+        if (G.currentActivity instanceof ActivityMain || G.currentActivity instanceof ActivityIntroduce || G.currentActivity instanceof ActivityRegister || G.currentActivity instanceof ActivityProfile || connectionState == ConnectionState.IGAP || connectionState == ConnectionState.UPDATING) {
 
             if (snack != null) {
                 if (snack.isShown()) {
@@ -67,12 +70,14 @@ public class HelperConnectionState {
                 if (G.currentActivity != null) {
                     final String finalMessage2 = message;
                     G.currentActivity.runOnUiThread(new Runnable() {
-                        @Override public void run() {
+                        @Override
+                        public void run() {
 
                             snack = null;
                             snack = Snackbar.make(G.currentActivity.findViewById(android.R.id.content), finalMessage, 600000);
                             snack.setAction(R.string.cancel, new View.OnClickListener() {
-                                @Override public void onClick(View view) {
+                                @Override
+                                public void onClick(View view) {
                                     if (snack != null) {
                                         snack.dismiss();
                                     }

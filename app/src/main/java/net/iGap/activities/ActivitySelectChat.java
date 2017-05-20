@@ -76,7 +76,6 @@ public class ActivitySelectChat extends ActivityEnhanced {
     public static final String ARG_FORWARD_MESSAGE = "arg_forward_msg";
     public static final String ARG_FORWARD_MESSAGE_COUNT = "arg_forward_msg_count";
     private RealmRecyclerView mRecyclerView;
-    private Realm mRealm;
     private RoomAdapter roomAdapter;
     private ArrayList<Parcelable> mForwardMessages;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -92,20 +91,12 @@ public class ActivitySelectChat extends ActivityEnhanced {
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mRealm != null) mRealm.close();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRealm = Realm.getDefaultInstance();
-
         progressBar = (ProgressBar) findViewById(R.id.ac_progress_bar_waiting);
-        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        AppUtils.setProgresColler(progressBar);
 
         mForwardMessages = getIntent().getExtras().getParcelableArrayList(ARG_FORWARD_MESSAGE);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -220,7 +211,9 @@ public class ActivitySelectChat extends ActivityEnhanced {
         mRecyclerView.setItemViewCacheSize(100);
         mRecyclerView.setDrawingCacheEnabled(true);
 
-        RealmResults<RealmRoom> results = mRealm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAllSorted(RealmRoomFields.UPDATED_TIME, Sort.DESCENDING);
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<RealmRoom> results =
+            realm.where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).findAllSorted(RealmRoomFields.UPDATED_TIME, Sort.DESCENDING);
         roomAdapter = new RoomAdapter(ActivitySelectChat.this, results, null);
         mRecyclerView.setAdapter(roomAdapter);
 
@@ -260,6 +253,7 @@ public class ActivitySelectChat extends ActivityEnhanced {
 
         mRecyclerView.getRecycleView().addOnScrollListener(onScrollListener);
 
+        realm.close();
     }
 
     public class ShouldScrolledBehavior extends AppBarLayout.ScrollingViewBehavior {
