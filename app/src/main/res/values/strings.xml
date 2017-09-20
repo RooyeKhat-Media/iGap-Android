@@ -2,9 +2,10 @@
 <resources>
   <!-- Check connect to internet Page introduce app -->
   <string name="text_i_introduce_page1">i</string>
-  <string name="text_line_1_introduce_page1">GAP</string>
+  <string name="text_line_1_introduce_page1">Gap</string>
   <string name="text_line_2_introduce_page1">Limitless Connection</string>
   <string name="text_line_3_introduce_page1">Build your own world by iGap right now.</string>
+  <string name="text_line_4_introduce_page1">It takes only few minutes to join iGap community!</string>
 
   <!-- Page 2 introduce app -->
   <string name="text_line_1_introduce_page2">Security &amp; Privacy</string>
@@ -12,22 +13,27 @@
 
   <!-- Page 3 introduce app -->
   <string name="text_line_1_introduce_page3">Chat</string>
-  <string name="text_line_2_introduce_page3">You can chat in private or group and even create your own channel and add members.</string>
+  <string name="text_line_2_introduce_page3">You can have one-on-one or group chats and even create your own channel and add members in order to share information with millions of people.</string>
 
   <!-- Page 4 introduce app -->
   <string name="text_line_1_introduce_page4">File Transferring</string>
-  <string name="text_line_2_introduce_page4">You can transfer any file with any size and type; and then share anything you’d like to with anyone you\'d want to.</string>
+  <string name="text_line_2_introduce_page4">You have an authority to transfer any file with any size and type or save them on your cloud storage; and then share anything you’d like to with anyone you’d want to.</string>
 
   <!-- Page 5 introduce app -->
-  <string name="btn_start_page5">Start Now</string>
-  <string name="text_line_1_introduce_page5">Everything for Free in iGap!</string>
-  <string name="text_line_2_introduce_page5"><![CDATA[ Better not to bore you any more! <br /> iGap is thoroughly free. So, build your own world free just now! ]]></string>
+  <string name="text_line_1_introduce_page5">Voice Call</string>
+  <string name="text_line_2_introduce_page5">You can make thoroughly free and secure voice calls to anyone on iGap and save your money. iGap voice call is P2P-based with no server\'s interference in voice transmission.</string>
+
+  <!-- Page 6 introduce app -->
+  <string name="btn_start_page6">Start Now</string>
+  <string name="text_line_1_introduce_page6">Everything for Free in iGap!</string>
+  <string name="text_line_2_introduce_page6">Let’s stop waiting! \n iGap is thoroughly free. So, just now build your own world freely.</string>
+
 
   <!--Fill Profile User -->
   <string name="pu_title_profileUser">Complete Your User Profile</string>
   <string name="pu_desc_profileUser">Enter your Nickname and select a photo as your Profile Avatar/Picture</string>
   <string name="pu_addPhoto_profileUser">Profile Picture</string>
-  <string name="pu_nikname_profileUser">Nickname</string>
+  <string name="pu_nikname_profileUser">First Name</string>
   <string name="pu_Lets_Go">Continue</string>
 
   <!-- Register Page -->
@@ -43,10 +49,10 @@
   <string name="rg_verify_dialog_try_code">I entered manually</string>
   <string name="rg_verify_dialog_resend_code">Resend Code</string>
   <string name="Re_dialog_verify_number_part1">You have entered this number :</string>
-  <string name="Re_dialog_verify_number_part2">Press OK if this entered phone number is correct or simply modify it if wrong.</string>
+  <string name="Re_dialog_verify_number_part2">Tap OK if this entered phone number is correct or simply modify it if wrong.</string>
   <string name="Re_Enter_Verify_Code_Please">Please enter the verification code</string>
   <string name="verify_socket_message">You have logged into your account on another device and iGap has sent a verification code via its Notification Service in your account, Please check another device and enter the verification code.</string>
-  <string name="verify_time_out_message">iGap recognizes the code automatically; if not, enter it manually, Please ask the app to resend the verification code unless it’s been received.</string>
+  <string name="verify_time_out_message">iGap recognizes the code automatically; if not, enter it manually. (Please ask the app to resend the verification code if you have not received it yet)</string>
   <string name="verify_invalid_code_message">Unfortunately; the verification code is invalid , Please enter the correct one manually.</string>
   <string name="resend_message">Resending the verification code</string>
   <string name="phone_number">Phone Number</string>
@@ -77,20 +83,20 @@
   <string name="contact_message">Contact Message</string>
   <string name="gif_message">Gif Message</string>
   <string name="voice_message">Voice Message</string>
-  <string name="typing">typing</string>
-  <string name="sending_image">Sending image</string>
-  <string name="capturing_image">Capturing image</string>
-  <string name="sending_video">Sending Video</string>
-  <string name="capturing_video">Capturing Video</string>
-  <string name="sending_audio">Sending Audio</string>
-  <string name="recording_voice">Recording Voice</string>
-  <string name="sending_voice">Sending Voice</string>
-  <string name="sending_document">Sending Document</string>
-  <string name="sending_gif">Sending Gif</string>
-  <string name="sending_file">Sending File</string>
-  <string name="sending_location">Sending Location</string>
-  <string name="choosing_contact">Choosing Contact</string>
-  <string name="painting">Painting</string>
+  <string name="typing">typing…</string>
+  <string name="sending_image">Sending image…</string>
+  <string name="capturing_image">Capturing image…</string>
+  <string name="sending_video">Sending video…</string>
+  <string name="capturing_video">Capturing video…</string>
+  <string name="sending_audio">Sending audio…</string>
+  <string name="recording_voice">Recording voice…</string>
+  <string name="sending_voice">Sending voice…</string>
+  <string name="sending_document">Sending document…</string>
+  <string name="sending_gif">Sending gif…</string>
+  <string name="sending_file">Sending file…</string>
+  <string name="sending_location">Sending location…</string>
+  <string name="choosing_contact">Choosing contact…</string>
+  <string name="painting">Painting…</string>
 
   <!-- Action Box -->
   <string name="log_out">Logout</string>
@@ -98,6 +104,8 @@
   <string name="mute">Mute</string>
   <string name="unmute">Unmute</string>
   <string name="mute_notification">Mute Notification</string>
+  <string name="pin_to_top">Pin to top</string>
+  <string name="Unpin_to_top">UnPin from top</string>
   <string name="unmute_notification">Unmute Notification</string>
   <string name="clear_history">Clear History</string>
   <string name="delete_chat">Delete Chat</string>
@@ -109,6 +117,8 @@
   <string formatted="false" name="d_of_d">%d of %d</string>
   <string name="add_to_contact">Add to Contact</string>
   <string name="app_name">iGap</string>
+  <string name="call_name">iGap Voice Call</string>
+
 
   <string name="chat">Chat</string>
   <string name="group">Group</string>
@@ -116,9 +126,9 @@
   <string name="igap">iGap</string>
   <string name="igapChanel">iGap</string>
 
-  <string name="clear_history_content">Are you sure to clear history?</string>
-  <string name="delete_chat_content">Are you sure to delete this chat?</string>
-  <string name="delete_text">Are you sure to delete this contact?</string>
+  <string name="clear_history_content">Are you sure you want to clear history?</string>
+  <string name="delete_chat_content">Are you sure you want to delete this chat?</string>
+  <string name="delete_text">Are you sure you want to delete this contact?</string>
   <string name="cancel">Cancel</string>
   <string name="B_cancel">Cancel</string>
   <string name="B_skip">Skip</string>
@@ -142,22 +152,22 @@
   <string name="select_picture_en">Select Picture</string>
   <string name="cannot_load_data_en">Unable to load data.</string>
   <string name="do_you_want_exit">Do you want to exit?</string>
-  <string name="slide_to_cancel_en">Drag and release to cancel.</string>
+  <string name="slide_to_cancel_en">Slide to Cancel</string>
   <string formatted="false" name="video_duration">%s (%s)</string>
 
   <!-- setting -->
   <string name="st_Info">Account Info</string>
   <string name="st_Language">Language</string>
   <string name="st_titleToolbar">Settings</string>
-  <string name="st_title_general">General Setting</string>
+  <string name="st_title_general">General Settings</string>
   <string name="st_username">Username</string>
-  <string name="st_nickname">Nickname</string>
+  <string name="st_nickname">First Name</string>
   <string name="st_contactName">Contact Name</string>
   <string name="st_phoneNumber">Phone Number</string>
   <string name="st_title_info">Information</string>
   <string name="st_title_notification_sounds">Notifications and Sounds</string>
   <string name="st_title_Clear_Cache">Clear Cache</string>
-  <string name="st_title_Privacy_Security">Security and Privacy</string>
+  <string name="st_title_Privacy_Security">Privacy and Security</string>
   <string name="st_title_message">Message Room</string>
   <string name="st_title_message_textSize">Text Message Size</string>
   <string name="st_stickers">Stickers and Pictures</string>
@@ -208,7 +218,7 @@
   <string name="st_title_reset">Reset</string>
   <string name="st_reset_all_notification">Reset all Notifications</string>
   <string name="st_text_reset_all_notification">Undo all custom notification settings for all your contacts and groups</string>
-  <string name="st_dialog_reset_all_notification">Are you sure to undo all custom notification settings?</string>
+  <string name="st_dialog_reset_all_notification">Are you sure you want to undo all custom notification settings?</string>
   <string name="st_dialog_reset_all_notification_yes">YES</string>
   <string name="st_dialog_reset_all_notification_no">NO</string>
   <string name="st_title_Background">Chat Background</string>
@@ -236,7 +246,7 @@
   <string name="chi_clearChat">Clear Chat History</string>
   <string name="chi_blockContact">Block this contact</string>
   <string name="chi_title_setting">Settings</string>
-  <string name="chi_popup_call">Call</string>
+  <string name="chi_popup_call">Voice Call</string>
   <string name="chi_popup_copy">Copy</string>
   <string name="chi_NEXT_STEP">Next Step</string>
 
@@ -262,7 +272,7 @@
   <string name="edited">Edited</string>
   <string name="today">Today</string>
   <string name="yesterday">Yesterday</string>
-  <string name="clean_log">Clean logs</string>
+  <string name="clean_log">Clear Call History</string>
 
 
   <!-- array -->
@@ -277,15 +287,15 @@
   <string name="array_Copy">Copy</string>
   <string name="array_Off">Off</string>
   <string name="array_No_popup">No pop-up</string>
-  <string name="array_Only_when_screen_on">Only when the screen is active</string>
-  <string name="array_Only_when_screen_off">Only when the screen is black</string>
+  <string name="array_Only_when_screen_on">Only when the screen is on</string>
+  <string name="array_Only_when_screen_off">Only when the screen is off</string>
   <string name="array_Always_show_popup">Show popup always</string>
   <string name="array_Disable">Disable</string>
   <string name="array_enable">Enable</string>
   <string name="array_Default">Default</string>
   <string name="array_Short">Short</string>
   <string name="array_Long">Long</string>
-  <string name="array_Only_if_silent">Only if it is silent</string>
+  <string name="array_Only_if_silent">When silent</string>
   <string name="array_From_Gallery">Gallery</string>
   <string name="array_From_Camera">Camera</string>
   <string name="array_Delete_photo">Delete Photo</string>
@@ -326,14 +336,16 @@
   <string name="please_enter_group_name">Please enter group name</string>
   <string name="group_description">Group Description</string>
   <string name="please_enter_group_description">Please enter a description about group</string>
-  <string name="do_you_want_to_set_admin_role_to_member">Are you sure to appoint admin role to this/these member(s)?</string>
-  <string name="do_you_want_to_kick_this_member">Are you sure to kick this/these member(s) out?</string>
-  <string name="do_you_want_to_set_modereator_role_to_member">Are you sure to appoint moderator role to this/these member(s)?</string>
+  <string name="do_you_want_to_set_admin_role_to_member">Are you sure you want to remove the admin role from this member?</string>
+  <string name="do_you_want_to_kick_this_member">Are you sure you want to kick this member?</string>
+  <string name="do_you_want_to_set_modereator_role_to_member">Are you sure you want to remove the moderator role from this member?</string>
   <string name="waiting_for_network">Waiting for network…</string>
   <string name="connecting">Connecting…</string>
   <string name="updating">Updating…</string>
-  <string name="last_seen_recently">Last Seen Recently</string>
+  <string name="last_seen_recently">Just Now</string>
   <string name="member">Members</string>
+  <string name="member_chat">Members</string>
+  <string name="one_member_chat">Member</string>
   <string name="save_ok">Saved</string>
   <string name="exception">Exception:</string>
   <string name="please_enter_phone_number">Please enter your phone number</string>
@@ -355,16 +367,16 @@
   <string name="longitude">Longitude :</string>
   <string name="unknown_artist">Unknown Artist</string>
   <string name="add_new_member">Add New Members</string>
-  <string name="set_admin">Set Admin</string>
-  <string name="set_modereator">Appoint Moderator</string>
+  <string name="set_admin">Assign Admin</string>
+  <string name="set_modereator">Assign Moderator</string>
   <string name="set_kick">Kick out</string>
   <string name="member_can_add_new_member">Members Can Add New Members</string>
   <string name="notificaion_and_sound">Notifications and Sounds</string>
   <string name="your_link">Your Link</string>
   <string name="public_channel">Public Channel</string>
   <string name="private_channel">Private Channel</string>
-  <string name="desc_private_channel">Public Channels can only be joined via an invitation link.</string>
-  <string name="desc_public_channel">Public Channels can result in search, anyone can join them.</string>
+  <string name="desc_private_channel">Not anyone can join. They can only be added as members by the admin(s). </string>
+  <string name="desc_public_channel">Anyone can join public channels via searching or receiving the invitation link.</string>
   <string formatted="false" name="last_msg_format_chat">%s</string>
 
   <!-- Error -->
@@ -452,7 +464,7 @@
   <string name="E_214">This operation is not permitted.</string>
   <string formatted="false" name="resend_all_messages">Resend %d messages</string>
   <string formatted="false" name="resend_chat_message">Resend messages</string>
-  <string name="if_you_are_away_for">If you\'re away for</string>
+  <string name="if_you_are_away_for">Away for</string>
   <string name="st_Gander">Gender:</string>
   <string name="st_email">Email:</string>
   <string name="month_1">1 month</string>
@@ -492,14 +504,14 @@
   <string name="from_Now">From Now</string>
   <string name="last_50_Messages">Last 50 Messages</string>
   <string name="customs">Customs</string>
-  <string name="image_selected_for_send">the selected image to send</string>
-  <string name="video_selected_for_send">the selected video to send</string>
-  <string name="multi_video_selected_for_send">"the selected video to send</string>
-  <string name="audio_selected_for_send">the selected audio to send</string>
-  <string name="file_selected_for_send">the selected file to send</string>
-  <string name="pain_selected_for_send">the selected paint image to send</string>
-  <string name="phone_selected_for_send">the selected phone number to send</string>
-  <string name="crop_selected_for_send">the selected crop image to send</string>
+  <string name="image_selected_for_send">selected image </string>
+  <string name="video_selected_for_send">selected video</string>
+  <string name="multi_video_selected_for_send">"selected</string>
+  <string name="audio_selected_for_send">selected audio</string>
+  <string name="file_selected_for_send">selected file</string>
+  <string name="pain_selected_for_send">selected paint</string>
+  <string name="phone_selected_for_send">selected phone</string>
+  <string name="crop_selected_for_send">selected Image</string>
   <string name="location_message">Location Message</string>
   <string name="chat_to_group">Convert to Group</string>
   <string name="last_seen_at">last seen at</string>
@@ -507,10 +519,10 @@
   <string name="last_month">last month</string>
   <string name="last_week">last week</string>
   <string name="online">online</string>
-  <string name="exactly">exactly</string>
-  <string name="recently">recently</string>
-  <string name="support">support</string>
-  <string name="service_notification">Notification Service</string>
+  <string name="exactly">Exactly</string>
+  <string name="recently">Recently</string>
+  <string name="support">Support</string>
+  <string name="service_notification">Notification Services</string>
   <string name="B_edit">Edit</string>
   <string name="left">Leave</string>
   <string name="Channel_name">New Channel</string>
@@ -519,12 +531,12 @@
   <string name="DISCARD">Discard</string>
   <string name="unknown">Unknown</string>
   <string name="add_to_list_contact">Add to Contact List</string>
-  <string name="text_add_to_list_contact">Do you want to add this phone number to your contacts?</string>
+  <string name="text_add_to_list_contact">Do you want to add this phone number to your contacts list?</string>
 
   <string name="delete_account_text">Are you sure you want to delete your account?</string>
-  <string name="delete_account_text_desc">( If you delete your account all sort of files received as messages will be deleted permanently! )</string>
-  <string name="text_kick_admin">Are you sure to kick this admin out?</string>
-  <string name="text_kick_moderator">Are you sure to kick this moderator out?</string>
+  <string name="delete_account_text_desc">(If you delete your account, all sort of files received as messages will be deleted permanently!)</string>
+  <string name="text_kick_admin">Are you sure you want to kick this admin out?</string>
+  <string name="text_kick_moderator">Are you sure you want to kick this moderator out?</string>
   <string name="dialog_readonly_chat">Sorry, you are not allowed to send any messages to this chat.</string>
   <string name="to_delete_contact">Delete Contact</string>
 
@@ -534,8 +546,8 @@
   <string name="set_email">Set Email</string>
   <string name="delete_contact">Delete Contact</string>
   <string name="error_email">Wrong Email Address</string>
-  <string name="active_session_title">Terminating the Active Session</string>
-  <string name="active_session_all_title">Terminating All Active Sessions</string>
+  <string name="active_session_title">Terminate the Active Session</string>
+  <string name="active_session_all_title">Terminate all Active Sessions</string>
   <string name="active_session_content">Are you sure you want to terminate this active session?</string>
   <string name="active_session_all_content">Are you sure you want to terminate all active sessions?</string>
   <string name="USER_VERIFY_GIVEN_USERNAME">There is no registered user with given username.</string>
@@ -543,17 +555,17 @@
   <string name="USER_VERIFY_MANY_TRIES_SEND">Verification code has been forwarded frequently.</string>
   <string name="USER_VERIFY_EXPIRED">Verification code is expired.</string>
   <string name="USER_VERIFY_BLOCK">User is blocked for his/her request</string>
-  <string name="convert_chat_to_group_content">Do you want to convert this chat to group?</string>
+  <string name="convert_chat_to_group_content">Do you want to convert this chat to a group?</string>
   <string name="convert_chat_to_group_title">Convert chat to group</string>
   <string name="minute_ago">minute ago</string>
   <string name="device">Device:</string>
   <string name="country">Country:</string>
-  <string name="create_time">Create time:</string>
+  <string name="create_time">Create on:</string>
   <string name="ip">IP:</string>
   <string name="current_session">Current Session</string>
   <string name="Active_session">Active Session</string>
   <string name="terminate">Terminate</string>
-  <string name="terminate_all">Terminating all other Active sessions</string>
+  <string name="terminate_all">Terminate all other Active Sessions</string>
   <string name="forwarded_from">Forwarded from</string>
   <string name="more">more ...</string>
   <string name="do_you_want_to_delet_this_chat">Do you want to delete this chat?</string>
@@ -590,12 +602,12 @@
 
   <string name="message">Message</string>
   <string name="future_done">will be offered in the future</string>
-  <string name="nick_name_not_exist">nick name not exist</string>
+  <string name="nick_name_not_exist">Name not exist</string>
   <string name="first_name">First Name</string>
   <string name="last_name">Last Name</string>
   <string name="block_this_contact">Block This Contact?</string>
   <string name="block">Block</string>
-  <string name="clear_this_chat">Clear This Chat?</string>
+  <string name="clear_this_chat">Are you sure you want to clear this chat history?</string>
   <string name="clear">Clear</string>
   <string name="can_not_save_image">Can\'t Save image</string>
   <string name="just_owner_can_delete">Just Creator can delete</string>
@@ -615,8 +627,8 @@
   <string name="TERMINATE">"TERMINATE"</string>
   <string name="iGap_version">"iGap Android Client V"</string>
 
-  <string name="do_you_want_to_delete_this_group">Are you sure to delete this group?</string>
-  <string name="do_you_want_to_leave_this_group">Are you sure to left this group?</string>
+  <string name="do_you_want_to_delete_this_group">Are you sure you want to delete this group?</string>
+  <string name="do_you_want_to_leave_this_group">Are you sure you want to leave this group?</string>
   <string name="waiting_for_connection">Waiting for Connecting to Server</string>
   <string name="array_delete_photo_group">Delete Photo</string>
   <string name="to_delete_chat">Delete Chat</string>
@@ -669,11 +681,13 @@
   <string name="txt_draft">Draft: </string>
   <string name="txt_you">You: </string>
   <string name="you">You</string>
-  <string name="st_data_shams">Shamsi Date</string>
-  <string name="do_you_want_left_this">"Are you sure you want to leave the selected item ?"</string>
-  <string name="do_you_want_delete_this">Are you sure you want to delete the selected item ?</string>
-  <string name="do_you_want_clear_history_this">Are you sure you want to clear history the selected item ?</string>
-  <string name="content_log_out">Are you sure you want to logout of your iGap account ?</string>
+  <string name="st_data_shams">Persian Date</string>
+  <string name="do_you_want_left_this">"Are you sure you want to leave this room?"</string>
+  <string name="do_you_want_delete_this">Are you sure you want to delete this room?</string>
+  <string name="do_you_want_delete_this_channel">Are you sure you want to delete this channel?</string>
+  <string name="do_you_want_leave_this_channel">Are you sure you want to leave this channel?</string>
+  <string name="do_you_want_clear_history_this">Are you sure you want to clear history of this room?</string>
+  <string name="content_log_out">Are you sure you want to sign out of your iGap account?</string>
   <string name="st_signature">Signature</string>
   <string name="one_day">Last day</string>
   <string name="two_day">Two days ago</string>
@@ -697,7 +711,7 @@
   <string name="group_link_copy">Copy</string>
   <string name="group_link_revoke">Change Link</string>
   <string name="join">Join</string>
-  <string name="do_you_want_to_join_to_this">"do you want to join this "</string>
+  <string name="do_you_want_to_join_to_this">"Do you want to join this "</string>
   <string name="block_user">Block User</string>
   <string name="un_block_user">"Unblock User"</string>
   <string name="spam">Spam</string>
@@ -711,19 +725,23 @@
   <string name="saturday">"Saturday"</string>
 
 
-  <string name="USER_JOINED">"Joined iGap"</string>
-  <string name="USER_DELETED">"Left from iGap"</string>
-  <string name="ROOM_CREATED">"Created Room"</string>
-  <string name="MEMBER_ADDED">"Added"</string>
+  <string name="USER_JOINED">"joined iGap"</string>
+  <string name="USER_DELETED">"left iGap"</string>
+  <string name="ROOM_CREATED">"created"</string>
+  <string name="MEMBER_ADDED">"added"</string>
   <string name="prefix">""</string>  <!-- have to empty -->
-  <string name="MEMBER_KICKED">"Kicked out"</string>
-  <string name="MEMBER_LEFT">"Left Page"</string>
-  <string name="ROOM_CONVERTED_TO_PUBLIC">"The Private Page Converted to Public"</string>
-  <string name="ROOM_CONVERTED_TO_PRIVATE">"The Public Page Converted to Private"</string>
-  <string name="MEMBER_JOINED_BY_INVITE_LINK">"Join by Invitation Link"</string>
-  <string name="MEMBER_JOINED_BY_INVITE_LINK_2">"اضافه شد"</string>
-  <string name="Room_Deleted">"Deleted Room"</string>
+  <string name="MEMBER_KICKED">"kicked out"</string>
+  <string name="MEMBER_LEFT">"left Page"</string>
+  <string name="ROOM_CONVERTED_TO_PUBLIC">"converted to Public"</string>
+  <string name="ROOM_CONVERTED_TO_PRIVATE">"converted to Private"</string>
+  <string name="MEMBER_JOINED_BY_INVITE_LINK">"joined via Invite Link"</string>
+  <string name="Room_Deleted_log">"deleted Room"</string>
   <string name="conversation">""</string>
+
+  <string name="MISSED_SCREEN_SHARE">"Missed Screen Share"</string>
+  <string name="MISSED_VOICE_CALL">"Missed Voice Call"</string>
+  <string name="MISSED_VIDEO_CALL">"Missed Video Call"</string>
+
 
   <string name="delete_account_text1">other</string>
   <string name="delete_account_text2">other</string>
@@ -734,10 +752,10 @@
   <string name="channel_link_hint_revoke">Channel Invitation Link</string>
   <string name="group_link_hint_revoke">Group Invitation Link</string>
   <string name="self_destructs">Self-destruct</string>
-  <string name="channel_title_convert_to_private">Convert channel to private</string>
-  <string name="channel_text_convert_to_private">Do you want Convert channel to private?</string>
-  <string name="channel_title_convert_to_public">Convert channel to public</string>
-  <string name="channel_text_convert_to_public">Do you want Convert channel to public?</string>
+  <string name="channel_title_convert_to_private">Convert to private</string>
+  <string name="channel_text_convert_to_private">Do you want to convert this channel to private?</string>
+  <string name="channel_title_convert_to_public">Convert to public</string>
+  <string name="channel_text_convert_to_public">Do you want to convert this channel to public?</string>
   <string name="channel_title_channel_set_username">Set Username</string>
 
   <string name="group_title_convert_to_private">Convert to Private</string>
@@ -775,7 +793,7 @@
   <string name="you_have_to_get_storage_permision_for_continue">You need the storage permission for going on.</string>
   <string name="clean_up_chat_rooms">Clean Up All</string>
   <string name="clean_up">Clean Up</string>
-  <string name="do_you_want_to_clean_all_data_in_chat_rooms">Are you sure you want to clean all data in local chat rooms?</string>
+  <string name="do_you_want_to_clean_all_data_in_chat_rooms">Are you sure you want to clean up all data in local chat rooms?</string>
   <string name="pm">PM</string>
   <string name="am">AM</string>
   <string name="message_selected">Message(s) Selected</string>
@@ -790,15 +808,15 @@
   <string name="please_try_again">Please Try Again</string>
   <string name="room_not_exist">There is no room with this ID</string>
   <string name="app_theme">iGap Theme Color</string>
-  <string name="app_notif_color">Notification Color</string>
-  <string name="theme">Theme Colors</string>
+  <string name="app_notif_color">Notification</string>
+  <string name="theme">Color</string>
   <string name="is"> is </string>
   <string name="are"> are </string>
   <string name="members_are">Members are </string>
   <string name="toggle_botton_color">Toggle Button Color</string>
-  <string name="send_and_attach_botton_color"> Color of Send and Attach Button</string>
-  <string name="default_header_font_color">Default Color of Title</string>
-  <string name="default_progress_color">Default Color of Progress</string>
+  <string name="send_and_attach_botton_color">Send and Attach Button</string>
+  <string name="default_header_font_color">Title</string>
+  <string name="default_progress_color">Progress bar</string>
   <string name="who_can_see_my_avatar">Who can see my Avatar?</string>
   <string name="who_can_invite_you_to_channel_s">Who can invite me to Channels?</string>
   <string name="who_can_invite_you_to_group_s">Who can invite me to Groups?</string>
@@ -806,12 +824,13 @@
   <string name="my_contacts">My Contacts</string>
   <string name="privacy_setting">Privacy Setting</string>
   <string name="igap_search">Look and Find</string>
-  <string name="set_color_to_default">Set Colors as Default</string>
+  <string name="set_color_to_default">Reset Colors Back to Default</string>
   <string name="empty_message">Please try to enter the first 5 characters of username</string>
-  <string name="empty_message3">Entering 3 characters at least is required for searching</string>
+  <string name="empty_message3">Enter at least 3 characters to search</string>
   <string name="there_is_no_any_result">No Result</string>
-  <string name="there_is_no_connection_to_server">No Connection to the Server</string>
+  <string name="there_is_no_connection_to_server">Server not found</string>
   <string name="empty_room">No Messages Yet</string>
+  <string name="empty_call">You didn\'t make any call yet</string>
   <string name="show_member">Show Members List</string>
   <string name="show_vote_layout_in_channel">Show Channel Vote Layout</string>
   <string name="close">Close</string>
@@ -835,10 +854,230 @@
   <string name="title_limit_Create_Group">Restriction in Number of Rooms</string>
   <string name="text_limit_Create_Group">You are allowed to create up to 25 Groups and/or Channels</string>
   <string name="show_sender_name_in_group">Show Sender Name in Groups</string>
-  <string name="calls">Calls</string>
-  <string name="igap_call">iGap Call</string>
+  <string name="calls">Voice Calls</string>
+  <string name="map">Map</string>
+  <string name="igap_nearby">Nearby</string>
+  <string name="igap_call">iGap Voice Call</string>
   <string name="No_messages_here_yet">No messages here yet…</string>
-  <string name="mandatory">(Mandatory)</string>
+  <string name="mandatory">(Required)</string>
   <string name="optional">(Optional)</string>
   <string name="desc_group_chanel">Description (Optional)</string>
+  <string name="set_additional_password">Set Additional Password</string>
+  <string name="two_step_verification_title">Two-Step Verification</string>
+  <string name="two_step_verification_description">You can set a password that will be required when you log in on a new device in addition to the code you get via SMS.</string>
+  <string name="enter_a_password">Enter a Password</string>
+  <string name="please_enter_your_password">Please enter your Password</string>
+  <string name="your_password">Your Password</string>
+  <string name="please_re_enter_your_password">Please re-enter your password</string>
+  <string name="please_create_hint_for_your_password">Please create a password hint</string>
+  <string name="password_hint">Password Hint</string>
+  <string name="password_Question_title_one">Question one (Required)</string>
+  <string name="password_Question_one">eg: Who is your Favorite teacher?</string>
+  <string name="password_Question_title_two">Question two (Required)</string>
+  <string name="title_toolbar_password_Question">New Security Questions</string>
+  <string name="password_Question_explain">Change old question with answers for recovering password.</string>
+  <string name="password_Question_two">eg: Who is your best friend?</string>
+  <string name="password_answer">Answer</string>
+  <string name="password_Question_title">Password Question</string>
+  <string name="recovery_email">Recovery E-mail</string>
+  <string name="your_email">Your Email (Optional)</string>
+  <string name="recovery_question">Recovery Question</string>
+  <string name="two_step_verification">Two-Step Verification</string>
+  <string name="forgot_password">Forgot password?</string>
+  <string name="Recovery_with_email">Recovery via E-mail</string>
+  <string name="recent_code">Recent code</string>
+  <string name="enter_code">Enter your code</string>
+  <string name="Change_password">Change Password</string>
+  <string name="Change_hint">Change Hint</string>
+  <string name="turn_Password_off">Turn Password off</string>
+  <string name="turn_Password_off_desc">Do you really want to remove password?</string>
+
+  <string name="change_email_recovery">Set/change Recovery E-Mail</string>
+  <string name="Change_question_recovery">Change Security Questions</string>
+  <string name="set_recovery_dialog_title"> Recover password via:</string>
+
+  <string name="set_unconfirmed_email">Confirm E-Mail</string>
+  <string name="Recovery_with_question">Recovery with Question</string>
+  <string name="please_enter_confirm_code">Confirmation Code</string>
+
+  <string name="recovery_by_email">Recovery via E-mail</string>
+  <string name="recovery_by_question">Recovery via Question</string>
+
+  <string name="recovery_by_question_dialog">Security Question</string>
+  <string name="recovery_by_email_dialog">E-mail</string>
+
+  <string name="recovery_Password">Recovery Password</string>
+  <string name="your_email_desc">Please add your valid e-mail! It is another way to recover your forgotten password</string>
+  <string name="call_with">Select Contact</string>
+  <string name="please_enter_code">Please enter code</string>
+  <string name="please_enter_all_item">Please enter code</string>
+  <string name="Hint_cant_the_same_password">Hint can\'t be the same as password</string>
+  <string name="please_complete_all_item">"Please complete all items</string>
+  <string name="Password_dose_not_match">"Password does not match</string>
+  <string name="Password_has_to_mor_than_character">"Password has to be more than 2 characters</string>
+  <string name="Please_complete_all_Item">"Please complete all items</string>
+  <string name="hint_can_same_password">"hint can\'t be the same as password</string>
+  <string name="Please_enter_your_hint">"Please enter your hint</string>
+  <string name="Please_enter_your_email">"Please enter your email</string>
+
+  <string name="error_check_password">Password is locked for a while due to too many tries.</string>
+  <string name="e_call_permision">Is not allowed to communicate </string>
+  <string name="e_904_6">User is blocked </string>
+  <string name="e_904_7">Dialed number is not active</string>
+  <string name="e_904_8">You are talking with your other devices</string>
+  <string name="e_904_9">The user is in conversation</string>
+  <string name="e_906_1">Is not allowed to communicate</string>
+  <string name="tab_to_return_to_call">Return to Call Screen</string>
+
+  <string name="iGap_has_crashed">iGap has crashed!</string>
+  <string name="iGap_has_crashed_reload">Reset</string>
+  <string name="iGap_has_crashed_desc">An unexpected error occurred forcing the application to stop. We are aware of this error. Please be sure we are fixing this problem, all you have to do is only click "Reset".</string>
+  <string name="who_is_allowed_to_call">Who can call me?</string>
+  <string name="miss">Missed Call</string>
+  <string name="not_answer">Unanswered Call</string>
+
+  <string name="nothing">Nothing</string>
+  <string name="are_you_sure_clear_call_logs">Are you sure you want to clear all incoming and outgoing calls?</string>
+  <string name="please_write_your_reasons">Please write your reasons</string>
+  <string name="your_confirm_email">Enter the confirmation code sent to Email</string>
+  <string name="confirm_email_title">Confirmation email</string>
+  <string name="confirm_email_text">A code has been sent to your email in order that your email address will be verified and confirmed then.</string>
+  <string name="your_confirm_email_skip">Skip</string>
+  <string name="your_resend_email_skip">Resend Confirmation Code</string>
+  <string name="invalid_verify_email_code">Invalid verify email code</string>
+  <string name="resend_verify_email_code">We\'ve resent the confirmation code to your email</string>
+  <string name="enter_verify_email_code">Please enter verify email code</string>
+  <string name="invalid_password">Password is invalid</string>
+  <string name="please_set_password">"Please set password"</string>
+  <string name="please_set_hint">"Please set hint"</string>
+  <string name="invalid_email">"Your email is invalid"</string>
+  <string name="yes">"Yes"</string>
+  <string name="no">"No"</string>
+
+
+  <string name="not_answered">Not Answered ANSWERED</string>
+  <string name="unavalable">Unavailable</string>
+  <string name="too_long">Too Long</string>
+  <string name="signaling">Signaling</string>
+  <string name="incoming_call">Incoming Call</string>
+  <string name="ringing">Ringing</string>
+  <string name="connecting_call">Connecting</string>
+  <string name="connected">Connected</string>
+  <string name="disconnected">Disconnected</string>
+  <string name="faild">Failed</string>
+  <string name="reject">Rejected</string>
+  <string name="busy">Busy</string>
+
+  <string name="invalid_email_token">"Your email token is invalid"</string>
+  <string name="invalid_question_token">"Your answer is invalid"</string>
+
+  <string name="not_answerd_call">"Voice Call Cancelled"</string>
+  <string name="recorded_by">Recorded By</string>
+  <string name="Login_with_QrCode">Login with QR code</string>
+  <string name="Input_device_specification">Device login success</string>
+  <string name="QrCode_Scan">QR code Scanner</string>
+  <string name="Call_Quality">Call Quality</string>
+  <string name="desc_self_destroy">"If you choose one of the periods in the following and never use your iGap account during the certain time, your account will be destructed and deleted spontaneously."</string>
+  <string name="color_default">Are you sure you want to reset all changes with color to default?</string>
+
+  <string name="crop_image_menu_rotate_right">Rotate</string>
+  <string name="crop_image_menu_crop">Crop</string>
+  <string name="crop_image_menu_flip">Flip</string>
+  <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
+  <string name="crop_image_menu_flip_vertically">Flip vertically</string>
+
+  <string name="title_who_can_see_my_avatar">My Avatars get seen by</string>
+  <string name="title_who_can_invite_you_to_channel_s">Channels Invite Link received from</string>
+  <string name="title_who_can_invite_you_to_group_s">Groups Invite Link received from</string>
+  <string name="title_who_is_allowed_to_call">Calls received from</string>
+  <string name="title_Last_Seen">My Last Seen checked by</string>
+  <string name="item">item</string>
+
+  <string name="c_byte">byte</string>
+  <string name="c_KB">KB</string>
+  <string name="c_MB">MB</string>
+  <string name="c_GB">GB</string>
+  <string name="c_TB">TB</string>
+
+
+  <string name="audio">Audio</string>
+  <string name="total_size">Total Size</string>
+
+  <string name="manage_spacing">Manage Spacing</string>
+  <string name="local_database">Local Database</string>
+  <string name="data_storage">Data Storage</string>
+  <string name="keep_media">Keep Media</string>
+
+
+  <string name="invite_friend">This user dose not have iGap yet, send an invitation?</string>
+  <string name="clean_up_description">Clearing the local database will delete the texts of cached messages and compress the database to save internal disk space. iGap needs some data to work, so database size will not reach zero. \n\n This operation can take few minutes to complete.</string>
+  <string name="list_contacts">List of Phone Contacts</string>
+
+  <string name="limit_for_set_username">Limit time for change Username</string>
+  <string name="clear_cache_desc">Cached data on your device are the uploaded and/or downloaded files as photos, videos or documents, which must be cleared occasionally not to stop your device working or slow it down. Whenever you want to see them again, it is sufficient only to tap on them for downloading.</string>
+  <string name="name">Name</string>
+
+  <string name="turn_on_gps_explain">The location status and other features of map are disabled. To use all the capabilities, turn the switch on first.</string>
+  <string name="turn_off_map">turn off</string>
+  <string name="turn_on_map">turn on</string>
+  <string name="positioning">positioning</string>
+  <string name="nearby">Manually Update the Map</string>
+  <string name="list_user_map">List of People Nearby</string>
+  <string name="map_registration">Disable "Nearby" Visibility</string>
+  <string name="comment_waiting">Receiving notes...</string>
+  <string name="comment_no">No Status</string>
+  <string formatted="false" name="distance">about %d m</string>
+  <string name="hint_gps">Your Status</string>
+  <string name="Clear_Status">Clear Status</string>
+  <string name="Clear_Status_desc">You will be visible to others with no status. Are you sure to continue?</string>
+
+  <string name="Visible_Status_title_dialog">Enable Nearby</string>
+  <string name="Visible_Status_title_dialog_invisible">Disable Nearby</string>
+  <string name="Visible_Status_text_dialog">Enabling Nearby will result in getting your and others\' status visible to both. Are you sure to continue?</string>
+  <string name="Visible_Status_text_dialog_invisible">Disabling Nearby will not only result in hiding your status from others, but you won\'t also be able to see others\' status within your certain range. Are you still sure to continue?</string>
+  <string name="Visible_Status_text">Notice! Activating "Map Status" will result in making your location visible to others. Please be sure about it before turning on.</string>
+  <string name="info_map">Only the users within your 5KM radius distance are visible to you if their Map Status in ON.</string>
+
+  <string name="exceed_4_line">Your status cannot exceed 4 lines.</string>
+
+  <string name="st_Auto_Rotate">Auto-Rotate Screen</string>
+  <string name="two_step_pass_code">PassCode Lock</string>
+  <string name="unlock_with_fingerPrint">Unlock With FingerPrint</string>
+  <string name="change_pass_code">Change PassCode</string>
+  <string name="auto_lock">Auto-lock</string>
+  <string name="allow_screen_capture">Allow Screen Capture</string>
+  <string name="Confirm_fingerPrint_continue">Confirm fingerPrint to continue</string>
+  <string name="Touch_sensor">Touch sensor</string>
+  <string name="FingerPrint">FingerPrint</string>
+  <string name="Fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+  <string name="Auto_lock_description">The app will be locked after each time you choose and you need to unlock it at the beginning.</string>
+  <string name="Allow_Screen_Capture_description">If enabled, you can take screenshots of the app, but the system will display your chats in the task switcher even when the passcode is on. You may need to restart the app for this to take effect.</string>
+  <string name="set_pass_code_description">When you set a passcode, a lock icon will appear on top of the main chats page. Tap it to lock or unlock the app.
+    \nNote: you can set only numbers as a PIN or a combination of numbers and letters as a Password with no restriction. \nIf you forget your passcode, you just need to log out once and log in again with no need to enter the PIN/Password.</string>
+
+  <string name="forgot_pin_desc">If you have forgotten your PIN/Password, there is no way to recover but only to log out and log in again. Are you sure to log out?</string>
+  <string name="forgot_pin_title">Forgot PIN/Password?</string>
+  <string name="enter_pass_code">Enter your passcode</string>
+  <string name="enter_change_pass_code">Enter your new passcode</string>
+  <string name="re_enter_pass_code">Re-enter your passcode</string>
+
+
+  <string name="Disable">Disable</string>
+  <string name="in_1_minutes">in 1 minute</string>
+  <string name="in_5_minutes">in 5 minutes</string>
+  <string name="in_1_hours">in 1 hour</string>
+  <string name="in_5_hours">in 5 hours</string>
+  <string name="PIN">PIN</string>
+  <string name="password">Password</string>
+  <string name="Unlock_with_your_passcode">Unlock with your passcode</string>
+  <string name="forgot_Unlock_with_your_passcode">Forgot Passcode?</string>
+  <string name="limit_passcode">The passcode must contain at least 4 numbers and/or letters.</string>
+  <string name="block_the_user">Block the User</string>
+  <string name="block_the_user_text">Are you sure to block this User?</string>
+  <string name="unblock_the_user">Unblock the User</string>
+  <string name="unblock_the_user_text">Are you sure to unblock this User?</string>
+
+  <string name="text_empty_user_map">Oops! No user nearby has turned on her/his map yet</string>
+  <string name="send_message_to">Send Message To </string>
+
 </resources>

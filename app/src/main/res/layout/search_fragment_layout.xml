@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:elevation="999dp"
+    android:clickable="true"
     android:orientation="vertical"
     >
 
@@ -57,7 +58,7 @@
               />
         </net.iGap.libs.rippleeffect.RippleView>
 
-        <EditText
+        <net.iGap.module.MEditText
             android:id="@+id/sfl_edt_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -107,13 +108,6 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <View
-      android:id="@+id/sfl_view_line"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="#34a49f"
-      />
-
   <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -133,52 +127,54 @@
         android:orientation="vertical"
         >
 
-
-      <ImageView
-          android:layout_width="@dimen/dp160"
-          android:layout_height="@dimen/dp160"
-          android:layout_margin="@dimen/dp20"
-          app:srcCompat="@drawable/find1"
-          android:layout_gravity="top|center"
-          android:visibility="gone"
-          android:id="@+id/sfl_imv_nothing_found"
-          />
-
-
-      <TextView
-          android:id="@+id/sfl_txt_empty_nothing"
-          android:layout_width="wrap_content"
+      <android.support.v4.widget.NestedScrollView
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dp8"
-          android:layout_gravity="center"
-          android:textColor="@color/black90"
-          android:textSize="@dimen/dp22"
-          android:visibility="gone"
-          android:text="Nothing"
-          />
+          >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+          <ImageView
+              android:id="@+id/sfl_imv_nothing_found"
+              android:layout_width="@dimen/dp180"
+              android:layout_height="@dimen/dp180"
+              android:layout_gravity="top|center"
+              android:layout_marginBottom="@dimen/dp12"
+              android:layout_marginLeft="@dimen/dp20"
+              android:layout_marginRight="@dimen/dp20"
+              android:layout_marginTop="@dimen/dp20"
+              android:adjustViewBounds="true"
+              android:paddingTop="@dimen/dp20"
+              android:visibility="gone"
+              app:srcCompat="@drawable/find1"
 
-      <TextView
-          android:id="@+id/sfl_txt_empty_list_comment"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/dp8"
-          android:padding="@dimen/dp16"
-          android:layout_gravity="center"
-          android:textSize="@dimen/dp16"
-          android:visibility="gone"
-          android:text="@string/empty_message"
-          />
+              />
+          <TextView
+              android:id="@+id/sfl_txt_empty_list_comment"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:paddingLeft="@dimen/dp20"
+              android:paddingRight="@dimen/dp20"
+              android:text="@string/empty_message"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
 
-
+        </LinearLayout>
+      </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/sfl_progress_loading"
         android:layout_width="64dp"
-        android:layout_gravity="center"
         android:layout_height="64dp"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:visibility="gone"
         style="?android:attr/progressBarStyleLarge"
         />

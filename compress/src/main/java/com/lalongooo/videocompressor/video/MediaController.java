@@ -145,7 +145,8 @@ import java.nio.ByteBuffer;
     }
 
 
-    @TargetApi(16) private long readAndWriteTrack(MediaExtractor extractor, MP4Builder mediaMuxer, MediaCodec.BufferInfo info, long start, long end, File file, boolean isAudio) throws Exception {
+    @TargetApi(16)
+    private long readAndWriteTrack(MediaExtractor extractor, MP4Builder mediaMuxer, MediaCodec.BufferInfo info, long start, long end, File file, boolean isAudio) throws Exception {
         int trackIndex = selectTrack(extractor, isAudio);
         if (trackIndex >= 0) {
             extractor.selectTrack(trackIndex);
@@ -263,12 +264,15 @@ import java.nio.ByteBuffer;
         String rotation = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
 
         int videoWidth = 641;
-        int videoHeight = 481;
+        int videoHeight = 361;
         try {
             MediaMetadataRetriever re = new MediaMetadataRetriever();
             Bitmap bmp = null;
             re.setDataSource(path);
             bmp = retriever.getFrameAtTime();
+            if (bmp == null) {
+                return false;
+            }
             videoHeight = bmp.getHeight();
             videoWidth = bmp.getWidth();
         } catch (IllegalArgumentException e) {
@@ -293,7 +297,7 @@ import java.nio.ByteBuffer;
             return true;
         } else {
             resultWidth = 640;
-            resultHeight = 480;
+            resultHeight = 360;
         }
 
         int rotationValue = Integer.valueOf(rotation);

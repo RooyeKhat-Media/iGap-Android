@@ -87,11 +87,11 @@ public final class ProtoUserDelete {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -123,12 +123,11 @@ public final class ProtoUserDelete {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
+      return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDelete.class,
-            net.iGap.proto.ProtoUserDelete.UserDelete.Builder.class);
+      return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDelete.class, net.iGap.proto.ProtoUserDelete.UserDelete.Builder.class);
     }
 
     /**
@@ -190,7 +189,7 @@ public final class ProtoUserDelete {
       }
 
       public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserDelete.UserDelete.getDescriptor().getEnumTypes().get(0);
+        return net.iGap.proto.ProtoUserDelete.UserDelete.getDescriptor().getEnumTypes().get(0);
       }
 
       private static final Reason[] VALUES = values();
@@ -215,7 +214,7 @@ public final class ProtoUserDelete {
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -226,7 +225,7 @@ public final class ProtoUserDelete {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -277,8 +276,8 @@ public final class ProtoUserDelete {
      * <code>optional .proto.UserDelete.Reason reason = 3;</code>
      */
     public net.iGap.proto.ProtoUserDelete.UserDelete.Reason getReason() {
-        net.iGap.proto.ProtoUserDelete.UserDelete.Reason result = net.iGap.proto.ProtoUserDelete.UserDelete.Reason.valueOf(reason_);
-        return result == null ? net.iGap.proto.ProtoUserDelete.UserDelete.Reason.UNRECOGNIZED : result;
+      net.iGap.proto.ProtoUserDelete.UserDelete.Reason result = net.iGap.proto.ProtoUserDelete.UserDelete.Reason.valueOf(reason_);
+      return result == null ? net.iGap.proto.ProtoUserDelete.UserDelete.Reason.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -298,7 +297,7 @@ public final class ProtoUserDelete {
       if (!getTokenBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, token_);
       }
-        if (reason_ != net.iGap.proto.ProtoUserDelete.UserDelete.Reason.OTHER.getNumber()) {
+      if (reason_ != net.iGap.proto.ProtoUserDelete.UserDelete.Reason.OTHER.getNumber()) {
         output.writeEnum(3, reason_);
       }
     }
@@ -314,7 +313,7 @@ public final class ProtoUserDelete {
       if (!getTokenBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, token_);
       }
-        if (reason_ != net.iGap.proto.ProtoUserDelete.UserDelete.Reason.OTHER.getNumber()) {
+      if (reason_ != net.iGap.proto.ProtoUserDelete.UserDelete.Reason.OTHER.getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, reason_);
       }
       memoizedSize = size;
@@ -327,10 +326,10 @@ public final class ProtoUserDelete {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserDelete.UserDelete)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserDelete.UserDelete)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserDelete.UserDelete other = (net.iGap.proto.ProtoUserDelete.UserDelete) obj;
+      net.iGap.proto.ProtoUserDelete.UserDelete other = (net.iGap.proto.ProtoUserDelete.UserDelete) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -362,46 +361,43 @@ public final class ProtoUserDelete {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -412,7 +408,7 @@ public final class ProtoUserDelete {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserDelete.UserDelete prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserDelete.UserDelete prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -431,15 +427,14 @@ public final class ProtoUserDelete {
             // @@protoc_insertion_point(builder_implements:proto.UserDelete)
         net.iGap.proto.ProtoUserDelete.UserDeleteOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDelete.class,
-              net.iGap.proto.ProtoUserDelete.UserDelete.Builder.class);
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDelete.class, net.iGap.proto.ProtoUserDelete.UserDelete.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserDelete.UserDelete.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserDelete.UserDelete.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -469,23 +464,23 @@ public final class ProtoUserDelete {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDelete_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserDelete.UserDelete.getDefaultInstance();
+      public net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserDelete.UserDelete.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDelete build() {
-            net.iGap.proto.ProtoUserDelete.UserDelete result = buildPartial();
+      public net.iGap.proto.ProtoUserDelete.UserDelete build() {
+        net.iGap.proto.ProtoUserDelete.UserDelete result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDelete buildPartial() {
-            net.iGap.proto.ProtoUserDelete.UserDelete result = new net.iGap.proto.ProtoUserDelete.UserDelete(this);
+      public net.iGap.proto.ProtoUserDelete.UserDelete buildPartial() {
+        net.iGap.proto.ProtoUserDelete.UserDelete result = new net.iGap.proto.ProtoUserDelete.UserDelete(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -521,16 +516,16 @@ public final class ProtoUserDelete {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserDelete.UserDelete) {
-              return mergeFrom((net.iGap.proto.ProtoUserDelete.UserDelete) other);
+        if (other instanceof net.iGap.proto.ProtoUserDelete.UserDelete) {
+          return mergeFrom((net.iGap.proto.ProtoUserDelete.UserDelete) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserDelete.UserDelete other) {
-            if (other == net.iGap.proto.ProtoUserDelete.UserDelete.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserDelete.UserDelete other) {
+        if (other == net.iGap.proto.ProtoUserDelete.UserDelete.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -550,11 +545,11 @@ public final class ProtoUserDelete {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserDelete.UserDelete parsedMessage = null;
+        net.iGap.proto.ProtoUserDelete.UserDelete parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserDelete.UserDelete) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserDelete.UserDelete) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -564,9 +559,8 @@ public final class ProtoUserDelete {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -578,7 +572,7 @@ public final class ProtoUserDelete {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -618,7 +612,7 @@ public final class ProtoUserDelete {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -658,7 +652,7 @@ public final class ProtoUserDelete {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -666,8 +660,7 @@ public final class ProtoUserDelete {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -758,8 +751,8 @@ public final class ProtoUserDelete {
        * <code>optional .proto.UserDelete.Reason reason = 3;</code>
        */
       public net.iGap.proto.ProtoUserDelete.UserDelete.Reason getReason() {
-          net.iGap.proto.ProtoUserDelete.UserDelete.Reason result = net.iGap.proto.ProtoUserDelete.UserDelete.Reason.valueOf(reason_);
-          return result == null ? net.iGap.proto.ProtoUserDelete.UserDelete.Reason.UNRECOGNIZED : result;
+        net.iGap.proto.ProtoUserDelete.UserDelete.Reason result = net.iGap.proto.ProtoUserDelete.UserDelete.Reason.valueOf(reason_);
+        return result == null ? net.iGap.proto.ProtoUserDelete.UserDelete.Reason.UNRECOGNIZED : result;
       }
       /**
        * <code>optional .proto.UserDelete.Reason reason = 3;</code>
@@ -798,10 +791,10 @@ public final class ProtoUserDelete {
     // @@protoc_insertion_point(class_scope:proto.UserDelete)
     private static final net.iGap.proto.ProtoUserDelete.UserDelete DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserDelete.UserDelete();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserDelete.UserDelete();
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -820,7 +813,7 @@ public final class ProtoUserDelete {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserDelete.UserDelete getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -880,11 +873,11 @@ public final class ProtoUserDelete {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -904,16 +897,15 @@ public final class ProtoUserDelete {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
+      return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDeleteResponse.class,
-            net.iGap.proto.ProtoUserDelete.UserDeleteResponse.Builder.class);
+      return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDeleteResponse.class, net.iGap.proto.ProtoUserDelete.UserDeleteResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -924,7 +916,7 @@ public final class ProtoUserDelete {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -967,10 +959,10 @@ public final class ProtoUserDelete {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserDelete.UserDeleteResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserDelete.UserDeleteResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserDelete.UserDeleteResponse other = (net.iGap.proto.ProtoUserDelete.UserDeleteResponse) obj;
+      net.iGap.proto.ProtoUserDelete.UserDeleteResponse other = (net.iGap.proto.ProtoUserDelete.UserDeleteResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -996,47 +988,43 @@ public final class ProtoUserDelete {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -1047,7 +1035,7 @@ public final class ProtoUserDelete {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserDelete.UserDeleteResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserDelete.UserDeleteResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -1066,15 +1054,14 @@ public final class ProtoUserDelete {
             // @@protoc_insertion_point(builder_implements:proto.UserDeleteResponse)
         net.iGap.proto.ProtoUserDelete.UserDeleteResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDeleteResponse.class,
-              net.iGap.proto.ProtoUserDelete.UserDeleteResponse.Builder.class);
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserDelete.UserDeleteResponse.class, net.iGap.proto.ProtoUserDelete.UserDeleteResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserDelete.UserDeleteResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserDelete.UserDeleteResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1100,23 +1087,23 @@ public final class ProtoUserDelete {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
+        return net.iGap.proto.ProtoUserDelete.internal_static_proto_UserDeleteResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserDelete.UserDeleteResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserDelete.UserDeleteResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDeleteResponse build() {
-            net.iGap.proto.ProtoUserDelete.UserDeleteResponse result = buildPartial();
+      public net.iGap.proto.ProtoUserDelete.UserDeleteResponse build() {
+        net.iGap.proto.ProtoUserDelete.UserDeleteResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserDelete.UserDeleteResponse buildPartial() {
-            net.iGap.proto.ProtoUserDelete.UserDeleteResponse result = new net.iGap.proto.ProtoUserDelete.UserDeleteResponse(this);
+      public net.iGap.proto.ProtoUserDelete.UserDeleteResponse buildPartial() {
+        net.iGap.proto.ProtoUserDelete.UserDeleteResponse result = new net.iGap.proto.ProtoUserDelete.UserDeleteResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1150,16 +1137,16 @@ public final class ProtoUserDelete {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserDelete.UserDeleteResponse) {
-              return mergeFrom((net.iGap.proto.ProtoUserDelete.UserDeleteResponse) other);
+        if (other instanceof net.iGap.proto.ProtoUserDelete.UserDeleteResponse) {
+          return mergeFrom((net.iGap.proto.ProtoUserDelete.UserDeleteResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserDelete.UserDeleteResponse other) {
-            if (other == net.iGap.proto.ProtoUserDelete.UserDeleteResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserDelete.UserDeleteResponse other) {
+        if (other == net.iGap.proto.ProtoUserDelete.UserDeleteResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1172,11 +1159,11 @@ public final class ProtoUserDelete {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserDelete.UserDeleteResponse parsedMessage = null;
+        net.iGap.proto.ProtoUserDelete.UserDeleteResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserDelete.UserDeleteResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserDelete.UserDeleteResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1186,9 +1173,8 @@ public final class ProtoUserDelete {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1200,7 +1186,7 @@ public final class ProtoUserDelete {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1240,7 +1226,7 @@ public final class ProtoUserDelete {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1280,7 +1266,7 @@ public final class ProtoUserDelete {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1288,8 +1274,7 @@ public final class ProtoUserDelete {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1313,10 +1298,10 @@ public final class ProtoUserDelete {
     // @@protoc_insertion_point(class_scope:proto.UserDeleteResponse)
     private static final net.iGap.proto.ProtoUserDelete.UserDeleteResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserDelete.UserDeleteResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserDelete.UserDeleteResponse();
     }
 
-      public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1335,7 +1320,7 @@ public final class ProtoUserDelete {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserDelete.UserDeleteResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1358,7 +1343,8 @@ public final class ProtoUserDelete {
                     "t\030\001 \001(\0132\016.proto.Request\022\r\n\005token\030\002 \001(\t\022(" +
                     "\n\006reason\030\003 \001(\0162\030.proto.UserDelete.Reason" +
                     "\"\023\n\006Reason\022\t\n\005OTHER\020\000\"7\n\022UserDeleteRespo" +
-                    "nse\022!\n\010response\030\001 \001(\0132\017.proto.ResponseB!" + "\n\016net.iGap.protoB\017ProtoUserDeleteb\006proto" +
+                    "nse\022!\n\010response\030\001 \001(\0132\017.proto.ResponseB!" +
+                    "\n\016net.iGap.protoB\017ProtoUserDeleteb\006proto" +
                     "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1368,7 +1354,7 @@ public final class ProtoUserDelete {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_UserDelete_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_UserDelete_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserDelete_descriptor, new java.lang.String[]{"Request", "Token", "Reason",});
@@ -1378,8 +1364,8 @@ public final class ProtoUserDelete {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserDeleteResponse_descriptor,
         new java.lang.String[] { "Response", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -10,38 +10,51 @@
 
 package net.iGap.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
+import android.view.WindowManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
+import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperPermision;
-import net.iGap.helper.HelperSetStatusBarColor;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.AttachFile;
+import net.iGap.module.SHP_SETTING;
 import net.iGap.module.StartupActions;
+import net.iGap.module.StatusBarUtil;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.request.RequestUserUpdateStatus;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityEnhanced extends AppCompatActivity {
 
-    private boolean isOnGetPermistion = false;
+    public boolean isOnGetPermistion = false;
 
-    @Override protected void attachBaseContext(Context newBase) {
+    @Override
+    protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
 
         makeDirectoriesIfNotExist();
@@ -50,18 +63,57 @@ public class ActivityEnhanced extends AppCompatActivity {
     }
 
     public void onCreate(Bundle savedInstanceState) {
-        checkLanguage(this);
+        G.checkLanguage();
+        checkFont();
+
+        IntentFilter screenStateFilter = new IntentFilter();
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
+        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(mybroadcast, screenStateFilter);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+
+        boolean allwScrren = sharedPreferences.getBoolean(SHP_SETTING.KEY_SCREEN_SHOT_LOCK, true);
+
+        if (G.isPassCode && !allwScrren) {
+
+            try {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+            } catch (Exception e) {
+                HelperLog.setErrorLog(e.toString());
+            }
+        } else {
+            try {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+            } catch (Exception e) {
+                HelperLog.setErrorLog(e.toString());
+            }
+        }
+
+
+
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StatusBarUtil.setColor(this, Color.parseColor(G.appBarColor), 50);
+        }
 
         makeDirectoriesIfNotExist();
 
-        HelperSetStatusBarColor.setColor(this);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        boolean checkedEnableDataShams = sharedPreferences.getBoolean(SHP_SETTING.KEY_AUTO_ROTATE, true);
+        if (!checkedEnableDataShams) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        }
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         try {
             HelperPermision.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -70,7 +122,8 @@ public class ActivityEnhanced extends AppCompatActivity {
         }
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
 
         if (!G.isAppInFg) {
             G.isAppInFg = true;
@@ -96,7 +149,8 @@ public class ActivityEnhanced extends AppCompatActivity {
         super.onStart();
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
 
         if (!G.isScrInFg || !G.isChangeScrFg) {
@@ -105,7 +159,8 @@ public class ActivityEnhanced extends AppCompatActivity {
         G.isScrInFg = false;
 
         new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (!G.isAppInFg && !AttachFile.isInAttach && G.userLogin) {
                     new RequestUserUpdateStatus().userUpdateStatus(ProtoUserUpdateStatus.UserUpdateStatus.Status.OFFLINE);
                 }
@@ -113,26 +168,27 @@ public class ActivityEnhanced extends AppCompatActivity {
         }, Config.UPDATE_STATUS_TIME);
     }
 
+
     /**
      * check the selected language user and set the language if change it
      */
 
-    public static void checkLanguage(Context context) {
+    private void checkFont() {
 
-        try {
-            String selectedLanguage = G.selectedLanguage;
-            if (selectedLanguage == null) return;
+        if (G.typeface_IRANSansMobile == null) {
+            G.typeface_IRANSansMobile = Typeface.createFromAsset(getAssets(), "fonts/IRANSansMobile.ttf");
+        }
 
-            String currentLanguage = Locale.getDefault().getLanguage();
-            if (!selectedLanguage.equals(currentLanguage)) {
-                Locale locale = new Locale(selectedLanguage);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (G.typeface_IRANSansMobile_Bold == null) {
+            G.typeface_IRANSansMobile_Bold = Typeface.createFromAsset(getAssets(), "fonts/IRANSansMobile_Bold.ttf");
+        }
+
+        if (G.typeface_Fontico == null) {
+            G.typeface_Fontico = Typeface.createFromAsset(getAssets(), "fonts/iGap-Fontico.ttf");
+        }
+
+        if (G.typeface_neuropolitical == null) {
+            G.typeface_neuropolitical = Typeface.createFromAsset(getAssets(), "fonts/neuropolitical.ttf");
         }
     }
 
@@ -142,7 +198,7 @@ public class ActivityEnhanced extends AppCompatActivity {
             return;
         }
 
-        if (this instanceof ActivityIntroduce) {
+        if (this instanceof ActivityRegisteration) {
             return;
         }
 
@@ -150,11 +206,13 @@ public class ActivityEnhanced extends AppCompatActivity {
 
         try {
             HelperPermision.getStoragePermision(this, new OnGetPermission() {
-                @Override public void Allow() throws IOException {
+                @Override
+                public void Allow() throws IOException {
                     checkIsDirectoryExist();
                 }
 
-                @Override public void deny() {
+                @Override
+                public void deny() {
                     finish();
                 }
             });
@@ -167,8 +225,7 @@ public class ActivityEnhanced extends AppCompatActivity {
 
         isOnGetPermistion = false;
 
-        if (new File(G.DIR_APP).exists() && new File(G.DIR_IMAGES).exists() && new File(G.DIR_VIDEOS).exists() && new File(G.DIR_AUDIOS).exists() && new File(G.DIR_DOCUMENT).exists() && new File(
-            G.DIR_CHAT_BACKGROUND).exists() && new File(G.DIR_IMAGE_USER).exists() && new File(G.DIR_TEMP).exists()) {
+        if (new File(G.DIR_APP).exists() && new File(G.DIR_IMAGES).exists() && new File(G.DIR_VIDEOS).exists() && new File(G.DIR_AUDIOS).exists() && new File(G.DIR_DOCUMENT).exists() && new File(G.DIR_CHAT_BACKGROUND).exists() && new File(G.DIR_IMAGE_USER).exists() && new File(G.DIR_TEMP).exists()) {
             return;
         } else {
             StartupActions.makeFolder();
@@ -176,5 +233,49 @@ public class ActivityEnhanced extends AppCompatActivity {
     }
 
 
+    BroadcastReceiver mybroadcast = new BroadcastReceiver() {
+        //When Event is published, onReceive method is called
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            Log.i("[BroadcastReceiver]", "MyReceiver");
 
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (G.isPassCode && !ActivityMain.isActivityEnterPassCode) {
+                    G.isFirstPassCode = true;
+                    Intent i = new Intent(ActivityEnhanced.this, ActivityEnterPassCode.class);
+                    startActivity(i);
+                }
+            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+            }
+
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mybroadcast);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        checkLanguage();
+    }
+
+    public void checkLanguage() {
+        try {
+            String selectedLanguage = G.selectedLanguage;
+            if (selectedLanguage == null) return;
+            Locale locale = new Locale(selectedLanguage);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

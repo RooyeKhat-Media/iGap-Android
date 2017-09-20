@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Neo Visionaries Inc.
+ * Copyright (C) 2015-2017 Neo Visionaries Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,21 +38,21 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
 
 /**
  * WebSocket.
- * <p>
+ *
  * <h3>Create WebSocketFactory</h3>
- * <p>
+ *
  * <p>
  * {@link WebSocketFactory} is a factory class that creates
  * {@link WebSocket} instances. The first step is to create a
  * {@code WebSocketFactory} instance.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a WebSocketFactory instance.</span>
  * WebSocketFactory factory = new {@link WebSocketFactory#WebSocketFactory()
  * WebSocketFactory()};</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * By default, {@code WebSocketFactory} uses {@link
  * javax.net.SocketFactory SocketFactory}{@code .}{@link
@@ -76,23 +76,23 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * WebSocketFactory#createSocket(URI) createSocket(URI)} method for
  * details.
  * </p>
- * <p>
+ *
  * <p>
  * The following is an example to set a custom SSL context to a
  * {@code WebSocketFactory} instance. (Again, you don't have to call a
  * {@code setSSL*} method if you use the default SSL configuration.)
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a custom SSL context.</span>
  * SSLContext context = <a href="https://gist.github.com/TakahikoKawasaki/d07de2218b4b81bf65ac"
  * >NaiveSSLContext</a>.getInstance(<span style="color:darkred;">"TLS"</span>);
- * <p>
+ *
  * <span style="color: green;">// Set the custom SSL context.</span>
  * factory.{@link WebSocketFactory#setSSLContext(javax.net.ssl.SSLContext)
  * setSSLContext}(context);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * <a href="https://gist.github.com/TakahikoKawasaki/d07de2218b4b81bf65ac"
  * >NaiveSSLContext</a> used in the above example is a factory class to
@@ -102,9 +102,9 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * "unable to find valid certificate path to requested target" while
  * testing, try {@code NaiveSSLContext}.
  * </p>
- * <p>
+ *
  * <h3>HTTP Proxy</h3>
- * <p>
+ *
  * <p>
  * If a WebSocket endpoint needs to be accessed via an HTTP proxy,
  * information about the proxy server has to be set to a {@code
@@ -115,13 +115,13 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {@code WebSocketFactory.}{@link WebSocketFactory#getProxySettings()
  * getProxySettings()} method.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Get the associated ProxySettings instance.</span>
  * {@link ProxySettings} settings = factory.{@link
  * WebSocketFactory#getProxySettings() getProxySettings()};</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * {@code ProxySettings} class has methods to set information about
  * a proxy server such as {@link ProxySettings#setHost(String) setHost}
@@ -129,13 +129,13 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * following is an example to set a secure (<code>https</code>) proxy
  * server.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Set a proxy server.</span>
  * settings.{@link ProxySettings#setServer(String)
  * setServer}(<span style="color:darkred;">"https://proxy.example.com"</span>);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * If credentials are required for authentication at a proxy server,
  * {@link ProxySettings#setId(String) setId} method and {@link
@@ -144,23 +144,23 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * method can be used to set the credentials. Note that, however,
  * the current implementation supports only Basic Authentication.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Set credentials for authentication at a proxy server.</span>
  * settings.{@link ProxySettings#setCredentials(String, String)
  * setCredentials}(id, password);
  * </pre>
  * </blockquote>
- * <p>
+ *
  * <h3>Create WebSocket</h3>
- * <p>
+ *
  * <p>
  * {@link WebSocket} class represents a WebSocket. Its instances are
  * created by calling one of {@code createSocket} methods of a {@link
  * WebSocketFactory} instance. Below is the simplest example to create
  * a {@code WebSocket} instance.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a WebSocket. The scheme part can be one of the following:
  * // 'ws', 'wss', 'http' and 'https' (case-insensitive). The user info
@@ -171,45 +171,45 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * .{@link WebSocketFactory#createSocket(String)
  * createWebSocket}(<span style="color: darkred;">"ws://localhost/endpoint"</span>);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * There are two ways to set a timeout value for socket connection. The
  * first way is to call {@link WebSocketFactory#setConnectionTimeout(int)
  * setConnectionTimeout(int timeout)} method of {@code WebSocketFactory}.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a WebSocket factory and set 5000 milliseconds as a timeout
  * // value for socket connection.</span>
  * WebSocketFactory factory = new WebSocketFactory().{@link
  * WebSocketFactory#setConnectionTimeout(int) setConnectionTimeout}(5000);
- * <p>
+ *
  * <span style="color: green;">// Create a WebSocket. The timeout value set above is used.</span>
  * WebSocket ws = factory.{@link WebSocketFactory#createSocket(String)
  * createWebSocket}(<span style="color: darkred;">"ws://localhost/endpoint"</span>);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * The other way is to give a timeout value to a {@code createSocket} method.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a WebSocket factory. The timeout value remains 0.</span>
  * WebSocketFactory factory = new WebSocketFactory();
- * <p>
+ *
  * <span style="color: green;">// Create a WebSocket with a socket connection timeout value.</span>
  * WebSocket ws = factory.{@link WebSocketFactory#createSocket(String, int)
  * createWebSocket}(<span style="color: darkred;">"ws://localhost/endpoint"</span>, 5000);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * The timeout value is passed to {@link Socket#connect(java.net.SocketAddress, int)
  * connect}{@code (}{@link java.net.SocketAddress SocketAddress}{@code , int)}
- * method of {@link Socket}.
+ * method of {@link java.net.Socket}.
  * </p>
- * <p>
+ *
  * <h3>Register Listener</h3>
- * <p>
+ *
  * <p>
  * After creating a {@code WebSocket} instance, you should call {@link
  * #addListener(WebSocketListener)} method to register a {@link
@@ -217,7 +217,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * WebSocketAdapter} is an empty implementation of {@link
  * WebSocketListener} interface.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Register a listener to receive WebSocket events.</span>
  * ws.{@link #addListener(WebSocketListener) addListener}(new {@link
@@ -230,12 +230,12 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * }
  * });</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * The table below is the list of callback methods defined in {@code WebSocketListener}
  * interface.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <table border="1" cellpadding="5" style="border-collapse: collapse;">
  * <caption>{@code WebSocketListener} methods</caption>
@@ -343,21 +343,33 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * <td>Called when a text message failed to be constructed.</td>
  * </tr>
  * <tr>
+ * <td>{@link WebSocketListener#onThreadCreated(WebSocket, ThreadType, Thread) onThreadCreated}</td>
+ * <td>Called after a thread was created.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link WebSocketListener#onThreadStarted(WebSocket, ThreadType, Thread) onThreadStarted}</td>
+ * <td>Called at the beginning of a thread's {@code run()} method.
+ * </tr>
+ * <tr>
+ * <td>{@link WebSocketListener#onThreadStopping(WebSocket, ThreadType, Thread) onThreadStopping}</td>
+ * <td>Called at the end of a thread's {@code run()} method.
+ * </tr>
+ * <tr>
  * <td>{@link WebSocketListener#onUnexpectedError(WebSocket, WebSocketException) onUnexpectedError}</td>
  * <td>Called when an uncaught throwable was detected.</td>
  * </tr>
  * </tbody>
  * </table>
  * </blockquote>
- * <p>
+ *
  * <h3>Configure WebSocket</h3>
- * <p>
+ *
  * <p>
  * Before starting a WebSocket <a href="https://tools.ietf.org/html/rfc6455#section-4"
  * >opening handshake</a> with the server, you can configure the
  * {@code WebSocket} instance by using the following methods.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <table border="1" cellpadding="5" style="border-collapse: collapse;">
  * <caption>Methods for Configuration</caption>
@@ -407,9 +419,9 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * </tbody>
  * </table>
  * </blockquote>
- * <p>
+ *
  * <h3>Connect To Server</h3>
- * <p>
+ *
  * <p>
  * By calling {@link #connect()} method, connection to the server is
  * established and a WebSocket opening handshake is performed
@@ -419,7 +431,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * threads and starts them to read and write WebSocket frames
  * asynchronously.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> try
  * {
@@ -432,12 +444,16 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * <span style="color: green;">// A violation against the WebSocket protocol was detected</span>
  * <span style="color: green;">// during the opening handshake.</span>
  * }
+ * catch ({@link HostnameUnverifiedException} e)
+ * {
+ * <span style="color: green;">// The certificate of the peer does not match the expected hostname.</span>
+ * }
  * catch ({@link WebSocketException} e)
  * {
  * <span style="color: green;">// Failed to establish a WebSocket connection.</span>
  * }</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * In some cases, {@code connect()} method throws {@link OpeningHandshakeException}
  * which is a subclass of {@code WebSocketException} (since version 1.19).
@@ -448,7 +464,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * response from a server. The following snippet is an example to print
  * information that the exception holds.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> catch ({@link OpeningHandshakeException} e)
  * {
@@ -458,7 +474,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * System.out.format(<span style="color:darkred;">"HTTP Version  = %s\n"</span>, sl.{@link StatusLine#getHttpVersion() getHttpVersion()});
  * System.out.format(<span style="color:darkred;">"Status Code   = %d\n"</span>, sl.{@link StatusLine#getStatusCode() getStatusCode()});
  * System.out.format(<span style="color:darkred;">"Reason Phrase = %s\n"</span>, sl.{@link StatusLine#getReasonPhrase() getReasonPhrase()});
- * <p>
+ *
  * <span style="color: green;">// HTTP headers.</span>
  * Map&lt;String, List&lt;String&gt;&gt; headers = e.{@link OpeningHandshakeException#getHeaders() getHeaders()};
  * System.out.println(<span style="color:darkred;">"=== HTTP Headers ==="</span>);
@@ -466,17 +482,17 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {
  * <span style="color: green;">// Header name.</span>
  * String name = entry.getKey();
- * <p>
+ *
  * <span style="color: green;">// Values of the header.</span>
  * List&lt;String&gt; values = entry.getValue();
- * <p>
+ *
  * if (values == null || values.size() == 0)
  * {
  * <span style="color: green;">// Print the name only.</span>
  * System.out.println(name);
  * continue;
  * }
- * <p>
+ *
  * for (String value : values)
  * {
  * <span style="color: green;">// Print the name and the value.</span>
@@ -485,9 +501,15 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * }
  * }</pre>
  * </blockquote>
+ *
  * <p>
+ * Also, {@code connect()} method throws {@link HostnameUnverifiedException}
+ * which is a subclass of {@code WebSocketException} (since version 2.1) when
+ * the certificate of the peer does not match the expected hostname.
+ * </p>
+ *
  * <h3>Connect To Server Asynchronously</h3>
- * <p>
+ *
  * <p>
  * The simplest way to call {@code connect()} method asynchronously is to
  * use {@link #connectAsynchronously()} method. The implementation of the
@@ -498,30 +520,30 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {@code onConnectError()} is called only when {@code connectAsynchronously()}
  * was used and the {@code connect()} call executed in the background thread
  * failed. Neither direct synchronous {@code connect()} nor
- * {@link WebSocket#connect(ExecutorService)
+ * {@link WebSocket#connect(java.util.concurrent.ExecutorService)
  * connect(ExecutorService)} (described below) will trigger the callback method.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Connect to the server asynchronously.</span>
  * ws.{@link #connectAsynchronously()};
  * </pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Another way to call {@code connect()} method asynchronously is to use
  * {@link #connect(ExecutorService)} method. The method performs a WebSocket
  * opening handshake asynchronously using the given {@link ExecutorService}.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Prepare an ExecutorService.</span>
  * {@link ExecutorService} es = {@link java.util.concurrent.Executors Executors}.{@link
  * java.util.concurrent.Executors#newSingleThreadExecutor() newSingleThreadExecutor()};
- * <p>
+ *
  * <span style="color: green;">// Connect to the server asynchronously.</span>
  * {@link Future}{@code <WebSocket>} future = ws.{@link #connect(ExecutorService) connect}(es);
- * <p>
+ *
  * try
  * {
  * <span style="color: green;">// Wait for the opening handshake to complete.</span>
@@ -535,19 +557,19 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * }
  * }</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * The implementation of {@code connect(ExecutorService)} method creates
- * a {@link Callable Callable}{@code <WebSocket>}
+ * a {@link java.util.concurrent.Callable Callable}{@code <WebSocket>}
  * instance by calling {@link #connectable()} method and passes the
  * instance to {@link ExecutorService#submit(Callable) submit(Callable)}
  * method of the given {@code ExecutorService}. What the implementation
  * of {@link Callable#call() call()} method of the {@code Callable}
  * instance does is just to call the synchronous {@code connect()}.
  * </p>
- * <p>
+ *
  * <h3>Send Frames</h3>
- * <p>
+ *
  * <p>
  * WebSocket frames can be sent by {@link #sendFrame(WebSocketFrame)}
  * method. Other <code>send<i>Xxx</i></code> methods such as {@link
@@ -557,7 +579,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * may block. See <a href="#congestion_control">Congestion Control</a>
  * for details.
  * </p>
- * <p>
+ *
  * <p>
  * Below
  * are some examples of <code>send<i>Xxx</i></code> methods. Note that
@@ -565,26 +587,26 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * and {@link #sendPong()} (or their variants) explicitly because they
  * are called automatically when appropriate.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Send a text frame.</span>
  * ws.{@link #sendText(String) sendText}(<span style="color: darkred;">"Hello."</span>);
- * <p>
+ *
  * <span style="color: green;">// Send a binary frame.</span>
  * byte[] binary = ......;
  * ws.{@link #sendBinary(byte[]) sendBinary}(binary);
- * <p>
+ *
  * <span style="color: green;">// Send a ping frame.</span>
  * ws.{@link #sendPing(String) sendPing}(<span style="color: darkred;">"Are you there?"</span>);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * If you want to send fragmented frames, you have to know the details
  * of the specification (<a href="https://tools.ietf.org/html/rfc6455#section-5.4"
  * >5.4. Fragmentation</a>). Below is an example to send a text message
  * ({@code "How are you?"}) which consists of 3 fragmented frames.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// The first frame must be either a text frame or a binary frame.
  * // And its FIN bit must be cleared.</span>
@@ -592,7 +614,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * .{@link WebSocketFrame#createTextFrame(String)
  * createTextFrame}(<span style="color: darkred;">"How "</span>)
  * .{@link WebSocketFrame#setFin(boolean) setFin}(false);
- * <p>
+ *
  * <span style="color: green;">// Subsequent frames must be continuation frames. The FIN bit of
  * // all continuation frames except the last one must be cleared.
  * // Note that the FIN bit of frames returned from
@@ -601,7 +623,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * WebSocketFrame secondFrame = WebSocketFrame
  * .{@link WebSocketFrame#createContinuationFrame(String)
  * createContinuationFrame}(<span style="color: darkred;">"are "</span>);
- * <p>
+ *
  * <span style="color: green;">// The last frame must be a continuation frame with the FIN bit set.
  * // Note that the FIN bit of frames returned from
  * // WebSocketFrame.createContinuationFrame methods is cleared, so
@@ -610,48 +632,48 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * .{@link WebSocketFrame#createContinuationFrame(String)
  * createContinuationFrame}(<span style="color: darkred;">"you?"</span>)
  * .{@link WebSocketFrame#setFin(boolean) setFin}(true);
- * <p>
+ *
  * <span style="color: green;">// Send a text message which consists of 3 frames.</span>
  * ws.{@link #sendFrame(WebSocketFrame) sendFrame}(firstFrame)
  * .{@link #sendFrame(WebSocketFrame) sendFrame}(secondFrame)
  * .{@link #sendFrame(WebSocketFrame) sendFrame}(lastFrame);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Alternatively, the same as above can be done like this.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Send a text message which consists of 3 frames.</span>
  * ws.{@link #sendText(String, boolean) sendText}(<span style="color: darkred;">"How "</span>, false)
  * .{@link #sendContinuation(String) sendContinuation}(<span style="color: darkred;">"are "</span>)
  * .{@link #sendContinuation(String, boolean) sendContinuation}(<span style="color: darkred;">"you?"</span>, true);</pre>
  * </blockquote>
- * <p>
+ *
  * <h3>Send Ping/Pong Frames Periodically</h3>
- * <p>
+ *
  * <p>
  * You can send ping frames periodically by calling {@link #setPingInterval(long)
  * setPingInterval} method with an interval in milliseconds between ping frames.
  * This method can be called both before and after {@link #connect()} method.
  * Passing zero stops the periodical sending.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Send a ping per 60 seconds.</span>
  * ws.{@link #setPingInterval(long) setPingInterval}(60 * 1000);
- * <p>
+ *
  * <span style="color: green;">// Stop the periodical sending.</span>
  * ws.{@link #setPingInterval(long) setPingInterval}(0);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Likewise, you can send pong frames periodically by calling {@link
  * #setPongInterval(long) setPongInterval} method. "<i>A Pong frame MAY be sent
  * <b>unsolicited</b>."</i> (<a href="https://tools.ietf.org/html/rfc6455#section-5.5.3"
  * >RFC 6455, 5.5.3. Pong</a>)
  * </p>
- * <p>
+ *
  * <p>
  * You can customize payload of ping/pong frames that are sent automatically by using
  * {@link #setPingPayloadGenerator(PayloadGenerator)} and
@@ -659,7 +681,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * instance of {@link PayloadGenerator} interface. The following is an example to
  * use the string representation of the current date as payload of ping frames.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> ws.{@link #setPingPayloadGenerator(PayloadGenerator)
  * setPingPayloadGenerator}(new {@link PayloadGenerator} () {
@@ -670,39 +692,39 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * }
  * });</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Note that the maximum payload length of control frames (e.g. ping frames) is 125.
  * Therefore, the length of a byte array returned from {@link PayloadGenerator#generate()
  * generate()} method must not exceed 125.
  * </p>
- * <p>
+ *
  * <h3>Auto Flush</h3>
- * <p>
+ *
  * <p>
  * By default, a frame is automatically flushed to the server immediately after
  * {@link #sendFrame(WebSocketFrame) sendFrame} method is executed. This automatic
  * flush can be disabled by calling {@link #setAutoFlush(boolean) setAutoFlush}{@code
  * (false)}.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Disable auto-flush.</span>
  * ws.{@link #setAutoFlush(boolean) setAutoFlush}(false);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * To flush frames manually, call {@link #flush()} method. Note that this method
  * works asynchronously.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Flush frames to the server manually.</span>
  * ws.{@link #flush()};</pre>
  * </blockquote>
- * <p>
+ *
  * <h3 id="congestion_control">Congestion Control</h3>
- * <p>
+ *
  * <p>
  * <code>send<i>Xxx</i></code> methods queue a {@link WebSocketFrame} instance to the
  * internal queue. By default, no upper limit is imposed on the queue size, so
@@ -711,7 +733,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * a short time for the WebSocket server to process. In such a case, you may want
  * <code>send<i>Xxx</i></code> methods to block when many frames are queued.
  * </p>
- * <p>
+ *
  * <p>
  * You can set an upper limit on the internal queue by calling {@link #setFrameQueueSize(int)}
  * method. As a result, if the number of frames in the queue has reached the upper limit
@@ -719,12 +741,12 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * queue gets spaces. The code snippet below is an example to set 5 as the upper limit
  * of the internal frame queue.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Set 5 as the frame queue size.</span>
  * ws.{@link #setFrameQueueSize(int) setFrameQueueSize}(5);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Note that under some conditions, even if the queue is full, <code>send<i>Xxx</i></code>
  * methods do not block. For example, in the case where the thread to send frames
@@ -732,48 +754,48 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * method calls to send a <a href="https://tools.ietf.org/html/rfc6455#section-5.5"
  * >control frame</a> (e.g. {@link #sendClose()} and {@link #sendPing()}) do not block.
  * </p>
- * <p>
+ *
  * <h3 id="maximum_payload_size">Maximum Payload Size</h3>
- * <p>
+ *
  * <p>
  * You can set an upper limit on the payload size of WebSocket frames by calling
  * {@link #setMaxPayloadSize(int)} method with a positive value. Text, binary and
  * continuation frames whose payload size is bigger than the maximum payload size
  * you have set will be split into multiple frames.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Set 1024 as the maximum payload size.</span>
  * ws.{@link #setMaxPayloadSize(int) setMaxPayloadSize}(1024);</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * Control frames (close, ping and pong frames) are never split as per the specification.
  * </p>
- * <p>
+ *
  * <p>
  * If permessage-deflate extension is enabled and if the payload size of a WebSocket
  * frame after compression does not exceed the maximum payload size, the WebSocket
  * frame is not split even if the payload size before compression execeeds the
  * maximum payload size.
  * </p>
- * <p>
+ *
  * <h3 id="compression">Compression</h3>
- * <p>
+ *
  * <p>
  * The <strong>permessage-deflate</strong> extension (<a href=
  * "http://tools.ietf.org/html/rfc7692">RFC 7692</a>) has been supported
  * since the version 1.17. To enable the extension, call {@link #addExtension(String)
  * addExtension} method with {@code "permessage-deflate"}.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"><span style="color: green;"> // Enable "permessage-deflate" extension (RFC 7692).</span>
  * ws.{@link #addExtension(String) addExtension}({@link WebSocketExtension#PERMESSAGE_DEFLATE});</pre>
  * </blockquote>
- * <p>
+ *
  * <h3>Missing Close Frame</h3>
- * <p>
+ *
  * <p>
  * Some server implementations close a WebSocket connection without sending a
  * <a href="https://tools.ietf.org/html/rfc6455#section-5.5.1">close frame</a> to
@@ -789,28 +811,28 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {@code WebSocket} instance report an error in the case, pass {@code false} to
  * {@link #setMissingCloseFrameAllowed(boolean)} method.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"><span style="color: green;"
  * > // Make this library report an error when the end of the input stream
  * // of the WebSocket connection is reached before a close frame is read.</span>
  * ws.{@link #setMissingCloseFrameAllowed(boolean) setMissingCloseFrameAllowed}(false);</pre>
  * </blockquote>
- * <p>
+ *
  * <h3>Disconnect WebSocket</h3>
- * <p>
+ *
  * <p>
  * Before a WebSocket is closed, a closing handshake is performed. A closing handshake
  * is started (1) when the server sends a close frame to the client or (2) when the
  * client sends a close frame to the server. You can start a closing handshake by calling
  * {@link #disconnect()} method (or by sending a close frame manually).
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Close the WebSocket connection.</span>
  * ws.{@link #disconnect()};</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * {@code disconnect()} method has some variants. If you want to change the close code
  * and the reason phrase of the close frame that this client will send to the server,
@@ -818,9 +840,9 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * method itself is an alias of {@code disconnect(}{@link WebSocketCloseCode}{@code
  * .NORMAL, null)}.
  * </p>
- * <p>
+ *
  * <h3>Reconnection</h3>
- * <p>
+ *
  * <p>
  * {@code connect()} method can be called at most only once regardless of whether the
  * method succeeded or failed. If you want to re-connect to the WebSocket endpoint,
@@ -830,19 +852,19 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * same settings as the original instance. Note that, however, settings you made on
  * the raw socket of the original {@code WebSocket} instance are not copied.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Create a new WebSocket instance and connect to the same endpoint.</span>
  * ws = ws.{@link #recreate()}.{@link #connect()};</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * There is a variant of {@code recreate()} method that takes a timeout value for
  * socket connection. If you want to use a timeout value that is different from the
  * one used when the existing {@code WebSocket} instance was created, use {@link
  * #recreate(int) recreate(int timeout)} method.
  * </p>
- * <p>
+ *
  * <p>
  * Note that you should not trigger reconnection in {@link
  * WebSocketListener#onError(WebSocket, WebSocketException) onError()} method
@@ -850,7 +872,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {@link WebSocketListener#onDisconnected(WebSocket, WebSocketFrame, WebSocketFrame,
  * boolean) onDisconnected()} is the right place to trigger reconnection.
  * </p>
- * <p>
+ *
  * <p>
  * Also note that the reason I use an expression of <i>"to trigger reconnection"</i>
  * instead of <i>"to call <code>recreate().connect()</code>"</i> is that I myself
@@ -859,9 +881,9 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * of <i>application loop</i> that repeats to establish a WebSocket connection until
  * it succeeds.
  * </p>
- * <p>
+ *
  * <h3>Error Handling</h3>
- * <p>
+ *
  * <p>
  * {@code WebSocketListener} has some {@code onXxxError()} methods such as {@link
  * WebSocketListener#onFrameError(WebSocket, WebSocketException, WebSocketFrame)
@@ -875,7 +897,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * WebSocketListener#onUnexpectedError(WebSocket, WebSocketException)
  * onUnexpectedError()} are called in this order. The following is the implementation.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: gray;">{@code @}Override</span>
  * public void run()
@@ -890,7 +912,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * {@link WebSocketException} cause = new WebSocketException(
  * {@link WebSocketError}.{@link WebSocketError#UNEXPECTED_ERROR_IN_READING_THREAD UNEXPECTED_ERROR_IN_READING_THREAD},
  * <span style="color: darkred;">"An uncaught throwable was detected in the reading thread"</span>, t);
- * <p>
+ *
  * <span style="color: green;">// Notify the listeners.</span>
  * ListenerManager manager = mWebSocket.getListenerManager();
  * manager.callOnError(cause);
@@ -898,7 +920,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * }
  * }</pre>
  * </blockquote>
- * <p>
+ *
  * <p>
  * So, you can handle all error cases in {@code onError()} method. However, note
  * that {@code onError()} may be called multiple times for one error cause, so don't
@@ -906,7 +928,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * WebSocketListener#onDisconnected(WebSocket, WebSocketFrame, WebSocketFrame, boolean)
  * onDiconnected()} is the right place to trigger reconnection.
  * </p>
- * <p>
+ *
  * <p>
  * All {@code onXxxError()} methods receive a {@link WebSocketException} instance
  * as the second argument (the first argument is a {@code WebSocket} instance). The
@@ -916,18 +938,104 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * library. The error causes are so granular that they can make it easy for you to
  * find the root cause when an error occurs.
  * </p>
- * <p>
+ *
  * <p>
  * {@code Throwable}s thrown by implementations of {@code onXXX()} callback methods
  * are passed to {@link WebSocketListener#handleCallbackError(WebSocket, Throwable)
  * handleCallbackError()} of {@code WebSocketListener}.
  * </p>
- * <p>
+ *
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: gray;">{@code @}Override</span>
  * public void {@link WebSocketListener#handleCallbackError(WebSocket, Throwable)
  * handleCallbackError}(WebSocket websocket, Throwable cause) throws Exception {
  * <span style="color: green;">// Throwables thrown by onXxx() callback methods come here.</span>
+ * }</pre>
+ * </blockquote>
+ *
+ * <h3>Thread Callbacks</h3>
+ *
+ * <p>
+ * Some threads are created internally in the implementation of {@code WebSocket}.
+ * Known threads are as follows.
+ * </p>
+ *
+ * <blockquote>
+ * <table border="1" cellpadding="5" style="border-collapse: collapse;">
+ * <caption>Internal Threads</caption>
+ * <thead>
+ * <tr>
+ * <th>THREAD TYPE</th>
+ * <th>DESCRIPTION</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>{@link ThreadType#READING_THREAD READING_THREAD}</td>
+ * <td>A thread which reads WebSocket frames from the server.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link ThreadType#WRITING_THREAD WRITING_THREAD}</td>
+ * <td>A thread which sends WebSocket frames to the server.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link ThreadType#CONNECT_THREAD CONNECT_THREAD}</td>
+ * <td>A thread which calls {@link WebSocket#connect()} asynchronously.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link ThreadType#FINISH_THREAD FINISH_THREAD}</td>
+ * <td>A thread which does finalization of a {@code WebSocket} instance.</td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * </blockquote>
+ *
+ * <p>
+ * The following callback methods of {@link WebSocketListener} are called according
+ * to the life cycle of the threads.
+ * </p>
+ *
+ * <blockquote>
+ * <table border="1" cellpadding="5" style="border-collapse: collapse;">
+ * <caption>Thread Callbacks</caption>
+ * <thead>
+ * <tr>
+ * <th>METHOD</th>
+ * <th>DESCRIPTION</th>
+ * </tr>
+ * </thead>
+ * <tbody>
+ * <tr>
+ * <td>{@link WebSocketListener#onThreadCreated(WebSocket, ThreadType, Thread) onThreadCreated()}</td>
+ * <td>Called after a thread was created.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link WebSocketListener#onThreadStarted(WebSocket, ThreadType, Thread) onThreadStarted()}</td>
+ * <td>Called at the beginning of the thread's {@code run()} method.</td>
+ * </tr>
+ * <tr>
+ * <td>{@link WebSocketListener#onThreadStopping(WebSocket, ThreadType, Thread) onThreadStopping()}</td>
+ * <td>Called at the end of the thread's {@code run()} method.</td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * </blockquote>
+ *
+ * <p>
+ * For example, if you want to change the name of the reading thread,
+ * implement {@link WebSocketListener#onThreadCreated(WebSocket, ThreadType, Thread)
+ * onThreadCreated()} method like below.
+ * </p>
+ *
+ * <blockquote>
+ * <pre style="border-left: solid 5px lightgray;"> <span style="color: gray;">{@code @}Override</span>
+ * public void {@link WebSocketListener#onThreadCreated(WebSocket, ThreadType, Thread)
+ * onThreadCreated}(WebSocket websocket, {@link ThreadType} type, Thread thread)
+ * {
+ * if (type == ThreadType.READING_THREAD)
+ * {
+ * thread.setName(<span style="color: darkred;">"READING_THREAD"</span>);
+ * }
  * }</pre>
  * </blockquote>
  *
@@ -937,6 +1045,7 @@ import static com.neovisionaries.ws.client.WebSocketState.OPEN;
  * @see <a href="https://github.com/TakahikoKawasaki/nv-websocket-client">[GitHub] nv-websocket-client</a>
  */
 public class WebSocket {
+    //public static boolean isSecure;
     public static boolean useMask = true;
     private static final long DEFAULT_CLOSE_DELAY = 10 * 1000L;
     private final WebSocketFactory mWebSocketFactory;
@@ -985,12 +1094,12 @@ public class WebSocket {
      * Create a new {@code WebSocket} instance that has the same settings
      * as this instance. Note that, however, settings you made on the raw
      * socket are not copied.
-     * <p>
+     *
      * <p>
      * The {@link WebSocketFactory} instance that you used to create this
      * {@code WebSocket} instance is used again.
      * </p>
-     * <p>
+     *
      * <p>
      * This method calls {@link #recreate(int)} with the timeout value that
      * was used when this instance was created. If you want to create a
@@ -1011,7 +1120,7 @@ public class WebSocket {
      * Create a new {@code WebSocket} instance that has the same settings
      * as this instance. Note that, however, settings you made on the raw
      * socket are not copied.
-     * <p>
+     *
      * <p>
      * The {@link WebSocketFactory} instance that you used to create this
      * {@code WebSocket} instance is used again.
@@ -1065,7 +1174,7 @@ public class WebSocket {
 
     /**
      * Get the current state of this WebSocket.
-     * <p>
+     *
      * <p>
      * The initial state is {@link WebSocketState#CREATED CREATED}.
      * When {@link #connect()} is called, the state is changed to
@@ -1076,7 +1185,7 @@ public class WebSocket {
      * is started, and then to {@link WebSocketState#CLOSED CLOSED}
      * when the closing handshake finished.
      * </p>
-     * <p>
+     *
      * <p>
      * See the description of {@link WebSocketState} for details.
      * </p>
@@ -1316,7 +1425,7 @@ public class WebSocket {
 
     /**
      * Check if extended use of WebSocket frames are allowed.
-     * <p>
+     *
      * <p>
      * When extended use is allowed, values of RSV1/RSV2/RSV3 bits
      * and opcode of frames are not checked. On the other hand,
@@ -1461,7 +1570,7 @@ public class WebSocket {
     /**
      * Set the size of the frame queue. The default value is 0 and it means
      * there is no limit on the queue size.
-     * <p>
+     *
      * <p>
      * <code>send<i>Xxx</i></code> methods queue a {@link WebSocketFrame}
      * instance to the internal queue. If the number of frames in the queue
@@ -1469,7 +1578,7 @@ public class WebSocket {
      * a <code>send<i>Xxx</i></code> method is called, the method blocks
      * until the queue gets spaces.
      * </p>
-     * <p>
+     *
      * <p>
      * Under some conditions, even if the queue is full, <code>send<i>Xxx</i></code>
      * methods do not block. For example, in the case where the thread to send
@@ -1510,7 +1619,7 @@ public class WebSocket {
 
     /**
      * Set the maximum payload size.
-     * <p>
+     *
      * <p>
      * Text, binary and continuation frames whose payload size is bigger than
      * the maximum payload size will be split into multiple frames. Note that
@@ -1551,7 +1660,7 @@ public class WebSocket {
      * Set the interval of periodical
      * <a href="https://tools.ietf.org/html/rfc6455#section-5.5.2">ping</a>
      * frames.
-     * <p>
+     *
      * <p>
      * Setting a positive number starts sending ping frames periodically.
      * Setting zero stops the periodical sending. This method can be called
@@ -1587,13 +1696,13 @@ public class WebSocket {
      * Set the interval of periodical
      * <a href="https://tools.ietf.org/html/rfc6455#section-5.5.3">pong</a>
      * frames.
-     * <p>
+     *
      * <p>
      * Setting a positive number starts sending pong frames periodically.
      * Setting zero stops the periodical sending. This method can be called
      * both before and after {@link #connect()} method.
      * </p>
-     * <p>
+     *
      * <blockquote>
      * <dl>
      * <dt>
@@ -1767,26 +1876,26 @@ public class WebSocket {
      * Connect to the server, send an opening handshake to the server,
      * receive the response and then start threads to communicate with
      * the server.
-     * <p>
+     *
      * <p>
      * As necessary, {@link #addProtocol(String)}, {@link #addExtension(WebSocketExtension)}
      * {@link #addHeader(String, String)} should be called before you call this
      * method. It is because the parameters set by these methods are used in the
      * opening handshake.
      * </p>
-     * <p>
+     *
      * <p>
      * Also, as necessary, {@link #getSocket()} should be used to set up socket
      * parameters before you call this method. For example, you can set the
      * socket timeout like the following.
      * </p>
-     * <p>
+     *
      * <pre>
      * WebSocket websocket = ......;
      * websocket.{@link #getSocket() getSocket()}.{@link Socket#setSoTimeout(int)
      * setSoTimeout}(5000);
      * </pre>
-     * <p>
+     *
      * <p>
      * If the WebSocket endpoint requires Basic Authentication, you can set
      * credentials by {@link #setUserInfo(String) setUserInfo(userInfo)} or
@@ -1796,7 +1905,7 @@ public class WebSocket {
      * .createSocket} method contains the user-info part, you don't have to
      * call {@code setUserInfo} method.
      * </p>
-     * <p>
+     *
      * <p>
      * Note that this method can be called at most only once regardless of
      * whether this method succeeded or failed. If you want to re-connect to
@@ -1866,7 +1975,7 @@ public class WebSocket {
     /**
      * Execute {@link #connect()} asynchronously using the given {@link
      * ExecutorService}. This method is just an alias of the following.
-     * <p>
+     *
      * <blockquote>
      * <code>executorService.{@link ExecutorService#submit(Callable) submit}({@link #connectable()})</code>
      * </blockquote>
@@ -1910,7 +2019,16 @@ public class WebSocket {
      * @since 1.8
      */
     public WebSocket connectAsynchronously() {
-        new ConnectThread(this).start();
+        Thread thread = new ConnectThread(this);
+
+        // Get the reference (just in case)
+        ListenerManager lm = mListenerManager;
+
+        if (lm != null) {
+            lm.callOnThreadCreated(ThreadType.CONNECT_THREAD, thread);
+        }
+
+        thread.start();
 
         return this;
     }
@@ -1918,7 +2036,7 @@ public class WebSocket {
 
     /**
      * Disconnect the WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #disconnect(int, String)
      * disconnect}{@code (}{@link WebSocketCloseCode#NORMAL}{@code , null)}.
@@ -1933,7 +2051,7 @@ public class WebSocket {
 
     /**
      * Disconnect the WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #disconnect(int, String)
      * disconnect}{@code (closeCode, null)}.
@@ -1952,7 +2070,7 @@ public class WebSocket {
 
     /**
      * Disconnect the WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #disconnect(int, String)
      * disconnect}{@code (}{@link WebSocketCloseCode#NORMAL}{@code , reason)}.
@@ -1975,7 +2093,7 @@ public class WebSocket {
 
     /**
      * Disconnect the WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #disconnect(int, String, long)
      * disconnect}{@code (closeCode, reason, 10000L)}.
@@ -2018,7 +2136,7 @@ public class WebSocket {
      * This safeguard is needed for the case where the server fails to send
      * back a close frame. The default value is 10000 (= 10 seconds). When
      * a negative value is given, the default value is used.
-     * <p>
+     *
      * If a very short time (e.g. 0) is given, it is likely to happen either
      * (1) that this client will fail to send a close frame to the server
      * (in this case, you will probably see an error message "Flushing frames
@@ -2084,7 +2202,7 @@ public class WebSocket {
 
     /**
      * Get the agreed extensions.
-     * <p>
+     *
      * <p>
      * This method works correctly only after {@link #connect()} succeeds
      * (= after the opening handshake succeeds).
@@ -2099,7 +2217,7 @@ public class WebSocket {
 
     /**
      * Get the agreed protocol.
-     * <p>
+     *
      * <p>
      * This method works correctly only after {@link #connect()} succeeds
      * (= after the opening handshake succeeds).
@@ -2114,25 +2232,25 @@ public class WebSocket {
 
     /**
      * Send a WebSocket frame to the server.
-     * <p>
+     *
      * <p>
      * This method just queues the given frame. Actual transmission
      * is performed asynchronously.
      * </p>
-     * <p>
+     *
      * <p>
      * When the current state of this WebSocket is not {@link
      * WebSocketState#OPEN OPEN}, this method does not accept
      * the frame.
      * </p>
-     * <p>
+     *
      * <p>
      * Sending a <a href="https://tools.ietf.org/html/rfc6455#section-5.5.1"
      * >close frame</a> changes the state to {@link WebSocketState#CLOSING
      * CLOSING} (if the current state is neither {@link WebSocketState#CLOSING
      * CLOSING} nor {@link WebSocketState#CLOSED CLOSED}).
      * </p>
-     * <p>
+     *
      * <p>
      * Note that the validity of the give frame is not checked.
      * For example, even if the payload length of a given frame
@@ -2202,14 +2320,14 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
      * WebSocketFrame#createContinuationFrame()
      * createContinuationFrame()}{@code )}.
      * </p>
-     * <p>
+     *
      * <p>
      * Note that the FIN bit of a frame sent by this method is {@code false}.
      * If you want to set the FIN bit, use {@link #sendContinuation(boolean)
@@ -2225,7 +2343,7 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2244,14 +2362,14 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
      * WebSocketFrame#createContinuationFrame(String)
      * createContinuationFrame}{@code (payload))}.
      * </p>
-     * <p>
+     *
      * <p>
      * Note that the FIN bit of a frame sent by this method is {@code false}.
      * If you want to set the FIN bit, use {@link #sendContinuation(String,
@@ -2269,7 +2387,7 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2289,14 +2407,14 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
      * WebSocketFrame#createContinuationFrame(byte[])
      * createContinuationFrame}{@code (payload))}.
      * </p>
-     * <p>
+     *
      * <p>
      * Note that the FIN bit of a frame sent by this method is {@code false}.
      * If you want to set the FIN bit, use {@link #sendContinuation(byte[],
@@ -2314,7 +2432,7 @@ public class WebSocket {
 
     /**
      * Send a continuation frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2334,14 +2452,14 @@ public class WebSocket {
 
     /**
      * Send a text message to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
      * WebSocketFrame#createTextFrame(String)
      * createTextFrame}{@code (message))}.
      * </p>
-     * <p>
+     *
      * <p>
      * If you want to send a text frame that is to be followed by
      * continuation frames, use {@link #sendText(String, boolean)
@@ -2358,7 +2476,7 @@ public class WebSocket {
 
     /**
      * Send a text frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2378,14 +2496,14 @@ public class WebSocket {
 
     /**
      * Send a binary message to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
      * WebSocketFrame#createBinaryFrame(byte[])
      * createBinaryFrame}{@code (message))}.
      * </p>
-     * <p>
+     *
      * <p>
      * If you want to send a binary frame that is to be followed by
      * continuation frames, use {@link #sendBinary(byte[], boolean)
@@ -2395,21 +2513,14 @@ public class WebSocket {
      * @param message A binary message to be sent to the server.
      * @return {@code this} object.
      */
-
     public WebSocket sendBinary(byte[] message, Object requestWrapper) {
         return sendFrame(WebSocketFrame.createBinaryFrame(message, requestWrapper));
     }
 
-    //original method for this websocket library
-
-    //public WebSocket sendBinary(byte[] message) {
-    //    return sendFrame(WebSocketFrame.createBinaryFrame(message));
-    //}
-
 
     /**
      * Send a binary frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2429,7 +2540,7 @@ public class WebSocket {
 
     /**
      * Send a close frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2445,7 +2556,7 @@ public class WebSocket {
 
     /**
      * Send a close frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2464,7 +2575,7 @@ public class WebSocket {
 
     /**
      * Send a close frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2487,7 +2598,7 @@ public class WebSocket {
 
     /**
      * Send a ping frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2503,7 +2614,7 @@ public class WebSocket {
 
     /**
      * Send a ping frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2524,7 +2635,7 @@ public class WebSocket {
 
     /**
      * Send a ping frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2545,7 +2656,7 @@ public class WebSocket {
 
     /**
      * Send a pong frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2561,7 +2672,7 @@ public class WebSocket {
 
     /**
      * Send a pong frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2582,7 +2693,7 @@ public class WebSocket {
 
     /**
      * Send a pong frame to the server.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #sendFrame(WebSocketFrame)
      * sendFrame}{@code (WebSocketFrame.}{@link
@@ -2683,7 +2794,7 @@ public class WebSocket {
 
     /**
      * Generate a value for Sec-WebSocket-Key.
-     * <p>
+     *
      * <blockquote>
      * <p><i>
      * The request MUST include a header field with the name Sec-WebSocket-Key.
@@ -2741,7 +2852,7 @@ public class WebSocket {
 
     /**
      * Start both the reading thread and the writing thread.
-     * <p>
+     *
      * <p>
      * The reading thread will call {@link #onReadingThreadStarted()}
      * as its first step. Likewise, the writing thread will call
@@ -2759,6 +2870,10 @@ public class WebSocket {
             mWritingThread = writingThread;
         }
 
+        // Execute onThreadCreated of the listeners.
+        readingThread.callOnThreadCreated();
+        writingThread.callOnThreadCreated();
+
         readingThread.start();
         writingThread.start();
     }
@@ -2766,7 +2881,7 @@ public class WebSocket {
 
     /**
      * Stop both the reading thread and the writing thread.
-     * <p>
+     *
      * <p>
      * The reading thread will call {@link #onReadingThreadFinished(WebSocketFrame)}
      * as its last step. Likewise, the writing thread will call {@link
@@ -2987,7 +3102,7 @@ public class WebSocket {
     }
 
 
-    private void finish() {
+    void finish() {
         // Stop the ping sender and the pong sender.
         mPingSender.stop();
         mPongSender.stop();
@@ -3016,12 +3131,12 @@ public class WebSocket {
      * Call {@link #finish()} from within a separate thread.
      */
     private void finishAsynchronously() {
-        new Thread() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }.start();
+        WebSocketThread thread = new FinishThread(this);
+
+        // Execute onThreadCreated() of the listeners.
+        thread.callOnThreadCreated();
+
+        thread.start();
     }
 
 

@@ -11,14 +11,16 @@
 package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.helper.HelperRadius;
 import net.iGap.interfaces.IMessageItem;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
@@ -27,29 +29,49 @@ import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class ImageWithTextItem extends AbstractMessage<ImageWithTextItem, ImageWithTextItem.ViewHolder> {
 
-    public ImageWithTextItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public ImageWithTextItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutImageWithText;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_image_with_text;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getImageItem(true));
+        }
+
+        holder.image = ((ReserveSpaceRoundedImageView) holder.itemView.findViewById(R.id.thumbnail));
+        holder.image.setTag(getCacheId(mMessage));
+
         super.bindView(holder, payloads);
 
+        String text = "";
+
         if (mMessage.forwardedFrom != null) {
-            setTextIfNeeded(holder.messageText, mMessage.forwardedFrom.getMessage());
+            text = mMessage.forwardedFrom.getMessage();
         } else {
-            setTextIfNeeded(holder.messageText, mMessage.messageText);
+            text = mMessage.messageText;
+        }
+
+        if (mMessage.hasEmojiInText) {
+            setTextIfNeeded((EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
         }
 
         holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!isSelected()) {
                     if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                         return;
@@ -64,22 +86,25 @@ public class ImageWithTextItem extends AbstractMessage<ImageWithTextItem, ImageW
         });
 
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override public boolean onLongClick(View v) {
+            @Override
+            public boolean onLongClick(View v) {
                 holder.itemView.performLongClick();
                 return false;
             }
         });
 
         if (!mMessage.hasLinkInMessage) {
-            holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
+            messageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     holder.itemView.performLongClick();
                     return false;
                 }
             });
 
-            holder.messageText.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+            messageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (!isSelected()) {
                         if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             return;
@@ -95,32 +120,28 @@ public class ImageWithTextItem extends AbstractMessage<ImageWithTextItem, ImageW
         }
     }
 
-    @Override public void onLoadThumbnailFromLocal(final ViewHolder holder, final String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        G.imageLoader.displayImage(suitablePath(localPath), holder.image);
-        holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
+        if (holder.image != null && holder.image.getTag() != null && (holder.image.getTag()).equals(tag)) {
+            G.imageLoader.displayImage(suitablePath(localPath), holder.image);
+            holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
+        }
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         protected ReserveSpaceRoundedImageView image;
-        protected EmojiTextView messageText;
 
         public ViewHolder(View view) {
             super(view);
 
-            image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
-            messageText.setMovementMethod(LinkMovementMethod.getInstance());
+            //image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
         }
     }
 }

@@ -10,9 +10,21 @@
 
 package net.iGap.request;
 
+import android.text.format.DateUtils;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashMap;
+import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserInfo;
 
 public class RequestUserInfo {
+    public static HashMap<Long, OnInfo> infoHashMap = new HashMap<>();
+
+    public enum InfoType {
+        JUST_INFO
+    }
+
+    public static CopyOnWriteArrayList<String> userIdArrayList = new CopyOnWriteArrayList<>(); // ids that exist in list don't allowed to send request again
+    public static final int CLEAR_ARRAY_TIME = (int) (3 * DateUtils.SECOND_IN_MILLIS);
 
     public void userInfo(long userId) {
         ProtoUserInfo.UserInfo.Builder builder = ProtoUserInfo.UserInfo.newBuilder();
@@ -46,6 +58,31 @@ public class RequestUserInfo {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * send userInfo request to server and avoid from resend request
+     * at lower than {@link RequestUserInfo#CLEAR_ARRAY_TIME} again
+     *
+     * HINT: haven't use this method for all get user info because
+     * in some state maybe need send multiple request.
+     * for example when client try for create new chat with a contact
+     * we send a request when coming to ActivityChat and send a
+     * request after send message
+     */
+    public void userInfoAvoidDuplicate(long userId) {
+        if (!userIdArrayList.contains(String.valueOf(userId))) {
+            userIdArrayList.add(String.valueOf(userId));
+            ProtoUserInfo.UserInfo.Builder builder = ProtoUserInfo.UserInfo.newBuilder();
+            builder.setUserId(userId);
+
+            RequestWrapper requestWrapper = new RequestWrapper(117, builder, userId + "");
+            try {
+                RequestQueue.sendRequest(requestWrapper);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -12,12 +12,14 @@ package net.iGap.realm;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.format.DateUtils;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 import java.util.List;
 import net.iGap.G;
+import net.iGap.R;
 import net.iGap.helper.HelperString;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
@@ -42,9 +44,11 @@ public class RealmRoom extends RealmObject {
     private RealmRoomDraft draft;
     private long updatedTime;
     private String sharedMediaCount = "";
+    //if it was needed in the future we can combine this two under fields in RealmAction (actionStateUserId and actionState).
     private long actionStateUserId;
     private String actionState;
     private boolean isDeleted = false;
+    private boolean isPinned;
     /**
      * client need keepRoom info for show in forward message that forward
      * from a room that user don't have that room
@@ -135,8 +139,8 @@ public class RealmRoom extends RealmObject {
      * @param room ProtoGlobal.Room
      * @return RealmRoom
      */
-    public static RealmRoom putOrUpdate(ProtoGlobal.Room room) {
-        Realm realm = Realm.getDefaultInstance();
+    public static RealmRoom putOrUpdate(ProtoGlobal.Room room, Realm realm) {
+
         putChatToClientCondition(realm, room);
 
         RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).findFirst();
@@ -146,6 +150,7 @@ public class RealmRoom extends RealmObject {
         }
 
         realmRoom.isDeleted = false;
+        realmRoom.keepRoom = false;
 
         realmRoom.setColor(room.getColor());
         realmRoom.setInitials(room.getInitials());
@@ -153,14 +158,14 @@ public class RealmRoom extends RealmObject {
         realmRoom.setType(RoomType.convert(room.getType()));
         realmRoom.setUnreadCount(room.getUnreadCount());
         realmRoom.setReadOnly(room.getReadOnly());
-        //realmRoom.setMute(false); //
+        //realmRoom.setMute(false);
         realmRoom.setActionState(null, 0);
         switch (room.getType()) {
             case CHANNEL:
                 realmRoom.setType(RoomType.CHANNEL);
                 realmRoom.setChannelRoom(RealmChannelRoom.convert(room.getChannelRoomExtra(), realmRoom.getChannelRoom(), realm));
                 realmRoom.getChannelRoom().setDescription(room.getChannelRoomExtra().getDescription());
-                realmRoom.setAvatar(RealmAvatar.put(realmRoom.getId(), room.getChannelRoomExtra().getAvatar(), true));
+                realmRoom.setAvatar(RealmAvatar.putAndGet(realm, realmRoom.getId(), room.getChannelRoomExtra().getAvatar()));
                 realmRoom.getChannelRoom().setInviteLink(room.getChannelRoomExtra().getPrivateExtra().getInviteLink());
                 realmRoom.getChannelRoom().setInvite_token(room.getChannelRoomExtra().getPrivateExtra().getInviteToken());
                 realmRoom.getChannelRoom().setUsername(room.getChannelRoomExtra().getPublicExtra().getUsername());
@@ -174,13 +179,15 @@ public class RealmRoom extends RealmObject {
                  * update user info for detect current status(online,offline,...)
                  * and also update another info
                  */
-                realmRoom.setAvatar(RealmRegisteredInfo.putOrUpdate(room.getChatRoomExtra().getPeer()).getLastAvatar());
+
+                RealmRegisteredInfo.putOrUpdate(room.getChatRoomExtra().getPeer());
+                realmRoom.setAvatar(RealmAvatar.putAndGet(realm, room.getChatRoomExtra().getPeer().getId(), room.getChatRoomExtra().getPeer().getAvatar()));
                 break;
             case GROUP:
                 realmRoom.setType(RoomType.GROUP);
                 realmRoom.setGroupRoom(RealmGroupRoom.convert(room.getGroupRoomExtra(), realmRoom.getGroupRoom(), realm));
                 realmRoom.getGroupRoom().setDescription(room.getGroupRoomExtra().getDescription());
-                realmRoom.setAvatar(RealmAvatar.put(realmRoom.getId(), room.getGroupRoomExtra().getAvatar(), true));
+                realmRoom.setAvatar(RealmAvatar.putAndGet(realm, realmRoom.getId(), room.getGroupRoomExtra().getAvatar()));
                 realmRoom.getGroupRoom().setInvite_token(room.getGroupRoomExtra().getPrivateExtra().getInviteToken());
                 if (!room.getGroupRoomExtra().getPrivateExtra().getInviteLink().isEmpty()) {
                     realmRoom.getGroupRoom().setInvite_link(room.getGroupRoomExtra().getPrivateExtra().getInviteLink());
@@ -194,21 +201,30 @@ public class RealmRoom extends RealmObject {
          * set setFirstUnreadMessage
          */
         if (room.hasFirstUnreadMessage()) {
-            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(room.getFirstUnreadMessage(), room.getId());
+            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdateGetRoom(room.getFirstUnreadMessage(), room.getId());
             //realmRoomMessage.setPreviousMessageId(room.getFirstUnreadMessage().getMessageId());
             realmRoomMessage.setFutureMessageId(room.getFirstUnreadMessage().getMessageId());
             realmRoom.setFirstUnreadMessage(realmRoomMessage);
         }
 
         if (room.hasLastMessage()) {
-            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(room.getLastMessage(), room.getId());
-            realmRoomMessage.setPreviousMessageId(room.getLastMessage().getMessageId());
-            realmRoomMessage.setFutureMessageId(room.getLastMessage().getMessageId());
+            /**
+             * if this message not exist set gap otherwise don't change in gap state
+             */
+            boolean setGap = false;
+            if (!RealmRoomMessage.existMessage(room.getLastMessage().getMessageId())) {
+                setGap = true;
+            }
+            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdateGetRoom(room.getLastMessage(), room.getId());
+            if (setGap) {
+                realmRoomMessage.setPreviousMessageId(room.getLastMessage().getMessageId());
+                realmRoomMessage.setFutureMessageId(room.getLastMessage().getMessageId());
+            }
             realmRoom.setLastMessage(realmRoomMessage);
             if (room.getLastMessage().getUpdateTime() == 0) {
-                realmRoom.setUpdatedTime(room.getLastMessage().getCreateTime());
+                realmRoom.setUpdatedTime(room.getLastMessage().getCreateTime() * (DateUtils.SECOND_IN_MILLIS));
             } else {
-                realmRoom.setUpdatedTime(room.getLastMessage().getUpdateTime());
+                realmRoom.setUpdatedTime(room.getLastMessage().getUpdateTime() * (DateUtils.SECOND_IN_MILLIS));
             }
         }
 
@@ -221,7 +237,7 @@ public class RealmRoom extends RealmObject {
 
         realmRoom.setDraft(realmRoomDraft);
 
-        realm.close();
+
 
         return realmRoom;
     }
@@ -240,7 +256,8 @@ public class RealmRoom extends RealmObject {
          */
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
@@ -255,7 +272,7 @@ public class RealmRoom extends RealmObject {
                         }
 
                         for (ProtoGlobal.Room room : rooms) {
-                            RealmRoom.putOrUpdate(room);
+                            RealmRoom.putOrUpdate(room, realm);
                         }
 
                         if (cleanDeletedRoommessage) {
@@ -264,8 +281,12 @@ public class RealmRoom extends RealmObject {
                             for (RealmRoom item : deletedRoomsList) {
                                 /**
                                  * delete all message in deleted room
+                                 *
+                                 * hint: {@link RealmRoom#deleteRoom(long)} also do following actions but it is in
+                                 * transaction and client can't use a transaction inside another
                                  */
                                 realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, item.getId()).findAll().deleteAllFromRealm();
+                                realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, item.getId()).findAll().deleteAllFromRealm();
                                 item.deleteFromRealm();
                             }
                         }
@@ -348,18 +369,6 @@ public class RealmRoom extends RealmObject {
         realm.close();
     }
 
-    public static boolean isCloudRoom(long roomId) {
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null && realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == G.userId) {
-                return true;
-            }
-
-        realm.close();
-        return false;
-    }
-
     /**
      * check updater author for detect that updater is another device for
      * this account and finally update unread count if another account
@@ -419,6 +428,31 @@ public class RealmRoom extends RealmObject {
             });
         }
 
+        realm.close();
+    }
+
+    /**
+     * delete room from realm and also delete all messages
+     * from this room and finally delete RealmClientCondition
+     */
+    public static void deleteRoom(final long roomId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (realmRoom != null) {
+                    realmRoom.deleteFromRealm();
+                }
+
+                RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirst();
+                if (realmClientCondition != null) {
+                    realmClientCondition.deleteFromRealm();
+                }
+
+                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll().deleteAllFromRealm();
+            }
+        });
         realm.close();
     }
 
@@ -539,7 +573,45 @@ public class RealmRoom extends RealmObject {
     }
 
     public String getSharedMediaCount() {
-        return sharedMediaCount;
+
+        if (sharedMediaCount == null || sharedMediaCount.length() == 0) {
+            return G.context.getString(R.string.there_is_no_sheared_media);
+        }
+
+        String countList[] = sharedMediaCount.split("\n");
+        try {
+
+            int countOFImage = Integer.parseInt(countList[0]);
+            int countOFVIDEO = Integer.parseInt(countList[1]);
+            int countOFAUDIO = Integer.parseInt(countList[2]);
+            int countOFVOICE = Integer.parseInt(countList[3]);
+            int countOFGIF = Integer.parseInt(countList[4]);
+            int countOFFILE = Integer.parseInt(countList[5]);
+            int countOFLink = Integer.parseInt(countList[6]);
+
+            String result = "";
+
+            if (countOFImage > 0) result += "\n" + countOFImage + " " + G.context.getString(R.string.shared_image);
+            if (countOFVIDEO > 0) result += "\n" + countOFVIDEO + " " + G.context.getString(R.string.shared_video);
+            if (countOFAUDIO > 0) result += "\n" + countOFAUDIO + " " + G.context.getString(R.string.shared_audio);
+            if (countOFVOICE > 0) result += "\n" + countOFVOICE + " " + G.context.getString(R.string.shared_voice);
+            if (countOFGIF > 0) result += "\n" + countOFGIF + " " + G.context.getString(R.string.shared_gif);
+            if (countOFFILE > 0) result += "\n" + countOFFILE + " " + G.context.getString(R.string.shared_file);
+            if (countOFLink > 0) result += "\n" + countOFLink + " " + G.context.getString(R.string.shared_links);
+
+            result = result.trim();
+
+            if (result.length() < 1) {
+                result = G.context.getString(R.string.there_is_no_sheared_media);
+            }
+
+            return result;
+        } catch (Exception e) {
+
+            return sharedMediaCount;
+        }
+
+
     }
 
     public void setSharedMediaCount(String sharedMediaCount) {
@@ -557,5 +629,13 @@ public class RealmRoom extends RealmObject {
 
     public long getActionStateUserId() {
         return actionStateUserId;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
     }
 }

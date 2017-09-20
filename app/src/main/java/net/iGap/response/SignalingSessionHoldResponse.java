@@ -35,8 +35,8 @@ public class SignalingSessionHoldResponse extends MessageHandler {
 
         boolean hold = builder.getHold();
 
-        if (G.iSignalingSesionHold != null) {
-            G.iSignalingSesionHold.onHold(hold);
+        if (G.iSignalingSessionHold != null) {
+            G.iSignalingSessionHold.onHold(hold);
         }
 
     }

@@ -5,7 +5,7 @@
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:textSize">@dimen/dp16</item>
-    <item name="android:textColor">@android:color/black</item>
+    <item name="android:textColor">#333333</item>
     <item name="android:textDirection">firstStrong</item>
     <item name="android:layoutDirection">locale</item>
     <item name="emojiSize">24dp</item>

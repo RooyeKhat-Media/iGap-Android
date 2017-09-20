@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoPushTwoStepVerification;
 
 public class PushTwoStepVerificationResponse extends MessageHandler {
@@ -30,6 +31,9 @@ public class PushTwoStepVerificationResponse extends MessageHandler {
         super.handler();
 
         ProtoPushTwoStepVerification.PushTwoStepVerificationResponse.Builder builder = (ProtoPushTwoStepVerification.PushTwoStepVerificationResponse.Builder) message;
+        if (G.onPushTwoStepVerification != null) {
+            G.onPushTwoStepVerification.pushTwoStepVerification(builder.getUsername(), builder.getUserId(), builder.getAuthorHash());
+        }
     }
 
     @Override public void timeOut() {

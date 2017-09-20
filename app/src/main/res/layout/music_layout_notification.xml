@@ -31,7 +31,8 @@
             android:singleLine="true"
             android:text="@string/music_name"
             android:textColor="@color/notification_music_background"
-            android:textSize="16sp" />
+            android:textSize="16dp"
+            />
 
 
         <TextView
@@ -43,7 +44,8 @@
             android:singleLine="true"
             android:text="hamid asgari"
             android:textColor="@color/notification_music_background"
-            android:textSize="12sp" />
+            android:textSize="12dp"
+            />
 
 
         <LinearLayout
@@ -56,7 +58,7 @@
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="6dp"
+                android:padding="4dp"
                 android:tint="@color/notification_music_background"
                 android:src="@mipmap/previous_track" />
 
@@ -67,7 +69,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:padding="6dp"
+                android:padding="4dp"
                 android:tint="@color/notification_music_background"
                 android:src="@mipmap/play_button" />
 
@@ -76,7 +78,7 @@
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="6dp"
+                android:padding="4dp"
                 android:src="@mipmap/play_next_button"
                 android:tint="@color/notification_music_background"
                 />

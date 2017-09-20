@@ -64,7 +64,7 @@ public class TrimVideoUtils {
     private static void genVideoUsingMp4Parser(@NonNull File src, @NonNull File dst, long startMs, long endMs, @NonNull OnTrimVideoListener callback) throws IOException {
         // NOTE: Switched to using FileDataSourceViaHeapImpl since it does not use memory mapping (VM).
         // Otherwise we get OOM with large movie files.
-        Movie movie = MovieCreator.build(src.getAbsolutePath()); //
+        Movie movie = MovieCreator.build(src.getAbsolutePath()); // TODO: 4/5/2017 check later
 
         List<Track> tracks = movie.getTracks();
         movie.setTracks(new LinkedList<Track>());

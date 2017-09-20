@@ -12,6 +12,7 @@ package net.iGap.helper;
 
 import android.content.ContentValues;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
@@ -70,6 +71,8 @@ public class HelperSaveFile {
                 return false;
             }
 
+            Boolean shudCopy = true;
+
             String destinationPath = " ";
 
             switch (folderType) {
@@ -100,14 +103,24 @@ public class HelperSaveFile {
 
                     if (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).exists()) {
                         destinationPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath() + "/" + fileName;
+                    } else {
+                        HelperSaveFile.saveVideoToGallary(filePath, true);
+                        shudCopy = false;
                     }
 
                     break;
+
+                case image:
+
+                    savePicToGallary(filePath, true);
+                    shudCopy = false;
+                    break;
             }
 
-            AndroidUtils.copyFile(src, new File(destinationPath));
-
-            Toast.makeText(G.currentActivity, sucsesMessageSRC, Toast.LENGTH_SHORT).show();
+            if (shudCopy) {
+                AndroidUtils.copyFile(src, new File(destinationPath));
+                Toast.makeText(G.currentActivity, sucsesMessageSRC, Toast.LENGTH_SHORT).show();
+            }
 
             return true;
         } catch (Exception e) {
@@ -131,10 +144,23 @@ public class HelperSaveFile {
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.MediaColumns.DATA, filePath);
 
-        G.context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        try {
 
-        if (showToast) {
-            Toast.makeText(G.context, R.string.picture_save_to_galary, Toast.LENGTH_SHORT).show();
+            G.context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            if (showToast) {
+                Toast.makeText(G.context, R.string.picture_save_to_galary, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+            String name = filePath.substring(filePath.lastIndexOf("/"));
+
+            savePicToGallary(bitmap, name);
+
+            if (showToast) {
+                Toast.makeText(G.context, R.string.picture_save_to_galary, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

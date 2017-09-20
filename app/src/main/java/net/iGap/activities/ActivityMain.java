@@ -10,82 +10,86 @@
 
 package net.iGap.activities;
 
-import android.content.Context;
+import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.wang.avi.AVLoadingIndicatorView;
 import io.realm.Realm;
-import io.realm.RealmBasedRecyclerViewAdapter;
-import io.realm.RealmResults;
-import io.realm.RealmViewHolder;
-import io.realm.Sort;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.WebSocketClient;
-import net.iGap.emoji.EmojiTextView;
-import net.iGap.fragments.ContactGroupFragment;
+import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.fragments.FragmentCall;
-import net.iGap.fragments.FragmentCreateChannel;
 import net.iGap.fragments.FragmentIgapSearch;
+import net.iGap.fragments.FragmentMain;
+import net.iGap.fragments.FragmentMediaPlayer;
 import net.iGap.fragments.FragmentNewGroup;
+import net.iGap.fragments.FragmentQrCodeNewDevice;
+import net.iGap.fragments.FragmentSetting;
+import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.fragments.RegisteredContactsFragment;
 import net.iGap.fragments.SearchFragment;
+import net.iGap.helper.GoToChatActivity;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperCalculateKeepMedia;
-import net.iGap.helper.HelperClientCondition;
+import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetAction;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperImageBackColor;
+import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperLogout;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperUrl;
 import net.iGap.helper.ServiceContact;
+import net.iGap.interfaces.FinishActivity;
+import net.iGap.interfaces.ICallFinish;
+import net.iGap.interfaces.ITowPanModDesinLayout;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnChangeUserPhotoListener;
 import net.iGap.interfaces.OnChatClearMessageResponse;
@@ -94,142 +98,409 @@ import net.iGap.interfaces.OnChatSendMessageResponse;
 import net.iGap.interfaces.OnChatUpdateStatusResponse;
 import net.iGap.interfaces.OnClientCondition;
 import net.iGap.interfaces.OnClientGetRoomListResponse;
-import net.iGap.interfaces.OnComplete;
 import net.iGap.interfaces.OnConnectionChangeState;
+import net.iGap.interfaces.OnGeoGetConfiguration;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnGroupAvatarResponse;
+import net.iGap.interfaces.OnMapRegisterState;
 import net.iGap.interfaces.OnRefreshActivity;
 import net.iGap.interfaces.OnSetActionInRoom;
 import net.iGap.interfaces.OnUpdateAvatar;
 import net.iGap.interfaces.OnUpdating;
 import net.iGap.interfaces.OnUserInfoMyClient;
 import net.iGap.interfaces.OnUserSessionLogout;
+import net.iGap.interfaces.OnVerifyNewDevice;
 import net.iGap.interfaces.OpenFragment;
 import net.iGap.libs.floatingAddButton.ArcMenu;
 import net.iGap.libs.floatingAddButton.StateChangeListener;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
-import net.iGap.module.CircleImageView;
-import net.iGap.module.DeviceUtils;
+import net.iGap.module.EmojiTextViewE;
+import net.iGap.module.FileUtils;
 import net.iGap.module.LoginActions;
+import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.MyAppBarLayout;
 import net.iGap.module.SHP_SETTING;
-import net.iGap.module.ShouldScrolledBehavior;
-import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.ConnectionState;
-import net.iGap.module.enums.GroupChatRole;
-import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
-import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
+import net.iGap.realm.RealmCallConfig;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.realm.RealmUserInfo;
-import net.iGap.request.RequestChannelDelete;
-import net.iGap.request.RequestChannelLeft;
-import net.iGap.request.RequestChatDelete;
 import net.iGap.request.RequestChatGetRoom;
-import net.iGap.request.RequestClientCondition;
-import net.iGap.request.RequestClientGetRoomList;
-import net.iGap.request.RequestGroupDelete;
-import net.iGap.request.RequestGroupLeft;
+import net.iGap.request.RequestGeoGetConfiguration;
+import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
 
-import static android.view.View.GONE;
-import static net.iGap.G.clientConditionGlobal;
 import static net.iGap.G.context;
-import static net.iGap.G.firstTimeEnterToApp;
 import static net.iGap.G.isSendContact;
 import static net.iGap.G.userId;
 import static net.iGap.R.string.updating;
-import static net.iGap.proto.ProtoGlobal.Room.Type.CHANNEL;
-import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
-import static net.iGap.realm.RealmRoom.putChatToDatabase;
+import static net.iGap.fragments.FragmentiGapMap.mapUrls;
 
-public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnComplete, OnChatClearMessageResponse, OnChatSendMessageResponse, OnChatUpdateStatusResponse, OnSetActionInRoom, OnGroupAvatarResponse, OnUpdateAvatar, OnClientCondition, OnClientGetRoomListResponse {
+public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatUpdateStatusResponse, OnChatSendMessageResponse, OnClientCondition, OnSetActionInRoom, OnGroupAvatarResponse, OnUpdateAvatar, DrawerLayout.DrawerListener {
+
+    public static final String openChat = "openChat";
+    public static final String openMediaPlyer = "openMediaPlyer";
+
 
     public static boolean isMenuButtonAddShown = false;
+    private LinearLayout mediaLayout;
+
+    private FrameLayout frameChatContainer;
+    private FrameLayout frameMainContainer;
+    private FrameLayout frameFragmentBack;
+
+    private FrameLayout frameFragmentContainer;
+    public static boolean isOpenChatBeforeSheare = false;
+
+    FragmentCall fragmentCall;
+
+    private NavigationTabStrip navigationTabStrip;
+
+    private MyAppBarLayout appBarLayout;
+    private Typeface titleTypeface;
+    private SharedPreferences sharedPreferences;
+    private ImageView imgNavImage;
+    private DrawerLayout drawer;
+    private ProgressBar contentLoading;
+    private TextView iconLocation;
+    public TextView iconLock;
+
+    public MainInterface mainActionApp;
+    public MainInterface mainActionChat;
+    public MainInterface mainActionGroup;
+    public MainInterface mainActionChannel;
+
+    public MainInterfaceGetRoomList mainInterfaceGetRoomList;
+
+    public ArcMenu arcMenu;
     FloatingActionButton btnStartNewChat;
     FloatingActionButton btnCreateNewGroup;
     FloatingActionButton btnCreateNewChannel;
-    LinearLayout mediaLayout;
-    MusicPlayer musicPlayer;
-    ProgressBar progressBar;
+    private Realm mRealm;
+    private boolean isNeedToRegister = false;
 
-    Realm mRealm;
+    private ViewPager mViewPager;
+    private ArrayList<Fragment> pages = new ArrayList<Fragment>();
+    SampleFragmentPagerAdapter sampleFragmentPagerAdapter;
+    boolean waitingForConfiguration = false;
+    private String phoneNumber;
+
+    private static long oldTime;
+    private static long currentTime;
+    public static boolean isLock = true;
+    public static boolean isActivityEnterPassCode = false;
+    public static FinishActivity finishActivity;
+
+    public enum MainAction {
+        downScrool, clinetCondition
+    }
+
+    public interface MainInterface {
+        void onAction(MainAction action);
+    }
+
+    public Realm getRealm() {
+        if (mRealm == null || mRealm.isClosed()) {
+
+            mRealm = Realm.getDefaultInstance();
+        }
+
+        return mRealm;
+    }
+
+    public interface MainInterfaceGetRoomList {
+
+        void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, String identity);
+
+        void onError(int majorCode, int minorCode);
+
+        void onTimeout();
+    }
 
 
-    public static MyAppBarLayout appBarLayout;
-
-    public static ArcMenu arcMenu;
-    private int clickPosition = 0;
-    private boolean keepMedia;
-    private Typeface titleTypeface;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private SharedPreferences sharedPreferences;
-    private boolean isGetContactList = false;
-    private ImageView imgNavImage;
-    private DrawerLayout drawer;
-    private Toolbar mainToolbar;
-
-    public static int curentMainRoomListPosition = 0;
-    private int mOffset = 0;
-    private int mLimit = 20;
-    private RecyclerView.OnScrollListener onScrollListener;
-    boolean isSendRequestForLoading = false;
-    boolean isThereAnyMoreItemToLoad = false;
-
-    private RealmRecyclerView mRecyclerView;
-    private RoomAdapter roomAdapter;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mRealm != null) {
-            mRealm.close();
-        }
-    }
-
-    private Realm getRealm() {
+        Log.i("PPPPPPPPPP", "onDestroy");
 
         if (mRealm != null && !mRealm.isClosed()) {
-            return mRealm;
+            mRealm.close();
         }
 
-        mRealm = Realm.getDefaultInstance();
-        return mRealm;
+        //if (G.mRealm != null && !G.mRealm.isClosed()) {
+        //    G.mRealm.close();
+        //}
+
+        G.imageLoader.clearMemoryCache();
+
     }
 
+    private void deleteContentFolderChatBackground() {
+
+        // delete  content of folder chat background in the first registeration
+
+        FileUtils.deleteRecursive(new File(G.DIR_CHAT_BACKGROUND));
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        isOpenChatBeforeSheare = true;
+        chechIntent(intent);
+    }
+
+    private void chechIntent(Intent intent) {
+
+        new HelperGetDataFromOtherApp(intent);
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+
+            long _roomid = extras.getLong(ActivityMain.openChat);
+            if (_roomid > 0) {
+                GoToChatActivity goToChatActivity = new GoToChatActivity(_roomid);
+                long _peerID = extras.getLong("PeerID");
+                if (_peerID > 0) {
+                    goToChatActivity.setPeerID(_peerID);
+                }
+                goToChatActivity.startActivity();
+            }
+
+            boolean openMediaPlyer = extras.getBoolean(ActivityMain.openMediaPlyer);
+            if (openMediaPlyer) {
+                if (getSupportFragmentManager().findFragmentByTag(FragmentMediaPlayer.class.getName()) == null) {
+                    FragmentMediaPlayer fragmant = new FragmentMediaPlayer();
+                    new HelperFragment(fragmant).setReplace(false).load();
+                }
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        if (G.isFirstPassCode) {
+            openActivityPassCode();
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            isNeedToRegister = true;
+            isOnGetPermistion = true;
+        }
         super.onCreate(savedInstanceState);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        finishActivity = new FinishActivity() {
+            @Override
+            public void finishActivity() {
+                // ActivityChat.this.finish();
+                finish();
+            }
+        };
+
+
+        if (isNeedToRegister) {
+
+            Intent intent = new Intent(this, ActivityRegisteration.class);
+            startActivity(intent);
+
+            finish();
+            return;
+        }
+
+
+
+
+        G.fragmentManager = getSupportFragmentManager();
+
+        //checkAppAccount();
+
+        try {
+            HelperPermision.getPhonePermision(this, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        RealmUserInfo userInfo = getRealm().where(RealmUserInfo.class).findFirst();
+
+        if (userInfo == null) { // user registered before
+            isNeedToRegister = true;
+            Intent intent = new Intent(this, ActivityRegisteration.class);
+            startActivity(intent);
+
+            if (mRealm != null && !mRealm.isClosed()) {
+                mRealm.close();
+            }
+
+            finish();
+            return;
+        }
+
+
+
+        if (G.firstTimeEnterToApp) {
+            /**
+             * set true mFirstRun for get room history after logout and login again
+             */
+
+            //licenceChecker();
+
+            sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+
+            boolean deleteFolderBackground = sharedPreferences.getBoolean(SHP_SETTING.DELETE_FOLDER_BACKGROUND, true);
+
+            if (deleteFolderBackground) {
+                deleteContentFolderChatBackground();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(SHP_SETTING.DELETE_FOLDER_BACKGROUND, false);
+                editor.apply();
+            }
+        }
+
+
+
         setContentView(R.layout.activity_main);
 
-        progressBar = (ProgressBar) findViewById(R.id.ac_progress_bar_waiting);
-        AppUtils.setProgresColler(progressBar);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FrameLayout _mainframe = (FrameLayout) findViewById(R.id.frame_main);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        if (G.isAppRtl) {
+            ViewCompat.setLayoutDirection(_mainframe, ViewCompat.LAYOUT_DIRECTION_RTL);
+        } else {
+            ViewCompat.setLayoutDirection(_mainframe, ViewCompat.LAYOUT_DIRECTION_LTR);
+        }
 
-        G application = (G) getApplication();
+
+        frameChatContainer = (FrameLayout) findViewById(R.id.am_frame_chat_container);
+        frameMainContainer = (FrameLayout) findViewById(R.id.am_frame_main_container);
+
+        if (G.twoPaneMode) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                G.isLandscape = true;
+            } else {
+                G.isLandscape = false;
+            }
+
+            frameFragmentBack = (FrameLayout) findViewById(R.id.am_frame_fragment_back);
+            frameFragmentContainer = (FrameLayout) findViewById(R.id.am_frame_fragment_container);
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int height = displayMetrics.heightPixels;
+            int width = displayMetrics.widthPixels;
+
+            int size = Math.min(width, height) - 50;
+
+            ViewGroup.LayoutParams lp = frameFragmentContainer.getLayoutParams();
+            lp.width = size;
+            lp.height = size;
+
+
+
+            desighnLayout(chatLayoutMode.none);
+
+            frameFragmentBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    onBackPressed();
+                }
+            });
+
+            G.iTowPanModDesinLayout = new ITowPanModDesinLayout() {
+                @Override
+                public void onLayout(chatLayoutMode mode) {
+                    desighnLayout(mode);
+                }
+
+                @Override
+                public boolean getBackChatVisibility() {
+
+                    if (frameFragmentBack != null && frameFragmentBack.getVisibility() == View.VISIBLE) {
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                @Override
+                public void setBackChatVisibility(boolean visibility) {
+
+                    if (true) {
+                        if (frameFragmentBack != null) {
+                            frameFragmentBack.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            };
+
+
+        } else {
+            frameChatContainer.setVisibility(View.GONE);
+        }
+
+        isOpenChatBeforeSheare = false;
+        chechIntent(getIntent());
+
+
+        initTabStrip();
+
+        initFloatingButtonCreateNew();
+
+        arcMenu.setBackgroundTintColor();
+
+        btnStartNewChat.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
+        btnCreateNewGroup.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
+        btnCreateNewChannel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
+
+        final G application = (G) getApplication();
         Tracker mTracker = application.getDefaultTracker();
         mTracker.setScreenName("RoomList");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        new HelperGetDataFromOtherApp(getIntent());
-
         mediaLayout = (LinearLayout) findViewById(R.id.amr_ll_music_layout);
-        musicPlayer = new MusicPlayer(mediaLayout);
+
+        MusicPlayer.setMusicPlayer(mediaLayout);
+        MusicPlayer.mainLayout = mediaLayout;
+
+        ActivityCall.stripLayoutMain = findViewById(R.id.am_ll_strip_call);
+
+
+        appBarLayout = (MyAppBarLayout) findViewById(R.id.appBarLayout);
+        final ViewGroup toolbar = (ViewGroup) findViewById(R.id.rootToolbar);
+
+        appBarLayout.addOnMoveListener(new MyAppBarLayout.OnMoveListener() {
+            @Override
+            public void onAppBarLayoutMove(AppBarLayout appBarLayout, int verticalOffset, boolean moveUp) {
+                toolbar.clearAnimation();
+                if (moveUp) {
+                    if (toolbar.getAlpha() != 0F) {
+                        toolbar.animate().setDuration(150).alpha(0F).start();
+                    }
+                } else {
+                    if (toolbar.getAlpha() != 1F) {
+                        toolbar.animate().setDuration(150).alpha(1F).start();
+                    }
+                }
+            }
+        });
+
+        initComponent();
 
         sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-        isGetContactList = sharedPreferences.getBoolean(SHP_SETTING.KEY_GET_CONTACT, false);
+        boolean isGetContactList = sharedPreferences.getBoolean(SHP_SETTING.KEY_GET_CONTACT, false);
         /**
          * just do this action once
          */
@@ -252,6 +523,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                     @Override
                     public void deny() {
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(SHP_SETTING.KEY_GET_CONTACT, true);
+                        editor.apply();
+
                         /**
                          * user not allowed to import contact, so client set
                          * isSendContact = true for avoid from try again
@@ -262,7 +538,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
         G.helperNotificationAndBadge.cancelNotification();
@@ -282,7 +557,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                         fragmentNewGroup.setArguments(bundle);
 
                         try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragmentNewGroup, "newGroup_fragment").commitAllowingStateLoss();
+                            new HelperFragment(fragmentNewGroup).setStateLoss(true).load();
                         } catch (Exception e) {
                             e.getStackTrace();
                         }
@@ -292,19 +567,18 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         };
 
-
-
         G.clearMessagesUtil.setOnChatClearMessageResponse(this);
-        G.chatSendMessageUtil.setOnChatSendMessageResponse(this);
+
         G.chatUpdateStatusUtil.setOnChatUpdateStatusResponse(this);
 
-        initComponent();
+
         connectionState();
-        initRecycleView();
-        initFloatingButtonCreateNew();
+
         initDrawerMenu();
 
-        keepMedia = sharedPreferences.getBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
+        verifyAccount();
+
+        boolean keepMedia = sharedPreferences.getBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
         if (keepMedia && G.isCalculatKeepMedia) {// if Was selected keep media at 1week
             G.isCalculatKeepMedia = false;
             G.handler.postDelayed(new Runnable() {
@@ -327,552 +601,62 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 }
             }, 5000);
         }
-    }
 
-    /**
-     * send client condition
-     */
-    private void sendClientCondition() {
-        if (clientConditionGlobal != null) {
-            new RequestClientCondition().clientCondition(clientConditionGlobal);
-
-        } else {
-            G.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    sendClientCondition();
-                }
-            }, 1000);
-        }
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //RealmRoomMessage.fetchNotDeliveredMessages(new OnActivityMainStart() {
-        //    @Override
-        //    public void sendDeliveredStatus(RealmRoom room, RealmRoomMessage message) {
-        //        G.chatUpdateStatusUtil.sendUpdateStatus(room.getType(), message.getRoomId(), message.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
-        //    }
-        //});
-    }
-
-    /**
-     * init  menu drawer
-     */
-
-    private void initDrawerMenu() {
-
-        mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(mainToolbar);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                // Do whatever you want here
-                if (arcMenu.isMenuOpened()) {
-                    arcMenu.toggleMenu();
-                }
-            }
-        };
-
-        ViewGroup drawerButton = (ViewGroup) findViewById(R.id.amr_ripple_menu);
-        drawerButton.setOnClickListener(new View.OnClickListener() {
-
+        G.onVerifyNewDevice = new OnVerifyNewDevice() {
             @Override
-            public void onClick(View v) {
-                drawer.openDrawer(GravityCompat.START);
-            }
-        });
+            public void verifyNewDevice(String appName, int appId, int appBuildVersion, String appVersion, ProtoGlobal.Platform platform, String platformVersion, ProtoGlobal.Device device, String deviceName, boolean twoStepVerification) {
 
-        toggle.setDrawerIndicatorEnabled(false);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+                final String content = "" + "App name: " + appName + "\n" + "Build version: " + appBuildVersion + "\n" + "App version: " + appVersion + "\n" + "Platform: " + platform + "\n" + "Platform version: " + platformVersion + "\n" + "Device: " + device + "\n" + "Device name: " + deviceName;
 
-        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
-
-        RealmUserInfo realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
-        if (realmUserInfo != null) {
-            String username = realmUserInfo.getUserInfo().getDisplayName();
-            String phoneNumber = realmUserInfo.getUserInfo().getPhoneNumber();
-
-            imgNavImage = (ImageView) findViewById(R.id.lm_imv_user_picture);
-            TextView txtNavName = (TextView) findViewById(R.id.lm_txt_user_name);
-            TextView txtNavPhone = (TextView) findViewById(R.id.lm_txt_phone_number);
-            txtNavName.setText(username);
-            txtNavPhone.setText(phoneNumber);
-
-            if (HelperCalander.isLanguagePersian) {
-                txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
-                txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
-            }
-            new RequestUserInfo().userInfo(realmUserInfo.getUserId());
-            setImage(realmUserInfo.getUserId());
-        }
-
-
-
-
-        final ViewGroup navBackGround = (ViewGroup) findViewById(R.id.lm_layout_user_picture);
-        navBackGround.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                drawer.closeDrawer(GravityCompat.START);
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        chatGetRoom(G.userId);
-
-                    }
-                }, 225);
-            }
-        });
-
-        TextView txtCloud = (TextView) findViewById(R.id.lm_txt_cloud);
-        txtCloud.setTextColor(Color.parseColor(G.appBarColor));
-        txtCloud.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navBackGround.performClick();
-            }
-        });
-
-        ViewGroup itemNavChat = (ViewGroup) findViewById(R.id.lm_ll_new_chat);
-        itemNavChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        final Fragment fragment = RegisteredContactsFragment.newInstance();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("TITLE", "New Chat");
-                        fragment.setArguments(bundle);
-
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-                lockNavigation();
-            }
-        });
-
-        ViewGroup itemNavGroup = (ViewGroup) findViewById(R.id.lm_ll_new_group);
-        itemNavGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        FragmentNewGroup fragment = FragmentNewGroup.newInstance();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("TYPE", "NewGroup");
-                        fragment.setArguments(bundle);
-
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "newGroup_fragment").commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-                lockNavigation();
-            }
-        });
-
-        ViewGroup itemNavChanel = (ViewGroup) findViewById(R.id.lm_ll_new_channle);
-        itemNavChanel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        FragmentNewGroup fragment = FragmentNewGroup.newInstance();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("TYPE", "NewChanel");
-                        fragment.setArguments(bundle);
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "newGroup_fragment").commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-                lockNavigation();
-            }
-        });
-
-        ViewGroup igapSearch = (ViewGroup) findViewById(R.id.lm_ll_igap_search);
-        igapSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Fragment fragment = FragmentIgapSearch.newInstance();
-
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "Search_fragment_igap").commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-                lockNavigation();
-            }
-        });
-
-        ViewGroup itemNavContacts = (ViewGroup) findViewById(R.id.lm_ll_contacts);
-        itemNavContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Fragment fragment = RegisteredContactsFragment.newInstance();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("TITLE", "Contacts");
-                        fragment.setArguments(bundle);
-
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-                lockNavigation();
-            }
-        });
-
-        ViewGroup itemNavCall = (ViewGroup) findViewById(R.id.lm_ll_call);
-        itemNavCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Fragment fragment = FragmentCall.newInstance();
-                        try {
-                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
-                        } catch (Exception e) {
-                            e.getStackTrace();
-                        }
-                    }
-                }, 256);
-            }
-        });
-
-
-
-
-        ViewGroup itemNavSend = (ViewGroup) findViewById(R.id.lm_ll_invite_friends);
-        itemNavSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you !");
-                        sendIntent.setType("text/plain");
-                        startActivity(sendIntent);
-                    }
-                }, 256);
-            }
-        });
-        ViewGroup itemNavSetting = (ViewGroup) findViewById(R.id.lm_ll_setting);
-        itemNavSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            HelperPermision.getStoragePermision(ActivityMain.this, new OnGetPermission() {
-                                @Override
-                                public void Allow() {
-                                    Intent intent = new Intent(G.context, ActivitySetting.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    //ActivityMain.mLeftDrawerLayout.closeDrawer();
-                                }
-
-                                @Override
-                                public void deny() {
-
-                                }
-                            });
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 256);
-            }
-        });
-
-        ViewGroup itemNavOut = (ViewGroup) findViewById(R.id.lm_ll_igap_faq);
-        itemNavOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
-
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        new MaterialDialog.Builder(ActivityMain.this).title(getResources().getString(R.string.log_out))
-                            .content(R.string.content_log_out)
-                            .positiveText(getResources().getString(R.string.B_ok))
-                            .negativeText(getResources().getString(R.string.B_cancel))
-                            .iconRes(R.mipmap.exit_to_app_button)
-                            .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    G.onUserSessionLogout = new OnUserSessionLogout() {
-                                        @Override
-                                        public void onUserSessionLogout() {
-
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    HelperLogout.logout();
-                                                }
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            snack.dismiss();
-                                                        }
-                                                    });
-                                                    snack.show();
-                                                }
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onTimeOut() {
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                    snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            snack.dismiss();
-                                                        }
-                                                    });
-                                                    snack.show();
-                                                }
-                                            });
-                                        }
-                                    };
-                                    new RequestUserSessionLogout().userSessionLogout();
-                                }
-                            })
-                            .show();
-                    }
-                }, 256);
-            }
-        });
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            clickPosition = (int) ev.getX();
-        }
-        return super.dispatchTouchEvent(ev);
-    }
-
-    private void initComponent() {
-
-        contentLoading = (ContentLoadingProgressBar) findViewById(R.id.loadingContent);
-        contentLoading.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
-
-        RippleView rippleSearch = (RippleView) findViewById(R.id.amr_ripple_search);
-        rippleSearch.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                Fragment fragment = SearchFragment.newInstance();
-
-                try {
-                    getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "Search_fragment").commit();
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }
-                lockNavigation();
-            }
-        });
-
-        if (!HelperCalander.isLanguagePersian) {
-            titleTypeface = Typeface.createFromAsset(getAssets(), "fonts/neuropolitical.ttf");
-        } else {
-            titleTypeface = Typeface.createFromAsset(getAssets(), "fonts/IRANSansMobile.ttf");
-        }
-    }
-
-
-    private void connectionState() {
-        final TextView txtIgap = (TextView) findViewById(R.id.cl_txt_igap);
-        if (G.connectionState == ConnectionState.WAITING_FOR_NETWORK) {
-            txtIgap.setText(R.string.waiting_for_network);
-            txtIgap.setTypeface(null, Typeface.BOLD);
-        } else if (G.connectionState == ConnectionState.CONNECTING) {
-            txtIgap.setText(R.string.connecting);
-            txtIgap.setTypeface(null, Typeface.BOLD);
-        } else if (G.connectionState == ConnectionState.UPDATING) {
-            txtIgap.setText(updating);
-            txtIgap.setTypeface(null, Typeface.BOLD);
-        } else {
-            txtIgap.setText(R.string.igap);
-            txtIgap.setTypeface(titleTypeface, Typeface.BOLD);
-        }
-
-        G.onConnectionChangeState = new OnConnectionChangeState() {
-            @Override
-            public void onChangeState(final ConnectionState connectionStateR) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        G.connectionState = connectionStateR;
-                        if (connectionStateR == ConnectionState.WAITING_FOR_NETWORK) {
-                            txtIgap.setText(R.string.waiting_for_network);
-                            txtIgap.setTypeface(null, Typeface.BOLD);
-                        } else if (connectionStateR == ConnectionState.CONNECTING) {
-                            txtIgap.setText(R.string.connecting);
-                            txtIgap.setTypeface(null, Typeface.BOLD);
-                        } else if (connectionStateR == ConnectionState.UPDATING) {
-                            txtIgap.setText(R.string.updating);
-                            txtIgap.setTypeface(null, Typeface.BOLD);
+                        if (HelperCalander.isLanguagePersian) {
+                            new MaterialDialog.Builder(ActivityMain.this).title(R.string.Input_device_specification).contentGravity(GravityEnum.END).content(content).positiveText(R.string.B_ok).show();
                         } else {
-                            txtIgap.setText(R.string.igap);
-                            txtIgap.setTypeface(titleTypeface, Typeface.BOLD);
+                            new MaterialDialog.Builder(ActivityMain.this).title(R.string.Input_device_specification).contentGravity(GravityEnum.START).content(content).positiveText(R.string.B_ok).show();
                         }
                     }
                 });
             }
-        };
 
-        G.onUpdating = new OnUpdating() {
             @Override
-            public void onUpdating() {
+            public void errorVerifyNewDevice(final int majorCode, final int minCode) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        G.connectionState = ConnectionState.UPDATING;
-                        txtIgap.setText(R.string.updating);
-                        txtIgap.setTypeface(null, Typeface.BOLD);
+
                     }
                 });
             }
-
-            @Override
-            public void onCancelUpdating() {
-                /**
-                 * if yet still G.connectionState is in update state
-                 * show latestState that was in previous state
-                 */
-                if (G.connectionState == ConnectionState.UPDATING) {
-                    G.onConnectionChangeState.onChangeState(ConnectionState.IGAP);
-                }
-            }
         };
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+        if (G.twoPaneMode) {
+
+            boolean beforeState = G.isLandscape;
+
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                G.isLandscape = true;
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                G.isLandscape = false;
+            }
+
+            if (beforeState != G.isLandscape) {
+                desighnLayout(chatLayoutMode.none);
+            }
+
+
+        }
+
+        super.onConfigurationChanged(newConfig);
+    }
+
+
+    //*******************************************************************************************************************************************
 
     private void initFloatingButtonCreateNew() {
         arcMenu = (ArcMenu) findViewById(R.id.ac_arc_button_add);
@@ -898,11 +682,18 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 fragment.setArguments(bundle);
 
                 try {
-                    getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
+                    //getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
+                    //    R.anim.slide_exit_in_right, R.anim.slide_exit_out_left).replace(R.id.fragmentContainer, fragment, "register_contact_fragment").commit();
+
+                    new HelperFragment(fragment).load();
+
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
-                arcMenu.toggleMenu();
+                if (arcMenu.isMenuOpened()) {
+                    arcMenu.toggleMenu();
+                }
+
                 lockNavigation();
             }
         });
@@ -915,15 +706,16 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 Bundle bundle = new Bundle();
                 bundle.putString("TYPE", "NewGroup");
                 fragment.setArguments(bundle);
-
                 try {
-                    ActivityMain.this.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "newGroup_fragment").commit();
+                    new HelperFragment(fragment).load();
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
                 lockNavigation();
 
-                arcMenu.toggleMenu();
+                if (arcMenu.isMenuOpened()) {
+                    arcMenu.toggleMenu();
+                }
             }
         });
 
@@ -937,272 +729,1158 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 bundle.putString("TYPE", "NewChanel");
                 fragment.setArguments(bundle);
                 try {
-                    ActivityMain.this.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragmentContainer, fragment, "newGroup_fragment").commit();
+                    new HelperFragment(fragment).load();
                 } catch (Exception e) {
                     e.getStackTrace();
                 }
                 lockNavigation();
-                arcMenu.toggleMenu();
-            }
-        });
-    }
-
-    @Override
-    public void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, boolean fromLogin) {
-
-        if (fromLogin) {
-            mOffset = 0;
-        }
-
-        boolean deleteBefore = false;
-        if (mOffset == 0) {
-            deleteBefore = true;
-        }
-
-        if (roomList.size() > 0) {
-            putChatToDatabase(roomList, deleteBefore, false);
-            isThereAnyMoreItemToLoad = true;
-
-
-        } else {
-            putChatToDatabase(roomList, deleteBefore, true);
-            isThereAnyMoreItemToLoad = false;
-        }
-
-        /**
-         * to first enter to app , client first compute clientCondition then
-         * getRoomList and finally send condition that before get clientCondition;
-         * in else state compute new client condition with latest messaging state
-         */
-        if (firstTimeEnterToApp) {
-            firstTimeEnterToApp = false;
-            sendClientCondition();
-        } else if (fromLogin || mOffset == 0) {
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    new RequestClientCondition().clientCondition(HelperClientCondition.computeClientCondition(null));
+                if (arcMenu.isMenuOpened()) {
+                    arcMenu.toggleMenu();
                 }
-            }).start();
-        }
-
-        mOffset += roomList.size();
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);// swipe refresh is complete and gone
             }
         });
 
-        isSendRequestForLoading = false;
-    }
-
-    @Override
-    public void onError(int majorCode, int minorCode) {
-        runOnUiThread(new Runnable() {
+        arcMenu.fabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);// swipe refresh is complete and gone
-            }
-        });
+            public void onClick(View v) {
 
-        if (majorCode == 9) {
-            if (G.currentActivity != null) {
-                G.currentActivity.finish();
-            }
-            Intent intent = new Intent(G.context, ActivityProfile.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            G.context.startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onTimeout() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                firstTimeEnterToApp = false;
-                getChatsList();
-                swipeRefreshLayout.setRefreshing(false);// swipe refresh is complete and gone
-            }
-        });
-    }
-
-    public class PreCachingLayoutManager extends LinearLayoutManager {
-        private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 600;
-        private int extraLayoutSpace = -1;
-        private Context context;
-
-        public PreCachingLayoutManager(Context context) {
-            super(context);
-            this.context = context;
-        }
-
-        public PreCachingLayoutManager(Context context, int extraLayoutSpace) {
-            super(context);
-            this.context = context;
-            this.extraLayoutSpace = extraLayoutSpace;
-        }
-
-        public PreCachingLayoutManager(Context context, int orientation, boolean reverseLayout) {
-            super(context, orientation, reverseLayout);
-            this.context = context;
-        }
-
-        public void setExtraLayoutSpace(int extraLayoutSpace) {
-            this.extraLayoutSpace = extraLayoutSpace;
-        }
-
-        @Override
-        protected int getExtraLayoutSpace(RecyclerView.State state) {
-            if (extraLayoutSpace > 0) {
-                return extraLayoutSpace;
-            }
-            return DEFAULT_EXTRA_LAYOUT_SPACE;
-        }
-
-        private static final float MILLISECONDS_PER_INCH = 2000f; //default is 25f (bigger = slower)
-
-        @Override
-        public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
-
-            final LinearSmoothScroller linearSmoothScroller = new LinearSmoothScroller(recyclerView.getContext()) {
-
-                @Override
-                public PointF computeScrollVectorForPosition(int targetPosition) {
-                    return PreCachingLayoutManager.this.computeScrollVectorForPosition(targetPosition);
+                if (mViewPager == null || mViewPager.getAdapter() == null) {
+                    return;
                 }
 
-                @Override
-                protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                    return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
-                }
-            };
+                try {
 
-            linearSmoothScroller.setTargetPosition(position);
-            startSmoothScroll(linearSmoothScroller);
-        }
-    }
+                    FragmentPagerAdapter adapter = (FragmentPagerAdapter) mViewPager.getAdapter();
+                    if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentMain) {
 
-    private void initRecycleView() {
+                        FragmentMain fm = (FragmentMain) adapter.getItem(mViewPager.getCurrentItem());
+                        switch (fm.mainType) {
 
-        mRecyclerView = (RealmRecyclerView) findViewById(R.id.cl_recycler_view_contact);
-        mRecyclerView.setItemViewCacheSize(50);
-        mRecyclerView.setDrawingCacheEnabled(true);
-
-        PreCachingLayoutManager preCachingLayoutManager = new PreCachingLayoutManager(this);
-        mRecyclerView.getRecycleView().setLayoutManager(preCachingLayoutManager);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(ActivityMain.this);
-        mRecyclerView.getRecycleView().setLayoutManager(mLayoutManager);
-
-        preCachingLayoutManager.setExtraLayoutSpace(DeviceUtils.getScreenHeight(ActivityMain.this));
-
-        RealmResults<RealmRoom> results = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
-            equalTo(RealmRoomFields.IS_DELETED, false).findAllSorted(RealmRoomFields.UPDATED_TIME, Sort.DESCENDING);
-        roomAdapter = new RoomAdapter(this, results, this);
-        mRecyclerView.setAdapter(roomAdapter);
-
-        onScrollListener = new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (isThereAnyMoreItemToLoad) {
-                    if (!isSendRequestForLoading) {
-
-                        int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-
-                        if (lastVisiblePosition + 10 >= mOffset) {
-                            isSendRequestForLoading = true;
-
-                            //  mOffset = mRecyclerView.getRecycleView().getAdapter().getItemCount();
-                            new RequestClientGetRoomList().clientGetRoomList(mOffset, mLimit);
-                            progressBar.setVisibility(View.VISIBLE);
-
+                            case all:
+                                arcMenu.toggleMenu();
+                                break;
+                            case chat:
+                                btnStartNewChat.performClick();
+                                break;
+                            case group:
+                                btnCreateNewGroup.performClick();
+                                break;
+                            case channel:
+                                btnCreateNewChannel.performClick();
+                                break;
                         }
+                    } else if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentCall) {
+
+                        ((FragmentCall) adapter.getItem(mViewPager.getCurrentItem())).showContactListForCall();
+                    }
+                } catch (Exception e) {
+                    HelperLog.setErrorLog(" Activity main   arcMenu.fabMenu.setOnClickListener   " + e.toString());
+                }
+            }
+        });
+    }
+
+    //*******************************************************************************************************************************************
+
+    private void onSelectItem(int position) {
+        FragmentPagerAdapter adapter = (FragmentPagerAdapter) mViewPager.getAdapter();
+
+        if (adapter.getItem(position) instanceof FragmentMain) {
+
+            findViewById(R.id.amr_ripple_search).setVisibility(View.VISIBLE);
+            findViewById(R.id.am_btn_menu).setVisibility(View.GONE);
+            setFabIcon(R.mipmap.plus);
+        } else if (adapter.getItem(position) instanceof FragmentCall) {
+
+            findViewById(R.id.amr_ripple_search).setVisibility(View.GONE);
+            findViewById(R.id.am_btn_menu).setVisibility(View.VISIBLE);
+            setFabIcon(R.drawable.ic_call_black_24dp);
+        }
+
+        if (arcMenu.isMenuOpened()) {
+            arcMenu.toggleMenu();
+        }
+
+        arcMenu.fabMenu.show();
+    }
+
+    private void setFabIcon(int res) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            arcMenu.fabMenu.setImageDrawable(getResources().getDrawable(res, context.getTheme()));
+        } else {
+            arcMenu.fabMenu.setImageDrawable(getResources().getDrawable(res));
+        }
+    }
+
+    private void setmViewPagerSelectedItem() {
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (mViewPager == null || mViewPager.getAdapter() == null || mViewPager.getAdapter().getCount() == 0) {
+                    return;
+                }
+
+                int index = 0;
+
+                if (G.salectedTabInMainActivity.length() > 0) {
+
+                    if (HelperCalander.isLanguagePersian) {
+
+                        if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
+                            index = 4;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
+                            index = 3;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
+                            index = 2;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
+                            index = 1;
+                        } else {
+                            index = 0;
+                        }
+                    } else {
+
+                        if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
+                            index = 0;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
+                            index = 1;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
+                            index = 2;
+                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
+                            index = 3;
+                        } else {
+                            index = 4;
+                        }
+
+                    }
+
+                    G.salectedTabInMainActivity = "";
+
+
+                } else {
+
+                    if (HelperCalander.isLanguagePersian) {
+                        index = 4;
+                    } else {
+                        index = 0;
                     }
                 }
+
+
+                navigationTabStrip.setViewPager(mViewPager, index);
+
+                //try {
+                //    if (mViewPager.getAdapter().getCount() > 0) {
+                //        if (navigationTabStrip.getTitles() != null && navigationTabStrip.getTitles().length == 5) {
+                //            navigationTabStrip.setTabIndex(mViewPager.getCurrentItem());
+                //        }
+                //    }
+                //} catch (Exception e) {
+                //    HelperLog.setErrorLog("Activity main     setmViewPagerSelectedItem    " + index + "     " + HelperCalander.isLanguagePersian + "    " + e.toString());
+                //}
+
+                navigationTabStrip.setOnTabStripSelectedIndexListener(new NavigationTabStrip.OnTabStripSelectedIndexListener() {
+                    @Override
+                    public void onStartTabSelected(String title, int index) {
+
+                    }
+
+                    @Override
+                    public void onEndTabSelected(String title, int index) {
+
+                        onSelectItem(index);
+                    }
+                });
+
+
+
+            }
+        }, 100);
+    }
+
+    private void initTabStrip() {
+
+        navigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts);
+        navigationTabStrip.setBackgroundColor(Color.parseColor(G.appBarColor));
+
+        if (HelperCalander.isLanguagePersian) {
+            navigationTabStrip.setTitles(getString(R.string.md_phone), getString(R.string.md_channel_icon), getString(R.string.md_users_social_symbol), getString(R.string.md_user_account_box), getString(R.string.md_apps));
+        } else {
+            navigationTabStrip.setTitles(getString(R.string.md_apps), getString(R.string.md_user_account_box), getString(R.string.md_users_social_symbol), getString(R.string.md_channel_icon), getString(R.string.md_phone));
+        }
+
+        navigationTabStrip.setTitleSize(getResources().getDimension(R.dimen.dp20));
+        navigationTabStrip.setStripColor(Color.WHITE);
+
+
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setOffscreenPageLimit(5);
+
+
+        findViewById(R.id.loadingContent).setVisibility(View.VISIBLE);
+
+        if (HelperCalander.isLanguagePersian) {
+
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fragmentCall = FragmentCall.newInstance(true);
+                    pages.add(fragmentCall);
+
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.all));
+
+                    sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
+                    mViewPager.setAdapter(sampleFragmentPagerAdapter);
+
+
+                    setmViewPagerSelectedItem();
+
+                    findViewById(R.id.loadingContent).setVisibility(View.GONE);
+                }
+            }, 400);
+        } else {
+
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.all));
+
+                    sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
+                    mViewPager.setAdapter(sampleFragmentPagerAdapter);
+
+                    findViewById(R.id.loadingContent).setVisibility(View.GONE);
+
+                }
+            }, 400);
+
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
+                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
+
+                    fragmentCall = FragmentCall.newInstance(true);
+                    pages.add(fragmentCall);
+
+                    mViewPager.getAdapter().notifyDataSetChanged();
+
+                    setmViewPagerSelectedItem();
+
+                }
+            }, 800);
+        }
+
+        MaterialDesignTextView txtMenu = (MaterialDesignTextView) findViewById(R.id.am_btn_menu);
+
+        txtMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    fragmentCall.openDialogMenu();
+                } catch (Exception e) {
+
+                }
+            }
+        });
+
+        if (HelperCalander.isLanguagePersian) {
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            //    mViewPager.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            //    //  navigationTabStrip.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            //}
+            ViewMaker.setLayoutDirection(mViewPager, View.LAYOUT_DIRECTION_RTL);
+        }
+    }
+
+    class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        SampleFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return pages.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return pages.size();
+        }
+    }
+
+    //******************************************************************************************************************************
+
+    /**
+     * send client condition
+     */
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.i("PPPPPPPPPP", "onStart");
+        if (!G.isFirstPassCode) {
+            openActivityPassCode();
+        }
+        G.isFirstPassCode = false;
+
+        //RealmRoomMessage.fetchNotDeliveredMessages(new OnActivityMainStart() {
+        //    @Override
+        //    public void sendDeliveredStatus(RealmRoom room, RealmRoomMessage message) {
+        //        G.chatUpdateStatusUtil.sendUpdateStatus(room.getType(), message.getRoomId(), message.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
+        //    }
+        //});
+    }
+
+    public void openActivityPassCode() {
+        if (!isActivityEnterPassCode && G.isPassCode && isLock && !G.isRestartActivity) {
+            enterPassword();
+        } else if (!isActivityEnterPassCode && !G.isRestartActivity) {
+            currentTime = System.currentTimeMillis();
+            SharedPreferences sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            long timeLock = sharedPreferences.getLong(SHP_SETTING.KEY_TIME_LOCK, 0);
+            long calculatorTimeLock = currentTime - oldTime;
+
+            if (timeLock > 0 && calculatorTimeLock > (timeLock * 1000)) {
+                enterPassword();
+            }
+        }
+
+        G.isRestartActivity = false;
+    }
+
+    /**
+     * init  menu drawer
+     */
+
+    private void initDrawerMenu() {
+
+        Toolbar mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mainToolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
             }
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                // Do whatever you want here
 
-                curentMainRoomListPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                //if (arcMenu.isMenuOpened()) {
+                //    arcMenu.toggleMenu();
+                //}
+
             }
         };
 
-        mRecyclerView.getRecycleView().addOnScrollListener(onScrollListener);
+        final ViewGroup drawerButton = (ViewGroup) findViewById(R.id.amr_ripple_menu);
+        drawerButton.setOnClickListener(new View.OnClickListener() {
 
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) swipeRefreshLayout.getLayoutParams();
-        params.setBehavior(new ShouldScrolledBehavior((LinearLayoutManager) mRecyclerView.getRecycleView().getLayoutManager(), roomAdapter));
-        mRecyclerView.getRecycleView().setLayoutParams(params);
-
-        appBarLayout = (MyAppBarLayout) findViewById(R.id.appBarLayout);
-        final ViewGroup toolbar = (ViewGroup) findViewById(R.id.rootToolbar);
-        appBarLayout.addOnMoveListener(new MyAppBarLayout.OnMoveListener() {
             @Override
-            public void onAppBarLayoutMove(AppBarLayout appBarLayout, int verticalOffset, boolean moveUp) {
-                toolbar.clearAnimation();
-                if (moveUp) {
-                    if (toolbar.getAlpha() != 0F) {
-                        toolbar.animate().setDuration(150).alpha(0F).start();
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+        toggle.setDrawerIndicatorEnabled(false);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+
+        setDrawerInfo(true);
+
+        findViewById(R.id.lm_layout_header).setBackgroundColor(Color.parseColor(G.appBarColor));
+
+        final ViewGroup navBackGround = (ViewGroup) findViewById(R.id.lm_layout_user_picture);
+        navBackGround.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chatGetRoom(userId);
+                closeDrawer();
+                //drawer.closeDrawer(GravityCompat.START);
+                //pageDrawer = 1;
+            }
+        });
+
+        TextView txtCloud = (TextView) findViewById(R.id.lm_txt_cloud);
+        txtCloud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navBackGround.performClick();
+            }
+        });
+
+        ViewGroup itemNavChat = (ViewGroup) findViewById(R.id.lm_ll_new_chat);
+        itemNavChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Fragment fragment = RegisteredContactsFragment.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString("TITLE", "New Chat");
+                fragment.setArguments(bundle);
+                try {
+                    new HelperFragment(fragment).load();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup itemNavGroup = (ViewGroup) findViewById(R.id.lm_ll_new_group);
+        itemNavGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentNewGroup fragment = FragmentNewGroup.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString("TYPE", "NewGroup");
+                fragment.setArguments(bundle);
+                try {
+                    new HelperFragment(fragment).load();
+
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup itemNavChanel = (ViewGroup) findViewById(R.id.lm_ll_new_channle);
+        itemNavChanel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentNewGroup fragment = FragmentNewGroup.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString("TYPE", "NewChanel");
+                fragment.setArguments(bundle);
+                try {
+                    new HelperFragment(fragment).load();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup igapSearch = (ViewGroup) findViewById(R.id.lm_ll_igap_search);
+        igapSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Fragment fragment = FragmentIgapSearch.newInstance();
+                try {
+                    new HelperFragment(fragment).load();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup itemNavContacts = (ViewGroup) findViewById(R.id.lm_ll_contacts);
+        itemNavContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = RegisteredContactsFragment.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString("TITLE", "Contacts");
+                fragment.setArguments(bundle);
+                try {
+                    new HelperFragment(fragment).load();
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup itemNavCall = (ViewGroup) findViewById(R.id.lm_ll_call);
+
+        // gone or visible view call
+        RealmCallConfig callConfig = getRealm().where(RealmCallConfig.class).findFirst();
+        if (callConfig != null) {
+            if (callConfig.isVoice_calling()) {
+                itemNavCall.setVisibility(View.VISIBLE);
+
+                itemNavCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Fragment fragment = FragmentCall.newInstance(false);
+                        try {
+                            new HelperFragment(fragment).load();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+                        lockNavigation();
+                        closeDrawer();
                     }
+                });
+            } else {
+                itemNavCall.setVisibility(View.GONE);
+            }
+        } else {
+            new RequestSignalingGetConfiguration().signalingGetConfiguration();
+        }
+
+
+        ViewGroup itemNavMap = (ViewGroup) findViewById(R.id.lm_ll_map);
+        itemNavMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!waitingForConfiguration) {
+                    waitingForConfiguration = true;
+                    if (mapUrls == null || mapUrls.isEmpty() || mapUrls.size() == 0) {
+                        G.onGeoGetConfiguration = new OnGeoGetConfiguration() {
+                            @Override
+                            public void onGetConfiguration() {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        G.handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                waitingForConfiguration = false;
+                                            }
+                                        }, 2000);
+                                        openMapFragment();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void getConfigurationTimeOut() {
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        waitingForConfiguration = false;
+                                    }
+                                }, 2000);
+                            }
+                        };
+                        new RequestGeoGetConfiguration().getConfiguration();
+                    } else {
+                        G.handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                waitingForConfiguration = false;
+                            }
+                        }, 2000);
+                        openMapFragment();
+                    }
+                }
+            }
+        });
+
+        ViewGroup itemNavSend = (ViewGroup) findViewById(R.id.lm_ll_invite_friends);
+        itemNavSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net I'm waiting for you!");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                closeDrawer();
+            }
+        });
+        ViewGroup itemNavSetting = (ViewGroup) findViewById(R.id.lm_ll_setting);
+        itemNavSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    HelperPermision.getStoragePermision(ActivityMain.this, new OnGetPermission() {
+                        @Override
+                        public void Allow() {
+                            new HelperFragment(new FragmentSetting()).load();
+                        }
+
+                        @Override
+                        public void deny() {
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                closeDrawer();
+                lockNavigation();
+            }
+        });
+        ViewGroup itemQrCode = (ViewGroup) findViewById(R.id.lm_ll_qrCode);
+        itemQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    HelperPermision.getCameraPermission(ActivityMain.this, new OnGetPermission() {
+                        @Override
+                        public void Allow() throws IOException {
+                            new HelperFragment(FragmentQrCodeNewDevice.newInstance()).load();
+                        }
+
+                        @Override
+                        public void deny() {
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                lockNavigation();
+                closeDrawer();
+            }
+        });
+
+        ViewGroup itemNavOut = (ViewGroup) findViewById(R.id.lm_ll_igap_faq);
+        itemNavOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(ActivityMain.this).title(getResources().getString(R.string.log_out))
+                        .content(R.string.content_log_out)
+                        .positiveText(getResources().getString(R.string.B_ok))
+                        .negativeText(getResources().getString(R.string.B_cancel))
+                        .iconRes(R.mipmap.exit_to_app_button)
+                        .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                G.onUserSessionLogout = new OnUserSessionLogout() {
+                                    @Override
+                                    public void onUserSessionLogout() {
+
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                HelperLogout.logout();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        snack.dismiss();
+                                                    }
+                                                });
+                                                snack.show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onTimeOut() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        snack.dismiss();
+                                                    }
+                                                });
+                                                snack.show();
+                                            }
+                                        });
+                                    }
+                                };
+                                new RequestUserSessionLogout().userSessionLogout();
+                            }
+                        })
+                        .show();
+                closeDrawer();
+            }
+        });
+
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+                /*switch (pageDrawer) {
+                    case 1:
+                        chatGetRoom(userId);
+                        pageDrawer = 0;
+                        break;
+                    case 2: {
+                        final Fragment fragment = RegisteredContactsFragment.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TITLE", "New Chat");
+                        fragment.setArguments(bundle);
+                        try {
+                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 3: {
+                        FragmentNewGroup fragment = FragmentNewGroup.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TYPE", "NewGroup");
+                        fragment.setArguments(bundle);
+                        try {
+                              HelperFragment.loadFragment(getSupportFragmentManager(),fragment);
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 4: {
+                        FragmentNewGroup fragment = FragmentNewGroup.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TYPE", "NewChanel");
+                        fragment.setArguments(bundle);
+                        try {
+                            HelperFragment.loadFragment(getSupportFragmentManager(),fragment);
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 5: {
+                        final Fragment fragment = FragmentIgapSearch.newInstance();
+                        try {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "Search_fragment_igap").commit();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 6: {
+                        Fragment fragment = RegisteredContactsFragment.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TITLE", "Contacts");
+                        fragment.setArguments(bundle);
+                        try {
+                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 7: {
+                        Fragment fragment = FragmentCall.newInstance(false);
+                        try {
+                            getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.fragmentContainer, fragment).commit();
+                        } catch (Exception e) {
+                            e.getStackTrace();
+                        }
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 8: {
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you !");
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 9: {
+                        try {
+                            HelperPermision.getStoragePermision(ActivityMain.this, new OnGetPermission() {
+                                @Override
+                                public void Allow() {
+                                    Intent intent = new Intent(G.context, ActivitySetting.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    //ActivityMain.mLeftDrawerLayout.closeDrawer();
+                                }
+
+                                @Override
+                                public void deny() {
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        pageDrawer = 0;
+                        break;
+                    }
+                    case 10: {
+
+
+                        try {
+                            HelperPermision.getCameraPermission(ActivityMain.this, new OnGetPermission() {
+                                @Override
+                                public void Allow() throws IOException {
+                                    startActivity(new Intent(ActivityMain.this, ActivityQrCodeNewDevice.class));
+                                }
+
+                                @Override
+                                public void deny() {
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        pageDrawer = 0;
+                    }
+                    break;
+
+                    case 11: {
+                        new MaterialDialog.Builder(ActivityMain.this).title(getResources().getString(R.string.log_out))
+                                .content(R.string.content_log_out)
+                                .positiveText(getResources().getString(R.string.B_ok))
+                                .negativeText(getResources().getString(R.string.B_cancel))
+                                .iconRes(R.mipmap.exit_to_app_button)
+                                .maxIconSize((int) getResources().getDimension(R.dimen.dp24))
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        G.onUserSessionLogout = new OnUserSessionLogout() {
+                                            @Override
+                                            public void onUserSessionLogout() {
+
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        HelperLogout.logout();
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onError() {
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                snack.dismiss();
+                                                            }
+                                                        });
+                                                        snack.show();
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onTimeOut() {
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                                                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+                                                                snack.dismiss();
+                                                            }
+                                                        });
+                                                        snack.show();
+                                                    }
+                                                });
+                                            }
+                                        };
+                                        new RequestUserSessionLogout().userSessionLogout();
+                                    }
+                                })
+                                .show();
+                        pageDrawer = 0;
+                    }
+                    break;
+                }*/
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
+    private void closeDrawer() {
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (drawer != null) drawer.closeDrawer(GravityCompat.START);
+            }
+        }, 1000);
+    }
+
+    private void openMapFragment() {
+        try {
+            HelperPermision.getLocationPermission(ActivityMain.this, new OnGetPermission() {
+                @Override
+                public void Allow() throws IOException {
+                    try {
+                        new HelperFragment(FragmentiGapMap.getInstance()).load();
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lockNavigation();
+                        }
+                    });
+                }
+
+                @Override
+                public void deny() {
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        closeDrawer();
+    }
+
+    private void initComponent() {
+
+
+        iconLock = (TextView) findViewById(R.id.am_btn_lock);
+
+        iconLock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isLock) {
+                    iconLock.setText(getResources().getString(R.string.md_igap_lock_open_outline));
+                    isLock = false;
                 } else {
-                    if (toolbar.getAlpha() != 1F) {
-                        toolbar.animate().setDuration(150).alpha(1F).start();
-                    }
+                    iconLock.setText(getResources().getString(R.string.md_igap_lock));
+                    isLock = true;
                 }
+
             }
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        contentLoading = (ProgressBar) findViewById(R.id.loadingContent);
+        iconLocation = (TextView) findViewById(R.id.am_btn_location);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        boolean isRegisterStatus = sharedPreferences.getBoolean(SHP_SETTING.REGISTER_STATUS, false);
+        if (isRegisterStatus) {
+            startAnimationLocation();
+        } else {
+            stopAnimationLocation();
+        }
+
+        iconLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                if (heartBeatTimeOut()) {
-                    WebSocketClient.checkConnection();
-                }
-                if (isSendRequestForLoading == false) {
-
-                    mOffset = 0;
-                    isThereAnyMoreItemToLoad = true;
-                    new RequestClientGetRoomList().clientGetRoomList(mOffset, mLimit);
-                    isSendRequestForLoading = true;
-                } else {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
+            public void onClick(View v) {
+                openMapFragment();
             }
         });
-
-        //   swipeRefreshLayout.setColorSchemeResources(R.color.green, R.color.room_message_blue, R.color.accent);
-
-        swipeRefreshLayout.setColorSchemeColors(Color.parseColor(G.progressColor));
-
-        mRecyclerView.getRecycleView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+        G.onMapRegisterState = new OnMapRegisterState() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (arcMenu.isMenuOpened()) arcMenu.toggleMenu();
-
-                if (dy > 0) {
-                    // Scroll Down
-                    if (arcMenu.fabMenu.isShown()) {
-                        arcMenu.fabMenu.hide();
+            public void onState(final boolean state) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (state) {
+                            startAnimationLocation();
+                            editor.putBoolean(SHP_SETTING.REGISTER_STATUS, true);
+                            editor.apply();
+                        } else {
+                            stopAnimationLocation();
+                            editor.putBoolean(SHP_SETTING.REGISTER_STATUS, false);
+                            editor.apply();
+                        }
                     }
-                } else if (dy < 0) {
-                    // Scroll Up
-                    if (!arcMenu.fabMenu.isShown()) {
-                        arcMenu.fabMenu.show();
-                    }
+                });
+            }
+        };
+
+        RippleView rippleSearch = (RippleView) findViewById(R.id.amr_ripple_search);
+        rippleSearch.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                Fragment fragment = SearchFragment.newInstance();
+
+                try {
+                    //  getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, "Search_fragment").commit();
+                    new HelperFragment(fragment).load();
+
+
+                } catch (Exception e) {
+                    e.getStackTrace();
                 }
+                lockNavigation();
             }
         });
+
+        if (!HelperCalander.isLanguagePersian) {
+            titleTypeface = G.typeface_neuropolitical;
+        } else {
+            titleTypeface = G.typeface_IRANSansMobile;
+        }
+    }
+
+    public void stopAnimationLocation() {
+        if (iconLocation != null) {
+            // iconLocation.clearAnimation();
+            iconLocation.setVisibility(View.GONE);
+        }
+    }
+
+    public void startAnimationLocation() {
+        if (iconLocation != null) {
+            iconLocation.setVisibility(View.VISIBLE);
+            //Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            //anim.setDuration(1000); //You can manage the time
+            //anim.setStartOffset(20);
+            //anim.setRepeatMode(Animation.REVERSE);
+            //anim.setRepeatCount(Animation.INFINITE);
+            //iconLocation.startAnimation(anim);
+        }
+    }
+
+    private void connectionState() {
+        final TextView txtIgap = (TextView) findViewById(R.id.cl_txt_igap);
+
+        Typeface typeface = null;
+        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
+            typeface = titleTypeface;
+        }
+        if (G.connectionState == ConnectionState.WAITING_FOR_NETWORK) {
+            txtIgap.setText(R.string.waiting_for_network);
+            txtIgap.setTypeface(typeface, Typeface.BOLD);
+        } else if (G.connectionState == ConnectionState.CONNECTING) {
+            txtIgap.setText(R.string.connecting);
+            txtIgap.setTypeface(typeface, Typeface.BOLD);
+        } else if (G.connectionState == ConnectionState.UPDATING) {
+            txtIgap.setText(updating);
+            txtIgap.setTypeface(typeface, Typeface.BOLD);
+        } else {
+            txtIgap.setText(R.string.app_name);
+            txtIgap.setTypeface(titleTypeface, Typeface.BOLD);
+        }
+
+        G.onConnectionChangeState = new OnConnectionChangeState() {
+            @Override
+            public void onChangeState(final ConnectionState connectionStateR) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Typeface typeface = null;
+                        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
+                            typeface = titleTypeface;
+                        }
+                        G.connectionState = connectionStateR;
+                        if (connectionStateR == ConnectionState.WAITING_FOR_NETWORK) {
+                            txtIgap.setText(R.string.waiting_for_network);
+                            txtIgap.setTypeface(typeface, Typeface.BOLD);
+                        } else if (connectionStateR == ConnectionState.CONNECTING) {
+                            txtIgap.setText(R.string.connecting);
+                            txtIgap.setTypeface(typeface, Typeface.BOLD);
+                        } else if (connectionStateR == ConnectionState.UPDATING) {
+                            txtIgap.setText(R.string.updating);
+                            txtIgap.setTypeface(titleTypeface, Typeface.BOLD);
+                        } else if (connectionStateR == ConnectionState.IGAP) {
+                            txtIgap.setText(R.string.app_name);
+                            txtIgap.setTypeface(titleTypeface, Typeface.BOLD);
+                        } else {
+                            txtIgap.setTypeface(typeface, Typeface.BOLD);
+                        }
+                    }
+                });
+            }
+        };
+
+        G.onUpdating = new OnUpdating() {
+            @Override
+            public void onUpdating() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Typeface typeface = null;
+                        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
+                            typeface = titleTypeface;
+                        }
+                        G.connectionState = ConnectionState.UPDATING;
+                        txtIgap.setText(R.string.updating);
+                        txtIgap.setTypeface(typeface, Typeface.BOLD);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelUpdating() {
+                /**
+                 * if yet still G.connectionState is in update state
+                 * show latestState that was in previous state
+                 */
+                if (G.connectionState == ConnectionState.UPDATING) {
+                    G.onConnectionChangeState.onChangeState(ConnectionState.IGAP);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 
     @Override
@@ -1211,314 +1889,241 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         return false;
     }
 
-    private void muteNotification(final Long id, final boolean mute) {
+    /**
+     * set drawer info
+     *
+     * @param updateFromServer if is set true send request to sever for get own info
+     */
+    private void setDrawerInfo(boolean updateFromServer) {
+        RealmUserInfo realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
+        if (realmUserInfo != null) {
+            String username = realmUserInfo.getUserInfo().getDisplayName();
+            phoneNumber = realmUserInfo.getUserInfo().getPhoneNumber();
+            imgNavImage = (ImageView) findViewById(R.id.lm_imv_user_picture);
+            EmojiTextViewE txtNavName = (EmojiTextViewE) findViewById(R.id.lm_txt_user_name);
+            TextView txtNavPhone = (TextView) findViewById(R.id.lm_txt_phone_number);
+            txtNavName.setText(username);
+            txtNavPhone.setText(phoneNumber);
 
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst().setMute(!mute);
+            if (HelperCalander.isLanguagePersian) {
+                txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
+                txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
             }
-        });
-
-        realm.close();
-    }
-
-    private void clearHistory(Long id) {
-
-        ActivityChat.clearHistoryMessage(id);
-    }
-
-    private void onSelectRoomMenu(String message, RealmRoom item) {
-        if (checkValidationForRealm(item)) {
-            switch (message) {
-                case "txtMuteNotification":
-                    muteNotification(item.getId(), item.getMute());
-                    break;
-                case "txtClearHistory":
-                    clearHistory(item.getId());
-                    break;
-                case "txtDeleteChat":
-                    if (item.getType() == ProtoGlobal.Room.Type.CHAT) {
-                        new RequestChatDelete().chatDelete(item.getId());
-                    } else if (item.getType() == ProtoGlobal.Room.Type.GROUP) {
-                        if (item.getGroupRoom().getRole() == GroupChatRole.OWNER) {
-                            new RequestGroupDelete().groupDelete(item.getId());
-                        } else {
-                            new RequestGroupLeft().groupLeft(item.getId());
-                        }
-                    } else if (item.getType() == ProtoGlobal.Room.Type.CHANNEL) {
-                        if (item.getChannelRoom().getRole() == ChannelChatRole.OWNER) {
-                            new RequestChannelDelete().channelDelete(item.getId());
-                        } else {
-                            new RequestChannelLeft().channelLeft(item.getId());
-                        }
-                    }
-                    break;
+            if (updateFromServer) {
+                new RequestUserInfo().userInfo(realmUserInfo.getUserId());
             }
+            setImage(realmUserInfo.getUserId());
         }
     }
 
-    private boolean checkValidationForRealm(RealmRoom realmRoom) {
-        if (realmRoom != null && realmRoom.isManaged() && realmRoom.isValid() && realmRoom.isLoaded()) {
-            return true;
-        }
-        return false;
+    public static OnBackPressedListener onBackPressedListener;
+
+    public interface OnBackPressedListener {
+        void doBack();
     }
 
-    private boolean heartBeatTimeOut() {
-
-        long difference;
-
-        long currentTime = System.currentTimeMillis();
-        difference = (currentTime - G.latestHearBeatTime);
-
-        if (difference >= Config.HEART_BEAT_CHECKING_TIME_OUT) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private void testIsSecure() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (G.isSecure && G.userLogin) {
-
-                    mOffset = 0;
-                    new RequestClientGetRoomList().clientGetRoomList(mOffset, mLimit);
-                    isSendRequestForLoading = true;
-                    progressBar.setVisibility(View.VISIBLE);
-                } else {
-                    testIsSecure();
-                }
-            }
-        }, 1000);
-    }
-
-    private ContentLoadingProgressBar contentLoading;
-
-    private void getChatsList() {
-        //swipeRefreshLayout.setRefreshing(true);
-        /*if (fromServer && G.socketConnection) {
-            testIsSecure();
-        } else {*/
-        if (firstTimeEnterToApp) {
-            testIsSecure();
-        }
-
-        if (G.deletedRoomList.size() > 0) {
-            cleanDeletedRooms();
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener, boolean isDisable) {
+        if (!isDisable) {
+            ActivityMain.onBackPressedListener = onBackPressedListener;
+        } else {
+            ActivityMain.onBackPressedListener = null;
         }
     }
 
-    private void cleanDeletedRooms() {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
 
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        if (G.dispatchTochEventChat != null) {
+            G.dispatchTochEventChat.getToch(ev);
+        }
 
-                final Realm realm = Realm.getDefaultInstance();
-
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-
-                        for (int i = 0; i < G.deletedRoomList.size(); i++) {
-
-                            RealmRoom _RealmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).
-                                equalTo(RealmRoomFields.ID, G.deletedRoomList.get(i)).findFirst();
-
-                            // delete messages and rooms in the deleted room
-                            if (_RealmRoom != null) {
-                                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, _RealmRoom.getId()).findAll().deleteAllFromRealm();
-                                _RealmRoom.deleteFromRealm();
-                            }
-                        }
-
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        realm.close();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        realm.close();
-                    }
-                });
-            }
-        });
-
-        G.deletedRoomList.clear();
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public void onBackPressed() {
-        openNavigation();
-        SearchFragment myFragment = (SearchFragment) getSupportFragmentManager().findFragmentByTag("Search_fragment");
-        FragmentNewGroup fragmentNeGroup = (FragmentNewGroup) getSupportFragmentManager().findFragmentByTag("newGroup_fragment");
-        FragmentCreateChannel fragmentCreateChannel = (FragmentCreateChannel) getSupportFragmentManager().findFragmentByTag("createChannel_fragment");
-        ContactGroupFragment fragmentContactGroup = (ContactGroupFragment) getSupportFragmentManager().findFragmentByTag("contactGroup_fragment");
-        FragmentIgapSearch fragmentIgapSearch = (FragmentIgapSearch) getSupportFragmentManager().findFragmentByTag("Search_fragment_igap");
 
-        if (fragmentNeGroup != null && fragmentNeGroup.isVisible()) {
 
-            try {
-                getSupportFragmentManager().beginTransaction().remove(fragmentNeGroup).commit();
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
 
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        } else if (fragmentCreateChannel != null && fragmentCreateChannel.isVisible()) {
-            try {
-                getSupportFragmentManager().beginTransaction().remove(fragmentCreateChannel).commit();
-            } catch (Exception e) {
-                e.getStackTrace();
+        if (G.onBackPressedExplorer != null) {
+            if (G.onBackPressedExplorer.onBack()) {
+                return;
             }
-        } else if (fragmentContactGroup != null && fragmentContactGroup.isVisible()) {
-            try {
-                getSupportFragmentManager().beginTransaction().remove(fragmentContactGroup).commit();
-            } catch (Exception e) {
-                e.getStackTrace();
+        } else if (G.onBackPressedChat != null) {
+            if (G.onBackPressedChat.onBack()) {
+                return;
             }
-        } else if (fragmentIgapSearch != null && fragmentIgapSearch.isVisible()) {
-            try {
-                getSupportFragmentManager().beginTransaction().remove(fragmentIgapSearch).commit();
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
-        } else if (myFragment != null && myFragment.isVisible()) {
-            try {
-                getSupportFragmentManager().beginTransaction().remove(myFragment).commit();
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
-        } else if (this.drawer.isDrawerOpen(GravityCompat.START)) {
+        }
+
+
+        if (onBackPressedListener != null) {
+            onBackPressedListener.doBack();
+        }
+
+        if (this.drawer.isDrawerOpen(GravityCompat.START)) {
             this.drawer.closeDrawer(GravityCompat.START);
         } else {
+
+            openNavigation();
+
+            // this call for create group   getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
             super.onBackPressed();
-            finish();
+
+            if (G.fragmentManager != null && G.fragmentManager.getBackStackEntryCount() == 0) {
+                if (!this.isFinishing()) {
+                    resume();
+                }
+            }
+
+            desighnLayout(chatLayoutMode.none);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        resume();
+    }
+
+    public void resume() {
         /**
          * after change language in ActivitySetting this part refresh Activity main
          */
         G.onRefreshActivity = new OnRefreshActivity() {
             @Override
-            public void refresh(String changeLanguage) {
+            public void refresh(String changeLanguag) {
+
+                G.isUpdateNotificaionColorMain = false;
+                G.isUpdateNotificaionColorChannel = false;
+                G.isUpdateNotificaionColorGroup = false;
+                G.isUpdateNotificaionColorChat = false;
+                G.isUpdateNotificaionCall = false;
+
+                new HelperFragment().removeAll(false);
+
                 ActivityMain.this.recreate();
+
             }
         };
 
+        desighnLayout(chatLayoutMode.none);
+
+
+        if (contentLoading != null) {
+            AppUtils.setProgresColler(contentLoading);
+        }
+
+        if (G.isInCall) {
+            findViewById(R.id.am_ll_strip_call).setVisibility(View.VISIBLE);
+
+            ActivityCall.txtTimerMain = (TextView) findViewById(R.id.cslcs_txt_timer);
+
+            TextView txtCallActivityBack = (TextView) findViewById(R.id.cslcs_btn_call_strip);
+            txtCallActivityBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ActivityMain.this, ActivityCall.class));
+                }
+            });
+
+            G.iCallFinishMain = new ICallFinish() {
+                @Override
+                public void onFinish() {
+                    try {
+
+                        findViewById(R.id.am_ll_strip_call).setVisibility(View.GONE);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+        } else {
+            findViewById(R.id.am_ll_strip_call).setVisibility(View.GONE);
+        }
+
         if (drawer != null) {
             drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            drawer.closeDrawer(GravityCompat.START);
         }
 
         appBarLayout.setBackgroundColor(Color.parseColor(G.appBarColor));
-        arcMenu.setBackgroundTintColor();
 
-        btnStartNewChat.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
-        btnCreateNewGroup.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
-        btnCreateNewChannel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
 
-        if (MusicPlayer.mp != null) {
-            MusicPlayer.initLayoutTripMusic(mediaLayout);
-        }
         G.clearMessagesUtil.setOnChatClearMessageResponse(this);
-        G.chatSendMessageUtil.setOnChatSendMessageResponse(this);
         G.chatUpdateStatusUtil.setOnChatUpdateStatusResponse(this);
-        G.onClientCondition = this;
+        G.chatSendMessageUtil.setOnChatSendMessageResponseRoomList(this);
         G.onSetActionInRoom = this;
+        G.onClientCondition = this;
         G.onClientGetRoomListResponse = this;
 
-        getChatsList();
         startService(new Intent(this, ServiceContact.class));
 
         HelperUrl.getLinkinfo(getIntent(), ActivityMain.this);
         getIntent().setData(null);
+        setDrawerInfo(false);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+        ActivityMain.setMediaLayout();
+
+        if (G.isPassCode) {
+            iconLock.setVisibility(View.VISIBLE);
+
+            if (isLock) {
+                iconLock.setText(getResources().getString(R.string.md_igap_lock));
+            } else {
+                iconLock.setText(getResources().getString(R.string.md_igap_lock_open_outline));
+            }
+        } else {
+            iconLock.setVisibility(View.GONE);
+        }
+
+    }
+
+    private void enterPassword() {
+
+        closeDrawer();
+        Intent intent = new Intent(ActivityMain.this, ActivityEnterPassCode.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        HelperNotificationAndBadge.updateBadgeOnly();
-    }
 
-    @Override
-    public void complete(boolean result, String messageOne, String MessageTow) {
-        if (messageOne.equals("closeMenuButton")) {
-            arcMenu.toggleMenu();
+        if (isNeedToRegister) {
+            return;
+        }
+
+        HelperNotificationAndBadge.updateBadgeOnly();
+
+        if (mViewPager != null && mViewPager.getAdapter() != null) {
+
+            try {
+
+                FragmentPagerAdapter adapter = (FragmentPagerAdapter) mViewPager.getAdapter();
+
+                if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentMain) {
+
+                    FragmentMain fm = (FragmentMain) adapter.getItem(mViewPager.getCurrentItem());
+                    G.salectedTabInMainActivity = fm.mainType.toString();
+                } else if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentCall) {
+
+                    G.salectedTabInMainActivity = adapter.getItem(mViewPager.getCurrentItem()).getClass().getName();
+                }
+            } catch (Exception e) {
+
+            }
         }
     }
 
     @Override
     public void onChatClearMessage(final long roomId, long clearId, final ProtoResponse.Response response) {
-        //empty
-    }
-
-    @Override
-    public void onMessageUpdate(final long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, String identity, ProtoGlobal.RoomMessage roomMessage) {
-        //empty
-    }
-
-    @Override
-    public void onMessageReceive(final long roomId, final String message, ProtoGlobal.RoomMessageType messageType, final ProtoGlobal.RoomMessage roomMessage, ProtoGlobal.Room.Type roomType) {
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                final RealmRoomMessage realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, roomMessage.getMessageId()).findFirst();
-                if (room != null && realmRoomMessage != null) {
-                    /**
-                     * client checked  (room.getUnreadCount() <= 1)  because in HelperMessageResponse unreadCount++
-                     */
-                    if (room.getUnreadCount() <= 1) {
-                        realmRoomMessage.setFutureMessageId(realmRoomMessage.getMessageId());
-                        room.setFirstUnreadMessage(realmRoomMessage);
-                    }
-                }
-            }
-        });
-        realm.close();
-
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int firstVisibleItem = ((LinearLayoutManager) mRecyclerView.getRecycleView().getLayoutManager()).findFirstVisibleItemPosition();
-                if (firstVisibleItem < 5) {
-                    mRecyclerView.getRecycleView().scrollToPosition(0);
-                }
-            }
-        });
-
-        /**
-         * don't send update status for own message
-         */
-        if (roomMessage.getAuthor().getUser() != null && roomMessage.getAuthor().getUser().getUserId() != G.userId) {
-            // user has received the message, so I make a new delivered update status request
-            if (roomType == ProtoGlobal.Room.Type.CHAT) {
-                G.chatUpdateStatusUtil.sendUpdateStatus(roomType, roomId, roomMessage.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
-            } else if (roomType == ProtoGlobal.Room.Type.GROUP && roomMessage.getStatus() == ProtoGlobal.RoomMessageStatus.SENT) {
-                G.chatUpdateStatusUtil.sendUpdateStatus(roomType, roomId, roomMessage.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
-            }
-        }
-    }
-
-    @Override
-    public void onMessageFailed(final long roomId, RealmRoomMessage roomMessage) {
         //empty
     }
 
@@ -1539,23 +2144,18 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     @Override
     public void onSetAction(final long roomId, final long userId, final ProtoGlobal.ClientAction clientAction) {
-
-        final Realm realm = Realm.getDefaultInstance();
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-
-        if (realmRoom != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-
-                    if (realmRoom.getType() != null) {
-                        String action = HelperGetAction.getAction(roomId, realmRoom.getType(), clientAction);
-                        realmRoom.setActionState(action, userId);
-                    }
+        //+Realm realm = Realm.getDefaultInstance();
+        getRealm().executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (realmRoom != null && realmRoom.isValid() && !realmRoom.isDeleted() && realmRoom.getType() != null) {
+                    String action = HelperGetAction.getAction(roomId, realmRoom.getType(), clientAction);
+                    realmRoom.setActionState(action, userId);
                 }
-            });
-        }
-        realm.close();
+            }
+        });
+        //realm.close();
     }
 
     //******* GroupAvatar and ChannelAvatar
@@ -1575,28 +2175,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     }
 
-    @Override
-    public void onClientCondition() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
-
-    @Override
-    public void onClientConditionError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
-
     public void setImage(long userId) {
-        HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, new OnAvatarGet() {
+        HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
             @Override
             public void onAvatarGet(final String avatarPath, long ownerId) {
                 G.handler.post(new Runnable() {
@@ -1625,10 +2205,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                     @Override
                     public void run() {
                         if (imagePath == null || !new File(imagePath).exists()) {
-                            Realm realm1 = Realm.getDefaultInstance();
-                            RealmUserInfo realmUserInfo = realm1.where(RealmUserInfo.class).findFirst();
+                            //Realm realm1 = Realm.getDefaultInstance();
+                            RealmUserInfo realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
                             imgNavImage.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) imgNavImage.getContext().getResources().getDimension(R.dimen.dp100), realmUserInfo.getUserInfo().getInitials(), realmUserInfo.getUserInfo().getColor()));
-                            realm1.close();
+                            //realm1.close();
                         } else {
                             G.imageLoader.displayImage(AndroidUtils.suitablePath(imagePath), imgNavImage);
                         }
@@ -1654,26 +2234,20 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     }
 
     private void chatGetRoom(final long peerId) {
-        final Realm realm = Realm.getDefaultInstance();
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, peerId).findFirst();
+        //final Realm realm = Realm.getDefaultInstance();
+        final RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, peerId).findFirst();
 
         if (realmRoom != null) {
 
-            Intent intent = new Intent(context, ActivityChat.class);
-            intent.putExtra("RoomId", realmRoom.getId());
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-            //getActivity().getSupportFragmentManager().popBackStack();
+            new GoToChatActivity(realmRoom.getId()).startActivity();
+
         } else {
 
             G.onChatGetRoom = new OnChatGetRoom() {
                 @Override
                 public void onChatGetRoom(final long roomId) {
-                    Intent intent = new Intent(context, ActivityChat.class);
-                    intent.putExtra("peerId", peerId);
-                    intent.putExtra("RoomId", roomId);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+
+                    new GoToChatActivity(roomId).setPeerID(peerId).startActivity();
 
                     G.onChatGetRoom = null;
                 }
@@ -1696,383 +2270,334 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
             new RequestChatGetRoom().chatGetRoom(peerId);
         }
-        realm.close();
+        //realm.close();
     }
 
-    public class RoomAdapter extends RealmBasedRecyclerViewAdapter<RealmRoom, RoomAdapter.ViewHolder> {
+    //*****************************************************************************************************************************
 
-        public OnComplete mComplete;
-        public String action;
-        private Typeface typeFaceIcon;
+    @Override
+    public void onMessageUpdate(final long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, String identity, ProtoGlobal.RoomMessage roomMessage) {
+        //empty
+    }
 
-        public RoomAdapter(Context context, RealmResults<RealmRoom> realmResults, OnComplete complete) {
-            super(context, realmResults, true, false, false, "");
-            this.mComplete = complete;
-        }
+    @Override
+    public void onMessageReceive(final long roomId, final String message, ProtoGlobal.RoomMessageType messageType, final ProtoGlobal.RoomMessage roomMessage, final ProtoGlobal.Room.Type roomType) {
 
-        @Override
-        public RoomAdapter.ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int i) {
-            View v = inflater.inflate(R.layout.chat_sub_layout, viewGroup, false);
-            return new RoomAdapter.ViewHolder(v);
-        }
-
-        @Override
-        public void onBindRealmViewHolder(final ViewHolder holder, final int i) {
-
-            RealmRoom mInfo = holder.mInfo = realmResults.get(i);
-
-            if (mInfo != null && mInfo.isValid()) {
-                if (mInfo.getActionState() != null && ((mInfo.getType() == GROUP || mInfo.getType() == CHANNEL) || ((RealmRoom.isCloudRoom(mInfo.getId()) || (!RealmRoom.isCloudRoom(mInfo.getId()) && mInfo.getActionStateUserId() != userId))))) {
-                    //holder.messageStatus.setVisibility(GONE);
-                    holder.lastMessageSender.setVisibility(View.GONE);
-                    holder.lastMessage.setVisibility(View.VISIBLE);
-                    holder.avi.setVisibility(View.VISIBLE);
-                    holder.lastMessage.setText(mInfo.getActionState());
-                    holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                } else if (mInfo.getDraft() != null && !TextUtils.isEmpty(mInfo.getDraft().getMessage())) {
-                    holder.avi.setVisibility(View.GONE);
-                    holder.messageStatus.setVisibility(GONE);
-                    holder.lastMessage.setVisibility(View.VISIBLE);
-                    holder.lastMessageSender.setVisibility(View.VISIBLE);
-                    holder.lastMessageSender.setText(R.string.txt_draft);
-                    holder.lastMessageSender.setTextColor(Color.parseColor("#ff4644"));
-                    holder.lastMessage.setText(mInfo.getDraft().getMessage());
-                    holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
-                } else {
-                    holder.avi.setVisibility(View.GONE);
-                    if (mInfo.getLastMessage() != null) {
-                        String lastMessage = AppUtils.rightLastMessage(mInfo.getId(), holder.itemView.getResources(), mInfo.getType(), mInfo.getLastMessage(), mInfo.getLastMessage().getForwardMessage() != null ? mInfo.getLastMessage().getForwardMessage().getAttachment() : mInfo.getLastMessage().getAttachment());
-                        if (lastMessage == null) {
-                            lastMessage = mInfo.getLastMessage().getMessage();
-                        }
-
-                        if (lastMessage == null || lastMessage.isEmpty()) {
-                            holder.messageStatus.setVisibility(GONE);
-                            holder.lastMessage.setVisibility(GONE);
-                            holder.lastMessageSender.setVisibility(GONE);
-                        } else {
-                            if (mInfo.getLastMessage().isSenderMe()) {
-                                AppUtils.rightMessageStatus(holder.messageStatus, ProtoGlobal.RoomMessageStatus.valueOf(mInfo.getLastMessage().getStatus()), mInfo.getLastMessage().isSenderMe());
-                                holder.messageStatus.setVisibility(View.VISIBLE);
-                            } else {
-                                holder.messageStatus.setVisibility(GONE);
-                            }
-
+        //Realm realm = Realm.getDefaultInstance();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getRealm().executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                        final RealmRoomMessage realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, roomMessage.getMessageId()).findFirst();
+                        if (room != null && realmRoomMessage != null) {
                             /**
-                             * here i get latest message from chat history with chatId and
-                             * get DisplayName with that . when login app client get latest
-                             * message for each group from server , if latest message that
-                             * send server and latest message that exist in client for that
-                             * room be different latest message sender showing will be wrong
+                             * client checked  (room.getUnreadCount() <= 1)  because in HelperMessageResponse unreadCount++
                              */
-
-                            String lastMessageSender = "";
-                            if (mInfo.getLastMessage().isSenderMe()) {
-                                lastMessageSender = holder.itemView.getResources().getString(R.string.txt_you);
-                            } else {
-
-                                Realm realm = Realm.getDefaultInstance();
-
-                                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mInfo.getLastMessage().getUserId()).findFirst();
-                                if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName() != null) {
-
-                                    String _name = realmRegisteredInfo.getDisplayName();
-                                    if (_name.length() > 0) {
-
-                                        if (Character.getDirectionality(_name.charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
-                                            if (HelperCalander.isLanguagePersian) {
-                                                lastMessageSender = _name + ": ";
-                                            } else {
-                                                lastMessageSender = " :" + _name;
-                                            }
-                                        } else {
-                                            if (HelperCalander.isLanguagePersian) {
-                                                lastMessageSender = " :" + _name;
-                                            } else {
-                                                lastMessageSender = _name + ": ";
-                                            }
-                                        }
-                                    }
-                                }
-
-                                realm.close();
-                            }
-
-                            if (mInfo.getType() == ProtoGlobal.Room.Type.GROUP) {
-                                holder.lastMessageSender.setText(lastMessageSender);
-                                holder.lastMessageSender.setTextColor(Color.parseColor("#2bbfbd"));
-                                holder.lastMessageSender.setVisibility(View.VISIBLE);
-                            } else {
-                                holder.lastMessageSender.setVisibility(GONE);
-                            }
-
-                            holder.lastMessage.setVisibility(View.VISIBLE);
-
-                            if (mInfo.getLastMessage() != null) {
-                                ProtoGlobal.RoomMessageType _type, tmp;
-
-                                _type = mInfo.getLastMessage().getMessageType();
-
-                                try {
-                                    if (mInfo.getLastMessage().getReplyTo() != null) {
-                                        tmp = mInfo.getLastMessage().getReplyTo().getMessageType();
-                                        if (tmp != null) _type = tmp;
-                                    }
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-
-                                try {
-                                    if (mInfo.getLastMessage().getForwardMessage() != null) {
-                                        tmp = mInfo.getLastMessage().getForwardMessage().getMessageType();
-                                        if (tmp != null) _type = tmp;
-                                    }
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-
-                                switch (_type) {
-                                    case VOICE:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.voice_message);
-                                        break;
-                                    case VIDEO:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.video_message);
-                                        break;
-                                    case FILE:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.file_message);
-                                        break;
-                                    case AUDIO:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.audio_message);
-                                        break;
-                                    case IMAGE:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.image_message);
-                                        break;
-                                    case CONTACT:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.contact_message);
-                                        break;
-                                    case GIF:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.gif_message);
-                                        break;
-                                    case LOCATION:
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
-                                        holder.lastMessage.setText(R.string.location_message);
-                                        break;
-                                    default:
-                                        if (!HelperCalander.isLanguagePersian) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                                                holder.lastMessage.setTextDirection(View.TEXT_DIRECTION_LTR);
-                                            }
-                                        }
-                                        holder.lastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
-                                        holder.lastMessage.setText(lastMessage);
-                                        break;
-                                }
-                            } else {
-                                holder.lastMessage.setText(lastMessage);
+                            if (room.getUnreadCount() <= 1) {
+                                realmRoomMessage.setFutureMessageId(realmRoomMessage.getMessageId());
+                                room.setFirstUnreadMessage(realmRoomMessage);
                             }
                         }
-                    } else {
-                        holder.lastMessage.setVisibility(GONE);
-                        holder.lastSeen.setVisibility(GONE);
-                        holder.messageStatus.setVisibility(GONE);
-                        holder.lastMessageSender.setVisibility(GONE);
-                    }
-                }
-
-                long idForGetAvatar;
-                HelperAvatar.AvatarType avatarType;
-                if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
-                    idForGetAvatar = mInfo.getChatRoom().getPeerId();
-                    avatarType = HelperAvatar.AvatarType.USER;
-                } else {
-                    idForGetAvatar = mInfo.getId();
-                    avatarType = HelperAvatar.AvatarType.ROOM;
-                }
-
-                HelperAvatar.getAvatar(idForGetAvatar, avatarType, new OnAvatarGet() {
-                    @Override
-                    public void onAvatarGet(String avatarPath, long roomId) {
-                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), holder.image);
-                    }
-
-                    @Override
-                    public void onShowInitials(String initials, String color) {
-                        holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp52), initials, color));
                     }
                 });
+                //realm.close();
 
-                holder.chatIcon.setTypeface(typeFaceIcon);
-                if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
-                    holder.chatIcon.setVisibility(GONE);
-                } else if (mInfo.getType() == ProtoGlobal.Room.Type.GROUP) {
-                    typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/MaterialIcons-Regular.ttf");
-                    holder.chatIcon.setTypeface(typeFaceIcon);
-                    holder.chatIcon.setVisibility(View.VISIBLE);
-                    holder.chatIcon.setText(getStringChatIcon(RoomType.GROUP));
-                } else if (mInfo.getType() == ProtoGlobal.Room.Type.CHANNEL) {
-                    typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/iGap_font.ttf");
-                    holder.chatIcon.setTypeface(typeFaceIcon);
-                    holder.chatIcon.setVisibility(View.VISIBLE);
-                    holder.chatIcon.setText(getStringChatIcon(RoomType.CHANNEL));
+                switch (roomType) {
+
+                    case CHAT:
+                        if (mainActionChat != null) {
+                            mainActionChat.onAction(MainAction.downScrool);
+                        }
+                        break;
+                    case GROUP:
+                        if (mainActionGroup != null) {
+                            mainActionGroup.onAction(MainAction.downScrool);
+                        }
+                        break;
+                    case CHANNEL:
+                        if (mainActionChannel != null) {
+                            mainActionChannel.onAction(MainAction.downScrool);
+                        }
+                        break;
                 }
 
-                holder.name.setText(mInfo.getTitle());
-
-                if (mInfo.getLastMessage() != null && mInfo.getLastMessage().getUpdateOrCreateTime() != 0) {
-                    holder.lastSeen.setText(HelperCalander.getTimeForMainRoom(mInfo.getLastMessage().getUpdateOrCreateTime()));
-
-                    holder.lastSeen.setVisibility(View.VISIBLE);
-                } else {
-                    holder.lastSeen.setVisibility(GONE);
+                if (mainActionApp != null) {
+                    mainActionApp.onAction(MainAction.downScrool);
                 }
 
-                if (mInfo.getUnreadCount() < 1) {
-                    holder.unreadMessage.setVisibility(GONE);
-                } else {
-                    holder.unreadMessage.setVisibility(View.VISIBLE);
-                    holder.unreadMessage.setText(Integer.toString(mInfo.getUnreadCount()));
-
-                    if (mInfo.getMute()) {
-                        holder.unreadMessage.setBackgroundResource(R.drawable.oval_gray);
-                    } else {
-                        holder.unreadMessage.setBackgroundResource(R.drawable.oval_red);
+                /**
+                 * don't send update status for own message
+                 */
+                if (roomMessage.getAuthor().getUser() != null && roomMessage.getAuthor().getUser().getUserId() != userId) {
+                    // user has received the message, so I make a new delivered update status request
+                    if (roomType == ProtoGlobal.Room.Type.CHAT) {
+                        G.chatUpdateStatusUtil.sendUpdateStatus(roomType, roomId, roomMessage.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
+                    } else if (roomType == ProtoGlobal.Room.Type.GROUP && roomMessage.getStatus() == ProtoGlobal.RoomMessageStatus.SENT) {
+                        G.chatUpdateStatusUtil.sendUpdateStatus(roomType, roomId, roomMessage.getMessageId(), ProtoGlobal.RoomMessageStatus.DELIVERED);
                     }
                 }
-
-                if (mInfo.getMute()) {
-                    holder.mute.setVisibility(View.VISIBLE);
-                } else {
-                    holder.mute.setVisibility(GONE);
-                }
             }
+        });
+    }
 
-            /**
-             * for change english number to persian number
-             */
-            if (HelperCalander.isLanguagePersian) {
-                holder.lastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastMessage.getText().toString()));
-                holder.name.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.name.getText().toString()));
-                holder.unreadMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.unreadMessage.getText().toString()));
-            }
+    @Override
+    public void onMessageFailed(final long roomId, RealmRoomMessage roomMessage) {
+        //empty
+    }
+
+    //************************
+    @Override
+    public void onClientCondition() {
+
+        notifySubFragmentForCondition();
+    }
+
+    @Override
+    public void onClientConditionError() {
+        notifySubFragmentForCondition();
+    }
+
+    private void notifySubFragmentForCondition() {
+
+        if (mainActionApp != null) {
+            mainActionApp.onAction(MainAction.clinetCondition);
         }
 
-        public class ViewHolder extends RealmViewHolder {
-
-            public RealmRoom mInfo;
-            protected CircleImageView image;
-            protected View distanceColor;
-            protected TextView chatIcon;
-            protected EmojiTextView name;
-            protected EmojiTextView lastMessageSender;
-            protected TextView mute;
-            protected EmojiTextView lastMessage;
-            protected TextView lastSeen;
-            protected TextView unreadMessage;
-            protected ImageView messageStatus;
-            private AVLoadingIndicatorView avi;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                avi = (AVLoadingIndicatorView) view.findViewById(R.id.cs_avi);
-                image = (CircleImageView) view.findViewById(R.id.cs_img_contact_picture);
-                distanceColor = view.findViewById(R.id.cs_view_distance_color);
-                chatIcon = (TextView) view.findViewById(R.id.cs_txt_contact_icon);
-                name = (EmojiTextView) view.findViewById(R.id.cs_txt_contact_name);
-                lastMessage = (EmojiTextView) view.findViewById(R.id.cs_txt_last_message);
-                lastMessageSender = (EmojiTextView) view.findViewById(R.id.cs_txt_last_message_sender);
-                lastSeen = (TextView) view.findViewById(R.id.cs_txt_contact_time);
-                unreadMessage = (TextView) view.findViewById(R.id.cs_txt_unread_message);
-
-                mute = (TextView) view.findViewById(R.id.cs_txt_mute);
-                messageStatus = (ImageView) view.findViewById(R.id.cslr_txt_tic);
-
-                AndroidUtils.setBackgroundShapeColor(unreadMessage, Color.parseColor(G.notificationColor));
-
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (ActivityMain.isMenuButtonAddShown) {
-                            mComplete.complete(true, "closeMenuButton", "");
-                        } else {
-                            if (mInfo.isValid()) {
-
-                                Intent intent = new Intent(ActivityMain.this, ActivityChat.class);
-                                intent.putExtra("RoomId", mInfo.getId());
-
-                                startActivity(intent);
-                                overridePendingTransition(0, 0);
-
-                                if (ActivityMain.arcMenu != null && ActivityMain.arcMenu.isMenuOpened()) {
-                                    ActivityMain.arcMenu.toggleMenu();
-                                }
-                            }
-                        }
-                    }
-                });
-
-                view.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-
-                        if (ActivityMain.isMenuButtonAddShown) {
-                            mComplete.complete(true, "closeMenuButton", "");
-                        } else {
-                            if (mInfo.isValid()) {
-                                String role = null;
-                                if (mInfo.getType() == ProtoGlobal.Room.Type.GROUP) {
-                                    role = mInfo.getGroupRoom().getRole().toString();
-                                } else if (mInfo.getType() == ProtoGlobal.Room.Type.CHANNEL) {
-                                    role = mInfo.getChannelRoom().getRole().toString();
-                                }
-
-                                MyDialog.showDialogMenuItemRooms(ActivityMain.this, mInfo.getType(), mInfo.getMute(), role, new OnComplete() {
-                                    @Override
-                                    public void complete(boolean result, String messageOne, String MessageTow) {
-                                        onSelectRoomMenu(messageOne, mInfo);
-                                    }
-                                });
-                            }
-                        }
-                        return true;
-                    }
-                });
-            }
+        if (mainActionChat != null) {
+            mainActionChat.onAction(MainAction.clinetCondition);
         }
 
-        /**
-         * get string chat icon
-         *
-         * @param chatType chat type
-         * @return String
-         */
-        private String getStringChatIcon(RoomType chatType) {
-            switch (chatType) {
-                case CHAT:
-                    return "";
-                case CHANNEL:
-                    return context.getString(R.string.md_channel_icon);
-                case GROUP:
-                    return context.getString(R.string.md_users_social_symbol);
-                default:
-                    return null;
-            }
+        if (mainActionGroup != null) {
+            mainActionGroup.onAction(MainAction.clinetCondition);
+        }
+
+        if (mainActionChannel != null) {
+            mainActionChannel.onAction(MainAction.clinetCondition);
         }
     }
 
-    private void lockNavigation() {
+    //************************
+
+    @Override
+    public void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, String identity) {
+
+        if (mainInterfaceGetRoomList != null) {
+            mainInterfaceGetRoomList.onClientGetRoomList(roomList, response, identity);
+        }
+    }
+
+    @Override
+    public void onError(int majorCode, int minorCode) {
+
+        if (mainInterfaceGetRoomList != null) {
+            mainInterfaceGetRoomList.onError(majorCode, minorCode);
+        }
+    }
+
+    @Override
+    public void onTimeout() {
+
+        if (mainInterfaceGetRoomList != null) {
+            mainInterfaceGetRoomList.onTimeout();
+        }
+    }
+
+    //*************************************************************
+
+    public void lockNavigation() {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
-    private void openNavigation() {
+    public void openNavigation() {
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
+
+    public void verifyAccount() {
+        boolean bereitsAngelegt = false;
+        String accountType;
+        accountType = this.getPackageName();
+
+        AccountManager accountManager = AccountManager.get(getApplicationContext());
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Account[] accounts = accountManager.getAccounts();
+        for (int i = 0; i < accounts.length; i++) {
+            if ((accounts[i].type != null) && (accounts[i].type.contentEquals(accountType))) {
+                bereitsAngelegt = true;
+            }
+        }
+
+        if (!bereitsAngelegt) {
+            AccountManager accMgr = AccountManager.get(this);
+            String password = "";
+
+            final Account account = new Account("" + phoneNumber, accountType);
+            try {
+                accMgr.addAccountExplicitly(account, password, null);
+            } catch (Exception e1) {
+                e1.getMessage();
+            }
+        }
+    } // end of
+
+    public static void setWeight(View view, int value) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.weight = value;
+        view.setLayoutParams(params);
+
+        if (value > 0) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
+
+    public enum chatLayoutMode {
+        none, show, hide
+    }
+
+    public void desighnLayout(final chatLayoutMode mode) {
+
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (G.twoPaneMode) {
+                    if (frameFragmentContainer == null || frameFragmentContainer.getChildCount() == 0) {
+                        frameFragmentBack.setVisibility(View.GONE);
+                    }
+
+                    if (G.isLandscape) {
+                        setWeight(frameChatContainer, 2);
+                        setWeight(frameMainContainer, 1);
+                        openNavigation();
+                    } else {
+
+                        if (mode == chatLayoutMode.show) {
+                            setWeight(frameChatContainer, 1);
+                            setWeight(frameMainContainer, 0);
+                            lockNavigation();
+                        } else if (mode == chatLayoutMode.hide) {
+                            setWeight(frameChatContainer, 0);
+                            setWeight(frameMainContainer, 1);
+                            openNavigation();
+                        } else {
+                            if (frameChatContainer.getChildCount() > 0) {
+                                setWeight(frameChatContainer, 1);
+                                setWeight(frameMainContainer, 0);
+                                lockNavigation();
+                            } else {
+                                setWeight(frameChatContainer, 0);
+                                setWeight(frameMainContainer, 1);
+                                openNavigation();
+                            }
+                        }
+                    }
+
+
+                }
+
+
+            }
+        });
+
+
+    }
+
+    public static void setMediaLayout() {
+
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+
+                    if (MusicPlayer.mp != null) {
+
+                        if (MusicPlayer.shearedMediaLayout != null) {
+                            MusicPlayer.initLayoutTripMusic(MusicPlayer.shearedMediaLayout);
+
+                            if (MusicPlayer.chatLayout != null) {
+                                MusicPlayer.chatLayout.setVisibility(View.GONE);
+                            }
+
+                            if (MusicPlayer.mainLayout != null) {
+                                MusicPlayer.mainLayout.setVisibility(View.GONE);
+                            }
+                        } else if (MusicPlayer.chatLayout != null) {
+                            MusicPlayer.initLayoutTripMusic(MusicPlayer.chatLayout);
+
+                            if (MusicPlayer.mainLayout != null) {
+                                MusicPlayer.mainLayout.setVisibility(View.GONE);
+                            }
+                        } else if (MusicPlayer.mainLayout != null) {
+                            MusicPlayer.initLayoutTripMusic(MusicPlayer.mainLayout);
+                        }
+                    } else {
+
+                        if (MusicPlayer.mainLayout != null) {
+                            MusicPlayer.mainLayout.setVisibility(View.GONE);
+                        }
+
+                        if (MusicPlayer.chatLayout != null) {
+                            MusicPlayer.chatLayout.setVisibility(View.GONE);
+                        }
+
+                        if (MusicPlayer.shearedMediaLayout != null) {
+                            MusicPlayer.shearedMediaLayout.setVisibility(View.GONE);
+                        }
+
+
+                    }
+                } catch (Exception e) {
+                    Log.e("dddddd", "activity main  setMediaLayout " + e.toString());
+                }
+            }
+        });
+    }
+
+    public static void setStripLayoutCall() {
+
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (G.isInCall) {
+
+                    if (ActivityCall.stripLayoutChat != null) {
+                        ActivityCall.stripLayoutChat.setVisibility(View.VISIBLE);
+
+                        if (ActivityCall.stripLayoutMain != null) {
+                            ActivityCall.stripLayoutMain.setVisibility(View.GONE);
+                        }
+                    } else {
+                        if (ActivityCall.stripLayoutMain != null) {
+                            ActivityCall.stripLayoutMain.setVisibility(View.VISIBLE);
+                        }
+                    }
+                } else {
+
+                    if (ActivityCall.stripLayoutMain != null) {
+                        ActivityCall.stripLayoutMain.setVisibility(View.GONE);
+                    }
+
+                    if (ActivityCall.stripLayoutChat != null) {
+                        ActivityCall.stripLayoutChat.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        oldTime = System.currentTimeMillis();
+    }
+
 }

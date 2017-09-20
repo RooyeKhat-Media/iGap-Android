@@ -111,14 +111,15 @@ class WebSocketOutputStream extends FilterOutputStream {
         write((len) & 0xFF);
     }
 
+
     private void writeFramePayload(WebSocketFrame frame, byte[] maskingKey) throws IOException {
         byte[] payload = frame.getPayload();
 
         if (payload == null) {
             return;
         }
-        for (int i = 0; i < payload.length; ++i) {
 
+        for (int i = 0; i < payload.length; ++i) {
             // Mask
             int b;
             if (WebSocket.useMask) {

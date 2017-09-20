@@ -148,6 +148,7 @@ public final class ProtoRequest {
     }
 
     private static final long serialVersionUID = 0L;
+
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -238,8 +239,7 @@ public final class ProtoRequest {
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -248,7 +248,7 @@ public final class ProtoRequest {
      */
     public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:proto.Request)
-        net.iGap.proto.ProtoRequest.RequestOrBuilder {
+            net.iGap.proto.ProtoRequest.RequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return net.iGap.proto.ProtoRequest.internal_static_proto_Request_descriptor;
       }

@@ -4,6 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="999dp"
+    android:clickable="true"
                 android:background="@android:color/black">
 
     <android.support.v7.widget.RecyclerView
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center|left"
             android:text="@string/d_of_d"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"

@@ -15,9 +15,13 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.Sort;
 import io.realm.annotations.PrimaryKey;
+import net.iGap.G;
 import net.iGap.helper.HelperString;
+import net.iGap.interfaces.OnInfo;
+import net.iGap.interfaces.OnRegistrationInfo;
 import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.request.RequestUserInfo;
 
 public class RealmRegisteredInfo extends RealmObject {
     @PrimaryKey private long id;
@@ -253,5 +257,39 @@ public class RealmRegisteredInfo extends RealmObject {
         info.setMutual(registeredUser.getMutual());
         info.setLastSeen(registeredUser.getLastSeen());
         info.setCacheId(registeredUser.getCacheId());
+    }
+
+    /**
+     * check info existence in realm if exist will be returned that otherwise send
+     * 'RequestUserInfo' to server and after get response will be called 'OnInfo'
+     * for return 'RealmRegisteredInfo'
+     *
+     * @param onRegistrationInfo RealmRegisteredInfo will be returned with this interface
+     */
+    public static void getRegistrationInfo(long userId, final OnInfo onRegistrationInfo) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        if (realmRegisteredInfo != null) {
+            onRegistrationInfo.onInfo(realmRegisteredInfo);
+        } else {
+            RequestUserInfo.infoHashMap.put(userId, onRegistrationInfo);
+            G.onRegistrationInfo = new OnRegistrationInfo() {
+                @Override
+                public void onInfo(ProtoGlobal.RegisteredUser registeredInfo) {
+                    Realm realm1 = Realm.getDefaultInstance();
+                    OnInfo InfoListener = RequestUserInfo.infoHashMap.get(registeredInfo.getId());
+                    if (InfoListener != null) {
+                        RealmRegisteredInfo realmRegisteredInfo = realm1.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, registeredInfo.getId()).findFirst();
+                        if (realmRegisteredInfo != null) {
+                            InfoListener.onInfo(realmRegisteredInfo);
+                        }
+                    }
+                    RequestUserInfo.infoHashMap.remove(registeredInfo.getId());
+                    realm1.close();
+                }
+            };
+            new RequestUserInfo().userInfo(userId, RequestUserInfo.InfoType.JUST_INFO.toString());
+        }
+        realm.close();
     }
 }

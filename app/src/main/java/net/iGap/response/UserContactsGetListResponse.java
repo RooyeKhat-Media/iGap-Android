@@ -80,7 +80,7 @@ public class UserContactsGetListResponse extends MessageHandler {
                                 listResponse.setLast_seen(registerUser.getLastSeen());
                                 listResponse.setAvatarCount(registerUser.getAvatarCount());
                                 listResponse.setCacheId(registerUser.getCacheId());
-                                listResponse.setAvatar(RealmAvatar.put(registerUser.getId(), registerUser.getAvatar(), true));
+                                listResponse.setAvatar(RealmAvatar.putAndGet(realm, registerUser.getId(), registerUser.getAvatar()));
                             }
                         }
                     }, new Realm.Transaction.OnSuccess() {

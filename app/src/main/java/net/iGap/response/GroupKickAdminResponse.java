@@ -53,7 +53,7 @@ public class GroupKickAdminResponse extends MessageHandler {
                             member.setRole(ProtoGlobal.GroupRoom.Role.MEMBER.toString());
                         }
                     });
-                    G.onGroupKickAdmin.onGroupKickAdmin(builder.getRoomId(), builder.getMemberId());
+                    //G.onGroupKickAdmin.onGroupKickAdmin(builder.getRoomId(), builder.getMemberId());
                     break;
                 }
             }

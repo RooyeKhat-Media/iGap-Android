@@ -49,11 +49,11 @@ public class RealmCallLog extends RealmObject {
         this.name = name;
     }
 
-    public ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog getlogProto() {
+    public ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog getLogProto() {
         return logProto == null ? null : (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) SerializationUtils.deserialize(logProto);
     }
 
-    public void setlogProto(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog logProto) {
+    public void setLogProto(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog logProto) {
         this.logProto = SerializationUtils.serialize(logProto);
     }
 
@@ -65,7 +65,7 @@ public class RealmCallLog extends RealmObject {
             realmCallLog = realm.createObject(RealmCallLog.class, callLog.getId());
         }
 
-        realmCallLog.setlogProto(callLog);
+        realmCallLog.setLogProto(callLog);
         realmCallLog.setName(callLog.getPeer().getDisplayName());
         realmCallLog.setTime(callLog.getOfferTime());
     }
@@ -75,7 +75,8 @@ public class RealmCallLog extends RealmObject {
         Realm realm = Realm.getDefaultInstance();
 
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
 
                 for (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item : list) {
 

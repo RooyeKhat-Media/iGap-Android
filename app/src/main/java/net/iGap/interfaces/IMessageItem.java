@@ -36,4 +36,6 @@ public interface IMessageItem {
     void onItemShowingMessageId(StructMessageInfo messageInfo);
 
     //void onVoteClick(StructMessageInfo message, String vote, ProtoGlobal.RoomMessageReaction reaction);
+
+    void onPlayMusic(String messageId);
 }

@@ -70,9 +70,7 @@ class ProxyHandshaker {
         String host = String.format("%s:%d", mHost, mPort);
 
         // CONNECT
-        StringBuilder builder = new StringBuilder()
-                .append("CONNECT ").append(host).append(" HTTP/1.1").append(RN)
-                .append("Host: ").append(host).append(RN);
+        StringBuilder builder = new StringBuilder().append("CONNECT ").append(host).append(" HTTP/1.1").append(RN).append("Host: ").append(host).append(RN);
 
 
         // Additional headers
@@ -121,10 +119,7 @@ class ProxyHandshaker {
         String credentials = String.format("%s:%s", id, password);
 
         // The current implementation always uses Basic Authentication.
-        builder
-                .append("Proxy-Authorization: Basic ")
-                .append(Base64.encode(credentials))
-                .append(RN);
+        builder.append("Proxy-Authorization: Basic ").append(Base64.encode(credentials)).append(RN);
     }
 
 
@@ -154,16 +149,12 @@ class ProxyHandshaker {
         String[] elements = statusLine.split(" +", 3);
 
         if (elements.length < 2) {
-            throw new IOException(
-                    "The status line in the response from the proxy server is badly formatted. " +
-                            "The status line is: " + statusLine);
+            throw new IOException("The status line in the response from the proxy server is badly formatted. " + "The status line is: " + statusLine);
         }
 
         // If the status code is not "200".
         if ("200".equals(elements[1]) == false) {
-            throw new IOException(
-                    "The status code in the response from the proxy server is not '200 Connection established'. " +
-                            "The status line is: " + statusLine);
+            throw new IOException("The status code in the response from the proxy server is not '200 Connection established'. " + "The status line is: " + statusLine);
         }
 
         // OK. A connection was established.
@@ -230,5 +221,17 @@ class ProxyHandshaker {
             // Reset the counter and go to the next line.
             count = 0;
         }
+    }
+
+
+    /**
+     * To be able to verify the hostname of the certificate received
+     * if a connection is made to an https/wss endpoint, access to this
+     * hostname is required.
+     *
+     * @return the hostname of the server the proxy is asked to connect to.
+     */
+    String getProxiedHostname() {
+        return mHost;
     }
 }

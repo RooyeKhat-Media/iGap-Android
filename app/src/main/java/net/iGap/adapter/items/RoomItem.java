@@ -321,12 +321,12 @@
 //            if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
 //                holder.chatIcon.setVisibility(GONE);
 //            } else if (mInfo.getType() == ProtoGlobal.Room.Type.GROUP) {
-//                typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/MaterialIcons-Regular.ttf");
+//                typeFaceIcon = G.typeface_Fontico;
 //                holder.chatIcon.setTypeface(typeFaceIcon);
 //                holder.chatIcon.setVisibility(View.VISIBLE);
 //                holder.chatIcon.setText(getStringChatIcon(RoomType.GROUP));
 //            } else if (mInfo.getType() == ProtoGlobal.Room.Type.CHANNEL) {
-//                typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/iGap_font.ttf");
+//                typeFaceIcon = G.typeface_Fontico;
 //                holder.chatIcon.setTypeface(typeFaceIcon);
 //                holder.chatIcon.setVisibility(View.VISIBLE);
 //                holder.chatIcon.setText(getStringChatIcon(RoomType.CHANNEL));

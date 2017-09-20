@@ -22,6 +22,7 @@ public class RealmPrivacy extends RealmObject {
     private String whoCanInviteMeToChannel;
     private String whoCanInviteMeToGroup;
     private String whoCanSeeMyLastSeen;
+    private String whoCanVoiceCallToMe;
 
     public String getWhoCanSeeMyAvatar() {
         return whoCanSeeMyAvatar;
@@ -55,7 +56,17 @@ public class RealmPrivacy extends RealmObject {
         this.whoCanInviteMeToChannel = whoCanInviteMeToChannel;
     }
 
-    public static void updatePrivacy(final String avatar, final String channel, final String Group, final String lastSeen) {
+    public String getWhoCanVoiceCallToMe() {
+        return whoCanVoiceCallToMe;
+    }
+
+    public void setWhoCanVoiceCallToMe(String whoCanVoiceCallToMe) {
+        this.whoCanVoiceCallToMe = whoCanVoiceCallToMe;
+    }
+
+    //********************************************************************************************************************************************
+
+    public static void updatePrivacy(final String avatar, final String channel, final String Group, final String lastSeen, final String voiceCall) {
 
         Realm realm = Realm.getDefaultInstance();
         final RealmPrivacy realmPrivacy = realm.where(RealmPrivacy.class).findFirst();
@@ -69,6 +80,7 @@ public class RealmPrivacy extends RealmObject {
                     if (channel.length() > 0) realmPrivacy.setWhoCanInviteMeToChannel(channel);
                     if (Group.length() > 0) realmPrivacy.setWhoCanInviteMeToGroup(Group);
                     if (lastSeen.length() > 0) realmPrivacy.setWhoCanSeeMyLastSeen(lastSeen);
+                    if (voiceCall.length() > 0) realmPrivacy.setWhoCanVoiceCallToMe(voiceCall);
                 }
             });
         } else {
@@ -82,6 +94,7 @@ public class RealmPrivacy extends RealmObject {
                     if (channel.length() > 0) realmPrivacy1.setWhoCanInviteMeToChannel(channel);
                     if (Group.length() > 0) realmPrivacy1.setWhoCanInviteMeToGroup(Group);
                     if (lastSeen.length() > 0) realmPrivacy1.setWhoCanSeeMyLastSeen(lastSeen);
+                    if (voiceCall.length() > 0) realmPrivacy.setWhoCanVoiceCallToMe(voiceCall);
                 }
             });
         }
@@ -100,6 +113,7 @@ public class RealmPrivacy extends RealmObject {
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.CHANNEL_INVITE);
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.GROUP_INVITE);
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.USER_STATUS);
+        new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.VOICE_CALLING);
     }
 
     public static void updateRealmPrivacy(ProtoGlobal.PrivacyType privacyType, ProtoGlobal.PrivacyLevel privacyLevel) {
@@ -107,21 +121,21 @@ public class RealmPrivacy extends RealmObject {
         switch (privacyType) {
 
             case AVATAR:
-                RealmPrivacy.updatePrivacy(privacyLevel.toString(), "", "", "");
-
+                RealmPrivacy.updatePrivacy(privacyLevel.toString(), "", "", "", "");
                 break;
             case CHANNEL_INVITE:
-                RealmPrivacy.updatePrivacy("", privacyLevel.toString(), "", "");
-
+                RealmPrivacy.updatePrivacy("", privacyLevel.toString(), "", "", "");
                 break;
             case GROUP_INVITE:
-                RealmPrivacy.updatePrivacy("", "", privacyLevel.toString(), "");
-
+                RealmPrivacy.updatePrivacy("", "", privacyLevel.toString(), "", "");
                 break;
             case USER_STATUS:
-                RealmPrivacy.updatePrivacy("", "", "", privacyLevel.toString());
-
+                RealmPrivacy.updatePrivacy("", "", "", privacyLevel.toString(), "");
                 break;
+            case VOICE_CALLING:
+                RealmPrivacy.updatePrivacy("", "", "", "", privacyLevel.toString());
+                break;
+
         }
     }
 }

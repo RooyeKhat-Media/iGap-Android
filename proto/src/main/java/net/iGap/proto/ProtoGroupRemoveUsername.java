@@ -72,11 +72,11 @@ public final class ProtoGroupRemoveUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -101,16 +101,15 @@ public final class ProtoGroupRemoveUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
+      return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.Builder.class);
+      return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -121,7 +120,7 @@ public final class ProtoGroupRemoveUsername {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -179,10 +178,10 @@ public final class ProtoGroupRemoveUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername other = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) obj;
+      net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername other = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -211,48 +210,43 @@ public final class ProtoGroupRemoveUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -263,7 +257,7 @@ public final class ProtoGroupRemoveUsername {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -282,15 +276,14 @@ public final class ProtoGroupRemoveUsername {
             // @@protoc_insertion_point(builder_implements:proto.GroupRemoveUsername)
         net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.Builder.class);
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -317,23 +310,23 @@ public final class ProtoGroupRemoveUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsername_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername build() {
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername result = buildPartial();
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername build() {
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername buildPartial() {
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername result = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername(this);
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername buildPartial() {
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername result = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -368,16 +361,16 @@ public final class ProtoGroupRemoveUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) {
-              return mergeFrom((net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) other);
+        if (other instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) {
+          return mergeFrom((net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername other) {
-            if (other == net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername other) {
+        if (other == net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -393,11 +386,11 @@ public final class ProtoGroupRemoveUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parsedMessage = null;
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -407,9 +400,8 @@ public final class ProtoGroupRemoveUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -421,7 +413,7 @@ public final class ProtoGroupRemoveUsername {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -461,7 +453,7 @@ public final class ProtoGroupRemoveUsername {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -501,7 +493,7 @@ public final class ProtoGroupRemoveUsername {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -509,9 +501,7 @@ public final class ProtoGroupRemoveUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
-                    getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -558,10 +548,10 @@ public final class ProtoGroupRemoveUsername {
     // @@protoc_insertion_point(class_scope:proto.GroupRemoveUsername)
     private static final net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername();
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -580,7 +570,7 @@ public final class ProtoGroupRemoveUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsername getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -645,11 +635,11 @@ public final class ProtoGroupRemoveUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -674,16 +664,15 @@ public final class ProtoGroupRemoveUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
+      return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder.class);
+      return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -694,7 +683,7 @@ public final class ProtoGroupRemoveUsername {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -752,10 +741,10 @@ public final class ProtoGroupRemoveUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse other = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) obj;
+      net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse other = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -784,48 +773,43 @@ public final class ProtoGroupRemoveUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -836,7 +820,7 @@ public final class ProtoGroupRemoveUsername {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -855,15 +839,14 @@ public final class ProtoGroupRemoveUsername {
             // @@protoc_insertion_point(builder_implements:proto.GroupRemoveUsernameResponse)
         net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder.class);
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.class, net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -890,23 +873,23 @@ public final class ProtoGroupRemoveUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoGroupRemoveUsername.internal_static_proto_GroupRemoveUsernameResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse build() {
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse result = buildPartial();
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse build() {
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse buildPartial() {
-            net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse result = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse(this);
+      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse buildPartial() {
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse result = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -941,16 +924,16 @@ public final class ProtoGroupRemoveUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) {
-              return mergeFrom((net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) other);
+        if (other instanceof net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) {
+          return mergeFrom((net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse other) {
-            if (other == net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse other) {
+        if (other == net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -966,11 +949,11 @@ public final class ProtoGroupRemoveUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parsedMessage = null;
+        net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -980,9 +963,8 @@ public final class ProtoGroupRemoveUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -994,7 +976,7 @@ public final class ProtoGroupRemoveUsername {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1034,7 +1016,7 @@ public final class ProtoGroupRemoveUsername {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1074,7 +1056,7 @@ public final class ProtoGroupRemoveUsername {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1082,9 +1064,7 @@ public final class ProtoGroupRemoveUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
-                    getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1131,10 +1111,10 @@ public final class ProtoGroupRemoveUsername {
     // @@protoc_insertion_point(class_scope:proto.GroupRemoveUsernameResponse)
     private static final net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse();
     }
 
-      public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1153,7 +1133,7 @@ public final class ProtoGroupRemoveUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupRemoveUsername.GroupRemoveUsernameResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1176,7 +1156,8 @@ public final class ProtoGroupRemoveUsername {
                     "est.proto\032\016Response.proto\"G\n\023GroupRemove" +
                     "Username\022\037\n\007request\030\001 \001(\0132\016.proto.Reques" +
                     "t\022\017\n\007room_id\030\002 \001(\004\"Q\n\033GroupRemoveUsernam" +
-                    "eResponse\022!\n\010response\030\001 \001(\0132\017.proto.Resp" + "onse\022\017\n\007room_id\030\002 \001(\004B*\n\016net.iGap.protoB" +
+                    "eResponse\022!\n\010response\030\001 \001(\0132\017.proto.Resp" +
+                    "onse\022\017\n\007room_id\030\002 \001(\004B*\n\016net.iGap.protoB" +
                     "\030ProtoGroupRemoveUsernameb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1186,7 +1167,7 @@ public final class ProtoGroupRemoveUsername {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_GroupRemoveUsername_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_GroupRemoveUsername_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GroupRemoveUsername_descriptor, new java.lang.String[]{"Request", "RoomId",});
@@ -1195,8 +1176,8 @@ public final class ProtoGroupRemoveUsername {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupRemoveUsernameResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

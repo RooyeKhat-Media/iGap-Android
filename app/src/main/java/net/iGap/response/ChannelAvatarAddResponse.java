@@ -31,25 +31,30 @@ public class ChannelAvatarAddResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoChannelAvatarAdd.ChannelAvatarAddResponse.Builder builder = (ProtoChannelAvatarAdd.ChannelAvatarAddResponse.Builder) message;
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
-                        RealmAvatar.put(builder.getRoomId(), builder.getAvatar(), true);
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmAvatar.putAndGet(realm, builder.getRoomId(), builder.getAvatar());
                     }
                 }, new Realm.Transaction.OnSuccess() {
-                    @Override public void onSuccess() {
+                    @Override
+                    public void onSuccess() {
                         if (G.onChannelAvatarAdd != null) {
 
                             G.handler.post(new Runnable() {
-                                @Override public void run() {
+                                @Override
+                                public void run() {
                                     G.onChannelAvatarAdd.onAvatarAdd(builder.getRoomId(), builder.getAvatar());
                                 }
                             });
@@ -58,7 +63,8 @@ public class ChannelAvatarAddResponse extends MessageHandler {
                         realm.close();
                     }
                 }, new Realm.Transaction.OnError() {
-                    @Override public void onError(Throwable error) {
+                    @Override
+                    public void onError(Throwable error) {
                         realm.close();
                     }
                 });
@@ -66,11 +72,13 @@ public class ChannelAvatarAddResponse extends MessageHandler {
         });
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

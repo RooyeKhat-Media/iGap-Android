@@ -17,13 +17,15 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import net.iGap.G;
 import net.iGap.R;
-import net.iGap.helper.FontCache;
+import net.iGap.adapter.items.chat.ViewMaker;
 
 public class AvlDirectCall extends LinearLayout {
 
@@ -53,37 +55,117 @@ public class AvlDirectCall extends LinearLayout {
 
     private void init(Context context) {
 
-        TextView txtDirect1 = (TextView) makeHeaderTextView(context);
-        TextView txtDirect2 = (TextView) makeHeaderTextView(context);
-        TextView txtDirect3 = (TextView) makeHeaderTextView(context);
+        int time = 250;
 
-        addAnimation(txtDirect1, 0);
-        addAnimation(txtDirect2, 250);
-        addAnimation(txtDirect3, 500);
+        final TextView txtDirect2 = (TextView) makeHeaderTextView(context);
+        final TextView txtDirect3 = (TextView) makeHeaderTextView(context);
+        final TextView txtDirect4 = (TextView) makeHeaderTextView(context);
 
-        this.addView(txtDirect1);
+        final Animation fadeIn2 = new AlphaAnimation(0, 1);
+        fadeIn2.setDuration(time);
+
+        final Animation fadeIn3 = new AlphaAnimation(0, 1);
+        fadeIn3.setDuration(time);
+
+        final Animation fadeIn4 = new AlphaAnimation(0, 1);
+        fadeIn4.setDuration(time);
+
+        txtDirect4.setAnimation(fadeIn4);
+
+        fadeIn4.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                txtDirect3.startAnimation(fadeIn3);
+                txtDirect4.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        fadeIn3.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                txtDirect2.startAnimation(fadeIn2);
+                txtDirect3.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        fadeIn2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                txtDirect4.setVisibility(INVISIBLE);
+                txtDirect3.setVisibility(INVISIBLE);
+
+                txtDirect4.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtDirect4.startAnimation(fadeIn4);
+                    }
+                }, 750);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+
+
+
+
         this.addView(txtDirect2);
         this.addView(txtDirect3);
+        this.addView(txtDirect4);
     }
 
     private View makeHeaderTextView(Context context) {
 
         TextView textView = new TextView(context);
-        textView.setTextColor(Color.parseColor("#312B30"));
-        textView.setTextSize(context.getResources().getDimension(R.dimen.dp14));
-        textView.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setTextColor(Color.parseColor("#ffffff"));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.dp16));
+        LinearLayoutCompat.LayoutParams lp = new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(lp);
+        textView.setPadding(0, -(ViewMaker.i_Dp(R.dimen.dp6)), 0, -(ViewMaker.i_Dp(R.dimen.dp6)));
         textView.setText(R.string.md_expand_arrow);
-        textView.setTypeface(FontCache.get("fonts/MaterialIcons-Regular.ttf", context));
+        textView.setVisibility(INVISIBLE);
+        textView.setTypeface(G.typeface_Fontico);
+
 
         return textView;
     }
 
-    private void addAnimation(View view, int start) {
+    private void getAnimation(View view, int start) {
 
-        Animation fadeIn = new AlphaAnimation(.4f, 1);
+        Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setStartOffset(start);
-        fadeIn.setDuration(750);
-        fadeIn.setRepeatCount(Animation.REVERSE);
+        // fadeIn.setDuration(600);
+        // fadeIn.setRepeatCount(Animation.REVERSE);
         fadeIn.setRepeatCount(Animation.INFINITE);
 
         view.setAnimation(fadeIn);

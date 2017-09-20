@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatDrawableManager;
 
 /* * This is the source code of iGap for Android
  * It is licensed under GNU AGPL v3.0
@@ -19,7 +19,7 @@ public final class AndroidUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return context.getResources().getDrawable(res, context.getTheme());
         } else {
-            return ContextCompat.getDrawable(context, res);
+            return AppCompatDrawableManager.get().getDrawable(context, res);
         }
     }
 }

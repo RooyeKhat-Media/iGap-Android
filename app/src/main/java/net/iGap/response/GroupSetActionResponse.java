@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import android.util.Log;
 import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.helper.HelperGetAction;
@@ -33,7 +32,6 @@ public class GroupSetActionResponse extends MessageHandler {
     @Override public void handler() {
         super.handler();
         final ProtoGroupSetAction.GroupSetActionResponse.Builder builder = (ProtoGroupSetAction.GroupSetActionResponse.Builder) message;
-        Log.i("VVV", "GroupSetActionResponse : " + builder.getAction());
 
         new Thread(new Runnable() {
             @Override public void run() {

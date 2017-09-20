@@ -16,22 +16,28 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import io.realm.Realm;
+import io.realm.RealmList;
 import java.io.File;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityChat;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.helper.HelperCalander;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.module.AppUtils;
 import net.iGap.module.MusicPlayer;
+import net.iGap.module.SUID;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmClientCondition;
+import net.iGap.realm.RealmClientConditionFields;
+import net.iGap.realm.RealmOfflineListen;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
 
@@ -39,54 +45,196 @@ import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> {
 
-    public VoiceItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    private long roomId;
+
+
+    public VoiceItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutVoice;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_voice;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(ViewHolder holder, final String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
         if (!TextUtils.isEmpty(localPath) && new File(localPath).exists()) {
             holder.mFilePath = localPath;
+            holder.musicSeekbar.setEnabled(true);
             holder.btnPlayMusic.setEnabled(true);
+
+            if (!mMessage.isSenderMe() && Build.VERSION.SDK_INT >= JELLY_BEAN) {
+                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
+            }
+            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.toolbar_background));
         } else {
+            holder.musicSeekbar.setEnabled(false);
             holder.btnPlayMusic.setEnabled(false);
+            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.gray_6c));
         }
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getVoiceItem());
+        }
+
+        holder.thumbnail = (ImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.author = (TextView) holder.itemView.findViewById(R.id.cslv_txt_author);
+        holder.btnPlayMusic = (TextView) holder.itemView.findViewById(R.id.csla_btn_play_music);
+        holder.txt_Timer = (TextView) holder.itemView.findViewById(R.id.csla_txt_timer);
+        holder.musicSeekbar = (SeekBar) holder.itemView.findViewById(R.id.csla_seekBar1);
+        holder.musicSeekbar.setTag(mMessage.messageID);
+        //tic = (ImageView) view.findViewById(R.id.cslr_txt_tic);
+
+        holder.complete = new OnComplete() {
+            @Override
+            public void complete(final boolean result, String messageOne, final String MessageTow) {
+
+                if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
+                    if (messageOne.equals("play")) {
+                        holder.btnPlayMusic.setText(R.string.md_play_arrow);
+                    } else if (messageOne.equals("pause")) {
+                        holder.btnPlayMusic.setText(R.string.md_pause_button);
+                    } else if (messageOne.equals("updateTime")) {
+
+                        if (result) {
+
+                            G.handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    if (mMessage.messageID.equals(MusicPlayer.messageId)) {
+                                        holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
+                                        if (HelperCalander.isLanguagePersian) {
+                                            holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
+                                        }
+                                        holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
+                                    }
+                                }
+                            });
+                        } else {
+                            holder.btnPlayMusic.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
+                                    if (HelperCalander.isLanguagePersian) {
+                                        holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
+                                    }
+                                    holder.musicSeekbar.setProgress(0);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        };
+
+        holder.itemView.findViewById(R.id.mainContainer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (holder.mFilePath.length() < 1) return;
+
+                G.chatUpdateStatusUtil.sendUpdateStatus(holder.mType, holder.mRoomId, Long.parseLong(holder.mMessageID), ProtoGlobal.RoomMessageStatus.LISTENED);
+
+                realmChat.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        final RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, holder.mRoomId).findFirst();
+
+                        if (realmClientCondition != null) {
+
+                            RealmOfflineListen realmOfflineListen = realm.createObject(RealmOfflineListen.class, SUID.id().get());
+                            realmOfflineListen.setOfflineListen(Long.parseLong(holder.mMessageID));
+                            if (realmClientCondition.getOfflineListen() != null) {
+                                realmClientCondition.getOfflineListen().add(realmOfflineListen);
+                            } else {
+                                RealmList<RealmOfflineListen> offlineSeenListen = new RealmList<>();
+                                offlineSeenListen.add(realmOfflineListen);
+                                realmClientCondition.setOfflineListen(offlineSeenListen);
+                            }
+                        }
+                    }
+                });
+
+                if (holder.mMessageID.equals(MusicPlayer.messageId)) {
+                    MusicPlayer.onCompleteChat = holder.complete;
+
+                    if (MusicPlayer.mp != null) {
+                        MusicPlayer.playAndPause();
+                    } else {
+                        MusicPlayer.startPlayer("", holder.mFilePath, FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, true, holder.mMessageID);
+                        messageClickListener.onPlayMusic(holder.mMessageID);
+                    }
+                } else {
+
+                    MusicPlayer.stopSound();
+                    MusicPlayer.onCompleteChat = holder.complete;
+                    MusicPlayer.startPlayer("", holder.mFilePath, FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, true, holder.mMessageID);
+                    messageClickListener.onPlayMusic(holder.mMessageID);
+
+                    holder.mTimeMusic = MusicPlayer.musicTime;
+                }
+            }
+        });
+
+        holder.musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (holder.mMessageID.equals(MusicPlayer.messageId)) {
+                        MusicPlayer.setMusicProgress(holder.musicSeekbar.getProgress());
+                    }
+                }
+                return false;
+            }
+        });
+
         super.bindView(holder, payloads);
 
         ProtoGlobal.RoomMessageType _type = mMessage.forwardedFrom != null ? mMessage.forwardedFrom.getMessageType() : mMessage.messageType;
-
+        holder.mType = type;
         AppUtils.rightFileThumbnailIcon(holder.thumbnail, _type, null);
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class)
+        holder.mRoomId = mMessage.roomId;
+
+        RealmRegisteredInfo registeredInfo = realmChat.where(RealmRegisteredInfo.class)
             .equalTo(RealmRegisteredInfoFields.ID, mMessage.forwardedFrom != null ? mMessage.forwardedFrom.getUserId() : Long.parseLong(mMessage.senderID))
             .findFirst();
 
         if (registeredInfo != null) {
-            holder.author.setText("Recorded By " + registeredInfo.getDisplayName());
+            holder.author.setText(G.context.getString(R.string.recorded_by) + " " + registeredInfo.getDisplayName());
         } else {
             holder.author.setText("");
         }
-
-        realm.close();
 
         final long _st = (int) ((mMessage.forwardedFrom != null ? mMessage.forwardedFrom.getAttachment().getDuration() : mMessage.attachment.duration) * 1000);
 
         holder.txt_Timer.setText("00/" + MusicPlayer.milliSecondsToTimer(_st));
 
-        if (mMessage.messageID.equals(MusicPlayer.messageId)) {
+        if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
             MusicPlayer.onCompleteChat = holder.complete;
 
             holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
@@ -111,20 +259,28 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
         if (HelperCalander.isLanguagePersian) holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
     }
 
-    @Override protected void updateLayoutForSend(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForSend(ViewHolder holder) {
         super.updateLayoutForSend(holder);
 
-        if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
-            holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
+        if (mMessage.isSenderMe() && ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.LISTENED) {
+            if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
+                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColor), PorterDuff.Mode.SRC_IN);
+            }
+            holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.iGapColor), android.graphics.PorterDuff.Mode.SRC_IN);
+        } else {
+            if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
+                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
+            }
+            holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
         }
 
-        holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-        holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.iGapColor));
         holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
         holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
     }
 
-    @Override protected void updateLayoutForReceive(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
 
         if (type == ProtoGlobal.Room.Type.CHANNEL) {
@@ -133,28 +289,23 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
             }
 
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.iGapColor));
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
             holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
         } else {
             if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
-                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
+                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
             }
 
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.green));
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.grayNewDarker));
             holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
         }
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected ImageView thumbnail;
+        //protected ImageView tic;
         protected TextView btnPlayMusic;
         protected SeekBar musicSeekbar;
         protected OnComplete complete;
@@ -163,77 +314,82 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
         protected String mFilePath = "";
         protected String mMessageID = "";
         protected String mTimeMusic = "";
+        protected long mRoomId;
+        protected ProtoGlobal.Room.Type mType;
 
         public ViewHolder(View view) {
             super(view);
-
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            author = (TextView) view.findViewById(R.id.cslv_txt_author);
-            btnPlayMusic = (TextView) view.findViewById(R.id.csla_btn_play_music);
-            txt_Timer = (TextView) view.findViewById(R.id.csla_txt_timer);
-            musicSeekbar = (SeekBar) view.findViewById(R.id.csla_seekBar1);
-
-            complete = new OnComplete() {
-                @Override public void complete(boolean result, String messageOne, final String MessageTow) {
-
-                    if (messageOne.equals("play")) {
-                        btnPlayMusic.setText(R.string.md_play_arrow);
-                    } else if (messageOne.equals("pause")) {
-                        btnPlayMusic.setText(R.string.md_pause_button);
-                    } else if (messageOne.equals("updateTime")) {
-                        txt_Timer.post(new Runnable() {
-                            @Override public void run() {
-                                txt_Timer.setText(MessageTow + "/" + mTimeMusic);
-
-                                if (HelperCalander.isLanguagePersian) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
-
-                                musicSeekbar.setProgress(MusicPlayer.musicProgress);
-                            }
-                        });
-                    }
-                }
-            };
-
-            btnPlayMusic.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-
-                    if (mFilePath.length() < 1) return;
-
-                    if (mMessageID.equals(MusicPlayer.messageId)) {
-                        MusicPlayer.onCompleteChat = complete;
-
-                        if (MusicPlayer.mp != null) {
-                            MusicPlayer.playAndPause();
-                        } else {
-                            MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
-                        }
-                    } else {
-
-                        MusicPlayer.stopSound();
-                        MusicPlayer.onCompleteChat = complete;
-                        MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
-
-                        mTimeMusic = MusicPlayer.musicTime;
-                    }
-                }
-            });
-
-            musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (mMessageID.equals(MusicPlayer.messageId)) {
-                            MusicPlayer.setMusicProgress(musicSeekbar.getProgress());
-                        }
-                    }
-                    return false;
-                }
-            });
+            /**
+             *  this commented code used with xml layout
+             */
+            //thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            //author = (TextView) view.findViewById(R.id.cslv_txt_author);
+            //btnPlayMusic = (TextView) view.findViewById(R.id.csla_btn_play_music);
+            //txt_Timer = (TextView) view.findViewById(R.id.csla_txt_timer);
+            //musicSeekbar = (SeekBar) view.findViewById(R.id.csla_seekBar1);
+            //
+            //complete = new OnComplete() {
+            //    @Override public void complete(boolean result, String messageOne, final String MessageTow) {
+            //
+            //        if (messageOne.equals("play")) {
+            //            btnPlayMusic.setText(R.string.md_play_arrow);
+            //        } else if (messageOne.equals("pause")) {
+            //            btnPlayMusic.setText(R.string.md_pause_button);
+            //        } else if (messageOne.equals("updateTime")) {
+            //            txt_Timer.post(new Runnable() {
+            //                @Override public void run() {
+            //                    txt_Timer.setText(MessageTow + "/" + mTimeMusic);
+            //
+            //                    if (HelperCalander.isLanguagePersian) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
+            //
+            //                    musicSeekbar.setProgress(MusicPlayer.musicProgress);
+            //                }
+            //            });
+            //        }
+            //    }
+            //};
+            //
+            //btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            //    @Override public void onClick(View v) {
+            //
+            //        if (mFilePath.length() < 1) return;
+            //
+            //        if (mMessageID.equals(MusicPlayer.messageId)) {
+            //            MusicPlayer.onCompleteChat = complete;
+            //
+            //            if (MusicPlayer.mp != null) {
+            //                MusicPlayer.playAndPause();
+            //            } else {
+            //                MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
+            //            }
+            //        } else {
+            //
+            //            MusicPlayer.stopSound();
+            //            MusicPlayer.onCompleteChat = complete;
+            //            MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
+            //
+            //            mTimeMusic = MusicPlayer.musicTime;
+            //        }
+            //    }
+            //});
+            //
+            //musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
+            //
+            //    @Override public boolean onTouch(View v, MotionEvent event) {
+            //
+            //        if (event.getAction() == MotionEvent.ACTION_UP) {
+            //            if (mMessageID.equals(MusicPlayer.messageId)) {
+            //                MusicPlayer.setMusicProgress(musicSeekbar.getProgress());
+            //            }
+            //        }
+            //        return false;
+            //    }
+            //});
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

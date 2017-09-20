@@ -19,7 +19,7 @@ public class RequestChannelCreate {
         builder.setName(name);
         builder.setDescription(description);
 
-        RequestWrapper requestWrapper = new RequestWrapper(400, builder);
+        RequestWrapper requestWrapper = new RequestWrapper(400, builder, name); // set name as identity because client need channel name for show correct log message.
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

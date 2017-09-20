@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Neo Visionaries Inc.
+ * Copyright (C) 2015-2017 Neo Visionaries Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package com.neovisionaries.ws.client;
 
 
 import com.neovisionaries.ws.client.StateManager.CloseInitiator;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -37,8 +36,7 @@ import static com.neovisionaries.ws.client.WebSocketState.CLOSED;
 import static com.neovisionaries.ws.client.WebSocketState.CLOSING;
 
 
-class ReadingThread extends Thread {
-    private final WebSocket mWebSocket;
+class ReadingThread extends WebSocketThread {
     private boolean mStopRequested;
     private WebSocketFrame mCloseFrame;
     private List<WebSocketFrame> mContinuation = new ArrayList<WebSocketFrame>();
@@ -51,22 +49,19 @@ class ReadingThread extends Thread {
 
 
     public ReadingThread(WebSocket websocket) {
-        super("ReadingThread");
+        super("ReadingThread", websocket, ThreadType.READING_THREAD);
 
-        mWebSocket = websocket;
         mPMCE = websocket.getPerMessageCompressionExtension();
     }
 
 
     @Override
-    public void run() {
+    public void runMain() {
         try {
             main();
         } catch (Throwable t) {
             // An uncaught throwable was detected in the reading thread.
-            WebSocketException cause = new WebSocketException(
-                    WebSocketError.UNEXPECTED_ERROR_IN_READING_THREAD,
-                    "An uncaught throwable was detected in the reading thread: " + t.getMessage(), t);
+            WebSocketException cause = new WebSocketException(WebSocketError.UNEXPECTED_ERROR_IN_READING_THREAD, "An uncaught throwable was detected in the reading thread: " + t.getMessage(), t);
 
             // Notify the listeners.
             ListenerManager manager = mWebSocket.getListenerManager();
@@ -218,9 +213,7 @@ class ReadingThread extends Thread {
             callOnTextMessage(message);
         } catch (Throwable t) {
             // Failed to convert payload data into a string.
-            WebSocketException wse = new WebSocketException(
-                    WebSocketError.TEXT_MESSAGE_CONSTRUCTION_ERROR,
-                    "Failed to convert payload data into a string: " + t.getMessage(), t);
+            WebSocketException wse = new WebSocketException(WebSocketError.TEXT_MESSAGE_CONSTRUCTION_ERROR, "Failed to convert payload data into a string: " + t.getMessage(), t);
 
             // Notify the listeners that text message construction failed.
             callOnError(wse);
@@ -312,9 +305,7 @@ class ReadingThread extends Thread {
                 return null;
             } else {
                 // Interruption occurred while a frame was being read from the web socket.
-                wse = new WebSocketException(
-                        WebSocketError.INTERRUPTED_IN_READING,
-                        "Interruption occurred while a frame was being read from the web socket: " + e.getMessage(), e);
+                wse = new WebSocketException(WebSocketError.INTERRUPTED_IN_READING, "Interruption occurred while a frame was being read from the web socket: " + e.getMessage(), e);
             }
         } catch (IOException e) {
             if (mStopRequested && isInterrupted()) {
@@ -323,9 +314,7 @@ class ReadingThread extends Thread {
                 return null;
             } else {
                 // An I/O error occurred while a frame was being read from the web socket.
-                wse = new WebSocketException(
-                        WebSocketError.IO_ERROR_IN_READING,
-                        "An I/O error occurred while a frame was being read from the web socket: " + e.getMessage(), e);
+                wse = new WebSocketException(WebSocketError.IO_ERROR_IN_READING, "An I/O error occurred while a frame was being read from the web socket: " + e.getMessage(), e);
             }
         } catch (WebSocketException e) {
             // A protocol error.
@@ -419,8 +408,7 @@ class ReadingThread extends Thread {
         }
 
         // The RSV1 bit of a frame is set unexpectedly.
-        throw new WebSocketException(
-                WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV1 bit of a frame is set unexpectedly.");
+        throw new WebSocketException(WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV1 bit of a frame is set unexpectedly.");
     }
 
 
@@ -452,8 +440,7 @@ class ReadingThread extends Thread {
         }
 
         // The RSV2 bit of a frame is set unexpectedly.
-        throw new WebSocketException(
-                WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV2 bit of a frame is set unexpectedly.");
+        throw new WebSocketException(WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV2 bit of a frame is set unexpectedly.");
     }
 
 
@@ -467,14 +454,13 @@ class ReadingThread extends Thread {
         }
 
         // The RSV3 bit of a frame is set unexpectedly.
-        throw new WebSocketException(
-                WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV3 bit of a frame is set unexpectedly.");
+        throw new WebSocketException(WebSocketError.UNEXPECTED_RESERVED_BIT, "The RSV3 bit of a frame is set unexpectedly.");
     }
 
 
     /**
      * Ensure that the opcode of the give frame is a known one.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, 5.2. Base Framing Protocol</p>
      * <p><i>
@@ -505,19 +491,17 @@ class ReadingThread extends Thread {
         }
 
         // A frame has an unknown opcode.
-        throw new WebSocketException(
-                WebSocketError.UNKNOWN_OPCODE,
-                "A frame has an unknown opcode: 0x" + Integer.toHexString(frame.getOpcode()));
+        throw new WebSocketException(WebSocketError.UNKNOWN_OPCODE, "A frame has an unknown opcode: 0x" + Integer.toHexString(frame.getOpcode()));
     }
 
 
     /**
      * Ensure that the given frame is not masked.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, 5.1. Overview:</p>
      * <p><i>
-     * A server MUST NOT isSecure any frames that it sends to the client.
+     * A server MUST NOT mask any frames that it sends to the client.
      * A client MUST close a connection if it detects a masked frame.
      * </i></p>
      * </blockquote>
@@ -526,9 +510,7 @@ class ReadingThread extends Thread {
         // If the frame is masked.
         if (frame.getMask()) {
             // A frame from the server is masked.
-            throw new WebSocketException(
-                    WebSocketError.FRAME_MASKED,
-                    "A frame from the server is masked.");
+            throw new WebSocketException(WebSocketError.FRAME_MASKED, "A frame from the server is masked.");
         }
     }
 
@@ -541,9 +523,7 @@ class ReadingThread extends Thread {
             // If fragmented.
             if (frame.getFin() == false) {
                 // A control frame is fragmented.
-                throw new WebSocketException(
-                        WebSocketError.FRAGMENTED_CONTROL_FRAME,
-                        "A control frame is fragmented.");
+                throw new WebSocketException(WebSocketError.FRAGMENTED_CONTROL_FRAME, "A control frame is fragmented.");
             }
 
             // No more requirements on a control frame.
@@ -558,9 +538,7 @@ class ReadingThread extends Thread {
             // There must already exist a continuation sequence.
             if (continuationExists == false) {
                 // A continuation frame was detected although a continuation had not started.
-                throw new WebSocketException(
-                        WebSocketError.UNEXPECTED_CONTINUATION_FRAME,
-                        "A continuation frame was detected although a continuation had not started.");
+                throw new WebSocketException(WebSocketError.UNEXPECTED_CONTINUATION_FRAME, "A continuation frame was detected although a continuation had not started.");
             }
 
             // No more requirements on a continuation frame.
@@ -571,9 +549,7 @@ class ReadingThread extends Thread {
 
         if (continuationExists) {
             // A non-control frame was detected although the existing continuation had not been closed.
-            throw new WebSocketException(
-                    WebSocketError.CONTINUATION_NOT_CLOSED,
-                    "A non-control frame was detected although the existing continuation had not been closed.");
+            throw new WebSocketException(WebSocketError.CONTINUATION_NOT_CLOSED, "A non-control frame was detected although the existing continuation had not been closed.");
         }
     }
 
@@ -600,9 +576,7 @@ class ReadingThread extends Thread {
 
         if (125 < payload.length) {
             // The payload size of a control frame exceeds the maximum size (125 bytes).
-            throw new WebSocketException(
-                    WebSocketError.TOO_LONG_CONTROL_FRAME_PAYLOAD,
-                    "The payload size of a control frame exceeds the maximum size (125 bytes): " + payload.length);
+            throw new WebSocketException(WebSocketError.TOO_LONG_CONTROL_FRAME_PAYLOAD, "The payload size of a control frame exceeds the maximum size (125 bytes): " + payload.length);
         }
     }
 
@@ -776,9 +750,7 @@ class ReadingThread extends Thread {
         }
 
         // Create a WebSocketException which has a cause.
-        WebSocketException wse = new WebSocketException(
-                WebSocketError.MESSAGE_CONSTRUCTION_ERROR,
-                "Failed to concatenate payloads of multiple frames to construct a message: " + cause.getMessage(), cause);
+        WebSocketException wse = new WebSocketException(WebSocketError.MESSAGE_CONSTRUCTION_ERROR, "Failed to concatenate payloads of multiple frames to construct a message: " + cause.getMessage(), cause);
 
         // Notify the listeners that message construction failed.
         callOnError(wse);
@@ -786,8 +758,7 @@ class ReadingThread extends Thread {
 
         // Create a close frame with a close code of 1009 which
         // indicates that the message is too big to process.
-        WebSocketFrame frame = WebSocketFrame
-                .createCloseFrame(WebSocketCloseCode.OVERSIZE, wse.getMessage());
+        WebSocketFrame frame = WebSocketFrame.createCloseFrame(WebSocketCloseCode.OVERSIZE, wse.getMessage());
 
         // Send the close frame.
         mWebSocket.sendFrame(frame);
@@ -828,8 +799,7 @@ class ReadingThread extends Thread {
 
         // Create a close frame with a close code of 1003 which
         // indicates that the message cannot be accepted.
-        WebSocketFrame frame = WebSocketFrame
-                .createCloseFrame(WebSocketCloseCode.UNACCEPTABLE, wse.getMessage());
+        WebSocketFrame frame = WebSocketFrame.createCloseFrame(WebSocketCloseCode.UNACCEPTABLE, wse.getMessage());
 
         // Send the close frame.
         mWebSocket.sendFrame(frame);
@@ -948,8 +918,7 @@ class ReadingThread extends Thread {
 
         // Create a pong frame which has the same payload as
         // the ping frame.
-        WebSocketFrame pong = WebSocketFrame
-                .createPongFrame(frame.getPayload());
+        WebSocketFrame pong = WebSocketFrame.createPongFrame(frame.getPayload());
 
         // Send the pong frame to the server.
         mWebSocket.sendFrame(pong);

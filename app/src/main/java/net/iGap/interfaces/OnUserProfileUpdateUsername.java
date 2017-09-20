@@ -14,4 +14,6 @@ public interface OnUserProfileUpdateUsername {
     void onUserProfileUpdateUsername(String username);
 
     void Error(int majorCode, int minorCode, int time);
+
+    void timeOut();
 }

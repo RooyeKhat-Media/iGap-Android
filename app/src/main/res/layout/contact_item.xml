@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingEnd="@dimen/dp20"
+    android:clickable="true"
     android:paddingLeft="@dimen/dp52"
     android:paddingRight="@dimen/dp20"
     >
@@ -60,6 +61,7 @@
                 android:singleLine="true"
                 android:text="@string/last_seen_recently"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textSize="@dimen/dp14"
                 android:textColor="#bbbbbb" />
 
         <View

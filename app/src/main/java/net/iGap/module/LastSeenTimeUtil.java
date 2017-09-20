@@ -116,8 +116,11 @@ public class LastSeenTimeUtil {
                     break;
             }
         } else {
-            //time = G.context.getResources().getString(R.string.last_seen) + " " + HelperCalander.checkHijriAndReturnTime(beforeMillis) + " " + exactlyTime;
-            time = HelperCalander.checkHijriAndReturnTime(beforeMillis) + " " + exactlyTime;
+            if (beforeMillis == 0) {
+                time = G.context.getResources().getString(R.string.last_seen_recently);
+            } else {
+                time = HelperCalander.checkHijriAndReturnTime(beforeMillis) + " " + exactlyTime;
+            }
         }
 
         if (HelperCalander.isLanguagePersian) {
@@ -142,8 +145,7 @@ public class LastSeenTimeUtil {
             long value = entry.getValue();
             RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
             if (realmRegisteredInfo != null) {
-                if (realmRegisteredInfo.getStatus() != null && realmRegisteredInfo.getMainStatus() != null && !realmRegisteredInfo.getStatus().equals("online") && !realmRegisteredInfo.getStatus()
-                    .equals("آنلاین") && !realmRegisteredInfo.getMainStatus().equals(ProtoGlobal.RegisteredUser.Status.LONG_TIME_AGO.toString())) {
+                if (realmRegisteredInfo.getStatus() != null && realmRegisteredInfo.getMainStatus() != null && !realmRegisteredInfo.getStatus().equals("online") && !realmRegisteredInfo.getStatus().equals("آنلاین") && !realmRegisteredInfo.getMainStatus().equals(ProtoGlobal.RegisteredUser.Status.LONG_TIME_AGO.toString())) {
                     String showLastSeen;
                     if (timeOut(realmRegisteredInfo.getLastSeen() * DateUtils.SECOND_IN_MILLIS)) {
                         showLastSeen = computeDays(realmRegisteredInfo.getLastSeen(), true);

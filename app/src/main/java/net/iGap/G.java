@@ -12,11 +12,15 @@ package net.iGap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -27,21 +31,35 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.crypto.spec.SecretKeySpec;
+import net.iGap.activities.ActivityCustomError;
+import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.helper.HelperNotificationAndBadge;
+import net.iGap.interfaces.FingerPrint;
+import net.iGap.interfaces.IActivityFinish;
+import net.iGap.interfaces.ICallFinish;
 import net.iGap.interfaces.IClientSearchUserName;
+import net.iGap.interfaces.IDispatchTochEvent;
+import net.iGap.interfaces.IMainFinish;
+import net.iGap.interfaces.IOnBackPressed;
+import net.iGap.interfaces.ISendPosition;
 import net.iGap.interfaces.ISignalingAccept;
 import net.iGap.interfaces.ISignalingCallBack;
-import net.iGap.interfaces.ISignalingCondidate;
+import net.iGap.interfaces.ISignalingCandidate;
+import net.iGap.interfaces.ISignalingErrore;
 import net.iGap.interfaces.ISignalingGetCallLog;
 import net.iGap.interfaces.ISignalingLeave;
 import net.iGap.interfaces.ISignalingOffer;
 import net.iGap.interfaces.ISignalingRinging;
-import net.iGap.interfaces.ISignalingSesionHold;
+import net.iGap.interfaces.ISignalingSessionHold;
+import net.iGap.interfaces.ITowPanModDesinLayout;
+import net.iGap.interfaces.OnBackgroundChanged;
+import net.iGap.interfaces.OnCallLeaveView;
 import net.iGap.interfaces.OnChangeUserPhotoListener;
 import net.iGap.interfaces.OnChannelAddAdmin;
 import net.iGap.interfaces.OnChannelAddMember;
@@ -87,6 +105,10 @@ import net.iGap.interfaces.OnDeleteChatFinishActivity;
 import net.iGap.interfaces.OnDraftMessage;
 import net.iGap.interfaces.OnFileDownloadResponse;
 import net.iGap.interfaces.OnFileDownloaded;
+import net.iGap.interfaces.OnGeoCommentResponse;
+import net.iGap.interfaces.OnGeoGetComment;
+import net.iGap.interfaces.OnGeoGetConfiguration;
+import net.iGap.interfaces.OnGetNearbyCoordinate;
 import net.iGap.interfaces.OnGetUserInfo;
 import net.iGap.interfaces.OnGetWallpaper;
 import net.iGap.interfaces.OnGroupAddAdmin;
@@ -111,12 +133,23 @@ import net.iGap.interfaces.OnHelperSetAction;
 import net.iGap.interfaces.OnInfoCountryResponse;
 import net.iGap.interfaces.OnInfoTime;
 import net.iGap.interfaces.OnLastSeenUpdateTiming;
+import net.iGap.interfaces.OnLocationChanged;
+import net.iGap.interfaces.OnMapClose;
+import net.iGap.interfaces.OnMapRegisterState;
+import net.iGap.interfaces.OnPushLoginToken;
+import net.iGap.interfaces.OnPushTwoStepVerification;
+import net.iGap.interfaces.OnQrCodeNewDevice;
 import net.iGap.interfaces.OnReceiveInfoLocation;
 import net.iGap.interfaces.OnReceivePageInfoTOS;
+import net.iGap.interfaces.OnRecoveryEmailToken;
+import net.iGap.interfaces.OnRecoverySecurityPassword;
 import net.iGap.interfaces.OnRefreshActivity;
+import net.iGap.interfaces.OnRegistrationInfo;
 import net.iGap.interfaces.OnSecuring;
+import net.iGap.interfaces.OnSecurityCheckPassword;
 import net.iGap.interfaces.OnSetAction;
 import net.iGap.interfaces.OnSetActionInRoom;
+import net.iGap.interfaces.OnTwoStepPassword;
 import net.iGap.interfaces.OnUpdateAvatar;
 import net.iGap.interfaces.OnUpdateUserStatusInChangePage;
 import net.iGap.interfaces.OnUpdating;
@@ -146,11 +179,14 @@ import net.iGap.interfaces.OnUserSessionTerminate;
 import net.iGap.interfaces.OnUserUpdateStatus;
 import net.iGap.interfaces.OnUserUsernameToId;
 import net.iGap.interfaces.OnUserVerification;
+import net.iGap.interfaces.OnVerifyNewDevice;
 import net.iGap.interfaces.OpenFragment;
+import net.iGap.interfaces.TwoStepSecurityConfirmEmail;
 import net.iGap.interfaces.UpdateListAfterKick;
 import net.iGap.module.ChatSendMessageUtil;
 import net.iGap.module.ChatUpdateStatusUtil;
 import net.iGap.module.ClearMessagesUtil;
+import net.iGap.module.MultiDexUtils;
 import net.iGap.module.StartupActions;
 import net.iGap.module.enums.ConnectionState;
 import net.iGap.proto.ProtoClientCondition;
@@ -162,6 +198,7 @@ public class G extends MultiDexApplication {
     public static Handler handler;
     public static LayoutInflater inflater;
     private Tracker mTracker;
+    //public static Realm mRealm;
 
     public static HelperNotificationAndBadge helperNotificationAndBadge;
     public static ConcurrentHashMap<String, RequestWrapper> requestQueueMap = new ConcurrentHashMap<>();
@@ -174,15 +211,18 @@ public class G extends MultiDexApplication {
     public static ArrayList<Long> deletedRoomList = new ArrayList<>();
 
     public static ArrayList<String> unSecure = new ArrayList<>();
+    public static ArrayList<String> unSecureResponseActionId = new ArrayList<>();
     public static ArrayList<String> unLogin = new ArrayList<>();// list of actionId that can be doing without secure
     public static ArrayList<String> waitingActionIds = new ArrayList<>();
+    public static ArrayList<String> generalImmovableClasses = new ArrayList<>();
 
     public static HashMap<Integer, String> lookupMap = new HashMap<>();
     public static HashMap<String, ArrayList<Object>> requestQueueRelationMap = new HashMap<>();
     public static HashMap<Long, HelperLogMessage.StructLog> logMessageUpdatList = new HashMap<>();
 
     public static Activity currentActivity;
-    public static Activity latestActivity;
+    public static FragmentActivity fragmentActivity;
+    public static String latestActivityName;
 
     public static File IMAGE_NEW_GROUP;
     public static File IMAGE_NEW_CHANEL;
@@ -215,7 +255,7 @@ public class G extends MultiDexApplication {
     public static boolean isChangeScrFg = false;
     public static boolean isUserStatusOnline = false;
     public static boolean isSecure = false;
-    public static boolean allowForConnect = true; //
+    public static boolean allowForConnect = true; //set allowForConnect to realm , if don't set client try for connect
     public static boolean userLogin = false;
     public static boolean socketConnection = false;
     public static boolean canRunReceiver = false;
@@ -229,15 +269,31 @@ public class G extends MultiDexApplication {
     public static boolean showSenderNameInGroup = false;
     public static boolean needGetSignalingConfiguration = true;
     public static boolean isInCall = false;
+    public static boolean isShowRatingDialog = false;
+
+    public static boolean isUpdateNotificaionColorMain = false;
+    public static boolean isUpdateNotificaionColorChannel = false;
+    public static boolean isUpdateNotificaionColorGroup = false;
+    public static boolean isUpdateNotificaionColorChat = false;
+    public static boolean isUpdateNotificaionCall = false;
+
+    public static boolean twoPaneMode = false;
+    public static boolean isLandscape = false;
+    public static boolean isAppRtl = false;
+
+
+    public static String salectedTabInMainActivity = "";
 
     public static int ivSize;
     public static int userTextSize = 0;
     public static int COPY_BUFFER_SIZE = 1024;
     public static boolean isCalculatKeepMedia = true;
+    public static int maxChatBox = 0;
 
     public static long currentTime;
     public static long userId;
     public static long latestHearBeatTime = System.currentTimeMillis();
+    public static long latestResponse = System.currentTimeMillis();
     public static long serverHeartBeatTiming = 60 * 1000;
 
     public static ClearMessagesUtil clearMessagesUtil = new ClearMessagesUtil();
@@ -351,21 +407,76 @@ public class G extends MultiDexApplication {
     public static OnUserContactsUnBlock onUserContactsUnBlock;
     public static OnClientCondition onClientCondition;
     public static OnGetWallpaper onGetWallpaper;
+    public static OnTwoStepPassword onTwoStepPassword;
+    public static TwoStepSecurityConfirmEmail twoStepSecurityConfirmEmail;
+    public static OnSecurityCheckPassword onSecurityCheckPassword;
+    public static OnRecoverySecurityPassword onRecoverySecurityPassword;
+    public static OnRecoveryEmailToken onRecoveryEmailToken;
+    public static OnQrCodeNewDevice onQrCodeNewDevice;
+    public static OnVerifyNewDevice onVerifyNewDevice;
+    public static OnPushLoginToken onPushLoginToken;
+    public static OnPushTwoStepVerification onPushTwoStepVerification;
+    public static OnBackgroundChanged onBackgroundChanged;
     public static IClientSearchUserName onClientSearchUserName;
+    public static OnCallLeaveView onCallLeaveView;
+    public static ICallFinish iCallFinishChat;
+    public static ICallFinish iCallFinishMain;
+    public static IMainFinish iMainFinish;
+    public static IActivityFinish iActivityFinish;
+
+    public static IDispatchTochEvent dispatchTochEventChat;
+    public static IOnBackPressed onBackPressedChat;
+    public static ISendPosition iSendPositionChat;
+    public static ITowPanModDesinLayout iTowPanModDesinLayout;
+
+    public static IOnBackPressed onBackPressedExplorer;
+
+    public static OnLocationChanged onLocationChanged;
+    public static OnGetNearbyCoordinate onGetNearbyCoordinate;
+    public static OnGeoGetComment onGeoGetComment;
+    public static OnMapRegisterState onMapRegisterState;
+    public static OnMapClose onMapClose;
+    public static OnRegistrationInfo onRegistrationInfo;
+    public static OnGeoCommentResponse onGeoCommentResponse;
+    public static OnGeoGetConfiguration onGeoGetConfiguration;
 
     public static ISignalingOffer iSignalingOffer;
     public static ISignalingRinging iSignalingRinging;
     public static ISignalingAccept iSignalingAccept;
-    public static ISignalingCondidate iSignalingCondidate;
+    public static ISignalingCandidate iSignalingCandidate;
     public static ISignalingLeave iSignalingLeave;
-    public static ISignalingSesionHold iSignalingSesionHold;
+    public static ISignalingSessionHold iSignalingSessionHold;
     public static ISignalingGetCallLog iSignalingGetCallLog;
     public static ISignalingCallBack iSignalingCallBack;
+    public static ISignalingErrore iSignalingErrore;
+
+    public static Typeface typeface_IRANSansMobile;
+    public static Typeface typeface_IRANSansMobile_Bold;
+    public static Typeface typeface_Fontico;
+    public static Typeface typeface_neuropolitical;
+    public static boolean isPassCode;
+    public static FingerPrint fingerPrint;
+
+    public static boolean isFragmentMapActive = false; // for check network
+    public static boolean isRestartActivity = false; // for check passCode
+    public static boolean isFirstPassCode = true; // for check passCode
+
+    public static FragmentManager fragmentManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+
+        G.firstTimeEnterToApp = true;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Fabric.with(getApplicationContext(), new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+                CaocConfig.Builder.create().backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT).showErrorDetails(false).showRestartButton(true).trackActivities(true).restartActivity(ActivityMain.class).errorActivity(ActivityCustomError.class).apply();
+            }
+        }).start();
+
 
         context = getApplicationContext();
         handler = new Handler();
@@ -377,7 +488,8 @@ public class G extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+        //MultiDex.install(this);
+        new MultiDexUtils().getLoadedExternalDexClasses(this);
     }
 
     synchronized public Tracker getDefaultTracker() {
@@ -386,5 +498,19 @@ public class G extends MultiDexApplication {
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return mTracker;
+    }
+
+    public static void checkLanguage() {
+        try {
+            String selectedLanguage = G.selectedLanguage;
+            if (selectedLanguage == null) return;
+            Locale locale = new Locale(selectedLanguage);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -13,7 +13,7 @@ package net.iGap.request;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupSendMessage;
 
-public class RequestGroupSendMessage { //
+public class RequestGroupSendMessage {
     ProtoGroupSendMessage.GroupSendMessage.Builder groupSendMessage;
 
     public RequestGroupSendMessage newBuilder(ProtoGlobal.RoomMessageType messageType, long roomId) {

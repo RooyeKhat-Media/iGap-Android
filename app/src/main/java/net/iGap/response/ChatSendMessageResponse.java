@@ -14,6 +14,7 @@ import net.iGap.G;
 import net.iGap.helper.HelperMessageResponse;
 import net.iGap.proto.ProtoChatSendMessage;
 import net.iGap.proto.ProtoError;
+import net.iGap.proto.ProtoGlobal;
 
 import static net.iGap.realm.RealmRoomMessage.makeFailed;
 
@@ -31,13 +32,15 @@ public class ChatSendMessageResponse extends MessageHandler {
         this.message = protoClass;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoChatSendMessage.ChatSendMessageResponse.Builder builder = (ProtoChatSendMessage.ChatSendMessageResponse.Builder) message;
-        HelperMessageResponse.handleMessage(builder.getRoomId(), builder.getRoomMessage(), builder.getResponse(), this.identity);
+        HelperMessageResponse.handleMessage(builder.getRoomId(), builder.getRoomMessage(), ProtoGlobal.Room.Type.CHAT, builder.getResponse(), this.identity);
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         makeFailed(Long.parseLong(identity));
 
@@ -51,7 +54,8 @@ public class ChatSendMessageResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 }

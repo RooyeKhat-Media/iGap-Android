@@ -46,6 +46,9 @@ public class UserProfileUpdateUsernameResponse extends MessageHandler {
 
     @Override public void timeOut() {
         super.timeOut();
+
+        if (G.onUserProfileUpdateUsername != null) G.onUserProfileUpdateUsername.timeOut();
+
     }
 
     @Override public void error() {

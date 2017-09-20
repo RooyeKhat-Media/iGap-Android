@@ -28,15 +28,19 @@ public class UserSessionLogoutResponse extends MessageHandler {
 
     @Override public void handler() {
         super.handler();
-        G.onUserSessionLogout.onUserSessionLogout();
+        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onUserSessionLogout();
     }
 
     @Override public void timeOut() {
         super.timeOut();
+        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onTimeOut();
     }
 
     @Override public void error() {
         super.error();
+
+        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onError();
+
     }
 }
 

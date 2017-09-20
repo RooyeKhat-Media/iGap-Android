@@ -25,7 +25,7 @@ import java.util.Map;
  * <a href="https://tools.ietf.org/html/rfc7692">RFC 7692</a>).
  *
  * @see <a href="https://tools.ietf.org/html/rfc7692#section-7"
- * >7&#46; The "permessage-deflate" Extension in RFC 7692</a>
+ *      >7&#46; The "permessage-deflate" Extension in RFC 7692</a>
  */
 class PerMessageDeflateExtension extends PerMessageCompressionExtension {
     private static final String SERVER_NO_CONTEXT_TAKEOVER = "server_no_context_takeover";
@@ -100,9 +100,7 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension {
             mClientWindowSize = computeWindowSize(key, value);
         } else {
             // permessage-deflate extension contains an unsupported parameter.
-            throw new WebSocketException(
-                    WebSocketError.PERMESSAGE_DEFLATE_UNSUPPORTED_PARAMETER,
-                    "permessage-deflate extension contains an unsupported parameter: " + key);
+            throw new WebSocketException(WebSocketError.PERMESSAGE_DEFLATE_UNSUPPORTED_PARAMETER, "permessage-deflate extension contains an unsupported parameter: " + key);
         }
     }
 
@@ -127,8 +125,7 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension {
                     "The value of %s parameter of permessage-deflate extension is invalid: %s",
                     key, value);
 
-            throw new WebSocketException(
-                    WebSocketError.PERMESSAGE_DEFLATE_INVALID_MAX_WINDOW_BITS, message);
+            throw new WebSocketException(WebSocketError.PERMESSAGE_DEFLATE_INVALID_MAX_WINDOW_BITS, message);
         }
 
         return bits;
@@ -371,8 +368,7 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension {
     }
 
 
-    private static boolean skipBlock(
-            ByteArray input, int[] bitIndex, boolean[] hasEmptyBlock) throws FormatException {
+    private static boolean skipBlock(ByteArray input, int[] bitIndex, boolean[] hasEmptyBlock) throws FormatException {
         // Each block has a block header which consists of 3 bits.
         // See 3.2.3. of RFC 1951.
 
@@ -499,9 +495,7 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension {
     }
 
 
-    private static void skipData(
-            ByteArray input, int[] bitIndex,
-            Huffman literalLengthHuffman, Huffman distanceHuffman) throws FormatException {
+    private static void skipData(ByteArray input, int[] bitIndex, Huffman literalLengthHuffman, Huffman distanceHuffman) throws FormatException {
         // 3.2.5 Compressed blocks (length and distance codes)
 
         while (true) {

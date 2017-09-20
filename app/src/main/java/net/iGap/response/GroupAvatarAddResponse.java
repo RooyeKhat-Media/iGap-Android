@@ -41,7 +41,7 @@ public class GroupAvatarAddResponse extends MessageHandler {
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override public void execute(Realm realm) {
-                        RealmAvatar.put(groupAvatarAddResponse.getRoomId(), groupAvatarAddResponse.getAvatar(), true);
+                        RealmAvatar.putAndGet(realm, groupAvatarAddResponse.getRoomId(), groupAvatarAddResponse.getAvatar());
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override public void onSuccess() {

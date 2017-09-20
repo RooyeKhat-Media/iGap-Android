@@ -11,6 +11,7 @@
 package net.iGap.response;
 
 import net.iGap.helper.HelperMessageResponse;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupSendMessage;
 
 import static net.iGap.realm.RealmRoomMessage.makeFailed;
@@ -33,7 +34,7 @@ public class GroupSendMessageResponse extends MessageHandler {
     public void handler() {
         super.handler();
         final ProtoGroupSendMessage.GroupSendMessageResponse.Builder builder = (ProtoGroupSendMessage.GroupSendMessageResponse.Builder) message;
-        HelperMessageResponse.handleMessage(builder.getRoomId(), builder.getRoomMessage(), builder.getResponse(), this.identity);
+        HelperMessageResponse.handleMessage(builder.getRoomId(), builder.getRoomMessage(), ProtoGlobal.Room.Type.GROUP, builder.getResponse(), this.identity);
     }
 
     @Override

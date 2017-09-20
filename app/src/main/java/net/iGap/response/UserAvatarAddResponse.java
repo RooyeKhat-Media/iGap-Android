@@ -39,7 +39,7 @@ public class UserAvatarAddResponse extends MessageHandler {
 
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override public void execute(Realm realm) {
-                            RealmAvatar.put(G.userId, userAvatarAddResponse.getAvatar(), true);
+                            RealmAvatar.putAndGet(realm, G.userId, userAvatarAddResponse.getAvatar());
                         }
                     });
 

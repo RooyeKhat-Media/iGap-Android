@@ -28,22 +28,22 @@ public class UserContactsEditResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserContactsEdit.UserContactsEditResponse.Builder builder = (ProtoUserContactsEdit.UserContactsEditResponse.Builder) message;
-
-        long phone = builder.getPhone();
-        String first_name = builder.getFirstName();
-        String last_name = builder.getLastName();
-        G.onUserContactEdit.onContactEdit(first_name, last_name);
+        //long phone = builder.getPhone();
+        G.onUserContactEdit.onContactEdit(builder.getFirstName(), builder.getLastName(), builder.getInitials());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         G.onUserContactEdit.onContactEditTimeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int MajorCode = errorResponse.getMajorCode();

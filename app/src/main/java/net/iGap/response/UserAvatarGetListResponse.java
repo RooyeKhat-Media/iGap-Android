@@ -11,7 +11,6 @@
 package net.iGap.response;
 
 import io.realm.Realm;
-import net.iGap.module.SUID;
 import net.iGap.module.enums.AttachmentFor;
 import net.iGap.proto.ProtoUserAvatarGetList;
 import net.iGap.realm.RealmAttachment;
@@ -48,7 +47,6 @@ public class UserAvatarGetListResponse extends MessageHandler {
                 for (int i = 0; i < builder.getAvatarList().size(); i++) {
                     RealmAvatar realmAvatar = realm.createObject(RealmAvatar.class, builder.getAvatarList().get(i).getId());
                     realmAvatar.setOwnerId(userId);
-                    realmAvatar.setUid(SUID.id().get());
                     realmAvatar.setFile(RealmAttachment.build(builder.getAvatarList().get(i).getFile(), AttachmentFor.AVATAR, null));
                 }
             }

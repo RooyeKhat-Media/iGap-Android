@@ -15,11 +15,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import net.iGap.G;
 import net.iGap.R;
 
-public class CustomCircleImage extends ImageView {
+public class CustomCircleImage extends android.support.v7.widget.AppCompatImageView {
 
     private static final int CIRCLE_RADIUS = (int) G.context.getResources().getDimension(R.dimen.dp12);
     private static final int CIRCLE_SPACE = (int) G.context.getResources().getDimension(R.dimen.dp16);
@@ -53,12 +52,12 @@ public class CustomCircleImage extends ImageView {
 
         fiiPain = new Paint();
         fiiPain.setStyle(Paint.Style.FILL);
-        fiiPain.setColor(Color.parseColor(("#31BCB6")));
+        fiiPain.setColor(Color.parseColor(G.appBarColor));
         fiiPain.setAntiAlias(true);
 
         strokePain = new Paint();
         strokePain.setStyle(Paint.Style.STROKE);
-        strokePain.setColor(Color.parseColor(("#31BCB6")));
+        strokePain.setColor(Color.parseColor(("#7e7e7e")));
         strokePain.setAntiAlias(true);
 
         screenWidth = G.context.getResources().getDisplayMetrics().widthPixels;

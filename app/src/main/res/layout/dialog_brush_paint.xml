@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     android:layoutDirection="ltr"
+    android:clickable="true"
     android:orientation="horizontal"
     android:weightSum="10">
 

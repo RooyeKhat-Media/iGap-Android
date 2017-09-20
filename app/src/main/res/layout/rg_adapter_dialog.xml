@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="@null"
+    android:clickable="true"
     android:layoutDirection="ltr"
     android:orientation="vertical">
 
@@ -17,5 +18,6 @@
         android:layoutDirection="ltr"
         android:paddingLeft="@dimen/dp20"
         android:paddingRight="@dimen/dp20"
+        android:textSize="@dimen/dp14"
         android:text="New RadioButton" />
 </LinearLayout>

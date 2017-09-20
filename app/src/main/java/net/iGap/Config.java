@@ -36,7 +36,7 @@ public class Config {
     public static final int LAST_SEEN_DELAY_CHECKING = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int LAST_SEEN_TIME_OUT = (int) (60 * DateUtils.MINUTE_IN_MILLIS); // after this time show exactly time instead of minutes
     public static final int GROUP_SHOW_ACTIONS_COUNT = 3;
-    public static final int IMAGE_CORNER = 15;
+    public static final int IMAGE_CORNER = 7;
     public static final int TRY_CONNECTION_COUNT = 5;
     public static final int GET_CONTACT_LIST_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int HEART_BEAT_CHECKING_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
@@ -45,24 +45,34 @@ public class Config {
     public static final int FAST_START_PAGE_TIME = (int) 20;
     public static final int LOW_START_PAGE_TIME = (int) 25;
     public static final int FETCH_CONTACT_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
+    public static final int LIMIT_GET_HISTORY_LOW = 10;
+    public static final int LIMIT_GET_HISTORY_NORMAL = 100;
 
-    public static String default_appBarColor = "#3dbcb3";
-    public static String default_notificationColor = "#f23131";
-    public static String default_toggleButtonColor = "#31bdb6";
-    public static String default_attachmentColor = "#31bdb6";
-    public static String default_headerTextColor = "#31bdb6";
-    public static String default_progressColor = "#41c6c4";
+    public static String default_appBarColor = "#00B0BF";
+    public static String default_notificationColor = "#e51c23";
+    public static String default_toggleButtonColor = "#00B0BF";
+    public static String default_attachmentColor = "#00B0BF";
+    public static String default_headerTextColor = "#00B0BF";
+    public static String default_progressColor = "#00B0BF";
 
     public static final String URL_WEBSOCKET = "wss://secure.igap.net/hybrid/";
+    public static final String URL_MAP = "https://c.tile.openstreetmap.org/";
 
-    public static final byte[] SALT = new byte[] {
-        -46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89
+    public static final String PUBLIC_KEY_CLIENT = "-----BEGIN PUBLIC KEY-----\n"
+            + "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo+inlAfd8Qior8IMKaJ+\n"
+            + "BREJcEc9J9RhHgh6g/LvHKsnMaiEbAL70jQBQTLpCRu5Cnpj20+isOi++Wtf/pIP\n"
+            + "FdJbD/1H+5jS+ja0RA6unp93DnBuYZ2JjV60vF3Ynj6F4Vr1ts5Xg5dJlEaOcOO2\n"
+            + "YzOU97ZGP0ozrXIT5S+Y0BC4M9ieQmlGREzt3UZlTBbyUYPS4mMFh88YcT3QTiTA\n"
+            + "k897qlJLxkYxVyAgwAD/0ihmWEkBQe9IxwVT/x5/QbixGSl4Zvd+5d+9sTZcSZQS\n"
+            + "iJInT4E6DcmgAVYu5jFMWJDTEuurOQZ1W4nbmGyoY1bZXaFoiMPfzy72VIddkoHg\n"
+            + "mwIDAQAB\n"
+            + "-----END PUBLIC KEY-----\n";
+
+    public static final byte[] SALT = new byte[]{
+            -46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89
     };
     public static final String BASE64_PUBLIC_KEY =
-        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsm4sNLgDVqPf0ZxLWH3vkB1mPzHIkGWIJtNelibcTtzhipRv0iHeS3Z0wzeQpwYcMbkWQ81+WtgJwxUujitPOZnHvBex8qQLJ2JH33DvevWOgLDWPKEnKlfdi3Qg09pfO/Bx7eoWznWhRR6ZNjRgzY+P/2AaW77/f3wq3XHbHldM3jUrqwValwrWrkigIR0MFTkaGkg11T9JCFvO/L/FaZCAybuutje+H1nmNav3r8Xv6eBYS0nSVEm0dm5h46ECQi9PIxOCSMJ1McZMRkb8UaCScCAxh6lkD9fgZrOT5XQa8EOSWOwHx"
-            + "+uQWdR0efHyYbdC3A8zoJZjxBVtvVnDYwIDAQAB";
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsm4sNLgDVqPf0ZxLWH3vkB1mPzHIkGWIJtNelibcTtzhipRv0iHeS3Z0wzeQpwYcMbkWQ81+WtgJwxUujitPOZnHvBex8qQLJ2JH33DvevWOgLDWPKEnKlfdi3Qg09pfO/Bx7eoWznWhRR6ZNjRgzY+P/2AaW77/f3wq3XHbHldM3jUrqwValwrWrkigIR0MFTkaGkg11T9JCFvO/L/FaZCAybuutje+H1nmNav3r8Xv6eBYS0nSVEm0dm5h46ECQi9PIxOCSMJ1McZMRkb8UaCScCAxh6lkD9fgZrOT5XQa8EOSWOwHx"
+                    + "+uQWdR0efHyYbdC3A8zoJZjxBVtvVnDYwIDAQAB";
 
-    public enum PutExtraKeys {
-        CHANNEL_PROFILE_ROOM_ID_LONG
-    }
 }

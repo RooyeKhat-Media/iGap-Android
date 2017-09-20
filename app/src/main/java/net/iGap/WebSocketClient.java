@@ -28,6 +28,8 @@ import net.iGap.request.RequestWrapper;
 import net.iGap.response.HandleResponse;
 
 import static net.iGap.Config.ALLOW_RECONNECT_AGAIN_NORMAL;
+import static net.iGap.G.latestHearBeatTime;
+import static net.iGap.G.latestResponse;
 
 public class WebSocketClient {
 
@@ -52,7 +54,8 @@ public class WebSocketClient {
             websocketFactory = new WebSocketFactory().setConnectionTimeout((int) (10 * DateUtils.SECOND_IN_MILLIS)).createSocket(Config.URL_WEBSOCKET);
             websocketFactory.addListener(new WebSocketAdapter() {
 
-                @Override public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception {
+                @Override
+                public void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception {
                     latestConnectionOpenTime = System.currentTimeMillis();
                     waitingForReconnecting = false;
                     if (G.isSecure) {
@@ -61,26 +64,32 @@ public class WebSocketClient {
                             webSocketClient.disconnect();
                         }
                     } else {
+                        latestHearBeatTime = System.currentTimeMillis();
+                        latestResponse = System.currentTimeMillis();
                         reconnectQueueLimitation = 0;
                         G.socketConnection = true;
                         HelperConnectionState.connectionState(ConnectionState.CONNECTING);
-                        //checkFirstResponse();
+                        checkFirstResponse();
                     }
 
                     super.onConnected(websocket, headers);
                 }
 
-                @Override public void onBinaryMessage(WebSocket websocket, final byte[] binary) throws Exception {
+                @Override
+                public void onBinaryMessage(WebSocket websocket, final byte[] binary) throws Exception {
                     new HandleResponse(binary).run();
                     super.onBinaryMessage(websocket, binary);
                 }
 
-                @Override public void onError(WebSocket websocket, WebSocketException cause) throws Exception {
+                @Override
+                public void onError(WebSocket websocket, WebSocketException cause) throws Exception {
+                    resetMainInfo();
                     reconnect(true);
                     super.onError(websocket, cause);
                 }
 
-                @Override public void onFrameSent(WebSocket websocket, WebSocketFrame frame) throws Exception {
+                @Override
+                public void onFrameSent(WebSocket websocket, WebSocketFrame frame) throws Exception {
                     super.onFrameSent(websocket, frame);
 
                     /**
@@ -89,20 +98,24 @@ public class WebSocketClient {
                     ((RequestWrapper) frame.getRequestWrapper()).time = System.currentTimeMillis();
                 }
 
-                @Override public void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception {
+                @Override
+                public void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception {
                     super.onStateChanged(websocket, newState);
                     connectionState = newState;
                 }
 
-                @Override public void onDisconnected(WebSocket websocket, com.neovisionaries.ws.client.WebSocketFrame serverCloseFrame, com.neovisionaries.ws.client.WebSocketFrame clientCloseFrame,
-                    boolean closedByServer) throws Exception {
+                @Override
+                public void onDisconnected(WebSocket websocket, com.neovisionaries.ws.client.WebSocketFrame serverCloseFrame, com.neovisionaries.ws.client.WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception {
                     allowForReconnecting = true;
                     G.socketConnection = false;
+                    resetMainInfo();
                     reconnect(true);
                     super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
                 }
 
-                @Override public void onConnectError(WebSocket websocket, WebSocketException exception) throws Exception {
+                @Override
+                public void onConnectError(WebSocket websocket, WebSocketException exception) throws Exception {
+                    resetMainInfo();
                     reconnect(true);
                     super.onConnectError(websocket, exception);
                 }
@@ -112,7 +125,8 @@ public class WebSocketClient {
         }
         final WebSocket finalWs = websocketFactory;
         Thread thread = new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (G.allowForConnect) {
                     try {
                         if (finalWs != null) {
@@ -161,7 +175,8 @@ public class WebSocketClient {
     private static void checkGetInstanceSuccessfully() {
 
         G.handler.postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (webSocketClient == null || !webSocketClient.isOpen()) {
                     reconnect(false);
                 }
@@ -181,15 +196,14 @@ public class WebSocketClient {
 
         if ((force || (webSocketClient == null || !webSocketClient.isOpen()))) {
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
 
-                    if (timeDifference(latestConnectionTryTiming) && connectionState != WebSocketState.CONNECTING && (connectionState != WebSocketState.OPEN || (HelperTimeOut.timeoutChecking(0,
-                        latestConnectionOpenTime, Config.CONNECTION_OPEN_TIME_OUT)))) {
+                    if (timeDifference(latestConnectionTryTiming) && connectionState != WebSocketState.CONNECTING && (connectionState != WebSocketState.OPEN || (HelperTimeOut.timeoutChecking(0, latestConnectionOpenTime, Config.CONNECTION_OPEN_TIME_OUT)))) {
                         if (reconnectQueueLimitation > 0) {
                             reconnectQueueLimitation--;
                         }
 
-                        HelperSetAction.clearAllActions();
                         if (allowForReconnecting) {
                             allowForReconnecting = false;
                             HelperConnectionState.connectionState(ConnectionState.CONNECTING);
@@ -224,7 +238,8 @@ public class WebSocketClient {
     private static void checkSocketConnection() {
         if (webSocketClient == null || !webSocketClient.isOpen()) {
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     if (timeDifference(latestConnectionTryTiming)) {
                         allowForReconnecting = true;
                         waitingForReconnecting = false;
@@ -273,7 +288,7 @@ public class WebSocketClient {
     }
 
     /**
-     * role back main data for preparation for reconnecting to socket
+     * role back main data for preparation reconnecting to socket
      */
 
     private static void resetWebsocketInfo() {
@@ -290,13 +305,22 @@ public class WebSocketClient {
     }
 
     /**
+     * reset some info after connection is lost
+     */
+
+    private static void resetMainInfo() {
+        HelperSetAction.clearAllActions();
+    }
+
+    /**
      * if not secure yet send fake message to server for securing preparation
      */
 
     private static void checkFirstResponse() {
 
         Thread thread = new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
 
                 while (G.symmetricKey == null && G.socketConnection) {
 
@@ -309,7 +333,8 @@ public class WebSocketClient {
                         }
 
                         G.handler.post(new Runnable() {
-                            @Override public void run() {
+                            @Override
+                            public void run() {
                                 if (G.symmetricKey == null && G.socketConnection) {
                                     WebSocket webSocket = WebSocketClient.getInstance();
                                     if (webSocket != null) {

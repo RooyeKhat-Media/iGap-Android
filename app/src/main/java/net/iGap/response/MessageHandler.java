@@ -12,9 +12,14 @@ package net.iGap.response;
 
 import android.support.annotation.CallSuper;
 import android.util.Log;
+import android.widget.Toast;
+import net.iGap.BuildConfig;
+import net.iGap.G;
+import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperError;
 import net.iGap.proto.ProtoError;
 
+import static net.iGap.G.latestResponse;
 import static net.iGap.helper.HelperTimeOut.heartBeatTimeOut;
 
 public abstract class MessageHandler {
@@ -29,23 +34,35 @@ public abstract class MessageHandler {
         this.identity = identity;
     }
 
-    @CallSuper public void handler() throws NullPointerException {
-        Log.i("MSGH", "MessageHandler handler : " + actionId + " || " + message);
-        //Log.i("LLL", "MessageHandler handler : " + actionId + " || Response => " + G.lookupMap.get(actionId));
+    @CallSuper
+    public void handler() throws NullPointerException {
+        if (BuildConfig.DEBUG) {
+            Log.i("MSGH", "MessageHandler handler : " + actionId + " || " + G.lookupMap.get(actionId) + " || " + message);
+        }
+        latestResponse = System.currentTimeMillis();
     }
 
-    @CallSuper public void timeOut() {
+    @CallSuper
+    public void timeOut() {
         if (heartBeatTimeOut()) {
-            Log.i("HHH", "heartBeatTimeOut");
-            //WebSocketClient.reconnect(true);
-        } else {
-            Log.i("HHH", "Not Time Out HeartBeat");
+            if (BuildConfig.DEBUG) {
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(G.context, "MessageHandler HeartBeat TimeOut", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            WebSocketClient.reconnect(true);
         }
-        Log.i("MSGT", "MessageHandler timeOut : " + actionId + " || " + message);
+        //if (BuildConfig.DEBUG) {
+        //    Log.i("MSGT", "MessageHandler timeOut : " + actionId + " || " + message);
+        //}
         error();
     }
 
-    @CallSuper public void error() {
+    @CallSuper
+    public void error() {
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
@@ -53,7 +70,8 @@ public abstract class MessageHandler {
 
         HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode));
 
-        Log.i("MSGE", "MessageHandler error : " + actionId + " || " + message);
-        //Log.i("LLL", "MessageHandler timeOut/error : " + actionId + " || Response => " + G.lookupMap.get(actionId) + " || code : " + majorCode + "," + minorCode + " || reason => " + errorResponse.getMessage());
+        if (BuildConfig.DEBUG) {
+            Log.i("MSGE", "MessageHandler error : " + actionId + " || " + G.lookupMap.get(actionId) + " || " + message);
+        }
     }
 }

@@ -14,10 +14,10 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityIntroduce;
+import net.iGap.activities.ActivityEnterPassCode;
 import net.iGap.activities.ActivityMain;
-import net.iGap.activities.ActivityProfile;
-import net.iGap.activities.ActivityRegister;
+import net.iGap.activities.ActivityManageSpace;
+import net.iGap.activities.ActivityRegisteration;
 import net.iGap.module.enums.ConnectionState;
 
 /**
@@ -28,6 +28,14 @@ public class HelperConnectionState {
     public static Snackbar snack = null;
 
     public static void connectionState(final ConnectionState connectionState) {
+
+        if (connectionState != ConnectionState.IGAP) {
+            if (G.onCallLeaveView != null) {
+                G.onCallLeaveView.onLeaveView("");
+            }
+        }
+
+
         if (HelperCheckInternetConnection.hasNetwork()) {
             if (G.onConnectionChangeState != null) {
                 G.onConnectionChangeState.onChangeState(connectionState);
@@ -39,12 +47,13 @@ public class HelperConnectionState {
             }
             G.connectionState = ConnectionState.WAITING_FOR_NETWORK;
         }
-
-        if (G.currentActivity != G.latestActivity) {
+        if (G.currentActivity != null && !G.currentActivity.getLocalClassName().equals(G.latestActivityName)) {
             G.latestConnectionState = ConnectionState.UPDATING;
         }
 
-        if (G.currentActivity instanceof ActivityMain || G.currentActivity instanceof ActivityIntroduce || G.currentActivity instanceof ActivityRegister || G.currentActivity instanceof ActivityProfile || connectionState == ConnectionState.IGAP || connectionState == ConnectionState.UPDATING) {
+        if ((G.currentActivity instanceof ActivityMain || G.currentActivity instanceof ActivityEnterPassCode || G.currentActivity instanceof ActivityRegisteration || G.currentActivity instanceof ActivityManageSpace) && (!G.isFragmentMapActive
+            || connectionState == ConnectionState.IGAP
+            || connectionState == ConnectionState.UPDATING)) {
 
             if (snack != null) {
                 if (snack.isShown()) {
@@ -56,12 +65,22 @@ public class HelperConnectionState {
 
             if (G.latestConnectionState != G.connectionState) {
 
-                G.latestActivity = G.currentActivity;
+                if (G.currentActivity != null) {
+                    G.latestActivityName = G.currentActivity.getLocalClassName();
+                }
                 G.latestConnectionState = G.connectionState;
                 String message = G.context.getResources().getString(R.string.waiting_for_network);
 
                 if (G.connectionState == ConnectionState.WAITING_FOR_NETWORK) {
                     message = G.context.getResources().getString(R.string.waiting_for_network);
+
+                    if (G.iCallFinishChat != null) {
+                        G.iCallFinishChat.onFinish();
+                    }
+                    if (G.iCallFinishMain != null) {
+                        G.iCallFinishMain.onFinish();
+                    }
+
                 } else if (G.connectionState == ConnectionState.CONNECTING) {
                     message = G.context.getResources().getString(R.string.connecting);
                 }

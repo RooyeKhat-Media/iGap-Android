@@ -13,6 +13,7 @@ package net.iGap.response;
 import io.realm.Realm;
 import net.iGap.proto.ProtoSignalingClearLog;
 import net.iGap.realm.RealmCallLog;
+import net.iGap.realm.RealmCallLogFields;
 
 public class SignalingClearLogResponse extends MessageHandler {
 
@@ -33,13 +34,13 @@ public class SignalingClearLogResponse extends MessageHandler {
         super.handler();
         ProtoSignalingClearLog.SignalingClearLogResponse.Builder builder = (ProtoSignalingClearLog.SignalingClearLogResponse.Builder) message;
 
-        // long clearId = builder.getClearId();
+        final long clearId = builder.getClearId();  // delete  all call logs smaller then clearId
 
         Realm realm = Realm.getDefaultInstance();
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override public void execute(Realm realm) {
-                realm.where(RealmCallLog.class).findAll().deleteAllFromRealm();
+                realm.where(RealmCallLog.class).lessThanOrEqualTo(RealmCallLogFields.ID, clearId).findAll().deleteAllFromRealm();
             }
         });
         realm.close();

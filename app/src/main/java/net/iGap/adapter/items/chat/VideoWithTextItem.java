@@ -11,18 +11,19 @@
 package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.helper.HelperRadius;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
@@ -31,48 +32,67 @@ import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class VideoWithTextItem extends AbstractMessage<VideoWithTextItem, VideoWithTextItem.ViewHolder> {
 
-    public VideoWithTextItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public VideoWithTextItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutVideoWithText;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_video_with_text;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getVideoItem(true));
+
+        }
+
+        holder.image = (ReserveSpaceRoundedImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.duration = (TextView) holder.itemView.findViewById(R.id.duration);
+        holder.image.setTag(getCacheId(mMessage));
+
         super.bindView(holder, payloads);
+
+        String text = "";
 
         if (mMessage.forwardedFrom != null) {
             if (mMessage.forwardedFrom.getAttachment() != null) {
-                holder.duration.setText(
-                    String.format(holder.itemView.getResources().getString(R.string.video_duration), AndroidUtils.formatDuration((int) (mMessage.forwardedFrom.getAttachment().getDuration() * 1000L)),
-                        AndroidUtils.humanReadableByteCount(mMessage.forwardedFrom.getAttachment().getSize(), true)));
+                holder.duration.setText(String.format(holder.itemView.getResources().getString(R.string.video_duration), AndroidUtils.formatDuration((int) (mMessage.forwardedFrom.getAttachment().getDuration() * 1000L)), AndroidUtils.humanReadableByteCount(mMessage.forwardedFrom.getAttachment().getSize(), true)));
             }
 
-            setTextIfNeeded(holder.messageText, mMessage.forwardedFrom.getMessage());
+            text = mMessage.forwardedFrom.getMessage();
         } else {
             if (mMessage.attachment != null) {
-                holder.duration.setText(String.format(holder.itemView.getResources().getString(R.string.video_duration), AndroidUtils.formatDuration((int) (mMessage.attachment.duration * 1000L)),
-                    AndroidUtils.humanReadableByteCount(mMessage.attachment.size, true) + " " + mMessage.attachment.compressing));
+                holder.duration.setText(String.format(holder.itemView.getResources().getString(R.string.video_duration), AndroidUtils.formatDuration((int) (mMessage.attachment.duration * 1000L)), AndroidUtils.humanReadableByteCount(mMessage.attachment.size, true) + " " + mMessage.attachment.compressing));
             }
+            text = mMessage.messageText;
+        }
 
-            setTextIfNeeded(holder.messageText, mMessage.messageText);
+        if (mMessage.hasEmojiInText) {
+            setTextIfNeeded((EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
         }
 
         if (!mMessage.hasLinkInMessage) {
-            holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
+            messageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     holder.itemView.performLongClick();
                     return false;
                 }
             });
 
-            holder.messageText.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+            messageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (!isSelected()) {
                         if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             return;
@@ -88,45 +108,43 @@ public class VideoWithTextItem extends AbstractMessage<VideoWithTextItem, VideoW
         }
     }
 
-    @Override public void onLoadThumbnailFromLocal(final ViewHolder holder, String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        if (fileType == LocalFileType.THUMBNAIL) {
+        if (holder.image != null && holder.image.getTag() != null && (holder.image.getTag()).equals(tag)) {
+            if (fileType == LocalFileType.THUMBNAIL) {
 
-            G.imageLoader.displayImage(suitablePath(localPath), holder.image);
+                G.imageLoader.displayImage(suitablePath(localPath), holder.image);
 
-            holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
-        } else {
+                holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
+            } else {
 
-            MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
-            AppUtils.setProgresColor(progress.progressBar);
+                MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
+                AppUtils.setProgresColor(progress.progressBar);
 
-            progress.setVisibility(View.VISIBLE);
-            progress.withDrawable(R.drawable.ic_play, true);
+                progress.setVisibility(View.VISIBLE);
+                progress.withDrawable(R.drawable.ic_play, true);
+            }
         }
-    }
-
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         protected ReserveSpaceRoundedImageView image;
         protected TextView duration;
-        protected EmojiTextView messageText;
 
         public ViewHolder(View view) {
             super(view);
-
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
-            image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
-            duration = (TextView) view.findViewById(R.id.duration);
-            messageText.setMovementMethod(LinkMovementMethod.getInstance());
+            /**
+             *  this commented code used with xml layout
+             */
+            //image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
+            //duration = (TextView) view.findViewById(R.id.duration);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

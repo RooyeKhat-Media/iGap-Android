@@ -28,6 +28,7 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnVoiceRecord;
+import net.iGap.proto.ProtoGlobal;
 
 public class VoiceRecord {
 
@@ -100,6 +101,10 @@ public class VoiceRecord {
 
     private void startRecording() {
 
+        if (G.onHelperSetAction != null) {
+            G.onHelperSetAction.onAction(ProtoGlobal.ClientAction.RECORDING_VOICE);
+        }
+
         outputFile = G.DIR_AUDIOS + "/" + "record_" + HelperString.getRandomFileName(3) + ".mp3";
 
         if (mediaRecorder != null) {
@@ -127,18 +132,20 @@ public class VoiceRecord {
     public void startVoiceRecord() {
 
         Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(200);
+        v.vibrate(35);
 
         canStop = false;
         startRecording();
         timertask = new TimerTask() {
 
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (state) {
 
                     imgPicRecord.post(new Runnable() {
 
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             imgPicRecord.setImageResource(R.mipmap.circle_white);
                             state = false;
                         }
@@ -146,7 +153,8 @@ public class VoiceRecord {
                 } else {
                     imgPicRecord.post(new Runnable() {
 
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             imgPicRecord.setImageResource(R.mipmap.circle_red);
                             state = true;
                         }
@@ -165,7 +173,8 @@ public class VoiceRecord {
             secendTimer = new Timer();
             secendTimer.schedule(new TimerTask() {
 
-                @Override public void run() {
+                @Override
+                public void run() {
 
                     secend++;
                     if (secend >= 60) {
@@ -181,7 +190,8 @@ public class VoiceRecord {
 
                     txtTimeRecord.post(new Runnable() {
 
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             String s = "";
                             if (minute < 10) {
                                 s += "0" + minute;
@@ -205,11 +215,13 @@ public class VoiceRecord {
         if (miliSecendTimer == null) {
             miliSecendTimer = new Timer();
             miliSecendTimer.schedule(new TimerTask() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     milisecend++;
                     if (milisecend >= 99) milisecend = 1;
                     txtMilisecend.post(new Runnable() {
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             if (milisecend < 10) {
                                 txtMilisecend.setText(":0" + milisecend + "");
                             } else {
@@ -234,7 +246,8 @@ public class VoiceRecord {
             case MotionEvent.ACTION_UP:
                 if (itemTag.equals("ivVoice")) {
                     new Handler().postDelayed(new Runnable() {
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             reset();
                         }
                     }, 100);
@@ -302,7 +315,6 @@ public class VoiceRecord {
         if (canStop) {
             stopVoiceRecord();
         }
-
         if (cansel) {
             if (onVoiceRecordListener != null) {
                 onVoiceRecordListener.onVoiceRecordCancel();
@@ -315,6 +327,10 @@ public class VoiceRecord {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            } else {
+                if (onVoiceRecordListener != null) {
+                    onVoiceRecordListener.onVoiceRecordCancel();
                 }
             }
         }

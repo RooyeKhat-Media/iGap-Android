@@ -13,6 +13,7 @@ package net.iGap.response;
 import io.realm.Realm;
 import io.realm.RealmList;
 import net.iGap.G;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupUpdateStatus;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.realm.RealmClientCondition;
@@ -65,11 +66,27 @@ public class GroupUpdateStatusResponse extends MessageHandler {
                     /**
                      * find message from database and update its status
                      */
-                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, builder.getMessageId()).findFirst();
+                    RealmRoomMessage roomMessage;
+                    if (builder.getStatus() != ProtoGlobal.RoomMessageStatus.LISTENED) {
+                        roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, builder.getMessageId()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.SEEN.toString()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.LISTENED.toString()).findFirst();
+                    } else {
+                        roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, builder.getMessageId()).findFirst();
+                    }
+
                     if (roomMessage != null) {
                         roomMessage.setStatus(builder.getStatus().toString());
+                        roomMessage.setStatusVersion(builder.getStatusVersion());
                         realm.copyToRealmOrUpdate(roomMessage);
 
+                        if (G.chatUpdateStatusUtil != null) {
+                            G.chatUpdateStatusUtil.onChatUpdateStatus(builder.getRoomId(), builder.getMessageId(), builder.getStatus(), builder.getStatusVersion());
+                        }
+                    } else if (builder.getStatus() == ProtoGlobal.RoomMessageStatus.SEEN) {
+                        /**
+                         * reason : getRoomList will be updated status in Realm and after that when
+                         * client get status here and was in chat will not be updated status in second
+                         * so i use from this block for avoid from this problem
+                         */
                         if (G.chatUpdateStatusUtil != null) {
                             G.chatUpdateStatusUtil.onChatUpdateStatus(builder.getRoomId(), builder.getMessageId(), builder.getStatus(), builder.getStatusVersion());
                         }

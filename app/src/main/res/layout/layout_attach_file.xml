@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
     android:orientation="vertical"
     >
 
@@ -44,13 +45,13 @@
           android:paddingRight="@dimen/dp8"
           android:text="@string/md_emoticon_with_happy_face"
           android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/gray_6c"
-          android:textSize="@dimen/dp28"
+          android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+          android:textSize="@dimen/dp20"
           style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
           />
 
 
-      <net.iGap.emoji.EmojiEditText
+      <net.iGap.module.EmojiEditTextE
           android:id="@+id/chl_edt_chat"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -58,10 +59,12 @@
           android:layout_weight="1"
           android:background="@null"
           android:gravity="bottom"
+          android:imeOptions="flagNoExtractUi"
           android:hint="@string/type_message"
           android:lineSpacingMultiplier=".8"
           android:maxLines="4"
           android:textColorHint="@color/light_gray"
+          android:textSize="@dimen/dp16"
           app:emojiSize="@dimen/dp26"
           />
 
@@ -74,7 +77,7 @@
           android:padding="@dimen/dp8"
           android:text="@string/md_send_button"
           android:textAppearance="@style/TextIconAppearance.all"
-          android:textSize="@dimen/dp28"
+          android:textSize="@dimen/dp20"
           android:visibility="gone"
           style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
           />
@@ -97,8 +100,8 @@
             android:rotation="135"
             android:text="@string/md_attachment_clip"
             android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/gray_6c"
-            android:textSize="@dimen/dp28"
+            android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+            android:textSize="@dimen/dp20"
             style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
             />
 
@@ -111,8 +114,8 @@
             android:padding="@dimen/dp8"
             android:text="@string/md_voice_message_microphone_button"
             android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/gray_6c"
-            android:textSize="@dimen/dp28"
+            android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+            android:textSize="@dimen/dp20"
             style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
             />
 

@@ -10,11 +10,7 @@
 
 package net.iGap.helper;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v4.util.ArrayMap;
-import android.view.View;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.io.File;
@@ -23,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import net.iGap.G;
-import net.iGap.R;
 import net.iGap.interfaces.OnFileDownloadResponse;
 import net.iGap.module.AndroidUtils;
 import net.iGap.proto.ProtoFileDownload;
@@ -85,9 +80,9 @@ public class HelperDownloadFile {
                         requestDownloadFile(item);
                     } else {
 
-                        for (UpdateListener listener : item.listeners) {
-                            if (listener != null) {
-                                listener.OnError(item.Token);
+                        for (StructListener mItem : item.structListeners) {
+                            if (mItem.listener != null) {
+                                mItem.listener.OnError(item.Token);
                             }
                         }
 
@@ -104,10 +99,21 @@ public class HelperDownloadFile {
         G.onFileDownloadResponse = onFileDownloadResponse;
     }
 
+    public static class StructListener {
+        public UpdateListener listener;
+        public String messageId;
+
+        public StructListener(UpdateListener listener, String messageId) {
+            this.listener = listener;
+            this.messageId = messageId;
+        }
+    }
+
     private static class StructDownLoad {
+
         public String Token = "";
         public String cashId = "";
-        public ArrayList<UpdateListener> listeners = new ArrayList<>();
+        public ArrayList<StructListener> structListeners = new ArrayList<>();
         public int progress = 0;
         public long offset = 0;
         public String name = "";
@@ -159,12 +165,16 @@ public class HelperDownloadFile {
         sq.primaryKey = primaryKey;
 
         for (int i = mQueue.size() - 1; i >= 0; i--) {
-            if (priority > mQueue.get(i).priority) {
-                continue;
-            } else {
-                mQueue.add(i + 1, sq);
-                additem = true;
-                break;
+            try {
+                if (priority > mQueue.get(i).priority) {
+                    continue;
+                } else {
+                    mQueue.add(i + 1, sq);
+                    additem = true;
+                    break;
+                }
+            } catch (NullPointerException e) {
+
             }
         }
 
@@ -173,7 +183,7 @@ public class HelperDownloadFile {
         }
     }
 
-    public static void startDownload(String token, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority,
+    public static void startDownload(String messageID, String token, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority,
         UpdateListener update) {
 
         StructDownLoad item;
@@ -185,7 +195,8 @@ public class HelperDownloadFile {
             item = new StructDownLoad();
             item.Token = token;
             item.cashId = cashId;
-            item.listeners.add(update);
+
+            item.structListeners.add(new StructListener(update, messageID));
             item.name = name;
             item.moveToDirectoryPAth = moveToDirectoryPAth;
             item.size = size;
@@ -193,7 +204,27 @@ public class HelperDownloadFile {
             list.put(primaryKey, item);
         } else {
             item = list.get(primaryKey);
-            item.listeners.add(update);
+
+            boolean needAdd = true;
+
+            if (update == null) {
+                needAdd = false;
+            } else {
+                for (StructListener structListener : item.structListeners) {
+
+                    if (structListener.messageId.equals(messageID)) {
+                        needAdd = false;
+                        structListener.listener = update;
+                        break;
+                    }
+                }
+            }
+
+            if (needAdd) {
+                item.structListeners.add(new StructListener(update, messageID));
+            }
+
+
             updateView(item);
 
             return;
@@ -250,10 +281,10 @@ public class HelperDownloadFile {
 
             StructDownLoad item = list.get(primaryKey);
 
-            if (item != null && item.listeners != null) {
-                for (UpdateListener listener : item.listeners) {
-                    if (listener != null) {
-                        listener.OnError(item.Token);
+            if (item != null && item.structListeners != null) {
+                for (StructListener mItem : item.structListeners) {
+                    if (mItem.listener != null) {
+                        mItem.listener.OnError(item.Token);
                     }
                 }
             }
@@ -385,12 +416,10 @@ public class HelperDownloadFile {
     }
 
     private static void updateView(final StructDownLoad item) {
-        for (UpdateListener listener : item.listeners) {
-            if (listener != null) {
-
+        for (StructListener mItem : item.structListeners) {
+            if (mItem.listener != null) {
                 String _path = item.moveToDirectoryPAth.length() > 0 ? item.moveToDirectoryPAth : item.path;
-
-                listener.OnProgress(_path, item.progress);
+                mItem.listener.OnProgress(_path, item.progress);
             }
         }
     }
@@ -407,98 +436,4 @@ public class HelperDownloadFile {
         return false;
     }
 
-    private void onError(int majorCode, int minorCode, final Context context) {
-        if (majorCode == 713 && minorCode == 1) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_713_1), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 713 && minorCode == 2) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_713_2), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 713 && minorCode == 3) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_713_3), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 713 && minorCode == 4) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_713_4), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 713 && minorCode == 5) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_713_5), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 714) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_714), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        } else if (majorCode == 715) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override public void run() {
-                    final Snackbar snack = Snackbar.make(((Activity) context).findViewById(android.R.id.content), context.getResources().getString(R.string.E_715), Snackbar.LENGTH_LONG);
-
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        }
-    }
 }

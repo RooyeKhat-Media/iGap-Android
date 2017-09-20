@@ -67,11 +67,11 @@ public final class ProtoUserProfileGetSelfRemove {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -91,16 +91,15 @@ public final class ProtoUserProfileGetSelfRemove {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
+      return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.Builder.class);
+      return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -111,7 +110,7 @@ public final class ProtoUserProfileGetSelfRemove {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -154,10 +153,10 @@ public final class ProtoUserProfileGetSelfRemove {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove other = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) obj;
+      net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove other = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -183,48 +182,43 @@ public final class ProtoUserProfileGetSelfRemove {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -235,7 +229,7 @@ public final class ProtoUserProfileGetSelfRemove {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -254,15 +248,14 @@ public final class ProtoUserProfileGetSelfRemove {
             // @@protoc_insertion_point(builder_implements:proto.UserProfileGetSelfRemove)
         net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.Builder.class);
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -288,23 +281,23 @@ public final class ProtoUserProfileGetSelfRemove {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemove_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.getDefaultInstance();
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove build() {
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove result = buildPartial();
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove build() {
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove buildPartial() {
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove result = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove(this);
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove buildPartial() {
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove result = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -338,16 +331,16 @@ public final class ProtoUserProfileGetSelfRemove {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) other);
+        if (other instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) {
+          return mergeFrom((net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove other) {
-            if (other == net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove other) {
+        if (other == net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -360,11 +353,11 @@ public final class ProtoUserProfileGetSelfRemove {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parsedMessage = null;
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -374,9 +367,8 @@ public final class ProtoUserProfileGetSelfRemove {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -388,7 +380,7 @@ public final class ProtoUserProfileGetSelfRemove {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -428,7 +420,7 @@ public final class ProtoUserProfileGetSelfRemove {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -468,7 +460,7 @@ public final class ProtoUserProfileGetSelfRemove {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -476,8 +468,7 @@ public final class ProtoUserProfileGetSelfRemove {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -501,10 +492,10 @@ public final class ProtoUserProfileGetSelfRemove {
     // @@protoc_insertion_point(class_scope:proto.UserProfileGetSelfRemove)
     private static final net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove();
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -523,7 +514,7 @@ public final class ProtoUserProfileGetSelfRemove {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemove getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -589,11 +580,11 @@ public final class ProtoUserProfileGetSelfRemove {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -618,16 +609,15 @@ public final class ProtoUserProfileGetSelfRemove {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
+      return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.Builder.class);
+      return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -638,7 +628,7 @@ public final class ProtoUserProfileGetSelfRemove {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -696,10 +686,10 @@ public final class ProtoUserProfileGetSelfRemove {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse other = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) obj;
+      net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse other = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -728,49 +718,43 @@ public final class ProtoUserProfileGetSelfRemove {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseDelimitedFrom(java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -781,7 +765,7 @@ public final class ProtoUserProfileGetSelfRemove {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -800,15 +784,14 @@ public final class ProtoUserProfileGetSelfRemove {
             // @@protoc_insertion_point(builder_implements:proto.UserProfileGetSelfRemoveResponse)
         net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.Builder.class);
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.class, net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -836,23 +819,23 @@ public final class ProtoUserProfileGetSelfRemove {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse build() {
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse result = buildPartial();
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse build() {
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse buildPartial() {
-            net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse result = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse(this);
+      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse buildPartial() {
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse result = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -887,16 +870,16 @@ public final class ProtoUserProfileGetSelfRemove {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) other);
+        if (other instanceof net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) {
+          return mergeFrom((net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse other) {
-            if (other == net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse other) {
+        if (other == net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -912,11 +895,11 @@ public final class ProtoUserProfileGetSelfRemove {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parsedMessage = null;
+        net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -926,9 +909,8 @@ public final class ProtoUserProfileGetSelfRemove {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -940,7 +922,7 @@ public final class ProtoUserProfileGetSelfRemove {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -980,7 +962,7 @@ public final class ProtoUserProfileGetSelfRemove {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1020,7 +1002,7 @@ public final class ProtoUserProfileGetSelfRemove {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1028,8 +1010,7 @@ public final class ProtoUserProfileGetSelfRemove {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1079,10 +1060,10 @@ public final class ProtoUserProfileGetSelfRemove {
     // @@protoc_insertion_point(class_scope:proto.UserProfileGetSelfRemoveResponse)
     private static final net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse();
     }
 
-      public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1101,7 +1082,7 @@ public final class ProtoUserProfileGetSelfRemove {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserProfileGetSelfRemove.UserProfileGetSelfRemoveResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1123,7 +1104,8 @@ public final class ProtoUserProfileGetSelfRemove {
                     "\rRequest.proto\032\016Response.proto\";\n\030UserPr" +
                     "ofileGetSelfRemove\022\037\n\007request\030\001 \001(\0132\016.pr" +
                     "oto.Request\"Z\n UserProfileGetSelfRemoveR" +
-                    "esponse\022!\n\010response\030\001 \001(\0132\017.proto.Respon" + "se\022\023\n\013self_remove\030\002 \001(\rB/\n\016net.iGap.prot" +
+                    "esponse\022!\n\010response\030\001 \001(\0132\017.proto.Respon" +
+                    "se\022\023\n\013self_remove\030\002 \001(\rB/\n\016net.iGap.prot" +
                     "oB\035ProtoUserProfileGetSelfRemoveb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1133,7 +1115,7 @@ public final class ProtoUserProfileGetSelfRemove {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_UserProfileGetSelfRemove_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_UserProfileGetSelfRemove_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserProfileGetSelfRemove_descriptor, new java.lang.String[]{"Request",});
@@ -1142,8 +1124,8 @@ public final class ProtoUserProfileGetSelfRemove {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserProfileGetSelfRemoveResponse_descriptor,
         new java.lang.String[] { "Response", "SelfRemove", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

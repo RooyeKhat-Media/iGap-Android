@@ -10,6 +10,9 @@
 
 package net.iGap.response;
 
+import android.widget.Toast;
+import net.iGap.G;
+import net.iGap.R;
 import net.iGap.proto.ProtoSignalingRinging;
 
 public class SignalingRingingResponse extends MessageHandler {
@@ -31,6 +34,20 @@ public class SignalingRingingResponse extends MessageHandler {
         super.handler();
 
         ProtoSignalingRinging.SignalingRingingResponse.Builder builder = (ProtoSignalingRinging.SignalingRingingResponse.Builder) message;
+        if (builder.getResponse().getId().isEmpty()) {
+
+            if (G.iSignalingRinging != null) {
+                G.iSignalingRinging.onRinging();
+            }
+
+            G.handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(G.context, R.string.ringing, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 
     @Override

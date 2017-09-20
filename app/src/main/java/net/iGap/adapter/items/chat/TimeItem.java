@@ -12,7 +12,9 @@ package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
@@ -20,26 +22,33 @@ import net.iGap.proto.ProtoGlobal;
 
 public class TimeItem extends AbstractMessage<TimeItem, TimeItem.ViewHolder> {
 
-    public TimeItem(IMessageItem messageClickListener) {
-        super(false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
+    public TimeItem(Realm realmChat, IMessageItem messageClickListener) {
+        super(realmChat, false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutTime;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_time;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.cslt_txt_time_date) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getTimeItem());
+
+        }
+
+        holder.text = (TextView) holder.itemView.findViewById(R.id.cslt_txt_time_date);
+
         super.bindView(holder, payloads);
 
         setTextIfNeeded(holder.text, mMessage.messageText);
-    }
-
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -48,12 +57,15 @@ public class TimeItem extends AbstractMessage<TimeItem, TimeItem.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-
-            text = (TextView) view.findViewById(R.id.text);
+            /**
+             *  this commented code used with xml layout
+             */
+            //text = (TextView) view.findViewById(R.id.cslt_txt_time_date);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

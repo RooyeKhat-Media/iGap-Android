@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoUserTwoStepVerificationChangeHint;
 
 public class UserTwoStepVerificationChangeHintResponse extends MessageHandler {
@@ -31,6 +32,11 @@ public class UserTwoStepVerificationChangeHintResponse extends MessageHandler {
 
         ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder builder =
             (ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder) message;
+
+        if (G.onTwoStepPassword != null) {
+            G.onTwoStepPassword.changeHint();
+        }
+
     }
 
     @Override public void timeOut() {

@@ -20,12 +20,10 @@ package com.neovisionaries.ws.client;
  * Utility methods for DEFLATE (<a href="http://tools.ietf.org/html/rfc1951">RFC 1951</a>).
  */
 class DeflateUtil {
-    private static int[] INDICES_FROM_CODE_LENGTH_ORDER =
-            {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
+    private static int[] INDICES_FROM_CODE_LENGTH_ORDER = {16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15};
 
 
-    public static void readDynamicTables(
-            ByteArray input, int[] bitIndex, Huffman[] tables) throws FormatException {
+    public static void readDynamicTables(ByteArray input, int[] bitIndex, Huffman[] tables) throws FormatException {
         // 3.2.7 Compression with dynamic Huffman codes (BTYPE=10)
 
         // 5 Bits: HLIT, The number of Literal/Length codes - 257 (257 - 286)
@@ -79,9 +77,7 @@ class DeflateUtil {
     }
 
 
-    private static void readCodeLengths(
-            ByteArray input, int bitIndex[], int[] codeLengths,
-            Huffman codeLengthHuffman) throws FormatException {
+    private static void readCodeLengths(ByteArray input, int bitIndex[], int[] codeLengths, Huffman codeLengthHuffman) throws FormatException {
         // 3.2.7 Compression with dynamic Huffman codes (BTYPE=10)
 
         for (int i = 0; i < codeLengths.length; ++i) {
@@ -149,8 +145,7 @@ class DeflateUtil {
     }
 
 
-    public static int readLength(
-            ByteArray input, int[] bitIndex, int literalLength) throws FormatException {
+    public static int readLength(ByteArray input, int[] bitIndex, int literalLength) throws FormatException {
         // 3.2.5 Compressed blocks (length and distance code)
 
         int baseValue;
@@ -265,8 +260,7 @@ class DeflateUtil {
     }
 
 
-    public static int readDistance(
-            ByteArray input, int[] bitIndex, Huffman distanceHuffman) throws FormatException {
+    public static int readDistance(ByteArray input, int[] bitIndex, Huffman distanceHuffman) throws FormatException {
         // 3.2.5 Compressed blocks (length and distance code)
 
         // Read a distance code from the input.

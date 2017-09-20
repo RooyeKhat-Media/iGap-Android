@@ -73,11 +73,11 @@ public final class ProtoGroupAvatarGetList {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -102,16 +102,15 @@ public final class ProtoGroupAvatarGetList {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
+      return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.Builder.class);
+      return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -122,7 +121,7 @@ public final class ProtoGroupAvatarGetList {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -180,10 +179,10 @@ public final class ProtoGroupAvatarGetList {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList other = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) obj;
+      net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList other = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -212,48 +211,43 @@ public final class ProtoGroupAvatarGetList {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -264,7 +258,7 @@ public final class ProtoGroupAvatarGetList {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -283,15 +277,14 @@ public final class ProtoGroupAvatarGetList {
             // @@protoc_insertion_point(builder_implements:proto.GroupAvatarGetList)
         net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.Builder.class);
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -319,23 +312,23 @@ public final class ProtoGroupAvatarGetList {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetList_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList build() {
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList result = buildPartial();
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList build() {
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList buildPartial() {
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList result = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList(this);
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList buildPartial() {
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList result = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -370,16 +363,16 @@ public final class ProtoGroupAvatarGetList {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) {
-              return mergeFrom((net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) other);
+        if (other instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) {
+          return mergeFrom((net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList other) {
-            if (other == net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList other) {
+        if (other == net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -395,11 +388,11 @@ public final class ProtoGroupAvatarGetList {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parsedMessage = null;
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -409,9 +402,8 @@ public final class ProtoGroupAvatarGetList {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -423,7 +415,7 @@ public final class ProtoGroupAvatarGetList {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -463,7 +455,7 @@ public final class ProtoGroupAvatarGetList {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -503,7 +495,7 @@ public final class ProtoGroupAvatarGetList {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -511,8 +503,7 @@ public final class ProtoGroupAvatarGetList {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -562,10 +553,10 @@ public final class ProtoGroupAvatarGetList {
     // @@protoc_insertion_point(class_scope:proto.GroupAvatarGetList)
     private static final net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList();
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -584,7 +575,7 @@ public final class ProtoGroupAvatarGetList {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetList getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -666,11 +657,11 @@ public final class ProtoGroupAvatarGetList {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -680,10 +671,10 @@ public final class ProtoGroupAvatarGetList {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                  avatar_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Avatar>();
+                avatar_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Avatar>();
                 mutable_bitField0_ |= 0x00000002;
               }
-                avatar_.add(input.readMessage(net.iGap.proto.ProtoGlobal.Avatar.parser(), extensionRegistry));
+              avatar_.add(input.readMessage(net.iGap.proto.ProtoGlobal.Avatar.parser(), extensionRegistry));
               break;
             }
           }
@@ -701,17 +692,16 @@ public final class ProtoGroupAvatarGetList {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
+      return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.Builder.class);
+      return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.Builder.class);
     }
 
     private int bitField0_;
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -722,7 +712,7 @@ public final class ProtoGroupAvatarGetList {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -732,7 +722,7 @@ public final class ProtoGroupAvatarGetList {
     }
 
     public static final int AVATAR_FIELD_NUMBER = 2;
-      private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_;
+    private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_;
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
@@ -804,10 +794,10 @@ public final class ProtoGroupAvatarGetList {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse other = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) obj;
+      net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse other = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -838,48 +828,43 @@ public final class ProtoGroupAvatarGetList {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -890,7 +875,7 @@ public final class ProtoGroupAvatarGetList {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -910,15 +895,14 @@ public final class ProtoGroupAvatarGetList {
             // @@protoc_insertion_point(builder_implements:proto.GroupAvatarGetListResponse)
         net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.Builder.class);
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.class, net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -951,23 +935,23 @@ public final class ProtoGroupAvatarGetList {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
+        return net.iGap.proto.ProtoGroupAvatarGetList.internal_static_proto_GroupAvatarGetListResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse build() {
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse result = buildPartial();
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse build() {
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse buildPartial() {
-            net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse result = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse(this);
+      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse buildPartial() {
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse result = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (responseBuilder_ == null) {
@@ -1013,16 +997,16 @@ public final class ProtoGroupAvatarGetList {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) {
-              return mergeFrom((net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) other);
+        if (other instanceof net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) {
+          return mergeFrom((net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse other) {
-            if (other == net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse other) {
+        if (other == net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1059,11 +1043,11 @@ public final class ProtoGroupAvatarGetList {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parsedMessage = null;
+        net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1074,9 +1058,8 @@ public final class ProtoGroupAvatarGetList {
       }
       private int bitField0_;
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1088,7 +1071,7 @@ public final class ProtoGroupAvatarGetList {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1128,7 +1111,7 @@ public final class ProtoGroupAvatarGetList {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1168,7 +1151,7 @@ public final class ProtoGroupAvatarGetList {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1176,8 +1159,7 @@ public final class ProtoGroupAvatarGetList {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1186,15 +1168,15 @@ public final class ProtoGroupAvatarGetList {
         return responseBuilder_;
       }
 
-        private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_ = java.util.Collections.emptyList();
+      private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_ = java.util.Collections.emptyList();
       private void ensureAvatarIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-            avatar_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Avatar>(avatar_);
+          avatar_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Avatar>(avatar_);
           bitField0_ |= 0x00000002;
         }
       }
 
-        private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder> avatarBuilder_;
+      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder> avatarBuilder_;
 
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
@@ -1382,13 +1364,13 @@ public final class ProtoGroupAvatarGetList {
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Avatar.Builder addAvatarBuilder() {
-          return getAvatarFieldBuilder().addBuilder(net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
+        return getAvatarFieldBuilder().addBuilder(net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Avatar.Builder addAvatarBuilder(int index) {
-          return getAvatarFieldBuilder().addBuilder(index, net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
+        return getAvatarFieldBuilder().addBuilder(index, net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
@@ -1397,9 +1379,9 @@ public final class ProtoGroupAvatarGetList {
         return getAvatarFieldBuilder().getBuilderList();
       }
 
-        private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder> getAvatarFieldBuilder() {
+      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder> getAvatarFieldBuilder() {
         if (avatarBuilder_ == null) {
-            avatarBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder>(
+          avatarBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Avatar, net.iGap.proto.ProtoGlobal.Avatar.Builder, net.iGap.proto.ProtoGlobal.AvatarOrBuilder>(
                   avatar_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
@@ -1424,10 +1406,10 @@ public final class ProtoGroupAvatarGetList {
     // @@protoc_insertion_point(class_scope:proto.GroupAvatarGetListResponse)
     private static final net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse();
     }
 
-      public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1446,7 +1428,7 @@ public final class ProtoGroupAvatarGetList {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupAvatarGetList.GroupAvatarGetListResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1469,7 +1451,8 @@ public final class ProtoGroupAvatarGetList {
                     "\n\022GroupAvatarGetList\022\037\n\007request\030\001 \001(\0132\016." +
                     "proto.Request\022\017\n\007room_id\030\002 \001(\004\"^\n\032GroupA" +
                     "vatarGetListResponse\022!\n\010response\030\001 \001(\0132\017" +
-                    ".proto.Response\022\035\n\006avatar\030\002 \003(\0132\r.proto." + "AvatarB)\n\016net.iGap.protoB\027ProtoGroupAvat" +
+                    ".proto.Response\022\035\n\006avatar\030\002 \003(\0132\r.proto." +
+                    "AvatarB)\n\016net.iGap.protoB\027ProtoGroupAvat" +
                     "arGetListb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1479,7 +1462,7 @@ public final class ProtoGroupAvatarGetList {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
     }, assigner);
     internal_static_proto_GroupAvatarGetList_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_GroupAvatarGetList_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GroupAvatarGetList_descriptor, new java.lang.String[]{"Request", "RoomId",});
@@ -1489,9 +1472,9 @@ public final class ProtoGroupAvatarGetList {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupAvatarGetListResponse_descriptor,
         new java.lang.String[] { "Response", "Avatar", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

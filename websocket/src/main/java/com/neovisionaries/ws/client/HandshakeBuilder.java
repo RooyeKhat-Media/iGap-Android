@@ -49,8 +49,7 @@ class HandshakeBuilder {
 
         // 'host' may contain ':{port}' at its end.
         // 'path' may contain '?{query}' at its end.
-        mUri = URI.create(String.format("%s://%s%s",
-                (secure ? "wss" : "ws"), host, path));
+        mUri = URI.create(String.format("%s://%s%s", (secure ? "wss" : "ws"), host, path));
     }
 
 
@@ -69,9 +68,7 @@ class HandshakeBuilder {
 
     public void addProtocol(String protocol) {
         if (isValidProtocol(protocol) == false) {
-            throw new IllegalArgumentException(
-                    "'protocol' must be a non-empty string with characters in the range " +
-                            "U+0021 to U+007E not including separator characters.");
+            throw new IllegalArgumentException("'protocol' must be a non-empty string with characters in the range " + "U+0021 to U+007E not including separator characters.");
         }
 
         synchronized (this) {
@@ -432,8 +429,7 @@ class HandshakeBuilder {
             return null;
         }
 
-        List<WebSocketExtension> newExtensions =
-                new ArrayList<WebSocketExtension>(extensions.size());
+        List<WebSocketExtension> newExtensions = new ArrayList<WebSocketExtension>(extensions.size());
 
         for (WebSocketExtension extension : extensions) {
             newExtensions.add(new WebSocketExtension(extension));

@@ -49,7 +49,7 @@ public class ChatGetRoomResponse extends MessageHandler {
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override public void execute(Realm realm) {
-                    RealmRoom.putOrUpdate(chatGetRoomResponse.getRoom());
+                    RealmRoom.putOrUpdate(chatGetRoomResponse.getRoom(), realm);
                 }
             });
             realm.close();

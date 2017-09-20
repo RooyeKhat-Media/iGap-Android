@@ -12,6 +12,7 @@ package net.iGap.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.iGap.R;
 import net.iGap.adapter.items.chat.AbstractMessage;
+import net.iGap.adapter.items.chat.LogItem;
 import net.iGap.adapter.items.chat.TimeItem;
 import net.iGap.helper.HelperUrl;
 import net.iGap.interfaces.IMessageItem;
@@ -40,15 +42,15 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
     private IMessageItem iMessageItem;
     private OnChatMessageRemove onChatMessageRemove;
     private OnLongClickListener longClickListener = new OnLongClickListener<Item>() {
-        @Override public boolean onLongClick(View v, IAdapter<Item> adapter, Item item, int position) {
+        @Override
+        public boolean onLongClick(View v, IAdapter<Item> adapter, Item item, int position) {
 
-            if (item instanceof TimeItem) {
+            if (item instanceof TimeItem || item instanceof LogItem) {
                 if (item.isSelected()) v.performLongClick();
             } else {
-                if (iMessageItem != null && !item.mMessage.senderID.equalsIgnoreCase("-1")) {
+                if (iMessageItem != null && item.mMessage != null && item.mMessage.senderID != null && !item.mMessage.senderID.equalsIgnoreCase("-1")) {
 
-                    if (item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString()) || item.mMessage.status.equalsIgnoreCase(
-                        ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
+                    if (item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString()) || item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
 
                         if (item.isSelected()) v.performLongClick();
                         return true;
@@ -65,9 +67,20 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
     };
 
     public int findPositionByMessageId(long messageId) {
-        for (Item item : getAdapterItems()) {
-            if (item.mMessage != null && Long.parseLong(item.mMessage.messageID) == messageId) {
-                return getAdapterPosition(item);
+        for (int i = (getAdapterItemCount() - 1); i >= 0; i--) {
+            Item item = getItem(i);
+            if (item.mMessage != null) {
+                if (item.mMessage.forwardedFrom != null) {
+                    if (item.mMessage.forwardedFrom.getMessageId() == messageId) {
+                        item = null; // set null for clear memory, is it true?
+                        return i;
+                    }
+                } else {
+                    if (Long.parseLong(item.mMessage.messageID) == messageId) {
+                        item = null;
+                        return i;
+                    }
+                }
             }
         }
         return -1;
@@ -87,7 +100,8 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         withOnPreLongClickListener(this);
         withOnLongClickListener(longClickListener);
         withOnClickListener(new OnClickListener<Item>() {
-            @Override public boolean onClick(View v, IAdapter<Item> adapter, Item item, int position) {
+            @Override
+            public boolean onClick(View v, IAdapter<Item> adapter, Item item, int position) {
                 if (getSelectedItems().size() == 0) {
                     if (iMessageItem != null && item.mMessage != null && item.mMessage.senderID != null && !item.mMessage.senderID.equalsIgnoreCase("-1")) {
                         if (item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
@@ -101,7 +115,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
                     }
                 } else {
                     if (!(item instanceof TimeItem)) {
-                        if (!item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
+                        if (item.mMessage != null && item.mMessage.status != null && !item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             v.performLongClick();
                         }
                     }
@@ -121,24 +135,6 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         return failedMessages;
     }
 
-    public void updateChengedItem(ArrayList<String> list) {
-
-        int count = list.size();
-
-        for (int i = 0; i < count; i++) {
-            String id = list.get(i);
-
-            for (int j = getAdapterItemCount() - 1; j >= 0; j--) {
-                try {
-                    if (getItem(j).mMessage.messageID.equals(id)) {
-                        notifyItemChanged(j);
-                        break;
-                    }
-                } catch (NullPointerException e) {
-                }
-            }
-        }
-    }
 
     public void updateChatAvatar(long userId, RealmRegisteredInfo registeredInfo) {
         for (Item item : getAdapterItems()) {
@@ -228,7 +224,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
                  * when i add message to RealmRoomMessage(putOrUpdate) set (replyMessageId * (-1))
                  * so i need to (replyMessageId * (-1)) again for use this messageId
                  */
-                if (messageInfo.mMessage.forwardedFrom != null && (messageInfo.mMessage.forwardedFrom.getMessageId() * (-1)) == messageId) {
+                if (messageInfo.mMessage.forwardedFrom != null && messageInfo.mMessage.forwardedFrom.isValid() && (messageInfo.mMessage.forwardedFrom.getMessageId() * (-1)) == messageId) {
                     int pos = items.indexOf(messageInfo);
                     set(pos, messageInfo);
                 } else if (messageInfo.mMessage.messageID.equals(Long.toString(messageId))) {
@@ -371,7 +367,8 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         }
     }
 
-    @Override public void notifyAdapterItemRemoved(int position) {
+    @Override
+    public void notifyAdapterItemRemoved(int position) {
         super.notifyAdapterItemRemoved(position);
 
         if (onChatMessageSelectionChanged != null) {
@@ -379,7 +376,8 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         }
     }
 
-    @Override public void deselect() {
+    @Override
+    public void deselect() {
         super.deselect();
 
         if (onChatMessageSelectionChanged != null) {
@@ -397,7 +395,8 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         ((FrameLayout) v).setForeground(new ColorDrawable(Color.TRANSPARENT));
     }
 
-    @Override public boolean onLongClick(View v, IAdapter<Item> adapter, Item item, int position) {
+    @Override
+    public boolean onLongClick(View v, IAdapter<Item> adapter, Item item, int position) {
         if (!item.isSelected()) {
             makeSelected(v);
         } else {
@@ -405,4 +404,31 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         }
         return false;
     }
+
+    public void toggleSelection(String messageId, boolean select, RecyclerView recyclerView) {
+
+        List<Item> items = getAdapterItems();
+        for (int i = items.size() - 1; i >= 0; i--) {
+            Item messageInfo = items.get(i);
+
+            try {
+
+                if (messageInfo.mMessage.messageID.equals(messageId)) {
+                    messageInfo.mMessage.isSelected = select;
+                    notifyItemChanged(i);
+
+                    if (select) {
+                        recyclerView.scrollToPosition(i);
+                    }
+
+                    break;
+                }
+            } catch (NullPointerException e) {
+                // some item can have no messageID
+            }
+        }
+    }
+
+
+
 }

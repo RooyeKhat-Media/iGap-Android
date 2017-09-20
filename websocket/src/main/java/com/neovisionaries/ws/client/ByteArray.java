@@ -35,7 +35,8 @@ class ByteArray {
     /**
      * Constructor with initial capacity.
      *
-     * @param capacity Initial capacity for the internal buffer.
+     * @param capacity
+     *         Initial capacity for the internal buffer.
      */
     public ByteArray(int capacity) {
         mBuffer = ByteBuffer.allocate(capacity);
@@ -47,7 +48,8 @@ class ByteArray {
      * Constructor with initial data. The length of the data is used
      * as the initial capacity of the internal buffer.
      *
-     * @param data Initial data.
+     * @param data
+     *         Initial data.
      */
     public ByteArray(byte[] data) {
         mBuffer = ByteBuffer.wrap(data);
@@ -112,7 +114,8 @@ class ByteArray {
     /**
      * Add data at the current position.
      *
-     * @param source Source data.
+     * @param source
+     *         Source data.
      */
     public void put(byte[] source) {
         // If the buffer is small.
@@ -128,9 +131,14 @@ class ByteArray {
     /**
      * Add data at the current position.
      *
-     * @param source Source data.
-     * @param index  The index in the source data. Data from the index is copied.
-     * @param length The length of data to copy.
+     * @param source
+     *         Source data.
+     *
+     * @param index
+     *         The index in the source data. Data from the index is copied.
+     *
+     * @param length
+     *         The length of data to copy.
      */
     public void put(byte[] source, int index, int length) {
         // If the buffer is small.
@@ -146,9 +154,14 @@ class ByteArray {
     /**
      * Add data at the current position.
      *
-     * @param source Source data.
-     * @param index  The index in the source data. Data from the index is copied.
-     * @param length The length of data to copy.
+     * @param source
+     *         Source data.
+     *
+     * @param index
+     *         The index in the source data. Data from the index is copied.
+     *
+     * @param length
+     *         The length of data to copy.
      */
     public void put(ByteArray source, int index, int length) {
         put(source.mBuffer.array(), index, length);

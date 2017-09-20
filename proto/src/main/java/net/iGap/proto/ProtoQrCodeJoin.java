@@ -13,7 +13,6 @@ public final class ProtoQrCodeJoin {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface QrCodeJoinOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.QrCodeJoin)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoQrCodeJoin {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -37,13 +34,11 @@ public final class ProtoQrCodeJoin {
      * <code>optional string invite_token = 2;</code>
      */
     java.lang.String getInviteToken();
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
     com.google.protobuf.ByteString getInviteTokenBytes();
   }
-
   /**
    * Protobuf type {@code proto.QrCodeJoin}
    */
@@ -54,7 +49,6 @@ public final class ProtoQrCodeJoin {
     private QrCodeJoin(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private QrCodeJoin() {
       inviteToken_ = "";
     }
@@ -121,21 +115,18 @@ public final class ProtoQrCodeJoin {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -145,7 +136,6 @@ public final class ProtoQrCodeJoin {
 
     public static final int INVITE_TOKEN_FIELD_NUMBER = 2;
     private volatile java.lang.Object inviteToken_;
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
@@ -160,7 +150,6 @@ public final class ProtoQrCodeJoin {
         return s;
       }
     }
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
@@ -176,7 +165,6 @@ public final class ProtoQrCodeJoin {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -211,7 +199,6 @@ public final class ProtoQrCodeJoin {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -292,15 +279,12 @@ public final class ProtoQrCodeJoin {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoQrCodeJoin.QrCodeJoin prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -310,7 +294,6 @@ public final class ProtoQrCodeJoin {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.QrCodeJoin}
      */
@@ -334,12 +317,10 @@ public final class ProtoQrCodeJoin {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -404,7 +385,6 @@ public final class ProtoQrCodeJoin {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoQrCodeJoin.QrCodeJoin) {
           return mergeFrom((net.iGap.proto.ProtoQrCodeJoin.QrCodeJoin) other);
@@ -448,14 +428,12 @@ public final class ProtoQrCodeJoin {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -466,7 +444,6 @@ public final class ProtoQrCodeJoin {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -483,7 +460,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -497,7 +473,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -515,7 +490,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -530,7 +504,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -539,7 +512,6 @@ public final class ProtoQrCodeJoin {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -550,7 +522,6 @@ public final class ProtoQrCodeJoin {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -563,7 +534,6 @@ public final class ProtoQrCodeJoin {
       }
 
       private java.lang.Object inviteToken_ = "";
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -578,7 +548,6 @@ public final class ProtoQrCodeJoin {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -592,7 +561,6 @@ public final class ProtoQrCodeJoin {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -605,7 +573,6 @@ public final class ProtoQrCodeJoin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -615,7 +582,6 @@ public final class ProtoQrCodeJoin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -644,7 +610,6 @@ public final class ProtoQrCodeJoin {
 
     // @@protoc_insertion_point(class_scope:proto.QrCodeJoin)
     private static final net.iGap.proto.ProtoQrCodeJoin.QrCodeJoin DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoQrCodeJoin.QrCodeJoin();
     }
@@ -682,12 +647,10 @@ public final class ProtoQrCodeJoin {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -698,7 +661,6 @@ public final class ProtoQrCodeJoin {
      */
     com.google.protobuf.ByteString getQrCodeImage();
   }
-
   /**
    * Protobuf type {@code proto.QrCodeJoinResponse}
    */
@@ -709,7 +671,6 @@ public final class ProtoQrCodeJoin {
     private QrCodeJoinResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private QrCodeJoinResponse() {
       qrCodeImage_ = com.google.protobuf.ByteString.EMPTY;
     }
@@ -775,21 +736,18 @@ public final class ProtoQrCodeJoin {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -799,7 +757,6 @@ public final class ProtoQrCodeJoin {
 
     public static final int QR_CODE_IMAGE_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString qrCodeImage_;
-
     /**
      * <code>optional bytes qr_code_image = 2;</code>
      */
@@ -808,7 +765,6 @@ public final class ProtoQrCodeJoin {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -843,7 +799,6 @@ public final class ProtoQrCodeJoin {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -924,15 +879,12 @@ public final class ProtoQrCodeJoin {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoQrCodeJoin.QrCodeJoinResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -942,7 +894,6 @@ public final class ProtoQrCodeJoin {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.QrCodeJoinResponse}
      */
@@ -966,12 +917,10 @@ public final class ProtoQrCodeJoin {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1036,7 +985,6 @@ public final class ProtoQrCodeJoin {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoQrCodeJoin.QrCodeJoinResponse) {
           return mergeFrom((net.iGap.proto.ProtoQrCodeJoin.QrCodeJoinResponse) other);
@@ -1079,14 +1027,12 @@ public final class ProtoQrCodeJoin {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1097,7 +1043,6 @@ public final class ProtoQrCodeJoin {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1114,7 +1059,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1128,7 +1072,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1146,7 +1089,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1161,7 +1103,6 @@ public final class ProtoQrCodeJoin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1170,7 +1111,6 @@ public final class ProtoQrCodeJoin {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1181,7 +1121,6 @@ public final class ProtoQrCodeJoin {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1194,14 +1133,12 @@ public final class ProtoQrCodeJoin {
       }
 
       private com.google.protobuf.ByteString qrCodeImage_ = com.google.protobuf.ByteString.EMPTY;
-
       /**
        * <code>optional bytes qr_code_image = 2;</code>
        */
       public com.google.protobuf.ByteString getQrCodeImage() {
         return qrCodeImage_;
       }
-
       /**
        * <code>optional bytes qr_code_image = 2;</code>
        */
@@ -1214,7 +1151,6 @@ public final class ProtoQrCodeJoin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional bytes qr_code_image = 2;</code>
        */
@@ -1239,7 +1175,6 @@ public final class ProtoQrCodeJoin {
 
     // @@protoc_insertion_point(class_scope:proto.QrCodeJoinResponse)
     private static final net.iGap.proto.ProtoQrCodeJoin.QrCodeJoinResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoQrCodeJoin.QrCodeJoinResponse();
     }
@@ -1279,14 +1214,14 @@ public final class ProtoQrCodeJoin {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\020QrCodeJoin.proto\022\005proto\032\rRequest.proto" +
                     "\032\016Response.proto\"C\n\nQrCodeJoin\022\037\n\007reques" +
                     "t\030\001 \001(\0132\016.proto.Request\022\024\n\014invite_token\030" +
                     "\002 \001(\t\"N\n\022QrCodeJoinResponse\022!\n\010response\030" +
-                    "\001 \001(\0132\017.proto.Response\022\025\n\rqr_code_image\030" + "\002 \001(\014B!\n\016net.iGap.protoB\017ProtoQrCodeJoin" +
+                    "\001 \001(\0132\017.proto.Response\022\025\n\rqr_code_image\030" +
+                    "\002 \001(\014B!\n\016net.iGap.protoB\017ProtoQrCodeJoin" +
                     "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1305,8 +1240,8 @@ public final class ProtoQrCodeJoin {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_QrCodeJoinResponse_descriptor,
         new java.lang.String[] { "Response", "QrCodeImage", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

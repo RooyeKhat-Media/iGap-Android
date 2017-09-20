@@ -10,8 +10,8 @@
 
 package net.iGap.helper;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -20,8 +20,8 @@ import android.view.View;
 import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityChat;
-import net.iGap.activities.ActivityContactsProfile;
+import net.iGap.fragments.FragmentChat;
+import net.iGap.fragments.FragmentContactsProfile;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
@@ -31,18 +31,8 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChatGetRoom;
+import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
-
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.MEMBER_ADDED;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.MEMBER_JOINED_BY_INVITE_LINK;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.MEMBER_KICKED;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.MEMBER_LEFT;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.ROOM_CONVERTED_TO_PRIVATE;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.ROOM_CONVERTED_TO_PUBLIC;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.ROOM_CREATED;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.ROOM_DELETED;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.USER_DELETED;
-import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.USER_JOINED;
 
 /**
  * return correct log message with author and target
@@ -59,28 +49,36 @@ public class HelperLogMessage {
         long updateID;
     }
 
-    public static void updateLogMessageAfterGetUserInfo(final StructLog item) {
+    public static void updateLogMessageAfterGetUserInfo(final long id) {
+
+        final StructLog item;
+
+        if (G.logMessageUpdatList.containsKey(id)) {
+
+            item = G.logMessageUpdatList.get(id);
+        } else {
+            return;
+        }
 
         Realm realm = Realm.getDefaultInstance();
-
         try {
-
-            final RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, item.messageID).findFirst();
-
-            if (roomMessage != null) {
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
-                        roomMessage.setLogMessage(HelperLogMessage.logMessage(item.roomId, item.author, item.messageLog, item.messageID));
-
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, item.messageID).findFirst();
+                    if (roomMessage != null) {
+                        String LogText = HelperLogMessage.logMessage(item.roomId, item.author, item.messageLog, item.messageID);
+                        roomMessage.setLogMessage(LogText);
                         G.logMessageUpdatList.remove(item.updateID);
+                        if (FragmentChat.iUpdateLogItem != null) {
+                            FragmentChat.iUpdateLogItem.onUpdate(LogText, item.messageID);
+                        }
                     }
-                });
-            }
+                }
+            });
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
         realm.close();
     }
 
@@ -119,7 +117,7 @@ public class HelperLogMessage {
 
                 G.logMessageUpdatList.put(updateID, item);
 
-                HelperInfo.needUpdateUser(author.getUser().getUserId(), author.getUser().getCacheId());
+                new RequestUserInfo().userInfoAvoidDuplicate(author.getUser().getUserId());
             }
         } else if (author.hasRoom()) {
 
@@ -139,6 +137,8 @@ public class HelperLogMessage {
                 G.logMessageUpdatList.put(updateID, item);
 
                 HelperInfo.needUpdateRoomInfo(author.getRoom().getRoomId());
+
+                new RequestClientGetRoom().clientGetRoom(author.getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
             }
         }
 
@@ -166,7 +166,7 @@ public class HelperLogMessage {
         /**
          * detect log message
          */
-        logMessage = logMessageString(messageLog.getType());
+        logMessage = logMessageString(messageLog.getType(), author);
         String englishResult = "";
 
         /**
@@ -196,97 +196,93 @@ public class HelperLogMessage {
             return "";
         }
 
-        englishResult = authorName + " " + logMessage + " " + targetName;
+        englishResult = "\u200E" + authorName + " " + logMessage + " " + targetName;
 
-        linkInfoEnglish = englishResult.indexOf(authorName)
-            + "@"
-            + authorName.length()
-            + "@"
-            + updateID
-            + "@"
-            + author.hasUser()
-            + "@"
-            + englishResult.lastIndexOf(targetName)
-            + "@"
-            + targetName.length()
-            + "@"
-            + messageLog.getTargetUser().getId();
+        linkInfoEnglish = englishResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + englishResult.lastIndexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
 
         switch (messageLog.getType()) {
             case USER_JOINED:
-                persianResult = authorName + " " + logMessage;
+                persianResult = "\u200F" + authorName + " " + logMessage;
                 linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
                 break;
             case USER_DELETED:
-                persianResult = authorName + " " + logMessage;
+                persianResult = "\u200F" + authorName + " " + logMessage;
                 linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
                 break;
             case ROOM_CREATED:
 
                 if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
-                    persianResult = logMessage + " " + finalTypeRoom + " " + authorName;
+                    persianResult = finalTypeRoom + " " + authorName + " " + logMessage;
+
+                    englishResult = "Channel" + " " + logMessage.replace("Created Room", "Created") + " " + targetName;
                 } else {
-                    persianResult = logMessage + " " + finalTypeRoom + " توسط " + authorName;
+                    persianResult = finalTypeRoom + " توسط " + authorName + " " + logMessage;
+
+                    englishResult = "Group" + " " + logMessage.replace("Room", "") + " " + targetName;
                 }
 
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
+                linkInfoEnglish = "";
+                linlInfoPersian = "";
 
                 break;
             case MEMBER_ADDED:
-                persianResult = logMessage + " " + targetName + " توسط " + authorName;
-
-                linlInfoPersian = persianResult.lastIndexOf(authorName)
-                    + "@"
-                    + authorName.length()
-                    + "@"
-                    + updateID
-                    + "@"
-                    + author.hasUser()
-                    + "@"
-                    + persianResult.indexOf(targetName)
-                    + "@"
-                    + targetName.length()
-                    + "@"
-                    + messageLog.getTargetUser().getId();
+                persianResult = "\u200F" + targetName + " توسط " + authorName + " " + logMessage;
+                linlInfoPersian = persianResult.lastIndexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + persianResult.indexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
 
                 break;
             case MEMBER_KICKED:
-                persianResult = logMessage + " " + targetName + " توسط " + authorName;
-
-                linlInfoPersian = persianResult.lastIndexOf(authorName)
-                    + "@"
-                    + authorName.length()
-                    + "@"
-                    + updateID
-                    + "@"
-                    + author.hasUser()
-                    + "@"
-                    + persianResult.indexOf(targetName)
-                    + "@"
-                    + targetName.length()
-                    + "@"
-                    + messageLog.getTargetUser().getId();
+                persianResult = "\u200F" + targetName + " توسط " + authorName + " " + logMessage;
+                linlInfoPersian = persianResult.lastIndexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + persianResult.indexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
 
                 break;
             case MEMBER_LEFT:
-                persianResult = authorName + " " + finalTypeRoom + " " + logMessage;
+                persianResult = "\u200F" + authorName + " " + finalTypeRoom + " " + logMessage;
                 linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
                 break;
             case ROOM_CONVERTED_TO_PUBLIC:
-                persianResult = finalTypeRoom + " " + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
+
+                if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
+                    persianResult = finalTypeRoom + " " + logMessage;
+
+                    englishResult = "Channel" + " " + logMessage + " " + targetName;
+                } else {
+                    persianResult = finalTypeRoom + " " + logMessage;
+
+                    englishResult = "Group" + " " + logMessage + " " + targetName;
+                }
+                linlInfoPersian = "";
+                linkInfoEnglish = "";
                 break;
             case ROOM_CONVERTED_TO_PRIVATE:
-                persianResult = finalTypeRoom + " " + authorName + " " + logMessage;
+
+                if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
+                    persianResult = finalTypeRoom + " " + logMessage;
+                    englishResult = "Channel" + " " + logMessage + " " + targetName;
+                } else {
+                    persianResult = finalTypeRoom + " " + logMessage;
+                    englishResult = "Group" + " " + logMessage + " " + targetName;
+                }
+
+                linlInfoPersian = "";
+                linkInfoEnglish = "";
+
                 break;
             case MEMBER_JOINED_BY_INVITE_LINK:
-                persianResult = authorName + " " + logMessage + " " + finalTypeRoom + " اضافه شد ";
+                persianResult = "\u200F" + authorName + " " + logMessage + " " + finalTypeRoom + " اضافه شد ";
                 linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
 
                 break;
             case ROOM_DELETED:
-                persianResult = logMessage + " " + finalTypeRoom + " توسط " + authorName;
+                persianResult = finalTypeRoom + " توسط " + authorName + " " + logMessage;
                 linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
+                break;
+            case MISSED_VOICE_CALL:
+                // persianResult = authorName + " " + logMessage;
+                //  linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
+
+                persianResult = englishResult = logMessage;
+                linkInfoEnglish = linlInfoPersian = "";
+
                 break;
         }
 
@@ -295,33 +291,61 @@ public class HelperLogMessage {
         return (englishResult + "\n" + persianResult + "\n" + linkInfoEnglish + "\n" + linlInfoPersian);
     }
 
-    private static String logMessageString(ProtoGlobal.RoomMessageLog.Type type) {
+    private static String logMessageString(ProtoGlobal.RoomMessageLog.Type type, ProtoGlobal.RoomMessage.Author author) {
 
         int message = 0;
 
-        if (type == USER_JOINED) {
-            message = R.string.USER_JOINED;
-        } else if (type == USER_DELETED) {
-            message = R.string.USER_DELETED;
-        } else if (type == ROOM_CREATED) {
-            message = R.string.ROOM_CREATED;
-        } else if (type == MEMBER_ADDED) {
-            //message = "member added";
-            message = R.string.MEMBER_ADDED;
-        } else if (type == MEMBER_KICKED) {
-            //message = "member kicked";
-            message = R.string.MEMBER_KICKED;
-        } else if (type == MEMBER_LEFT) {
-            //message = "member left";
-            message = R.string.MEMBER_LEFT;
-        } else if (type == ROOM_CONVERTED_TO_PUBLIC) {
-            message = R.string.ROOM_CONVERTED_TO_PUBLIC;
-        } else if (type == ROOM_CONVERTED_TO_PRIVATE) {
-            message = R.string.ROOM_CONVERTED_TO_PRIVATE;
-        } else if (type == MEMBER_JOINED_BY_INVITE_LINK) {
-            message = R.string.MEMBER_JOINED_BY_INVITE_LINK;
-        } else if (type == ROOM_DELETED) {
-            message = R.string.Room_Deleted;
+        switch (type) {
+
+            case USER_JOINED:
+                message = R.string.USER_JOINED;
+                break;
+            case USER_DELETED:
+                message = R.string.USER_DELETED;
+                break;
+            case ROOM_CREATED:
+                message = R.string.ROOM_CREATED;
+                break;
+            case MEMBER_ADDED:
+                //message = "member added";
+                message = R.string.MEMBER_ADDED;
+                break;
+            case MEMBER_KICKED:
+                //message = "member kicked";
+                message = R.string.MEMBER_KICKED;
+                break;
+            case MEMBER_LEFT:
+                //message = "member left";
+                message = R.string.MEMBER_LEFT;
+                break;
+            case ROOM_CONVERTED_TO_PUBLIC:
+                message = R.string.ROOM_CONVERTED_TO_PUBLIC;
+                break;
+            case ROOM_CONVERTED_TO_PRIVATE:
+                message = R.string.ROOM_CONVERTED_TO_PRIVATE;
+                break;
+            case MEMBER_JOINED_BY_INVITE_LINK:
+                message = R.string.MEMBER_JOINED_BY_INVITE_LINK;
+                break;
+            case ROOM_DELETED:
+                message = R.string.Room_Deleted_log;
+                break;
+
+            case MISSED_SCREEN_SHARE:
+                message = R.string.MISSED_SCREEN_SHARE;
+                break;
+            case MISSED_VOICE_CALL:
+
+                if (G.authorHash.equals(author.getHash())) {
+                    message = R.string.not_answerd_call;
+                } else {
+                    message = R.string.MISSED_VOICE_CALL;
+                }
+
+                break;
+            case MISSED_VIDEO_CALL:
+                message = R.string.MISSED_VIDEO_CALL;
+                break;
         }
 
         return "*" + message + "*";
@@ -420,7 +444,8 @@ public class HelperLogMessage {
     public static void insertClickSpanLink(SpannableStringBuilder builder, int start, int end, final boolean isUser, final long id) {
 
         ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override public void onClick(View widget) {
+            @Override
+            public void onClick(View widget) {
 
                 if (isUser) {
 
@@ -434,7 +459,8 @@ public class HelperLogMessage {
                 }
             }
 
-            @Override public void updateDrawState(TextPaint ds) {
+            @Override
+            public void updateDrawState(TextPaint ds) {
                 ds.linkColor = Color.DKGRAY;
                 super.updateDrawState(ds);
             }
@@ -453,45 +479,53 @@ public class HelperLogMessage {
             //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //G.currentActivity.startActivity(intent);
 
-            Intent intent = new Intent(G.context, ActivityContactsProfile.class);
-            intent.putExtra("peerId", id);
-            intent.putExtra("RoomId", realmRoom.getId());
-            intent.putExtra("enterFrom", "GROUP");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            G.currentActivity.startActivity(intent);
+            //Intent intent = new Intent(G.context, ActivityContactsProfile.class);
+            //intent.putExtra("peerId", id);
+            //intent.putExtra("RoomId", realmRoom.getId());
+            //intent.putExtra("enterFrom", "GROUP");
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //G.currentActivity.startActivity(intent);
+
+            FragmentContactsProfile contactsProfile = new FragmentContactsProfile();
+            Bundle bundle = new Bundle();
+            bundle.putLong("peerId", id);
+            bundle.putLong("RoomId", realmRoom.getId());
+            bundle.putString("enterFrom", "GROUP");
+            contactsProfile.setArguments(bundle);
+
+            new HelperFragment(contactsProfile).setReplace(false).load();
+
         } else {
             G.onChatGetRoom = new OnChatGetRoom() {
-                @Override public void onChatGetRoom(final long roomId) {
-                    G.currentActivity.runOnUiThread(new Runnable() {
-                        @Override public void run() {
-
-                            //Intent intent = new Intent(G.currentActivity, ActivityChat.class);
-                            //intent.putExtra("peerId", id);
-                            //intent.putExtra("RoomId", roomId);
-                            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            //G.currentActivity.startActivity(intent);
-
-                            Intent intent = new Intent(G.context, ActivityContactsProfile.class);
-                            intent.putExtra("peerId", id);
-                            intent.putExtra("RoomId", roomId);
-                            intent.putExtra("enterFrom", "GROUP");
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            G.currentActivity.startActivity(intent);
-
+                @Override
+                public void onChatGetRoom(final long roomId) {
+                    G.handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            FragmentContactsProfile contactsProfile = new FragmentContactsProfile();
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("peerId", id);
+                            bundle.putLong("RoomId", roomId);
+                            bundle.putString("enterFrom", "GROUP");
+                            contactsProfile.setArguments(bundle);
+                            new HelperFragment(contactsProfile).setReplace(false).load();
                             G.onChatGetRoom = null;
                         }
                     });
                 }
 
-                @Override public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
+                @Override
+                public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
 
                 }
 
-                @Override public void onChatGetRoomTimeOut() {
+                @Override
+                public void onChatGetRoomTimeOut() {
 
                 }
 
-                @Override public void onChatGetRoomError(int majorCode, int minorCode) {
+                @Override
+                public void onChatGetRoomError(int majorCode, int minorCode) {
 
                 }
             };
@@ -507,10 +541,9 @@ public class HelperLogMessage {
         Realm realm = Realm.getDefaultInstance();
         RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst();
         if (realmRoom != null) {
-            Intent intent = new Intent(G.currentActivity, ActivityChat.class);
-            intent.putExtra("RoomId", realmRoom.getId());
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            G.currentActivity.startActivity(intent);
+
+            new GoToChatActivity(realmRoom.getId()).startActivity();
+
         } else {
             HelperInfo.needUpdateRoomInfo(id);
         }

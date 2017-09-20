@@ -21,7 +21,6 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -46,7 +45,8 @@ public class WebSocketFactory {
      * Get the socket factory that has been set by {@link
      * #setSocketFactory(SocketFactory)}.
      *
-     * @return The socket factory.
+     * @return
+     *         The socket factory.
      */
     public SocketFactory getSocketFactory() {
         return mSocketFactorySettings.getSocketFactory();
@@ -57,8 +57,11 @@ public class WebSocketFactory {
      * Set a socket factory.
      * See {@link #createSocket(URI)} for details.
      *
-     * @param factory A socket factory.
-     * @return {@code this} instance.
+     * @param factory
+     *         A socket factory.
+     *
+     * @return
+     *         {@code this} instance.
      */
     public WebSocketFactory setSocketFactory(SocketFactory factory) {
         mSocketFactorySettings.setSocketFactory(factory);
@@ -71,7 +74,8 @@ public class WebSocketFactory {
      * Get the SSL socket factory that has been set by {@link
      * #setSSLSocketFactory(SSLSocketFactory)}.
      *
-     * @return The SSL socket factory.
+     * @return
+     *         The SSL socket factory.
      */
     public SSLSocketFactory getSSLSocketFactory() {
         return mSocketFactorySettings.getSSLSocketFactory();
@@ -82,8 +86,11 @@ public class WebSocketFactory {
      * Set an SSL socket factory.
      * See {@link #createSocket(URI)} for details.
      *
-     * @param factory An SSL socket factory.
-     * @return {@code this} instance.
+     * @param factory
+     *         An SSL socket factory.
+     *
+     * @return
+     *         {@code this} instance.
      */
     public WebSocketFactory setSSLSocketFactory(SSLSocketFactory factory) {
         mSocketFactorySettings.setSSLSocketFactory(factory);
@@ -95,7 +102,8 @@ public class WebSocketFactory {
     /**
      * Get the SSL context that has been set by {@link #setSSLContext(SSLContext)}.
      *
-     * @return The SSL context.
+     * @return
+     *         The SSL context.
      */
     public SSLContext getSSLContext() {
         return mSocketFactorySettings.getSSLContext();
@@ -106,8 +114,11 @@ public class WebSocketFactory {
      * Set an SSL context to get a socket factory.
      * See {@link #createSocket(URI)} for details.
      *
-     * @param context An SSL context.
-     * @return {@code this} instance.
+     * @param context
+     *         An SSL context.
+     *
+     * @return
+     *         {@code this} instance.
      */
     public WebSocketFactory setSSLContext(SSLContext context) {
         mSocketFactorySettings.setSSLContext(context);
@@ -119,9 +130,12 @@ public class WebSocketFactory {
     /**
      * Get the proxy settings.
      *
-     * @return The proxy settings.
-     * @see ProxySettings
+     * @return
+     *         The proxy settings.
+     *
      * @since 1.3
+     *
+     * @see ProxySettings
      */
     public ProxySettings getProxySettings() {
         return mProxySettings;
@@ -131,14 +145,16 @@ public class WebSocketFactory {
     /**
      * Get the timeout value in milliseconds for socket connection.
      * The default value is 0 and it means an infinite timeout.
-     * <p>
+     *
      * <p>
      * When a {@code createSocket} method which does not have {@code
      * timeout} argument is called, the value returned by this method
      * is used as a timeout value for socket connection.
      * </p>
      *
-     * @return The connection timeout value in milliseconds.
+     * @return
+     *         The connection timeout value in milliseconds.
+     *
      * @since 1.10
      */
     public int getConnectionTimeout() {
@@ -150,9 +166,15 @@ public class WebSocketFactory {
      * Set the timeout value in milliseconds for socket connection.
      * A timeout of zero is interpreted as an infinite timeout.
      *
-     * @param timeout The connection timeout value in milliseconds.
-     * @return {@code this} object.
-     * @throws IllegalArgumentException The given timeout value is negative.
+     * @param timeout
+     *         The connection timeout value in milliseconds.
+     *
+     * @return
+     *         {@code this} object.
+     *
+     * @throws IllegalArgumentException
+     *         The given timeout value is negative.
+     *
      * @since 1.10
      */
     public WebSocketFactory setConnectionTimeout(int timeout) {
@@ -168,17 +190,24 @@ public class WebSocketFactory {
 
     /**
      * Create a WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #createSocket(String, int)
      * createSocket}{@code (uri, }{@link #getConnectionTimeout()}{@code )}.
      * </p>
      *
-     * @param uri The URI of the WebSocket endpoint on the server side.
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URI is {@code null} or violates RFC 2396.
-     * @throws IOException              Failed to create a socket. Or, HTTP proxy handshake or SSL
-     *                                  handshake failed.
+     * @param uri
+     *         The URI of the WebSocket endpoint on the server side.
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URI is {@code null} or violates RFC 2396.
+     *
+     * @throws IOException
+     *         Failed to create a socket. Or, HTTP proxy handshake or SSL
+     *         handshake failed.
      */
     public WebSocket createSocket(String uri) throws IOException {
         return createSocket(uri, getConnectionTimeout());
@@ -187,20 +216,30 @@ public class WebSocketFactory {
 
     /**
      * Create a WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #createSocket(URI, int) createSocket}{@code
      * (}{@link URI#create(String) URI.create}{@code (uri), timeout)}.
      * </p>
      *
-     * @param uri     The URI of the WebSocket endpoint on the server side.
-     * @param timeout The timeout value in milliseconds for socket connection.
-     *                A timeout of zero is interpreted as an infinite timeout.
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URI is {@code null} or violates RFC 2396, or
-     *                                  the given timeout value is negative.
-     * @throws IOException              Failed to create a socket. Or, HTTP proxy handshake or SSL
-     *                                  handshake failed.
+     * @param uri
+     *         The URI of the WebSocket endpoint on the server side.
+     *
+     * @param timeout
+     *         The timeout value in milliseconds for socket connection.
+     *         A timeout of zero is interpreted as an infinite timeout.
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URI is {@code null} or violates RFC 2396, or
+     *         the given timeout value is negative.
+     *
+     * @throws IOException
+     *         Failed to create a socket. Or, HTTP proxy handshake or SSL
+     *         handshake failed.
+     *
      * @since 1.10
      */
     public WebSocket createSocket(String uri, int timeout) throws IOException {
@@ -218,17 +257,24 @@ public class WebSocketFactory {
 
     /**
      * Create a WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #createSocket(URL, int) createSocket}{@code
      * (url, }{@link #getConnectionTimeout()}{@code )}.
      * </p>
      *
-     * @param url The URL of the WebSocket endpoint on the server side.
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URL is {@code null} or failed to be converted into a URI.
-     * @throws IOException              Failed to create a socket. Or, HTTP proxy handshake or SSL
-     *                                  handshake failed.
+     * @param url
+     *         The URL of the WebSocket endpoint on the server side.
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URL is {@code null} or failed to be converted into a URI.
+     *
+     * @throws IOException
+     *         Failed to create a socket. Or, HTTP proxy handshake or SSL
+     *         handshake failed.
      */
     public WebSocket createSocket(URL url) throws IOException {
         return createSocket(url, getConnectionTimeout());
@@ -237,19 +283,29 @@ public class WebSocketFactory {
 
     /**
      * Create a WebSocket.
-     * <p>
+     *
      * <p>
      * This method is an alias of {@link #createSocket(URI, int) createSocket}{@code
      * (url.}{@link URL#toURI() toURI()}{@code , timeout)}.
      * </p>
      *
-     * @param url     The URL of the WebSocket endpoint on the server side.
-     * @param timeout The timeout value in milliseconds for socket connection.
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URL is {@code null} or failed to be converted into a URI,
-     *                                  or the given timeout value is negative.
-     * @throws IOException              Failed to create a socket. Or, HTTP proxy handshake or SSL
-     *                                  handshake failed.
+     * @param url
+     *         The URL of the WebSocket endpoint on the server side.
+     *
+     * @param timeout
+     *         The timeout value in milliseconds for socket connection.
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URL is {@code null} or failed to be converted into a URI,
+     *         or the given timeout value is negative.
+     *
+     * @throws IOException
+     *         Failed to create a socket. Or, HTTP proxy handshake or SSL
+     *         handshake failed.
+     *
      * @since 1.10
      */
     public WebSocket createSocket(URL url, int timeout) throws IOException {
@@ -272,47 +328,54 @@ public class WebSocketFactory {
     /**
      * Create a WebSocket. This method is an alias of {@link #createSocket(URI, int)
      * createSocket}{@code (uri, }{@link #getConnectionTimeout()}{@code )}.
-     * <p>
+     *
      * <p>
      * A socket factory (= a {@link SocketFactory} instance) to create a raw
      * socket (= a {@link Socket} instance) is determined as described below.
      * </p>
-     * <p>
+     *
      * <ol>
      * <li>
-     * If the scheme of the URI is either {@code wss} or {@code https},
-     * <ol type="i">
+     *   If the scheme of the URI is either {@code wss} or {@code https},
+     *   <ol type="i">
+     *     <li>
+     *       If an {@link SSLContext} instance has been set by {@link
+     *       #setSSLContext(SSLContext)}, the value returned from {@link
+     *       SSLContext#getSocketFactory()} method of the instance is used.
+     *     <li>
+     *       Otherwise, if an {@link SSLSocketFactory} instance has been
+     *       set by {@link #setSSLSocketFactory(SSLSocketFactory)}, the
+     *       instance is used.
+     *     <li>
+     *       Otherwise, the value returned from {@link SSLSocketFactory#getDefault()}
+     *       is used.
+     *   </ol>
      * <li>
-     * If an {@link SSLContext} instance has been set by {@link
-     * #setSSLContext(SSLContext)}, the value returned from {@link
-     * SSLContext#getSocketFactory()} method of the instance is used.
-     * <li>
-     * Otherwise, if an {@link SSLSocketFactory} instance has been
-     * set by {@link #setSSLSocketFactory(SSLSocketFactory)}, the
-     * instance is used.
-     * <li>
-     * Otherwise, the value returned from {@link SSLSocketFactory#getDefault()}
-     * is used.
-     * </ol>
-     * <li>
-     * Otherwise (= the scheme of the URI is either {@code ws} or {@code http}),
-     * <ol type="i">
-     * <li>
-     * If a {@link SocketFactory} instance has been set by {@link
-     * #setSocketFactory(SocketFactory)}, the instance is used.
-     * <li>
-     * Otherwise, the value returned from {@link SocketFactory#getDefault()}
-     * is used.
-     * </ol>
+     *   Otherwise (= the scheme of the URI is either {@code ws} or {@code http}),
+     *   <ol type="i">
+     *     <li>
+     *       If a {@link SocketFactory} instance has been set by {@link
+     *       #setSocketFactory(SocketFactory)}, the instance is used.
+     *     <li>
+     *       Otherwise, the value returned from {@link SocketFactory#getDefault()}
+     *       is used.
+     *   </ol>
      * </ol>
      *
-     * @param uri The URI of the WebSocket endpoint on the server side.
-     *            The scheme part of the URI must be one of {@code ws},
-     *            {@code wss}, {@code http} and {@code https}
-     *            (case-insensitive).
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URI is {@code null} or violates RFC 2396.
-     * @throws IOException              Failed to create a socket.
+     * @param uri
+     *         The URI of the WebSocket endpoint on the server side.
+     *         The scheme part of the URI must be one of {@code ws},
+     *         {@code wss}, {@code http} and {@code https}
+     *         (case-insensitive).
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URI is {@code null} or violates RFC 2396.
+     *
+     * @throws IOException
+     *         Failed to create a socket.
      */
     public WebSocket createSocket(URI uri) throws IOException {
         return createSocket(uri, getConnectionTimeout());
@@ -321,49 +384,59 @@ public class WebSocketFactory {
 
     /**
      * Create a WebSocket.
-     * <p>
+     *
      * <p>
      * A socket factory (= a {@link SocketFactory} instance) to create a raw
      * socket (= a {@link Socket} instance) is determined as described below.
      * </p>
-     * <p>
+     *
      * <ol>
      * <li>
-     * If the scheme of the URI is either {@code wss} or {@code https},
-     * <ol type="i">
+     *   If the scheme of the URI is either {@code wss} or {@code https},
+     *   <ol type="i">
+     *     <li>
+     *       If an {@link SSLContext} instance has been set by {@link
+     *       #setSSLContext(SSLContext)}, the value returned from {@link
+     *       SSLContext#getSocketFactory()} method of the instance is used.
+     *     <li>
+     *       Otherwise, if an {@link SSLSocketFactory} instance has been
+     *       set by {@link #setSSLSocketFactory(SSLSocketFactory)}, the
+     *       instance is used.
+     *     <li>
+     *       Otherwise, the value returned from {@link SSLSocketFactory#getDefault()}
+     *       is used.
+     *   </ol>
      * <li>
-     * If an {@link SSLContext} instance has been set by {@link
-     * #setSSLContext(SSLContext)}, the value returned from {@link
-     * SSLContext#getSocketFactory()} method of the instance is used.
-     * <li>
-     * Otherwise, if an {@link SSLSocketFactory} instance has been
-     * set by {@link #setSSLSocketFactory(SSLSocketFactory)}, the
-     * instance is used.
-     * <li>
-     * Otherwise, the value returned from {@link SSLSocketFactory#getDefault()}
-     * is used.
-     * </ol>
-     * <li>
-     * Otherwise (= the scheme of the URI is either {@code ws} or {@code http}),
-     * <ol type="i">
-     * <li>
-     * If a {@link SocketFactory} instance has been set by {@link
-     * #setSocketFactory(SocketFactory)}, the instance is used.
-     * <li>
-     * Otherwise, the value returned from {@link SocketFactory#getDefault()}
-     * is used.
-     * </ol>
+     *   Otherwise (= the scheme of the URI is either {@code ws} or {@code http}),
+     *   <ol type="i">
+     *     <li>
+     *       If a {@link SocketFactory} instance has been set by {@link
+     *       #setSocketFactory(SocketFactory)}, the instance is used.
+     *     <li>
+     *       Otherwise, the value returned from {@link SocketFactory#getDefault()}
+     *       is used.
+     *   </ol>
      * </ol>
      *
-     * @param uri     The URI of the WebSocket endpoint on the server side.
-     *                The scheme part of the URI must be one of {@code ws},
-     *                {@code wss}, {@code http} and {@code https}
-     *                (case-insensitive).
-     * @param timeout The timeout value in milliseconds for socket connection.
-     * @return A WebSocket.
-     * @throws IllegalArgumentException The given URI is {@code null} or violates RFC 2396, or
-     *                                  the given timeout value is negative.
-     * @throws IOException              Failed to create a socket.
+     * @param uri
+     *         The URI of the WebSocket endpoint on the server side.
+     *         The scheme part of the URI must be one of {@code ws},
+     *         {@code wss}, {@code http} and {@code https}
+     *         (case-insensitive).
+     *
+     * @param timeout
+     *         The timeout value in milliseconds for socket connection.
+     *
+     * @return
+     *         A WebSocket.
+     *
+     * @throws IllegalArgumentException
+     *         The given URI is {@code null} or violates RFC 2396, or
+     *         the given timeout value is negative.
+     *
+     * @throws IOException
+     *         Failed to create a socket.
+     *
      * @since 1.10
      */
     public WebSocket createSocket(URI uri, int timeout) throws IOException {
@@ -387,9 +460,7 @@ public class WebSocketFactory {
     }
 
 
-    private WebSocket createSocket(
-            String scheme, String userInfo, String host, int port,
-            String path, String query, int timeout) throws IOException {
+    private WebSocket createSocket(String scheme, String userInfo, String host, int port, String path, String query, int timeout) throws IOException {
         // True if 'scheme' is 'wss' or 'https'.
         boolean secure = isSecureConnectionRequired(scheme);
 
@@ -407,6 +478,7 @@ public class WebSocketFactory {
         // Create a WebSocket instance.
         return createWebSocket(secure, userInfo, host, port, path, query, connector);
     }
+
 
 
     private static boolean isSecureConnectionRequired(String scheme) {
@@ -439,8 +511,7 @@ public class WebSocketFactory {
     }
 
 
-    private SocketConnector createRawSocket(
-            String host, int port, boolean secure, int timeout) throws IOException {
+    private SocketConnector createRawSocket(String host, int port, boolean secure, int timeout) throws IOException {
         // Determine the port number. Especially, if 'port' is -1,
         // it is converted to 80 or 443.
         port = determinePort(port, secure);
@@ -461,8 +532,7 @@ public class WebSocketFactory {
     }
 
 
-    private SocketConnector createProxiedRawSocket(
-            String host, int port, boolean secure, int timeout) throws IOException {
+    private SocketConnector createProxiedRawSocket(String host, int port, boolean secure, int timeout) throws IOException {
         // Determine the port number of the proxy server.
         // Especially, if getPort() returns -1, the value
         // is converted to 80 or 443.
@@ -481,8 +551,7 @@ public class WebSocketFactory {
         ProxyHandshaker handshaker = new ProxyHandshaker(socket, host, port, mProxySettings);
 
         // SSLSocketFactory for SSL handshake with the WebSocket endpoint.
-        SSLSocketFactory sslSocketFactory = secure ?
-                (SSLSocketFactory) mSocketFactorySettings.selectSocketFactory(secure) : null;
+        SSLSocketFactory sslSocketFactory = secure ? (SSLSocketFactory) mSocketFactorySettings.selectSocketFactory(secure) : null;
 
         // Create an instance that will execute the task to connect to the server later.
         return new SocketConnector(
@@ -518,9 +587,7 @@ public class WebSocketFactory {
     }
 
 
-    private WebSocket createWebSocket(
-            boolean secure, String userInfo, String host, int port,
-            String path, String query, SocketConnector connector) {
+    private WebSocket createWebSocket(boolean secure, String userInfo, String host, int port, String path, String query, SocketConnector connector) {
         // The value for "Host" HTTP header.
         if (0 <= port) {
             host = host + ":" + port;

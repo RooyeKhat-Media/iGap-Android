@@ -10,14 +10,17 @@
 
 package net.iGap.fragments;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,65 +32,96 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
+import com.mikepenz.fastadapter.items.AbstractItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import io.realm.Case;
 import io.realm.Realm;
-import io.realm.RealmBasedRecyclerViewAdapter;
+import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
-import io.realm.RealmViewHolder;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperFragment;
+import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperPublicMethod;
 import net.iGap.interfaces.OnAvatarGet;
+import net.iGap.interfaces.OnGetPermission;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.CircleImageView;
+import net.iGap.module.Contacts;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.LastSeenTimeUtil;
-import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.SHP_SETTING;
+import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
+import net.iGap.request.RequestUserContactsDelete;
+import net.iGap.request.RequestUserContactsGetList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static net.iGap.G.context;
+import static net.iGap.R.string.contacts;
 
-public class RegisteredContactsFragment extends Fragment {
+public class RegisteredContactsFragment extends BaseFragment {
 
     private TextView menu_txt_titleToolbar;
     private ViewGroup vgAddContact, vgRoot;
 
-    private RealmRecyclerView realmRecyclerView;
+    private RecyclerView realmRecyclerView;
     private SharedPreferences sharedPreferences;
     private boolean isImportContactList = false;
     StickyRecyclerHeadersDecoration decoration;
     private ProgressBar prgWaiting;
     RealmResults<RealmContacts> results;
-    private FragmentActivity mActivity;
     private EditText edtSearch;
     private boolean isCallAction = false;
+    private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
+    private FastItemAdapter fastItemAdapter;
+    private ProgressBar prgWaitingLiadList;
+
+    private Realm realm;
+
+    private Realm getRealm() {
+        if (realm == null || realm.isClosed()) {
+            realm = Realm.getDefaultInstance();
+        }
+
+        return realm;
+    }
 
 
     public static RegisteredContactsFragment newInstance() {
         return new RegisteredContactsFragment();
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
 
-    @Override public void onViewCreated(View view, final @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
-        sharedPreferences = getActivity().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
 
         /**
          * not import contact in every enter to this page
@@ -96,7 +130,7 @@ public class RegisteredContactsFragment extends Fragment {
         //isImportContactList = sharedPreferences.getBoolean(SHP_SETTING.KEY_GET_CONTACT_IN_FRAGMENT, false);
         //if (!isImportContactList) {
         //    try {
-        //        HelperPermision.getContactPermision(getActivity(), new OnGetPermission() {
+        //        HelperPermision.getContactPermision(G.fragmentActivity, new OnGetPermission() {
         //            @Override
         //            public void Allow() throws IOException {
         //                importContactList();
@@ -117,6 +151,10 @@ public class RegisteredContactsFragment extends Fragment {
 
         //set interface for get callback here
 
+        TextView txtNonUser = (TextView) view.findViewById(R.id.txtNon_User);
+        txtNonUser.setTextColor(Color.parseColor(G.appBarColor));
+        prgWaitingLiadList = (ProgressBar) view.findViewById(R.id.prgWaiting_loadList);
+
         prgWaiting = (ProgressBar) view.findViewById(R.id.prgWaiting_addContact);
         AppUtils.setProgresColler(prgWaiting);
 
@@ -136,12 +174,13 @@ public class RegisteredContactsFragment extends Fragment {
             if (title.equals("New Chat")) {
                 title = G.context.getString(R.string.New_Chat);
             } else if (title.equals("Contacts")) {
-                title = G.context.getString(R.string.contacts);
+                title = G.context.getString(contacts);
+            } else if (title.equals("call")) {
+                title = G.context.getString(R.string.call_with);
             }
         }
 
         view.findViewById(R.id.fc_layot_title).setBackgroundColor(Color.parseColor(G.appBarColor));
-        view.findViewById(R.id.fc_view_line).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         menu_txt_titleToolbar = (TextView) view.findViewById(R.id.menu_txt_titleToolbar);
         menu_txt_titleToolbar.setText(title);
@@ -150,7 +189,8 @@ public class RegisteredContactsFragment extends Fragment {
         edtSearch = (EditText) view.findViewById(R.id.menu_edt_search);
         final TextView txtSearch = (TextView) view.findViewById(R.id.menu_btn_search);
         txtSearch.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 txtClose.setVisibility(View.VISIBLE);
                 edtSearch.setVisibility(View.VISIBLE);
                 edtSearch.setFocusable(true);
@@ -160,7 +200,8 @@ public class RegisteredContactsFragment extends Fragment {
         });
 
         txtClose.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (edtSearch.getText().length() > 0) {
                     edtSearch.setText("");
                 } else {
@@ -168,104 +209,120 @@ public class RegisteredContactsFragment extends Fragment {
                     edtSearch.setVisibility(View.GONE);
                     menu_txt_titleToolbar.setVisibility(View.VISIBLE);
                     txtSearch.setVisibility(View.VISIBLE);
-                    InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                Realm realm = Realm.getDefaultInstance();
+
 
                 if (s.length() > 0) {
-                    results = realm.where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+                    results = getRealm().where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAllSorted(RealmContactsFields.DISPLAY_NAME);
                 } else {
-                    results = realm.where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+                    results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
                 }
-                realmRecyclerView.setAdapter(new ContactListAdapter(getActivity(), results));
+                realmRecyclerView.setAdapter(new ContactListAdapter(results));
 
-                realmRecyclerView.getRecycleView().removeItemDecoration(decoration);
-                decoration = new StickyRecyclerHeadersDecoration(new StikyHeader(results));
-                realmRecyclerView.getRecycleView().addItemDecoration(decoration);
+                realmRecyclerView.removeItemDecoration(decoration);
+                decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(results));
+                realmRecyclerView.addItemDecoration(decoration);
 
-                realm.close();
+
             }
 
-            @Override public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
         vgAddContact.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-
+            @Override
+            public void onClick(View view) {
                 FragmentAddContact fragment = FragmentAddContact.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putString("TITLE", G.context.getString(R.string.fac_Add_Contact));
                 fragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
-                    .addToBackStack(null)
-                    .add(R.id.fragmentContainer, fragment)
-                    .commit();
+                new HelperFragment(fragment).setReplace(false).load();
             }
         });
 
-        MaterialDesignTextView txtMenu = (MaterialDesignTextView) view.findViewById(R.id.menu_txtBack);
         RippleView rippleMenu = (RippleView) view.findViewById(R.id.menu_ripple_txtBack);
         rippleMenu.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override public void onComplete(RippleView rippleView) {
-                // close and remove fragment from stack
-
-                //getActivity().getSupportFragmentManager().popBackStack();
-                getActivity().onBackPressed();
-                InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            @Override
+            public void onComplete(RippleView rippleView) {
+                G.fragmentActivity.onBackPressed();
+                InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(rippleView.getWindowToken(), 0);
             }
         });
 
-        Realm realm = Realm.getDefaultInstance();
+        realmRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        realmRecyclerView.setItemViewCacheSize(1000);
+        realmRecyclerView.setItemAnimator(null);
+        realmRecyclerView.setLayoutManager(new LinearLayoutManager(G.fragmentActivity));
+        realmRecyclerView.setNestedScrollingEnabled(false);
 
-        realmRecyclerView = (RealmRecyclerView) view.findViewById(R.id.recycler_view);
-        realmRecyclerView.setItemViewCacheSize(100);
-        realmRecyclerView.setDrawingCacheEnabled(true);
-        results = realm.where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
-        realmRecyclerView.setAdapter(new ContactListAdapter(getActivity(), results));
+        results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+        realmRecyclerView.setAdapter(new ContactListAdapter(results));
 
-        StikyHeader stikyHeader = new StikyHeader(results);
-        decoration = new StickyRecyclerHeadersDecoration(stikyHeader);
-        realmRecyclerView.getRecycleView().addItemDecoration(decoration);
+        StickyHeader stickyHeader = new StickyHeader(results);
+        decoration = new StickyRecyclerHeadersDecoration(stickyHeader);
+        realmRecyclerView.addItemDecoration(decoration);
 
-        realm.close();
 
-        ///**
-        // * after send contact automatically do get contact list
-        // * so if !G.isSendContact try for get list for getting
-        // * contacts if other account imported to server
-        // */
-        //if (!G.isSendContact || contacts.size() == 0) {
-        //    /**
-        //     * if contacts size is zero send request for get contacts list
-        //     * for insuring that contacts not exist really or not
-        //     */
-        //    new RequestUserContactsGetList().userContactGetList();
-        //}
+        RecyclerView rcvListContact = (RecyclerView) view.findViewById(R.id.rcv_friends_to_invite);
+        fastItemAdapter = new FastItemAdapter();
 
+        try {
+            HelperPermision.getContactPermision(G.fragmentActivity, new OnGetPermission() {
+                @Override
+                public void Allow() throws IOException {
+                    new LongOperation().execute();
+                }
+
+                @Override
+                public void deny() {
+                    prgWaitingLiadList.setVisibility(View.GONE);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        rcvListContact.setLayoutManager(new LinearLayoutManager(getContext()));
+        rcvListContact.setItemAnimator(new DefaultItemAnimator());
+        rcvListContact.setAdapter(fastItemAdapter);
+        rcvListContact.setNestedScrollingEnabled(false);
+
+
+        /**
+         * if contacts size is zero send request for get contacts list
+         * for insuring that contacts not exist really or not
+         */
+        if (results.size() == 0) {
+            new RequestUserContactsGetList().userContactGetList();
+        }
     }
-
 
 
     private void hideProgress() {
 
         G.handler.post(new Runnable() {
-            @Override public void run() {
-                mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            @Override
+            public void run() {
+                G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 prgWaiting.setVisibility(View.GONE);
             }
         });
@@ -273,66 +330,93 @@ public class RegisteredContactsFragment extends Fragment {
 
     private void showProgress() {
         G.handler.post(new Runnable() {
-            @Override public void run() {
-                mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            @Override
+            public void run() {
+                G.fragmentActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 prgWaiting.setVisibility(View.VISIBLE);
             }
         });
     }
 
-    @Override public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (FragmentActivity) activity;
-    }
-
-    @Override public void onDetach() {
+    @Override
+    public void onDetach() {
         super.onDetach();
         hideProgress();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (realm != null && !realm.isClosed()) {
+            realm.close();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //Override onSaveInstanceState method and comment 'super' from avoid from "Can not perform this action after onSaveInstanceState" error
+        //super.onSaveInstanceState(outState); //
+    }
+
     //********************************************************************************************
 
-    public class ContactListAdapter extends RealmBasedRecyclerViewAdapter<RealmContacts, ContactListAdapter.ViewHolder> {
+    public class ContactListAdapter extends RealmRecyclerViewAdapter<RealmContacts, ContactListAdapter.ViewHolder> {
 
         String lastHeader = "";
         int count;
 
-        public ContactListAdapter(Context context, RealmResults<RealmContacts> realmResults) {
-            super(context, realmResults, true, false, false, "");
+        ContactListAdapter(RealmResults<RealmContacts> realmResults) {
+            super(realmResults, true);
             count = realmResults.size();
         }
 
-        public class ViewHolder extends RealmViewHolder {
+        public class ViewHolder extends RecyclerView.ViewHolder {
 
+            private RealmContacts realmContacts;
             protected CircleImageView image;
-            protected CustomTextViewMedium title;
-            protected CustomTextViewMedium subtitle;
+            protected TextView title;
+            protected TextView subtitle;
             protected View topLine;
 
             public ViewHolder(View view) {
                 super(view);
 
                 image = (CircleImageView) view.findViewById(R.id.imageView);
-                title = (CustomTextViewMedium) view.findViewById(R.id.title);
-                subtitle = (CustomTextViewMedium) view.findViewById(R.id.subtitle);
+                title = (TextView) view.findViewById(R.id.title);
+                subtitle = (TextView) view.findViewById(R.id.subtitle);
                 topLine = (View) view.findViewById(R.id.topLine);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
 
                         if (isCallAction) {
-                            getActivity().getSupportFragmentManager().popBackStack();
-                            FragmentCall.call(realmResults.get(getPosition()).getId(), false);
+                            //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
+
+                            popBackStackFragment();
+
+                            long userId = realmContacts.getId();
+                            if (userId != 134 && G.userId != userId) {
+                                FragmentCall.call(userId, false);
+                            }
+
+
                         } else {
                             showProgress();
 
-                            HelperPublicMethod.goToChatRoom(realmResults.get(getPosition()).getId(), new HelperPublicMethod.Oncomplet() {
-                                @Override public void complete() {
+                            HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
+                                @Override
+                                public void complete() {
                                     hideProgress();
-                                    getActivity().getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
+                                    //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
+
+                                    popBackStackFragment();
+
                                 }
                             }, new HelperPublicMethod.OnError() {
-                                @Override public void error() {
+                                @Override
+                                public void error() {
                                     hideProgress();
                                 }
                             });
@@ -346,19 +430,21 @@ public class RegisteredContactsFragment extends Fragment {
             }
         }
 
-        @Override public ContactListAdapter.ViewHolder onCreateRealmViewHolder(ViewGroup viewGroup, int i) {
-            View v = inflater.inflate(R.layout.contact_item, viewGroup, false);
+        @Override
+        public ContactListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            // View v = inflater.inflate(R.layout.contact_item, viewGroup, false);
 
-            if (count != realmResults.size()) {
+            View v = ViewMaker.getViewRegisteredContacts();
 
-                count = realmResults.size();
+            if (getData() != null && count != getData().size()) {
+                count = getData().size();
 
                 realmRecyclerView.post(new Runnable() {
-                    @Override public void run() {
-
-                        realmRecyclerView.getRecycleView().removeItemDecoration(decoration);
-                        decoration = new StickyRecyclerHeadersDecoration(new StikyHeader(realmResults));
-                        realmRecyclerView.getRecycleView().addItemDecoration(decoration);
+                    @Override
+                    public void run() {
+                        realmRecyclerView.removeItemDecoration(decoration);
+                        decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(getData().sort(RealmContactsFields.DISPLAY_NAME)));
+                        realmRecyclerView.addItemDecoration(decoration);
                     }
                 });
             }
@@ -366,51 +452,76 @@ public class RegisteredContactsFragment extends Fragment {
             return new ViewHolder(v);
         }
 
-        @Override public void onBindRealmViewHolder(final ContactListAdapter.ViewHolder viewHolder, int i) {
+        @Override
+        public void onBindViewHolder(final ContactListAdapter.ViewHolder viewHolder, int i) {
 
-            String header = realmResults.get(i).getDisplay_name();
+            final RealmContacts contact = viewHolder.realmContacts = getItem(i);
+            if (contact == null) {
+                return;
+            }
+
+            String header = contact.getDisplay_name();
 
             if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {
-
                 viewHolder.topLine.setVisibility(View.VISIBLE);
             } else {
-
                 viewHolder.topLine.setVisibility(View.GONE);
             }
 
             lastHeader = header;
 
-            viewHolder.title.setText(realmResults.get(i).getDisplay_name());
-            Realm realm = Realm.getDefaultInstance();
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmResults.get(i).getId()).findFirst();
-            if (realmRegisteredInfo != null) {
+            viewHolder.title.setText(contact.getDisplay_name());
 
+            final RealmRegisteredInfo realmRegisteredInfo = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, contact.getId()).findFirst();
+            if (realmRegisteredInfo != null) {
+                viewHolder.subtitle.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
                 if (realmRegisteredInfo.getStatus() != null) {
                     if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
-                        viewHolder.subtitle.setText(LastSeenTimeUtil.computeTime(realmResults.get(i).getId(), realmRegisteredInfo.getLastSeen(), false));
+                        viewHolder.subtitle.setText(LastSeenTimeUtil.computeTime(contact.getId(), realmRegisteredInfo.getLastSeen(), false));
                     } else {
+                        if (realmRegisteredInfo.getMainStatus().equals(ProtoGlobal.RegisteredUser.Status.ONLINE.toString())) {
+                            viewHolder.subtitle.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
+                        }
                         viewHolder.subtitle.setText(realmRegisteredInfo.getStatus());
                     }
                 }
 
                 if (HelperCalander.isLanguagePersian) {
-                    viewHolder.subtitle.setText(HelperCalander.convertToUnicodeFarsiNumber(viewHolder.subtitle.getText().toString()));
+                    viewHolder.subtitle.setText(viewHolder.subtitle.getText().toString());
                 }
             }
-            realm.close();
 
-            setAvatar(viewHolder, realmResults.get(i).getId());
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            new RequestUserContactsDelete().contactsDelete(realmRegisteredInfo.getPhoneNumber());
+                        }
+                    }).negativeText(R.string.B_cancel).show();
+
+                    return false;
+                }
+            });
+
+            hashMapAvatar.put(contact.getId(), viewHolder.image);
+            setAvatar(viewHolder, contact.getId());
         }
 
-        private void setAvatar(final ViewHolder holder, long userId) {
+        private void setAvatar(final ViewHolder holder, final long userId) {
 
-            HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, new OnAvatarGet() {
-                @Override public void onAvatarGet(final String avatarPath, long ownerId) {
-                    G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), holder.image);
+            HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
+                @Override
+                public void onAvatarGet(final String avatarPath, long ownerId) {
+                    G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(ownerId));
                 }
 
-                @Override public void onShowInitials(final String initials, final String color) {
-                    holder.image.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+                @Override
+                public void onShowInitials(final String initials, final String color) {
+                    hashMapAvatar.get(userId).setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                 }
             });
         }
@@ -418,33 +529,153 @@ public class RegisteredContactsFragment extends Fragment {
 
     //********************************************************************************************
 
-    private class StikyHeader implements StickyRecyclerHeadersAdapter {
+    private class StickyHeader implements StickyRecyclerHeadersAdapter {
 
         RealmResults<RealmContacts> realmResults;
 
-        public StikyHeader(RealmResults<RealmContacts> realmResults) {
+        StickyHeader(RealmResults<RealmContacts> realmResults) {
             this.realmResults = realmResults;
         }
 
-        @Override public long getHeaderId(int position) {
-            return realmResults.get(position).getDisplay_name().toString().toUpperCase().charAt(0);
+        @Override
+        public long getHeaderId(int position) {
+            return realmResults.get(position).getDisplay_name().toUpperCase().charAt(0);
         }
 
-        @Override public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        @Override
+        public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_header_item, parent, false);
             return new RecyclerView.ViewHolder(view) {
             };
         }
 
-        @Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        @Override
+        public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
 
             CustomTextViewMedium textView = (CustomTextViewMedium) holder.itemView;
             textView.setText(realmResults.get(position).getDisplay_name().toUpperCase().substring(0, 1));
         }
 
-        @Override public int getItemCount() {
+        @Override
+        public int getItemCount() {
             return realmResults.size();
         }
+    }
+
+    public class AdapterListContact extends AbstractItem<AdapterListContact, AdapterListContact.ViewHolder> {
+
+        public String item;
+        public String phone;
+
+        //public String getItem() {
+        //    return item;
+        //}
+
+        public AdapterListContact(String item, String phone) {
+            this.item = item;
+            this.phone = phone;
+        }
+
+        //public void setItem(String item) {
+        //    this.item = item;
+        //}
+
+        //The unique ID for this type of item
+        @Override
+        public int getType() {
+            return R.id.root_List_contact;
+        }
+
+        //The layout to be used for this type of item
+        @Override
+        public int getLayoutRes() {
+            return R.layout.adapter_list_cobtact;
+        }
+
+        //The logic to bind your data to the view
+
+        @Override
+        public void bindView(ViewHolder holder, List payloads) {
+            super.bindView(holder, payloads);
+
+            holder.txtName.setText(item);
+            holder.txtPhone.setText(phone);
+
+            holder.root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.igap))
+
+                        .content(G.context.getResources().getString(R.string.invite_friend)).positiveText(G.context.getResources().getString(R.string.ok)).negativeText(G.context.getResources().getString(R.string.cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you!");
+                            sendIntent.setType("text/plain");
+                            startActivity(sendIntent);
+                        }
+                    }).show();
+
+
+                }
+            });
+
+
+        }
+
+        //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
+        protected class ViewHolder extends RecyclerView.ViewHolder {
+
+
+            private TextView txtName;
+            private TextView txtPhone;
+            private ViewGroup root;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                txtName = (TextView) view.findViewById(R.id.txtName);
+                txtPhone = (TextView) view.findViewById(R.id.txtPhone);
+                root = (ViewGroup) view.findViewById(R.id.root_List_contact);
+
+            }
+        }
+
+        @Override
+        public ViewHolder getViewHolder(View v) {
+            return new ViewHolder(v);
+        }
+    }
+
+    private class LongOperation extends AsyncTask<Void, Void, ArrayList<StructListOfContact>> {
+
+
+        @Override
+        protected void onPreExecute() {
+
+            prgWaitingLiadList.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected ArrayList<StructListOfContact> doInBackground(Void... params) {
+
+            return Contacts.getMobileListContact();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<StructListOfContact> structListOfContacts) {
+
+            //Collections.sort(structListOfContacts);
+
+            for (int i = 0; i < structListOfContacts.size(); i++) {
+                fastItemAdapter.add(new AdapterListContact(structListOfContacts.get(i).getDisplayName(), structListOfContacts.get(i).getPhone()).withIdentifier(100 + i));
+            }
+            prgWaitingLiadList.setVisibility(View.GONE);
+            super.onPostExecute(structListOfContacts);
+        }
+
     }
 }
 

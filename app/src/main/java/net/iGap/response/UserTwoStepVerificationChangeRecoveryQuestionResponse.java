@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoUserTwoStepVerificationChangeRecoveryQuestion;
 
 public class UserTwoStepVerificationChangeRecoveryQuestionResponse extends MessageHandler {
@@ -31,6 +32,10 @@ public class UserTwoStepVerificationChangeRecoveryQuestionResponse extends Messa
 
         ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestionResponse.Builder builder =
             (ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestionResponse.Builder) message;
+
+        if (G.onTwoStepPassword != null) {
+            G.onTwoStepPassword.changeRecoveryQuestion();
+        }
     }
 
     @Override public void timeOut() {

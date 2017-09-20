@@ -53,9 +53,9 @@ public class ChannelKickAdminResponse extends MessageHandler {
                         }
                     });
 
-                    if (G.onChannelKickAdmin != null) {
-                        G.onChannelKickAdmin.onChannelKickAdmin(builder.getRoomId(), builder.getMemberId());
-                    }
+                    //if (G.onChannelKickAdmin != null) {
+                    //    G.onChannelKickAdmin.onChannelKickAdmin(builder.getRoomId(), builder.getMemberId());
+                    //}
                     break;
                 }
             }

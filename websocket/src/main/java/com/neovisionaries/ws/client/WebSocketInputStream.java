@@ -64,7 +64,7 @@ class WebSocketInputStream extends FilterInputStream {
         // Mask flag. This should never be true because the specification
         // (RFC 6455, 5. Data Framing, 5.1. Overview) says as follows:
         //
-        //     A server MUST NOT isSecure any frames that it sends to the client.
+        //     A server MUST NOT mask any frames that it sends to the client.
         //
         boolean mask = ((buffer[1] & 0x80) != 0);
 
@@ -77,8 +77,7 @@ class WebSocketInputStream extends FilterInputStream {
             readBytes(buffer, 2);
 
             // Interpret the bytes as a number.
-            payloadLength = (((buffer[0] & 0xFF) << 8) |
-                    ((buffer[1] & 0xFF)));
+            payloadLength = (((buffer[0] & 0xFF) << 8) | ((buffer[1] & 0xFF)));
         } else if (payloadLength == 127) {
             // Read the extended payload length.
             // It is expressed in 8 bytes in network byte order.
@@ -90,9 +89,7 @@ class WebSocketInputStream extends FilterInputStream {
             //
             if ((buffer[0] & 0x80) != 0) {
                 // The payload length in a frame is invalid.
-                throw new WebSocketException(
-                        WebSocketError.INVALID_PAYLOAD_LENGTH,
-                        "The payload length of a frame is invalid.");
+                throw new WebSocketException(WebSocketError.INVALID_PAYLOAD_LENGTH, "The payload length of a frame is invalid.");
             }
 
             // Interpret the bytes as a number.
@@ -119,23 +116,14 @@ class WebSocketInputStream extends FilterInputStream {
             // In Java, the maximum array size is Integer.MAX_VALUE.
             // Skip the payload and raise an exception.
             skipQuietly(payloadLength);
-            throw new WebSocketException(
-                    WebSocketError.TOO_LONG_PAYLOAD,
-                    "The payload length of a frame exceeds the maximum array size in Java.");
+            throw new WebSocketException(WebSocketError.TOO_LONG_PAYLOAD, "The payload length of a frame exceeds the maximum array size in Java.");
         }
 
         // Read the payload if the payload length is not 0.
         byte[] payload = readPayload(payloadLength, mask, maskingKey);
 
         // Create a WebSocketFrame instance that represents a frame.
-        return new WebSocketFrame()
-                .setFin(fin)
-                .setRsv1(rsv1)
-                .setRsv2(rsv2)
-                .setRsv3(rsv3)
-                .setOpcode(opcode)
-                .setMask(mask)
-                .setPayload(payload);
+        return new WebSocketFrame().setFin(fin).setRsv1(rsv1).setRsv2(rsv2).setRsv3(rsv3).setOpcode(opcode).setMask(mask).setPayload(payload);
     }
 
 
@@ -178,9 +166,7 @@ class WebSocketInputStream extends FilterInputStream {
             // OutOfMemoryError occurred during a trial to allocate a memory area
             // for a frame's payload. Skip the payload and raise an exception.
             skipQuietly(payloadLength);
-            throw new WebSocketException(
-                    WebSocketError.INSUFFICIENT_MEMORY_FOR_PAYLOAD,
-                    "OutOfMemoryError occurred during a trial to allocate a memory area for a frame's payload: " + e.getMessage(), e);
+            throw new WebSocketException(WebSocketError.INSUFFICIENT_MEMORY_FOR_PAYLOAD, "OutOfMemoryError occurred during a trial to allocate a memory area for a frame's payload: " + e.getMessage(), e);
         }
 
         // Read the payload.

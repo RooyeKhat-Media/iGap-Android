@@ -18,6 +18,7 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.realm.RealmClientCondition;
 import net.iGap.realm.RealmClientConditionFields;
+import net.iGap.realm.RealmOfflineListen;
 import net.iGap.realm.RealmOfflineSeen;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomMessage;
@@ -44,16 +45,25 @@ public class ChatUpdateStatusResponse extends MessageHandler {
         final ProtoResponse.Response.Builder response = ProtoResponse.Response.newBuilder().mergeFrom(chatUpdateStatus.getResponse());
 
         final Realm realm = Realm.getDefaultInstance();
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 if (!response.getId().isEmpty()) { // I'm sender
+
                     if (chatUpdateStatus.getStatus() == ProtoGlobal.RoomMessageStatus.SEEN) {
                         RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, chatUpdateStatus.getRoomId()).findFirst();
                         for (RealmOfflineSeen realmOfflineSeen : realmClientCondition.getOfflineSeen()) {
                             if (realmOfflineSeen.getOfflineSeen() == chatUpdateStatus.getMessageId()) {
                                 realmOfflineSeen.deleteFromRealm();
+                                break;
+                            }
+                        }
+                    } else if (chatUpdateStatus.getStatus() == ProtoGlobal.RoomMessageStatus.LISTENED) {
+                        RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, chatUpdateStatus.getRoomId()).findFirst();
+                        for (RealmOfflineListen realmOfflineListen : realmClientCondition.getOfflineListen()) {
+                            if (realmOfflineListen.getOfflineListen() == chatUpdateStatus.getMessageId()) {
+                                realmOfflineListen.deleteFromRealm();
+
                                 break;
                             }
                         }
@@ -63,20 +73,36 @@ public class ChatUpdateStatusResponse extends MessageHandler {
                      * clear unread count if another account was saw this message
                      */
                     RealmRoom.clearUnreadCount(chatUpdateStatus.getRoomId(), chatUpdateStatus.getUpdaterAuthorHash(), chatUpdateStatus.getStatus());
+
                     /**
                      * find message from database and update its status
                      */
-                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, chatUpdateStatus.getMessageId()).findFirst();
+                    RealmRoomMessage roomMessage;
+                    if (chatUpdateStatus.getStatus() != ProtoGlobal.RoomMessageStatus.LISTENED) {
+                        roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, chatUpdateStatus.getMessageId()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.SEEN.toString()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.LISTENED.toString()).findFirst();
+                    } else {
+                        roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, chatUpdateStatus.getMessageId()).findFirst();
+                    }
+
                     if (roomMessage != null) {
                         roomMessage.setStatus(chatUpdateStatus.getStatus().toString());
+                        roomMessage.setStatusVersion(chatUpdateStatus.getStatusVersion());
                         realm.copyToRealmOrUpdate(roomMessage);
 
                         if (G.chatUpdateStatusUtil != null) {
                             G.chatUpdateStatusUtil.onChatUpdateStatus(chatUpdateStatus.getRoomId(), chatUpdateStatus.getMessageId(), chatUpdateStatus.getStatus(), chatUpdateStatus.getStatusVersion());
                         }
+                    } else if (chatUpdateStatus.getStatus() == ProtoGlobal.RoomMessageStatus.SEEN) {
+                        /**
+                         * reason : getRoomList will be updated status in Realm and after that when
+                         * client get status here and was in chat will not be updated status in second
+                         * so i use from this block for avoid from this problem
+                         */
+                        if (G.chatUpdateStatusUtil != null) {
+                            G.chatUpdateStatusUtil.onChatUpdateStatus(chatUpdateStatus.getRoomId(), chatUpdateStatus.getMessageId(), chatUpdateStatus.getStatus(), chatUpdateStatus.getStatusVersion());
+                        }
                     }
                 }
-
             }
         });
 

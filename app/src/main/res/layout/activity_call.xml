@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ac_layout_call_root"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_call_fragment"
@@ -8,10 +9,12 @@
     android:elevation="999dp"
     android:layoutDirection="ltr"
     android:orientation="vertical"
+    tools:ignore="MissingPrefix"
     >
 
 
   <FrameLayout
+      android:id="@+id/ac_layout_main_call"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       >
@@ -21,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha=".5"
+        android:background="#00B0BF"
         android:scaleType="centerCrop"
         />
 
@@ -33,13 +37,28 @@
         >
 
       <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp16"
+          android:singleLine="true"
+          android:text="@string/call_name"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textColor="#f8f4df"
+
+          android:textSize="@dimen/dp22"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+
+          />
+
+      <TextView
           android:id="@+id/fcr_txt_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:singleLine="true"
-          android:text="name"
-          android:textColor="@color/black90"
+          android:text="Name"
+          android:textColor="#f8f4df"
           android:textSize="@dimen/dp22"
+          android:textStyle="bold"
           />
       <LinearLayout
           android:layout_width="match_parent"
@@ -51,31 +70,39 @@
             android:id="@+id/fcr_txt_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="status"
-            android:textColor="@color/black90"
+            android:text="Status"
+            android:textColor="#f8f4df"
             />
-        <com.wang.avi.AVLoadingIndicatorView
+        <TextView
             android:id="@+id/fcr_txt_avi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp12"
-            app:indicatorColor="@color/gray"
-            app:indicatorName="BallPulseIndicator"
-            style="@style/AVLoadingIndicatorView.Small"
+            android:text="..."
+            android:textColor="#f8f4df"
+            android:textSize="@dimen/dp18"
             />
+
+
       </LinearLayout>
 
-      <View
+      <TextView
+          android:id="@+id/fcr_txt_timer"
           android:layout_width="wrap_content"
-          android:layout_height="0dp"
-          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:text="00:00"
+          android:textColor="#f8f4df"
+          android:visibility="gone"
           />
+
+
 
 
       <LinearLayout
           android:id="@+id/fcr_layout_caller"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp200"
+          android:layout_height="0dp"
+          android:layout_weight="1"
           android:layout_marginBottom="@dimen/dp20"
           android:gravity="center|bottom"
           android:orientation="horizontal"
@@ -91,8 +118,8 @@
 
           <net.iGap.module.MaterialDesignTextView
               android:id="@+id/fcr_btn_end"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="@dimen/dp52"
+              android:layout_width="@dimen/dp60"
+              android:layout_height="@dimen/dp60"
               android:layout_gravity="bottom"
               android:background="@drawable/circle_red"
               android:gravity="center"
@@ -104,26 +131,46 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/fcr_layout_answer_call"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
+
+          <net.iGap.module.AvlDirectCall
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginBottom="@dimen/dp24"
+              android:orientation="vertical"
+              ></net.iGap.module.AvlDirectCall>
+
+          <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/fcr_btn_call"
+              android:layout_width="@dimen/dp60"
+              android:layout_height="@dimen/dp60"
+              android:layout_gravity="bottom"
+              android:background="@drawable/circle_green"
+              android:gravity="center"
+              android:layout_marginLeft="@dimen/dp40"
+              android:layout_marginRight="@dimen/dp40"
+              android:text="@string/md_phone"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="@color/white"
+              />
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/fcr_layout_chat_call"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             >
-          <net.iGap.module.AvlDirectCall
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:layout_marginBottom="@dimen/dp10"
-              android:layout_gravity="center"
-              ></net.iGap.module.AvlDirectCall>
-
 
           <net.iGap.module.MaterialDesignTextView
               android:id="@+id/fcr_btn_circle_chat"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="@dimen/dp52"
+              android:layout_width="@dimen/dp60"
+              android:layout_height="@dimen/dp60"
               android:layout_gravity="bottom"
-              android:layout_marginLeft="@dimen/dp52"
-              android:layout_marginRight="@dimen/dp52"
+
               android:background="@drawable/circle_white"
               android:gravity="center"
               android:text="@string/md_chat"
@@ -132,26 +179,6 @@
               />
 
 
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fcr_layout_answer_call"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
-
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/fcr_btn_call"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="@dimen/dp52"
-              android:layout_gravity="bottom"
-              android:background="@drawable/circle_mic"
-              android:gravity="center"
-              android:text="@string/md_phone"
-              android:textAppearance="@style/TextIconAppearance.all"
-              android:textColor="@color/white"
-              />
         </FrameLayout>
 
 
@@ -164,7 +191,7 @@
           android:layout_marginTop="@dimen/dp20"
           android:gravity="center"
           android:orientation="horizontal"
-          android:visibility="gone"
+          android:visibility="visible"
           >
         <net.iGap.module.MaterialDesignTextView
             android:id="@+id/fcr_btn_mic"
@@ -200,7 +227,7 @@
             android:id="@+id/fcr_btn_speaker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/md_muted"
+            android:text="@string/md_Mute"
             android:textAppearance="@style/TextIconAppearance.all"
             android:textColor="@color/white"
             android:textSize="@dimen/dp28"

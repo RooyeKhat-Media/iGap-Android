@@ -12,7 +12,7 @@ package net.iGap.interfaces;
 
 public interface OnChannelCreate {
 
-    void onChannelCreate(long roomId, String inviteLink);
+    void onChannelCreate(long roomId, String inviteLink, String channelName);
 
     void onError(int majorCode, int minorCode);
 

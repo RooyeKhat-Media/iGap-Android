@@ -45,6 +45,11 @@ public class HelperUnpackMessage {
         }
 
         int actionId = (int) objects[0];
+
+        if (!G.isSecure && !G.unSecureResponseActionId.contains(Integer.toString(actionId))) {
+            return false;
+        }
+
         byte[] payload = (byte[]) objects[1];
         String className = (String) objects[2];
 
@@ -202,7 +207,7 @@ public class HelperUnpackMessage {
             return null;
         }
 
-        return new Object[] { actionId, payload, className };
+        return new Object[]{actionId, payload, className};
     }
 
     public static synchronized int getId(byte[] byteArray) {

@@ -8,6 +8,7 @@
     android:elevation="999dp"
     android:background="@android:color/white"
     tools:ignore="MissingPrefix"
+    android:clickable="true"
     android:layoutDirection="ltr"
     >
 
@@ -24,7 +25,7 @@
             android:orientation="vertical"
             app:elevation="8dp">
 
-            <RelativeLayout
+          <LinearLayout
                 android:id="@+id/fcg_ll_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -54,7 +55,8 @@
               </net.iGap.libs.rippleeffect.RippleView>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -69,7 +71,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/dp18"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:textStyle="bold"
                         android:visibility="gone"/>
 
@@ -79,7 +81,7 @@
                         android:layout_height="match_parent"
                         android:singleLine="true"
                         android:text="0/5000 member"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/dp18"
@@ -112,15 +114,10 @@
                     />
               </net.iGap.libs.rippleeffect.RippleView>
 
-            </RelativeLayout>
+          </LinearLayout>
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/fcg_view_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#34a49f"/>
 
     </android.support.design.widget.AppBarLayout>
 

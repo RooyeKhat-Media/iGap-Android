@@ -18,7 +18,7 @@ package com.neovisionaries.ws.client;
 
 /**
  * WebSocket state.
- * <p>
+ *
  * <p>
  * The initial state of a {@link WebSocket} instance is
  * <b><code>CREATED</code></b>. {@code WebSocket.}{@link
@@ -28,7 +28,7 @@ package com.neovisionaries.ws.client;
  * is thrown (its error code is {@link WebSocketError#NOT_IN_CREATED_STATE
  * NOT_IN_CREATED_STATE}).
  * </p>
- * <p>
+ *
  * <p>
  * At the beginning of the implementation of {@code connect()} method,
  * the state is changed to <b><code>CONNECTING</code></b>, and then
@@ -36,7 +36,7 @@ package com.neovisionaries.ws.client;
  * onStateChanged()} method of each registered listener ({@link
  * WebSocketListener}) is called.
  * </p>
- * <p>
+ *
  * <p>
  * After the state is changed to {@code CONNECTING}, a WebSocket
  * <a href="https://tools.ietf.org/html/rfc6455#section-4">opening
@@ -48,7 +48,7 @@ package com.neovisionaries.ws.client;
  * code ({@link WebSocketError}) by calling {@link
  * WebSocketException#getError() getError()} method of the exception.
  * </p>
- * <p>
+ *
  * <p>
  * After the opening handshake succeeded, the state is changed to
  * <b><code>OPEN</code></b>. Listeners' {@code onStateChanged()} method
@@ -56,7 +56,7 @@ package com.neovisionaries.ws.client;
  * onConnected()} method are called in this order. Note that {@code
  * onConnected()} method is called by another thread.
  * </p>
- * <p>
+ *
  * <p>
  * Upon either sending or receiving a <a href=
  * "https://tools.ietf.org/html/rfc6455#section-5.5.1">close frame</a>,
@@ -65,7 +65,7 @@ package com.neovisionaries.ws.client;
  * <b><code>CLOSING</code></b> and {@code onStateChanged()} method of
  * listeners is called.
  * </p>
- * <p>
+ *
  * <p>
  * After the client and the server have exchanged close frames, the
  * state is changed to <b><code>CLOSED</code></b>. Listeners'

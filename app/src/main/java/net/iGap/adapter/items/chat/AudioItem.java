@@ -10,72 +10,209 @@
 
 package net.iGap.adapter.items.chat;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import io.realm.Realm;
 import java.io.File;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityChat;
-import net.iGap.emoji.EmojiTextView;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.helper.HelperCalander;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
+import net.iGap.module.EmojiTextViewE;
+import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
-import static android.view.View.GONE;
 
 public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> {
 
-    public AudioItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public AudioItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutAudio;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_audio;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(final ViewHolder holder, final String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        if (!TextUtils.isEmpty(localPath) && new File(localPath).exists()) {
+        if (holder.musicSeekbar.getTag().equals(mMessage.messageID)) {
+            if (!TextUtils.isEmpty(localPath) && new File(localPath).exists()) {
 
-            holder.mFilePath = localPath;
-            holder.btnPlayMusic.setEnabled(true);
-        } else {
-            holder.btnPlayMusic.setEnabled(false);
+                holder.mFilePath = localPath;
+                holder.musicSeekbar.setEnabled(true);
+                holder.btnPlayMusic.setEnabled(true);
+
+                //if (!mMessage.isSenderMe() && Build.VERSION.SDK_INT >= JELLY_BEAN) {
+                //    holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
+                //}
+
+                holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.iGapColor));
+            } else {
+                holder.musicSeekbar.setEnabled(false);
+                holder.btnPlayMusic.setEnabled(false);
+
+                holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.gray_6c));
+            }
         }
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getAudioItem());
+        }
+
+        holder.btnPlayMusic = (MaterialDesignTextView) holder.itemView.findViewById(R.id.txt_play_music);
+        holder.txt_Timer = (TextView) holder.itemView.findViewById(R.id.csla_txt_timer);
+        holder.musicSeekbar = (SeekBar) holder.itemView.findViewById(R.id.csla_seekBar1);
+        holder.fileName = (TextView) holder.itemView.findViewById(R.id.fileName);
+        holder.thumbnail = (ImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.fileSize = (TextView) holder.itemView.findViewById(R.id.fileSize);
+        holder.songArtist = (TextView) holder.itemView.findViewById(R.id.songArtist);
+        holder.musicSeekbar.setTag(mMessage.messageID);
+
+        holder.complete = new OnComplete() {
+            @Override
+            public void complete(final boolean result, String messageOne, final String MessageTow) {
+
+                if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
+                    if (messageOne.equals("play")) {
+                        holder.btnPlayMusic.setText(R.string.md_play_arrow);
+                    } else if (messageOne.equals("pause")) {
+                        holder.btnPlayMusic.setText(R.string.md_pause_button);
+                    } else if (messageOne.equals("updateTime")) {
+
+                        if (result) {
+
+                            G.handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (mMessage.messageID.equals(MusicPlayer.messageId)) {
+
+                                        holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
+
+                                        if (result) {
+                                            holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
+                                        } else {
+                                            holder.musicSeekbar.setProgress(0);
+                                        }
+
+                                        if (HelperCalander.isLanguagePersian) {
+                                            holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber((holder.txt_Timer.getText().toString())));
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            holder.btnPlayMusic.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
+                                    holder.musicSeekbar.setProgress(0);
+                                    if (HelperCalander.isLanguagePersian) {
+                                        holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber((holder.txt_Timer.getText().toString())));
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        };
+
+        holder.itemView.findViewById(R.id.mainContainer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (holder.mFilePath.length() < 1) return;
+
+                String name = "";
+
+                if (mMessage != null && mMessage.getAttachment() != null) {
+                    name = mMessage.getAttachment().name;
+                }
+
+                if (holder.mMessageID.equals(MusicPlayer.messageId)) {
+                    MusicPlayer.onCompleteChat = holder.complete;
+
+                    if (MusicPlayer.mp != null) {
+                        MusicPlayer.playAndPause();
+                    } else {
+                        MusicPlayer.startPlayer(name, holder.mFilePath, FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, true, holder.mMessageID);
+                        messageClickListener.onPlayMusic(holder.mMessageID);
+                    }
+                } else {
+
+                    MusicPlayer.stopSound();
+                    MusicPlayer.onCompleteChat = holder.complete;
+
+                    MusicPlayer.startPlayer(name, holder.mFilePath, FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, true, holder.mMessageID);
+                    messageClickListener.onPlayMusic(holder.mMessageID);
+                    holder.mTimeMusic = MusicPlayer.musicTime;
+                }
+            }
+        });
+
+        holder.musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (holder.mMessageID.equals(MusicPlayer.messageId)) {
+                        MusicPlayer.setMusicProgress(holder.musicSeekbar.getProgress());
+                    }
+                }
+                return false;
+            }
+        });
+
         super.bindView(holder, payloads);
 
         if (mMessage.isSenderMe()) {
-            holder.thumbnail.setImageResource(R.drawable.white_music_note);
+            AppUtils.setImageDrawable(holder.thumbnail, R.drawable.white_music_note);
         } else {
-            holder.thumbnail.setImageResource(R.drawable.green_music_note);
+            AppUtils.setImageDrawable(holder.thumbnail, R.drawable.green_music_note);
         }
+
+        String text = "";
 
         if (mMessage.forwardedFrom != null) {
             if (mMessage.forwardedFrom.getAttachment() != null) {
                 if (mMessage.forwardedFrom.getAttachment().isFileExistsOnLocal()) {
-                    holder.fileSize.setVisibility(GONE);
+                    holder.fileSize.setVisibility(View.INVISIBLE);
                 } else {
                     holder.fileSize.setVisibility(View.VISIBLE);
                     holder.fileSize.setText(AndroidUtils.humanReadableByteCount(mMessage.forwardedFrom.getAttachment().getSize(), true));
@@ -91,11 +228,11 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                 }
             }
 
-            setTextIfNeeded(holder.messageText, mMessage.forwardedFrom.getMessage());
+            text = mMessage.forwardedFrom.getMessage();
         } else {
             if (mMessage.attachment != null) {
                 if (mMessage.attachment.isFileExistsOnLocal()) {
-                    holder.fileSize.setVisibility(GONE);
+                    holder.fileSize.setVisibility(View.INVISIBLE);
                 } else {
                     holder.fileSize.setVisibility(View.VISIBLE);
                     holder.fileSize.setText(AndroidUtils.humanReadableByteCount(mMessage.attachment.size, true));
@@ -108,22 +245,29 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                 holder.songArtist.setText(holder.itemView.getResources().getString(R.string.unknown_artist));
             }
 
-            setTextIfNeeded(holder.messageText, mMessage.messageText);
+            text = mMessage.messageText;
+        }
+
+        if (mMessage.hasEmojiInText) {
+            setTextIfNeeded((EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
         }
 
         View audioBoxView = holder.itemView.findViewById(R.id.audioBox);
-        if ((mMessage.forwardedFrom != null && mMessage.forwardedFrom.getForwardMessage() != null && mMessage.forwardedFrom.getForwardMessage().getMessage() != null && !TextUtils.isEmpty(
-            mMessage.forwardedFrom.getForwardMessage().getMessage())) || !TextUtils.isEmpty(mMessage.messageText)) {
-            audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
-        } else {
-            audioBoxView.setBackgroundColor(Color.TRANSPARENT);
-        }
+        audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
+
+        //if ((mMessage.forwardedFrom != null && mMessage.forwardedFrom.getForwardMessage() != null && mMessage.forwardedFrom.getForwardMessage().getMessage() != null && !TextUtils.isEmpty(mMessage.forwardedFrom.getForwardMessage().getMessage())) || !TextUtils.isEmpty(mMessage.messageText)) {
+        //    audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
+        //} else {
+        //    audioBoxView.setBackgroundColor(Color.TRANSPARENT);
+        //}
 
         final long _st = (int) ((mMessage.forwardedFrom != null ? mMessage.forwardedFrom.getAttachment().getDuration() : mMessage.attachment.duration) * 1000);
 
         holder.txt_Timer.setText("00/" + MusicPlayer.milliSecondsToTimer(_st));
 
-        if (mMessage.messageID.equals(MusicPlayer.messageId)) {
+        if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
             MusicPlayer.onCompleteChat = holder.complete;
 
             holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
@@ -145,43 +289,40 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
 
         holder.mMessageID = mMessage.messageID;
 
-        if (HelperCalander.isLanguagePersian) holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
+        if (HelperCalander.isLanguagePersian) {
+            (holder.txt_Timer).setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
+        }
     }
 
-    @Override protected void updateLayoutForSend(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForSend(ViewHolder holder) {
         super.updateLayoutForSend(holder);
 
         if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
-            holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
+            holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
         }
         holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-        holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.iGapColor));
         holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
     }
 
-    @Override protected void updateLayoutForReceive(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
 
         if (type == ProtoGlobal.Room.Type.CHANNEL) {
             if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
-                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
+                holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
             }
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.iGapColor));
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
         } else {
             if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
                 holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
             }
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.btnPlayMusic.setTextColor(holder.itemView.getResources().getColor(R.color.green));
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.grayNewDarker));
             holder.fileName.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
         }
-    }
-
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -189,91 +330,96 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
         protected TextView fileSize;
         protected TextView fileName;
         protected TextView songArtist;
-        protected EmojiTextView messageText;
         protected String mFilePath = "";
         protected String mMessageID = "";
         protected String mTimeMusic = "";
 
-        protected TextView btnPlayMusic;
+        protected MaterialDesignTextView btnPlayMusic;
         protected SeekBar musicSeekbar;
         protected OnComplete complete;
         protected TextView txt_Timer;
 
-        public ViewHolder(View view) {
+        public ViewHolder(final View view) {
             super(view);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            fileSize = (TextView) view.findViewById(R.id.fileSize);
-            fileName = (TextView) view.findViewById(R.id.fileName);
-            songArtist = (TextView) view.findViewById(R.id.songArtist);
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
+            /**
+             *  this commented code used with xml layout
+             */
 
-            btnPlayMusic = (TextView) view.findViewById(R.id.csla_btn_play_music);
-
-            txt_Timer = (TextView) view.findViewById(R.id.csla_txt_timer);
-            musicSeekbar = (SeekBar) view.findViewById(R.id.csla_seekBar1);
-
-            complete = new OnComplete() {
-                @Override public void complete(boolean result, String messageOne, final String MessageTow) {
-
-                    if (messageOne.equals("play")) {
-                        btnPlayMusic.setText(R.string.md_play_arrow);
-                    } else if (messageOne.equals("pause")) {
-                        btnPlayMusic.setText(R.string.md_pause_button);
-                    } else if (messageOne.equals("updateTime")) {
-                        txt_Timer.post(new Runnable() {
-                            @Override public void run() {
-                                txt_Timer.setText(MessageTow + "/" + mTimeMusic);
-                                musicSeekbar.setProgress(MusicPlayer.musicProgress);
-
-                                if (HelperCalander.isLanguagePersian) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
-                            }
-                        });
-                    }
-                }
-            };
-
-            btnPlayMusic.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-
-                    if (mFilePath.length() < 1) return;
-
-                    if (mMessageID.equals(MusicPlayer.messageId)) {
-                        MusicPlayer.onCompleteChat = complete;
-
-                        if (MusicPlayer.mp != null) {
-                            MusicPlayer.playAndPause();
-                        } else {
-                            MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
-                        }
-                    } else {
-
-                        MusicPlayer.stopSound();
-                        MusicPlayer.onCompleteChat = complete;
-
-                        MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
-
-                        mTimeMusic = MusicPlayer.musicTime;
-                    }
-                }
-            });
-
-            musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override public boolean onTouch(View v, MotionEvent event) {
-
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (mMessageID.equals(MusicPlayer.messageId)) {
-                            MusicPlayer.setMusicProgress(musicSeekbar.getProgress());
-                        }
-                    }
-                    return false;
-                }
-            });
+            //thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            //fileSize = (TextView) view.findViewById(R.id.fileSize);
+            //fileName = (TextView) view.findViewById(R.id.fileName);
+            //songArtist = (TextView) view.findViewById(R.id.songArtist);
+            //
+            //btnPlayMusic = (TextView) view.findViewById(R.id.txt_play_music);
+            //
+            //txt_Timer = (TextView) view.findViewById(R.id.csla_txt_timer);
+            //musicSeekbar = (SeekBar) view.findViewById(R.id.csla_seekBar1);
+            //
+            //complete = new OnComplete() {
+            //    @Override
+            //    public void complete(boolean result, String messageOne, final String MessageTow) {
+            //
+            //        if (messageOne.equals("play")) {
+            //            btnPlayMusic.setText(R.string.md_play_arrow);
+            //        } else if (messageOne.equals("pause")) {
+            //            btnPlayMusic.setText(R.string.md_pause_button);
+            //        } else if (messageOne.equals("updateTime")) {
+            //            txt_Timer.post(new Runnable() {
+            //                @Override
+            //                public void run() {
+            //                    txt_Timer.setText(MessageTow + "/" + mTimeMusic);
+            //                    musicSeekbar.setProgress(MusicPlayer.musicProgress);
+            //
+            //                    if (HelperCalander.isLanguagePersian) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
+            //                }
+            //            });
+            //        }
+            //    }
+            //};
+            //
+            //btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            //    @Override
+            //    public void onClick(View v) {
+            //
+            //        if (mFilePath.length() < 1) return;
+            //
+            //        if (mMessageID.equals(MusicPlayer.messageId)) {
+            //            MusicPlayer.onCompleteChat = complete;
+            //
+            //            if (MusicPlayer.mp != null) {
+            //                MusicPlayer.playAndPause();
+            //            } else {
+            //                MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
+            //            }
+            //        } else {
+            //
+            //            MusicPlayer.stopSound();
+            //            MusicPlayer.onCompleteChat = complete;
+            //
+            //            MusicPlayer.startPlayer(mFilePath, ActivityChat.titleStatic, ActivityChat.mRoomIdStatic, true, mMessageID);
+            //            mTimeMusic = MusicPlayer.musicTime;
+            //        }
+            //    }
+            //});
+            //
+            //musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
+            //
+            //    @Override
+            //    public boolean onTouch(View v, MotionEvent event) {
+            //
+            //        if (event.getAction() == MotionEvent.ACTION_UP) {
+            //            if (mMessageID.equals(MusicPlayer.messageId)) {
+            //                MusicPlayer.setMusicProgress(musicSeekbar.getProgress());
+            //            }
+            //        }
+            //        return false;
+            //    }
+            //});
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

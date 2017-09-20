@@ -10,7 +10,7 @@
 
 package net.iGap.response;
 
-import net.iGap.activities.ActivityShearedMedia;
+import net.iGap.fragments.FragmentShearedMedia;
 import net.iGap.proto.ProtoClientCountRoomHistory;
 
 public class ClientCountRoomHistoryResponse extends MessageHandler {
@@ -33,7 +33,7 @@ public class ClientCountRoomHistoryResponse extends MessageHandler {
         ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder builder = (ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder) message;
         long _roomId = Long.parseLong(identity);
 
-        ActivityShearedMedia.updateStringSharedMediaCount(builder, _roomId);
+        FragmentShearedMedia.updateStringSharedMediaCount(builder, _roomId);
     }
 
     @Override public void timeOut() {

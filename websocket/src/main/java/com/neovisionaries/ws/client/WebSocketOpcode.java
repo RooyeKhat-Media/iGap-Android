@@ -20,7 +20,7 @@ package com.neovisionaries.ws.client;
  * Opcode.
  *
  * @see <a href="https://tools.ietf.org/html/rfc6455#section-5.2"
- * >RFC 6455, 5.2. Base Framing Protocol</a>
+ *      >RFC 6455, 5.2. Base Framing Protocol</a>
  */
 public class WebSocketOpcode {
     /**

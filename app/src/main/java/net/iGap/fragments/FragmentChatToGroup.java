@@ -11,13 +11,12 @@
 package net.iGap.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import net.iGap.R;
 
-public class FragmentChatToGroup extends Fragment {
+public class FragmentChatToGroup extends BaseFragment {
 
     public FragmentChatToGroup() {
         // Required empty public constructor

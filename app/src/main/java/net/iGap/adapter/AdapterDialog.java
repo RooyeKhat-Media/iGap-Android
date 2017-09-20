@@ -21,7 +21,7 @@ import android.widget.Filterable;
 import android.widget.RadioButton;
 import java.util.ArrayList;
 import net.iGap.R;
-import net.iGap.activities.ActivityRegister;
+import net.iGap.fragments.FragmentRegister;
 import net.iGap.module.structs.StructCountry;
 
 public class AdapterDialog extends BaseAdapter implements Filterable {
@@ -71,25 +71,25 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
 
                 mSelectedVariation = (Integer) v.getTag();
 
-                ActivityRegister.positionRadioButton = countrylist.get(position).getId();
+                FragmentRegister.positionRadioButton = countrylist.get(position).getId();
                 mSelectedVariation = countrylist.get(position).getId();
                 notifyDataSetChanged();
 
-                ActivityRegister.edtCodeNumber.setText(("+ " + countrylist.get(position).getCountryCode()));
+                FragmentRegister.edtCodeNumber.setText(("+ " + countrylist.get(position).getCountryCode()));
                 if (countrylist.get(position).getPhonePattern() != null) {
                     if (countrylist.get(position).getPhonePattern().equals(" ")) {
-                        ActivityRegister.edtPhoneNumber.setMask("###-###-####");
+                        FragmentRegister.edtPhoneNumber.setMask("###-###-####");
                     } else {
 
-                        ActivityRegister.edtPhoneNumber.setMask((countrylist.get(position).getPhonePattern().replace("X", "#").replace(" ", "-")));
+                        FragmentRegister.edtPhoneNumber.setMask((countrylist.get(position).getPhonePattern().replace("X", "#").replace(" ", "-")));
                     }
                 } else {
-                    ActivityRegister.edtPhoneNumber.setMask("###-###-####");
+                    FragmentRegister.edtPhoneNumber.setMask("###-###-####");
                 }
-                ActivityRegister.btnChoseCountry.setText((countrylist.get(position).getName()));
-                ActivityRegister.isoCode = countrylist.get(position).getAbbreviation();
-                ActivityRegister.btnOk.performClick();
-                ActivityRegister.dialogChooseCountry.dismiss();
+                FragmentRegister.btnChoseCountry.setText((countrylist.get(position).getName()));
+                FragmentRegister.isoCode = countrylist.get(position).getAbbreviation();
+                FragmentRegister.btnOk.performClick();
+                FragmentRegister.dialogChooseCountry.dismiss();
             }
         });
 

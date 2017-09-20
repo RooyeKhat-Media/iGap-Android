@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.interfaces.OnFileUpload;
 import net.iGap.interfaces.OnFileUploadStatusResponse;
 import net.iGap.module.AndroidUtils;
@@ -35,7 +36,6 @@ import net.iGap.request.RequestFileUploadOption;
 import net.iGap.request.RequestFileUploadStatus;
 
 import static net.iGap.G.handler;
-import static net.iGap.activities.ActivityChat.compressingFiles;
 import static net.iGap.proto.ProtoGlobal.ClientAction.CHOOSING_CONTACT;
 import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_AUDIO;
 import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_FILE;
@@ -90,8 +90,8 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
 
         if (!list.containsKey(identity)) {
 
-            if (compressingFiles.containsKey(Long.parseLong(identity))) {
-                structUpload = compressingFiles.get(Long.parseLong(identity));
+            if (FragmentChat.compressingFiles.containsKey(Long.parseLong(identity))) {
+                structUpload = FragmentChat.compressingFiles.get(Long.parseLong(identity));
             }
 
             if (structUpload == null) {
@@ -149,7 +149,9 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         FileUploadStructure fileUploadStructure = sp.fileUploadStructure;
         fileUploadStructure.token = token;
 
-        updateListeners(sp);
+        if (progress < 100) {
+            updateListeners(sp);
+        }
 
         // not already uploaded
         if (progress != 100.0) {
@@ -249,17 +251,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             updateListeners(sp);
 
             if (sp.chatType != null) {
-
                 UploadComplete(sp.fileUploadStructure, sp.identity, sp.chatType);
-            }
-
-            // remove from selected files to prevent calling this method multiple times
-            // multiple calling may occurs because of the server
-            try {
-                //removeFromSelectedFiles(identity);
-            } catch (Exception e) {
-                Log.i("BreakPoint", e.getMessage());
-                e.printStackTrace();
             }
 
             // close file into structure
@@ -350,10 +342,10 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
 
         StructUpload sp = list.get(identity);
 
-        if (sp == null && compressingFiles.containsKey(Long.parseLong(identity))) {
+        if (sp == null && FragmentChat.compressingFiles.containsKey(Long.parseLong(identity))) {
             StructUpload structUpload = new StructUpload();
             structUpload.listener1 = listener;
-            compressingFiles.setValueAt(compressingFiles.indexOfKey(Long.parseLong(identity)), structUpload);
+            FragmentChat.compressingFiles.setValueAt(FragmentChat.compressingFiles.indexOfKey(Long.parseLong(identity)), structUpload);
         }
 
         if (sp != null) {
@@ -468,7 +460,6 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
     }
 
     static ProtoGlobal.ClientAction getAction(ProtoGlobal.RoomMessageType type) {
-
 
         ProtoGlobal.ClientAction action = null;
 

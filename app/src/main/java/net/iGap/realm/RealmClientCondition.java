@@ -25,6 +25,7 @@ public class RealmClientCondition extends RealmObject {
     private RealmList<RealmOfflineDelete> offlineDeleted;
     private RealmList<RealmOfflineEdited> offlineEdited;
     private RealmList<RealmOfflineSeen> offlineSeen;
+    private RealmList<RealmOfflineListen> offlineListen;
     private long clearId;
     private long cacheStartId;
     private long cacheEndId;
@@ -125,5 +126,13 @@ public class RealmClientCondition extends RealmObject {
 
     public void setOfflineMute(String offlineMute) {
         this.offlineMute = offlineMute;
+    }
+
+    public RealmList<RealmOfflineListen> getOfflineListen() {
+        return offlineListen;
+    }
+
+    public void setOfflineListen(RealmList<RealmOfflineListen> offlineListen) {
+        this.offlineListen = offlineListen;
     }
 }

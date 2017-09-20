@@ -12,6 +12,7 @@ package net.iGap.response;
 
 import net.iGap.helper.HelperMessageResponse;
 import net.iGap.proto.ProtoChannelSendMessage;
+import net.iGap.proto.ProtoGlobal;
 
 import static net.iGap.realm.RealmRoomMessage.makeFailed;
 
@@ -32,7 +33,7 @@ public class ChannelSendMessageResponse extends MessageHandler {
     @Override public void handler() {
         super.handler();
         final ProtoChannelSendMessage.ChannelSendMessageResponse.Builder channelSendMessageResponse = (ProtoChannelSendMessage.ChannelSendMessageResponse.Builder) message;
-        HelperMessageResponse.handleMessage(channelSendMessageResponse.getRoomId(), channelSendMessageResponse.getRoomMessage(), channelSendMessageResponse.getResponse(), this.identity);
+        HelperMessageResponse.handleMessage(channelSendMessageResponse.getRoomId(), channelSendMessageResponse.getRoomMessage(), ProtoGlobal.Room.Type.CHANNEL, channelSendMessageResponse.getResponse(), this.identity);
     }
 
     @Override public void error() {

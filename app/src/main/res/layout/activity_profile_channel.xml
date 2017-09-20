@@ -6,6 +6,8 @@
     android:id="@+id/fragmentContainer_channel_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
     tools:ignore="MissingPrefix"
     >
 
@@ -45,24 +47,11 @@
             >
 
 
-          <RelativeLayout
+          <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               >
 
-            <TextView
-                android:id="@+id/pch_txt_titleToolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@string/st_titleToolbar"
-                android:textColor="@color/whit_background"
-                android:textSize="@dimen/dp18"
-                android:textStyle="normal"
-                fontPath="fonts/IRANSansMobile_Bold.ttf"
-                android:visibility="gone"
-                />
 
             <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/pch_ripple_back"
@@ -87,6 +76,28 @@
                   />
             </net.iGap.libs.rippleeffect.RippleView>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+
+              <TextView
+                  android:id="@+id/pch_txt_titleToolbar"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="left|center"
+                  android:text="@string/st_titleToolbar"
+                  android:textColor="@color/whit_background"
+                  android:textSize="@dimen/dp18"
+                  android:textStyle="normal"
+                  android:visibility="gone"
+                  fontPath="fonts/IRANSansMobile_Bold.ttf"
+                  />
+
+            </LinearLayout>
+
+
             <net.iGap.libs.rippleeffect.RippleView
                 android:id="@+id/pch_ripple_menuPopup"
                 android:layout_width="wrap_content"
@@ -109,7 +120,7 @@
                   android:textColor="@color/whit_background"
                   />
             </net.iGap.libs.rippleeffect.RippleView>
-          </RelativeLayout>
+          </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
@@ -130,17 +141,20 @@
               android:src="@mipmap/empty"
               />
 
-          <TextView
+          <net.iGap.module.EmojiTextViewE
               android:id="@+id/txt_channel_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:layout_margin="@dimen/dp4"
+              android:lineSpacingMultiplier=".8"
               android:maxLength="24"
+              android:padding="@dimen/dp4"
               android:text="svsavhispfauhvipushvfiuhvihvsvs"
               android:textColor="@android:color/white"
               android:textSize="@dimen/dp16"
               android:textStyle="normal"
+              app:emojiSize="@dimen/dp14"
               />
 
         </LinearLayout>
@@ -219,10 +233,12 @@
                   android:textSize="@dimen/dp15"
                   />
 
-              <TextView
+              <net.iGap.module.EmojiTextViewE
                   android:id="@+id/txt_channel_name_info"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:lineSpacingMultiplier=".8"
+                  android:padding="@dimen/dp4"
                   android:paddingBottom="@dimen/dp12"
                   android:paddingEnd="@dimen/dp4"
                   android:paddingStart="@dimen/dp4"
@@ -231,6 +247,7 @@
                   android:text=""
                   android:textColor="@color/gray_5c"
                   android:textSize="@dimen/dp13"
+                  app:emojiSize="@dimen/dp14"
                   />
             </LinearLayout>
           </LinearLayout>
@@ -294,10 +311,12 @@
                 android:textSize="@dimen/dp15"
                 />
 
-            <TextView
+            <net.iGap.module.EmojiTextViewE
                 android:id="@+id/txt_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingMultiplier=".8"
+                android:padding="@dimen/dp4"
                 android:paddingBottom="@dimen/dp12"
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
@@ -305,6 +324,7 @@
                 android:text=""
                 android:textColor="@color/gray_5c"
                 android:textSize="@dimen/dp13"
+                app:emojiSize="@dimen/dp14"
                 />
 
           </LinearLayout>
@@ -415,6 +435,7 @@
               />
 
           <LinearLayout
+              android:id="@+id/agp_layout_show_member"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="left|center"
@@ -650,7 +671,7 @@
               android:background="@color/background_editText"
               />
 
-          <RelativeLayout
+          <LinearLayout
               android:id="@+id/agp_layout_signature"
               android:layout_width="match_parent"
               android:layout_height="@dimen/dp48"
@@ -664,9 +685,9 @@
 
             <TextView
                 android:id="@+id/agp_txt_signature"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
                 android:gravity="center_vertical"
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/st_signature"
@@ -680,16 +701,12 @@
                 android:id="@+id/agp_toggle_signature"
                 android:layout_width="@dimen/dp44"
                 android:layout_height="@dimen/dp40"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
                 android:background="@drawable/st_switch_button"
-                android:clickable="false"
                 android:textOff=""
                 android:textOn=""
                 />
 
-          </RelativeLayout>
+          </LinearLayout>
 
         </LinearLayout>
 
@@ -703,7 +720,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:background="@drawable/pu_circle_dialog_give_image_gallery"
         android:indeterminate="true"
         android:visibility="gone"
         />

@@ -14,7 +14,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,7 +50,7 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientSearchUsername;
 
-public class FragmentIgapSearch extends Fragment {
+public class FragmentIgapSearch extends BaseFragment {
 
     private FastAdapter fastAdapter;
     private EditText edtSearch;
@@ -60,7 +59,8 @@ public class FragmentIgapSearch extends Fragment {
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
     private TextView txtEmptyListComment;
-    private TextView txtNothing;
+
+    //private TextView txtNothing;
     private ContentLoadingProgressBar loadingProgressBar;
     private ImageView imvNothingFound;
 
@@ -82,21 +82,26 @@ public class FragmentIgapSearch extends Fragment {
     private void initComponent(View view) {
 
         view.findViewById(R.id.sfl_ll_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
-        view.findViewById(R.id.sfl_view_line).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         imvNothingFound = (ImageView) view.findViewById(R.id.sfl_imv_nothing_found);
         imvNothingFound.setImageResource(R.drawable.find2);
 
         txtEmptyListComment = (TextView) view.findViewById(R.id.sfl_txt_empty_list_comment);
-        txtEmptyListComment.setVisibility(View.VISIBLE);
 
-        txtNothing = (TextView) view.findViewById(R.id.sfl_txt_empty_nothing);
-        txtNothing.setVisibility(View.VISIBLE);
 
-        imvNothingFound.setVisibility(View.VISIBLE);
+        //txtNothing = (TextView) view.findViewById(R.id.sfl_txt_empty_nothing);
+        //txtNothing.setVisibility(View.VISIBLE);
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                imvNothingFound.setVisibility(View.VISIBLE);
+                txtEmptyListComment.setVisibility(View.VISIBLE);
+            }
+        }, 150);
 
         loadingProgressBar = (ContentLoadingProgressBar) view.findViewById(R.id.sfl_progress_loading);
-        loadingProgressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        loadingProgressBar.getIndeterminateDrawable().setColorFilter(G.context.getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
 
         edtSearch = (EditText) view.findViewById(R.id.sfl_edt_search);
 
@@ -142,12 +147,12 @@ public class FragmentIgapSearch extends Fragment {
                 if (strSize > 1) {
                     txtEmptyListComment.setVisibility(View.GONE);
                     imvNothingFound.setVisibility(View.GONE);
-                    txtNothing.setVisibility(View.GONE);
+                    //txtNothing.setVisibility(View.GONE);
                 } else {
                     txtEmptyListComment.setText(R.string.empty_message);
                     txtEmptyListComment.setVisibility(View.VISIBLE);
                     imvNothingFound.setVisibility(View.VISIBLE);
-                    txtNothing.setVisibility(View.VISIBLE);
+                    //txtNothing.setVisibility(View.VISIBLE);
                 }
 
                 if (strSize > 5) {
@@ -177,10 +182,10 @@ public class FragmentIgapSearch extends Fragment {
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override public void onComplete(RippleView rippleView) {
 
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(rippleBack.getWindowToken(), 0);
-                //getActivity().getSupportFragmentManager().beginTransaction().remove(FragmentIgapSearch.this).commit();
-                getActivity().onBackPressed();
+                //G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(FragmentIgapSearch.this).commit();
+                G.fragmentActivity.onBackPressed();
             }
         });
 
@@ -214,17 +219,19 @@ public class FragmentIgapSearch extends Fragment {
 
                 if (item.getType() == ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.USER) {
 
-                    HelperUrl.checkUsernameAndGoToRoom(item.getUser().getUsername(), HelperUrl.ChatEntery.profile);
+                    HelperUrl.checkUsernameAndGoToRoom(item.getUser().getUsername(), HelperUrl.ChatEntry.profile);
                 } else if (item.getType() == ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.ROOM) {
 
                     if (item.getRoom().getType() == ProtoGlobal.Room.Type.CHANNEL) {
-                        HelperUrl.checkUsernameAndGoToRoom(item.getRoom().getChannelRoomExtra().getPublicExtra().getUsername(), HelperUrl.ChatEntery.profile);
+                        HelperUrl.checkUsernameAndGoToRoom(item.getRoom().getChannelRoomExtra().getPublicExtra().getUsername(), HelperUrl.ChatEntry.profile);
                     } else if (item.getRoom().getType() == ProtoGlobal.Room.Type.GROUP) {
-                        HelperUrl.checkUsernameAndGoToRoom(item.getRoom().getGroupRoomExtra().getPublicExtra().getUsername(), HelperUrl.ChatEntery.profile);
+                        HelperUrl.checkUsernameAndGoToRoom(item.getRoom().getGroupRoomExtra().getPublicExtra().getUsername(), HelperUrl.ChatEntry.profile);
                     }
                 }
 
-                getActivity().getSupportFragmentManager().beginTransaction().remove(FragmentIgapSearch.this).commit();
+                //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(FragmentIgapSearch.this).commit();
+
+                popBackStackFragment();
 
                 return false;
             }
@@ -237,7 +244,7 @@ public class FragmentIgapSearch extends Fragment {
         G.onClientSearchUserName = new IClientSearchUserName() {
             @Override public void OnGetList(final ProtoClientSearchUsername.ClientSearchUsernameResponse.Builder builderList) {
 
-                getActivity().runOnUiThread(new Runnable() {
+                G.handler.post(new Runnable() {
                     @Override public void run() {
 
                         loadingProgressBar.setVisibility(View.GONE);
@@ -246,7 +253,7 @@ public class FragmentIgapSearch extends Fragment {
                             txtEmptyListComment.setText(R.string.there_is_no_any_result);
                             txtEmptyListComment.setVisibility(View.VISIBLE);
                             imvNothingFound.setVisibility(View.VISIBLE);
-                            txtNothing.setVisibility(View.VISIBLE);
+                            //txtNothing.setVisibility(View.VISIBLE);
 
                             return;
                         }
@@ -273,7 +280,7 @@ public class FragmentIgapSearch extends Fragment {
                                 if (realmRoom[0] == null) {
                                     realm.executeTransaction(new Realm.Transaction() {
                                         @Override public void execute(Realm realm) {
-                                            realmRoom[0] = RealmRoom.putOrUpdate(item.getRoom());
+                                            realmRoom[0] = RealmRoom.putOrUpdate(item.getRoom(), realm);
                                             realmRoom[0].setDeleted(true);
                                             G.deletedRoomList.add(realmRoom[0].getId());
                                         }
@@ -283,7 +290,7 @@ public class FragmentIgapSearch extends Fragment {
 
                             items.add(new SearchItamIGap().setItem(item).withIdentifier(100 + i++));
                         }
-
+                        itemAdapter.clear();
                         itemAdapter.add(items);
 
                         realm.close();
@@ -293,7 +300,7 @@ public class FragmentIgapSearch extends Fragment {
             }
 
             @Override public void OnErrore() {
-                getActivity().runOnUiThread(new Runnable() {
+                G.handler.post(new Runnable() {
                     @Override public void run() {
                         loadingProgressBar.setVisibility(View.GONE);
                     }
@@ -301,68 +308,4 @@ public class FragmentIgapSearch extends Fragment {
             }
         };
     }
-
-    //private void goToRoom(final long id, SearchType type, long messageId) {
-    //
-    //    final Realm realm = Realm.getDefaultInstance();
-    //    RealmRoom realmRoom = null;
-    //
-    //    if (type == SearchType.room || type == SearchType.message) {
-    //        realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst();
-    //    } else if (type == SearchType.contact) {
-    //        realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, id).findFirst();
-    //    }
-    //
-    //    if (realmRoom != null) {
-    //        Intent intent = new Intent(G.context, ActivityChat.class);
-    //
-    //        if (type == SearchType.message) intent.putExtra("MessageId", messageId);
-    //
-    //        intent.putExtra("RoomId", realmRoom.getId());
-    //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    //        G.context.startActivity(intent);
-    //        getActivity().getSupportFragmentManager().beginTransaction().remove(SearchFragment.this).commit();
-    //    } else {
-    //        G.onChatGetRoom = new OnChatGetRoom() {
-    //            @Override
-    //            public void onChatGetRoom(final long roomId) {
-    //                G.currentActivity.runOnUiThread(new Runnable() {
-    //                    @Override
-    //                    public void run() {
-    //                        Realm realm = Realm.getDefaultInstance();
-    //                        Intent intent = new Intent(G.context, ActivityChat.class);
-    //                        intent.putExtra("peerId", id);
-    //                        intent.putExtra("RoomId", roomId);
-    //                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    //                        realm.close();
-    //                        G.context.startActivity(intent);
-    //                        if (getActivity() != null) {
-    //                            getActivity().getSupportFragmentManager().beginTransaction().remove(SearchFragment.this).commit();
-    //                        }
-    //                    }
-    //                });
-    //            }
-    //
-    //            @Override
-    //            public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-    //
-    //            }
-    //
-    //            @Override
-    //            public void onChatGetRoomTimeOut() {
-    //
-    //            }
-    //
-    //            @Override
-    //            public void onChatGetRoomError(int majorCode, int minorCode) {
-    //
-    //            }
-    //        };
-    //
-    //        new RequestChatGetRoom().chatGetRoom(id);
-    //    }
-    //    realm.close();
-    //}
-
-    //*********************************************************************************************
 }

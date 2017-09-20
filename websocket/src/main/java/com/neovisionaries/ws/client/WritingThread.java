@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Neo Visionaries Inc.
+ * Copyright (C) 2015-2017 Neo Visionaries Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package com.neovisionaries.ws.client;
 
 
 import com.neovisionaries.ws.client.StateManager.CloseInitiator;
-
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -25,13 +24,12 @@ import static com.neovisionaries.ws.client.WebSocketState.CLOSED;
 import static com.neovisionaries.ws.client.WebSocketState.CLOSING;
 
 
-class WritingThread extends Thread {
+class WritingThread extends WebSocketThread {
     private static final int SHOULD_SEND = 0;
     private static final int SHOULD_STOP = 1;
     private static final int SHOULD_CONTINUE = 2;
     private static final int SHOULD_FLUSH = 3;
     private static final int FLUSH_THRESHOLD = 1000;
-    private final WebSocket mWebSocket;
     private final LinkedList<WebSocketFrame> mFrames;
     private final PerMessageCompressionExtension mPMCE;
     private boolean mStopRequested;
@@ -41,23 +39,20 @@ class WritingThread extends Thread {
 
 
     public WritingThread(WebSocket websocket) {
-        super("WritingThread");
+        super("WritingThread", websocket, ThreadType.WRITING_THREAD);
 
-        mWebSocket = websocket;
         mFrames = new LinkedList<WebSocketFrame>();
         mPMCE = websocket.getPerMessageCompressionExtension();
     }
 
 
     @Override
-    public void run() {
+    public void runMain() {
         try {
             main();
         } catch (Throwable t) {
             // An uncaught throwable was detected in the writing thread.
-            WebSocketException cause = new WebSocketException(
-                    WebSocketError.UNEXPECTED_ERROR_IN_WRITING_THREAD,
-                    "An uncaught throwable was detected in the writing thread: " + t.getMessage(), t);
+            WebSocketException cause = new WebSocketException(WebSocketError.UNEXPECTED_ERROR_IN_WRITING_THREAD, "An uncaught throwable was detected in the writing thread: " + t.getMessage(), t);
 
             // Notify the listeners.
             ListenerManager manager = mWebSocket.getListenerManager();
@@ -357,9 +352,7 @@ class WritingThread extends Thread {
             }
         } catch (IOException e) {
             // Flushing frames to the server failed.
-            WebSocketException cause = new WebSocketException(
-                    WebSocketError.FLUSH_ERROR,
-                    "Flushing frames to the server failed: " + e.getMessage(), e);
+            WebSocketException cause = new WebSocketException(WebSocketError.FLUSH_ERROR, "Flushing frames to the server failed: " + e.getMessage(), e);
 
             // Notify the listeners.
             ListenerManager manager = mWebSocket.getListenerManager();
@@ -408,9 +401,7 @@ class WritingThread extends Thread {
             mWebSocket.getOutput().write(frame);
         } catch (IOException e) {
             // An I/O error occurred when a frame was tried to be sent.
-            WebSocketException cause = new WebSocketException(
-                    WebSocketError.IO_ERROR_IN_WRITING,
-                    "An I/O error occurred when a frame was tried to be sent: " + e.getMessage(), e);
+            WebSocketException cause = new WebSocketException(WebSocketError.IO_ERROR_IN_WRITING, "An I/O error occurred when a frame was tried to be sent: " + e.getMessage(), e);
 
             // Notify the listeners.
             ListenerManager manager = mWebSocket.getListenerManager();

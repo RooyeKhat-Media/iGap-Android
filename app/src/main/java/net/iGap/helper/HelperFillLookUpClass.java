@@ -74,6 +74,7 @@ public class HelperFillLookUpClass {
         lookupMap.put(30143, "ProtoUserPrivacyGetRule.UserPrivacyGetRuleResponse");
         lookupMap.put(30144, "ProtoUserPrivacySetRule.UserPrivacySetRuleResponse");
         lookupMap.put(30145, "ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse");
+        lookupMap.put(30146, "ProtoUserTwoStepVerificationResendVerifyEmail.UserTwoStepVerificationResendVerifyEmailResponse");
 
         // Chat 2xx , 302xx
         lookupMap.put(30200, "ProtoChatGetRoom.ChatGetRoomResponse");
@@ -192,10 +193,23 @@ public class HelperFillLookUpClass {
         lookupMap.put(30906, "ProtoSignalingSessionHold.SignalingSessionHoldResponse");
         lookupMap.put(30907, "ProtoSignalingGetLog.SignalingGetLogResponse");
         lookupMap.put(30908, "ProtoSignalingClearLog.SignalingClearLogResponse");
+        lookupMap.put(30909, "ProtoSignalingRate.SignalingRateResponse");
+
+        // Geo 10xx , 310xx
+        lookupMap.put(31000, "ProtoGeoGetRegisterStatus.GeoGetRegisterStatusResponse");
+        lookupMap.put(31001, "ProtoGeoRegister.GeoRegisterResponse");
+        lookupMap.put(31002, "ProtoGeoUpdatePosition.GeoUpdatePositionResponse");
+        lookupMap.put(31003, "ProtoGeoGetComment.GeoGetCommentResponse");
+        lookupMap.put(31004, "ProtoGeoUpdateComment.GeoUpdateCommentResponse");
+        lookupMap.put(31005, "ProtoGeoGetNearbyDistance.GeoGetNearbyDistanceResponse");
+        lookupMap.put(31006, "ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse");
+        lookupMap.put(31007, "ProtoGeoGetConfiguration.GeoGetConfigurationResponse");
 
         // Push 600xx
         lookupMap.put(60000, "ProtoPushLoginToken.PushLoginTokenResponse");
         lookupMap.put(60001, "ProtoPushTwoStepVerification.PushTwoStepVerificationResponse");
         lookupMap.put(60002, "ProtoPushUserInfoExpired.PushUserInfoExpiredResponse");
+        lookupMap.put(60003, "ProtoPushRateSignaling.PushRateSignalingResponse");
+
     }
 }

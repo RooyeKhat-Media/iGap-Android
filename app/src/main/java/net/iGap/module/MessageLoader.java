@@ -32,6 +32,7 @@ import static net.iGap.proto.ProtoClientGetRoomHistory.ClientGetRoomHistory.Dire
 
 public final class MessageLoader {
 
+    private static final int LOCAL_LIMIT = 100;
 
     /**
      * fetch local message from RealmRoomMessage.
@@ -39,25 +40,21 @@ public final class MessageLoader {
      *
      * @param roomId roomId that want show message for that
      * @param messageId start query with this messageId
-     * @param limit limitation for load message
      * @param duplicateMessage if set true return message for messageId that used in this method (will be used "lessThanOrEqualTo") otherwise just return less or greater than messageId(will be used "lessThan" method)
      * @param direction direction for load message up or down
      * @return Object[] ==> [0] -> ArrayList<StructMessageInfo>, [1] -> boolean hasMore, [2] -> boolean hasGap
      */
-    public static Object[] getLocalMessage(long roomId, long messageId, long gapMessageId, int limit, boolean duplicateMessage, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
-
-        Realm realm = Realm.getDefaultInstance();
-        limit = 100;//
+    public static Object[] getLocalMessage(Realm realm, long roomId, long messageId, long gapMessageId, boolean duplicateMessage, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+        //+Realm realm = Realm.getDefaultInstance();
         boolean hasMore = true;
         boolean hasSpaceToGap = true;
         List<RealmRoomMessage> realmRoomMessages;
         ArrayList<StructMessageInfo> structMessageInfos = new ArrayList<>();
 
         if (messageId == 0) {
-            realm.close();
+            //realm.close();
             return new Object[]{structMessageInfos, false, false};
         }
-
 
         /**
          * get message from RealmRoomMessage
@@ -100,8 +97,8 @@ public final class MessageLoader {
         /**
          * manage subList
          */
-        if (realmRoomMessages.size() > limit) {
-            realmRoomMessages = realmRoomMessages.subList(0, limit);
+        if (realmRoomMessages.size() > LOCAL_LIMIT) {
+            realmRoomMessages = realmRoomMessages.subList(0, LOCAL_LIMIT);
         } else {
             /**
              * when run this block means that end of message reached
@@ -117,11 +114,11 @@ public final class MessageLoader {
          */
         for (RealmRoomMessage realmRoomMessage : realmRoomMessages) {
             if (realmRoomMessage.getMessageId() != 0) {
-                structMessageInfos.add(StructMessageInfo.convert(realmRoomMessage));
+                structMessageInfos.add(StructMessageInfo.convert(realm, realmRoomMessage));
             }
         }
 
-        realm.close();
+        //realm.close();
 
         return new Object[]{structMessageInfos, hasMore, hasSpaceToGap};
     }
@@ -129,8 +126,8 @@ public final class MessageLoader {
 
     //*********** get message from server
 
-    public static void getOnlineMessage(final long roomId, final long messageIdGetHistory, final long reachMessageId, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction, final OnMessageReceive onMessageReceive) {
-        new RequestClientGetRoomHistory().getRoomHistory(roomId, messageIdGetHistory, direction, Long.toString(roomId) + "*" + messageIdGetHistory + "*" + reachMessageId + "*" + direction);
+    public static void getOnlineMessage(final Realm realm, final long roomId, final long messageIdGetHistory, final long reachMessageId, int limit, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction, final OnMessageReceive onMessageReceive) {
+        new RequestClientGetRoomHistory().getRoomHistory(roomId, messageIdGetHistory, limit, direction, Long.toString(roomId) + "*" + messageIdGetHistory + "*" + reachMessageId + "*" + direction);
 
         G.onClientGetRoomHistoryResponse = new OnClientGetRoomHistoryResponse() {
             @Override
@@ -150,7 +147,7 @@ public final class MessageLoader {
                          * if gapReached now check that future gap is reached or no. if future gap reached this means
                          * that with get this history , client jumped from local messages and now is in another gap
                          */
-                        if (startMessageId <= (long) gapExist(roomId, reachMessageId, UP)[0]) {
+                        if (startMessageId <= (long) gapExist(realm, roomId, reachMessageId, UP)[0]) {
                             jumpOverLocal = true;
                         }
                     }
@@ -161,7 +158,7 @@ public final class MessageLoader {
                          * if gapReached now check that future gap is reached or no. if future gap reached this means
                          * that with get this history , client jumped from local messages and now is in another gap
                          */
-                        if (endMessageId >= (long) gapExist(roomId, reachMessageId, DOWN)[0]) {
+                        if (endMessageId >= (long) gapExist(realm, roomId, reachMessageId, DOWN)[0]) {
                             jumpOverLocal = true;
                         }
                     }
@@ -169,7 +166,7 @@ public final class MessageLoader {
 
                 final boolean gapReachedFinal = gapReached;
                 final boolean jumpOverLocalFinal = jumpOverLocal;
-                Realm realm = Realm.getDefaultInstance();
+                //+Realm realm = Realm.getDefaultInstance();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
@@ -194,7 +191,7 @@ public final class MessageLoader {
                         }
                     }
                 });
-                realm.close();
+                //realm.close();
 
                 onMessageReceive.onMessage(roomId, startMessageId, endMessageId, gapReached, jumpOverLocal, historyDirection);
             }
@@ -245,9 +242,8 @@ public final class MessageLoader {
      * @param direction direction for load message up or down
      * @return [0] -> gapMessageId, [1] -> reachMessageId
      */
-    public static Object[] gapExist(long roomId, long messageId, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
-        Realm realm = Realm.getDefaultInstance();
-
+    public static Object[] gapExist(Realm realm, long roomId, long messageId, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+        //Realm realm = Realm.getDefaultInstance();
         RealmRoomMessage realmRoomMessage = null;
         long gapMessageId = 0;
         long reachMessageId = 0;
@@ -324,7 +320,7 @@ public final class MessageLoader {
             }
         }
 
-        realm.close();
+        //realm.close();
 
         return new Object[]{gapMessageId, reachMessageId};
     }

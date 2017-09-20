@@ -14,6 +14,9 @@ import net.iGap.proto.ProtoSignalingClearLog;
 
 public class RequestSignalingClearLog {
 
+    /**
+     * @param clearId last callLog Id
+     */
     public void signalingClearLog(long clearId) {
 
         ProtoSignalingClearLog.SignalingClearLog.Builder builder = ProtoSignalingClearLog.SignalingClearLog.newBuilder();

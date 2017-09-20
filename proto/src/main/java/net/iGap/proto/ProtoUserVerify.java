@@ -13,7 +13,6 @@ public final class ProtoUserVerify {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface UserVerifyOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.UserVerify)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoUserVerify {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -42,13 +39,11 @@ public final class ProtoUserVerify {
      * <code>optional string username = 3;</code>
      */
     java.lang.String getUsername();
-
     /**
      * <code>optional string username = 3;</code>
      */
     com.google.protobuf.ByteString getUsernameBytes();
   }
-
   /**
    * Protobuf type {@code proto.UserVerify}
    */
@@ -59,7 +54,6 @@ public final class ProtoUserVerify {
     private UserVerify(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserVerify() {
       code_ = 0;
       username_ = "";
@@ -132,21 +126,18 @@ public final class ProtoUserVerify {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -156,7 +147,6 @@ public final class ProtoUserVerify {
 
     public static final int CODE_FIELD_NUMBER = 2;
     private int code_;
-
     /**
      * <code>optional uint32 code = 2;</code>
      */
@@ -166,7 +156,6 @@ public final class ProtoUserVerify {
 
     public static final int USERNAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object username_;
-
     /**
      * <code>optional string username = 3;</code>
      */
@@ -181,7 +170,6 @@ public final class ProtoUserVerify {
         return s;
       }
     }
-
     /**
      * <code>optional string username = 3;</code>
      */
@@ -197,7 +185,6 @@ public final class ProtoUserVerify {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -238,7 +225,6 @@ public final class ProtoUserVerify {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -322,15 +308,12 @@ public final class ProtoUserVerify {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserVerify.UserVerify prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -340,7 +323,6 @@ public final class ProtoUserVerify {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserVerify}
      */
@@ -364,12 +346,10 @@ public final class ProtoUserVerify {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -437,7 +417,6 @@ public final class ProtoUserVerify {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserVerify.UserVerify) {
           return mergeFrom((net.iGap.proto.ProtoUserVerify.UserVerify) other);
@@ -484,14 +463,12 @@ public final class ProtoUserVerify {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -502,7 +479,6 @@ public final class ProtoUserVerify {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -519,7 +495,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -533,7 +508,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -551,7 +525,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -566,7 +539,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -575,7 +547,6 @@ public final class ProtoUserVerify {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -586,7 +557,6 @@ public final class ProtoUserVerify {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -599,14 +569,12 @@ public final class ProtoUserVerify {
       }
 
       private int code_;
-
       /**
        * <code>optional uint32 code = 2;</code>
        */
       public int getCode() {
         return code_;
       }
-
       /**
        * <code>optional uint32 code = 2;</code>
        */
@@ -616,7 +584,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint32 code = 2;</code>
        */
@@ -628,7 +595,6 @@ public final class ProtoUserVerify {
       }
 
       private java.lang.Object username_ = "";
-
       /**
        * <code>optional string username = 3;</code>
        */
@@ -643,7 +609,6 @@ public final class ProtoUserVerify {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string username = 3;</code>
        */
@@ -657,7 +622,6 @@ public final class ProtoUserVerify {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string username = 3;</code>
        */
@@ -670,7 +634,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string username = 3;</code>
        */
@@ -680,7 +643,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string username = 3;</code>
        */
@@ -709,7 +671,6 @@ public final class ProtoUserVerify {
 
     // @@protoc_insertion_point(class_scope:proto.UserVerify)
     private static final net.iGap.proto.ProtoUserVerify.UserVerify DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserVerify.UserVerify();
     }
@@ -747,12 +708,10 @@ public final class ProtoUserVerify {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -762,7 +721,6 @@ public final class ProtoUserVerify {
      * <code>optional string token = 2;</code>
      */
     java.lang.String getToken();
-
     /**
      * <code>optional string token = 2;</code>
      */
@@ -773,7 +731,6 @@ public final class ProtoUserVerify {
      */
     boolean getNewUser();
   }
-
   /**
    * Protobuf type {@code proto.UserVerifyResponse}
    */
@@ -784,7 +741,6 @@ public final class ProtoUserVerify {
     private UserVerifyResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserVerifyResponse() {
       token_ = "";
       newUser_ = false;
@@ -857,21 +813,18 @@ public final class ProtoUserVerify {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -881,7 +834,6 @@ public final class ProtoUserVerify {
 
     public static final int TOKEN_FIELD_NUMBER = 2;
     private volatile java.lang.Object token_;
-
     /**
      * <code>optional string token = 2;</code>
      */
@@ -896,7 +848,6 @@ public final class ProtoUserVerify {
         return s;
       }
     }
-
     /**
      * <code>optional string token = 2;</code>
      */
@@ -913,7 +864,6 @@ public final class ProtoUserVerify {
 
     public static final int NEW_USER_FIELD_NUMBER = 3;
     private boolean newUser_;
-
     /**
      * <code>optional bool new_user = 3;</code>
      */
@@ -922,7 +872,6 @@ public final class ProtoUserVerify {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -963,7 +912,6 @@ public final class ProtoUserVerify {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1047,11 +995,9 @@ public final class ProtoUserVerify {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserVerify.UserVerifyResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
@@ -1064,7 +1010,6 @@ public final class ProtoUserVerify {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserVerifyResponse}
      */
@@ -1088,12 +1033,10 @@ public final class ProtoUserVerify {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1161,7 +1104,6 @@ public final class ProtoUserVerify {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserVerify.UserVerifyResponse) {
           return mergeFrom((net.iGap.proto.ProtoUserVerify.UserVerifyResponse) other);
@@ -1208,14 +1150,12 @@ public final class ProtoUserVerify {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1226,7 +1166,6 @@ public final class ProtoUserVerify {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1243,7 +1182,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1257,7 +1195,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1275,7 +1212,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1290,7 +1226,6 @@ public final class ProtoUserVerify {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1299,7 +1234,6 @@ public final class ProtoUserVerify {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1310,7 +1244,6 @@ public final class ProtoUserVerify {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1323,7 +1256,6 @@ public final class ProtoUserVerify {
       }
 
       private java.lang.Object token_ = "";
-
       /**
        * <code>optional string token = 2;</code>
        */
@@ -1338,7 +1270,6 @@ public final class ProtoUserVerify {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string token = 2;</code>
        */
@@ -1352,7 +1283,6 @@ public final class ProtoUserVerify {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string token = 2;</code>
        */
@@ -1365,7 +1295,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string token = 2;</code>
        */
@@ -1375,7 +1304,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string token = 2;</code>
        */
@@ -1391,14 +1319,12 @@ public final class ProtoUserVerify {
       }
 
       private boolean newUser_;
-
       /**
        * <code>optional bool new_user = 3;</code>
        */
       public boolean getNewUser() {
         return newUser_;
       }
-
       /**
        * <code>optional bool new_user = 3;</code>
        */
@@ -1408,7 +1334,6 @@ public final class ProtoUserVerify {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional bool new_user = 3;</code>
        */
@@ -1433,7 +1358,6 @@ public final class ProtoUserVerify {
 
     // @@protoc_insertion_point(class_scope:proto.UserVerifyResponse)
     private static final net.iGap.proto.ProtoUserVerify.UserVerifyResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserVerify.UserVerifyResponse();
     }
@@ -1473,14 +1397,14 @@ public final class ProtoUserVerify {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\020UserVerify.proto\022\005proto\032\rRequest.proto" +
                     "\032\016Response.proto\"M\n\nUserVerify\022\037\n\007reques" +
                     "t\030\001 \001(\0132\016.proto.Request\022\014\n\004code\030\002 \001(\r\022\020\n" +
                     "\010username\030\003 \001(\t\"X\n\022UserVerifyResponse\022!\n" +
-                    "\010response\030\001 \001(\0132\017.proto.Response\022\r\n\005toke" + "n\030\002 \001(\t\022\020\n\010new_user\030\003 \001(\010B!\n\016net.iGap.pr" +
+                    "\010response\030\001 \001(\0132\017.proto.Response\022\r\n\005toke" +
+                    "n\030\002 \001(\t\022\020\n\010new_user\030\003 \001(\010B!\n\016net.iGap.pr" +
                     "otoB\017ProtoUserVerifyb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1496,10 +1420,9 @@ public final class ProtoUserVerify {
     internal_static_proto_UserVerify_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserVerify_descriptor, new java.lang.String[]{"Request", "Code", "Username",});
     internal_static_proto_UserVerifyResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_UserVerifyResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserVerifyResponse_descriptor, new java.lang.String[]{"Response", "Token", "NewUser",});
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    internal_static_proto_UserVerifyResponse_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserVerifyResponse_descriptor, new java.lang.String[]{"Response", "Token", "NewUser",});
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

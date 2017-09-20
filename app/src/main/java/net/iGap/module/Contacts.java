@@ -92,8 +92,7 @@ public class Contacts {
                     id = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
 
                     if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur =
-                            cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[] { String.valueOf(id) }, null);
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(id)}, null);
 
                         if (pCur != null) {
 
@@ -169,7 +168,8 @@ public class Contacts {
         if (size > 0) {
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
                     realm.delete(RealmInviteFriend.class);  // delete all item in invite friend database
                     for (int i = 0; i < size; i++) {
                         RealmInviteFriend item = realm.createObject(RealmInviteFriend.class);
@@ -186,7 +186,8 @@ public class Contacts {
             final RealmResults<RealmContacts> results = realm.where(RealmContacts.class).findAll();
             if (!results.isEmpty()) {
                 realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    @Override
+                    public void execute(Realm realm) {
                         for (int i = 0; i < results.size(); i++) {
                             if (results.get(i).isValid()) {
                                 long phone = results.get(i).getPhone();
@@ -236,5 +237,46 @@ public class Contacts {
         realm.close();
 
         return list;
+    }
+
+    private static ArrayList<String> arrayList = new ArrayList<>();
+    private static ArrayList<String> number = new ArrayList<>();
+
+    public static ArrayList<StructListOfContact> getMobileListContact() { //get List Of Contact
+        ArrayList<String> tempList = new ArrayList<>();
+        ArrayList<StructListOfContact> contactList = new ArrayList<>();
+        ContentResolver cr = G.context.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
+
+        if (cur != null) {
+            if (cur.getCount() > 0) {
+                while (cur.moveToNext()) {
+
+                    int id = 0;
+                    id = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
+
+                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(id)}, null);
+                        if (pCur != null) {
+                            while (pCur.moveToNext()) {
+                                String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                                if (!tempList.contains(number.replace("[\\s\\-()]", "").replace(" ", ""))) {
+                                    StructListOfContact itemContact = new StructListOfContact();
+                                    itemContact.setDisplayName(name);
+                                    itemContact.setPhone(number);
+                                    contactList.add(itemContact);
+                                    tempList.add(number.replace("[\\s\\-()]", "").replace(" ", ""));
+                                }
+                            }
+                            pCur.close();
+                        }
+                    }
+                }
+            }
+            cur.close();
+        }
+
+        return contactList;
     }
 }

@@ -51,7 +51,7 @@ public class UploadService extends Service {
         }
 
         final long messageId = SUID.id().get();
-        final long updateTime = System.currentTimeMillis();
+        final long updateTime = TimeUtils.currentLocalTime();
 
         final long duration = AndroidUtils.getAudioDuration(getApplicationContext(), savedPath);
 

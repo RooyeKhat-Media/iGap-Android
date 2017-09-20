@@ -12,15 +12,16 @@ package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import io.realm.Realm;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
@@ -28,49 +29,65 @@ import net.iGap.realm.RealmRoomMessageFields;
 
 public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
 
-    public FileItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public FileItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutFile;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_file;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(final ViewHolder holder, String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
-
-        //G.imageLoader.displayImage(suitablePath(localPath), holder.thumbnail);
-        //holder.thumbnail.setImageResource(R.drawable.file_icon);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getFileItem());
+        }
+
+        holder.cslf_txt_file_name = (TextView) holder.itemView.findViewById(R.id.songArtist);
+        holder.cslf_txt_file_size = (TextView) holder.itemView.findViewById(R.id.fileSize);
+        holder.thumbnail = (ImageView) holder.itemView.findViewById(R.id.thumbnail);
+
+
+
         super.bindView(holder, payloads);
+
+        String text = "";
 
         if (mMessage.forwardedFrom != null) {
             if (mMessage.forwardedFrom.getAttachment() != null) {
                 holder.cslf_txt_file_name.setText(mMessage.forwardedFrom.getAttachment().getName());
                 holder.cslf_txt_file_size.setText(AndroidUtils.humanReadableByteCount(mMessage.forwardedFrom.getAttachment().getSize(), true));
             }
-
-            setTextIfNeeded(holder.messageText, mMessage.forwardedFrom.getMessage());
+            text = mMessage.forwardedFrom.getMessage();
         } else {
             if (mMessage.attachment != null) {
                 holder.cslf_txt_file_name.setText(mMessage.attachment.name);
                 holder.cslf_txt_file_size.setText(AndroidUtils.humanReadableByteCount(mMessage.attachment.size, true));
             }
 
-            setTextIfNeeded(holder.messageText, mMessage.messageText);
+            text = mMessage.messageText;
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.valueOf(mMessage.messageID)).findFirst();
+        if (mMessage.hasEmojiInText) {
+            setTextIfNeeded((EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        }
+
+        RealmRoomMessage roomMessage = realmChat.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.valueOf(mMessage.messageID)).findFirst();
         if (roomMessage != null) {
-            //AppUtils.rightFileThumbnailIcon(holder.thumbnail, mMessage.messageType, roomMessage.getAttachment());
-            //holder.thumbnail.setImageResource(R.drawable.file_icon);
             holder.thumbnail.setVisibility(View.VISIBLE);
             if (roomMessage.getForwardMessage() != null) {
                 if (roomMessage.getForwardMessage().getAttachment().getName().toLowerCase().endsWith(".pdf")) {
@@ -98,44 +115,39 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
                 }
             }
         }
-        realm.close();
     }
 
-    @Override protected void updateLayoutForSend(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForSend(ViewHolder holder) {
         super.updateLayoutForSend(holder);
-        //   holder.cslf_txt_file_name.setTextColor(Color.WHITE);
-        //  holder.cslf_txt_file_size.setTextColor(Color.WHITE);
     }
 
-    @Override protected void updateLayoutForReceive(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
         holder.cslf_txt_file_name.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
         holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * this commented code used with xml layout
+         */
         protected TextView cslf_txt_file_name;
         protected TextView cslf_txt_file_size;
-        protected EmojiTextView messageText;
         protected ImageView thumbnail;
 
         public ViewHolder(View view) {
             super(view);
-
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
-            cslf_txt_file_name = (TextView) view.findViewById(R.id.songArtist);
-            cslf_txt_file_size = (TextView) view.findViewById(R.id.fileSize);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            //cslf_txt_file_name = (TextView) view.findViewById(R.id.songArtist);
+            //cslf_txt_file_size = (TextView) view.findViewById(R.id.fileSize);
+            //thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

@@ -20,6 +20,10 @@ public class RealmUserInfo extends RealmObject {
     private boolean registrationStatus;
     private String email;
     private int gender;
+    private boolean isPassCode;
+    private boolean isFingerPrint;
+    private String passCode;
+    private int kindPassCode;
     private int selfRemove;
     private String token;
     private String authorHash;
@@ -53,12 +57,44 @@ public class RealmUserInfo extends RealmObject {
         }
     }
 
+    public boolean isFingerPrint() {
+        return isFingerPrint;
+    }
+
+    public int getKindPassCode() {
+        return kindPassCode;
+    }
+
+    public void setKindPassCode(int kindPassCode) {
+        this.kindPassCode = kindPassCode;
+    }
+
+    public void setFingerPrint(boolean fingerPrint) {
+        isFingerPrint = fingerPrint;
+    }
+
     public ProtoGlobal.Gender getGender() {
         return ProtoGlobal.Gender.valueOf(this.gender);
     }
 
     public void setGender(ProtoGlobal.Gender value) {
         this.gender = value.getNumber();
+    }
+
+    public boolean isPassCode() {
+        return isPassCode;
+    }
+
+    public void setPassCode(boolean passCode) {
+        isPassCode = passCode;
+    }
+
+    public String getPassCode() {
+        return passCode;
+    }
+
+    public void setPassCode(String passCode) {
+        this.passCode = passCode;
     }
 
     public String getToken() {

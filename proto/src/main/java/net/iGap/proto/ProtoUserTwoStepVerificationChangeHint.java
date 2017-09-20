@@ -13,7 +13,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface UserTwoStepVerificationChangeHintOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.UserTwoStepVerificationChangeHint)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoUserTwoStepVerificationChangeHint {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -37,7 +34,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
      * <code>optional string password = 2;</code>
      */
     java.lang.String getPassword();
-
     /**
      * <code>optional string password = 2;</code>
      */
@@ -47,13 +43,11 @@ public final class ProtoUserTwoStepVerificationChangeHint {
      * <code>optional string hint = 3;</code>
      */
     java.lang.String getHint();
-
     /**
      * <code>optional string hint = 3;</code>
      */
     com.google.protobuf.ByteString getHintBytes();
   }
-
   /**
    * Protobuf type {@code proto.UserTwoStepVerificationChangeHint}
    */
@@ -64,7 +58,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     private UserTwoStepVerificationChangeHint(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserTwoStepVerificationChangeHint() {
       password_ = "";
       hint_ = "";
@@ -138,21 +131,18 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -162,7 +152,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     public static final int PASSWORD_FIELD_NUMBER = 2;
     private volatile java.lang.Object password_;
-
     /**
      * <code>optional string password = 2;</code>
      */
@@ -177,7 +166,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         return s;
       }
     }
-
     /**
      * <code>optional string password = 2;</code>
      */
@@ -194,7 +182,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     public static final int HINT_FIELD_NUMBER = 3;
     private volatile java.lang.Object hint_;
-
     /**
      * <code>optional string hint = 3;</code>
      */
@@ -209,7 +196,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         return s;
       }
     }
-
     /**
      * <code>optional string hint = 3;</code>
      */
@@ -225,7 +211,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -266,7 +251,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -350,15 +334,12 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHint prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -368,7 +349,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserTwoStepVerificationChangeHint}
      */
@@ -392,12 +372,10 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -465,7 +443,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHint) {
           return mergeFrom((net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHint) other);
@@ -513,14 +490,12 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -531,7 +506,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -548,7 +522,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -562,7 +535,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -580,7 +552,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -595,7 +566,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -604,7 +574,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -615,7 +584,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -628,7 +596,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       }
 
       private java.lang.Object password_ = "";
-
       /**
        * <code>optional string password = 2;</code>
        */
@@ -643,7 +610,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string password = 2;</code>
        */
@@ -657,7 +623,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string password = 2;</code>
        */
@@ -670,7 +635,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string password = 2;</code>
        */
@@ -680,7 +644,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string password = 2;</code>
        */
@@ -696,7 +659,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       }
 
       private java.lang.Object hint_ = "";
-
       /**
        * <code>optional string hint = 3;</code>
        */
@@ -711,7 +673,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string hint = 3;</code>
        */
@@ -725,7 +686,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string hint = 3;</code>
        */
@@ -738,7 +698,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string hint = 3;</code>
        */
@@ -748,7 +707,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string hint = 3;</code>
        */
@@ -777,7 +735,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     // @@protoc_insertion_point(class_scope:proto.UserTwoStepVerificationChangeHint)
     private static final net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHint DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHint();
     }
@@ -815,18 +772,15 @@ public final class ProtoUserTwoStepVerificationChangeHint {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.UserTwoStepVerificationChangeHintResponse}
    */
@@ -837,7 +791,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     private UserTwoStepVerificationChangeHintResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserTwoStepVerificationChangeHintResponse() {
     }
 
@@ -897,21 +850,18 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -920,7 +870,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -949,7 +898,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1027,15 +975,12 @@ public final class ProtoUserTwoStepVerificationChangeHint {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -1045,7 +990,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserTwoStepVerificationChangeHintResponse}
      */
@@ -1069,12 +1013,10 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1136,7 +1078,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse) {
           return mergeFrom((net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse) other);
@@ -1176,14 +1117,12 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1194,7 +1133,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1211,7 +1149,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1225,7 +1162,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1243,7 +1179,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1258,7 +1193,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1267,7 +1201,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1278,7 +1211,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1304,7 +1236,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
 
     // @@protoc_insertion_point(class_scope:proto.UserTwoStepVerificationChangeHintResponse)
     private static final net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse();
     }
@@ -1344,7 +1275,6 @@ public final class ProtoUserTwoStepVerificationChangeHint {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\'UserTwoStepVerificationChangeHint.prot" +
@@ -1352,7 +1282,8 @@ public final class ProtoUserTwoStepVerificationChangeHint {
                     "d\n!UserTwoStepVerificationChangeHint\022\037\n\007" +
                     "request\030\001 \001(\0132\016.proto.Request\022\020\n\010passwor" +
                     "d\030\002 \001(\t\022\014\n\004hint\030\003 \001(\t\"N\n)UserTwoStepVeri" +
-                    "ficationChangeHintResponse\022!\n\010response\030\001" + " \001(\0132\017.proto.ResponseB8\n\016net.iGap.protoB" +
+                    "ficationChangeHintResponse\022!\n\010response\030\001" +
+                    " \001(\0132\017.proto.ResponseB8\n\016net.iGap.protoB" +
                     "&ProtoUserTwoStepVerificationChangeHintb" +
                     "\006proto3"
     };
@@ -1372,8 +1303,8 @@ public final class ProtoUserTwoStepVerificationChangeHint {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserTwoStepVerificationChangeHintResponse_descriptor,
         new java.lang.String[] { "Response", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

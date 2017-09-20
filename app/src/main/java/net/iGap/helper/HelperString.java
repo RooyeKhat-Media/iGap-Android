@@ -188,7 +188,7 @@ public class HelperString {
 
     public static boolean isNumeric(String str) {
         try {
-            long number = Long.parseLong(str);
+            Long.parseLong(str);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -220,19 +220,16 @@ public class HelperString {
         return result;
     }
 
+    /**
+     * Convert from UTF-8 to Unicode
+     */
     public static String getUtf8String(String text) {
-        // s=  URLEncoder.encode(message, "utf-8");
-
         String result = "";
-
         try {
-
             byte[] utf8 = text.getBytes("UTF-8");
-
-            // Convert from UTF-8 to Unicode
             result = new String(utf8, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-
+            e.printStackTrace();
         }
 
         return result;

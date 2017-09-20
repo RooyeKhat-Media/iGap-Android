@@ -31,12 +31,11 @@ public class SignalingLeaveResponse extends MessageHandler {
     public void handler() {
         super.handler();
 
-        ProtoSignalingLeave.SignalingLeaveResponse.Builder builder = (ProtoSignalingLeave.SignalingLeaveResponse.Builder) message;
-        net.iGap.proto.ProtoSignalingLeave.SignalingLeaveResponse.Type type = builder.getType();
-
+        final ProtoSignalingLeave.SignalingLeaveResponse.Builder builder = (ProtoSignalingLeave.SignalingLeaveResponse.Builder) message;
         if (G.iSignalingLeave != null) {
-            G.iSignalingLeave.onLeave(type);
+            G.iSignalingLeave.onLeave(builder.getType());
         }
+
     }
 
     @Override

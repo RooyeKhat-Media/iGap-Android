@@ -36,7 +36,7 @@ public class ClientGetRoomListResponse extends MessageHandler {
         super.handler();
         final ProtoClientGetRoomList.ClientGetRoomListResponse.Builder clientGetRoomListResponse = (ProtoClientGetRoomList.ClientGetRoomListResponse.Builder) message;
         if (G.onClientGetRoomListResponse != null) {
-            G.onClientGetRoomListResponse.onClientGetRoomList(clientGetRoomListResponse.getRoomsList(), clientGetRoomListResponse.getResponse(), Boolean.parseBoolean(identity));
+            G.onClientGetRoomListResponse.onClientGetRoomList(clientGetRoomListResponse.getRoomsList(), clientGetRoomListResponse.getResponse(), identity);
         } else {
 
             new Thread(new Runnable() {

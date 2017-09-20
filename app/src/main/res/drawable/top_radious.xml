@@ -6,6 +6,6 @@
         android:topRightRadius="@dimen/dp8"
         />
 
-    <solid android:color="@color/iGapColorDarker"/>
+    <solid android:color="#32969696" />
 
 </shape>

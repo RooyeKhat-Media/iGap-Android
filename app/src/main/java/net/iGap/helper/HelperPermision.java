@@ -12,14 +12,14 @@ package net.iGap.helper;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import java.io.IOException;
 import java.util.ArrayList;
 import net.iGap.R;
@@ -313,30 +313,43 @@ public class HelperPermision {
     //************************************************************************************************************
     public static void getPermission(final Context context, final String[] needPermission, final int requestCode, String Text, final OnGetPermission onGetPermission) {
 
-        if (!ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, needPermission[0])) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, needPermission[0])) {
 
             String message = context.getString(R.string.you_need_to_allow) + " " + Text;
 
-            DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
-                @Override public void onClick(DialogInterface dialog, int which) {
+            //final DialogInterface.OnClickListener okListener = new DialogInterface.OnClickListener() {
+            //    @Override public void onClick(DialogInterface dialog, int which) {
+            //
+            //        ActivityCompat.requestPermissions((Activity) context, needPermission, requestCode);
+            //    }
+            //};
+            //
+            //final DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener() {
+            //    @Override public void onClick(DialogInterface dialog, int which) {
+            //
+            //        if (onGetPermission != null) onGetPermission.deny();
+            //    }
+            //};
 
+            new MaterialDialog.Builder(context).cancelable(false).content(message).positiveText(context.getString(R.string.ok)).onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     ActivityCompat.requestPermissions((Activity) context, needPermission, requestCode);
                 }
-            };
-
-            DialogInterface.OnClickListener onCancel = new DialogInterface.OnClickListener() {
-                @Override public void onClick(DialogInterface dialog, int which) {
-
+            }).negativeText(context.getString(R.string.cancel)).onNegative(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     if (onGetPermission != null) onGetPermission.deny();
                 }
-            };
+            }).show();
 
-            new AlertDialog.Builder(context).setMessage(message)
-                .setPositiveButton(context.getString(R.string.ok), okListener)
-                .setNegativeButton(context.getString(R.string.cancel), onCancel)
-                .setCancelable(false)
-                .create()
-                .show();
+
+            //new AlertDialog.Builder(context).setMessage(message)
+            //    .setPositiveButton(context.getString(R.string.ok), okListener)
+            //    .setNegativeButton(context.getString(R.string.cancel), onCancel)
+            //    .setCancelable(false)
+            //    .create()
+            //    .show();
 
             return;
         }
