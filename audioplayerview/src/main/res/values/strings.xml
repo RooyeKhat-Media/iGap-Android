@@ -1,6 +1,0 @@
-<resources>
-    <string name="audioplayerview_desc_pause">Pause</string>
-    <string name="audioplayerview_desc_play">Play</string>
-    <string name="audioplayerview_desc_stop">Stop</string>
-    <string name="audioplayerview_recorded_by_s" formatted="false">Recorded by <b>%s</b></string>
-</resources>
