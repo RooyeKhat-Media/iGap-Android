@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:paddingEnd="@dimen/dp28"
     android:paddingLeft="@dimen/dp52"
+    android:clickable="true"
     android:paddingRight="@dimen/dp28"
     android:paddingStart="@dimen/dp52">
 
@@ -72,6 +73,7 @@
                 android:gravity="bottom|left"
                 android:singleLine="true"
                 android:text="@string/last_seen_recently"
+              android:textSize="@dimen/dp14"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                 android:textColor="#bbbbbb" />
         </RelativeLayout>

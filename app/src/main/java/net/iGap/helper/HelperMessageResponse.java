@@ -28,7 +28,7 @@ import static net.iGap.G.authorHash;
 public class HelperMessageResponse {
 
 
-    public static void handleMessage(final long roomId, final ProtoGlobal.RoomMessage roomMessage, final ProtoResponse.Response response, final String identity) {
+    public static void handleMessage(final long roomId, final ProtoGlobal.RoomMessage roomMessage, final ProtoGlobal.Room.Type roomType, final ProtoResponse.Response response, final String identity) {
 
         final Realm realm = Realm.getDefaultInstance();
 
@@ -91,18 +91,15 @@ public class HelperMessageResponse {
                             HelperNotificationAndBadge.updateBadgeOnly();
                         } else {
 
-                            ProtoGlobal.Room.Type type = ProtoGlobal.Room.Type.CHAT;
-                            if (room != null) {
-                                type = room.getType();
+                            if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
+                                    }
+                                }, 200);
                             }
 
-                            final ProtoGlobal.Room.Type finalType = type;
-                            G.handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    G.helperNotificationAndBadge.checkAlert(true, finalType, roomId);
-                                }
-                            }, 200);
                         }
                     }
 
@@ -119,12 +116,6 @@ public class HelperMessageResponse {
                 }
             }
         });
-
-        ProtoGlobal.Room.Type roomType = ProtoGlobal.Room.Type.CHANNEL;
-        RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (room != null) {
-            roomType = room.getType();
-        }
 
         if (response.getId().isEmpty()) {
             /**

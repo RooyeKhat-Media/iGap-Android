@@ -39,7 +39,7 @@ public class ConnectionSymmetricKeyResponse extends MessageHandler {
 
         //builder.getSecurityIssue(); true means reject
 
-        if (statusNumber == Config.REJECT) {
+        if (statusNumber == Config.REJECT) { //go to upgrade page
 
             G.allowForConnect = false;
             WebSocket webSocket = WebSocketClient.getInstance();

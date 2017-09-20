@@ -21,7 +21,7 @@ import net.iGap.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentVideoTrime extends Fragment {
+public class FragmentVideoTrime extends BaseFragment {
 
     public FragmentVideoTrime() {
         // Required empty public constructor

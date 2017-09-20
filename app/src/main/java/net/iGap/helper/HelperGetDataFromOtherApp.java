@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import net.iGap.G;
+import net.iGap.activities.ActivityMain;
 
 public class HelperGetDataFromOtherApp {
 
@@ -65,23 +66,9 @@ public class HelperGetDataFromOtherApp {
 
         if (extension.endsWith("jpg") || extension.endsWith("jpeg") || extension.endsWith("png") || extension.endsWith("bmp") || extension.endsWith(".tiff")) {
             fileType = FileType.image;
-        } else if (extension.endsWith("mp3")
-            || extension.endsWith("ogg")
-            || extension.endsWith("wma")
-            || extension.endsWith("m4a")
-            || extension.endsWith("amr")
-            || extension.endsWith("wav")
-            || extension.endsWith(".mid")
-            || extension.endsWith(".midi")) {
+        } else if (extension.endsWith("mp3") || extension.endsWith("ogg") || extension.endsWith("wma") || extension.endsWith("m4a") || extension.endsWith("amr") || extension.endsWith("wav") || extension.endsWith(".mid") || extension.endsWith(".midi")) {
             fileType = FileType.audio;
-        } else if (extension.endsWith("mp4")
-            || extension.endsWith("3gp")
-            || extension.endsWith("avi")
-            || extension.endsWith("mpg")
-            || extension.endsWith("flv")
-            || extension.endsWith("wmv")
-            || extension.endsWith("m4v")
-            || extension.endsWith(".mpeg")) {
+        } else if (extension.endsWith("mp4") || extension.endsWith("3gp") || extension.endsWith("avi") || extension.endsWith("mpg") || extension.endsWith("flv") || extension.endsWith("wmv") || extension.endsWith("m4v") || extension.endsWith(".mpeg")) {
             fileType = FileType.video;
         }
 
@@ -130,6 +117,15 @@ public class HelperGetDataFromOtherApp {
 
                 SetOutPutMultipleFile(FileType.file);
             }
+        }
+
+        if (hasSharedData && ActivityMain.isOpenChatBeforeSheare) {
+            G.handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    new HelperFragment().removeAll(true);
+                }
+            });
         }
     }
 
@@ -182,12 +178,9 @@ public class HelperGetDataFromOtherApp {
 
     //*****************************************************************************************************
 
-    void handleSendText(Intent intent) {
-
+    private void handleSendText(Intent intent) {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-
         if (sharedText != null) {
-
             hasSharedData = true;
             messageType = FileType.message;
             message = sharedText;

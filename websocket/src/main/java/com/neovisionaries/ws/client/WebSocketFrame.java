@@ -147,7 +147,7 @@ public class WebSocketFrame {
 
     /**
      * Get the opcode.
-     * <p>
+     *
      * <table border="1" cellpadding="5" style="table-collapse: collapse;">
      * <caption>WebSocket opcode</caption>
      * <thead>
@@ -216,7 +216,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a continuation frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0x0 ({@link WebSocketOpcode#CONTINUATION}).
@@ -232,7 +232,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a text frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0x1 ({@link WebSocketOpcode#TEXT}).
@@ -248,7 +248,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a binary frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0x2 ({@link WebSocketOpcode#BINARY}).
@@ -264,7 +264,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a close frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0x8 ({@link WebSocketOpcode#CLOSE}).
@@ -280,7 +280,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a ping frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0x9 ({@link WebSocketOpcode#PING}).
@@ -296,7 +296,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a pong frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is 0xA ({@link WebSocketOpcode#PONG}).
@@ -312,7 +312,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a data frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is in between 0x1 and 0x7.
@@ -328,7 +328,7 @@ public class WebSocketFrame {
 
     /**
      * Check if this frame is a control frame.
-     * <p>
+     *
      * <p>
      * This method returns {@code true} when the value of the
      * opcode is in between 0x8 and 0xF.
@@ -416,7 +416,7 @@ public class WebSocketFrame {
 
     /**
      * Set the unmasked payload.
-     * <p>
+     *
      * <p>
      * Note that the payload length of a <a href="http://tools.ietf.org/html/rfc6455#section-5.5"
      * >control frame</a> must be 125 bytes or less.
@@ -441,7 +441,7 @@ public class WebSocketFrame {
     /**
      * Set the payload. The given string is converted to a byte array
      * in UTF-8 encoding.
-     * <p>
+     *
      * <p>
      * Note that the payload length of a <a href="http://tools.ietf.org/html/rfc6455#section-5.5"
      * >control frame</a> must be 125 bytes or less.
@@ -463,13 +463,13 @@ public class WebSocketFrame {
 
     /**
      * Set the payload that conforms to the payload format of close frames.
-     * <p>
+     *
      * <p>
      * The given parameters are encoded based on the rules described in
      * "<a href="http://tools.ietf.org/html/rfc6455#section-5.5.1"
      * >5.5.1. Close</a>" of RFC 6455.
      * </p>
-     * <p>
+     *
      * <p>
      * Note that the reason should not be too long because the payload
      * length of a <a href="http://tools.ietf.org/html/rfc6455#section-5.5"
@@ -512,12 +512,12 @@ public class WebSocketFrame {
 
     /**
      * Parse the first two bytes of the payload as a close code.
-     * <p>
+     *
      * <p>
      * If any payload is not set or the length of the payload is less than 2,
      * this method returns 1005 ({@link WebSocketCloseCode#NONE}).
      * </p>
-     * <p>
+     *
      * <p>
      * The value returned from this method is meaningless if this frame
      * is not a close frame.
@@ -542,12 +542,12 @@ public class WebSocketFrame {
 
     /**
      * Parse the third and subsequent bytes of the payload as a close reason.
-     * <p>
+     *
      * <p>
      * If any payload is not set or the length of the payload is less than 3,
      * this method returns {@code null}.
      * </p>
-     * <p>
+     *
      * <p>
      * The value returned from this method is meaningless if this frame
      * is not a close frame.
@@ -714,8 +714,6 @@ public class WebSocketFrame {
      * {@link WebSocketOpcode#BINARY BINARY} and payload is
      * the given one.
      */
-
-    //original method for this websocket library
     public static WebSocketFrame createBinaryFrame(byte[] payload) {
         return new WebSocketFrame().setFin(true).setOpcode(BINARY).setPayload(payload);
     }
@@ -723,7 +721,6 @@ public class WebSocketFrame {
     public static WebSocketFrame createBinaryFrame(byte[] payload, Object requestWrapper) {
         return new WebSocketFrame().setFin(true).setOpcode(BINARY).setPayload(payload).setRequestWrapper(requestWrapper);
     }
-
 
     /**
      * Create a close frame.
@@ -859,7 +856,7 @@ public class WebSocketFrame {
 
     /**
      * Mask/unmask payload.
-     * <p>
+     *
      * <p>
      * The logic of masking/unmasking is described in "<a href=
      * "http://tools.ietf.org/html/rfc6455#section-5.3">5.3.

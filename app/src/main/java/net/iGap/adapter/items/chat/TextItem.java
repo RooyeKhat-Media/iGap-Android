@@ -11,31 +11,42 @@
 package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.vanniktech.emoji.EmojiUtils;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.interfaces.IMessageItem;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.proto.ProtoGlobal;
 
 public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
 
-    public TextItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public TextItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutMessage;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getTextItem());
+        }
+
+
         super.bindView(holder, payloads);
 
         String text;
@@ -44,25 +55,45 @@ public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
         } else {
             text = mMessage.messageText;
         }
-        setTextIfNeeded(holder.messageText, text);
+
+        if (mMessage.hasEmojiInText) {
+
+            EmojiTextViewE textViewE = (EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage);
+
+            if (text.length() <= 2) {
+
+                if (EmojiUtils.emojisCount(text) == 1) {
+                    textViewE.setEmojiSize((int) G.context.getResources().getDimension(R.dimen.dp28));
+                }
+            }
+
+            setTextIfNeeded(textViewE, text);
+
+
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        }
 
         if (mMessage.hasLinkInMessage) {
 
-            holder.llTime.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+            holder.itemView.findViewById(R.id.csl_ll_time).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
                 }
             });
         } else {
-            holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
+            messageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     holder.itemView.performLongClick();
                     return false;
                 }
             });
 
-            holder.messageText.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+            messageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (!isSelected()) {
                         if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             return;
@@ -78,25 +109,17 @@ public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
         }
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
     protected static class ViewHolder extends RecyclerView.ViewHolder {
-        protected EmojiTextView messageText;
-        protected LinearLayout llTime;
+        //  protected LinearLayout llTime;
 
         public ViewHolder(View view) {
             super(view);
-
-            llTime = (LinearLayout) view.findViewById(R.id.csl_ll_time);
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
-            messageText.setMovementMethod(LinkMovementMethod.getInstance());
+            // llTime = (LinearLayout) view.findViewById(R.id.csl_ll_time);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

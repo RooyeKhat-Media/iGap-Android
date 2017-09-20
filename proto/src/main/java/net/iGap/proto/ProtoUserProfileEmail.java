@@ -77,11 +77,11 @@ public final class ProtoUserProfileEmail {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -107,16 +107,15 @@ public final class ProtoUserProfileEmail {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
+      return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.Builder.class);
+      return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -127,7 +126,7 @@ public final class ProtoUserProfileEmail {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -206,10 +205,10 @@ public final class ProtoUserProfileEmail {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail other = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) obj;
+      net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail other = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -238,48 +237,43 @@ public final class ProtoUserProfileEmail {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -290,7 +284,7 @@ public final class ProtoUserProfileEmail {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -309,15 +303,14 @@ public final class ProtoUserProfileEmail {
             // @@protoc_insertion_point(builder_implements:proto.UserProfileSetEmail)
         net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.Builder.class);
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -345,23 +338,23 @@ public final class ProtoUserProfileEmail {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmail_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.getDefaultInstance();
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail build() {
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail result = buildPartial();
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail build() {
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail buildPartial() {
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail result = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail(this);
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail buildPartial() {
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail result = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -396,16 +389,16 @@ public final class ProtoUserProfileEmail {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) other);
+        if (other instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) {
+          return mergeFrom((net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail other) {
-            if (other == net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail other) {
+        if (other == net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -422,11 +415,11 @@ public final class ProtoUserProfileEmail {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parsedMessage = null;
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -436,9 +429,8 @@ public final class ProtoUserProfileEmail {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -450,7 +442,7 @@ public final class ProtoUserProfileEmail {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -490,7 +482,7 @@ public final class ProtoUserProfileEmail {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -530,7 +522,7 @@ public final class ProtoUserProfileEmail {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -538,8 +530,7 @@ public final class ProtoUserProfileEmail {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -626,10 +617,10 @@ public final class ProtoUserProfileEmail {
     // @@protoc_insertion_point(class_scope:proto.UserProfileSetEmail)
     private static final net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail();
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -648,7 +639,7 @@ public final class ProtoUserProfileEmail {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmail getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -718,11 +709,11 @@ public final class ProtoUserProfileEmail {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -748,16 +739,15 @@ public final class ProtoUserProfileEmail {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
+      return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder.class);
+      return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -768,7 +758,7 @@ public final class ProtoUserProfileEmail {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -847,10 +837,10 @@ public final class ProtoUserProfileEmail {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse other = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) obj;
+      net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse other = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -879,48 +869,43 @@ public final class ProtoUserProfileEmail {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -931,7 +916,7 @@ public final class ProtoUserProfileEmail {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -951,15 +936,14 @@ public final class ProtoUserProfileEmail {
             // @@protoc_insertion_point(builder_implements:proto.UserProfileSetEmailResponse)
         net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder.class);
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.class, net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -987,23 +971,23 @@ public final class ProtoUserProfileEmail {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
+        return net.iGap.proto.ProtoUserProfileEmail.internal_static_proto_UserProfileSetEmailResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse build() {
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse result = buildPartial();
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse build() {
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse buildPartial() {
-            net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse result = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse(this);
+      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse buildPartial() {
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse result = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1038,16 +1022,16 @@ public final class ProtoUserProfileEmail {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) other);
+        if (other instanceof net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) {
+          return mergeFrom((net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse other) {
-            if (other == net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse other) {
+        if (other == net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1064,11 +1048,11 @@ public final class ProtoUserProfileEmail {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parsedMessage = null;
+        net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1078,9 +1062,8 @@ public final class ProtoUserProfileEmail {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1092,7 +1075,7 @@ public final class ProtoUserProfileEmail {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1132,7 +1115,7 @@ public final class ProtoUserProfileEmail {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1172,7 +1155,7 @@ public final class ProtoUserProfileEmail {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1180,8 +1163,7 @@ public final class ProtoUserProfileEmail {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1268,10 +1250,10 @@ public final class ProtoUserProfileEmail {
     // @@protoc_insertion_point(class_scope:proto.UserProfileSetEmailResponse)
     private static final net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse();
     }
 
-      public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1290,7 +1272,7 @@ public final class ProtoUserProfileEmail {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserProfileEmail.UserProfileSetEmailResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1312,7 +1294,8 @@ public final class ProtoUserProfileEmail {
                     "est.proto\032\016Response.proto\"E\n\023UserProfile" +
                     "SetEmail\022\037\n\007request\030\001 \001(\0132\016.proto.Reques" +
                     "t\022\r\n\005email\030\002 \001(\t\"O\n\033UserProfileSetEmailR" +
-                    "esponse\022!\n\010response\030\001 \001(\0132\017.proto.Respon" + "se\022\r\n\005email\030\002 \001(\tB\'\n\016net.iGap.protoB\025Pro" +
+                    "esponse\022!\n\010response\030\001 \001(\0132\017.proto.Respon" +
+                    "se\022\r\n\005email\030\002 \001(\tB\'\n\016net.iGap.protoB\025Pro" +
                     "toUserProfileEmailb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1322,7 +1305,7 @@ public final class ProtoUserProfileEmail {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_UserProfileSetEmail_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_UserProfileSetEmail_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserProfileSetEmail_descriptor, new java.lang.String[]{"Request", "Email",});
@@ -1331,8 +1314,8 @@ public final class ProtoUserProfileEmail {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserProfileSetEmailResponse_descriptor,
         new java.lang.String[] { "Response", "Email", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

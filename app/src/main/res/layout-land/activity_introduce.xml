@@ -1,211 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                               xmlns:app="http://schemas.android.com/apk/res-auto"
-                                               xmlns:tools="http://schemas.android.com/tools"
-                                               tools:ignore="MissingPrefix"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="match_parent"
-                                               android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:clickable="true"
+    tools:ignore="MissingPrefix"
+    >
 
-    <!--<TextView-->
-    <!--android:id="@+id/int_txt_skip"-->
-    <!--android:layout_width="75dp"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginRight="@dimen/dp16"-->
-    <!--android:gravity="bottom|right"-->
-    <!--android:paddingBottom="@dimen/dp4"-->
-    <!--android:text="SKIP"-->
-    <!--android:layout_marginBottom="@dimen/dp4"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:clickable="true"-->
-    <!--android:textColor="@color/toolbar_background"-->
-    <!--android:textSize="@dimen/dp16" />-->
 
-    <!---->
+  <android.support.percent.PercentRelativeLayout
+      android:id="@+id/int_layout_0"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/transparent"
+      app:layout_heightPercent="42%"
+      >
 
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/int_layout_0"
+    <ImageView
+        android:id="@+id/int_background_one"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        app:layout_heightPercent="55%">
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_heightPercent="100%"
+        app:srcCompat="@mipmap/city"
+        />
 
-        <ImageView
-            android:id="@+id/int_background_one"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/city"
-            app:layout_heightPercent="85%"/>
+    <ImageView
+        android:id="@+id/int_background_two"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_heightPercent="100%"
+        app:srcCompat="@mipmap/city"
+        />
 
-        <ImageView
-            android:id="@+id/int_background_two"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/city"
-            app:layout_heightPercent="85%"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_heightPercent="100%"
+        app:srcCompat="@drawable/sabz_land"
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:adjustViewBounds="false"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/sabz_land"
-            app:layout_heightPercent="85%"/>
+        />
+
+
+  </android.support.percent.PercentRelativeLayout>
+
+  <RelativeLayout
+
+      android:id="@+id/int_layout_1"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_alignParentTop="true"
+      android:background="@drawable/background_sky"
+      android:layoutDirection="ltr"
+      app:layout_heightPercent="57%"
+      app:layout_widthPercent="100%"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+      <RelativeLayout
+          android:id="@+id/int_mainImage"
+          android:layout_width="@dimen/dp200"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          >
+
         <!--page 1-->
         <ImageView
             android:id="@+id/int_img_logo_introduce"
-            android:layout_width="@dimen/dp70"
-            android:layout_height="@dimen/dp100"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dp4"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/logo"
-            android:visibility="invisible"/>
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:srcCompat="@drawable/icon_asli"
+            />
 
         <!--page 1-->
         <!--page 2-->
         <ImageView
             android:id="@+id/int_img_security_introduce"
-            android:layout_width="@dimen/dp80"
-            android:layout_height="@dimen/dp88"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
+            android:visibility="gone"
             app:srcCompat="@drawable/secure"
-            android:visibility="invisible"/>
+            />
         <!--page 2-->
 
         <!--page 3-->
         <ImageView
             android:id="@+id/int_img_chat_introduce"
-            android:layout_width="@dimen/dp68"
-            android:layout_height="@dimen/dp80"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
+            android:layout_width="@dimen/dp160"
+            android:layout_height="@dimen/dp160"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
+            android:visibility="gone"
             app:srcCompat="@drawable/chat"
-            android:visibility="invisible"/>
+            />
 
         <!--page 4-->
         <ImageView
             android:id="@+id/int_img_transfer_introduce"
-            android:layout_width="@dimen/dp68"
-            android:layout_height="@dimen/dp80"
-            android:layout_alignLeft="@+id/int_img_security_introduce"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/int_img_security_introduce"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dp12"
+            android:layout_width="@dimen/dp160"
+            android:layout_height="@dimen/dp160"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            android:visibility="gone"
             app:srcCompat="@drawable/transfer"
-            android:visibility="invisible"/>
+            />
 
         <!--page 5-->
         <ImageView
-            android:id="@+id/int_img_boy_introduce"
-            android:layout_width="@dimen/dp110"
+            android:id="@+id/int_img_call_introduce"
+            android:layout_width="@dimen/dp140"
             android:layout_height="@dimen/dp140"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            android:visibility="gone"
+            app:srcCompat="@drawable/call"
+            />
+
+        <!--page 6-->
+        <ImageView
+            android:id="@+id/int_img_boy_introduce"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp36"
+            android:adjustViewBounds="true"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            android:visibility="gone"
             app:srcCompat="@drawable/boy"
-            android:visibility="gone"/>
+            />
 
-    </android.support.percent.PercentRelativeLayout>
+      </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/int_layout_1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_below="@+id/int_layout_0"
-        app:layout_heightPercent="36.5%"
-        app:layout_widthPercent="100%">
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
 
-            <LinearLayout
-                android:id="@+id/int_layout_test"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="-5dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+            >
 
 
-                <TextView
-                    android:id="@+id/int_txt_i_p1_l1"
-                    fontPath="fonts/neuropolitical.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingBottom="@dimen/dp4"
-                    android:text="@string/text_i_introduce_page1"
-                    android:textColor="@color/country"
-                    android:textSize="@dimen/dp32"
-                    android:visibility="visible"/>
+          <LinearLayout
+              android:id="@+id/int_layout_iGap"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:layoutDirection="ltr"
+              android:orientation="horizontal"
+              android:visibility="gone"
+              >
 
-                <TextView
-                    android:id="@+id/int_txt_p1_l1"
-                    fontPath="fonts/neuropolitical.ttf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_horizontal"
-                    android:text="@string/text_line_1_introduce_page1"
-                    android:textColor="@color/text_line2_lc__dark"
-                    android:textSize="@dimen/dp26"
-                    android:visibility="visible"/>
-            </LinearLayout>
 
             <TextView
-                android:id="@+id/int_txt_p1_l2"
+                android:id="@+id/int_txt_i_p1_l1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-2dp"
-                android:gravity="top"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_2_introduce_page1"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp14"
-                android:visibility="gone"/>
+                android:text="@string/text_i_introduce_page1"
+                android:textColor="@color/text_line1_igap_dark"
+                android:textSize="@dimen/dp24"
+                android:visibility="visible"
+                />
 
             <TextView
-                android:id="@+id/int_txt_p1_l3"
+                android:id="@+id/int_txt_p1_l1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp4"
-                android:gravity="center"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_3_introduce_page1"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+                android:gravity="center_horizontal"
+                android:text="@string/text_line_1_introduce_page1"
+                android:textColor="@color/text_line1_igap_dark"
+                android:textSize="@dimen/dp24"
+                android:visibility="visible"
+                />
+          </LinearLayout>
+
+          <TextView
+              android:id="@+id/int_txt_p1_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page1"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
+
+          <TextView
+              android:id="@+id/int_txt_p1_l3"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_3_introduce_page1"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
         </LinearLayout>
         <!--page 1-->
 
@@ -213,34 +270,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
+            >
 
-            <TextView
-                android:id="@+id/int_txt_p2_l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"
-                android:text="@string/text_line_1_introduce_page2"
-                android:textColor="@color/text_line1_igap_dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <TextView
+              android:id="@+id/int_txt_p2_l1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center"
+              android:text="@string/text_line_1_introduce_page2"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
 
-
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
-                android:id="@+id/int_txt_p2_l2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp4"
-                android:gravity="center"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_2_introduce_page2"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:id="@+id/int_txt_p2_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page2"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
 
 
         </LinearLayout>
@@ -250,34 +314,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
+            >
 
-            <TextView
-                android:id="@+id/int_txt_p3_l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"
-                android:text="@string/text_line_1_introduce_page3"
-                android:textColor="@color/text_line1_igap_dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <TextView
+              android:id="@+id/int_txt_p3_l1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/text_line_1_introduce_page3"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
 
-
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
-                android:id="@+id/int_txt_p3_l2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp4"
-                android:gravity="center"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_2_introduce_page3"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:id="@+id/int_txt_p3_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page3"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
 
 
         </LinearLayout>
@@ -286,122 +356,194 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
+            >
 
-            <TextView
-                android:id="@+id/int_txt_p4_l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp"
-                android:text="@string/text_line_1_introduce_page4"
-                android:textColor="@color/text_line1_igap_dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <TextView
+              android:id="@+id/int_txt_p4_l1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/text_line_1_introduce_page4"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
 
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:id="@+id/int_txt_p4_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page4"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
 
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
-                android:id="@+id/int_txt_p4_l2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp4"
-                android:gravity="center"
-                android:lineSpacingExtra="@dimen/dp8"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_2_introduce_page4"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
         </LinearLayout>
         <!--page 4-->
         <!--page 5-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
+            >
 
-            <TextView
-                android:id="@+id/int_txt_p5_l1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp4"
-                android:text="@string/text_line_1_introduce_page5"
-                android:textColor="@color/text_line1_igap_dark"
-                android:textSize="@dimen/dp16"
-                android:visibility="gone"/>
+          <TextView
+              android:id="@+id/int_txt_p5_l1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/text_line_1_introduce_page5"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
 
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
-                android:id="@+id/int_txt_p5_l2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:paddingLeft="@dimen/dp28"
-                android:paddingRight="@dimen/dp28"
-                android:text="@string/text_line_2_introduce_page5"
-                android:textColor="@color/text_line2_lc__dark"
-                android:textSize="@dimen/dp14"
-                android:visibility="gone"/>
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:id="@+id/int_txt_p5_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page5"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
 
         </LinearLayout>
-    </RelativeLayout>
+        <!--page 5-->
 
-    <RelativeLayout
-        android:id="@+id/int_layoutParentCircleImage"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/int_layout_1"
-        app:layout_heightPercent="8.5%">
 
-      <net.iGap.module.CustomCircleImage
-            android:id="@+id/int_circleButton_introduce"
+        <!--page 6-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/dp28"/>
-    </RelativeLayout>
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp52"
+            >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/int_viewPager_introduce"
+          <TextView
+              android:id="@+id/int_txt_p6_l1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/text_line_1_introduce_page6"
+              android:textColor="@color/text_line1_igap_dark"
+              android:textSize="@dimen/dp16"
+              android:textStyle="bold"
+              android:visibility="gone"
+              />
+
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:id="@+id/int_txt_p6_l2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:clickable="false"
+              android:gravity="center_horizontal"
+              android:lineSpacingExtra="0dp"
+              android:paddingLeft="@dimen/dp22"
+              android:paddingRight="@dimen/dp22"
+              android:text="@string/text_line_2_introduce_page6"
+              android:textColor="@color/text_line2_lc__dark"
+              android:textSize="@dimen/dp13"
+              android:visibility="gone"
+              />
+
+        </LinearLayout>
+
+      </RelativeLayout>
+    </LinearLayout>
+  </RelativeLayout>
+
+
+  <RelativeLayout
+      android:id="@+id/int_layoutParentCircleImage"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_below="@+id/int_layout_1"
+      android:layout_marginRight="@dimen/dp10"
+      android:layout_marginLeft="@dimen/dp120"
+      android:duration="0"
+      android:fillAfter="true"
+      android:fromDegrees="0"
+      android:layoutDirection="ltr"
+      app:layout_heightPercent="8%"
+      >
+
+    <net.iGap.module.CustomCircleImage
+        android:id="@+id/int_circleButton_introduce"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
 
-    <Button
-        android:id="@+id/int_btnStart"
-        android:layout_width="@dimen/dp200"
-        android:layout_height="@dimen/dp28"
-        android:layout_above="@+id/int_layoutParentCircleImage"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/dp8"
-        android:background="@drawable/int_button_interduce"
-        android:gravity="center"
-        android:text="@string/btn_start_page5"
-        android:textAllCaps="false"
-        android:textColor="@color/txt_start_page5"
-        android:textSize="@dimen/dp16"
-        android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/int_txt_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignTop="@+id/int_layoutParentCircleImage"
-        android:layout_marginTop="@dimen/dp4"
-        android:background="@color/toolbar_background"
-        android:gravity="center"
-        android:minWidth="@dimen/dp60"
-        android:padding="@dimen/dp4"
-        android:text="@string/B_skip"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dp14"
         />
+  </RelativeLayout>
 
+  <android.support.v4.view.ViewPager
+      android:id="@+id/int_viewPager_introduce"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+
+
+  <Button
+      android:id="@+id/int_btnStart"
+      android:layout_width="@dimen/dp220"
+      android:layout_height="@dimen/dp32"
+      android:layout_above="@+id/int_layoutParentCircleImage"
+      android:layout_alignParentRight="true"
+      android:layout_marginRight="@dimen/dp120"
+      android:background="@drawable/int_button_interduce"
+      android:gravity="center"
+      android:paddingTop="@dimen/dp4"
+      android:text="@string/btn_start_page6"
+      android:textAllCaps="false"
+      android:textColor="@color/txt_start_page5"
+      android:textSize="@dimen/dp16"
+      android:visibility="gone"
+      />
+
+
+  <TextView
+      android:id="@+id/int_txt_skip"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:layout_alignTop="@+id/int_layoutParentCircleImage"
+      android:layout_marginTop="@dimen/dp4"
+      android:background="@drawable/background_skip"
+      android:gravity="center"
+      android:minWidth="@dimen/dp60"
+      android:padding="@dimen/dp4"
+      android:text="@string/B_skip"
+      android:textColor="@color/white"
+      android:textSize="@dimen/dp14"
+      />
 
 </android.support.percent.PercentRelativeLayout>

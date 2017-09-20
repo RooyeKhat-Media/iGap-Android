@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Default screen margins, per the Android Design guidelines. -->
 
   <bool name="isTablet">false</bool>
@@ -12,7 +12,7 @@
   <dimen name="design_fab_size_mini">18pt</dimen>
   <dimen name="design_fab_size_normal">23pt</dimen>
 
-  <dimen name="messageBox_cornerRadius">15dp</dimen>
+  <dimen name="messageBox_cornerRadius">5dp</dimen>
   <dimen name="messageBox_elevation">3dp</dimen>
 
   <dimen name="messageBox_minusLeftRightMargin">-4dp</dimen>
@@ -45,6 +45,7 @@
   <dimen name="dp88">66dp</dimen>
   <dimen name="dp100">75dp</dimen>
   <dimen name="dp120">90dp</dimen>
+  <dimen name="dp130">98dp</dimen>
   <dimen name="dp140">105dp</dimen>
   <dimen name="dp160">120dp</dimen>
   <dimen name="dp180">135dp</dimen>
@@ -60,6 +61,16 @@
   <dimen name="dp105">83dp</dimen>
   <dimen name="dp110">110dp</dimen>
   <dimen name="dp95">72dp</dimen>
+
+
+  <dimen name="md_action_corner_radius" tools:override="true">4dp</dimen>
+  <dimen name="md_bg_corner_radius" tools:override="true">4dp</dimen>
+
+  <dimen name="md_content_textsize" tools:override="true">12dp</dimen>
+  <dimen name="md_button_textsize" tools:override="true">19.5dp</dimen>
+  <dimen name="md_listitem_textsize" tools:override="true">12dp</dimen>
+  <dimen name="md_title_textsize" tools:override="true">14dp</dimen>
+  <dimen name="md_content_padding_bottom" tools:override="true">4dp</dimen>
 
 
 </resources>

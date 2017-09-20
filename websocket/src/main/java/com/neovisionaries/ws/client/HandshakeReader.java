@@ -81,16 +81,12 @@ class HandshakeReader {
             line = input.readLine();
         } catch (IOException e) {
             // Failed to read an opening handshake response from the server.
-            throw new WebSocketException(
-                    WebSocketError.OPENING_HANDSHAKE_RESPONSE_FAILURE,
-                    "Failed to read an opening handshake response from the server: " + e.getMessage(), e);
+            throw new WebSocketException(WebSocketError.OPENING_HANDSHAKE_RESPONSE_FAILURE, "Failed to read an opening handshake response from the server: " + e.getMessage(), e);
         }
 
         if (line == null || line.length() == 0) {
             // The status line of the opening handshake response is empty.
-            throw new WebSocketException(
-                    WebSocketError.STATUS_LINE_EMPTY,
-                    "The status line of the opening handshake response is empty.");
+            throw new WebSocketException(WebSocketError.STATUS_LINE_EMPTY, "The status line of the opening handshake response is empty.");
         }
 
         try {
@@ -98,17 +94,14 @@ class HandshakeReader {
             return new StatusLine(line);
         } catch (Exception e) {
             // The status line of the opening handshake response is badly formatted.
-            throw new WebSocketException(
-                    WebSocketError.STATUS_LINE_BAD_FORMAT,
-                    "The status line of the opening handshake response is badly formatted. The status line is: " + line);
+            throw new WebSocketException(WebSocketError.STATUS_LINE_BAD_FORMAT, "The status line of the opening handshake response is badly formatted. The status line is: " + line);
         }
     }
 
 
     private Map<String, List<String>> readHttpHeaders(WebSocketInputStream input) throws WebSocketException {
         // Create a map of HTTP headers. Keys are case-insensitive.
-        Map<String, List<String>> headers =
-                new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
+        Map<String, List<String>> headers = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
 
         StringBuilder builder = null;
         String line;
@@ -118,9 +111,7 @@ class HandshakeReader {
                 line = input.readLine();
             } catch (IOException e) {
                 // An error occurred while HTTP header section was being read.
-                throw new WebSocketException(
-                        WebSocketError.HTTP_HEADER_FAILURE,
-                        "An error occurred while HTTP header section was being read: " + e.getMessage(), e);
+                throw new WebSocketException(WebSocketError.HTTP_HEADER_FAILURE, "An error occurred while HTTP header section was being read: " + e.getMessage(), e);
             }
 
             // If the end of the header section was reached.
@@ -203,10 +194,7 @@ class HandshakeReader {
         byte[] body = readBody(headers, input);
 
         // The status code of the opening handshake response is not Switching Protocols.
-        throw new OpeningHandshakeException(
-                WebSocketError.NOT_SWITCHING_PROTOCOLS,
-                "The status code of the opening handshake response is not '101 Switching Protocols'. The status line is: " + statusLine,
-                statusLine, headers, body);
+        throw new OpeningHandshakeException(WebSocketError.NOT_SWITCHING_PROTOCOLS, "The status code of the opening handshake response is not '101 Switching Protocols'. The status line is: " + statusLine, statusLine, headers, body);
     }
 
 
@@ -252,7 +240,7 @@ class HandshakeReader {
 
     /**
      * Validate the value of {@code Upgrade} header.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, p19.</p>
      * <p><i>
@@ -268,10 +256,7 @@ class HandshakeReader {
 
         if (values == null || values.size() == 0) {
             // The opening handshake response does not contain 'Upgrade' header.
-            throw new OpeningHandshakeException(
-                    WebSocketError.NO_UPGRADE_HEADER,
-                    "The opening handshake response does not contain 'Upgrade' header.",
-                    statusLine, headers);
+            throw new OpeningHandshakeException(WebSocketError.NO_UPGRADE_HEADER, "The opening handshake response does not contain 'Upgrade' header.", statusLine, headers);
         }
 
         for (String value : values) {
@@ -287,16 +272,13 @@ class HandshakeReader {
         }
 
         // 'websocket' was not found in 'Upgrade' header.
-        throw new OpeningHandshakeException(
-                WebSocketError.NO_WEBSOCKET_IN_UPGRADE_HEADER,
-                "'websocket' was not found in 'Upgrade' header.",
-                statusLine, headers);
+        throw new OpeningHandshakeException(WebSocketError.NO_WEBSOCKET_IN_UPGRADE_HEADER, "'websocket' was not found in 'Upgrade' header.", statusLine, headers);
     }
 
 
     /**
      * Validate the value of {@code Connection} header.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, p19.</p>
      * <p><i>
@@ -312,10 +294,7 @@ class HandshakeReader {
 
         if (values == null || values.size() == 0) {
             // The opening handshake response does not contain 'Connection' header.
-            throw new OpeningHandshakeException(
-                    WebSocketError.NO_CONNECTION_HEADER,
-                    "The opening handshake response does not contain 'Connection' header.",
-                    statusLine, headers);
+            throw new OpeningHandshakeException(WebSocketError.NO_CONNECTION_HEADER, "The opening handshake response does not contain 'Connection' header.", statusLine, headers);
         }
 
         for (String value : values) {
@@ -331,16 +310,13 @@ class HandshakeReader {
         }
 
         // 'Upgrade' was not found in 'Connection' header.
-        throw new OpeningHandshakeException(
-                WebSocketError.NO_UPGRADE_IN_CONNECTION_HEADER,
-                "'Upgrade' was not found in 'Connection' header.",
-                statusLine, headers);
+        throw new OpeningHandshakeException(WebSocketError.NO_UPGRADE_IN_CONNECTION_HEADER, "'Upgrade' was not found in 'Connection' header.", statusLine, headers);
     }
 
 
     /**
      * Validate the value of {@code Sec-WebSocket-Accept} header.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, p19.</p>
      * <p><i>
@@ -359,10 +335,7 @@ class HandshakeReader {
 
         if (values == null) {
             // The opening handshake response does not contain 'Sec-WebSocket-Accept' header.
-            throw new OpeningHandshakeException(
-                    WebSocketError.NO_SEC_WEBSOCKET_ACCEPT_HEADER,
-                    "The opening handshake response does not contain 'Sec-WebSocket-Accept' header.",
-                    statusLine, headers);
+            throw new OpeningHandshakeException(WebSocketError.NO_SEC_WEBSOCKET_ACCEPT_HEADER, "The opening handshake response does not contain 'Sec-WebSocket-Accept' header.", statusLine, headers);
         }
 
         // The actual value of Sec-WebSocket-Accept.
@@ -390,10 +363,7 @@ class HandshakeReader {
 
         if (expected.equals(actual) == false) {
             // The value of 'Sec-WebSocket-Accept' header is different from the expected one.
-            throw new OpeningHandshakeException(
-                    WebSocketError.UNEXPECTED_SEC_WEBSOCKET_ACCEPT_HEADER,
-                    "The value of 'Sec-WebSocket-Accept' header is different from the expected one.",
-                    statusLine, headers);
+            throw new OpeningHandshakeException(WebSocketError.UNEXPECTED_SEC_WEBSOCKET_ACCEPT_HEADER, "The value of 'Sec-WebSocket-Accept' header is different from the expected one.", statusLine, headers);
         }
 
         // OK. The value of Sec-WebSocket-Accept is the same as the expected one.
@@ -402,7 +372,7 @@ class HandshakeReader {
 
     /**
      * Validate the value of {@code Sec-WebSocket-Extensions} header.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, p19.</p>
      * <p><i>
@@ -435,10 +405,7 @@ class HandshakeReader {
 
                 if (extension == null) {
                     // The value in 'Sec-WebSocket-Extensions' failed to be parsed.
-                    throw new OpeningHandshakeException(
-                            WebSocketError.EXTENSION_PARSE_ERROR,
-                            "The value in 'Sec-WebSocket-Extensions' failed to be parsed: " + element,
-                            statusLine, headers);
+                    throw new OpeningHandshakeException(WebSocketError.EXTENSION_PARSE_ERROR, "The value in 'Sec-WebSocket-Extensions' failed to be parsed: " + element, statusLine, headers);
                 }
 
                 // The extension name.
@@ -447,10 +414,7 @@ class HandshakeReader {
                 // If the extension is not contained in the original request from this client.
                 if (mWebSocket.getHandshakeBuilder().containsExtension(name) == false) {
                     // The extension contained in the Sec-WebSocket-Extensions header is not supported.
-                    throw new OpeningHandshakeException(
-                            WebSocketError.UNSUPPORTED_EXTENSION,
-                            "The extension contained in the Sec-WebSocket-Extensions header is not supported: " + name,
-                            statusLine, headers);
+                    throw new OpeningHandshakeException(WebSocketError.UNSUPPORTED_EXTENSION, "The extension contained in the Sec-WebSocket-Extensions header is not supported: " + name, statusLine, headers);
                 }
 
                 // Let the extension validate itself.
@@ -469,8 +433,7 @@ class HandshakeReader {
     }
 
 
-    private void validateExtensionCombination(
-            StatusLine statusLine, Map<String, List<String>> headers, List<WebSocketExtension> extensions) throws WebSocketException {
+    private void validateExtensionCombination(StatusLine statusLine, Map<String, List<String>> headers, List<WebSocketExtension> extensions) throws WebSocketException {
         // Currently, only duplication of per-message compression extensions is checked.
 
         // A per-message compression extension found in the list.
@@ -490,9 +453,7 @@ class HandshakeReader {
             }
 
             // Found the second per-message compression extension. Conflict.
-            String message = String.format(
-                    "'%s' extension and '%s' extension conflict with each other.",
-                    pmce.getName(), extension.getName());
+            String message = String.format("'%s' extension and '%s' extension conflict with each other.", pmce.getName(), extension.getName());
 
             // The extensions conflict with each other.
             throw new OpeningHandshakeException(
@@ -503,7 +464,7 @@ class HandshakeReader {
 
     /**
      * Validate the value of {@code Sec-WebSocket-Protocol} header.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, p20.</p>
      * <p><i>
@@ -536,10 +497,7 @@ class HandshakeReader {
         // from this client.
         if (mWebSocket.getHandshakeBuilder().containsProtocol(protocol) == false) {
             // The protocol contained in the Sec-WebSocket-Protocol header is not supported.
-            throw new OpeningHandshakeException(
-                    WebSocketError.UNSUPPORTED_PROTOCOL,
-                    "The protocol contained in the Sec-WebSocket-Protocol header is not supported: " + protocol,
-                    statusLine, headers);
+            throw new OpeningHandshakeException(WebSocketError.UNSUPPORTED_PROTOCOL, "The protocol contained in the Sec-WebSocket-Protocol header is not supported: " + protocol, statusLine, headers);
         }
 
         // Agreed protocol.

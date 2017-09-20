@@ -15,10 +15,12 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 import net.iGap.module.enums.ChannelChatRole;
+import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 
 public class RealmChannelRoom extends RealmObject {
     private String role;
+    private int participants_count;
     private String participants_count_label;
     private String participants_count_limit_label;
     private String description;
@@ -42,12 +44,43 @@ public class RealmChannelRoom extends RealmObject {
         if (realmChannelRoom == null) {
             realmChannelRoom = realm.createObject(RealmChannelRoom.class);
         }
+        realmChannelRoom.setParticipants_count(room.getParticipantsCount());
         realmChannelRoom.setParticipantsCountLabel(room.getParticipantsCountLabel());
         realmChannelRoom.setRole(ChannelChatRole.convert(room.getRole()));
         realmChannelRoom.setInviteLink(room.getPrivateExtra().getInviteLink());
         realmChannelRoom.setInvite_token(room.getPrivateExtra().getInviteToken());
         realmChannelRoom.setUsername(room.getPublicExtra().getUsername());
         return realmChannelRoom;
+    }
+
+    /**
+     * create room with empty info , just Id and inviteLink
+     *
+     * @param roomId roomId
+     * @param inviteLink inviteLink
+     */
+
+    public static void createChannelRoom(final long roomId, final String inviteLink, final String channelName) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (realmRoom == null) {
+                    realmRoom = realm.createObject(RealmRoom.class, roomId);
+                }
+                if (channelName != null) {
+                    realmRoom.setTitle(channelName);
+                }
+                realmRoom.setType(RoomType.CHANNEL);
+                RealmChannelRoom realmChannelRoom = realm.createObject(RealmChannelRoom.class);
+                realmChannelRoom.setInviteLink(inviteLink);
+                realmChannelRoom.setRole(ChannelChatRole.MEMBER);// set default role
+
+                realmRoom.setChannelRoom(realmChannelRoom);
+            }
+        });
+        realm.close();
     }
 
     public ChannelChatRole getRole() {
@@ -58,21 +91,33 @@ public class RealmChannelRoom extends RealmObject {
         this.role = role.toString();
     }
 
+
+    public int getParticipants_count() {
+        return participants_count;
+    }
+
+    public void setParticipants_count(int participants_count) {
+        this.participants_count = participants_count;
+    }
+
     public String getParticipantsCountLabel() {
-        return participants_count_label;
+        if (HelperString.isNumeric(participants_count_label)) {
+            return participants_count_label;
+        }
+        return Integer.toString(getParticipants_count());
     }
 
     public void setParticipantsCountLabel(String participants_count_label) {
         this.participants_count_label = participants_count_label;
     }
 
-    public String getParticipants_count_limit_label() {
-        return participants_count_limit_label;
-    }
-
-    public void setParticipants_count_limit_label(String participants_count_limit_label) {
-        this.participants_count_limit_label = participants_count_limit_label;
-    }
+    //public String getParticipants_count_limit_label() {
+    //    return participants_count_limit_label;
+    //}
+    //
+    //public void setParticipants_count_limit_label(String participants_count_limit_label) {
+    //    this.participants_count_limit_label = participants_count_limit_label;
+    //}
 
     public String getDescription() {
         return description;

@@ -79,11 +79,11 @@ public final class ProtoGroupDeleteMessage {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -113,16 +113,15 @@ public final class ProtoGroupDeleteMessage {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
+      return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.Builder.class);
+      return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -133,7 +132,7 @@ public final class ProtoGroupDeleteMessage {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -206,10 +205,10 @@ public final class ProtoGroupDeleteMessage {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage other = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) obj;
+      net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage other = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -241,48 +240,43 @@ public final class ProtoGroupDeleteMessage {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -293,7 +287,7 @@ public final class ProtoGroupDeleteMessage {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -312,15 +306,14 @@ public final class ProtoGroupDeleteMessage {
             // @@protoc_insertion_point(builder_implements:proto.GroupDeleteMessage)
         net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.Builder.class);
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -350,23 +343,23 @@ public final class ProtoGroupDeleteMessage {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessage_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage build() {
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage result = buildPartial();
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage build() {
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage buildPartial() {
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage result = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage(this);
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage buildPartial() {
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage result = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -402,16 +395,16 @@ public final class ProtoGroupDeleteMessage {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) {
-              return mergeFrom((net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) other);
+        if (other instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) {
+          return mergeFrom((net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage other) {
-            if (other == net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage other) {
+        if (other == net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -430,11 +423,11 @@ public final class ProtoGroupDeleteMessage {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parsedMessage = null;
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -444,9 +437,8 @@ public final class ProtoGroupDeleteMessage {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -458,7 +450,7 @@ public final class ProtoGroupDeleteMessage {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -498,7 +490,7 @@ public final class ProtoGroupDeleteMessage {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -538,7 +530,7 @@ public final class ProtoGroupDeleteMessage {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -546,8 +538,7 @@ public final class ProtoGroupDeleteMessage {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -623,10 +614,10 @@ public final class ProtoGroupDeleteMessage {
     // @@protoc_insertion_point(class_scope:proto.GroupDeleteMessage)
     private static final net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage();
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -645,7 +636,7 @@ public final class ProtoGroupDeleteMessage {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -723,11 +714,11 @@ public final class ProtoGroupDeleteMessage {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -762,16 +753,15 @@ public final class ProtoGroupDeleteMessage {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
+      return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder.class);
+      return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -782,7 +772,7 @@ public final class ProtoGroupDeleteMessage {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -870,10 +860,10 @@ public final class ProtoGroupDeleteMessage {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse other = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) obj;
+      net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse other = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -908,48 +898,43 @@ public final class ProtoGroupDeleteMessage {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -960,7 +945,7 @@ public final class ProtoGroupDeleteMessage {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -980,15 +965,14 @@ public final class ProtoGroupDeleteMessage {
             // @@protoc_insertion_point(builder_implements:proto.GroupDeleteMessageResponse)
         net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder.class);
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.class, net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1020,23 +1004,23 @@ public final class ProtoGroupDeleteMessage {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
+        return net.iGap.proto.ProtoGroupDeleteMessage.internal_static_proto_GroupDeleteMessageResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse build() {
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse result = buildPartial();
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse build() {
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse buildPartial() {
-            net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse result = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse(this);
+      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse buildPartial() {
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse result = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1073,16 +1057,16 @@ public final class ProtoGroupDeleteMessage {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) {
-              return mergeFrom((net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) other);
+        if (other instanceof net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) {
+          return mergeFrom((net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse other) {
-            if (other == net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse other) {
+        if (other == net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1104,11 +1088,11 @@ public final class ProtoGroupDeleteMessage {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parsedMessage = null;
+        net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1118,9 +1102,8 @@ public final class ProtoGroupDeleteMessage {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1132,7 +1115,7 @@ public final class ProtoGroupDeleteMessage {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1172,7 +1155,7 @@ public final class ProtoGroupDeleteMessage {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1212,7 +1195,7 @@ public final class ProtoGroupDeleteMessage {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1220,8 +1203,7 @@ public final class ProtoGroupDeleteMessage {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1323,10 +1305,10 @@ public final class ProtoGroupDeleteMessage {
     // @@protoc_insertion_point(class_scope:proto.GroupDeleteMessageResponse)
     private static final net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse();
     }
 
-      public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1345,7 +1327,7 @@ public final class ProtoGroupDeleteMessage {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGroupDeleteMessage.GroupDeleteMessageResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1369,7 +1351,8 @@ public final class ProtoGroupDeleteMessage {
                     "\017\n\007room_id\030\002 \001(\004\022\022\n\nmessage_id\030\003 \001(\004\"|\n\032" +
                     "GroupDeleteMessageResponse\022!\n\010response\030\001" +
                     " \001(\0132\017.proto.Response\022\017\n\007room_id\030\002 \001(\004\022\022" +
-                    "\n\nmessage_id\030\003 \001(\004\022\026\n\016delete_version\030\004 \001" + "(\004B)\n\016net.iGap.protoB\027ProtoGroupDeleteMe" +
+                    "\n\nmessage_id\030\003 \001(\004\022\026\n\016delete_version\030\004 \001" +
+                    "(\004B)\n\016net.iGap.protoB\027ProtoGroupDeleteMe" +
                     "ssageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1379,7 +1362,7 @@ public final class ProtoGroupDeleteMessage {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_GroupDeleteMessage_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_GroupDeleteMessage_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GroupDeleteMessage_descriptor, new java.lang.String[]{"Request", "RoomId", "MessageId",});
@@ -1388,8 +1371,8 @@ public final class ProtoGroupDeleteMessage {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupDeleteMessageResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "MessageId", "DeleteVersion", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

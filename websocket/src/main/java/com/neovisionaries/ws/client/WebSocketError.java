@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Neo Visionaries Inc.
+ * Copyright (C) 2015-2017 Neo Visionaries Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ package com.neovisionaries.ws.client;
 public enum WebSocketError {
     /**
      * The current state of the WebSocket is not CREATED.
-     * <p>
+     *
      * <p>
      * This error occurs if {@link WebSocket#connect()} is called
      * when the state of the WebSocket is not {@link
@@ -195,7 +195,7 @@ public enum WebSocketError {
 
     /**
      * At least one of the reserved bits of a frame is set.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, <a href="http://tools.ietf.org/html/rfc6455#section-5.2"
      * >5.2 Base Framing Protocol</a>; RSV1, RSV2, RSV3:</p>
@@ -206,12 +206,12 @@ public enum WebSocketError {
      * value, the receiving endpoint MUST Fail the WebSocket Connection.
      * </i></p>
      * </blockquote>
-     * <p>
+     *
      * <p>
      * By calling {@link WebSocket#setExtended(boolean) WebSocket.setExtended}{@code
      * (true)}, you can skip the validity check of the RSV1/RSV2/RSV3 bits.
      * </p>
-     * <p>
+     *
      * <p>
      * This error code is not used in version 1.15 and after.
      * </p>
@@ -221,7 +221,7 @@ public enum WebSocketError {
 
     /**
      * A reserved bit of a frame has an unexpected value.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, <a href="http://tools.ietf.org/html/rfc6455#section-5.2"
      * >5.2 Base Framing Protocol</a>; RSV1, RSV2, RSV3:</p>
@@ -232,7 +232,7 @@ public enum WebSocketError {
      * value, the receiving endpoint MUST Fail the WebSocket Connection.
      * </i></p>
      * </blockquote>
-     * <p>
+     *
      * <p>
      * By calling {@link WebSocket#setExtended(boolean) WebSocket.setExtended}{@code
      * (true)}, you can skip the validity check of the RSV1/RSV2/RSV3 bits.
@@ -245,12 +245,12 @@ public enum WebSocketError {
 
     /**
      * A frame from the server is masked.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, <a href="http://tools.ietf.org/html/rfc6455#section-5.1"
      * >5.1. Overview</a>:</p>
      * <p><i>
-     * A server MUST NOT isSecure any frames that it sends to the client.
+     * A server MUST NOT mask any frames that it sends to the client.
      * A client MUST close a connection if it detects a masked frame.
      * </i></p>
      * </blockquote>
@@ -260,7 +260,7 @@ public enum WebSocketError {
 
     /**
      * A frame has an unknown opcode.
-     * <p>
+     *
      * <p>
      * By calling {@link WebSocket#setExtended(boolean) WebSocket.setExtended}{@code
      * (true)}, you can accept frames which have an unknown opcode.
@@ -271,7 +271,7 @@ public enum WebSocketError {
 
     /**
      * A control frame is fragmented.
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, <a href="http://tools.ietf.org/html/rfc6455#section-5.4"
      * >5.4. Fragmentation</a>:</p>
@@ -298,7 +298,7 @@ public enum WebSocketError {
 
     /**
      * The payload size of a control frame exceeds the maximum size (125 bytes).
-     * <p>
+     *
      * <blockquote>
      * <p>From RFC 6455, <a href="http://tools.ietf.org/html/rfc6455#section-5.5"
      * >5.5. Control Frames</a>:</p>
@@ -339,7 +339,7 @@ public enum WebSocketError {
 
     /**
      * {@code permessage-deflate} extension contains an unsupported parameter.
-     * <p>
+     *
      * <p>
      * See <a href="https://tools.ietf.org/html/rfc7692#section-7">7. The
      * "permessage-deflate" Extension</a> in
@@ -355,7 +355,7 @@ public enum WebSocketError {
      * The value of {@code server_max_window_bits} parameter or {@code
      * client_max_window_bits} parameter of {@code permessage-deflate}
      * extension is invalid.
-     * <p>
+     *
      * <p>
      * See <a href="https://tools.ietf.org/html/rfc7692#section-7.1.2">7.1.2.
      * Limiting the LZ77 Sliding Window Size</a> in
@@ -418,7 +418,7 @@ public enum WebSocketError {
 
     /**
      * No more frame can be read because the end of the input stream has been reached.
-     * <p>
+     *
      * <p>
      * This happens when the WebSocket connection is closed without receiving a
      * <a href="https://tools.ietf.org/html/rfc6455#section-5.5.1">close frame</a>
@@ -430,5 +430,24 @@ public enum WebSocketError {
      *
      * @since 1.29
      */
-    NO_MORE_FRAME,;
+    NO_MORE_FRAME,
+
+
+    /**
+     * The certificate of the peer does not match the expected hostname.
+     *
+     * <p>
+     * When {@link WebSocketException#getError()} returns this error code, the
+     * {@link WebSocketException} can be cast to {@link HostnameUnverifiedException}
+     * through which you can get the
+     * </p>
+     *
+     * <p>
+     * See <a href='https://github.com/TakahikoKawasaki/nv-websocket-client/pull/107'
+     * >Verify that certificate is valid for server hostname (#107)</a>.
+     * </p>
+     *
+     * @since 2.1
+     */
+    HOSTNAME_UNVERIFIED,;
 }

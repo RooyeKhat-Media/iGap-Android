@@ -14,8 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.activities.ActivityChat;
 import net.iGap.adapter.items.chat.AbstractMessage;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentShowMember;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.proto.ProtoError;
@@ -23,6 +23,7 @@ import net.iGap.proto.ProtoUserInfo;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
+import net.iGap.request.RequestUserInfo;
 
 public class UserInfoResponse extends MessageHandler {
 
@@ -38,16 +39,19 @@ public class UserInfoResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoUserInfo.UserInfoResponse.Builder builder = (ProtoUserInfo.UserInfoResponse.Builder) message;
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
-
+                RealmRegisteredInfo realmRegisteredInfo;
                 realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    @Override
+                    public void execute(Realm realm) {
 
                         RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, builder.getUser().getId()).findFirst();
                         if (realmRegisteredInfo == null) {
@@ -66,9 +70,21 @@ public class UserInfoResponse extends MessageHandler {
                         realmRegisteredInfo.setMutual(builder.getUser().getMutual());
                         realmRegisteredInfo.setCacheId(builder.getUser().getCacheId());
 
-                        RealmAvatar.put(builder.getUser().getId(), builder.getUser().getAvatar(), true);
+                        RealmAvatar.putAndGet(realm, builder.getUser().getId(), builder.getUser().getAvatar());
                     }
                 });
+
+                G.handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        RequestUserInfo.userIdArrayList.remove(String.valueOf(builder.getUser().getId()));
+                    }
+                }, RequestUserInfo.CLEAR_ARRAY_TIME);
+
+                if (identity != null && identity.equals(RequestUserInfo.InfoType.JUST_INFO.toString())) {
+                    G.onRegistrationInfo.onInfo(builder.getUser());
+                    return;
+                }
 
                 if ((builder.getUser().getId() == G.userId)) {
                     canGetInfo = true;
@@ -77,7 +93,8 @@ public class UserInfoResponse extends MessageHandler {
                 realm.close();
 
                 G.handler.post(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
 
                         if (canGetInfo) {
                             if (G.onUserInfoMyClient != null) {
@@ -100,40 +117,53 @@ public class UserInfoResponse extends MessageHandler {
                             FragmentShowMember.infoUpdateListenerCount.complete(true, "" + builder.getUser().getId(), "OK");
                         }
 
-                        // updata chat message header forward after get user or room info
+                        // update chat message header forward after get user or room info
                         if (AbstractMessage.updateForwardInfo != null) {
                             long _id = builder.getUser().getId();
                             if (AbstractMessage.updateForwardInfo.containsKey(_id)) {
-                                String messageid = AbstractMessage.updateForwardInfo.get(_id);
+                                String messageId = AbstractMessage.updateForwardInfo.get(_id);
                                 AbstractMessage.updateForwardInfo.remove(_id);
-                                if (ActivityChat.onUpdateUserOrRoomInfo != null) {
-                                    ActivityChat.onUpdateUserOrRoomInfo.onUpdateUserOrRoomInfo(messageid);
+                                if (FragmentChat.onUpdateUserOrRoomInfo != null) {
+                                    FragmentChat.onUpdateUserOrRoomInfo.onUpdateUserOrRoomInfo(messageId);
                                 }
                             }
                         }
                     }
                 });
+
+                // update log message in realm room message after get user info
+                if (G.logMessageUpdatList.containsKey(builder.getUser().getId())) {
+                    G.handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            HelperLogMessage.updateLogMessageAfterGetUserInfo(builder.getUser().getId());
+                        }
+                    }, 500);
+                }
             }
         });
-
-        // update log message in realm room message after get user info
-        if (G.logMessageUpdatList.containsKey(builder.getUser().getId())) {
-
-            G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
-                    HelperLogMessage.updateLogMessageAfterGetUserInfo(G.logMessageUpdatList.get(builder.getUser().getId()));
-                }
-            }, 500);
-        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         G.onUserInfoResponse.onUserInfoTimeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (identity != null) {
+                    RequestUserInfo.userIdArrayList.remove(identity);
+                } else {
+                    RequestUserInfo.userIdArrayList.clear();
+                }
+            }
+        }, RequestUserInfo.CLEAR_ARRAY_TIME);
+
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();

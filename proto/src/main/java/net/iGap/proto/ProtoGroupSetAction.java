@@ -13,7 +13,6 @@ public final class ProtoGroupSetAction {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface GroupSetActionOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.GroupSetAction)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoGroupSetAction {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -42,7 +39,6 @@ public final class ProtoGroupSetAction {
      * <code>optional .proto.ClientAction action = 3;</code>
      */
     int getActionValue();
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
@@ -53,7 +49,6 @@ public final class ProtoGroupSetAction {
      */
     int getActionId();
   }
-
   /**
    * Protobuf type {@code proto.GroupSetAction}
    */
@@ -64,7 +59,6 @@ public final class ProtoGroupSetAction {
     private GroupSetAction(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupSetAction() {
       roomId_ = 0L;
       action_ = 0;
@@ -143,21 +137,18 @@ public final class ProtoGroupSetAction {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -167,7 +158,6 @@ public final class ProtoGroupSetAction {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -177,14 +167,12 @@ public final class ProtoGroupSetAction {
 
     public static final int ACTION_FIELD_NUMBER = 3;
     private int action_;
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
     public int getActionValue() {
       return action_;
     }
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
@@ -195,7 +183,6 @@ public final class ProtoGroupSetAction {
 
     public static final int ACTION_ID_FIELD_NUMBER = 4;
     private int actionId_;
-
     /**
      * <code>optional uint32 action_id = 4;</code>
      */
@@ -204,7 +191,6 @@ public final class ProtoGroupSetAction {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -251,7 +237,6 @@ public final class ProtoGroupSetAction {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -338,15 +323,12 @@ public final class ProtoGroupSetAction {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupSetAction.GroupSetAction prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -356,7 +338,6 @@ public final class ProtoGroupSetAction {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupSetAction}
      */
@@ -380,12 +361,10 @@ public final class ProtoGroupSetAction {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -456,7 +435,6 @@ public final class ProtoGroupSetAction {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupSetAction.GroupSetAction) {
           return mergeFrom((net.iGap.proto.ProtoGroupSetAction.GroupSetAction) other);
@@ -505,14 +483,12 @@ public final class ProtoGroupSetAction {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -523,7 +499,6 @@ public final class ProtoGroupSetAction {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -540,7 +515,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -554,7 +528,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -572,7 +545,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -587,7 +559,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -596,7 +567,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -607,7 +577,6 @@ public final class ProtoGroupSetAction {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -620,14 +589,12 @@ public final class ProtoGroupSetAction {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -637,7 +604,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -649,14 +615,12 @@ public final class ProtoGroupSetAction {
       }
 
       private int action_ = 0;
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
       public int getActionValue() {
         return action_;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -665,7 +629,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -673,7 +636,6 @@ public final class ProtoGroupSetAction {
         net.iGap.proto.ProtoGlobal.ClientAction result = net.iGap.proto.ProtoGlobal.ClientAction.valueOf(action_);
         return result == null ? net.iGap.proto.ProtoGlobal.ClientAction.UNRECOGNIZED : result;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -686,7 +648,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -698,14 +659,12 @@ public final class ProtoGroupSetAction {
       }
 
       private int actionId_;
-
       /**
        * <code>optional uint32 action_id = 4;</code>
        */
       public int getActionId() {
         return actionId_;
       }
-
       /**
        * <code>optional uint32 action_id = 4;</code>
        */
@@ -715,7 +674,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint32 action_id = 4;</code>
        */
@@ -740,7 +698,6 @@ public final class ProtoGroupSetAction {
 
     // @@protoc_insertion_point(class_scope:proto.GroupSetAction)
     private static final net.iGap.proto.ProtoGroupSetAction.GroupSetAction DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupSetAction.GroupSetAction();
     }
@@ -778,12 +735,10 @@ public final class ProtoGroupSetAction {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -798,7 +753,6 @@ public final class ProtoGroupSetAction {
      * <code>optional .proto.ClientAction action = 3;</code>
      */
     int getActionValue();
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
@@ -809,7 +763,6 @@ public final class ProtoGroupSetAction {
      */
     long getUserId();
   }
-
   /**
    * Protobuf type {@code proto.GroupSetActionResponse}
    */
@@ -820,7 +773,6 @@ public final class ProtoGroupSetAction {
     private GroupSetActionResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupSetActionResponse() {
       roomId_ = 0L;
       action_ = 0;
@@ -899,21 +851,18 @@ public final class ProtoGroupSetAction {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -923,7 +872,6 @@ public final class ProtoGroupSetAction {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -933,14 +881,12 @@ public final class ProtoGroupSetAction {
 
     public static final int ACTION_FIELD_NUMBER = 3;
     private int action_;
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
     public int getActionValue() {
       return action_;
     }
-
     /**
      * <code>optional .proto.ClientAction action = 3;</code>
      */
@@ -951,7 +897,6 @@ public final class ProtoGroupSetAction {
 
     public static final int USER_ID_FIELD_NUMBER = 4;
     private long userId_;
-
     /**
      * <code>optional uint64 user_id = 4;</code>
      */
@@ -960,7 +905,6 @@ public final class ProtoGroupSetAction {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1007,7 +951,6 @@ public final class ProtoGroupSetAction {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1094,11 +1037,9 @@ public final class ProtoGroupSetAction {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupSetAction.GroupSetActionResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
@@ -1111,7 +1052,6 @@ public final class ProtoGroupSetAction {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupSetActionResponse}
      */
@@ -1135,12 +1075,10 @@ public final class ProtoGroupSetAction {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1211,7 +1149,6 @@ public final class ProtoGroupSetAction {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupSetAction.GroupSetActionResponse) {
           return mergeFrom((net.iGap.proto.ProtoGroupSetAction.GroupSetActionResponse) other);
@@ -1260,14 +1197,12 @@ public final class ProtoGroupSetAction {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1278,7 +1213,6 @@ public final class ProtoGroupSetAction {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1295,7 +1229,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1309,7 +1242,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1327,7 +1259,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1342,7 +1273,6 @@ public final class ProtoGroupSetAction {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1351,7 +1281,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1362,7 +1291,6 @@ public final class ProtoGroupSetAction {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1375,14 +1303,12 @@ public final class ProtoGroupSetAction {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1392,7 +1318,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1404,14 +1329,12 @@ public final class ProtoGroupSetAction {
       }
 
       private int action_ = 0;
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
       public int getActionValue() {
         return action_;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -1420,7 +1343,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -1428,7 +1350,6 @@ public final class ProtoGroupSetAction {
         net.iGap.proto.ProtoGlobal.ClientAction result = net.iGap.proto.ProtoGlobal.ClientAction.valueOf(action_);
         return result == null ? net.iGap.proto.ProtoGlobal.ClientAction.UNRECOGNIZED : result;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -1441,7 +1362,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.ClientAction action = 3;</code>
        */
@@ -1453,14 +1373,12 @@ public final class ProtoGroupSetAction {
       }
 
       private long userId_;
-
       /**
        * <code>optional uint64 user_id = 4;</code>
        */
       public long getUserId() {
         return userId_;
       }
-
       /**
        * <code>optional uint64 user_id = 4;</code>
        */
@@ -1470,7 +1388,6 @@ public final class ProtoGroupSetAction {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 user_id = 4;</code>
        */
@@ -1495,7 +1412,6 @@ public final class ProtoGroupSetAction {
 
     // @@protoc_insertion_point(class_scope:proto.GroupSetActionResponse)
     private static final net.iGap.proto.ProtoGroupSetAction.GroupSetActionResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupSetAction.GroupSetActionResponse();
     }
@@ -1535,7 +1451,6 @@ public final class ProtoGroupSetAction {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\024GroupSetAction.proto\022\005proto\032\rRequest.p" +
@@ -1545,7 +1460,8 @@ public final class ProtoGroupSetAction {
                     ".proto.ClientAction\022\021\n\taction_id\030\004 \001(\r\"\202" +
                     "\001\n\026GroupSetActionResponse\022!\n\010response\030\001 " +
                     "\001(\0132\017.proto.Response\022\017\n\007room_id\030\002 \001(\004\022#\n" +
-                    "\006action\030\003 \001(\0162\023.proto.ClientAction\022\017\n\007us" + "er_id\030\004 \001(\004B%\n\016net.iGap.protoB\023ProtoGrou" +
+                    "\006action\030\003 \001(\0162\023.proto.ClientAction\022\017\n\007us" +
+                    "er_id\030\004 \001(\004B%\n\016net.iGap.protoB\023ProtoGrou" +
                     "pSetActionb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1565,9 +1481,9 @@ public final class ProtoGroupSetAction {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupSetActionResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "Action", "UserId", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -38,8 +38,7 @@ class DeflateDecompressor {
     }
 
 
-    private static boolean inflateBlock(
-            ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
+    private static boolean inflateBlock(ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
         // Each block has a block header which consists of 3 bits.
         // See 3.2.3. of RFC 1951.
 
@@ -120,8 +119,7 @@ class DeflateDecompressor {
     }
 
 
-    private static void inflateFixedBlock(
-            ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
+    private static void inflateFixedBlock(ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
         // 3.2.6 Compression with fixed Huffman codes (BTYPE=01)
 
         // Inflate the compressed data using the pre-defined
@@ -140,8 +138,7 @@ class DeflateDecompressor {
     }
 
 
-    private static void inflateDynamicBlock(
-            ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
+    private static void inflateDynamicBlock(ByteArray input, int[] bitIndex, ByteArray output) throws FormatException {
         // 3.2.7 Compression with dynamic Huffman codes (BTYPE=10)
 
         // Read 2 tables. One is a table to convert "code value of literal/length
@@ -156,9 +153,7 @@ class DeflateDecompressor {
     }
 
 
-    private static void inflateData(
-            ByteArray input, int[] bitIndex, ByteArray output,
-            Huffman literalLengthHuffman, Huffman distanceHuffman) throws FormatException {
+    private static void inflateData(ByteArray input, int[] bitIndex, ByteArray output, Huffman literalLengthHuffman, Huffman distanceHuffman) throws FormatException {
         // 3.2.5 Compressed blocks (length and distance codes)
 
         while (true) {

@@ -13,7 +13,6 @@ public final class ProtoChatUpdateDraft {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface ChatUpdateDraftOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.ChatUpdateDraft)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoChatUpdateDraft {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -42,18 +39,15 @@ public final class ProtoChatUpdateDraft {
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     boolean hasDraft();
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     net.iGap.proto.ProtoGlobal.RoomDraft getDraft();
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     net.iGap.proto.ProtoGlobal.RoomDraftOrBuilder getDraftOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.ChatUpdateDraft}
    */
@@ -64,7 +58,6 @@ public final class ProtoChatUpdateDraft {
     private ChatUpdateDraft(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChatUpdateDraft() {
       roomId_ = 0L;
     }
@@ -143,21 +136,18 @@ public final class ProtoChatUpdateDraft {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -167,7 +157,6 @@ public final class ProtoChatUpdateDraft {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -177,21 +166,18 @@ public final class ProtoChatUpdateDraft {
 
     public static final int DRAFT_FIELD_NUMBER = 3;
     private net.iGap.proto.ProtoGlobal.RoomDraft draft_;
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     public boolean hasDraft() {
       return draft_ != null;
     }
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     public net.iGap.proto.ProtoGlobal.RoomDraft getDraft() {
       return draft_ == null ? net.iGap.proto.ProtoGlobal.RoomDraft.getDefaultInstance() : draft_;
     }
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
@@ -200,7 +186,6 @@ public final class ProtoChatUpdateDraft {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -241,7 +226,6 @@ public final class ProtoChatUpdateDraft {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -330,15 +314,12 @@ public final class ProtoChatUpdateDraft {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraft prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -348,7 +329,6 @@ public final class ProtoChatUpdateDraft {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChatUpdateDraft}
      */
@@ -372,12 +352,10 @@ public final class ProtoChatUpdateDraft {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -453,7 +431,6 @@ public final class ProtoChatUpdateDraft {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraft) {
           return mergeFrom((net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraft) other);
@@ -499,14 +476,12 @@ public final class ProtoChatUpdateDraft {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -517,7 +492,6 @@ public final class ProtoChatUpdateDraft {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -534,7 +508,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -548,7 +521,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -566,7 +538,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -581,7 +552,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -590,7 +560,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -601,7 +570,6 @@ public final class ProtoChatUpdateDraft {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -614,14 +582,12 @@ public final class ProtoChatUpdateDraft {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -631,7 +597,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -644,14 +609,12 @@ public final class ProtoChatUpdateDraft {
 
       private net.iGap.proto.ProtoGlobal.RoomDraft draft_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RoomDraft, net.iGap.proto.ProtoGlobal.RoomDraft.Builder, net.iGap.proto.ProtoGlobal.RoomDraftOrBuilder> draftBuilder_;
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
       public boolean hasDraft() {
         return draftBuilder_ != null || draft_ != null;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -662,7 +625,6 @@ public final class ProtoChatUpdateDraft {
           return draftBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -679,7 +641,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -693,7 +654,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -711,7 +671,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -726,7 +685,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -735,7 +693,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return getDraftFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -746,7 +703,6 @@ public final class ProtoChatUpdateDraft {
           return draft_ == null ? net.iGap.proto.ProtoGlobal.RoomDraft.getDefaultInstance() : draft_;
         }
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -772,7 +728,6 @@ public final class ProtoChatUpdateDraft {
 
     // @@protoc_insertion_point(class_scope:proto.ChatUpdateDraft)
     private static final net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraft DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraft();
     }
@@ -810,12 +765,10 @@ public final class ProtoChatUpdateDraft {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -830,18 +783,15 @@ public final class ProtoChatUpdateDraft {
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     boolean hasDraft();
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     net.iGap.proto.ProtoGlobal.RoomDraft getDraft();
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     net.iGap.proto.ProtoGlobal.RoomDraftOrBuilder getDraftOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.ChatUpdateDraftResponse}
    */
@@ -852,7 +802,6 @@ public final class ProtoChatUpdateDraft {
     private ChatUpdateDraftResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChatUpdateDraftResponse() {
       roomId_ = 0L;
     }
@@ -931,21 +880,18 @@ public final class ProtoChatUpdateDraft {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -955,7 +901,6 @@ public final class ProtoChatUpdateDraft {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -965,21 +910,18 @@ public final class ProtoChatUpdateDraft {
 
     public static final int DRAFT_FIELD_NUMBER = 3;
     private net.iGap.proto.ProtoGlobal.RoomDraft draft_;
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     public boolean hasDraft() {
       return draft_ != null;
     }
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
     public net.iGap.proto.ProtoGlobal.RoomDraft getDraft() {
       return draft_ == null ? net.iGap.proto.ProtoGlobal.RoomDraft.getDefaultInstance() : draft_;
     }
-
     /**
      * <code>optional .proto.RoomDraft draft = 3;</code>
      */
@@ -988,7 +930,6 @@ public final class ProtoChatUpdateDraft {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1029,7 +970,6 @@ public final class ProtoChatUpdateDraft {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1118,15 +1058,12 @@ public final class ProtoChatUpdateDraft {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraftResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -1136,7 +1073,6 @@ public final class ProtoChatUpdateDraft {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChatUpdateDraftResponse}
      */
@@ -1160,12 +1096,10 @@ public final class ProtoChatUpdateDraft {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1241,7 +1175,6 @@ public final class ProtoChatUpdateDraft {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraftResponse) {
           return mergeFrom((net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraftResponse) other);
@@ -1287,14 +1220,12 @@ public final class ProtoChatUpdateDraft {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1305,7 +1236,6 @@ public final class ProtoChatUpdateDraft {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1322,7 +1252,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1336,7 +1265,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1354,7 +1282,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1369,7 +1296,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1378,7 +1304,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1389,7 +1314,6 @@ public final class ProtoChatUpdateDraft {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1402,14 +1326,12 @@ public final class ProtoChatUpdateDraft {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1419,7 +1341,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1432,14 +1353,12 @@ public final class ProtoChatUpdateDraft {
 
       private net.iGap.proto.ProtoGlobal.RoomDraft draft_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RoomDraft, net.iGap.proto.ProtoGlobal.RoomDraft.Builder, net.iGap.proto.ProtoGlobal.RoomDraftOrBuilder> draftBuilder_;
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
       public boolean hasDraft() {
         return draftBuilder_ != null || draft_ != null;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1450,7 +1369,6 @@ public final class ProtoChatUpdateDraft {
           return draftBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1467,7 +1385,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1481,7 +1398,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1499,7 +1415,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1514,7 +1429,6 @@ public final class ProtoChatUpdateDraft {
 
         return this;
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1523,7 +1437,6 @@ public final class ProtoChatUpdateDraft {
         onChanged();
         return getDraftFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1534,7 +1447,6 @@ public final class ProtoChatUpdateDraft {
           return draft_ == null ? net.iGap.proto.ProtoGlobal.RoomDraft.getDefaultInstance() : draft_;
         }
       }
-
       /**
        * <code>optional .proto.RoomDraft draft = 3;</code>
        */
@@ -1560,7 +1472,6 @@ public final class ProtoChatUpdateDraft {
 
     // @@protoc_insertion_point(class_scope:proto.ChatUpdateDraftResponse)
     private static final net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraftResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChatUpdateDraft.ChatUpdateDraftResponse();
     }
@@ -1600,7 +1511,6 @@ public final class ProtoChatUpdateDraft {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\025ChatUpdateDraft.proto\022\005proto\032\rRequest." +
@@ -1609,7 +1519,8 @@ public final class ProtoChatUpdateDraft {
                     "Request\022\017\n\007room_id\030\002 \001(\004\022\037\n\005draft\030\003 \001(\0132" +
                     "\020.proto.RoomDraft\"n\n\027ChatUpdateDraftResp" +
                     "onse\022!\n\010response\030\001 \001(\0132\017.proto.Response\022" +
-                    "\017\n\007room_id\030\002 \001(\004\022\037\n\005draft\030\003 \001(\0132\020.proto." + "RoomDraftB&\n\016net.iGap.protoB\024ProtoChatUp" +
+                    "\017\n\007room_id\030\002 \001(\004\022\037\n\005draft\030\003 \001(\0132\020.proto." +
+                    "RoomDraftB&\n\016net.iGap.protoB\024ProtoChatUp" +
                     "dateDraftb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1625,11 +1536,10 @@ public final class ProtoChatUpdateDraft {
     internal_static_proto_ChatUpdateDraft_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChatUpdateDraft_descriptor, new java.lang.String[]{"Request", "RoomId", "Draft",});
     internal_static_proto_ChatUpdateDraftResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_ChatUpdateDraftResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChatUpdateDraftResponse_descriptor, new java.lang.String[]{"Response", "RoomId", "Draft",});
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    internal_static_proto_ChatUpdateDraftResponse_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChatUpdateDraftResponse_descriptor, new java.lang.String[]{"Response", "RoomId", "Draft",});
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

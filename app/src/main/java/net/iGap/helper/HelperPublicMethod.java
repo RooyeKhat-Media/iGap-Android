@@ -15,7 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.activities.ActivityChat;
+import net.iGap.activities.ActivityMain;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.proto.ProtoGlobal;
@@ -30,7 +30,7 @@ import net.iGap.request.RequestUserInfo;
 
 public class HelperPublicMethod {
 
-    public interface Oncomplet {
+    public interface OnComplete {
         void complete();
     }
 
@@ -40,15 +40,15 @@ public class HelperPublicMethod {
 
     //**************************************************************************************************************************************
 
-    public static void goToChatRoom(final long peerId, final Oncomplet oncomplet, final OnError onError) {
+    public static void goToChatRoom(final long peerId, final OnComplete onComplete, final OnError onError) {
 
         final Realm realm = Realm.getDefaultInstance();
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, peerId).findFirst();
 
         if (realmRoom != null) {
 
-            if (oncomplet != null) {
-                oncomplet.complete();
+            if (onComplete != null) {
+                onComplete.complete();
             }
 
             goToRoom(realmRoom.getId(), -1);
@@ -60,7 +60,7 @@ public class HelperPublicMethod {
                         onError.error();
                     }
 
-                    getUserInfo(peerId, roomId, oncomplet, onError);
+                    getUserInfo(peerId, roomId, onComplete, onError);
 
                     G.onChatGetRoom = null;
                 }
@@ -89,7 +89,7 @@ public class HelperPublicMethod {
         realm.close();
     }
 
-    private static void getUserInfo(final long peerId, final long roomId, final Oncomplet oncomplet, final OnError onError) {
+    private static void getUserInfo(final long peerId, final long roomId, final OnComplete onComplete, final OnError onError) {
 
         G.onUserInfoResponse = new OnUserInfoResponse() {
             @Override public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
@@ -109,7 +109,7 @@ public class HelperPublicMethod {
                                         realmRegisteredInfo.setDoNotshowSpamBar(false);
                                     }
 
-                                    RealmAvatar.put(user.getId(), user.getAvatar(), true);
+                                    RealmAvatar.putAndGet(realm, user.getId(), user.getAvatar());
                                     realmRegisteredInfo.setUsername(user.getUsername());
                                     realmRegisteredInfo.setPhoneNumber(Long.toString(user.getPhone()));
                                     realmRegisteredInfo.setFirstName(user.getFirstName());
@@ -125,8 +125,8 @@ public class HelperPublicMethod {
                                 @Override public void onSuccess() {
                                     try {
 
-                                        if (oncomplet != null) {
-                                            oncomplet.complete();
+                                        if (onComplete != null) {
+                                            onComplete.complete();
                                         }
 
                                         goToRoom(roomId, peerId);
@@ -165,15 +165,14 @@ public class HelperPublicMethod {
 
     private static void goToRoom(long roomid, long peerId) {
 
-        Intent intent = new Intent(G.currentActivity, ActivityChat.class);
-        intent.putExtra("RoomId", roomid);
-
+        Intent intent = new Intent(G.context, ActivityMain.class);
+        intent.putExtra(ActivityMain.openChat, roomid);
         if (peerId >= 0) {
-            intent.putExtra("peerId", peerId);
+            intent.putExtra("PeerID", peerId);
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        G.currentActivity.startActivity(intent);
+        G.context.startActivity(intent);
     }
 
     //**************************************************************************************************************************************

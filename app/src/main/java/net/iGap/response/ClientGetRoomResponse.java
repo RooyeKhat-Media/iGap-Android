@@ -14,8 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.activities.ActivityChat;
 import net.iGap.adapter.items.chat.AbstractMessage;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.helper.HelperGetUserInfo;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.interfaces.OnGetUserInfo;
@@ -54,7 +54,7 @@ public class ClientGetRoomResponse extends MessageHandler {
                 final String identity = identityParams[0];
 
                 if (identity.equals(RequestClientGetRoom.CreateRoomMode.justInfo.toString())) {
-                    RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom());
+                    RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom(), realm);
                     realmRoom.setDeleted(true);
                     realmRoom.setKeepRoom(true);
 
@@ -63,7 +63,7 @@ public class ClientGetRoomResponse extends MessageHandler {
 
                         G.handler.postDelayed(new Runnable() {
                             @Override public void run() {
-                                HelperLogMessage.updateLogMessageAfterGetUserInfo(G.logMessageUpdatList.get(clientGetRoom.getRoom().getId()));
+                                HelperLogMessage.updateLogMessageAfterGetUserInfo(clientGetRoom.getRoom().getId());
                             }
                         }, 500);
                     }
@@ -82,7 +82,7 @@ public class ClientGetRoomResponse extends MessageHandler {
 
                                     realm.executeTransactionAsync(new Realm.Transaction() {
                                         @Override public void execute(Realm realm) {
-                                            putOrUpdate(clientGetRoom.getRoom());
+                                            putOrUpdate(clientGetRoom.getRoom(), realm);
                                         }
                                     }, new Realm.Transaction.OnSuccess() {
                                         @Override public void onSuccess() {
@@ -108,7 +108,7 @@ public class ClientGetRoomResponse extends MessageHandler {
                         }
                     }).getUserInfo(clientGetRoom.getRoom().getChatRoomExtra().getPeer().getId());
                 } else {
-                    putOrUpdate(clientGetRoom.getRoom());
+                    putOrUpdate(clientGetRoom.getRoom(), realm);
 
                     G.handler.postDelayed(new Runnable() {
                         @Override public void run() {
@@ -127,8 +127,8 @@ public class ClientGetRoomResponse extends MessageHandler {
             if (AbstractMessage.updateForwardInfo.containsKey(clientGetRoom.getRoom().getId())) {
                 String messageId = AbstractMessage.updateForwardInfo.get(clientGetRoom.getRoom().getId());
                 AbstractMessage.updateForwardInfo.remove(clientGetRoom.getRoom().getId());
-                if (ActivityChat.onUpdateUserOrRoomInfo != null) {
-                    ActivityChat.onUpdateUserOrRoomInfo.onUpdateUserOrRoomInfo(messageId);
+                if (FragmentChat.onUpdateUserOrRoomInfo != null) {
+                    FragmentChat.onUpdateUserOrRoomInfo.onUpdateUserOrRoomInfo(messageId);
                 }
             }
         }

@@ -15,6 +15,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import com.hanks.library.AnimateCheckBox;
 import com.mikepenz.fastadapter.items.AbstractItem;
+import java.util.HashMap;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
@@ -32,21 +33,25 @@ import net.iGap.proto.ProtoGlobal;
  */
 public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItemGroup.ViewHolder> {
     public StructContactInfo mContact;
+    private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
 
     public ContactItemGroup setContact(StructContactInfo contact) {
         this.mContact = contact;
         return this;
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return 0;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.contact_item_group;
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
 
         holder.checkBoxSelect.setChecked(true);
@@ -75,24 +80,29 @@ public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItem
             }
 
             if (HelperCalander.isLanguagePersian) {
-                holder.subtitle.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.subtitle.getText().toString()));
+                holder.subtitle.setText(holder.subtitle.getText().toString());
             }
         }
 
-        HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, new OnAvatarGet() {
-            @Override public void onAvatarGet(final String avatarPath, long ownerId) {
+        hashMapAvatar.put(mContact.peerId, holder.image);
+
+        HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
+            @Override
+            public void onAvatarGet(final String avatarPath, final long ownerId) {
                 G.handler.post(new Runnable() {
-                    @Override public void run() {
-                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), holder.image);
+                    @Override
+                    public void run() {
+                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(ownerId));
                     }
                 });
             }
 
-            @Override public void onShowInitials(final String initials, final String color) {
+            @Override
+            public void onShowInitials(final String initials, final String color) {
                 G.handler.post(new Runnable() {
-                    @Override public void run() {
-                        holder.image.setImageBitmap(
-                            net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+                    @Override
+                    public void run() {
+                        holder.image.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                     }
                 });
             }
@@ -118,7 +128,8 @@ public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItem
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

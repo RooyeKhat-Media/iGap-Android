@@ -15,7 +15,7 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
 
 public interface OnClientGetRoomListResponse {
-    void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, boolean fromLogin);
+    void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, String identity);
 
     void onError(int majorCode, int minorCode);
 

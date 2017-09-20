@@ -30,13 +30,11 @@ import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.Comparator;
+import net.iGap.G;
+import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 
-/**
- * @author Peli
- * @author paulburke (ipaulpro)
- * @version 2013-12-11
- */
+
 public class FileUtils {
     public static final String MIME_TYPE_AUDIO = "audio/*";
     public static final String MIME_TYPE_TEXT = "text/*";
@@ -55,7 +53,8 @@ public class FileUtils {
      * @author paulburke
      */
     public static Comparator<File> sComparator = new Comparator<File>() {
-        @Override public int compare(File f1, File f2) {
+        @Override
+        public int compare(File f1, File f2) {
             // Sort alphabetically by lower case, which is much cleaner
             return f1.getName().toLowerCase().compareTo(f2.getName().toLowerCase());
         }
@@ -66,7 +65,8 @@ public class FileUtils {
      * @author paulburke
      */
     public static FileFilter sFileFilter = new FileFilter() {
-        @Override public boolean accept(File file) {
+        @Override
+        public boolean accept(File file) {
             final String fileName = file.getName();
             // Return files only (not directories) and skip hidden files
             return file.isFile() && !fileName.startsWith(HIDDEN_PREFIX);
@@ -78,7 +78,8 @@ public class FileUtils {
      * @author paulburke
      */
     public static FileFilter sDirFilter = new FileFilter() {
-        @Override public boolean accept(File file) {
+        @Override
+        public boolean accept(File file) {
             final String fileName = file.getName();
             // Return directories only and skip hidden directories
             return file.isDirectory() && !fileName.startsWith(HIDDEN_PREFIX);
@@ -254,9 +255,9 @@ public class FileUtils {
     public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
 
         Cursor cursor = null;
-        final String column = "_data";
+        final String column = MediaStore.Images.Media.DATA;
         final String[] projection = {
-            column
+                column
         };
 
         try {
@@ -267,6 +268,8 @@ public class FileUtils {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
+        } catch (IllegalArgumentException e) {
+
         } finally {
             if (cursor != null) cursor.close();
         }
@@ -290,20 +293,7 @@ public class FileUtils {
     public static String getPath(final Context context, final Uri uri) {
 
         if (DEBUG) {
-            Log.d(TAG + " File -", "Authority: "
-                + uri.getAuthority()
-                + ", Fragment: "
-                + uri.getFragment()
-                + ", Port: "
-                + uri.getPort()
-                + ", Query: "
-                + uri.getQuery()
-                + ", Scheme: "
-                + uri.getScheme()
-                + ", Host: "
-                + uri.getHost()
-                + ", Segments: "
-                + uri.getPathSegments().toString());
+            Log.d(TAG + " File -", "Authority: " + uri.getAuthority() + ", Fragment: " + uri.getFragment() + ", Port: " + uri.getPort() + ", Query: " + uri.getQuery() + ", Scheme: " + uri.getScheme() + ", Host: " + uri.getHost() + ", Segments: " + uri.getPathSegments().toString());
         }
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -344,8 +334,8 @@ public class FileUtils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
-                    split[1]
+                final String[] selectionArgs = new String[]{
+                        split[1]
                 };
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
@@ -518,15 +508,15 @@ public class FileUtils {
         DecimalFormat dec = new DecimalFormat("0.0");
 
         if (t > 1) {
-            hrSize = dec.format(t).concat(" TB");
+            hrSize = dec.format(t).concat(" " + G.context.getResources().getString(R.string.c_TB));
         } else if (g > 1) {
-            hrSize = dec.format(g).concat(" GB");
+            hrSize = dec.format(g).concat(" " + G.context.getResources().getString(R.string.c_GB));
         } else if (m > 1) {
-            hrSize = dec.format(m).concat(" MB");
+            hrSize = dec.format(m).concat(" " + G.context.getResources().getString(R.string.c_MB));
         } else if (k > 1) {
-            hrSize = dec.format(k).concat(" KB");
+            hrSize = dec.format(k).concat(" " + G.context.getResources().getString(R.string.c_KB));
         } else {
-            hrSize = dec.format(b).concat(" Bytes");
+            hrSize = dec.format(b).concat(" " + G.context.getResources().getString(R.string.c_byte));
         }
 
         return HelperCalander.isLanguagePersian ? HelperCalander.convertToUnicodeFarsiNumber(hrSize) : hrSize;

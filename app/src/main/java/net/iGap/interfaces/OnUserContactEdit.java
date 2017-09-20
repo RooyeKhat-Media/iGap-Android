@@ -12,7 +12,7 @@ package net.iGap.interfaces;
 
 public interface OnUserContactEdit {
 
-    void onContactEdit(String firstName, String lastName);
+    void onContactEdit(String firstName, String lastName, String initials);
 
     void onContactEditTimeOut();
 

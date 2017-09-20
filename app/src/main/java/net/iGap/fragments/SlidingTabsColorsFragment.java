@@ -21,12 +21,11 @@ import java.util.ArrayList;
 import net.iGap.R;
 import net.iGap.module.SlidingTabLayout;
 
-public class SlidingTabsColorsFragment extends Fragment {
+public class SlidingTabsColorsFragment extends BaseFragment {
 
     private SlidingTabLayout mSlidingTabLayout;
     private ViewPager mViewPager;
     private ArrayList<Fragment> pages = new ArrayList<Fragment>();
-
     private static final String TAG = "SlidingTabsColorsFragment";
 
     @Override public void onCreate(Bundle savedInstanceState) {

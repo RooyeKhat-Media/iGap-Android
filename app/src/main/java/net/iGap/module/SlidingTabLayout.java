@@ -121,7 +121,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     protected TextView createDefaultTabView(Context context, int i) {
-        // Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/fontawesome-webfont.ttf");
 
         TextView textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);

@@ -13,7 +13,6 @@ public final class ProtoClientSearchUsername {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface ClientSearchUsernameOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.ClientSearchUsername)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoClientSearchUsername {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -37,13 +34,11 @@ public final class ProtoClientSearchUsername {
      * <code>optional string query = 2;</code>
      */
     java.lang.String getQuery();
-
     /**
      * <code>optional string query = 2;</code>
      */
     com.google.protobuf.ByteString getQueryBytes();
   }
-
   /**
    * Protobuf type {@code proto.ClientSearchUsername}
    */
@@ -54,7 +49,6 @@ public final class ProtoClientSearchUsername {
     private ClientSearchUsername(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ClientSearchUsername() {
       query_ = "";
     }
@@ -121,21 +115,18 @@ public final class ProtoClientSearchUsername {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -145,7 +136,6 @@ public final class ProtoClientSearchUsername {
 
     public static final int QUERY_FIELD_NUMBER = 2;
     private volatile java.lang.Object query_;
-
     /**
      * <code>optional string query = 2;</code>
      */
@@ -160,7 +150,6 @@ public final class ProtoClientSearchUsername {
         return s;
       }
     }
-
     /**
      * <code>optional string query = 2;</code>
      */
@@ -176,7 +165,6 @@ public final class ProtoClientSearchUsername {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -211,7 +199,6 @@ public final class ProtoClientSearchUsername {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -292,15 +279,12 @@ public final class ProtoClientSearchUsername {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsername prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -310,7 +294,6 @@ public final class ProtoClientSearchUsername {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ClientSearchUsername}
      */
@@ -334,12 +317,10 @@ public final class ProtoClientSearchUsername {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -404,7 +385,6 @@ public final class ProtoClientSearchUsername {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsername) {
           return mergeFrom((net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsername) other);
@@ -448,14 +428,12 @@ public final class ProtoClientSearchUsername {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -466,7 +444,6 @@ public final class ProtoClientSearchUsername {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -483,7 +460,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -497,7 +473,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -515,7 +490,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -530,7 +504,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -539,7 +512,6 @@ public final class ProtoClientSearchUsername {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -550,7 +522,6 @@ public final class ProtoClientSearchUsername {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -563,7 +534,6 @@ public final class ProtoClientSearchUsername {
       }
 
       private java.lang.Object query_ = "";
-
       /**
        * <code>optional string query = 2;</code>
        */
@@ -578,7 +548,6 @@ public final class ProtoClientSearchUsername {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string query = 2;</code>
        */
@@ -592,7 +561,6 @@ public final class ProtoClientSearchUsername {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string query = 2;</code>
        */
@@ -605,7 +573,6 @@ public final class ProtoClientSearchUsername {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string query = 2;</code>
        */
@@ -615,7 +582,6 @@ public final class ProtoClientSearchUsername {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string query = 2;</code>
        */
@@ -644,7 +610,6 @@ public final class ProtoClientSearchUsername {
 
     // @@protoc_insertion_point(class_scope:proto.ClientSearchUsername)
     private static final net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsername DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsername();
     }
@@ -682,12 +647,10 @@ public final class ProtoClientSearchUsername {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -697,28 +660,23 @@ public final class ProtoClientSearchUsername {
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     java.util.List<net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result> getResultList();
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result getResult(int index);
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     int getResultCount();
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     java.util.List<? extends net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.ResultOrBuilder> getResultOrBuilderList();
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.ResultOrBuilder getResultOrBuilder(int index);
   }
-
   /**
    * Protobuf type {@code proto.ClientSearchUsernameResponse}
    */
@@ -729,7 +687,6 @@ public final class ProtoClientSearchUsername {
     private ClientSearchUsernameResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ClientSearchUsernameResponse() {
       result_ = java.util.Collections.emptyList();
     }
@@ -807,7 +764,6 @@ public final class ProtoClientSearchUsername {
        * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
        */
       int getTypeValue();
-
       /**
        * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
        */
@@ -822,12 +778,10 @@ public final class ProtoClientSearchUsername {
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
       boolean hasUser();
-
       /**
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
       net.iGap.proto.ProtoGlobal.RegisteredUser getUser();
-
       /**
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
@@ -837,18 +791,15 @@ public final class ProtoClientSearchUsername {
        * <code>optional .proto.Room room = 4;</code>
        */
       boolean hasRoom();
-
       /**
        * <code>optional .proto.Room room = 4;</code>
        */
       net.iGap.proto.ProtoGlobal.Room getRoom();
-
       /**
        * <code>optional .proto.Room room = 4;</code>
        */
       net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomOrBuilder();
     }
-
     /**
      * Protobuf type {@code proto.ClientSearchUsernameResponse.Result}
      */
@@ -859,7 +810,6 @@ public final class ProtoClientSearchUsername {
       private Result(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
       }
-
       private Result() {
         type_ = 0;
         exactMatch_ = false;
@@ -1038,14 +988,12 @@ public final class ProtoClientSearchUsername {
 
       public static final int TYPE_FIELD_NUMBER = 1;
       private int type_;
-
       /**
        * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
        */
       public int getTypeValue() {
         return type_;
       }
-
       /**
        * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
        */
@@ -1056,7 +1004,6 @@ public final class ProtoClientSearchUsername {
 
       public static final int EXACT_MATCH_FIELD_NUMBER = 2;
       private boolean exactMatch_;
-
       /**
        * <code>optional bool exact_match = 2;</code>
        */
@@ -1066,21 +1013,18 @@ public final class ProtoClientSearchUsername {
 
       public static final int USER_FIELD_NUMBER = 3;
       private net.iGap.proto.ProtoGlobal.RegisteredUser user_;
-
       /**
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
       public boolean hasUser() {
         return user_ != null;
       }
-
       /**
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
       public net.iGap.proto.ProtoGlobal.RegisteredUser getUser() {
         return user_ == null ? net.iGap.proto.ProtoGlobal.RegisteredUser.getDefaultInstance() : user_;
       }
-
       /**
        * <code>optional .proto.RegisteredUser user = 3;</code>
        */
@@ -1090,21 +1034,18 @@ public final class ProtoClientSearchUsername {
 
       public static final int ROOM_FIELD_NUMBER = 4;
       private net.iGap.proto.ProtoGlobal.Room room_;
-
       /**
        * <code>optional .proto.Room room = 4;</code>
        */
       public boolean hasRoom() {
         return room_ != null;
       }
-
       /**
        * <code>optional .proto.Room room = 4;</code>
        */
       public net.iGap.proto.ProtoGlobal.Room getRoom() {
         return room_ == null ? net.iGap.proto.ProtoGlobal.Room.getDefaultInstance() : room_;
       }
-
       /**
        * <code>optional .proto.Room room = 4;</code>
        */
@@ -1113,7 +1054,6 @@ public final class ProtoClientSearchUsername {
       }
 
       private byte memoizedIsInitialized = -1;
-
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -1160,7 +1100,6 @@ public final class ProtoClientSearchUsername {
       }
 
       private static final long serialVersionUID = 0L;
-
       @java.lang.Override
       public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
@@ -1252,15 +1191,12 @@ public final class ProtoClientSearchUsername {
       public Builder newBuilderForType() {
         return newBuilder();
       }
-
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-
       public static Builder newBuilder(net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
-
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
       }
@@ -1270,7 +1206,6 @@ public final class ProtoClientSearchUsername {
         Builder builder = new Builder(parent);
         return builder;
       }
-
       /**
        * Protobuf type {@code proto.ClientSearchUsernameResponse.Result}
        */
@@ -1294,12 +1229,10 @@ public final class ProtoClientSearchUsername {
           super(parent);
           maybeForceBuilderInitialization();
         }
-
         private void maybeForceBuilderInitialization() {
           if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
           }
         }
-
         public Builder clear() {
           super.clear();
           type_ = 0;
@@ -1378,7 +1311,6 @@ public final class ProtoClientSearchUsername {
         public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
-
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result) {
             return mergeFrom((net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result) other);
@@ -1426,14 +1358,12 @@ public final class ProtoClientSearchUsername {
         }
 
         private int type_ = 0;
-
         /**
          * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
          */
         public int getTypeValue() {
           return type_;
         }
-
         /**
          * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
          */
@@ -1442,7 +1372,6 @@ public final class ProtoClientSearchUsername {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
          */
@@ -1450,7 +1379,6 @@ public final class ProtoClientSearchUsername {
           net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type result = net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.valueOf(type_);
           return result == null ? net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.UNRECOGNIZED : result;
         }
-
         /**
          * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
          */
@@ -1463,7 +1391,6 @@ public final class ProtoClientSearchUsername {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional .proto.ClientSearchUsernameResponse.Result.Type type = 1;</code>
          */
@@ -1475,14 +1402,12 @@ public final class ProtoClientSearchUsername {
         }
 
         private boolean exactMatch_;
-
         /**
          * <code>optional bool exact_match = 2;</code>
          */
         public boolean getExactMatch() {
           return exactMatch_;
         }
-
         /**
          * <code>optional bool exact_match = 2;</code>
          */
@@ -1492,7 +1417,6 @@ public final class ProtoClientSearchUsername {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional bool exact_match = 2;</code>
          */
@@ -1505,14 +1429,12 @@ public final class ProtoClientSearchUsername {
 
         private net.iGap.proto.ProtoGlobal.RegisteredUser user_ = null;
         private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder> userBuilder_;
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
         public boolean hasUser() {
           return userBuilder_ != null || user_ != null;
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1523,7 +1445,6 @@ public final class ProtoClientSearchUsername {
             return userBuilder_.getMessage();
           }
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1540,7 +1461,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1554,7 +1474,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1572,7 +1491,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1587,7 +1505,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1596,7 +1513,6 @@ public final class ProtoClientSearchUsername {
           onChanged();
           return getUserFieldBuilder().getBuilder();
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1607,7 +1523,6 @@ public final class ProtoClientSearchUsername {
             return user_ == null ? net.iGap.proto.ProtoGlobal.RegisteredUser.getDefaultInstance() : user_;
           }
         }
-
         /**
          * <code>optional .proto.RegisteredUser user = 3;</code>
          */
@@ -1621,14 +1536,12 @@ public final class ProtoClientSearchUsername {
 
         private net.iGap.proto.ProtoGlobal.Room room_ = null;
         private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder> roomBuilder_;
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
         public boolean hasRoom() {
           return roomBuilder_ != null || room_ != null;
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1639,7 +1552,6 @@ public final class ProtoClientSearchUsername {
             return roomBuilder_.getMessage();
           }
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1656,7 +1568,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1670,7 +1581,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1688,7 +1598,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1703,7 +1612,6 @@ public final class ProtoClientSearchUsername {
 
           return this;
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1712,7 +1620,6 @@ public final class ProtoClientSearchUsername {
           onChanged();
           return getRoomFieldBuilder().getBuilder();
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1723,7 +1630,6 @@ public final class ProtoClientSearchUsername {
             return room_ == null ? net.iGap.proto.ProtoGlobal.Room.getDefaultInstance() : room_;
           }
         }
-
         /**
          * <code>optional .proto.Room room = 4;</code>
          */
@@ -1749,7 +1655,6 @@ public final class ProtoClientSearchUsername {
 
       // @@protoc_insertion_point(class_scope:proto.ClientSearchUsernameResponse.Result)
       private static final net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result DEFAULT_INSTANCE;
-
       static {
         DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result();
       }
@@ -1782,21 +1687,18 @@ public final class ProtoClientSearchUsername {
     private int bitField0_;
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -1806,35 +1708,30 @@ public final class ProtoClientSearchUsername {
 
     public static final int RESULT_FIELD_NUMBER = 2;
     private java.util.List<net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result> result_;
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     public java.util.List<net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result> getResultList() {
       return result_;
     }
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     public java.util.List<? extends net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.ResultOrBuilder> getResultOrBuilderList() {
       return result_;
     }
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     public int getResultCount() {
       return result_.size();
     }
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
     public net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result getResult(int index) {
       return result_.get(index);
     }
-
     /**
      * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
      */
@@ -1843,7 +1740,6 @@ public final class ProtoClientSearchUsername {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1878,7 +1774,6 @@ public final class ProtoClientSearchUsername {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1961,15 +1856,12 @@ public final class ProtoClientSearchUsername {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -1979,7 +1871,6 @@ public final class ProtoClientSearchUsername {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ClientSearchUsernameResponse}
      */
@@ -2003,13 +1894,11 @@ public final class ProtoClientSearchUsername {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
           getResultFieldBuilder();
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -2089,7 +1978,6 @@ public final class ProtoClientSearchUsername {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse) {
           return mergeFrom((net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse) other);
@@ -2150,19 +2038,16 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       private int bitField0_;
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2173,7 +2058,6 @@ public final class ProtoClientSearchUsername {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2190,7 +2074,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2204,7 +2087,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2222,7 +2104,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2237,7 +2118,6 @@ public final class ProtoClientSearchUsername {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2246,7 +2126,6 @@ public final class ProtoClientSearchUsername {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2257,7 +2136,6 @@ public final class ProtoClientSearchUsername {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2270,7 +2148,6 @@ public final class ProtoClientSearchUsername {
       }
 
       private java.util.List<net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result> result_ = java.util.Collections.emptyList();
-
       private void ensureResultIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           result_ = new java.util.ArrayList<net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result>(result_);
@@ -2290,7 +2167,6 @@ public final class ProtoClientSearchUsername {
           return resultBuilder_.getMessageList();
         }
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2301,7 +2177,6 @@ public final class ProtoClientSearchUsername {
           return resultBuilder_.getCount();
         }
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2312,7 +2187,6 @@ public final class ProtoClientSearchUsername {
           return resultBuilder_.getMessage(index);
         }
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2329,7 +2203,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2343,7 +2216,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2360,7 +2232,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2377,7 +2248,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2391,7 +2261,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2405,7 +2274,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2419,7 +2287,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2433,7 +2300,6 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2447,14 +2313,12 @@ public final class ProtoClientSearchUsername {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
       public net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Builder getResultBuilder(int index) {
         return getResultFieldBuilder().getBuilder(index);
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2465,7 +2329,6 @@ public final class ProtoClientSearchUsername {
           return resultBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2476,21 +2339,18 @@ public final class ProtoClientSearchUsername {
           return java.util.Collections.unmodifiableList(result_);
         }
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
       public net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Builder addResultBuilder() {
         return getResultFieldBuilder().addBuilder(net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
       public net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Builder addResultBuilder(int index) {
         return getResultFieldBuilder().addBuilder(index, net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.ClientSearchUsernameResponse.Result result = 2;</code>
        */
@@ -2521,7 +2381,6 @@ public final class ProtoClientSearchUsername {
 
     // @@protoc_insertion_point(class_scope:proto.ClientSearchUsernameResponse)
     private static final net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientSearchUsername.ClientSearchUsernameResponse();
     }
@@ -2563,7 +2422,6 @@ public final class ProtoClientSearchUsername {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\032ClientSearchUsername.proto\022\005proto\032\rReq" +
@@ -2575,7 +2433,8 @@ public final class ProtoClientSearchUsername {
                     "roto.ClientSearchUsernameResponse.Result" +
                     "\032\270\001\n\006Result\022=\n\004type\030\001 \001(\0162/.proto.Client" +
                     "SearchUsernameResponse.Result.Type\022\023\n\013ex" +
-                    "act_match\030\002 \001(\010\022#\n\004user\030\003 \001(\0132\025.proto.Re", "gisteredUser\022\031\n\004room\030\004 \001(\0132\013.proto.Room\"" + "\032\n\004Type\022\010\n\004USER\020\000\022\010\n\004ROOM\020\001B+\n\016net.iGap." +
+                    "act_match\030\002 \001(\010\022#\n\004user\030\003 \001(\0132\025.proto.Re", "gisteredUser\022\031\n\004room\030\004 \001(\0132\013.proto.Room\"" +
+            "\032\n\004Type\022\010\n\004USER\020\000\022\010\n\004ROOM\020\001B+\n\016net.iGap." +
             "protoB\031ProtoClientSearchUsernameb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2601,9 +2460,9 @@ public final class ProtoClientSearchUsername {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClientSearchUsernameResponse_Result_descriptor,
         new java.lang.String[] { "Type", "ExactMatch", "User", "Room", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

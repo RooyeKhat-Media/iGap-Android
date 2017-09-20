@@ -13,7 +13,6 @@ public final class ProtoUserContactsUnblock {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface UserContactsUnblockOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.UserContactsUnblock)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoUserContactsUnblock {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -38,7 +35,6 @@ public final class ProtoUserContactsUnblock {
      */
     long getUserId();
   }
-
   /**
    * Protobuf type {@code proto.UserContactsUnblock}
    */
@@ -49,7 +45,6 @@ public final class ProtoUserContactsUnblock {
     private UserContactsUnblock(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserContactsUnblock() {
       userId_ = 0L;
     }
@@ -115,21 +110,18 @@ public final class ProtoUserContactsUnblock {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -139,7 +131,6 @@ public final class ProtoUserContactsUnblock {
 
     public static final int USER_ID_FIELD_NUMBER = 2;
     private long userId_;
-
     /**
      * <code>optional uint64 user_id = 2;</code>
      */
@@ -148,7 +139,6 @@ public final class ProtoUserContactsUnblock {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -183,7 +173,6 @@ public final class ProtoUserContactsUnblock {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -264,15 +253,12 @@ public final class ProtoUserContactsUnblock {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblock prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -282,7 +268,6 @@ public final class ProtoUserContactsUnblock {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserContactsUnblock}
      */
@@ -306,12 +291,10 @@ public final class ProtoUserContactsUnblock {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -376,7 +359,6 @@ public final class ProtoUserContactsUnblock {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblock) {
           return mergeFrom((net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblock) other);
@@ -419,14 +401,12 @@ public final class ProtoUserContactsUnblock {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -437,7 +417,6 @@ public final class ProtoUserContactsUnblock {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -454,7 +433,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -468,7 +446,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -486,7 +463,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -501,7 +477,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -510,7 +485,6 @@ public final class ProtoUserContactsUnblock {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -521,7 +495,6 @@ public final class ProtoUserContactsUnblock {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -534,14 +507,12 @@ public final class ProtoUserContactsUnblock {
       }
 
       private long userId_;
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
       public long getUserId() {
         return userId_;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -551,7 +522,6 @@ public final class ProtoUserContactsUnblock {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -576,7 +546,6 @@ public final class ProtoUserContactsUnblock {
 
     // @@protoc_insertion_point(class_scope:proto.UserContactsUnblock)
     private static final net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblock DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblock();
     }
@@ -614,12 +583,10 @@ public final class ProtoUserContactsUnblock {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -630,7 +597,6 @@ public final class ProtoUserContactsUnblock {
      */
     long getUserId();
   }
-
   /**
    * Protobuf type {@code proto.UserContactsUnblockResponse}
    */
@@ -641,7 +607,6 @@ public final class ProtoUserContactsUnblock {
     private UserContactsUnblockResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserContactsUnblockResponse() {
       userId_ = 0L;
     }
@@ -707,21 +672,18 @@ public final class ProtoUserContactsUnblock {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -731,7 +693,6 @@ public final class ProtoUserContactsUnblock {
 
     public static final int USER_ID_FIELD_NUMBER = 2;
     private long userId_;
-
     /**
      * <code>optional uint64 user_id = 2;</code>
      */
@@ -740,7 +701,6 @@ public final class ProtoUserContactsUnblock {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -775,7 +735,6 @@ public final class ProtoUserContactsUnblock {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -856,15 +815,12 @@ public final class ProtoUserContactsUnblock {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblockResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -874,7 +830,6 @@ public final class ProtoUserContactsUnblock {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserContactsUnblockResponse}
      */
@@ -898,12 +853,10 @@ public final class ProtoUserContactsUnblock {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -968,7 +921,6 @@ public final class ProtoUserContactsUnblock {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblockResponse) {
           return mergeFrom((net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblockResponse) other);
@@ -1011,14 +963,12 @@ public final class ProtoUserContactsUnblock {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1029,7 +979,6 @@ public final class ProtoUserContactsUnblock {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1046,7 +995,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1060,7 +1008,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1078,7 +1025,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1093,7 +1039,6 @@ public final class ProtoUserContactsUnblock {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1102,7 +1047,6 @@ public final class ProtoUserContactsUnblock {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1113,7 +1057,6 @@ public final class ProtoUserContactsUnblock {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1126,14 +1069,12 @@ public final class ProtoUserContactsUnblock {
       }
 
       private long userId_;
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
       public long getUserId() {
         return userId_;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -1143,7 +1084,6 @@ public final class ProtoUserContactsUnblock {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -1168,7 +1108,6 @@ public final class ProtoUserContactsUnblock {
 
     // @@protoc_insertion_point(class_scope:proto.UserContactsUnblockResponse)
     private static final net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblockResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserContactsUnblock.UserContactsUnblockResponse();
     }
@@ -1208,14 +1147,14 @@ public final class ProtoUserContactsUnblock {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\031UserContactsUnblock.proto\022\005proto\032\rRequ" +
                     "est.proto\032\016Response.proto\"G\n\023UserContact" +
                     "sUnblock\022\037\n\007request\030\001 \001(\0132\016.proto.Reques" +
                     "t\022\017\n\007user_id\030\002 \001(\004\"Q\n\033UserContactsUnbloc" +
-                    "kResponse\022!\n\010response\030\001 \001(\0132\017.proto.Resp" + "onse\022\017\n\007user_id\030\002 \001(\004B*\n\016net.iGap.protoB" +
+                    "kResponse\022!\n\010response\030\001 \001(\0132\017.proto.Resp" +
+                    "onse\022\017\n\007user_id\030\002 \001(\004B*\n\016net.iGap.protoB" +
                     "\030ProtoUserContactsUnblockb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1234,8 +1173,8 @@ public final class ProtoUserContactsUnblock {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserContactsUnblockResponse_descriptor,
         new java.lang.String[] { "Response", "UserId", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

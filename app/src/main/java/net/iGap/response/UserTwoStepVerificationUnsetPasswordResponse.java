@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoUserTwoStepVerificationUnsetPassword;
 
 public class UserTwoStepVerificationUnsetPasswordResponse extends MessageHandler {
@@ -31,6 +32,11 @@ public class UserTwoStepVerificationUnsetPasswordResponse extends MessageHandler
 
         ProtoUserTwoStepVerificationUnsetPassword.UserTwoStepVerificationUnsetPasswordResponse.Builder builder =
             (ProtoUserTwoStepVerificationUnsetPassword.UserTwoStepVerificationUnsetPasswordResponse.Builder) message;
+
+        if (G.onTwoStepPassword != null) {
+            G.onTwoStepPassword.unSetPassword();
+        }
+
     }
 
     @Override public void timeOut() {

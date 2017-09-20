@@ -88,11 +88,11 @@ public final class ProtoChannelAddMessageReaction {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -128,16 +128,15 @@ public final class ProtoChannelAddMessageReaction {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
+      return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.Builder.class);
+      return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -148,7 +147,7 @@ public final class ProtoChannelAddMessageReaction {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -187,8 +186,8 @@ public final class ProtoChannelAddMessageReaction {
      * <code>optional .proto.RoomMessageReaction reaction = 4;</code>
      */
     public net.iGap.proto.ProtoGlobal.RoomMessageReaction getReaction() {
-        net.iGap.proto.ProtoGlobal.RoomMessageReaction result = net.iGap.proto.ProtoGlobal.RoomMessageReaction.valueOf(reaction_);
-        return result == null ? net.iGap.proto.ProtoGlobal.RoomMessageReaction.UNRECOGNIZED : result;
+      net.iGap.proto.ProtoGlobal.RoomMessageReaction result = net.iGap.proto.ProtoGlobal.RoomMessageReaction.valueOf(reaction_);
+      return result == null ? net.iGap.proto.ProtoGlobal.RoomMessageReaction.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -211,7 +210,7 @@ public final class ProtoChannelAddMessageReaction {
       if (messageId_ != 0L) {
         output.writeUInt64(3, messageId_);
       }
-        if (reaction_ != net.iGap.proto.ProtoGlobal.RoomMessageReaction.THUMBS_UP.getNumber()) {
+      if (reaction_ != net.iGap.proto.ProtoGlobal.RoomMessageReaction.THUMBS_UP.getNumber()) {
         output.writeEnum(4, reaction_);
       }
     }
@@ -230,7 +229,7 @@ public final class ProtoChannelAddMessageReaction {
       if (messageId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream.computeUInt64Size(3, messageId_);
       }
-        if (reaction_ != net.iGap.proto.ProtoGlobal.RoomMessageReaction.THUMBS_UP.getNumber()) {
+      if (reaction_ != net.iGap.proto.ProtoGlobal.RoomMessageReaction.THUMBS_UP.getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, reaction_);
       }
       memoizedSize = size;
@@ -243,10 +242,10 @@ public final class ProtoChannelAddMessageReaction {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction other = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) obj;
+      net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction other = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -281,48 +280,43 @@ public final class ProtoChannelAddMessageReaction {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -333,7 +327,7 @@ public final class ProtoChannelAddMessageReaction {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -352,15 +346,14 @@ public final class ProtoChannelAddMessageReaction {
             // @@protoc_insertion_point(builder_implements:proto.ChannelAddMessageReaction)
         net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.Builder.class);
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -391,23 +384,23 @@ public final class ProtoChannelAddMessageReaction {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReaction_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction build() {
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction result = buildPartial();
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction build() {
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction buildPartial() {
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction result = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction(this);
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction buildPartial() {
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction result = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -444,16 +437,16 @@ public final class ProtoChannelAddMessageReaction {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) {
-              return mergeFrom((net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) other);
+        if (other instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) {
+          return mergeFrom((net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction other) {
-            if (other == net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction other) {
+        if (other == net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -475,11 +468,11 @@ public final class ProtoChannelAddMessageReaction {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parsedMessage = null;
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -489,9 +482,8 @@ public final class ProtoChannelAddMessageReaction {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -503,7 +495,7 @@ public final class ProtoChannelAddMessageReaction {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -543,7 +535,7 @@ public final class ProtoChannelAddMessageReaction {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -583,7 +575,7 @@ public final class ProtoChannelAddMessageReaction {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -591,9 +583,7 @@ public final class ProtoChannelAddMessageReaction {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
-                    getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -670,8 +660,8 @@ public final class ProtoChannelAddMessageReaction {
        * <code>optional .proto.RoomMessageReaction reaction = 4;</code>
        */
       public net.iGap.proto.ProtoGlobal.RoomMessageReaction getReaction() {
-          net.iGap.proto.ProtoGlobal.RoomMessageReaction result = net.iGap.proto.ProtoGlobal.RoomMessageReaction.valueOf(reaction_);
-          return result == null ? net.iGap.proto.ProtoGlobal.RoomMessageReaction.UNRECOGNIZED : result;
+        net.iGap.proto.ProtoGlobal.RoomMessageReaction result = net.iGap.proto.ProtoGlobal.RoomMessageReaction.valueOf(reaction_);
+        return result == null ? net.iGap.proto.ProtoGlobal.RoomMessageReaction.UNRECOGNIZED : result;
       }
       /**
        * <code>optional .proto.RoomMessageReaction reaction = 4;</code>
@@ -710,10 +700,10 @@ public final class ProtoChannelAddMessageReaction {
     // @@protoc_insertion_point(class_scope:proto.ChannelAddMessageReaction)
     private static final net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction();
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -732,7 +722,7 @@ public final class ProtoChannelAddMessageReaction {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReaction getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -801,11 +791,11 @@ public final class ProtoChannelAddMessageReaction {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -831,16 +821,15 @@ public final class ProtoChannelAddMessageReaction {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
+      return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -851,7 +840,7 @@ public final class ProtoChannelAddMessageReaction {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -930,10 +919,10 @@ public final class ProtoChannelAddMessageReaction {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse other = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) obj;
+      net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse other = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -962,49 +951,43 @@ public final class ProtoChannelAddMessageReaction {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseDelimitedFrom(java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -1015,7 +998,7 @@ public final class ProtoChannelAddMessageReaction {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -1034,15 +1017,14 @@ public final class ProtoChannelAddMessageReaction {
             // @@protoc_insertion_point(builder_implements:proto.ChannelAddMessageReactionResponse)
         net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.class, net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1069,23 +1051,23 @@ public final class ProtoChannelAddMessageReaction {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
+        return net.iGap.proto.ProtoChannelAddMessageReaction.internal_static_proto_ChannelAddMessageReactionResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse build() {
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse result = buildPartial();
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse build() {
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse buildPartial() {
-            net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse result = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse(this);
+      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse buildPartial() {
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse result = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1120,16 +1102,16 @@ public final class ProtoChannelAddMessageReaction {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) {
-              return mergeFrom((net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) other);
+        if (other instanceof net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) {
+          return mergeFrom((net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse other) {
-            if (other == net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse other) {
+        if (other == net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1146,11 +1128,11 @@ public final class ProtoChannelAddMessageReaction {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parsedMessage = null;
+        net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1160,9 +1142,8 @@ public final class ProtoChannelAddMessageReaction {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1174,7 +1155,7 @@ public final class ProtoChannelAddMessageReaction {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1214,7 +1195,7 @@ public final class ProtoChannelAddMessageReaction {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1254,7 +1235,7 @@ public final class ProtoChannelAddMessageReaction {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1262,9 +1243,7 @@ public final class ProtoChannelAddMessageReaction {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
-                    getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1348,10 +1327,10 @@ public final class ProtoChannelAddMessageReaction {
     // @@protoc_insertion_point(class_scope:proto.ChannelAddMessageReactionResponse)
     private static final net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse();
     }
 
-      public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1370,7 +1349,7 @@ public final class ProtoChannelAddMessageReaction {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1395,7 +1374,8 @@ public final class ProtoChannelAddMessageReaction {
                     "\002 \001(\004\022\022\n\nmessage_id\030\003 \001(\004\022,\n\010reaction\030\004 " +
                     "\001(\0162\032.proto.RoomMessageReaction\"f\n!Chann" +
                     "elAddMessageReactionResponse\022!\n\010response" +
-                    "\030\001 \001(\0132\017.proto.Response\022\036\n\026reaction_coun" + "ter_label\030\002 \001(\tB0\n\016net.iGap.protoB\036Proto" +
+                    "\030\001 \001(\0132\017.proto.Response\022\036\n\026reaction_coun" +
+                    "ter_label\030\002 \001(\tB0\n\016net.iGap.protoB\036Proto" +
                     "ChannelAddMessageReactionb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1405,7 +1385,7 @@ public final class ProtoChannelAddMessageReaction {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
     }, assigner);
     internal_static_proto_ChannelAddMessageReaction_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ChannelAddMessageReaction_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChannelAddMessageReaction_descriptor, new java.lang.String[]{"Request", "RoomId", "MessageId", "Reaction",});
@@ -1414,9 +1394,9 @@ public final class ProtoChannelAddMessageReaction {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ChannelAddMessageReactionResponse_descriptor,
         new java.lang.String[] { "Response", "ReactionCounterLabel", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

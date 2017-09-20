@@ -12,7 +12,9 @@ package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
@@ -21,24 +23,40 @@ import net.iGap.proto.ProtoGlobal;
 
 public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat.ProgressWaiting, net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder> {
 
-    public ProgressWaiting(IMessageItem messageClickListener) {
-        super(false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
+    public ProgressWaiting(Realm realmChat, IMessageItem messageClickListener) {
+        super(realmChat, false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.cslp_progress_bar_waiting;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_progress;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.cslp_progress_bar_waiting) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getProgressWaitingItem());
+        }
+
+        holder.progressBar = (ProgressBar) holder.itemView.findViewById(R.id.cslp_progress_bar_waiting);
+        AppUtils.setProgresColler(holder.progressBar);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
+
+
         super.bindView(holder, payloads);
-    }
-
-    @Override protected void voteAction(net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder holder) {
-        super.voteAction(holder);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,12 +65,16 @@ public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat
 
         public ViewHolder(View view) {
             super(view);
-            progressBar = (ProgressBar) view.findViewById(R.id.cslp_progress_bar_waiting);
-            AppUtils.setProgresColler(progressBar);
+            /**
+             *  this commented code used with xml layout
+             */
+            //progressBar = (ProgressBar) view.findViewById(R.id.cslp_progress_bar_waiting);
+            //AppUtils.setProgresColler(progressBar);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

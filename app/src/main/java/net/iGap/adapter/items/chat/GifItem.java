@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import io.realm.Realm;
 import java.io.File;
 import java.util.List;
 import net.iGap.R;
@@ -30,11 +32,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
 
-    public GifItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public GifItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public void onPlayPauseGIF(ViewHolder holder, String localPath) {
+    @Override
+    public void onPlayPauseGIF(ViewHolder holder, String localPath) throws ClassCastException {
         super.onPlayPauseGIF(holder, localPath);
 
         MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
@@ -54,38 +57,54 @@ public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
         }
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutGif;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_gif;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(ViewHolder holder, String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
-        holder.image.setImageURI(Uri.fromFile(new File(localPath)));
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        if (fileType == LocalFileType.FILE) {
-            SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-            if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 1) {
-                holder.itemView.findViewById(R.id.progress).setVisibility(View.GONE);
-            } else {
-                if (holder.image.getDrawable() instanceof GifDrawable) {
-                    GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
-                    // to get first frame
-                    gifDrawable.stop();
-                    holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        if (holder.image != null && holder.image.getTag() != null && holder.image.getTag().equals(tag)) {
+            holder.image.setImageURI(Uri.fromFile(new File(localPath)));
+
+            if (fileType == LocalFileType.FILE) {
+                SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+                if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 1) {
+                    holder.itemView.findViewById(R.id.progress).setVisibility(View.GONE);
+                } else {
+                    if (holder.image.getDrawable() instanceof GifDrawable) {
+                        GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
+                        // to get first frame
+                        gifDrawable.stop();
+                        holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getGifItem(false));
+        }
+
+        holder.image = (ReserveSpaceGifImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.image.setTag(getCacheId(mMessage));
+
         super.bindView(holder, payloads);
 
         holder.itemView.findViewById(R.id.progress).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!isSelected()) {
                     if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                         return;
@@ -94,10 +113,18 @@ public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
                         messageClickListener.onFailedMessageClick(v, mMessage, holder.getAdapterPosition());
                     } else {
                         if (mMessage.forwardedFrom != null && mMessage.forwardedFrom.getAttachment().isFileExistsOnLocal()) {
-                            onPlayPauseGIF(holder, mMessage.forwardedFrom.getAttachment().getLocalFilePath());
+                            try {
+                                onPlayPauseGIF(holder, mMessage.forwardedFrom.getAttachment().getLocalFilePath());
+                            } catch (ClassCastException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             if (mMessage.attachment.isFileExistsOnLocal()) {
-                                onPlayPauseGIF(holder, mMessage.attachment.getLocalFilePath());
+                                try {
+                                    onPlayPauseGIF(holder, mMessage.attachment.getLocalFilePath());
+                                } catch (ClassCastException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -106,24 +133,23 @@ public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
         });
 
         holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 holder.itemView.findViewById(R.id.progress).performClick();
             }
         });
 
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override public boolean onLongClick(View v) {
+            @Override
+            public boolean onLongClick(View v) {
                 holder.itemView.performLongClick();
                 return false;
             }
         });
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 
@@ -133,7 +159,7 @@ public class GifItem extends AbstractMessage<GifItem, GifItem.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
 
-            image = (ReserveSpaceGifImageView) view.findViewById(R.id.thumbnail);
+            //image = (ReserveSpaceGifImageView) view.findViewById(R.id.thumbnail);
         }
     }
 }

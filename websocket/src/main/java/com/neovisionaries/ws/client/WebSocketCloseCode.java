@@ -20,7 +20,7 @@ package com.neovisionaries.ws.client;
  * Close code.
  *
  * @see <a href="http://tools.ietf.org/html/rfc6455#section-7.4.1"
- * >RFC 6455, 7.4.1. Defined Status Codes</a>
+ *      >RFC 6455, 7.4.1. Defined Status Codes</a>
  */
 public class WebSocketCloseCode {
     /**

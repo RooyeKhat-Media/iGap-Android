@@ -29,8 +29,7 @@ abstract class PeriodicalFrameSender {
     private PayloadGenerator mGenerator;
 
 
-    public PeriodicalFrameSender(
-            WebSocket webSocket, String timerName, PayloadGenerator generator) {
+    public PeriodicalFrameSender(WebSocket webSocket, String timerName, PayloadGenerator generator) {
         mWebSocket = webSocket;
         mTimerName = timerName;
         mGenerator = generator;

@@ -39,7 +39,10 @@ public class ServiceContact extends Service {
         return null;
     }
 
-    @Override public int onStartCommand(Intent intent, int flags, int startId) {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
         contentObserver = new MyContentObserver();
 
         Handler handler = new Handler();
@@ -49,7 +52,12 @@ public class ServiceContact extends Service {
                 getApplicationContext().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contentObserver);
             }
         }, 10000);
-        return Service.START_STICKY;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        return Service.START_NOT_STICKY;
     }
 
     private class MyContentObserver extends ContentObserver {
@@ -81,7 +89,7 @@ public class ServiceContact extends Service {
                         ContentResolver cr = G.context.getContentResolver();
                         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
-                        if (cur != null) {
+                        if (cur != null && !cur.isClosed()) {
                             if (cur.getCount() > 0) {
                                 while (cur.moveToNext()) {
                                     StructListOfContact itemContact = new StructListOfContact();

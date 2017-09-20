@@ -172,6 +172,7 @@ public final class ProtoResponse {
     }
 
     private static final long serialVersionUID = 0L;
+
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -250,6 +251,7 @@ public final class ProtoResponse {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
+
     public static Builder newBuilder(net.iGap.proto.ProtoResponse.Response prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }

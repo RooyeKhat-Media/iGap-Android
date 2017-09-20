@@ -10,6 +10,8 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
+import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserTwoStepVerificationRecoverPasswordByToken;
 
 public class UserTwoStepVerificationRecoverPasswordByTokenResponse extends MessageHandler {
@@ -31,6 +33,10 @@ public class UserTwoStepVerificationRecoverPasswordByTokenResponse extends Messa
 
         ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByTokenResponse.Builder builder =
             (ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByTokenResponse.Builder) message;
+        if (G.onRecoverySecurityPassword != null) {
+            G.onRecoverySecurityPassword.recoveryByEmail(builder.getToken());
+        }
+
     }
 
     @Override public void timeOut() {
@@ -39,6 +45,20 @@ public class UserTwoStepVerificationRecoverPasswordByTokenResponse extends Messa
 
     @Override public void error() {
         super.error();
+
+        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+        int majorCode = errorResponse.getMajorCode();
+        int minorCode = errorResponse.getMinorCode();
+
+
+        if (majorCode == 10129) {
+
+            if (G.onRecoverySecurityPassword != null) {
+                G.onRecoverySecurityPassword.errorRecoveryByEmail();
+
+            }
+        }
+
     }
 }
 

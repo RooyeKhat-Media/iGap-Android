@@ -14,21 +14,6 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.proto.ProtoGlobal;
 
-import static net.iGap.proto.ProtoGlobal.ClientAction.CAPTURING_IMAGE;
-import static net.iGap.proto.ProtoGlobal.ClientAction.CAPTURING_VIDEO;
-import static net.iGap.proto.ProtoGlobal.ClientAction.CHOOSING_CONTACT;
-import static net.iGap.proto.ProtoGlobal.ClientAction.PAINTING;
-import static net.iGap.proto.ProtoGlobal.ClientAction.RECORDING_VOICE;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_AUDIO;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_DOCUMENT;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_FILE;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_GIF;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_IMAGE;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_LOCATION;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_VIDEO;
-import static net.iGap.proto.ProtoGlobal.ClientAction.SENDING_VOICE;
-import static net.iGap.proto.ProtoGlobal.ClientAction.TYPING;
-
 /**
  * get enum and return appropriate string for use .
  * for example : " SENDING_IMAGE " convert to " sending image "
@@ -46,36 +31,53 @@ public class HelperConvertEnumToString {
     public static String convertActionEnum(ProtoGlobal.ClientAction action) {
 
         String finalActionName = null;
-        String currentAction = action.toString();
 
-        if (currentAction.equals(TYPING.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.typing);
-        } else if (currentAction.equals(SENDING_IMAGE.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_image);
-        } else if (currentAction.equals(CAPTURING_IMAGE.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.capturing_image);
-        } else if (currentAction.equals(SENDING_VIDEO.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_video);
-        } else if (currentAction.equals(CAPTURING_VIDEO.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.capturing_video);
-        } else if (currentAction.equals(SENDING_AUDIO.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_audio);
-        } else if (currentAction.equals(RECORDING_VOICE.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.recording_voice);
-        } else if (currentAction.equals(SENDING_VOICE.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_voice);
-        } else if (currentAction.equals(SENDING_DOCUMENT.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_document);
-        } else if (currentAction.equals(SENDING_GIF.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_gif);
-        } else if (currentAction.equals(SENDING_FILE.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_file);
-        } else if (currentAction.equals(SENDING_LOCATION.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.sending_location);
-        } else if (currentAction.equals(CHOOSING_CONTACT.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.choosing_contact);
-        } else if (currentAction.equals(PAINTING.toString())) {
-            finalActionName = G.context.getResources().getString(R.string.painting);
+        switch (action) {
+
+            case CANCEL:
+                break;
+            case TYPING:
+                finalActionName = G.context.getResources().getString(R.string.typing);
+                break;
+            case SENDING_IMAGE:
+                finalActionName = G.context.getResources().getString(R.string.sending_image);
+                break;
+            case CAPTURING_IMAGE:
+                finalActionName = G.context.getResources().getString(R.string.capturing_image);
+                break;
+            case SENDING_VIDEO:
+                finalActionName = G.context.getResources().getString(R.string.sending_video);
+                break;
+            case CAPTURING_VIDEO:
+                finalActionName = G.context.getResources().getString(R.string.capturing_video);
+                break;
+            case SENDING_AUDIO:
+                finalActionName = G.context.getResources().getString(R.string.sending_audio);
+                break;
+            case RECORDING_VOICE:
+                finalActionName = G.context.getResources().getString(R.string.recording_voice);
+                break;
+            case SENDING_VOICE:
+                finalActionName = G.context.getResources().getString(R.string.sending_voice);
+                break;
+            case SENDING_DOCUMENT:
+                finalActionName = G.context.getResources().getString(R.string.sending_document);
+                break;
+            case SENDING_GIF:
+                finalActionName = G.context.getResources().getString(R.string.sending_gif);
+                break;
+            case SENDING_FILE:
+                finalActionName = G.context.getResources().getString(R.string.sending_file);
+                break;
+            case SENDING_LOCATION:
+                finalActionName = G.context.getResources().getString(R.string.sending_location);
+                break;
+            case CHOOSING_CONTACT:
+                finalActionName = G.context.getResources().getString(R.string.choosing_contact);
+                break;
+            case PAINTING:
+                finalActionName = G.context.getResources().getString(R.string.painting);
+                break;
         }
 
         return finalActionName;

@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import net.iGap.proto.ProtoError;
 import net.iGap.request.RequestUserContactsGetList;
 
 public class UserContactsImportResponse extends MessageHandler {
@@ -27,23 +26,26 @@ public class UserContactsImportResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         new RequestUserContactsGetList().userContactGetList();
-
-        //  if (G.onContactImport != null) G.onContactImport.onContactImport();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-        ProtoError.ErrorResponse.Builder errorReponse = (ProtoError.ErrorResponse.Builder) message;
-        errorReponse.getMajorCode();
-        errorReponse.getMinorCode();
+
+        /**
+         * even the import wasn't successful send request for get contacts list
+         */
+        new RequestUserContactsGetList().userContactGetList();
     }
 }
 

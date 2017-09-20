@@ -4,6 +4,7 @@
               android:layout_height="64dp"
               android:gravity="center"
               android:layoutDirection="ltr"
+    android:clickable="true"
               android:orientation="horizontal"
     >
 

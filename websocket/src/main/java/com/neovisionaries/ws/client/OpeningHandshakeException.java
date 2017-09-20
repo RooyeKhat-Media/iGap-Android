@@ -35,16 +35,12 @@ public class OpeningHandshakeException extends WebSocketException {
     private final byte[] mBody;
 
 
-    OpeningHandshakeException(
-            WebSocketError error, String message,
-            StatusLine statusLine, Map<String, List<String>> headers) {
+    OpeningHandshakeException(WebSocketError error, String message, StatusLine statusLine, Map<String, List<String>> headers) {
         this(error, message, statusLine, headers, null);
     }
 
 
-    OpeningHandshakeException(
-            WebSocketError error, String message,
-            StatusLine statusLine, Map<String, List<String>> headers, byte[] body) {
+    OpeningHandshakeException(WebSocketError error, String message, StatusLine statusLine, Map<String, List<String>> headers, byte[] body) {
         super(error, message);
 
         mStatusLine = statusLine;
@@ -57,7 +53,8 @@ public class OpeningHandshakeException extends WebSocketException {
      * Get the status line contained in the WebSocket opening handshake
      * response from the server.
      *
-     * @return The status line.
+     * @return
+     *         The status line.
      */
     public StatusLine getStatusLine() {
         return mStatusLine;
@@ -68,9 +65,10 @@ public class OpeningHandshakeException extends WebSocketException {
      * Get the HTTP headers contained in the WebSocket opening handshake
      * response from the server.
      *
-     * @return The HTTP headers. The returned map is an instance of
-     * {@link java.util.TreeMap TreeMap} with {@link
-     * String#CASE_INSENSITIVE_ORDER} comparator.
+     * @return
+     *         The HTTP headers. The returned map is an instance of
+     *         {@link java.util.TreeMap TreeMap} with {@link
+     *         String#CASE_INSENSITIVE_ORDER} comparator.
      */
     public Map<String, List<String>> getHeaders() {
         return mHeaders;
@@ -80,7 +78,7 @@ public class OpeningHandshakeException extends WebSocketException {
     /**
      * Get the response body contained in the WebSocket opening handshake
      * response from the server.
-     * <p>
+     *
      * <p>
      * This method returns a non-null value only when (1) the status code
      * is not 101 (Switching Protocols), (2) the response from the server
@@ -89,7 +87,8 @@ public class OpeningHandshakeException extends WebSocketException {
      * cases, this method returns {@code null}.
      * </p>
      *
-     * @return The response body.
+     * @return
+     *         The response body.
      */
     public byte[] getBody() {
         return mBody;

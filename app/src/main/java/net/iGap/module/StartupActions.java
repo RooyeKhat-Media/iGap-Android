@@ -1,31 +1,38 @@
 package net.iGap.module;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.one.EmojiOneProvider;
 import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Locale;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.WebSocketClient;
+import net.iGap.adapter.items.chat.ViewMaker;
+import net.iGap.fragments.FragmentQrCodeNewDevice;
+import net.iGap.fragments.FragmentShowAvatars;
+import net.iGap.fragments.FragmentShowImage;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperFillLookUpClass;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperUploadFile;
-import net.iGap.helper.MyService;
+import net.iGap.helper.MyServiceTemporat;
 import net.iGap.realm.RealmMigration;
+import net.iGap.realm.RealmUserInfo;
+import net.iGap.webrtc.CallObserver;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,7 +48,10 @@ import static net.iGap.G.IMAGE_NEW_CHANEL;
 import static net.iGap.G.IMAGE_NEW_GROUP;
 import static net.iGap.G.appBarColor;
 import static net.iGap.G.attachmentColor;
+import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
+import static net.iGap.G.displayName;
+import static net.iGap.G.generalImmovableClasses;
 import static net.iGap.G.headerTextColor;
 import static net.iGap.G.helperNotificationAndBadge;
 import static net.iGap.G.imageFile;
@@ -52,6 +62,8 @@ import static net.iGap.G.selectedLanguage;
 import static net.iGap.G.toggleButtonColor;
 import static net.iGap.G.unLogin;
 import static net.iGap.G.unSecure;
+import static net.iGap.G.unSecureResponseActionId;
+import static net.iGap.G.userId;
 import static net.iGap.G.userTextSize;
 import static net.iGap.G.waitingActionIds;
 
@@ -61,19 +73,51 @@ import static net.iGap.G.waitingActionIds;
 public final class StartupActions {
 
     public StartupActions() {
+
+        detectDeviceType();
+        EmojiManager.install(new EmojiOneProvider()); // This line needs to be executed before any usage of EmojiTextView or EmojiEditText.
         initializeGlobalVariables();
         realmConfiguration();
+        mainUserInfo();
         connectToServer();
         manageSettingPreferences();
         makeFolder();
         ConnectionManager.manageConnection();
 
+
+        new CallObserver();
         /**
          * initialize download and upload listeners
          */
         new HelperDownloadFile();
         new HelperUploadFile();
     }
+
+    /**
+     * if device is tablet twoPaneMode will be enabled
+     */
+    private void detectDeviceType() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+
+        float yInches = metrics.heightPixels / metrics.ydpi;
+        float xInches = metrics.widthPixels / metrics.xdpi;
+        double diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
+        if (diagonalInches >= 6.5) {
+            G.twoPaneMode = true;
+        } else {
+            G.twoPaneMode = false;
+        }
+
+        if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT || G.twoPaneMode) {
+            G.maxChatBox = Math.min(metrics.widthPixels, metrics.heightPixels) - ViewMaker.i_Dp(R.dimen.dp80);
+        } else {
+            G.maxChatBox = Math.max(metrics.widthPixels, metrics.heightPixels) - ViewMaker.i_Dp(R.dimen.dp80);
+        }
+    }
+
+
 
     /**
      * start connecting to the sever
@@ -101,7 +145,7 @@ public final class StartupActions {
          */
         int isStart = preferences.getInt(SHP_SETTING.KEY_STNS_KEEP_ALIVE_SERVICE, 1);
         if (isStart == 1) {
-            Intent intent = new Intent(context, MyService.class);
+            Intent intent = new Intent(context, MyServiceTemporat.class);
             context.startService(intent);
         }
 
@@ -111,57 +155,14 @@ public final class StartupActions {
         //setting for show layout sender name in group
         G.showSenderNameInGroup = preferences.getInt(SHP_SETTING.KEY_SHOW_SENDER_NEME_IN_GROUP, 0) == 1;
 
-
-
-
-
-
-
         /**
          * detect need save to gallery automatically
          */
         int checkedSaveToGallery = preferences.getInt(SHP_SETTING.KEY_SAVE_TO_GALLERY, 0);
         isSaveToGallery = checkedSaveToGallery == 1;
 
-        /**
-         * copy country list
-         */
-        SharedPreferences sharedPreferences = context.getSharedPreferences("CopyDataBase", MODE_PRIVATE);
-        boolean isCopyFromAsset = sharedPreferences.getBoolean("isCopyRealm", true);
-        if (isCopyFromAsset) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isCopyRealm", false);
-            editor.apply();
-            try {
-                copyCountryListFromAsset();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         textSizeDetection(preferences);
         languageDetection(preferences);
-    }
-
-    /**
-     * copy country list from assets just once for use in registration
-     *
-     * @throws IOException
-     */
-    private void copyCountryListFromAsset() throws IOException {
-        InputStream inputStream = context.getAssets().open("CountryListA.realm");
-        Realm realm = Realm.getDefaultInstance();
-        String outFileName = realm.getPath();
-        OutputStream outputStream = new FileOutputStream(outFileName);
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, len);
-        }
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
-        realm.close();
     }
 
     /**
@@ -169,20 +170,24 @@ public final class StartupActions {
      */
     public static void textSizeDetection(SharedPreferences sharedPreferences) {
         userTextSize = sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14);
-        int screenLayout = context.getResources().getConfiguration().screenLayout;
-        screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
 
-        switch (screenLayout) {
-            case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                userTextSize = (userTextSize * 3) / 4;
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                userTextSize = (userTextSize * 3) / 2;
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_XLARGE:// or 4
-                userTextSize *= 2;
+        if (!G.context.getResources().getBoolean(R.bool.isTablet)) {
+
+            int screenLayout = context.getResources().getConfiguration().screenLayout;
+            screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
+
+            switch (screenLayout) {
+                case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                    userTextSize = (userTextSize * 3) / 4;
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                    userTextSize = (userTextSize * 3) / 2;
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_XLARGE:// or 4
+                    userTextSize *= 2;
+            }
         }
     }
 
@@ -197,14 +202,17 @@ public final class StartupActions {
             case "فارسی":
                 selectedLanguage = "fa";
                 HelperCalander.isLanguagePersian = true;
+                G.isAppRtl = true;
                 break;
             case "English":
                 selectedLanguage = "en";
                 HelperCalander.isLanguagePersian = false;
+                G.isAppRtl = false;
                 break;
             case "العربی":
                 selectedLanguage = "ar";
                 HelperCalander.isLanguagePersian = false;
+                G.isAppRtl = false;
                 break;
         }
 
@@ -244,26 +252,74 @@ public final class StartupActions {
     }
 
     private void initializeGlobalVariables() {
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(false).build();
-        ImageLoader.getInstance().init(new ImageLoaderConfiguration.Builder(context).defaultDisplayImageOptions(defaultOptions).build());
-        imageLoader = ImageLoader.getInstance();
-        helperNotificationAndBadge = new HelperNotificationAndBadge();
 
-        HelperFillLookUpClass.fillLookUpClassArray();
-        fillUnSecureList();
-        fillUnLoginList();
-        fillWaitingRequestActionIdAllowed();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(false).build();
+                ImageLoader.getInstance().init(new ImageLoaderConfiguration.Builder(context).defaultDisplayImageOptions(defaultOptions).build());
+                imageLoader = ImageLoader.getInstance();
+                helperNotificationAndBadge = new HelperNotificationAndBadge();
+
+                HelperFillLookUpClass.fillLookUpClassArray();
+                fillUnSecureList();
+                fillUnSecureServerActionId();
+                fillUnLoginList();
+                fillImmovableClasses();
+                fillWaitingRequestActionIdAllowed();
+            }
+        }).start();
+
+    }
+
+    /**
+     * fill main user info in global variables
+     */
+    private void mainUserInfo() {
+
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
+
+        if (userInfo != null) {
+
+            userId = userInfo.getUserId();
+            G.isPassCode = userInfo.isPassCode();
+
+            if (userInfo.getAuthorHash() != null) {
+                authorHash = userInfo.getAuthorHash();
+            }
+
+            if (userInfo.getUserInfo().getDisplayName() != null) {
+                displayName = userInfo.getUserInfo().getDisplayName();
+            }
+
+        }
+
+        realm.close();
     }
 
     /**
      * list of actionId that can be doing without secure
+     * (for send request)
      */
     private void fillUnSecureList() {
         unSecure.add("2");
     }
 
     /**
+     * list of actionIds that allowed continue processing even communication is not secure
+     * (for receive response)
+     */
+    private void fillUnSecureServerActionId() {
+        unSecureResponseActionId.add("30001");
+        unSecureResponseActionId.add("30002");
+        unSecureResponseActionId.add("30003");
+    }
+
+    /**
      * list of actionId that can be doing without login
+     * (for send request)
      */
     private void fillUnLoginList() {
         unLogin.add("100");
@@ -273,11 +329,27 @@ public final class StartupActions {
         unLogin.add("501");
         unLogin.add("502");
         unLogin.add("503");
+        unLogin.add("131");
+        unLogin.add("132");
+        unLogin.add("138");
+        unLogin.add("139");
+        unLogin.add("140");
+        unLogin.add("802");
+    }
+
+    /**
+     * list off classes(fragments) that don't have any animations for open and close state
+     */
+    private void fillImmovableClasses() {
+        generalImmovableClasses.add(FragmentShowAvatars.class.getName());
+        generalImmovableClasses.add(FragmentShowImage.class.getName());
+        generalImmovableClasses.add(FragmentQrCodeNewDevice.class.getName());
     }
 
     /**
      * list of actionId that will be storing in waitingActionIds list
      * and after that user login send this request again
+     * (for send request)
      */
     private void fillWaitingRequestActionIdAllowed() {
         waitingActionIds.add("201");
@@ -299,15 +371,15 @@ public final class StartupActions {
          */
         Realm.init(context);
 
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(10).migration(new RealmMigration()).build();
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).migration(new RealmMigration()).build();
         DynamicRealm dynamicRealm = DynamicRealm.getInstance(configuration);
         /**
          * Returns version of Realm file on disk
          */
         if (dynamicRealm.getVersion() == -1) {
-            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(10).deleteRealmIfMigrationNeeded().build());
+            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).deleteRealmIfMigrationNeeded().build());
         } else {
-            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(10).migration(new RealmMigration()).build());
+            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).migration(new RealmMigration()).build());
         }
         dynamicRealm.close();
 

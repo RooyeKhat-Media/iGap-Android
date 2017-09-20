@@ -2,98 +2,70 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/chatSubLayoutGif"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp4"
-    android:maxWidth="@dimen/chatBoxMaxWidth"
+    android:paddingBottom="@dimen/dp4"
+    android:clickable="true"
     android:textDirection="firstStrong"
     >
 
-    <LinearLayout
-        android:id="@+id/mainContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+  <LinearLayout
+      android:id="@+id/mainContainer"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:ignore="UselessParent"
+      >
 
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
 
 
         <LinearLayout
-            android:id="@+id/vote_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:id="@+id/contentContainer"
+            style="@style/ChatMessages.CardView"
+            >
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/contentContainer"
-                style="@style/ChatMessages.CardView">
-
-                <LinearLayout
-                    android:id="@+id/m_container"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+          <LinearLayout
+              android:id="@+id/m_container"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              >
 
 
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
 
-                      <net.iGap.module.ReserveSpaceGifImageView
-                            android:id="@+id/thumbnail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
+              <net.iGap.module.ReserveSpaceGifImageView
+                  android:id="@+id/thumbnail"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  />
 
-                        <include
-                            android:id="@+id/progress"
-                            layout="@layout/msg_progress_item"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:layout_gravity="center"/>
+              <include
+                  layout="@layout/msg_progress_item"
+                  android:id="@+id/progress"
+                  android:layout_width="56dp"
+                  android:layout_height="56dp"
+                  android:layout_gravity="center"
+                  />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom|right"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginRight="6dp"
-                            android:background="@drawable/bg_message_image_time"
-                            android:gravity="center_vertical|right"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="6dp"
-                            android:paddingRight="6dp"
-                            android:paddingTop="1dp"
-                            >
 
-                            <TextView
-                                android:id="@+id/cslr_txt_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="16dp"
-                                android:layout_marginBottom="-1dp"
-                                android:gravity="center"
-                                android:text="10:21"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/dp10"
-                                />
-
-                            <ImageView
-                                android:id="@+id/cslr_txt_tic"
-                                style="@style/ChatMessages.MaterialDesignTextView.Tick"
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginLeft="@dimen/dp4"
-                                app:srcCompat="@drawable/ic_clock"
-                                android:tint="@color/white"/>
-                        </LinearLayout>
-                    </FrameLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
+            </FrameLayout>
+          </LinearLayout>
         </LinearLayout>
 
 
-    </LinearLayout>
+      </LinearLayout>
+
+
+
+  </LinearLayout>
 </FrameLayout>

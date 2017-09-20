@@ -13,7 +13,6 @@ public final class ProtoUserAvatarGetList {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface UserAvatarGetListOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.UserAvatarGetList)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoUserAvatarGetList {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -38,7 +35,6 @@ public final class ProtoUserAvatarGetList {
      */
     long getUserId();
   }
-
   /**
    * Protobuf type {@code proto.UserAvatarGetList}
    */
@@ -49,7 +45,6 @@ public final class ProtoUserAvatarGetList {
     private UserAvatarGetList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserAvatarGetList() {
       userId_ = 0L;
     }
@@ -115,21 +110,18 @@ public final class ProtoUserAvatarGetList {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -139,7 +131,6 @@ public final class ProtoUserAvatarGetList {
 
     public static final int USER_ID_FIELD_NUMBER = 2;
     private long userId_;
-
     /**
      * <code>optional uint64 user_id = 2;</code>
      */
@@ -148,7 +139,6 @@ public final class ProtoUserAvatarGetList {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -183,7 +173,6 @@ public final class ProtoUserAvatarGetList {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -264,15 +253,12 @@ public final class ProtoUserAvatarGetList {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetList prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -282,7 +268,6 @@ public final class ProtoUserAvatarGetList {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserAvatarGetList}
      */
@@ -306,12 +291,10 @@ public final class ProtoUserAvatarGetList {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -376,7 +359,6 @@ public final class ProtoUserAvatarGetList {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetList) {
           return mergeFrom((net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetList) other);
@@ -419,14 +401,12 @@ public final class ProtoUserAvatarGetList {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -437,7 +417,6 @@ public final class ProtoUserAvatarGetList {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -454,7 +433,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -468,7 +446,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -486,7 +463,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -501,7 +477,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -510,7 +485,6 @@ public final class ProtoUserAvatarGetList {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -521,7 +495,6 @@ public final class ProtoUserAvatarGetList {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -534,14 +507,12 @@ public final class ProtoUserAvatarGetList {
       }
 
       private long userId_;
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
       public long getUserId() {
         return userId_;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -551,7 +522,6 @@ public final class ProtoUserAvatarGetList {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 user_id = 2;</code>
        */
@@ -576,7 +546,6 @@ public final class ProtoUserAvatarGetList {
 
     // @@protoc_insertion_point(class_scope:proto.UserAvatarGetList)
     private static final net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetList DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetList();
     }
@@ -614,12 +583,10 @@ public final class ProtoUserAvatarGetList {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -629,28 +596,23 @@ public final class ProtoUserAvatarGetList {
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     java.util.List<net.iGap.proto.ProtoGlobal.Avatar> getAvatarList();
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     net.iGap.proto.ProtoGlobal.Avatar getAvatar(int index);
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     int getAvatarCount();
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     java.util.List<? extends net.iGap.proto.ProtoGlobal.AvatarOrBuilder> getAvatarOrBuilderList();
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     net.iGap.proto.ProtoGlobal.AvatarOrBuilder getAvatarOrBuilder(int index);
   }
-
   /**
    * Protobuf type {@code proto.UserAvatarGetListResponse}
    */
@@ -661,7 +623,6 @@ public final class ProtoUserAvatarGetList {
     private UserAvatarGetListResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private UserAvatarGetListResponse() {
       avatar_ = java.util.Collections.emptyList();
     }
@@ -734,21 +695,18 @@ public final class ProtoUserAvatarGetList {
     private int bitField0_;
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -758,35 +716,30 @@ public final class ProtoUserAvatarGetList {
 
     public static final int AVATAR_FIELD_NUMBER = 2;
     private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_;
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     public java.util.List<net.iGap.proto.ProtoGlobal.Avatar> getAvatarList() {
       return avatar_;
     }
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     public java.util.List<? extends net.iGap.proto.ProtoGlobal.AvatarOrBuilder> getAvatarOrBuilderList() {
       return avatar_;
     }
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     public int getAvatarCount() {
       return avatar_.size();
     }
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
     public net.iGap.proto.ProtoGlobal.Avatar getAvatar(int index) {
       return avatar_.get(index);
     }
-
     /**
      * <code>repeated .proto.Avatar avatar = 2;</code>
      */
@@ -795,7 +748,6 @@ public final class ProtoUserAvatarGetList {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -830,7 +782,6 @@ public final class ProtoUserAvatarGetList {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -913,15 +864,12 @@ public final class ProtoUserAvatarGetList {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetListResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -932,7 +880,6 @@ public final class ProtoUserAvatarGetList {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.UserAvatarGetListResponse}
      */
@@ -956,13 +903,11 @@ public final class ProtoUserAvatarGetList {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
           getAvatarFieldBuilder();
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1042,7 +987,6 @@ public final class ProtoUserAvatarGetList {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetListResponse) {
           return mergeFrom((net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetListResponse) other);
@@ -1103,19 +1047,16 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       private int bitField0_;
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1126,7 +1067,6 @@ public final class ProtoUserAvatarGetList {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1143,7 +1083,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1157,7 +1096,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1175,7 +1113,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1190,7 +1127,6 @@ public final class ProtoUserAvatarGetList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1199,7 +1135,6 @@ public final class ProtoUserAvatarGetList {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1210,7 +1145,6 @@ public final class ProtoUserAvatarGetList {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1223,7 +1157,6 @@ public final class ProtoUserAvatarGetList {
       }
 
       private java.util.List<net.iGap.proto.ProtoGlobal.Avatar> avatar_ = java.util.Collections.emptyList();
-
       private void ensureAvatarIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           avatar_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Avatar>(avatar_);
@@ -1243,7 +1176,6 @@ public final class ProtoUserAvatarGetList {
           return avatarBuilder_.getMessageList();
         }
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1254,7 +1186,6 @@ public final class ProtoUserAvatarGetList {
           return avatarBuilder_.getCount();
         }
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1265,7 +1196,6 @@ public final class ProtoUserAvatarGetList {
           return avatarBuilder_.getMessage(index);
         }
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1282,7 +1212,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1296,7 +1225,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1313,7 +1241,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1330,7 +1257,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1344,7 +1270,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1358,7 +1283,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1372,7 +1296,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1386,7 +1309,6 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1400,14 +1322,12 @@ public final class ProtoUserAvatarGetList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Avatar.Builder getAvatarBuilder(int index) {
         return getAvatarFieldBuilder().getBuilder(index);
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1418,7 +1338,6 @@ public final class ProtoUserAvatarGetList {
           return avatarBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1429,21 +1348,18 @@ public final class ProtoUserAvatarGetList {
           return java.util.Collections.unmodifiableList(avatar_);
         }
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Avatar.Builder addAvatarBuilder() {
         return getAvatarFieldBuilder().addBuilder(net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Avatar.Builder addAvatarBuilder(int index) {
         return getAvatarFieldBuilder().addBuilder(index, net.iGap.proto.ProtoGlobal.Avatar.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.Avatar avatar = 2;</code>
        */
@@ -1473,7 +1389,6 @@ public final class ProtoUserAvatarGetList {
 
     // @@protoc_insertion_point(class_scope:proto.UserAvatarGetListResponse)
     private static final net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetListResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserAvatarGetList.UserAvatarGetListResponse();
     }
@@ -1513,7 +1428,6 @@ public final class ProtoUserAvatarGetList {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\027UserAvatarGetList.proto\022\005proto\032\rReques" +
@@ -1521,7 +1435,8 @@ public final class ProtoUserAvatarGetList {
                     "\021UserAvatarGetList\022\037\n\007request\030\001 \001(\0132\016.pr" +
                     "oto.Request\022\017\n\007user_id\030\002 \001(\004\"]\n\031UserAvat" +
                     "arGetListResponse\022!\n\010response\030\001 \001(\0132\017.pr" +
-                    "oto.Response\022\035\n\006avatar\030\002 \003(\0132\r.proto.Ava" + "tarB(\n\016net.iGap.protoB\026ProtoUserAvatarGe" +
+                    "oto.Response\022\035\n\006avatar\030\002 \003(\0132\r.proto.Ava" +
+                    "tarB(\n\016net.iGap.protoB\026ProtoUserAvatarGe" +
                     "tListb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1541,9 +1456,9 @@ public final class ProtoUserAvatarGetList {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_UserAvatarGetListResponse_descriptor,
         new java.lang.String[] { "Response", "Avatar", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

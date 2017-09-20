@@ -15,18 +15,25 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import net.iGap.G;
@@ -46,7 +53,7 @@ public final class AppUtils {
         throw new InstantiationException("This class is not for instantiation.");
     }
 
-    public static String[] exts = { ".jpg", ".jpeg", ".gif", ".png", ".tif" };
+    public static String[] exts = {".jpg", ".jpeg", ".gif", ".png", ".tif"};
 
     public static String suitableThumbFileName(String name) {
         boolean isImage = false;
@@ -109,6 +116,7 @@ public final class AppUtils {
                 case AUDIO:
                 case AUDIO_TEXT:
                     setImageDrawable(view, R.drawable.green_music_note);
+                    break;
                 case FILE:
                 case FILE_TEXT:
 
@@ -150,13 +158,70 @@ public final class AppUtils {
         }
     }
 
+    /**
+     * convert message type to appropriate text
+     */
+    public static String conversionMessageType(ProtoGlobal.RoomMessageType type) {
+        return conversionMessageType(type, null, 0);
+    }
+
+    /**
+     * convert message type to appropriate text and setText if textView isn't null
+     */
+    public static String conversionMessageType(ProtoGlobal.RoomMessageType type, @Nullable TextView textView, int colorId) {
+        String result = "";
+
+        switch (type) {
+            case VOICE:
+                result = G.context.getResources().getString(R.string.voice_message);
+                break;
+            case VIDEO:
+            case VIDEO_TEXT:
+                result = G.context.getResources().getString(R.string.video_message);
+                break;
+            case FILE:
+            case FILE_TEXT:
+                result = G.context.getResources().getString(R.string.file_message);
+                break;
+            case AUDIO:
+            case AUDIO_TEXT:
+                result = G.context.getResources().getString(R.string.audio_message);
+                break;
+            case IMAGE:
+            case IMAGE_TEXT:
+                result = G.context.getResources().getString(R.string.image_message);
+                break;
+            case CONTACT:
+                result = G.context.getResources().getString(R.string.contact_message);
+                break;
+            case GIF:
+            case GIF_TEXT:
+                result = G.context.getResources().getString(R.string.gif_message);
+                break;
+            case LOCATION:
+                result = G.context.getResources().getString(R.string.location_message);
+                break;
+            default:
+                break;
+        }
+
+        if (textView != null && !result.isEmpty()) {
+            textView.setTextColor(ContextCompat.getColor(context, colorId));
+            textView.setText(result);
+        }
+
+        return result;
+    }
+
+
     private static void getAndSetPositionPicture(final RealmRoomMessage message, final ImageView view) {
         if (message.getLocation().getImagePath() != null) {
             G.imageLoader.displayImage(AndroidUtils.suitablePath(message.getLocation().getImagePath()), view);
         } else {
 
             FragmentMap.loadImageFromPosition(message.getLocation().getLocationLat(), message.getLocation().getLocationLong(), new FragmentMap.OnGetPicture() {
-                @Override public void getBitmap(Bitmap bitmap) {
+                @Override
+                public void getBitmap(Bitmap bitmap) {
 
                     view.setImageBitmap(bitmap);
 
@@ -164,7 +229,8 @@ public final class AppUtils {
 
                     Realm realm = Realm.getDefaultInstance();
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
                             if (message.getLocation() != null) {
                                 message.getLocation().setImagePath(savedPath);
                             }
@@ -196,33 +262,23 @@ public final class AppUtils {
             case DELIVERED:
 
                 setImageDrawable(view, R.drawable.ic_double_check);
-
-                //DrawableCompat.setTint(view.getDrawable(), Color.BLACK);
                 view.setColorFilter(Color.BLACK);
                 break;
             case FAILED:
                 setImageDrawable(view, R.drawable.ic_error);
-
-                //                DrawableCompat.setTint(view.getDrawable().mutate(), Color.RED);
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.red));
                 break;
             case SEEN:
 
                 setImageDrawable(view, R.drawable.ic_double_check);
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.iGapColor));
-                //final Drawable originalDrawable = view.getDrawable();
-                //final Drawable wrappedDrawable = DrawableCompat.wrap(originalDrawable);
-                //DrawableCompat.setTintList(wrappedDrawable, ColorStateList.valueOf(view.getContext().getResources().getColor(R.color.iGapColor)));
                 break;
             case SENDING:
-                //setImageDrawable(view, R.drawable.ic_clock);
-                //                DrawableCompat.setTint(view.getDrawable().mutate(), Color.BLACK);
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
                 break;
             case SENT:
                 setImageDrawable(view, R.drawable.ic_check);
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
-                //                DrawableCompat.setTint(view.getDrawable().mutate(), Color.BLACK);
                 break;
             default:
                 view.setVisibility(View.GONE);
@@ -258,6 +314,7 @@ public final class AppUtils {
                     DrawableCompat.setTint(view.getDrawable().mutate(), Color.RED);
                 }
                 break;
+            case LISTENED:
             case SEEN:
                 setImageDrawable(view, R.drawable.ic_double_check);
                 final Drawable originalDrawable = view.getDrawable();
@@ -286,7 +343,7 @@ public final class AppUtils {
         }
     }
 
-    private static void setImageDrawable(ImageView view, int res) {
+    public static void setImageDrawable(ImageView view, int res) {
         view.setImageDrawable(net.iGap.messageprogress.AndroidUtils.getDrawable(G.currentActivity, res));
 
         // view.setImageResource(res);
@@ -294,8 +351,7 @@ public final class AppUtils {
 
     public static long findLastMessageId(long roomId) {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<RealmRoomMessage> roomMessages =
-            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.ASCENDING);
+        RealmResults<RealmRoomMessage> roomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.ASCENDING);
         if (!roomMessages.isEmpty()) {
             return roomMessages.first().getMessageId();
         }
@@ -454,8 +510,7 @@ public final class AppUtils {
     private static String computeLastMessage(final long roomId, Resources resources, ProtoGlobal.Room.Type roomType, RealmAttachment attachment) {
         Realm realm = Realm.getDefaultInstance();
         String lastMessage = "";
-        RealmResults<RealmRoomMessage> realmList =
-            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+        RealmResults<RealmRoomMessage> realmList = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
         for (RealmRoomMessage realmRoomMessage : realmList) {
             if (realmRoomMessage != null && !realmRoomMessage.isDeleted()) {
                 lastMessage = AppUtils.rightLastMessage(roomId, resources, roomType, realmRoomMessage, attachment);
@@ -469,8 +524,7 @@ public final class AppUtils {
     public static long computeLastMessageTime(final long roomId) {
         Realm realm = Realm.getDefaultInstance();
         long lastMessageTime = 0;
-        RealmResults<RealmRoomMessage> realmList =
-            realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+        RealmResults<RealmRoomMessage> realmList = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
         for (RealmRoomMessage realmRoomMessage : realmList) {
             if (realmRoomMessage != null && !realmRoomMessage.isDeleted()) {
                 lastMessageTime = realmRoomMessage.getUpdateOrCreateTime();
@@ -498,25 +552,26 @@ public final class AppUtils {
             newIds[itemsId.indexOf(integer)] = integer;
         }
 
-        return new MaterialDialog.Builder(context).title("Resend Messages")
+        return new MaterialDialog.Builder(context).title(R.string.resend_chat_message)
             .negativeText(context.getString(R.string.cancel))
             .items(items)
             .itemsIds(newIds)
             .itemsCallback(new MaterialDialog.ListCallback() {
-                @Override public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                    switch (itemView.getId()) {
-                        case 0:
-                            listener.resendMessage();
-                            break;
-                        case 1:
-                            listener.resendAllMessages();
-                            break;
-                        case 2:
-                            listener.deleteMessage();
-                            break;
-                    }
+            @Override
+            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                switch (itemView.getId()) {
+                    case 0:
+                        listener.resendMessage();
+                        break;
+                    case 1:
+                        listener.resendAllMessages();
+                        break;
+                    case 2:
+                        listener.deleteMessage();
+                        break;
                 }
-            });
+            }
+        });
     }
 
     public static String humanReadableDuration(double d) {
@@ -536,7 +591,7 @@ public final class AppUtils {
 
         try {
 
-            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(G.progressColor), android.graphics.PorterDuff.Mode.MULTIPLY);
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(G.progressColor), PorterDuff.Mode.SRC_IN);
 
             //  getResources().getColor(R.color.toolbar_background)
 
@@ -555,6 +610,17 @@ public final class AppUtils {
         }
     }
 
+    public static Uri createtUri(File file) {
 
+        Uri outputUri;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            outputUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        } else {
+            outputUri = Uri.fromFile(file);
+        }
+
+        return outputUri;
+    }
 
 }

@@ -13,6 +13,7 @@ package net.iGap.helper;
 import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import java.util.List;
@@ -22,7 +23,10 @@ import net.iGap.realm.RealmClientCondition;
 import net.iGap.realm.RealmClientConditionFields;
 import net.iGap.realm.RealmOfflineDelete;
 import net.iGap.realm.RealmOfflineEdited;
+import net.iGap.realm.RealmOfflineListen;
 import net.iGap.realm.RealmOfflineSeen;
+import net.iGap.realm.RealmRoom;
+import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 
@@ -31,17 +35,40 @@ import net.iGap.realm.RealmRoomMessageFields;
  */
 public class HelperClientCondition {
 
-    public static ProtoClientCondition.ClientCondition.Builder computeClientCondition(Long roomid) {
+    public static ProtoClientCondition.ClientCondition.Builder computeClientCondition(Long roomId) {
 
         Realm realm = Realm.getDefaultInstance();
         ProtoClientCondition.ClientCondition.Builder clientCondition = ProtoClientCondition.ClientCondition.newBuilder();
 
+        if (realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAll().size() == 0) {
+            return clientCondition;
+        }
+
         RealmResults<RealmClientCondition> clientConditionList;
 
-        if (roomid != null) {
-            clientConditionList = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomid).findAll();
+        if (roomId != null) {
+            clientConditionList = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findAll();
         } else {
-            clientConditionList = realm.where(RealmClientCondition.class).findAll();
+            /**
+             * find all client condition that deleted is false
+             *
+             * hint: we use {@link net.iGap.realm.RealmRoom#putChatToDatabase(List, boolean, boolean)} for add room to realm
+             * and in this method also we called {@link net.iGap.realm.RealmRoom#putChatToClientCondition(Realm, ProtoGlobal.Room)}
+             * so for each room exist a RealmClientCondition, but we just need RealmClientCondition for rooms that aren't deleted.
+             *
+             * it is better that client just create RealmClientCondition for rooms that need really.
+             */
+            RealmQuery<RealmClientCondition> conditionQuery = realm.where(RealmClientCondition.class);
+            if (realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAll().size() > 1) {
+                for (RealmRoom realmRoom : realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAll()) {
+                    conditionQuery.equalTo(RealmClientConditionFields.ROOM_ID, realmRoom.getId()).or();
+                }
+            } else {
+                for (RealmRoom realmRoom : realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, false).findAll()) {
+                    conditionQuery.equalTo(RealmClientConditionFields.ROOM_ID, realmRoom.getId());
+                }
+            }
+            clientConditionList = conditionQuery.findAll();
         }
 
         for (RealmClientCondition realmClientCondition : clientConditionList) {
@@ -49,30 +76,15 @@ public class HelperClientCondition {
                 ProtoClientCondition.ClientCondition.Room.Builder room = ProtoClientCondition.ClientCondition.Room.newBuilder();
                 room.setRoomId(realmClientCondition.getRoomId());
 
-                long messageVersion = 0;
-                long statusVersion = 0;
-                List<RealmRoomMessage> allItemsMessageVersion = realm.where(RealmRoomMessage.class)
-                    .equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId())
-                    .findAll()
-                    .sort(RealmRoomMessageFields.MESSAGE_VERSION, Sort.DESCENDING);
-                for (RealmRoomMessage item : allItemsMessageVersion) {
-                    if (item != null) {
-                        messageVersion = item.getMessageVersion();
-                        break;
-                    }
+                Number messageVersion = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().max(RealmRoomMessageFields.MESSAGE_VERSION);
+                if (messageVersion != null) {
+                    room.setMessageVersion((long) messageVersion);
                 }
-                List<RealmRoomMessage> allItemsStatusVersion = realm.where(RealmRoomMessage.class)
-                    .equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId())
-                    .findAll()
-                    .sort(RealmRoomMessageFields.STATUS_VERSION, Sort.DESCENDING);
-                for (RealmRoomMessage item : allItemsStatusVersion) {
-                    if (item != null) {
-                        statusVersion = item.getStatusVersion();
-                        break;
-                    }
+
+                Number statusVersion = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().max(RealmRoomMessageFields.STATUS_VERSION);
+                if (statusVersion != null) {
+                    room.setStatusVersion((long) statusVersion);
                 }
-                room.setMessageVersion(messageVersion);
-                room.setStatusVersion(statusVersion);
 
                 room.setDeleteVersion(realmClientCondition.getDeleteVersion());
 
@@ -91,10 +103,13 @@ public class HelperClientCondition {
                     room.addOfflineSeen(offlineSeen.getOfflineSeen());
                 }
 
+                for (RealmOfflineListen offlineListen : realmClientCondition.getOfflineListen()) { // DONE
+                    room.addOfflineListened(offlineListen.getOfflineListen());
+                }
+
                 room.setClearId(realmClientCondition.getClearId()); //DONE
 
-                List<RealmRoomMessage> allItemsAscending =
-                    realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.ASCENDING);
+                List<RealmRoomMessage> allItemsAscending = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.ASCENDING);
                 for (RealmRoomMessage item : allItemsAscending) {
                     if (item != null) {
                         room.setCacheStartId(item.getMessageId());
@@ -102,8 +117,7 @@ public class HelperClientCondition {
                     }
                 }
 
-                List<RealmRoomMessage> allItems =
-                    realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+                List<RealmRoomMessage> allItems = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, realmClientCondition.getRoomId()).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
                 for (RealmRoomMessage item : allItems) {
                     if (item != null) {
                         room.setCacheEndId(item.getMessageId());//Done
@@ -122,7 +136,7 @@ public class HelperClientCondition {
                 }
 
                 clientCondition.addRooms(room);
-                Log.i("CLI", "Condition : " + realmClientCondition);
+                Log.i("CLI", "room : " + room);
                 clearOffline(realmClientCondition, realm);
             }
         }
@@ -131,48 +145,15 @@ public class HelperClientCondition {
         return clientCondition;
     }
 
-    public static void setMessageAndStatusVersion(Realm realm, long roomId, ProtoGlobal.RoomMessage roomMessage) {
-        RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirst();
-
-        /**
-         * if received new message set info to RealmClientCondition
-         */
-        if (realmClientCondition != null) {
-            realmClientCondition.setMessageVersion(roomMessage.getMessageVersion());
-            realmClientCondition.setStatusVersion(roomMessage.getStatusVersion());
-        }
-    }
-
     private static void clearOffline(final RealmClientCondition realmClientCondition, Realm realm) {
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 realmClientCondition.setOfflineEdited(new RealmList<RealmOfflineEdited>());
                 realmClientCondition.setOfflineDeleted(new RealmList<RealmOfflineDelete>());
                 realmClientCondition.setOfflineSeen(new RealmList<RealmOfflineSeen>());
+                realmClientCondition.setOfflineListen(new RealmList<RealmOfflineListen>());
             }
         });
-    }
-
-    private static void computeMessageVersion(long roomId, Realm realm) {
-        long messageVersion = 0;
-        long statusVersion = 0;
-
-        for (RealmRoomMessage roomMessage : realm.where(RealmRoomMessage.class).findAll()) {
-            if (roomMessage.getMessageVersion() > messageVersion) {
-                messageVersion = roomMessage.getMessageVersion();
-            }
-
-            if (roomMessage.getStatusVersion() > statusVersion) {
-                messageVersion = roomMessage.getStatusVersion();
-            }
-        }
-    }
-
-    private static void computeStatusVersion() {
-
-    }
-
-    private static void computeDeleteVersion() {
-
     }
 }

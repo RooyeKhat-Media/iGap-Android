@@ -18,9 +18,10 @@ import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
-import net.iGap.AESCrypt;
+import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.helper.HelperString;
+import net.iGap.module.AESCrypt;
 import net.iGap.proto.ProtoConnectionSecuring;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
@@ -39,7 +40,8 @@ public class ConnectionSecuringResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoConnectionSecuring.ConnectionSecuringResponse.Builder builder = (ProtoConnectionSecuring.ConnectionSecuringResponse.Builder) message;
         G.currentTime = builder.getResponse().getTimestamp();
@@ -56,16 +58,20 @@ public class ConnectionSecuringResponse extends MessageHandler {
 
         byte[] encryption = null;
         try {
-            RSAPublicKey rsaPublicKey = (RSAPublicKey) HelperString.getPublicKeyFromPemFormat(publicKey);
-            PublicKey pubKey = KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(rsaPublicKey.getModulus(), rsaPublicKey.getPublicExponent()));
-            encryption = AESCrypt.encryptSymmetricKey(pubKey, G.symmetricKey.getEncoded());
+            RSAPublicKey rsaPublicKeyServer = (RSAPublicKey) HelperString.getPublicKeyFromPemFormat(publicKey);
+            PublicKey pubKeyServer = KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(rsaPublicKeyServer.getModulus(), rsaPublicKeyServer.getPublicExponent()));
+
+            RSAPublicKey rsaPublicKeyClient = (RSAPublicKey) HelperString.getPublicKeyFromPemFormat(Config.PUBLIC_KEY_CLIENT);
+            PublicKey pubKeyClient = KeyFactory.getInstance("RSA").generatePublic(new RSAPublicKeySpec(rsaPublicKeyClient.getModulus(), rsaPublicKeyClient.getPublicExponent()));
+
+            encryption = AESCrypt.encryptSymmetricKey(pubKeyServer, pubKeyClient, G.symmetricKey.getEncoded(), builder.getSecondaryChunkSize());
         } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
         }
 
         ProtoConnectionSecuring.ConnectionSymmetricKey.Builder connectionSymmetricKey = ProtoConnectionSecuring.ConnectionSymmetricKey.newBuilder();
         connectionSymmetricKey.setSymmetricKey(ByteString.copyFrom(encryption));
-        //connectionSymmetricKey.setVersion(2);
+        connectionSymmetricKey.setVersion(2);
         RequestWrapper requestWrapper = new RequestWrapper(2, connectionSymmetricKey);
         try {
             RequestQueue.sendRequest(requestWrapper);
@@ -74,13 +80,15 @@ public class ConnectionSecuringResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         // disconnect socket for do securing action again
         //WebSocketClient.getInstance().disconnect();
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         // disconnect socket for do securing action again
         //WebSocketClient.getInstance().disconnect();
         super.error();

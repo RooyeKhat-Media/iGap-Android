@@ -14,9 +14,11 @@ import net.iGap.proto.ProtoSignalingCandidate;
 
 public class RequestSignalingCandidate {
 
-    public void signalingCandidate(String candidate) {
+    public void signalingCandidate(String sdpMId, int sdpMLineIndex, String candidate) {
 
         ProtoSignalingCandidate.SignalingCandidate.Builder builder = ProtoSignalingCandidate.SignalingCandidate.newBuilder();
+        builder.setSdpMId(sdpMId);
+        builder.setSdpMLineIndex(sdpMLineIndex);
         builder.setCandidate(candidate);
 
         RequestWrapper requestWrapper = new RequestWrapper(904, builder);

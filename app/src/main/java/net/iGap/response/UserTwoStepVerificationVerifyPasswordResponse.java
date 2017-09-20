@@ -10,6 +10,8 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
+import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserTwoStepVerificationVerifyPassword;
 
 public class UserTwoStepVerificationVerifyPasswordResponse extends MessageHandler {
@@ -32,14 +34,35 @@ public class UserTwoStepVerificationVerifyPasswordResponse extends MessageHandle
         ProtoUserTwoStepVerificationVerifyPassword.UserTwoStepVerificationVerifyPasswordResponse.Builder builder =
             (ProtoUserTwoStepVerificationVerifyPassword.UserTwoStepVerificationVerifyPasswordResponse.Builder) message;
         builder.getToken();
+
+        if (G.onSecurityCheckPassword != null) {
+            G.onSecurityCheckPassword.verifyPassword(builder.getToken());
+        }
+
     }
 
     @Override public void timeOut() {
         super.timeOut();
+
     }
 
     @Override public void error() {
         super.error();
+
+        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+        int majorCode = errorResponse.getMajorCode();
+        int minorCode = errorResponse.getMinorCode();
+        final int getWait = errorResponse.getWait();
+
+        if (majorCode == 191) {
+            if (G.onSecurityCheckPassword != null) {
+                G.onSecurityCheckPassword.errorVerifyPassword(getWait);
+            }
+        } else if (majorCode == 194 && minorCode == 1) {
+            if (G.onSecurityCheckPassword != null) {
+                G.onSecurityCheckPassword.errorInvalidPassword();
+            }
+        }
     }
 }
 

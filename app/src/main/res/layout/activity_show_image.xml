@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:elevation="999dp"
+    android:clickable="true"
     android:layoutDirection="ltr"
     >
 
@@ -53,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center|left"
         android:text="2 of 10"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
@@ -96,7 +97,7 @@
       android:paddingRight="@dimen/dp32"
       >
 
-    <net.iGap.emoji.EmojiTextView
+    <net.iGap.module.EmojiTextViewE
         android:id="@+id/asi_txt_image_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

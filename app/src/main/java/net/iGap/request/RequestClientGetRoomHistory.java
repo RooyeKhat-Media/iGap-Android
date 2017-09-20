@@ -14,12 +14,13 @@ import net.iGap.proto.ProtoClientGetRoomHistory;
 
 public class RequestClientGetRoomHistory {
 
-    public void getRoomHistory(long roomId, long firstMessageId, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction, String identity) {
+    public void getRoomHistory(long roomId, long firstMessageId, int limit, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction, String identity) {
 
         ProtoClientGetRoomHistory.ClientGetRoomHistory.Builder builder = ProtoClientGetRoomHistory.ClientGetRoomHistory.newBuilder();
         builder.setRoomId(roomId);
         builder.setFirstMessageId(firstMessageId);
         builder.setDirection(direction);
+        builder.setLimit(limit);
 
         RequestWrapper requestWrapper = new RequestWrapper(603, builder, identity);
         try {

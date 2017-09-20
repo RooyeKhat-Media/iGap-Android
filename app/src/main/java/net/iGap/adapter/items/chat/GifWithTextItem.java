@@ -13,16 +13,17 @@ package net.iGap.adapter.items.chat;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import io.realm.Realm;
 import java.io.File;
 import java.util.List;
-import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AppUtils;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.ReserveSpaceGifImageView;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.enums.LocalFileType;
@@ -33,11 +34,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTextItem.ViewHolder> {
 
-    public GifWithTextItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public GifWithTextItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public void onPlayPauseGIF(ViewHolder holder, String localPath) {
+    @Override
+    public void onPlayPauseGIF(ViewHolder holder, String localPath) throws ClassCastException {
         super.onPlayPauseGIF(holder, localPath);
 
         MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
@@ -57,44 +59,68 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
         }
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutGifWithText;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_gif_with_text;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(ViewHolder holder, String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
-        holder.image.setImageURI(Uri.fromFile(new File(localPath)));
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        if (fileType == LocalFileType.FILE) {
-            SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-            if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 1) {
-                holder.itemView.findViewById(R.id.progress).setVisibility(View.GONE);
-            } else {
-                if (holder.image.getDrawable() instanceof GifDrawable) {
-                    GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
-                    // to get first frame
-                    gifDrawable.stop();
-                    holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+        if (holder.image != null && holder.image.getTag() != null && holder.image.getTag().equals(tag)) {
+            holder.image.setImageURI(Uri.fromFile(new File(localPath)));
+
+            if (fileType == LocalFileType.FILE) {
+                SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+                if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 1) {
+                    holder.itemView.findViewById(R.id.progress).setVisibility(View.GONE);
+                } else {
+                    if (holder.image.getDrawable() instanceof GifDrawable) {
+                        GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
+                        // to get first frame
+                        gifDrawable.stop();
+                        holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
-        super.bindView(holder, payloads);
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
 
-        if (mMessage.forwardedFrom != null) {
-            setTextIfNeeded(holder.messageText, mMessage.forwardedFrom.getMessage());
-        } else {
-            setTextIfNeeded(holder.messageText, mMessage.messageText);
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getGifItem(true));
         }
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+        holder.image = (ReserveSpaceGifImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.image.setTag(getCacheId(mMessage));
+
+        super.bindView(holder, payloads);
+
+        String text = "";
+
+        if (mMessage.forwardedFrom != null) {
+            text = mMessage.forwardedFrom.getMessage();
+        } else {
+            text = mMessage.messageText;
+        }
+
+        if (mMessage.hasEmojiInText) {
+            setTextIfNeeded((EmojiTextViewE) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        } else {
+            setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
+        }
+
+        holder.itemView.findViewById(R.id.progress).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (!isSelected()) {
                     if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                         return;
@@ -103,10 +129,18 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
                         messageClickListener.onFailedMessageClick(v, mMessage, holder.getAdapterPosition());
                     } else {
                         if (mMessage.forwardedFrom != null && mMessage.forwardedFrom.getAttachment().isFileExistsOnLocal()) {
-                            onPlayPauseGIF(holder, mMessage.forwardedFrom.getAttachment().getLocalFilePath());
+                            try {
+                                onPlayPauseGIF(holder, mMessage.forwardedFrom.getAttachment().getLocalFilePath());
+                            } catch (ClassCastException e) {
+                                e.printStackTrace();
+                            }
                         } else {
                             if (mMessage.attachment.isFileExistsOnLocal()) {
-                                onPlayPauseGIF(holder, mMessage.attachment.getLocalFilePath());
+                                try {
+                                    onPlayPauseGIF(holder, mMessage.attachment.getLocalFilePath());
+                                } catch (ClassCastException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -114,29 +148,33 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
             }
         });
 
-        holder.itemView.findViewById(R.id.progress).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                holder.image.performClick();
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.itemView.findViewById(R.id.progress).performClick();
             }
         });
 
         holder.image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override public boolean onLongClick(View v) {
+            @Override
+            public boolean onLongClick(View v) {
                 holder.itemView.performLongClick();
                 return false;
             }
         });
 
         if (!mMessage.hasLinkInMessage) {
-            holder.messageText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
+            messageView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
                     holder.itemView.performLongClick();
                     return false;
                 }
             });
 
-            holder.messageText.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+            messageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (!isSelected()) {
                         if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             return;
@@ -152,26 +190,18 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
         }
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected ReserveSpaceGifImageView image;
-        protected EmojiTextView messageText;
 
         public ViewHolder(View view) {
             super(view);
-
-            image = (ReserveSpaceGifImageView) view.findViewById(R.id.thumbnail);
-            messageText = (EmojiTextView) view.findViewById(R.id.messageText);
-            messageText.setTextSize(G.userTextSize);
-            messageText.setMovementMethod(LinkMovementMethod.getInstance());
+            //image = (ReserveSpaceGifImageView) view.findViewById(R.id.thumbnail);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

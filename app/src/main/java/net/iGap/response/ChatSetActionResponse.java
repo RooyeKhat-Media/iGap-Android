@@ -27,24 +27,32 @@ public class ChatSetActionResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoChatSetAction.ChatSetActionResponse.Builder builder = (ProtoChatSetAction.ChatSetActionResponse.Builder) message;
 
-        if (G.onSetAction != null) {
-            G.onSetAction.onSetAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
-        }
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (G.onSetAction != null) {
+                    G.onSetAction.onSetAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
+                }
 
-        if (G.onSetActionInRoom != null) {
-            G.onSetActionInRoom.onSetAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
-        }
+                if (G.onSetActionInRoom != null) {
+                    G.onSetActionInRoom.onSetAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
+                }
+            }
+        });
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

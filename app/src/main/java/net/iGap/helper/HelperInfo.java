@@ -38,7 +38,7 @@ public class HelperInfo {
             realm.close();
             return false;
         }
-        new RequestUserInfo().userInfo(userId);
+        new RequestUserInfo().userInfoAvoidDuplicate(userId);
 
         realm.close();
         return true;

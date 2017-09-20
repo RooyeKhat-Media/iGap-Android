@@ -11,7 +11,8 @@
 package net.iGap.interfaces;
 
 
-public interface ISignalingCallBack {
+import net.iGap.module.enums.CallState;
 
-    void onStatusChanged(String status);
+public interface ISignalingCallBack {
+    void onStatusChanged(CallState callState);
 }

@@ -11,9 +11,9 @@
 package net.iGap.adapter.items.chat;
 
 import android.graphics.Bitmap;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import io.realm.Realm;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMap;
+import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperPermision;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnGetPermission;
@@ -29,12 +30,10 @@ import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessageLocation;
 
-import static net.iGap.R.id.ac_ll_parent;
-
 public class LocationItem extends AbstractMessage<LocationItem, LocationItem.ViewHolder> {
 
-    public LocationItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public LocationItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
     @Override public int getType() {
@@ -42,10 +41,18 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
     }
 
     @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_location;
+        return R.layout.chat_sub_layout_message;
     }
 
     @Override public void bindView(final ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getLocationItem());
+
+        }
+
+        holder.imgMapPosition = (ReserveSpaceRoundedImageView) holder.itemView.findViewById(R.id.thumbnail);
+
         super.bindView(holder, payloads);
 
         holder.imgMapPosition.reserveSpace(G.context.getResources().getDimension(R.dimen.dp240), G.context.getResources().getDimension(R.dimen.dp120), getRoomType());
@@ -98,14 +105,13 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
                     try {
                         HelperPermision.getLocationPermission(G.currentActivity, new OnGetPermission() {
                             @Override public void Allow() {
-                                FragmentMap fragment = FragmentMap.getInctance(finalItem.getLocationLat(), finalItem.getLocationLong(), FragmentMap.Mode.seePosition);
-                                FragmentActivity activity = (FragmentActivity) G.currentActivity;
-                                activity.getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .addToBackStack(null)
-                                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left)
-                                    .replace(ac_ll_parent, fragment, FragmentMap.flagFragmentMap)
-                                    .commit();
+                                G.handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        FragmentMap fragment = FragmentMap.getInctance(finalItem.getLocationLat(), finalItem.getLocationLong(), FragmentMap.Mode.seePosition);
+                                        new HelperFragment(fragment).setReplace(false).load();
+                                    }
+                                });
                             }
 
                             @Override public void deny() {
@@ -128,10 +134,6 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
         super.updateLayoutForSend(holder);
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
     @Override public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
@@ -142,7 +144,6 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
 
         public ViewHolder(View view) {
             super(view);
-            imgMapPosition = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
         }
     }
 }

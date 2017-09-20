@@ -12,16 +12,21 @@ package net.iGap.helper;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
+import android.util.Log;
 import java.util.ArrayList;
 import net.iGap.G;
 
 public class HelperAddContact {
 
-    public static void addContact(String displayName, String phone) {
+    public static void addContact(String displayName, String codeNumber, String phone) {
 
-        if (phone.startsWith("0")) phone = phone.substring(1, phone.length());
-
-        String saveNumber = "+98" + phone.replace("+98", "");
+        String saveNumber;
+        if (phone.startsWith("0")) {
+            saveNumber = codeNumber + phone.substring(1, phone.length());
+        } else {
+            saveNumber = codeNumber + phone;
+        }
+        Log.i("GGGGGGGG", "1 addContact: " + saveNumber);
 
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 

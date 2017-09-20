@@ -134,11 +134,11 @@
     <!--</string-array>-->
 
     <string-array name="vibrate">
-        <item>@string/array_Disable</item>
         <item>@string/array_Default</item>
         <item>@string/array_Short</item>
         <item>@string/array_Long</item>
         <item>@string/array_Only_if_silent</item>
+        <item>@string/array_Disable</item>
     </string-array>
 
     <string-array name="notifications_vibrate">
@@ -245,6 +245,16 @@
         <item>@string/Female</item>
     </string-array>
 
+    <string-array name="array_passCode">
+        <item>@string/PIN</item>
+        <item>@string/password</item>
+    </string-array>
+
+    <string-array name="keepMedia">
+        <item>@string/keep_media_forever</item>
+        <item>@string/keep_media_1week</item>
+    </string-array>
+
     <string-array name="delete_account">
         <item>@string/delete_account_text1</item>
         <item>@string/delete_account_text2</item>
@@ -262,6 +272,20 @@
     <string-array name="capture">
         <item>@string/capture_image</item>
         <item>@string/capture_video</item>
+    </string-array>
+
+  <string-array name="securityRecoveryPassword">
+    <item>@string/recovery_by_email_dialog</item>
+    <item>@string/recovery_by_question_dialog</item>
+  </string-array>
+
+  <string-array name="securityRecoveryPasswordWithoutEmail">
+    <item>@string/recovery_by_question_dialog</item>
+  </string-array>
+
+    <string-array name="modePassCode">
+        <item>@string/PIN</item>
+        <item>@string/password</item>
     </string-array>
 
 </resources>

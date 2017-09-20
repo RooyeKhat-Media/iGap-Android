@@ -13,7 +13,6 @@ public final class ProtoChannelDeleteMessage {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface ChannelDeleteMessageOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.ChannelDeleteMessage)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoChannelDeleteMessage {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -43,7 +40,6 @@ public final class ProtoChannelDeleteMessage {
      */
     long getMessageId();
   }
-
   /**
    * Protobuf type {@code proto.ChannelDeleteMessage}
    */
@@ -54,7 +50,6 @@ public final class ProtoChannelDeleteMessage {
     private ChannelDeleteMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChannelDeleteMessage() {
       roomId_ = 0L;
       messageId_ = 0L;
@@ -126,21 +121,18 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -150,7 +142,6 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -160,7 +151,6 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int MESSAGE_ID_FIELD_NUMBER = 3;
     private long messageId_;
-
     /**
      * <code>optional uint64 message_id = 3;</code>
      */
@@ -169,7 +159,6 @@ public final class ProtoChannelDeleteMessage {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -210,7 +199,6 @@ public final class ProtoChannelDeleteMessage {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -294,15 +282,12 @@ public final class ProtoChannelDeleteMessage {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -312,7 +297,6 @@ public final class ProtoChannelDeleteMessage {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChannelDeleteMessage}
      */
@@ -336,12 +320,10 @@ public final class ProtoChannelDeleteMessage {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -409,7 +391,6 @@ public final class ProtoChannelDeleteMessage {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessage) {
           return mergeFrom((net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessage) other);
@@ -455,14 +436,12 @@ public final class ProtoChannelDeleteMessage {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -473,7 +452,6 @@ public final class ProtoChannelDeleteMessage {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -490,7 +468,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -504,7 +481,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -522,7 +498,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -537,7 +512,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -546,7 +520,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -557,7 +530,6 @@ public final class ProtoChannelDeleteMessage {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -570,14 +542,12 @@ public final class ProtoChannelDeleteMessage {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -587,7 +557,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -599,14 +568,12 @@ public final class ProtoChannelDeleteMessage {
       }
 
       private long messageId_;
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
       public long getMessageId() {
         return messageId_;
       }
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
@@ -616,7 +583,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
@@ -641,7 +607,6 @@ public final class ProtoChannelDeleteMessage {
 
     // @@protoc_insertion_point(class_scope:proto.ChannelDeleteMessage)
     private static final net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessage DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessage();
     }
@@ -679,12 +644,10 @@ public final class ProtoChannelDeleteMessage {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -705,7 +668,6 @@ public final class ProtoChannelDeleteMessage {
      */
     long getDeleteVersion();
   }
-
   /**
    * Protobuf type {@code proto.ChannelDeleteMessageResponse}
    */
@@ -716,7 +678,6 @@ public final class ProtoChannelDeleteMessage {
     private ChannelDeleteMessageResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChannelDeleteMessageResponse() {
       roomId_ = 0L;
       messageId_ = 0L;
@@ -794,21 +755,18 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -818,7 +776,6 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -828,7 +785,6 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int MESSAGE_ID_FIELD_NUMBER = 3;
     private long messageId_;
-
     /**
      * <code>optional uint64 message_id = 3;</code>
      */
@@ -838,7 +794,6 @@ public final class ProtoChannelDeleteMessage {
 
     public static final int DELETE_VERSION_FIELD_NUMBER = 4;
     private long deleteVersion_;
-
     /**
      * <code>optional uint64 delete_version = 4;</code>
      */
@@ -847,7 +802,6 @@ public final class ProtoChannelDeleteMessage {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -894,7 +848,6 @@ public final class ProtoChannelDeleteMessage {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -981,15 +934,12 @@ public final class ProtoChannelDeleteMessage {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -1000,7 +950,6 @@ public final class ProtoChannelDeleteMessage {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChannelDeleteMessageResponse}
      */
@@ -1024,12 +973,10 @@ public final class ProtoChannelDeleteMessage {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1100,7 +1047,6 @@ public final class ProtoChannelDeleteMessage {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse) {
           return mergeFrom((net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse) other);
@@ -1110,23 +1056,23 @@ public final class ProtoChannelDeleteMessage {
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse other) {
-          if (other == net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse.getDefaultInstance()) return this;
-          if (other.hasResponse()) {
-            mergeResponse(other.getResponse());
-          }
-          if (other.getRoomId() != 0L) {
-            setRoomId(other.getRoomId());
-          }
-          if (other.getMessageId() != 0L) {
-            setMessageId(other.getMessageId());
-          }
-          if (other.getDeleteVersion() != 0L) {
-            setDeleteVersion(other.getDeleteVersion());
-          }
-          onChanged();
-          return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse other) {
+        if (other == net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse.getDefaultInstance()) return this;
+        if (other.hasResponse()) {
+          mergeResponse(other.getResponse());
         }
+        if (other.getRoomId() != 0L) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getMessageId() != 0L) {
+          setMessageId(other.getMessageId());
+        }
+        if (other.getDeleteVersion() != 0L) {
+          setDeleteVersion(other.getDeleteVersion());
+        }
+        onChanged();
+        return this;
+      }
 
       public final boolean isInitialized() {
         return true;
@@ -1149,14 +1095,12 @@ public final class ProtoChannelDeleteMessage {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1167,7 +1111,6 @@ public final class ProtoChannelDeleteMessage {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1184,7 +1127,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1198,7 +1140,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1216,7 +1157,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1231,7 +1171,6 @@ public final class ProtoChannelDeleteMessage {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1240,7 +1179,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1251,7 +1189,6 @@ public final class ProtoChannelDeleteMessage {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1264,14 +1201,12 @@ public final class ProtoChannelDeleteMessage {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1281,7 +1216,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1293,14 +1227,12 @@ public final class ProtoChannelDeleteMessage {
       }
 
       private long messageId_;
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
       public long getMessageId() {
         return messageId_;
       }
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
@@ -1310,7 +1242,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
@@ -1322,14 +1253,12 @@ public final class ProtoChannelDeleteMessage {
       }
 
       private long deleteVersion_;
-
       /**
        * <code>optional uint64 delete_version = 4;</code>
        */
       public long getDeleteVersion() {
         return deleteVersion_;
       }
-
       /**
        * <code>optional uint64 delete_version = 4;</code>
        */
@@ -1339,7 +1268,6 @@ public final class ProtoChannelDeleteMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 delete_version = 4;</code>
        */
@@ -1364,7 +1292,6 @@ public final class ProtoChannelDeleteMessage {
 
     // @@protoc_insertion_point(class_scope:proto.ChannelDeleteMessageResponse)
     private static final net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelDeleteMessage.ChannelDeleteMessageResponse();
     }
@@ -1404,7 +1331,6 @@ public final class ProtoChannelDeleteMessage {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\032ChannelDeleteMessage.proto\022\005proto\032\rReq" +
@@ -1413,11 +1339,12 @@ public final class ProtoChannelDeleteMessage {
                     "est\022\017\n\007room_id\030\002 \001(\004\022\022\n\nmessage_id\030\003 \001(\004" +
                     "\"~\n\034ChannelDeleteMessageResponse\022!\n\010resp" +
                     "onse\030\001 \001(\0132\017.proto.Response\022\017\n\007room_id\030\002" +
-                    " \001(\004\022\022\n\nmessage_id\030\003 \001(\004\022\026\n\016delete_versi" + "on\030\004 \001(\004B+\n\016net.iGap.protoB\031ProtoChannel" +
+                    " \001(\004\022\022\n\nmessage_id\030\003 \001(\004\022\026\n\016delete_versi" +
+                    "on\030\004 \001(\004B+\n\016net.iGap.protoB\031ProtoChannel" +
                     "DeleteMessageb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
             descriptor = root;
             return null;
           }
@@ -1432,8 +1359,8 @@ public final class ProtoChannelDeleteMessage {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ChannelDeleteMessageResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "MessageId", "DeleteVersion", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

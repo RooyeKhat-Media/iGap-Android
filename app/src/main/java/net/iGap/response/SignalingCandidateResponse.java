@@ -33,10 +33,10 @@ public class SignalingCandidateResponse extends MessageHandler {
 
         ProtoSignalingCandidate.SignalingCandidateResponse.Builder builder = (ProtoSignalingCandidate.SignalingCandidateResponse.Builder) message;
 
-        String peer_candidate = builder.getPeerCandidate();
-
-        if (G.iSignalingCondidate != null) {
-            G.iSignalingCondidate.onCondidate(peer_candidate);
+        if (builder.getResponse().getId().isEmpty()) {
+            if (G.iSignalingCandidate != null) {
+                G.iSignalingCandidate.onCandidate(builder.getPeerSdpMId(), builder.getPeerSdpMLineIndex(), builder.getPeerCandidate());
+            }
         }
     }
 

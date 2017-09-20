@@ -13,7 +13,6 @@ public final class ProtoGroupGetMemberList {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface GroupGetMemberListOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.GroupGetMemberList)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoGroupGetMemberList {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -42,7 +39,6 @@ public final class ProtoGroupGetMemberList {
      * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
      */
     int getFilterRoleValue();
-
     /**
      * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
      */
@@ -52,18 +48,15 @@ public final class ProtoGroupGetMemberList {
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
     boolean hasPagination();
-
     /**
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
     net.iGap.proto.ProtoGlobal.Pagination getPagination();
-
     /**
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
     net.iGap.proto.ProtoGlobal.PaginationOrBuilder getPaginationOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.GroupGetMemberList}
    */
@@ -74,7 +67,6 @@ public final class ProtoGroupGetMemberList {
     private GroupGetMemberList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupGetMemberList() {
       roomId_ = 0L;
       filterRole_ = 0;
@@ -273,21 +265,18 @@ public final class ProtoGroupGetMemberList {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -297,7 +286,6 @@ public final class ProtoGroupGetMemberList {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -307,14 +295,12 @@ public final class ProtoGroupGetMemberList {
 
     public static final int FILTER_ROLE_FIELD_NUMBER = 3;
     private int filterRole_;
-
     /**
      * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
      */
     public int getFilterRoleValue() {
       return filterRole_;
     }
-
     /**
      * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
      */
@@ -325,21 +311,18 @@ public final class ProtoGroupGetMemberList {
 
     public static final int PAGINATION_FIELD_NUMBER = 4;
     private net.iGap.proto.ProtoGlobal.Pagination pagination_;
-
     /**
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
     public boolean hasPagination() {
       return pagination_ != null;
     }
-
     /**
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
     public net.iGap.proto.ProtoGlobal.Pagination getPagination() {
       return pagination_ == null ? net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
     }
-
     /**
      * <code>optional .proto.Pagination pagination = 4;</code>
      */
@@ -348,7 +331,6 @@ public final class ProtoGroupGetMemberList {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -395,7 +377,6 @@ public final class ProtoGroupGetMemberList {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -487,15 +468,12 @@ public final class ProtoGroupGetMemberList {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -505,7 +483,6 @@ public final class ProtoGroupGetMemberList {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupGetMemberList}
      */
@@ -529,12 +506,10 @@ public final class ProtoGroupGetMemberList {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -613,7 +588,6 @@ public final class ProtoGroupGetMemberList {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList) {
           return mergeFrom((net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList) other);
@@ -662,14 +636,12 @@ public final class ProtoGroupGetMemberList {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -680,7 +652,6 @@ public final class ProtoGroupGetMemberList {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -697,7 +668,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -711,7 +681,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -729,7 +698,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -744,7 +712,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -753,7 +720,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -764,7 +730,6 @@ public final class ProtoGroupGetMemberList {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -777,14 +742,12 @@ public final class ProtoGroupGetMemberList {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -794,7 +757,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -806,14 +768,12 @@ public final class ProtoGroupGetMemberList {
       }
 
       private int filterRole_ = 0;
-
       /**
        * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
        */
       public int getFilterRoleValue() {
         return filterRole_;
       }
-
       /**
        * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
        */
@@ -822,7 +782,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
        */
@@ -830,7 +789,6 @@ public final class ProtoGroupGetMemberList {
         net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList.FilterRole result = net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.valueOf(filterRole_);
         return result == null ? net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.UNRECOGNIZED : result;
       }
-
       /**
        * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
        */
@@ -843,7 +801,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.GroupGetMemberList.FilterRole filter_role = 3;</code>
        */
@@ -856,14 +813,12 @@ public final class ProtoGroupGetMemberList {
 
       private net.iGap.proto.ProtoGlobal.Pagination pagination_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> paginationBuilder_;
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
       public boolean hasPagination() {
         return paginationBuilder_ != null || pagination_ != null;
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -874,7 +829,6 @@ public final class ProtoGroupGetMemberList {
           return paginationBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -891,7 +845,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -905,7 +858,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -923,7 +875,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -938,7 +889,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -947,7 +897,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return getPaginationFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -958,7 +907,6 @@ public final class ProtoGroupGetMemberList {
           return pagination_ == null ? net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
         }
       }
-
       /**
        * <code>optional .proto.Pagination pagination = 4;</code>
        */
@@ -984,7 +932,6 @@ public final class ProtoGroupGetMemberList {
 
     // @@protoc_insertion_point(class_scope:proto.GroupGetMemberList)
     private static final net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberList();
     }
@@ -1022,12 +969,10 @@ public final class ProtoGroupGetMemberList {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -1037,28 +982,23 @@ public final class ProtoGroupGetMemberList {
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     java.util.List<net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> getMemberList();
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member getMember(int index);
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     int getMemberCount();
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     java.util.List<? extends net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.MemberOrBuilder> getMemberOrBuilderList();
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.MemberOrBuilder getMemberOrBuilder(int index);
   }
-
   /**
    * Protobuf type {@code proto.GroupGetMemberListResponse}
    */
@@ -1069,7 +1009,6 @@ public final class ProtoGroupGetMemberList {
     private GroupGetMemberListResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupGetMemberListResponse() {
       member_ = java.util.Collections.emptyList();
     }
@@ -1152,13 +1091,11 @@ public final class ProtoGroupGetMemberList {
        * <code>optional .proto.GroupRoom.Role role = 2;</code>
        */
       int getRoleValue();
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 2;</code>
        */
       net.iGap.proto.ProtoGlobal.GroupRoom.Role getRole();
     }
-
     /**
      * Protobuf type {@code proto.GroupGetMemberListResponse.Member}
      */
@@ -1169,7 +1106,6 @@ public final class ProtoGroupGetMemberList {
       private Member(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
       }
-
       private Member() {
         userId_ = 0L;
         role_ = 0;
@@ -1229,7 +1165,6 @@ public final class ProtoGroupGetMemberList {
 
       public static final int USERID_FIELD_NUMBER = 1;
       private long userId_;
-
       /**
        * <code>optional uint64 userId = 1;</code>
        */
@@ -1239,14 +1174,12 @@ public final class ProtoGroupGetMemberList {
 
       public static final int ROLE_FIELD_NUMBER = 2;
       private int role_;
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 2;</code>
        */
       public int getRoleValue() {
         return role_;
       }
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 2;</code>
        */
@@ -1256,7 +1189,6 @@ public final class ProtoGroupGetMemberList {
       }
 
       private byte memoizedIsInitialized = -1;
-
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -1291,7 +1223,6 @@ public final class ProtoGroupGetMemberList {
       }
 
       private static final long serialVersionUID = 0L;
-
       @java.lang.Override
       public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
@@ -1367,15 +1298,12 @@ public final class ProtoGroupGetMemberList {
       public Builder newBuilderForType() {
         return newBuilder();
       }
-
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-
       public static Builder newBuilder(net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
-
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
       }
@@ -1385,7 +1313,6 @@ public final class ProtoGroupGetMemberList {
         Builder builder = new Builder(parent);
         return builder;
       }
-
       /**
        * Protobuf type {@code proto.GroupGetMemberListResponse.Member}
        */
@@ -1409,12 +1336,10 @@ public final class ProtoGroupGetMemberList {
           super(parent);
           maybeForceBuilderInitialization();
         }
-
         private void maybeForceBuilderInitialization() {
           if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
           }
         }
-
         public Builder clear() {
           super.clear();
           userId_ = 0L;
@@ -1471,7 +1396,6 @@ public final class ProtoGroupGetMemberList {
         public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
-
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member) {
             return mergeFrom((net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member) other);
@@ -1513,14 +1437,12 @@ public final class ProtoGroupGetMemberList {
         }
 
         private long userId_;
-
         /**
          * <code>optional uint64 userId = 1;</code>
          */
         public long getUserId() {
           return userId_;
         }
-
         /**
          * <code>optional uint64 userId = 1;</code>
          */
@@ -1530,7 +1452,6 @@ public final class ProtoGroupGetMemberList {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional uint64 userId = 1;</code>
          */
@@ -1542,14 +1463,12 @@ public final class ProtoGroupGetMemberList {
         }
 
         private int role_ = 0;
-
         /**
          * <code>optional .proto.GroupRoom.Role role = 2;</code>
          */
         public int getRoleValue() {
           return role_;
         }
-
         /**
          * <code>optional .proto.GroupRoom.Role role = 2;</code>
          */
@@ -1558,7 +1477,6 @@ public final class ProtoGroupGetMemberList {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional .proto.GroupRoom.Role role = 2;</code>
          */
@@ -1566,7 +1484,6 @@ public final class ProtoGroupGetMemberList {
           net.iGap.proto.ProtoGlobal.GroupRoom.Role result = net.iGap.proto.ProtoGlobal.GroupRoom.Role.valueOf(role_);
           return result == null ? net.iGap.proto.ProtoGlobal.GroupRoom.Role.UNRECOGNIZED : result;
         }
-
         /**
          * <code>optional .proto.GroupRoom.Role role = 2;</code>
          */
@@ -1579,7 +1496,6 @@ public final class ProtoGroupGetMemberList {
           onChanged();
           return this;
         }
-
         /**
          * <code>optional .proto.GroupRoom.Role role = 2;</code>
          */
@@ -1604,7 +1520,6 @@ public final class ProtoGroupGetMemberList {
 
       // @@protoc_insertion_point(class_scope:proto.GroupGetMemberListResponse.Member)
       private static final net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member DEFAULT_INSTANCE;
-
       static {
         DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member();
       }
@@ -1637,21 +1552,18 @@ public final class ProtoGroupGetMemberList {
     private int bitField0_;
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -1661,35 +1573,30 @@ public final class ProtoGroupGetMemberList {
 
     public static final int MEMBER_FIELD_NUMBER = 2;
     private java.util.List<net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> member_;
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     public java.util.List<net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> getMemberList() {
       return member_;
     }
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     public java.util.List<? extends net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.MemberOrBuilder> getMemberOrBuilderList() {
       return member_;
     }
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     public int getMemberCount() {
       return member_.size();
     }
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
     public net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member getMember(int index) {
       return member_.get(index);
     }
-
     /**
      * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
      */
@@ -1698,7 +1605,6 @@ public final class ProtoGroupGetMemberList {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1733,7 +1639,6 @@ public final class ProtoGroupGetMemberList {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1816,15 +1721,12 @@ public final class ProtoGroupGetMemberList {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -1834,7 +1736,6 @@ public final class ProtoGroupGetMemberList {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupGetMemberListResponse}
      */
@@ -1858,13 +1759,11 @@ public final class ProtoGroupGetMemberList {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
           getMemberFieldBuilder();
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1944,7 +1843,6 @@ public final class ProtoGroupGetMemberList {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse) {
           return mergeFrom((net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse) other);
@@ -2005,19 +1903,16 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       private int bitField0_;
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2028,7 +1923,6 @@ public final class ProtoGroupGetMemberList {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2045,7 +1939,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2059,7 +1952,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2077,7 +1969,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2092,7 +1983,6 @@ public final class ProtoGroupGetMemberList {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2101,7 +1991,6 @@ public final class ProtoGroupGetMemberList {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2112,7 +2001,6 @@ public final class ProtoGroupGetMemberList {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2125,7 +2013,6 @@ public final class ProtoGroupGetMemberList {
       }
 
       private java.util.List<net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> member_ = java.util.Collections.emptyList();
-
       private void ensureMemberIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           member_ = new java.util.ArrayList<net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member>(member_);
@@ -2145,7 +2032,6 @@ public final class ProtoGroupGetMemberList {
           return memberBuilder_.getMessageList();
         }
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2156,7 +2042,6 @@ public final class ProtoGroupGetMemberList {
           return memberBuilder_.getCount();
         }
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2167,7 +2052,6 @@ public final class ProtoGroupGetMemberList {
           return memberBuilder_.getMessage(index);
         }
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2184,7 +2068,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2198,7 +2081,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2215,7 +2097,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2232,7 +2113,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2246,7 +2126,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2260,7 +2139,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2274,7 +2152,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2288,7 +2165,6 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2302,14 +2178,12 @@ public final class ProtoGroupGetMemberList {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
       public net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member.Builder getMemberBuilder(int index) {
         return getMemberFieldBuilder().getBuilder(index);
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2320,7 +2194,6 @@ public final class ProtoGroupGetMemberList {
           return memberBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2331,21 +2204,18 @@ public final class ProtoGroupGetMemberList {
           return java.util.Collections.unmodifiableList(member_);
         }
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
       public net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member.Builder addMemberBuilder() {
         return getMemberFieldBuilder().addBuilder(net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
       public net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member.Builder addMemberBuilder(int index) {
         return getMemberFieldBuilder().addBuilder(index, net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse.Member.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.GroupGetMemberListResponse.Member member = 2;</code>
        */
@@ -2375,7 +2245,6 @@ public final class ProtoGroupGetMemberList {
 
     // @@protoc_insertion_point(class_scope:proto.GroupGetMemberListResponse)
     private static final net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupGetMemberList.GroupGetMemberListResponse();
     }
@@ -2417,7 +2286,6 @@ public final class ProtoGroupGetMemberList {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\030GroupGetMemberList.proto\022\005proto\032\rReque" +
@@ -2430,7 +2298,8 @@ public final class ProtoGroupGetMemberList {
                     "ER\020\001\022\r\n\tMODERATOR\020\002\022\t\n\005ADMIN\020\003\"\270\001\n\032Group" +
                     "GetMemberListResponse\022!\n\010response\030\001 \001(\0132" +
                     "\017.proto.Response\0228\n\006member\030\002 \003(\0132(.proto", ".GroupGetMemberListResponse.Member\032=\n\006Me" +
-            "mber\022\016\n\006userId\030\001 \001(\004\022#\n\004role\030\002 \001(\0162\025.pro" + "to.GroupRoom.RoleB)\n\016net.iGap.protoB\027Pro" +
+            "mber\022\016\n\006userId\030\001 \001(\004\022#\n\004role\030\002 \001(\0162\025.pro" +
+            "to.GroupRoom.RoleB)\n\016net.iGap.protoB\027Pro" +
             "toGroupGetMemberListb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2456,9 +2325,9 @@ public final class ProtoGroupGetMemberList {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupGetMemberListResponse_Member_descriptor,
         new java.lang.String[] { "UserId", "Role", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -53,9 +53,9 @@ public class GroupKickModeratorResponse extends MessageHandler {
                         }
                     });
 
-                    if (G.onGroupKickModerator != null) {
-                        G.onGroupKickModerator.onGroupKickModerator(builder.getRoomId(), builder.getMemberId());
-                    }
+                    //if (G.onGroupKickModerator != null) {
+                    //    G.onGroupKickModerator.onGroupKickModerator(builder.getRoomId(), builder.getMemberId());
+                    //}
                     break;
                 }
             }

@@ -12,6 +12,8 @@ package net.iGap.adapter.items.chat;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
@@ -25,34 +27,45 @@ import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class ImageItem extends AbstractMessage<ImageItem, ImageItem.ViewHolder> {
 
-    public ImageItem(ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
-        super(true, type, messageClickListener);
+    public ImageItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
+        super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutImage;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_image;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void onLoadThumbnailFromLocal(final ViewHolder holder, final String localPath, LocalFileType fileType) {
-        super.onLoadThumbnailFromLocal(holder, localPath, fileType);
+    @Override
+    public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
+        super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        G.imageLoader.displayImage(suitablePath(localPath), holder.image);
-        holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
+        if (holder.image != null && holder.image.getTag() != null && holder.image.getTag().equals(tag)) {
+            G.imageLoader.displayImage(suitablePath(localPath), holder.image);
+            holder.image.setCornerRadius(HelperRadius.computeRadius(localPath));
+        }
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+        if (holder.itemView.findViewById(R.id.mainContainer) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getImageItem(false));
+        }
+
+        holder.image = (ReserveSpaceRoundedImageView) holder.itemView.findViewById(R.id.thumbnail);
+        holder.image.setTag(getCacheId(mMessage));
+
         super.bindView(holder, payloads);
 
         holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!isSelected()) {
                     if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                         return;
@@ -66,8 +79,9 @@ public class ImageItem extends AbstractMessage<ImageItem, ImageItem.ViewHolder> 
             }
         });
 
-        holder.image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override public boolean onLongClick(View v) {
+        holder.itemView.findViewById(R.id.thumbnail).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 holder.itemView.performLongClick();
                 return false;
             }
@@ -76,15 +90,19 @@ public class ImageItem extends AbstractMessage<ImageItem, ImageItem.ViewHolder> 
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
+        /**
+         * this commented code used with xml layout
+         */
         protected ReserveSpaceRoundedImageView image;
 
         public ViewHolder(View view) {
             super(view);
-            image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
+            //image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

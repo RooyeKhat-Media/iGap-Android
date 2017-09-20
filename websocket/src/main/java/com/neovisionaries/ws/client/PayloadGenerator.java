@@ -19,13 +19,14 @@ package com.neovisionaries.ws.client;
 /**
  * Payload generator.
  *
- * @author Takahiko Kawasaki
  * @since 1.20
+ *
+ * @author Takahiko Kawasaki
  */
 public interface PayloadGenerator {
     /**
      * Generate a payload of a frame.
-     * <p>
+     *
      * <p>
      * Note that the maximum payload length of control frames
      * (e.g. ping frames) is 125 in bytes. Therefore, the length
@@ -33,7 +34,8 @@ public interface PayloadGenerator {
      * 125 bytes.
      * </p>
      *
-     * @return A payload of a frame.
+     * @return
+     *         A payload of a frame.
      */
     byte[] generate();
 }

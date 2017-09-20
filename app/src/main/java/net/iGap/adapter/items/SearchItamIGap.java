@@ -18,13 +18,13 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.emoji.EmojiTextView;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.CustomTextViewMedium;
+import net.iGap.module.EmojiTextViewE;
 import net.iGap.proto.ProtoClientSearchUsername;
 import net.iGap.proto.ProtoGlobal;
 
@@ -59,7 +59,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
 
         if (item.getType() == ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.USER) {
 
-            HelperAvatar.getAvatar(item.getUser().getId(), HelperAvatar.AvatarType.USER, new OnAvatarGet() {
+            HelperAvatar.getAvatar(item.getUser().getId(), HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
                 @Override
                 public void onAvatarGet(final String avatarPath, long roomId) {
 
@@ -87,7 +87,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
             holder.lastSeen.setText(item.getUser().getUsername());
         } else if (item.getType() == ProtoClientSearchUsername.ClientSearchUsernameResponse.Result.Type.ROOM) {
 
-            HelperAvatar.getAvatar(item.getRoom().getId(), HelperAvatar.AvatarType.ROOM, new OnAvatarGet() {
+            HelperAvatar.getAvatar(item.getRoom().getId(), HelperAvatar.AvatarType.ROOM, false, new OnAvatarGet() {
                 @Override
                 public void onAvatarGet(final String avatarPath, long roomId) {
                     G.currentActivity.runOnUiThread(new Runnable() {
@@ -118,12 +118,12 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
             }
 
             if (item.getRoom().getType() == ProtoGlobal.Room.Type.GROUP) {
-                typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/MaterialIcons-Regular.ttf");
+                typeFaceIcon = G.typeface_Fontico;
                 holder.txtIcon.setTypeface(typeFaceIcon);
                 holder.txtIcon.setVisibility(View.VISIBLE);
                 holder.txtIcon.setText(G.context.getString(R.string.md_users_social_symbol));
             } else if (item.getRoom().getType() == ProtoGlobal.Room.Type.CHANNEL) {
-                typeFaceIcon = Typeface.createFromAsset(G.context.getAssets(), "fonts/iGap_font.ttf");
+                typeFaceIcon = G.typeface_Fontico;
                 holder.txtIcon.setTypeface(typeFaceIcon);
                 holder.txtIcon.setVisibility(View.VISIBLE);
                 holder.txtIcon.setText(G.context.getString(R.string.md_channel_icon));
@@ -133,7 +133,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
         holder.txtTime.setText("");
 
         if (HelperCalander.isLanguagePersian) {
-            holder.name.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.name.getText().toString()));
+            holder.name.setText(holder.name.getText().toString());
             holder.lastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastSeen.getText().toString()));
             holder.txtTime.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtTime.getText().toString()));
         }
@@ -144,7 +144,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
         protected CircleImageView avatar;
         protected CustomTextViewMedium name;
         protected TextView txtIcon;
-        protected EmojiTextView lastSeen;
+        protected EmojiTextViewE lastSeen;
         protected TextView txtTime;
 
         public ViewHolder(View view) {
@@ -152,7 +152,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
 
             avatar = (CircleImageView) view.findViewById(R.id.sfsl_imv_contact_avatar);
             name = (CustomTextViewMedium) view.findViewById(R.id.sfsl_txt_contact_name);
-            lastSeen = (EmojiTextView) view.findViewById(R.id.sfsl_txt_contact_lastseen);
+            lastSeen = (EmojiTextViewE) view.findViewById(R.id.sfsl_txt_contact_lastseen);
             txtIcon = (TextView) view.findViewById(R.id.sfsl_txt_icon);
             txtTime = (TextView) view.findViewById(R.id.sfsl_txt_time);
         }

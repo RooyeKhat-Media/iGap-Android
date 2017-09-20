@@ -10,39 +10,65 @@
 
 package net.iGap.adapter.items.chat;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import io.realm.Realm;
 import java.util.List;
+import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.proto.ProtoGlobal;
 
 public class UnreadMessage extends AbstractMessage<UnreadMessage, UnreadMessage.ViewHolder> {
 
-    public UnreadMessage(IMessageItem messageClickListener) {
-        super(false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
+    public UnreadMessage(Realm realmChat, IMessageItem messageClickListener) {
+        super(realmChat, false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.cslum_txt_unread_message;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layot_unread_message;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.cslum_txt_unread_message) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getUnreadMessageItem());
+        }
+
+        holder.txtUnreadMessage = (TextView) holder.itemView.findViewById(R.id.cslum_txt_unread_message);
+        holder.txtUnreadMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.txtUnreadMessage.setBackgroundColor(Color.parseColor(G.appBarColor));
+
+        holder.txtUnreadMessage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
         super.bindView(holder, payloads);
 
         setTextIfNeeded(holder.txtUnreadMessage, mMessage.messageText);
     }
 
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 
@@ -51,19 +77,21 @@ public class UnreadMessage extends AbstractMessage<UnreadMessage, UnreadMessage.
 
         public ViewHolder(View view) {
             super(view);
-
-            txtUnreadMessage = (TextView) view.findViewById(R.id.cslum_txt_unread_message);
-            txtUnreadMessage.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-
-                }
-            });
-
-            txtUnreadMessage.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
-                    return false;
-                }
-            });
+            /**
+             *  this commented code used with xml layout
+             */
+            //txtUnreadMessage = (TextView) view.findViewById(R.id.cslum_txt_unread_message);
+            //txtUnreadMessage.setOnClickListener(new View.OnClickListener() {
+            //    @Override public void onClick(View v) {
+            //
+            //    }
+            //});
+            //
+            //txtUnreadMessage.setOnLongClickListener(new View.OnLongClickListener() {
+            //    @Override public boolean onLongClick(View v) {
+            //        return false;
+            //    }
+            //});
         }
     }
 }

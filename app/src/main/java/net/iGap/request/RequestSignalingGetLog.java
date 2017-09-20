@@ -15,16 +15,13 @@ import net.iGap.proto.ProtoSignalingGetLog;
 
 public class RequestSignalingGetLog {
 
-    public void signalingGetLog(int offcet, int limit) {
+    public void signalingGetLog(int offset, int limit) {
 
         ProtoSignalingGetLog.SignalingGetLog.Builder builder = ProtoSignalingGetLog.SignalingGetLog.newBuilder();
-
         ProtoGlobal.Pagination.Builder pagination = ProtoGlobal.Pagination.newBuilder();
-        pagination.setOffset(offcet);
+        pagination.setOffset(offset);
         pagination.setLimit(limit);
-
         builder.setPagination(pagination);
-
 
         RequestWrapper requestWrapper = new RequestWrapper(907, builder);
         try {

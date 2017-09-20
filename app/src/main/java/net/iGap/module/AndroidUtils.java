@@ -25,9 +25,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -108,7 +108,7 @@ public final class AndroidUtils {
                 String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                 return Integer.parseInt(durationStr);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
 
@@ -118,7 +118,7 @@ public final class AndroidUtils {
     public static String getRealPathFromURI(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] projection = { MediaStore.Audio.Media.DATA };
+            String[] projection = {MediaStore.Audio.Media.DATA};
             cursor = context.getContentResolver().query(contentUri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
             cursor.moveToFirst();
@@ -141,9 +141,9 @@ public final class AndroidUtils {
             int width = options.outWidth;
             int height = options.outHeight;
 
-            return new int[] { width, height };
+            return new int[]{width, height};
         } catch (Exception e) {
-            return new int[] { 0, 0 };
+            return new int[]{0, 0};
         }
     }
 
@@ -320,7 +320,6 @@ public final class AndroidUtils {
             }
             hash = digest.digest();
         } catch (Exception e) {
-            Log.e("dddddd", " android utile  getFileHashFromPath   " + e.toString());
             return null;
         }
 
@@ -337,6 +336,12 @@ public final class AndroidUtils {
 
     public static void copyFile(File src, File dst) throws IOException {
         InputStream in = new FileInputStream(src);
+
+        copyFile(in, dst);
+    }
+
+    public static void copyFile(InputStream in, File dst) throws IOException {
+
         OutputStream out = new FileOutputStream(dst);
 
         // Transfer bytes from in to out
@@ -441,7 +446,7 @@ public final class AndroidUtils {
 
         newHeight = Math.round((height / width) * newWidth);
 
-        return new int[] { Math.round(newWidth), Math.round(newHeight) };
+        return new int[]{Math.round(newWidth), Math.round(newHeight)};
     }
 
     /**
@@ -538,7 +543,7 @@ public final class AndroidUtils {
                 _hash = makeSHA1Hash(cashId);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         if (selectDir.equals(G.DIR_TEMP)) {
@@ -562,4 +567,13 @@ public final class AndroidUtils {
     }
 
     //*****************************************************************************************************************
+
+    public static void closeKeyboard(View v) {
+        try {
+            InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } catch (IllegalStateException e) {
+            e.getStackTrace();
+        }
+    }
 }

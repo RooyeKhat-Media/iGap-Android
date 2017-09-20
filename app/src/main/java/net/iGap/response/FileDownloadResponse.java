@@ -30,12 +30,13 @@ public class FileDownloadResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
 
         super.handler();
         ProtoFileDownload.FileDownloadResponse.Builder builder = (ProtoFileDownload.FileDownloadResponse.Builder) message;
         String[] identityParams = identity.split("\\*");
-        String cashid = identityParams[0];
+        String cacheId = identityParams[0];
         ProtoFileDownload.FileDownload.Selector selector = ProtoFileDownload.FileDownload.Selector.valueOf(identityParams[1]);
         long fileSize = Long.parseLong(identityParams[2]);
         String filePath = identityParams[3];
@@ -60,20 +61,22 @@ public class FileDownloadResponse extends MessageHandler {
 
         if (isFromHelperDownload) {
             if (G.onFileDownloadResponse != null) {
-                G.onFileDownloadResponse.onFileDownload(cashid, nextOffset, selector, (int) progress);
+                G.onFileDownloadResponse.onFileDownload(cacheId, nextOffset, selector, (int) progress);
             }
         } else {
             if (G.onFileDownloaded != null) {
-                G.onFileDownloaded.onFileDownload(filePath, cashid, fileSize, nextOffset, selector, (int) progress);
+                G.onFileDownloaded.onFileDownload(filePath, cacheId, fileSize, nextOffset, selector, (int) progress);
             }
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
@@ -81,17 +84,17 @@ public class FileDownloadResponse extends MessageHandler {
         int minorCode = errorResponse.getMinorCode();
 
         String[] identityParams = identity.split("\\*");
-        String cashid = identityParams[0];
+        String cacheId = identityParams[0];
         ProtoFileDownload.FileDownload.Selector selector = ProtoFileDownload.FileDownload.Selector.valueOf(identityParams[1]);
         if (identityParams[5].equals("true")) isFromHelperDownload = true;
 
         if (isFromHelperDownload) {
             if (G.onFileDownloadResponse != null) {
-                G.onFileDownloadResponse.onError(majorCode, minorCode, cashid, selector);
+                G.onFileDownloadResponse.onError(majorCode, minorCode, cacheId, selector);
             }
         } else {
             if (G.onFileDownloaded != null) {
-                G.onFileDownloaded.onError();
+                G.onFileDownloaded.onError(majorCode, identity);
             }
         }
     }

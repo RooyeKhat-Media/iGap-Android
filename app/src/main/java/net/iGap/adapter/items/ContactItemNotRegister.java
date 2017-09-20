@@ -53,7 +53,7 @@ public class ContactItemNotRegister extends AbstractItem<ContactItemNotRegister,
 
         holder.subtitle.setText(mContact.phone);
         if (HelperCalander.isLanguagePersian) {
-            holder.subtitle.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.subtitle.getText().toString()));
+            holder.subtitle.setText(holder.subtitle.getText().toString());
         }
 
         String name = HelperImageBackColor.getFirstAlphabetName(mContact.displayName);

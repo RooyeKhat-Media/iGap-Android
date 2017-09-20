@@ -11,7 +11,7 @@
 package net.iGap.module;
 
 import android.os.Parcel;
-import net.iGap.activities.ActivityChat;
+import net.iGap.fragments.FragmentChat;
 import net.iGap.realm.RealmString;
 import org.parceler.Parcels;
 
@@ -23,6 +23,6 @@ public class StringListParcelConverter extends RealmListParcelConverter<RealmStr
     }
 
     @Override public RealmString itemFromParcel(Parcel parcel) {
-        return Parcels.unwrap(parcel.readParcelable(ActivityChat.class.getClassLoader()));
+        return Parcels.unwrap(parcel.readParcelable(FragmentChat.class.getClassLoader()));
     }
 }

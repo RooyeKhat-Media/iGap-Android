@@ -68,7 +68,8 @@ public class ActivityPaint extends ActivityEnhanced {
     private FrameLayout frameLayout;
 
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_paint);
@@ -89,7 +90,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvclose = (TextView) findViewById(R.id.textView_close);
         tvclose.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 showAlertDialogExit();
             }
         });
@@ -97,7 +99,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvRefesh = (TextView) findViewById(R.id.textView_new);
         tvRefesh.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 drawingView = new DrawingView(ActivityPaint.this, false, null);
                 frameLayout.removeAllViews();
                 frameLayout.addView(drawingView);
@@ -107,7 +110,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvSave = (TextView) findViewById(R.id.textView_save);
         tvSave.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 savePicToFile("paint", false);
             }
         });
@@ -116,7 +120,8 @@ public class ActivityPaint extends ActivityEnhanced {
         tvSend.setTextColor(Color.parseColor(G.attachmentColor));
         tvSend.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 savePicToFile("paint", true);
             }
         });
@@ -124,17 +129,19 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvEraser = (TextView) findViewById(R.id.textView_erase);
         tvEraser.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 setPaintClear();
             }
         });
-        Typeface typefaceEraser = Typeface.createFromAsset(G.context.getAssets(), "fonts/iGap_font.ttf");
+        Typeface typefaceEraser = G.typeface_Fontico;
         tvEraser.setTypeface(typefaceEraser);
 
         TextView tvPaint = (TextView) findViewById(R.id.textView_paintsize);
         tvPaint.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 initDialogBrush();
                 setPaintColor();
             }
@@ -143,7 +150,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvColor = (TextView) findViewById(R.id.textView_color);
         tvColor.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
 
                 showDialogSelectColor();
             }
@@ -152,7 +160,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvSience = (TextView) findViewById(R.id.textView_sience);
         tvSience.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 captureimage = false;
                 try {
                     attachFile.requestOpenGalleryForImageSingleSelect();
@@ -165,7 +174,8 @@ public class ActivityPaint extends ActivityEnhanced {
         TextView tvCamera = (TextView) findViewById(R.id.textView_camera);
         tvCamera.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
+            @Override
+            public void onClick(View arg0) {
                 captureimage = true;
                 try {
                     attachFile.requestTakePicture();
@@ -179,7 +189,8 @@ public class ActivityPaint extends ActivityEnhanced {
     private void showDialogSelectColor() {
         ColorPiker d = new ColorPiker(ActivityPaint.this, paintColor, new OnColorChangedListenerSelect() {
 
-            @Override public void colorChanged(String key, int color) {
+            @Override
+            public void colorChanged(String key, int color) {
 
                 if (key.equals("ok")) {
                     paintColor = color;
@@ -187,7 +198,8 @@ public class ActivityPaint extends ActivityEnhanced {
                 }
             }
 
-            @Override public void Confirmation(Boolean result) {
+            @Override
+            public void Confirmation(Boolean result) {
 
             }
         });
@@ -223,15 +235,18 @@ public class ActivityPaint extends ActivityEnhanced {
         skBrushSize.setProgress(brushSize - minBrushSize);
         skBrushSize.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
                 setPaintColor();
             }
 
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
                 tvBrushSize.setText(brushSize + "");
             }
 
-            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 brushSize = progress + minBrushSize;
                 tvBrushSize.setText(brushSize + "");
             }
@@ -294,7 +309,8 @@ public class ActivityPaint extends ActivityEnhanced {
         }
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
@@ -328,17 +344,14 @@ public class ActivityPaint extends ActivityEnhanced {
 
     private void showAlertDialogExit() {
 
-        new MaterialDialog.Builder(ActivityPaint.this).title(getString(R.string.do_you_want_exit))
-            .positiveText(R.string.ok)
-            .negativeText(R.string.cancel)
-            .callback(new MaterialDialog.ButtonCallback() {
-                @Override public void onPositive(MaterialDialog dialog) {
-                    super.onPositive(dialog);
+        new MaterialDialog.Builder(ActivityPaint.this).title(getString(R.string.do_you_want_exit)).positiveText(R.string.yes).negativeText(R.string.no).callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                super.onPositive(dialog);
 
-                    ActivityPaint.this.finish();
-                }
-            })
-            .show();
+                ActivityPaint.this.finish();
+            }
+        }).show();
     }
 
     private void setImageToBitmap(Intent data) {
@@ -385,7 +398,8 @@ public class ActivityPaint extends ActivityEnhanced {
             this.PicAddress = picAddress;
         }
 
-        @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        @Override
+        protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
 
             mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
@@ -395,34 +409,40 @@ public class ActivityPaint extends ActivityEnhanced {
             if (fromGallery) {
 
                 if (!captureimage) {
-                    String[] projection = { MediaColumns.DATA };
-                    Cursor cursor = managedQuery(PicAddress, projection, null, null, null);
-                    try {
-                        int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
-                        cursor.moveToFirst();
-                        String selectedImagePath = cursor.getString(column_index);
+                    String[] projection = {MediaColumns.DATA};
+                    Cursor cursor = getContentResolver().query(PicAddress, projection, null, null, null);
+                    if (cursor != null) {
+                        try {
+                            int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+                            cursor.moveToFirst();
+                            String selectedImagePath = cursor.getString(column_index);
 
-                        File imgFile = new File(selectedImagePath);
-                        Bitmap b = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-                        b = Bitmap.createScaledBitmap(b, w, h, false);
-                        Paint paint = new Paint();
-                        mCanvas.drawBitmap(b, 0, 0, paint);
-                    } finally {
-                        cursor.close();
+                            File imgFile = new File(selectedImagePath);
+                            Bitmap b = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            if (b != null) {
+                                b = Bitmap.createScaledBitmap(b, w, h, false);
+                                Paint paint = new Paint();
+                                mCanvas.drawBitmap(b, 0, 0, paint);
+                            }
+                        } finally {
+                            cursor.close();
+                        }
                     }
                 } else {
                     String filePath = AttachFile.imagePath;
                     File imgFile = new File(filePath);
                     Bitmap b = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    b = Bitmap.createScaledBitmap(b, w, h, false);
-                    Paint paint = new Paint();
-                    mCanvas.drawBitmap(b, 0, 0, paint);
+                    if (b != null) {
+                        b = Bitmap.createScaledBitmap(b, w, h, false);
+                        Paint paint = new Paint();
+                        mCanvas.drawBitmap(b, 0, 0, paint);
+                    }
                 }
             }
         }
 
-        @Override protected void onDraw(Canvas canvas) {
+        @Override
+        protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
             canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
@@ -463,7 +483,8 @@ public class ActivityPaint extends ActivityEnhanced {
             mCanvas.drawPoint(mX, mY, paint);
         }
 
-        @Override public boolean onTouchEvent(MotionEvent event) {
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
             float x = event.getX();
             float y = event.getY();
 

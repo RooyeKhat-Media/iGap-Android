@@ -10,17 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import net.iGap.G;
 import net.iGap.proto.ProtoChatDelete;
 import net.iGap.proto.ProtoError;
-import net.iGap.realm.RealmClientCondition;
-import net.iGap.realm.RealmClientConditionFields;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 
 public class ChatDeleteResponse extends MessageHandler {
 
@@ -36,43 +29,26 @@ public class ChatDeleteResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoChatDelete.ChatDeleteResponse.Builder builder = (ProtoChatDelete.ChatDeleteResponse.Builder) message;
 
         final Long roomId = builder.getRoomId();
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirst();
-                if (realmClientCondition != null) {
-                    realmClientCondition.deleteFromRealm();
-                }
-
-                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (realmRoom != null) {
-                    realmRoom.deleteFromRealm();
-                }
-                RealmResults<RealmRoomMessage> realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll();
-                if (realmRoomMessage != null) {
-                    realmRoomMessage.deleteAllFromRealm();
-                }
-            }
-        });
-
-        realm.close();
-
+        RealmRoom.deleteRoom(roomId);
         if (G.onChatDelete != null) {
             G.onChatDelete.onChatDelete(builder.getRoomId());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder builder = (ProtoError.ErrorResponse.Builder) message;
     }

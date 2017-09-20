@@ -10,37 +10,50 @@
 
 package net.iGap.helper;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class MyService extends Service {
 
+    public static String STARTFOREGROUND_ACTION = "STARTFOREGROUND_ACTION";
+    public static String STOPFOREGROUND_ACTION = "STOPFOREGROUND_ACTION";
+
     public MyService() {
     }
 
-    @Override public void onCreate() {
-        super.onCreate();
-    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
-    @Override public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && intent.getExtras() != null) {
 
-        if (startId == 24) {
-            return Service.START_NOT_STICKY;
-        } else {
-            return Service.START_STICKY;
+            String action = intent.getExtras().getString("ACTION");
+            if (action != null) {
+
+                if (action.equals(STARTFOREGROUND_ACTION)) {
+
+                    Notification note = new Notification(0, null, System.currentTimeMillis());
+                    note.flags |= Notification.FLAG_NO_CLEAR;
+                    startForeground(142, note);
+                } else if (action.equals(STOPFOREGROUND_ACTION)) {
+                    stopSelf();
+                }
+            }
         }
+
+        return Service.START_STICKY;
     }
 
-    @Override public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
-    @Override public void onDestroy() {
+    @Override
+    public void onDestroy() {
         super.onDestroy();
 
-        Intent i = new Intent("stop");
-        onStartCommand(i, 12, 24);
-        stopSelf();
+        stopForeground(true);
     }
 }

@@ -8,7 +8,10 @@
     android:layoutDirection="ltr"
     tools:ignore="MissingPrefix"
     android:orientation="vertical"
+    android:clickable="true"
+    android:background="@color/white"
     >
+
 
 
     <android.support.v7.widget.RecyclerView
@@ -70,7 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:text="@string/shared_media"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white"
@@ -104,11 +107,6 @@
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/asm_view_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#34a49f"/>
 
             <include
                 android:id="@+id/asm_ll_music_layout"
@@ -116,6 +114,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+
+
         </LinearLayout>
 
 

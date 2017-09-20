@@ -5,5 +5,5 @@
         android:left="4dp"
         android:right="4dp"
         android:top="4dp"/>
-    <solid android:color="#e51c23"></solid>
+    <solid android:color="#f23131"></solid>
 </shape>

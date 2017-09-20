@@ -36,10 +36,12 @@ public class UserTwoStepVerificationSetPasswordResponse extends MessageHandler {
 
     @Override public void timeOut() {
         super.timeOut();
+
     }
 
     @Override public void error() {
         super.error();
+
     }
 }
 

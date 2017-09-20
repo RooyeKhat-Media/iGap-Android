@@ -72,11 +72,11 @@ public final class ProtoClientUnsubscribeFromRoom {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -101,16 +101,15 @@ public final class ProtoClientUnsubscribeFromRoom {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
+      return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.Builder.class);
+      return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -121,7 +120,7 @@ public final class ProtoClientUnsubscribeFromRoom {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -179,10 +178,10 @@ public final class ProtoClientUnsubscribeFromRoom {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom)) {
+      if (!(obj instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom other = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) obj;
+      net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom other = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -211,48 +210,43 @@ public final class ProtoClientUnsubscribeFromRoom {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -263,7 +257,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -282,15 +276,14 @@ public final class ProtoClientUnsubscribeFromRoom {
             // @@protoc_insertion_point(builder_implements:proto.ClientUnsubscribeFromRoom)
         net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.Builder.class);
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.newBuilder()
+      // Construct using net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -317,23 +310,23 @@ public final class ProtoClientUnsubscribeFromRoom {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoom_descriptor;
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.getDefaultInstance();
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom build() {
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom result = buildPartial();
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom build() {
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom buildPartial() {
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom result = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom(this);
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom buildPartial() {
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom result = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -368,16 +361,16 @@ public final class ProtoClientUnsubscribeFromRoom {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) {
-              return mergeFrom((net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) other);
+        if (other instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) {
+          return mergeFrom((net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom other) {
-            if (other == net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom other) {
+        if (other == net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -393,11 +386,11 @@ public final class ProtoClientUnsubscribeFromRoom {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parsedMessage = null;
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -407,9 +400,8 @@ public final class ProtoClientUnsubscribeFromRoom {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -421,7 +413,7 @@ public final class ProtoClientUnsubscribeFromRoom {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -461,7 +453,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -501,7 +493,7 @@ public final class ProtoClientUnsubscribeFromRoom {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -509,9 +501,7 @@ public final class ProtoClientUnsubscribeFromRoom {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
-                    getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -558,10 +548,10 @@ public final class ProtoClientUnsubscribeFromRoom {
     // @@protoc_insertion_point(class_scope:proto.ClientUnsubscribeFromRoom)
     private static final net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom();
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstance() {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -580,7 +570,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoom getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -639,11 +629,11 @@ public final class ProtoClientUnsubscribeFromRoom {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -663,16 +653,15 @@ public final class ProtoClientUnsubscribeFromRoom {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
+      return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.Builder.class);
+      return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -683,7 +672,7 @@ public final class ProtoClientUnsubscribeFromRoom {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -726,10 +715,10 @@ public final class ProtoClientUnsubscribeFromRoom {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse other = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) obj;
+      net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse other = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -755,49 +744,43 @@ public final class ProtoClientUnsubscribeFromRoom {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseDelimitedFrom(java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -808,7 +791,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -827,15 +810,14 @@ public final class ProtoClientUnsubscribeFromRoom {
             // @@protoc_insertion_point(builder_implements:proto.ClientUnsubscribeFromRoomResponse)
         net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.Builder.class);
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.class, net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -860,23 +842,23 @@ public final class ProtoClientUnsubscribeFromRoom {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse build() {
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse result = buildPartial();
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse build() {
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse buildPartial() {
-            net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse result = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse(this);
+      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse buildPartial() {
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse result = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -910,16 +892,16 @@ public final class ProtoClientUnsubscribeFromRoom {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) {
-              return mergeFrom((net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) other);
+        if (other instanceof net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) {
+          return mergeFrom((net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse other) {
-            if (other == net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse other) {
+        if (other == net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -932,11 +914,11 @@ public final class ProtoClientUnsubscribeFromRoom {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parsedMessage = null;
+        net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -946,9 +928,8 @@ public final class ProtoClientUnsubscribeFromRoom {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -960,7 +941,7 @@ public final class ProtoClientUnsubscribeFromRoom {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1000,7 +981,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1040,7 +1021,7 @@ public final class ProtoClientUnsubscribeFromRoom {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1048,9 +1029,7 @@ public final class ProtoClientUnsubscribeFromRoom {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
-                    getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1071,10 +1050,10 @@ public final class ProtoClientUnsubscribeFromRoom {
     // @@protoc_insertion_point(class_scope:proto.ClientUnsubscribeFromRoomResponse)
     private static final net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse();
     }
 
-      public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1093,7 +1072,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1115,7 +1094,8 @@ public final class ProtoClientUnsubscribeFromRoom {
                     "\032\rRequest.proto\032\016Response.proto\"M\n\031Clien" +
                     "tUnsubscribeFromRoom\022\037\n\007request\030\001 \001(\0132\016." +
                     "proto.Request\022\017\n\007room_id\030\002 \001(\004\"F\n!Client" +
-                    "UnsubscribeFromRoomResponse\022!\n\010response\030" + "\001 \001(\0132\017.proto.ResponseB0\n\016net.iGap.proto" +
+                    "UnsubscribeFromRoomResponse\022!\n\010response\030" +
+                    "\001 \001(\0132\017.proto.ResponseB0\n\016net.iGap.proto" +
                     "B\036ProtoClientUnsubscribeFromRoomb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1125,7 +1105,7 @@ public final class ProtoClientUnsubscribeFromRoom {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_ClientUnsubscribeFromRoom_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ClientUnsubscribeFromRoom_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ClientUnsubscribeFromRoom_descriptor, new java.lang.String[]{"Request", "RoomId",});
@@ -1134,8 +1114,8 @@ public final class ProtoClientUnsubscribeFromRoom {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClientUnsubscribeFromRoomResponse_descriptor,
         new java.lang.String[] { "Response", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

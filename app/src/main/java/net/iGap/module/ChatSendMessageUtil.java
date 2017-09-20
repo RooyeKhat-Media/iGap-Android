@@ -32,7 +32,8 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
     private RequestChannelSendMessage requestChannelSendMessage;
 
     private ProtoGlobal.Room.Type roomType;
-    private OnChatSendMessageResponse onChatSendMessageResponse;
+    private OnChatSendMessageResponse onChatSendMessageResponseChat;
+    private OnChatSendMessageResponse onChatSendMessageResponseRoom;
 
     public ChatSendMessageUtil newBuilder(ProtoGlobal.Room.Type roomType, ProtoGlobal.RoomMessageType messageType, long roomId) {
         this.roomType = roomType;
@@ -206,8 +207,12 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
         return this;
     }
 
-    public void setOnChatSendMessageResponse(OnChatSendMessageResponse response) {
-        this.onChatSendMessageResponse = response;
+    public void setOnChatSendMessageResponseChatPage(OnChatSendMessageResponse response) {
+        this.onChatSendMessageResponseChat = response;
+    }
+
+    public void setOnChatSendMessageResponseRoomList(OnChatSendMessageResponse response) {
+        this.onChatSendMessageResponseRoom = response;
     }
 
     public void sendMessage(String fakeMessageIdAsIdentity) {
@@ -232,17 +237,20 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
     private void makeFailed(final long fakeMessageId) {
         // message failed
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
                 realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    @Override
+                    public void execute(Realm realm) {
                         final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, fakeMessageId).findFirst();
                         if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
                             message.setStatus(ProtoGlobal.RoomMessageStatus.FAILED.toString());
                         }
                     }
                 }, new Realm.Transaction.OnSuccess() {
-                    @Override public void onSuccess() {
+                    @Override
+                    public void onSuccess() {
                         final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, fakeMessageId).findFirst();
                         if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
                             G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
@@ -255,21 +263,36 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
         });
     }
 
-    @Override public void onMessageUpdate(long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, String identity, ProtoGlobal.RoomMessage roomMessage) {
-        if (onChatSendMessageResponse != null) {
-            onChatSendMessageResponse.onMessageUpdate(roomId, messageId, status, identity, roomMessage);
+    @Override
+    public void onMessageUpdate(long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, String identity, ProtoGlobal.RoomMessage roomMessage) {
+        if (onChatSendMessageResponseChat != null) {
+            onChatSendMessageResponseChat.onMessageUpdate(roomId, messageId, status, identity, roomMessage);
+        }
+
+        if (onChatSendMessageResponseRoom != null) {
+            onChatSendMessageResponseRoom.onMessageUpdate(roomId, messageId, status, identity, roomMessage);
         }
     }
 
-    @Override public void onMessageReceive(long roomId, String message, ProtoGlobal.RoomMessageType messageType, ProtoGlobal.RoomMessage roomMessage, ProtoGlobal.Room.Type roomType) {
-        if (onChatSendMessageResponse != null) {
-            onChatSendMessageResponse.onMessageReceive(roomId, message, messageType, roomMessage, roomType);
+    @Override
+    public void onMessageReceive(long roomId, String message, ProtoGlobal.RoomMessageType messageType, ProtoGlobal.RoomMessage roomMessage, ProtoGlobal.Room.Type roomType) {
+        if (onChatSendMessageResponseChat != null) {
+            onChatSendMessageResponseChat.onMessageReceive(roomId, message, messageType, roomMessage, roomType);
+        }
+
+        if (onChatSendMessageResponseRoom != null) {
+            onChatSendMessageResponseRoom.onMessageReceive(roomId, message, messageType, roomMessage, roomType);
         }
     }
 
-    @Override public void onMessageFailed(long roomId, RealmRoomMessage roomMessage) {
-        if (onChatSendMessageResponse != null) {
-            onChatSendMessageResponse.onMessageFailed(roomId, roomMessage);
+    @Override
+    public void onMessageFailed(long roomId, RealmRoomMessage roomMessage) {
+        if (onChatSendMessageResponseChat != null) {
+            onChatSendMessageResponseChat.onMessageFailed(roomId, roomMessage);
+        }
+
+        if (onChatSendMessageResponseRoom != null) {
+            onChatSendMessageResponseRoom.onMessageFailed(roomId, roomMessage);
         }
     }
 }

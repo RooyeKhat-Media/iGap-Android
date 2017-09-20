@@ -31,7 +31,9 @@ public class HelperSetStatusBarColor {
         if (G.appBarColor == null) {
             G.appBarColor = Config.default_appBarColor;
         }
-        hackStatusBarColor(activity, G.appBarColor);
+
+        String colorStr = String.format("#%08X", 0x44FFFFFF & Color.parseColor(G.appBarColor));
+        hackStatusBarColor(activity, colorStr);
     }
 
     @SuppressLint("NewApi") @SuppressWarnings("deprecation") private static View hackStatusBarColor(final Activity act, final String colorResID) {

@@ -13,6 +13,7 @@ package net.iGap.realm;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import java.util.List;
+import net.iGap.G;
 import net.iGap.module.SerializationUtils;
 import net.iGap.proto.ProtoSignalingGetConfiguration;
 
@@ -64,7 +65,8 @@ public class RealmCallConfig extends RealmObject {
         final RealmCallConfig realmCall = realm.where(RealmCallConfig.class).findFirst();
 
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
 
                 RealmCallConfig item;
 
@@ -80,6 +82,8 @@ public class RealmCallConfig extends RealmObject {
                 item.setScreen_sharing(builder.getScreenSharing());
 
                 item.setIceServer(builder.getIceServerList());
+
+                G.needGetSignalingConfiguration = false;
             }
         });
 

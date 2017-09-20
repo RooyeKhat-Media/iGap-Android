@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Neo Visionaries Inc.
+ * Copyright (C) 2016-2017 Neo Visionaries Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.neovisionaries.ws.client;
 
 import java.io.IOException;
 import java.net.Socket;
-
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -26,8 +26,9 @@ import javax.net.ssl.SSLSocketFactory;
 /**
  * A class to connect to the server.
  *
- * @author Takahiko Kawasaki
  * @since 1.20
+ *
+ * @author Takahiko Kawasaki
  */
 class SocketConnector {
     private Socket mSocket;
@@ -44,10 +45,7 @@ class SocketConnector {
     }
 
 
-    SocketConnector(
-            Socket socket, Address address, int timeout,
-            ProxyHandshaker handshaker, SSLSocketFactory sslSocketFactory,
-            String host, int port) {
+    SocketConnector(Socket socket, Address address, int timeout, ProxyHandshaker handshaker, SSLSocketFactory sslSocketFactory, String host, int port) {
         mSocket = socket;
         mAddress = address;
         mConnectionTimeout = timeout;
@@ -94,10 +92,15 @@ class SocketConnector {
         try {
             // Connect to the server (either a proxy or a WebSocket endpoint).
             mSocket.connect(mAddress.toInetSocketAddress(), mConnectionTimeout);
+
+            if (mSocket instanceof SSLSocket) {
+                // Verify that the hostname matches the certificate here since
+                // this is not automatically done by the SSLSocket.
+                verifyHostname((SSLSocket) mSocket, mAddress.getHostname());
+            }
         } catch (IOException e) {
             // Failed to connect the server.
-            String message = String.format("Failed to connect to %s'%s': %s",
-                    (proxied ? "the proxy " : ""), mAddress, e.getMessage());
+            String message = String.format("Failed to connect to %s'%s': %s", (proxied ? "the proxy " : ""), mAddress, e.getMessage());
 
             // Raise an exception with SOCKET_CONNECT_ERROR.
             throw new WebSocketException(WebSocketError.SOCKET_CONNECT_ERROR, message, e);
@@ -112,6 +115,24 @@ class SocketConnector {
     }
 
 
+    private void verifyHostname(SSLSocket socket, String hostname) throws HostnameUnverifiedException {
+        // Hostname verifier.
+        OkHostnameVerifier verifier = OkHostnameVerifier.INSTANCE;
+
+        // The SSL session.
+        SSLSession session = socket.getSession();
+
+        // Verify the hostname.
+        if (verifier.verify(hostname, session)) {
+            // Verified. No problem.
+            return;
+        }
+
+        // The certificate of the peer does not match the expected hostname.
+        throw new HostnameUnverifiedException(socket, hostname);
+    }
+
+
     /**
      * Perform proxy handshake and optionally SSL handshake.
      */
@@ -121,8 +142,7 @@ class SocketConnector {
             mProxyHandshaker.perform();
         } catch (IOException e) {
             // Handshake with the proxy server failed.
-            String message = String.format(
-                    "Handshake with the proxy server (%s) failed: %s", mAddress, e.getMessage());
+            String message = String.format("Handshake with the proxy server (%s) failed: %s", mAddress, e.getMessage());
 
             // Raise an exception with PROXY_HANDSHAKE_ERROR.
             throw new WebSocketException(WebSocketError.PROXY_HANDSHAKE_ERROR, message, e);
@@ -148,10 +168,15 @@ class SocketConnector {
             // Start the SSL handshake manually. As for the reason, see
             // http://docs.oracle.com/javase/7/docs/technotes/guides/security/jsse/samples/sockets/client/SSLSocketClient.java
             ((SSLSocket) mSocket).startHandshake();
+
+            if (mSocket instanceof SSLSocket) {
+                // Verify that the proxied hostname matches the certificate here since
+                // this is not automatically done by the SSLSocket.
+                verifyHostname((SSLSocket) mSocket, mProxyHandshaker.getProxiedHostname());
+            }
         } catch (IOException e) {
             // SSL handshake with the WebSocket endpoint failed.
-            String message = String.format(
-                    "SSL handshake with the WebSocket endpoint (%s) failed: %s", mAddress, e.getMessage());
+            String message = String.format("SSL handshake with the WebSocket endpoint (%s) failed: %s", mAddress, e.getMessage());
 
             // Raise an exception with SSL_HANDSHAKE_ERROR.
             throw new WebSocketException(WebSocketError.SSL_HANDSHAKE_ERROR, message, e);

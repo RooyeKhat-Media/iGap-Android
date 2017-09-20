@@ -11,9 +11,9 @@
 package net.iGap.response;
 
 import net.iGap.G;
-import net.iGap.helper.HelperRealmDelete;
 import net.iGap.proto.ProtoChannelDelete;
 import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmRoom;
 
 public class ChannelDeleteResponse extends MessageHandler {
 
@@ -33,7 +33,7 @@ public class ChannelDeleteResponse extends MessageHandler {
         super.handler();
         final ProtoChannelDelete.ChannelDeleteResponse.Builder builder = (ProtoChannelDelete.ChannelDeleteResponse.Builder) message;
 
-        HelperRealmDelete.deleteRoom(builder.getRoomId());
+        RealmRoom.deleteRoom(builder.getRoomId());
 
         if (G.onChannelDelete != null) {
             G.onChannelDelete.onChannelDelete(builder.getRoomId());

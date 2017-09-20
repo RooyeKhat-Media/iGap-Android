@@ -14,6 +14,7 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 import java.util.ArrayList;
 import java.util.List;
+import net.iGap.helper.HelperLog;
 import net.iGap.module.SerializationUtils;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
@@ -25,7 +26,16 @@ public class RealmWallpaper extends RealmObject {
     private byte[] localList;
 
     public List<ProtoGlobal.Wallpaper> getWallPaperList() {
-        return wallPaperList == null ? null : (List<ProtoGlobal.Wallpaper>) SerializationUtils.deserialize(wallPaperList);
+
+        try {
+            return wallPaperList == null ? null : (List<net.iGap.proto.ProtoGlobal.Wallpaper>) SerializationUtils.deserialize(wallPaperList);
+        } catch (Exception e) {
+
+            HelperLog.setErrorLog(" RealmWallpaper     getWallPaperList()       " + e.toString());
+
+            return null;
+        }
+
     }
 
     public void setWallPaperList(List<ProtoGlobal.Wallpaper> wallpaperListProto) {

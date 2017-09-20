@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoQrCodeNewDevice;
 
 public class QrCodeNewDeviceResponse extends MessageHandler {
@@ -32,6 +33,11 @@ public class QrCodeNewDeviceResponse extends MessageHandler {
         ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder builder = (ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder) message;
         builder.getQrCodeImage();
         builder.getExpireTime();
+
+        if (G.onQrCodeNewDevice != null) {
+
+            G.onQrCodeNewDevice.getQrCode(builder.getQrCodeImage(), builder.getExpireTime() - builder.getResponse().getTimestamp());
+        }
     }
 
     @Override public void timeOut() {

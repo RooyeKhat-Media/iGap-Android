@@ -10,6 +10,8 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
+import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserVerifyNewDevice;
 
 public class UserVerifyNewDeviceResponse extends MessageHandler {
@@ -26,7 +28,8 @@ public class UserVerifyNewDeviceResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse.Builder builder = (ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse.Builder) message;
@@ -39,14 +42,27 @@ public class UserVerifyNewDeviceResponse extends MessageHandler {
         builder.getDevice();
         builder.getDeviceName();
         builder.getTwoStepVerification();
+
+        if (G.onVerifyNewDevice != null) {
+            G.onVerifyNewDevice.verifyNewDevice(builder.getAppName(), builder.getAppId(), builder.getAppBuildVersion(), builder.getAppVersion(), builder.getPlatform(), builder.getPlatformVersion(), builder.getDevice(), builder.getDeviceName(), builder.getTwoStepVerification());
+        }
+
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
+        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+        int majorCode = errorResponse.getMajorCode();
+        int minorCode = errorResponse.getMinorCode();
+        if (G.onVerifyNewDevice != null) {
+            G.onVerifyNewDevice.errorVerifyNewDevice(majorCode, minorCode);
+        }
     }
 }
 

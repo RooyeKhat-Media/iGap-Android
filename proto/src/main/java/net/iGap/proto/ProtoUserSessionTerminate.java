@@ -73,11 +73,11 @@ public final class ProtoUserSessionTerminate {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -102,16 +102,15 @@ public final class ProtoUserSessionTerminate {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
+      return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.Builder.class);
+      return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -122,7 +121,7 @@ public final class ProtoUserSessionTerminate {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -180,10 +179,10 @@ public final class ProtoUserSessionTerminate {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate other = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) obj;
+      net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate other = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -212,48 +211,43 @@ public final class ProtoUserSessionTerminate {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -264,7 +258,7 @@ public final class ProtoUserSessionTerminate {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -283,15 +277,14 @@ public final class ProtoUserSessionTerminate {
             // @@protoc_insertion_point(builder_implements:proto.UserSessionTerminate)
         net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.Builder.class);
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -319,23 +312,23 @@ public final class ProtoUserSessionTerminate {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminate_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.getDefaultInstance();
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate build() {
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate result = buildPartial();
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate build() {
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate buildPartial() {
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate result = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate(this);
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate buildPartial() {
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate result = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -370,16 +363,16 @@ public final class ProtoUserSessionTerminate {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) {
-              return mergeFrom((net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) other);
+        if (other instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) {
+          return mergeFrom((net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate other) {
-            if (other == net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate other) {
+        if (other == net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -395,11 +388,11 @@ public final class ProtoUserSessionTerminate {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parsedMessage = null;
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -409,9 +402,8 @@ public final class ProtoUserSessionTerminate {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -423,7 +415,7 @@ public final class ProtoUserSessionTerminate {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -463,7 +455,7 @@ public final class ProtoUserSessionTerminate {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -503,7 +495,7 @@ public final class ProtoUserSessionTerminate {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -511,8 +503,7 @@ public final class ProtoUserSessionTerminate {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -562,10 +553,10 @@ public final class ProtoUserSessionTerminate {
     // @@protoc_insertion_point(class_scope:proto.UserSessionTerminate)
     private static final net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate();
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -584,7 +575,7 @@ public final class ProtoUserSessionTerminate {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminate getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -644,11 +635,11 @@ public final class ProtoUserSessionTerminate {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -668,16 +659,15 @@ public final class ProtoUserSessionTerminate {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
+      return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder.class);
+      return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -688,7 +678,7 @@ public final class ProtoUserSessionTerminate {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -731,10 +721,10 @@ public final class ProtoUserSessionTerminate {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse other = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) obj;
+      net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse other = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -760,48 +750,43 @@ public final class ProtoUserSessionTerminate {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -812,7 +797,7 @@ public final class ProtoUserSessionTerminate {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -832,15 +817,14 @@ public final class ProtoUserSessionTerminate {
             // @@protoc_insertion_point(builder_implements:proto.UserSessionTerminateResponse)
         net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder.class);
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.class, net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -866,23 +850,23 @@ public final class ProtoUserSessionTerminate {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
+        return net.iGap.proto.ProtoUserSessionTerminate.internal_static_proto_UserSessionTerminateResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse build() {
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse result = buildPartial();
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse build() {
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse buildPartial() {
-            net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse result = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse(this);
+      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse buildPartial() {
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse result = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -916,16 +900,16 @@ public final class ProtoUserSessionTerminate {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) {
-              return mergeFrom((net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) other);
+        if (other instanceof net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) {
+          return mergeFrom((net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse other) {
-            if (other == net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse other) {
+        if (other == net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -938,11 +922,11 @@ public final class ProtoUserSessionTerminate {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parsedMessage = null;
+        net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -952,9 +936,8 @@ public final class ProtoUserSessionTerminate {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -966,7 +949,7 @@ public final class ProtoUserSessionTerminate {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1006,7 +989,7 @@ public final class ProtoUserSessionTerminate {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1046,7 +1029,7 @@ public final class ProtoUserSessionTerminate {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1054,8 +1037,7 @@ public final class ProtoUserSessionTerminate {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1079,10 +1061,10 @@ public final class ProtoUserSessionTerminate {
     // @@protoc_insertion_point(class_scope:proto.UserSessionTerminateResponse)
     private static final net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse();
     }
 
-      public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1101,7 +1083,7 @@ public final class ProtoUserSessionTerminate {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoUserSessionTerminate.UserSessionTerminateResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1123,7 +1105,8 @@ public final class ProtoUserSessionTerminate {
                     "uest.proto\032\016Response.proto\"K\n\024UserSessio" +
                     "nTerminate\022\037\n\007request\030\001 \001(\0132\016.proto.Requ" +
                     "est\022\022\n\nsession_id\030\002 \001(\004\"A\n\034UserSessionTe" +
-                    "rminateResponse\022!\n\010response\030\001 \001(\0132\017.prot" + "o.ResponseB+\n\016net.iGap.protoB\031ProtoUserS" +
+                    "rminateResponse\022!\n\010response\030\001 \001(\0132\017.prot" +
+                    "o.ResponseB+\n\016net.iGap.protoB\031ProtoUserS" +
                     "essionTerminateb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1133,15 +1116,14 @@ public final class ProtoUserSessionTerminate {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_UserSessionTerminate_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_UserSessionTerminate_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserSessionTerminate_descriptor, new java.lang.String[]{"Request", "SessionId",});
     internal_static_proto_UserSessionTerminateResponse_descriptor = getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserSessionTerminateResponse_descriptor, new java.lang.String[]{"Response",});
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    internal_static_proto_UserSessionTerminateResponse_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserSessionTerminateResponse_descriptor, new java.lang.String[]{"Response",});
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

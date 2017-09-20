@@ -58,6 +58,10 @@ public class SignalingGetLogResponse extends MessageHandler {
     @Override
     public void timeOut() {
         super.timeOut();
+
+        if (G.iSignalingGetCallLog != null) {
+            G.iSignalingGetCallLog.onGetList(-1);
+        }
     }
 
     @Override
@@ -65,7 +69,7 @@ public class SignalingGetLogResponse extends MessageHandler {
         super.error();
 
         if (G.iSignalingGetCallLog != null) {
-            G.iSignalingGetCallLog.onGetList(0);
+            G.iSignalingGetCallLog.onGetList(-1);
         }
 
 

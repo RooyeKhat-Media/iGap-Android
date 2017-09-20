@@ -20,7 +20,6 @@ import java.net.InetSocketAddress;
 
 
 class Address {
-    public static boolean mask;
     private final String mHost;
     private final int mPort;
     private transient String mString;
@@ -34,6 +33,11 @@ class Address {
 
     InetSocketAddress toInetSocketAddress() {
         return new InetSocketAddress(mHost, mPort);
+    }
+
+
+    String getHostname() {
+        return mHost;
     }
 
 

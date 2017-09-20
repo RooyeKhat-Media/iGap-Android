@@ -13,6 +13,8 @@ package net.iGap.helper;
 import net.iGap.Config;
 import net.iGap.G;
 
+import static net.iGap.G.latestResponse;
+
 public class HelperTimeOut {
 
     /**
@@ -46,10 +48,10 @@ public class HelperTimeOut {
         long currentTime = System.currentTimeMillis();
         difference = (currentTime - G.latestHearBeatTime);
 
-        if (difference >= (G.serverHeartBeatTiming + Config.HEART_BEAT_CHECKING_TIME_OUT)) { // server hearBeat timing and plus with Config.HEART_BEAT_CHECKING_TIME_OUT
-            return true;
-        }
-
-        return false;
+        /**
+         * if heartBeats was timedOut, check that received any response from server in this time or no
+         * if received response so not timedOut yet otherwise hearBeat timeOut is true really
+         */
+        return ((difference >= (G.serverHeartBeatTiming + Config.HEART_BEAT_CHECKING_TIME_OUT)) && timeoutChecking(0, latestResponse, (G.serverHeartBeatTiming + Config.HEART_BEAT_CHECKING_TIME_OUT)));
     }
 }

@@ -10,8 +10,12 @@
 
 package net.iGap.response;
 
+import io.realm.Realm;
 import net.iGap.G;
+import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoSignalingOffer;
+import net.iGap.realm.RealmCallConfig;
+import net.iGap.request.RequestSignalingGetConfiguration;
 
 public class SignalingOfferResponse extends MessageHandler {
 
@@ -27,27 +31,52 @@ public class SignalingOfferResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoSignalingOffer.SignalingOfferResponse.Builder builder = (ProtoSignalingOffer.SignalingOfferResponse.Builder) message;
 
-        String callerSdp = builder.getCallerSdp();
-        Long callerUserID = builder.getCallerUserId();
-        net.iGap.proto.ProtoSignalingOffer.SignalingOffer.Type type = builder.getType();
+        /**
+         * if client get response from caller do this actions
+         */
+        if (builder.getResponse().getId().isEmpty()) {
+            String callerSdp = builder.getCallerSdp();
+            Long callerUserID = builder.getCallerUserId();
+            net.iGap.proto.ProtoSignalingOffer.SignalingOffer.Type type = builder.getType();
 
-        if (G.iSignalingOffer != null) {
-            G.iSignalingOffer.onOffer(callerUserID, type, callerSdp);
+            Realm realm = Realm.getDefaultInstance();
+            RealmCallConfig realmCallConfig = realm.where(RealmCallConfig.class).findFirst();
+
+            if (realmCallConfig == null) {
+                new RequestSignalingGetConfiguration().signalingGetConfiguration();
+            } else {
+                if (G.iSignalingOffer != null) {
+                    G.iSignalingOffer.onOffer(callerUserID, type, callerSdp);
+                }
+            }
+
+            realm.close();
         }
-
-
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
+
+        if (G.iSignalingErrore != null) {
+
+            ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+            int majorCode = errorResponse.getMajorCode();
+            int minorCode = errorResponse.getMinorCode();
+
+            G.iSignalingErrore.onErrore(majorCode, minorCode);
+        }
+
     }
 }
 

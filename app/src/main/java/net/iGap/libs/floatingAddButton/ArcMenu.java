@@ -25,9 +25,6 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 
-/**
- * Created by Saurabh on 14/12/15.
- */
 @CoordinatorLayout.DefaultBehavior(MoveUpwardBehaviour.class) public class ArcMenu extends FrameLayout {
 
     private static final double POSITIVE_QUADRANT = 90;

@@ -29,6 +29,7 @@ import io.realm.RealmModel;
 import java.util.ArrayList;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperFragment;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.structs.StructSessions;
@@ -40,12 +41,11 @@ import net.iGap.request.RequestUserProfileGetSelfRemove;
 import net.iGap.request.RequestUserProfileSetSelfRemove;
 
 import static android.content.Context.MODE_PRIVATE;
-import static net.iGap.R.id.st_layoutParent;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentPrivacyAndSecurity extends Fragment {
+public class FragmentPrivacyAndSecurity extends BaseFragment {
 
     int poSelfRemove;
     private SharedPreferences sharedPreferences;
@@ -58,11 +58,13 @@ public class FragmentPrivacyAndSecurity extends Fragment {
     private TextView txtWhoCanInviteMeToChannel;
     private TextView txtWhoCanInviteMeToGroup;
     private TextView txtWhoCanSeeMyLastSeen;
+    private TextView txtWhoCanVoiceCallToMe;
 
     private LinearLayout layoutWhoCanSeeMyAvatar;
     private LinearLayout layoutWhoCanInviteMeToChannel;
     private LinearLayout layoutWhoCanInviteMeToGroup;
     private LinearLayout layoutWhoCanSeeMyLastSeen;
+    private LinearLayout layoutWhoCanVoiceCallToMe;
 
     private RealmChangeListener<RealmModel> userInfoListener;
     private RealmUserInfo realmUserInfo;
@@ -120,9 +122,6 @@ public class FragmentPrivacyAndSecurity extends Fragment {
 
         new RequestUserContactsGetBlockedList().userContactsGetBlockedList();
         view.findViewById(R.id.stps_backgroundToolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
-        view.findViewById(R.id.fpac_view_line).setBackgroundColor(Color.parseColor(G.appBarColor));
-
-
 
         Realm realm = Realm.getDefaultInstance();
 
@@ -130,8 +129,10 @@ public class FragmentPrivacyAndSecurity extends Fragment {
         userInfoListener = new RealmChangeListener<RealmModel>() {
             @Override
             public void onChange(RealmModel element) {
-                selfRemove = ((RealmUserInfo) element).getSelfRemove();
-                setTextSelfDestructs();
+                if (((RealmUserInfo) element).isValid()) {
+                    selfRemove = ((RealmUserInfo) element).getSelfRemove();
+                    setTextSelfDestructs();
+                }
             }
         };
 
@@ -158,7 +159,24 @@ public class FragmentPrivacyAndSecurity extends Fragment {
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(FragmentPrivacyAndSecurity.this).commit();
+                popBackStackFragment();
+            }
+        });
+
+
+        TextView txtPassCode = (TextView) view.findViewById(R.id.stps_passCode);
+        txtPassCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new HelperFragment(new FragmentPassCode()).setReplace(false).load();
+            }
+        });
+
+        TextView txtSecurity = (TextView) view.findViewById(R.id.stps_twoStepVerification);
+        txtSecurity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new HelperFragment(new FragmentSecurity()).setReplace(false).load();
             }
         });
 
@@ -166,8 +184,7 @@ public class FragmentPrivacyAndSecurity extends Fragment {
         txtActiveSessions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentActiveSessions fragmentActiveSessions = new FragmentActiveSessions();
-                getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).replace(st_layoutParent, fragmentActiveSessions, null).commit();
+                new HelperFragment(new FragmentActiveSessions()).setReplace(false).load();
             }
         });
 
@@ -175,8 +192,7 @@ public class FragmentPrivacyAndSecurity extends Fragment {
         txtBlockedUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentBlockedUser fragmentBlockedUser = new FragmentBlockedUser();
-                getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_left).addToBackStack(null).replace(R.id.parentPrivacySecurity, fragmentBlockedUser, null).commit();
+                new HelperFragment(new FragmentBlockedUser()).setReplace(false).load();
             }
         });
 
@@ -184,18 +200,20 @@ public class FragmentPrivacyAndSecurity extends Fragment {
         txtWhoCanInviteMeToChannel = (TextView) view.findViewById(R.id.stps_txt_who_can_invite_me_to_Channel);
         txtWhoCanInviteMeToGroup = (TextView) view.findViewById(R.id.stps_txt_who_can_invite_me_to_group);
         txtWhoCanSeeMyLastSeen = (TextView) view.findViewById(R.id.stps_who_can_see_my_last_seen);
+        txtWhoCanVoiceCallToMe = (TextView) view.findViewById(R.id.stps_txt_who_can_voice_call_to_me);
 
         layoutWhoCanSeeMyAvatar = (LinearLayout) view.findViewById(R.id.stps_ll_who_can_see_my_avatar);
         layoutWhoCanInviteMeToChannel = (LinearLayout) view.findViewById(R.id.stps_ll_who_can_invite_me_to_Channel);
         layoutWhoCanInviteMeToGroup = (LinearLayout) view.findViewById(R.id.stps_ll_who_can_invite_me_to_group);
         layoutWhoCanSeeMyLastSeen = (LinearLayout) view.findViewById(R.id.stps_ll_who_can_see_my_last_seen);
+        layoutWhoCanVoiceCallToMe = (LinearLayout) view.findViewById(R.id.stps_ll_who_can_voice_call_to_me);
 
         layoutWhoCanSeeMyAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (realmPrivacy != null) {
                     getStringFromEnumString(realmPrivacy.getWhoCanSeeMyAvatar());
-                    openDialogWhoCan(ProtoGlobal.PrivacyType.AVATAR, poWhoCan);
+                    openDialogWhoCan(ProtoGlobal.PrivacyType.AVATAR, poWhoCan, R.string.title_who_can_see_my_avatar);
                 }
             }
         });
@@ -205,7 +223,7 @@ public class FragmentPrivacyAndSecurity extends Fragment {
             public void onClick(View v) {
                 if (realmPrivacy != null) {
                     getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToChannel());
-                    openDialogWhoCan(ProtoGlobal.PrivacyType.CHANNEL_INVITE, poWhoCan);
+                    openDialogWhoCan(ProtoGlobal.PrivacyType.CHANNEL_INVITE, poWhoCan, R.string.title_who_can_invite_you_to_channel_s);
                 }
             }
         });
@@ -215,7 +233,7 @@ public class FragmentPrivacyAndSecurity extends Fragment {
             public void onClick(View v) {
                 if (realmPrivacy != null) {
                     getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToGroup());
-                    openDialogWhoCan(ProtoGlobal.PrivacyType.GROUP_INVITE, poWhoCan);
+                    openDialogWhoCan(ProtoGlobal.PrivacyType.GROUP_INVITE, poWhoCan, R.string.title_who_can_invite_you_to_group_s);
                 }
             }
         });
@@ -225,14 +243,26 @@ public class FragmentPrivacyAndSecurity extends Fragment {
             public void onClick(View v) {
                 if (realmPrivacy != null) {
                     getStringFromEnumString(realmPrivacy.getWhoCanSeeMyLastSeen());
-                    openDialogWhoCan(ProtoGlobal.PrivacyType.USER_STATUS, poWhoCan);
+                    openDialogWhoCan(ProtoGlobal.PrivacyType.USER_STATUS, poWhoCan, R.string.title_Last_Seen);
                 }
             }
         });
 
+        layoutWhoCanVoiceCallToMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (realmPrivacy != null) {
+                    getStringFromEnumString(realmPrivacy.getWhoCanVoiceCallToMe());
+                    openDialogWhoCan(ProtoGlobal.PrivacyType.VOICE_CALLING, poWhoCan, R.string.title_who_is_allowed_to_call);
+                }
+            }
+        });
+
+
+
         txtDestruction = (TextView) view.findViewById(R.id.stps_txt_Self_destruction);
 
-        sharedPreferences = getActivity().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
         poSelfRemove = sharedPreferences.getInt(SHP_SETTING.KEY_POSITION_SELF_REMOVE, 2);
         ViewGroup ltSelfDestruction = (ViewGroup) view.findViewById(R.id.stps_layout_Self_destruction);
         ltSelfDestruction.setOnClickListener(new View.OnClickListener() {
@@ -249,67 +279,67 @@ public class FragmentPrivacyAndSecurity extends Fragment {
 
     private void selfDestructs() {
 
-        new MaterialDialog.Builder(getActivity()).title(getResources().getString(R.string.self_destructs)).titleGravity(GravityEnum.START).titleColor(getResources().getColor(android.R.color.black)).items(R.array.account_self_destruct).itemsCallbackSingleChoice(poSelfRemove, new MaterialDialog.ListCallbackSingleChoice() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.self_destructs)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.account_self_destruct).itemsCallbackSingleChoice(poSelfRemove, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
                 switch (which) {
                     case 0: {
-                        txtDestruction.setText(getResources().getString(R.string.month_1));
+                        txtDestruction.setText(G.context.getResources().getString(R.string.month_1));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(1);
                         break;
                     }
                     case 1: {
-                        txtDestruction.setText(getResources().getString(R.string.month_3));
+                        txtDestruction.setText(G.context.getResources().getString(R.string.month_3));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(3);
                         break;
                     }
                     case 2: {
 
-                        txtDestruction.setText(getResources().getString(R.string.month_6));
+                        txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(6);
                         break;
                     }
                     case 3: {
 
-                        txtDestruction.setText(getResources().getString(R.string.year_1));
+                        txtDestruction.setText(G.context.getResources().getString(R.string.year_1));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(12);
                         break;
                     }
                 }
                 return false;
             }
-        }).positiveText(getResources().getString(R.string.B_ok)).negativeText(getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.context.getResources().getString(R.string.B_ok)).negativeText(G.context.getResources().getString(R.string.B_cancel)).show();
     }
 
     private void setTextSelfDestructs() throws IllegalStateException {
         if (selfRemove != 0) {
             switch (selfRemove) {
                 case 1:
-                    txtDestruction.setText(getResources().getString(R.string.month_1));
+                    txtDestruction.setText(G.context.getResources().getString(R.string.month_1));
                     poSelfRemove = 0;
                     break;
                 case 3:
-                    txtDestruction.setText(getResources().getString(R.string.month_3));
+                    txtDestruction.setText(G.context.getResources().getString(R.string.month_3));
                     poSelfRemove = 1;
                     break;
                 case 6:
-                    txtDestruction.setText(getResources().getString(R.string.month_6));
+                    txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
                     poSelfRemove = 2;
                     break;
                 case 12:
-                    txtDestruction.setText(getResources().getString(R.string.year_1));
+                    txtDestruction.setText(G.context.getResources().getString(R.string.year_1));
                     poSelfRemove = 3;
                     break;
             }
         } else {
-            txtDestruction.setText(getResources().getString(R.string.month_6));
+            txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
         }
     }
 
-    private void openDialogWhoCan(final ProtoGlobal.PrivacyType privacyType, int position) {
+    private void openDialogWhoCan(final ProtoGlobal.PrivacyType privacyType, int position, int title) {
 
-        new MaterialDialog.Builder(getActivity()).title(getResources().getString(R.string.privacy_setting)).titleGravity(GravityEnum.START).titleColor(getResources().getColor(android.R.color.black)).items(R.array.privacy_setting_array).itemsCallbackSingleChoice(position, new MaterialDialog.ListCallbackSingleChoice() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(title)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.privacy_setting_array).itemsCallbackSingleChoice(position, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
@@ -330,15 +360,17 @@ public class FragmentPrivacyAndSecurity extends Fragment {
                 }
                 return false;
             }
-        }).positiveText(getResources().getString(R.string.B_ok)).negativeText(getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.context.getResources().getString(R.string.B_ok)).negativeText(G.context.getResources().getString(R.string.B_cancel)).show();
     }
 
     private void updatePrivacyUI(RealmPrivacy realmPrivacy) {
-
-        txtWhoCanSeeMyAvatar.setText(getStringFromEnumString(realmPrivacy.getWhoCanSeeMyAvatar()));
-        txtWhoCanInviteMeToChannel.setText(getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToChannel()));
-        txtWhoCanInviteMeToGroup.setText(getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToGroup()));
-        txtWhoCanSeeMyLastSeen.setText(getStringFromEnumString(realmPrivacy.getWhoCanSeeMyLastSeen()));
+        if (realmPrivacy.isValid()) {
+            txtWhoCanSeeMyAvatar.setText(getStringFromEnumString(realmPrivacy.getWhoCanSeeMyAvatar()));
+            txtWhoCanInviteMeToChannel.setText(getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToChannel()));
+            txtWhoCanInviteMeToGroup.setText(getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToGroup()));
+            txtWhoCanSeeMyLastSeen.setText(getStringFromEnumString(realmPrivacy.getWhoCanSeeMyLastSeen()));
+            txtWhoCanVoiceCallToMe.setText(getStringFromEnumString(realmPrivacy.getWhoCanVoiceCallToMe()));
+        }
     }
 
     private int getStringFromEnumString(String str) {

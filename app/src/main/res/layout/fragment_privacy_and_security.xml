@@ -6,74 +6,78 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:elevation="999dp"
+    android:clickable="true"
     tools:context="net.iGap.fragments.FragmentPrivacyAndSecurity"
     tools:ignore="MissingPrefix"
     >
 
-  <android.support.v7.widget.Toolbar
+
+  <android.support.design.widget.AppBarLayout
       android:id="@+id/stps_backgroundToolbar"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/dp60"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_alignParentTop="true"
-      android:background="@color/toolbar_background"
-      android:layoutDirection="ltr"
-      android:padding="0dp"
-      app:contentInsetLeft="0dp"
-      app:contentInsetStart="0dp"
-      tools:ignore="MissingPrefix"
+      android:layout_height="wrap_content"
       >
+    <android.support.v7.widget.Toolbar
 
-    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layoutDirection="ltr"
+        android:padding="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        tools:ignore="MissingPrefix"
         >
 
-      <TextView
+      <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_centerInParent="true"
-          android:gravity="center"
-          android:text="@string/st_title_Privacy_Security"
-          android:textColor="@color/whit_background"
-          android:textSize="@dimen/dp18"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-          />
-
-      <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/stps_ripple_back"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="0"
-          app:rv_ripplePadding="5dp"
-          rv_centered="true"
           >
 
-        <net.iGap.module.MaterialDesignTextView
-            android:layout_width="@dimen/dp52"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/stps_ripple_back"
+            android:layout_toRightOf="@+id/stps_ripple_back"
             android:gravity="center"
-            android:text="@string/md_back_arrow"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:text="@string/st_title_Privacy_Security"
             android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:visibility="visible"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             />
 
-      </net.iGap.libs.rippleeffect.RippleView>
-    </RelativeLayout>
-  </android.support.v7.widget.Toolbar>
+        <net.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/stps_ripple_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp"
+            rv_centered="true"
+            >
 
-  <View
-      android:id="@+id/fpac_view_line"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:layout_below="@+id/stps_backgroundToolbar"
-      android:background="#34a49f"
-      />
+          <net.iGap.module.MaterialDesignTextView
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:layout_alignParentLeft="true"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background"
+              />
+
+        </net.iGap.libs.rippleeffect.RippleView>
+      </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+  </android.support.design.widget.AppBarLayout>
+
 
   <ScrollView
       android:layout_width="match_parent"
@@ -367,7 +371,43 @@
               fontPath="fonts/IRANSansMobile.ttf"
               />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/stps_ll_who_can_voice_call_to_me"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:orientation="horizontal"
+            >
 
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight=".5"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/who_is_allowed_to_call"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <TextView
+              android:id="@+id/stps_txt_who_can_voice_call_to_me"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/everybody"
+              android:textColor="@color/toolbar_background"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/stps_ll_who_can_see_my_last_seen"
             android:layout_width="match_parent"
@@ -405,6 +445,7 @@
               fontPath="fonts/IRANSansMobile.ttf"
               />
         </LinearLayout>
+
 
       </LinearLayout>
 
@@ -466,12 +507,45 @@
             android:visibility="gone"
             fontPath="fonts/IRANSansMobile.ttf"
             />
-
+        <TextView
+            android:id="@+id/stps_passCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/two_step_pass_code"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background_editText"
-            android:visibility="gone"
+            android:visibility="visible"
+            />
+        <TextView
+            android:id="@+id/stps_twoStepVerification"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/two_step_verification"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
             />
 
         <TextView
@@ -555,6 +629,19 @@
               fontPath="fonts/IRANSansMobile.ttf"
               />
         </LinearLayout>
+
+        <com.uncopt.android.widget.text.justify.JustifiedTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:padding="@dimen/dp8"
+            android:text="@string/desc_self_destroy"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp12"
+            android:textStyle="normal"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
+
       </LinearLayout>
     </LinearLayout>
   </ScrollView>

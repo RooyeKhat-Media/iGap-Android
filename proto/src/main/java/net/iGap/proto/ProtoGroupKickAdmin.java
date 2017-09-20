@@ -13,7 +13,6 @@ public final class ProtoGroupKickAdmin {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface GroupKickAdminOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.GroupKickAdmin)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoGroupKickAdmin {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -43,7 +40,6 @@ public final class ProtoGroupKickAdmin {
      */
     long getMemberId();
   }
-
   /**
    * Protobuf type {@code proto.GroupKickAdmin}
    */
@@ -54,7 +50,6 @@ public final class ProtoGroupKickAdmin {
     private GroupKickAdmin(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupKickAdmin() {
       roomId_ = 0L;
       memberId_ = 0L;
@@ -126,21 +121,18 @@ public final class ProtoGroupKickAdmin {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -150,7 +142,6 @@ public final class ProtoGroupKickAdmin {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -160,7 +151,6 @@ public final class ProtoGroupKickAdmin {
 
     public static final int MEMBER_ID_FIELD_NUMBER = 3;
     private long memberId_;
-
     /**
      * <code>optional uint64 member_id = 3;</code>
      */
@@ -169,7 +159,6 @@ public final class ProtoGroupKickAdmin {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -210,7 +199,6 @@ public final class ProtoGroupKickAdmin {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -294,15 +282,12 @@ public final class ProtoGroupKickAdmin {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdmin prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -312,7 +297,6 @@ public final class ProtoGroupKickAdmin {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupKickAdmin}
      */
@@ -336,12 +320,10 @@ public final class ProtoGroupKickAdmin {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -409,7 +391,6 @@ public final class ProtoGroupKickAdmin {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdmin) {
           return mergeFrom((net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdmin) other);
@@ -455,14 +436,12 @@ public final class ProtoGroupKickAdmin {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -473,7 +452,6 @@ public final class ProtoGroupKickAdmin {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -490,7 +468,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -504,7 +481,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -522,7 +498,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -537,7 +512,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -546,7 +520,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -557,7 +530,6 @@ public final class ProtoGroupKickAdmin {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -570,14 +542,12 @@ public final class ProtoGroupKickAdmin {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -587,7 +557,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -599,14 +568,12 @@ public final class ProtoGroupKickAdmin {
       }
 
       private long memberId_;
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
       public long getMemberId() {
         return memberId_;
       }
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
@@ -616,7 +583,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
@@ -641,7 +607,6 @@ public final class ProtoGroupKickAdmin {
 
     // @@protoc_insertion_point(class_scope:proto.GroupKickAdmin)
     private static final net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdmin DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdmin();
     }
@@ -679,12 +644,10 @@ public final class ProtoGroupKickAdmin {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -700,7 +663,6 @@ public final class ProtoGroupKickAdmin {
      */
     long getMemberId();
   }
-
   /**
    * Protobuf type {@code proto.GroupKickAdminResponse}
    */
@@ -711,7 +673,6 @@ public final class ProtoGroupKickAdmin {
     private GroupKickAdminResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GroupKickAdminResponse() {
       roomId_ = 0L;
       memberId_ = 0L;
@@ -783,21 +744,18 @@ public final class ProtoGroupKickAdmin {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -807,7 +765,6 @@ public final class ProtoGroupKickAdmin {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -817,7 +774,6 @@ public final class ProtoGroupKickAdmin {
 
     public static final int MEMBER_ID_FIELD_NUMBER = 3;
     private long memberId_;
-
     /**
      * <code>optional uint64 member_id = 3;</code>
      */
@@ -826,7 +782,6 @@ public final class ProtoGroupKickAdmin {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -867,7 +822,6 @@ public final class ProtoGroupKickAdmin {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -951,15 +905,12 @@ public final class ProtoGroupKickAdmin {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -970,7 +921,6 @@ public final class ProtoGroupKickAdmin {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GroupKickAdminResponse}
      */
@@ -994,12 +944,10 @@ public final class ProtoGroupKickAdmin {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1067,7 +1015,6 @@ public final class ProtoGroupKickAdmin {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse) {
           return mergeFrom((net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse) other);
@@ -1077,20 +1024,20 @@ public final class ProtoGroupKickAdmin {
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse other) {
-          if (other == net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse.getDefaultInstance()) return this;
-          if (other.hasResponse()) {
-            mergeResponse(other.getResponse());
-          }
-          if (other.getRoomId() != 0L) {
-            setRoomId(other.getRoomId());
-          }
-          if (other.getMemberId() != 0L) {
-            setMemberId(other.getMemberId());
-          }
-          onChanged();
-          return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse other) {
+        if (other == net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse.getDefaultInstance()) return this;
+        if (other.hasResponse()) {
+          mergeResponse(other.getResponse());
         }
+        if (other.getRoomId() != 0L) {
+          setRoomId(other.getRoomId());
+        }
+        if (other.getMemberId() != 0L) {
+          setMemberId(other.getMemberId());
+        }
+        onChanged();
+        return this;
+      }
 
       public final boolean isInitialized() {
         return true;
@@ -1113,14 +1060,12 @@ public final class ProtoGroupKickAdmin {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1131,7 +1076,6 @@ public final class ProtoGroupKickAdmin {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1148,7 +1092,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1162,7 +1105,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1180,7 +1122,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1195,7 +1136,6 @@ public final class ProtoGroupKickAdmin {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1204,7 +1144,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1215,7 +1154,6 @@ public final class ProtoGroupKickAdmin {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1228,14 +1166,12 @@ public final class ProtoGroupKickAdmin {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1245,7 +1181,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1257,14 +1192,12 @@ public final class ProtoGroupKickAdmin {
       }
 
       private long memberId_;
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
       public long getMemberId() {
         return memberId_;
       }
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
@@ -1274,7 +1207,6 @@ public final class ProtoGroupKickAdmin {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 member_id = 3;</code>
        */
@@ -1299,7 +1231,6 @@ public final class ProtoGroupKickAdmin {
 
     // @@protoc_insertion_point(class_scope:proto.GroupKickAdminResponse)
     private static final net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoGroupKickAdmin.GroupKickAdminResponse();
     }
@@ -1339,7 +1270,6 @@ public final class ProtoGroupKickAdmin {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\024GroupKickAdmin.proto\022\005proto\032\rRequest.p" +
@@ -1347,7 +1277,8 @@ public final class ProtoGroupKickAdmin {
                     "\n\007request\030\001 \001(\0132\016.proto.Request\022\017\n\007room_" +
                     "id\030\002 \001(\004\022\021\n\tmember_id\030\003 \001(\004\"_\n\026GroupKick" +
                     "AdminResponse\022!\n\010response\030\001 \001(\0132\017.proto." +
-                    "Response\022\017\n\007room_id\030\002 \001(\004\022\021\n\tmember_id\030\003" + " \001(\004B%\n\016net.iGap.protoB\023ProtoGroupKickAd" +
+                    "Response\022\017\n\007room_id\030\002 \001(\004\022\021\n\tmember_id\030\003" +
+                    " \001(\004B%\n\016net.iGap.protoB\023ProtoGroupKickAd" +
                     "minb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1366,8 +1297,8 @@ public final class ProtoGroupKickAdmin {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupKickAdminResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "MemberId", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

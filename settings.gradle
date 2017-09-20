@@ -1,2 +1,2 @@
-include ':app', ':messageprogress', ':proto', ':emoji', ':audioplayerview', ':websocket', ':compress', ':k4l-video-trimmer'
+include ':app', ':messageprogress', ':proto', ':websocket', ':compress', ':k4l-video-trimmer', ':libwebrtc'
 include ':lvl'

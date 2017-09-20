@@ -70,7 +70,7 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
             }
 
             if (HelperCalander.isLanguagePersian) {
-                holder.subtitle.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.subtitle.getText().toString()));
+                holder.subtitle.setText(holder.subtitle.getText().toString());
             }
         }
         realm.close();
@@ -80,7 +80,7 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
 
     private void setAvatar(final ViewHolder holder) {
 
-        HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, new OnAvatarGet() {
+        HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
             @Override public void onAvatarGet(final String avatarPath, long ownerId) {
                 G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), holder.image);
             }

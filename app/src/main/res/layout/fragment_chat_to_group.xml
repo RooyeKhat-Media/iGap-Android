@@ -3,6 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
     tools:context="net.iGap.fragments.FragmentChatToGroup"
+    android:clickable="true"
     >
 
     <TextView

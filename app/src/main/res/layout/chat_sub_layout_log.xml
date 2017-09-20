@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/chatSubLayoutLog"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/csll_txt_log_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -18,8 +19,8 @@
         android:paddingTop="@dimen/dp4"
         android:gravity="center"
         android:singleLine="false"
-        android:text="Today"
-        android:textColor="@color/white"
+        android:text="Log"
+        android:textColor="#4a5d5c"
         android:textSize="@dimen/dp12"
         android:textAllCaps="false"
         />

@@ -43,8 +43,11 @@ public class WebSocketExtension {
     /**
      * Constructor with an extension name.
      *
-     * @param name The extension name.
-     * @throws IllegalArgumentException The given name is not a valid token.
+     * @param name
+     *         The extension name.
+     *
+     * @throws IllegalArgumentException
+     *         The given name is not a valid token.
      */
     public WebSocketExtension(String name) {
         // Check the validity of the name.
@@ -61,8 +64,12 @@ public class WebSocketExtension {
     /**
      * Copy constructor.
      *
-     * @param source A source extension. Must not be {@code null}.
-     * @throws IllegalArgumentException The given argument is {@code null}.
+     * @param source
+     *         A source extension. Must not be {@code null}.
+     *
+     * @throws IllegalArgumentException
+     *         The given argument is {@code null}.
+     *
      * @since 1.6
      */
     public WebSocketExtension(WebSocketExtension source) {
@@ -79,7 +86,8 @@ public class WebSocketExtension {
     /**
      * Get the extension name.
      *
-     * @return The extension name.
+     * @return
+     *         The extension name.
      */
     public String getName() {
         return mName;
@@ -89,7 +97,8 @@ public class WebSocketExtension {
     /**
      * Get the parameters.
      *
-     * @return The parameters.
+     * @return
+     *         The parameters.
      */
     public Map<String, String> getParameters() {
         return mParameters;
@@ -99,8 +108,11 @@ public class WebSocketExtension {
     /**
      * Check if the parameter identified by the key is contained.
      *
-     * @param key The name of the parameter.
-     * @return {@code true} if the parameter is contained.
+     * @param key
+     *         The name of the parameter.
+     *
+     * @return
+     *         {@code true} if the parameter is contained.
      */
     public boolean containsParameter(String key) {
         return mParameters.containsKey(key);
@@ -110,8 +122,11 @@ public class WebSocketExtension {
     /**
      * Get the value of the specified parameter.
      *
-     * @param key The name of the parameter.
-     * @return The value of the parameter. {@code null} may be returned.
+     * @param key
+     *         The name of the parameter.
+     *
+     * @return
+     *         The value of the parameter. {@code null} may be returned.
      */
     public String getParameter(String key) {
         return mParameters.get(key);
@@ -121,17 +136,24 @@ public class WebSocketExtension {
     /**
      * Set a value to the specified parameter.
      *
-     * @param key   The name of the parameter.
-     * @param value The value of the parameter. If not {@code null}, it must be
-     *              a valid token. Note that <a href="http://tools.ietf.org/html/rfc6455"
-     *              >RFC 6455</a> says "<i>When using the quoted-string syntax
-     *              variant, the value after quoted-string unescaping MUST
-     *              conform to the 'token' ABNF.</i>"
-     * @return {@code this} object.
-     * @throws IllegalArgumentException <ul>
-     *                                  <li>The key is not a valid token.
-     *                                  <li>The value is not {@code null} and it is not a valid token.
-     *                                  </ul>
+     * @param key
+     *         The name of the parameter.
+     *
+     * @param value
+     *         The value of the parameter. If not {@code null}, it must be
+     *         a valid token. Note that <a href="http://tools.ietf.org/html/rfc6455"
+     *         >RFC 6455</a> says "<i>When using the quoted-string syntax
+     *         variant, the value after quoted-string unescaping MUST
+     *         conform to the 'token' ABNF.</i>"
+     *
+     * @return
+     *         {@code this} object.
+     *
+     * @throws IllegalArgumentException
+     *         <ul>
+     *         <li>The key is not a valid token.
+     *         <li>The value is not {@code null} and it is not a valid token.
+     *         </ul>
      */
     public WebSocketExtension setParameter(String key, String value) {
         // Check the validity of the key.
@@ -192,10 +214,13 @@ public class WebSocketExtension {
      * Extensions</a> in <a href="https://tools.ietf.org/html/rfc6455"
      * >RFC 6455</a>.
      *
-     * @param string A string that represents a WebSocket extension.
-     * @return A new {@link WebSocketExtension} instance that represents
-     * the given string. If the input string does not comply with
-     * RFC 6455, {@code null} is returned.
+     * @param string
+     *         A string that represents a WebSocket extension.
+     *
+     * @return
+     *         A new {@link WebSocketExtension} instance that represents
+     *         the given string. If the input string does not comply with
+     *         RFC 6455, {@code null} is returned.
      */
     public static WebSocketExtension parse(String string) {
         if (string == null) {

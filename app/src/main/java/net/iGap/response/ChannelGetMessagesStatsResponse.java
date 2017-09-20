@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import android.util.Log;
 import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelGetMessagesStats;
@@ -35,7 +34,6 @@ public class ChannelGetMessagesStatsResponse extends MessageHandler {
     @Override public void handler() {
         super.handler();
 
-        Log.i("MMM", "ChannelGetMessagesStatsResponse message : " + message);
         final ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder builder = (ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder) message;
 
         Realm realm = Realm.getDefaultInstance();

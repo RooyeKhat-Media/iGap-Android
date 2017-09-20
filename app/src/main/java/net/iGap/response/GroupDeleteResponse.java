@@ -10,19 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupDelete;
-import net.iGap.realm.RealmClientCondition;
-import net.iGap.realm.RealmClientConditionFields;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
-
-import static net.iGap.module.MusicPlayer.roomId;
 
 public class GroupDeleteResponse extends MessageHandler {
 
@@ -38,42 +29,26 @@ public class GroupDeleteResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoGroupDelete.GroupDeleteResponse.Builder builder = (ProtoGroupDelete.GroupDeleteResponse.Builder) message;
-        final long id = builder.getRoomId();
+        final long roomId = builder.getRoomId();
 
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(final Realm realm) {
-
-                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst();
-                if (realmRoom != null) {
-                    realmRoom.deleteFromRealm();
-                }
-                RealmResults<RealmRoomMessage> realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, id).findAll();
-                if (realmRoomMessage != null) {
-                    realmRoomMessage.deleteAllFromRealm();
-                }
-
-                RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirst();
-                if (realmClientCondition != null) {
-                    realmClientCondition.deleteFromRealm();
-                }
-            }
-        });
-        realm.close();
+        RealmRoom.deleteRoom(roomId);
         if (G.onGroupDelete != null) {
-            G.onGroupDelete.onGroupDelete(id);
+            G.onGroupDelete.onGroupDelete(roomId);
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         G.onGroupDelete.onTimeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

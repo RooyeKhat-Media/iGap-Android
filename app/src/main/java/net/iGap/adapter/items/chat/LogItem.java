@@ -13,7 +13,9 @@ package net.iGap.adapter.items.chat;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import io.realm.Realm;
 import java.util.List;
 import net.iGap.R;
 import net.iGap.helper.HelperLogMessage;
@@ -22,37 +24,32 @@ import net.iGap.proto.ProtoGlobal;
 
 public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
 
-    public LogItem(IMessageItem messageClickListener) {
-        super(false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
+    public LogItem(Realm realmChat, IMessageItem messageClickListener) {
+        super(realmChat, false, ProtoGlobal.Room.Type.CHAT, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutLog;
     }
 
-    @Override public int getLayoutRes() {
-        return R.layout.chat_sub_layout_log;
+    @Override
+    public int getLayoutRes() {
+        return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
+
+        if (holder.itemView.findViewById(R.id.csll_txt_log_text) == null) {
+            ((ViewGroup) holder.itemView).addView(ViewMaker.getLogItem());
+        }
+
+        holder.text = (TextView) holder.itemView.findViewById(R.id.csll_txt_log_text);
+        holder.text.setMovementMethod(LinkMovementMethod.getInstance());
+
         super.bindView(holder, payloads);
-
-        //Realm realm=Realm.getDefaultInstance();
-        //
-        //RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID ,Long.parseLong(mMessage.messageID)).findFirst();
-        //if(roomMessage!=null){
-        //
-        //}
-        //
-        //realm.close();
-
         holder.text.setText(HelperLogMessage.getLogMessageWithLink(mMessage.messageText));
-
-        // setTextIfNeeded(holder.text, mMessage.messageText);
-    }
-
-    @Override protected void voteAction(ViewHolder holder) {
-        super.voteAction(holder);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,12 +58,16 @@ public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-            text = (TextView) view.findViewById(R.id.text);
-            text.setMovementMethod(LinkMovementMethod.getInstance());
+            /**
+             *  this commented code used with xml layout
+             */
+            //text = (TextView) view.findViewById(R.id.csll_txt_log_text);
+            //text.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 }

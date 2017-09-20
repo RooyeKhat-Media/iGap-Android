@@ -82,11 +82,11 @@ public final class ProtoChannelCheckUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -117,16 +117,15 @@ public final class ProtoChannelCheckUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
+      return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.Builder.class);
+      return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -137,7 +136,7 @@ public final class ProtoChannelCheckUsername {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -231,10 +230,10 @@ public final class ProtoChannelCheckUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername other = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) obj;
+      net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername other = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -266,48 +265,43 @@ public final class ProtoChannelCheckUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -317,8 +311,7 @@ public final class ProtoChannelCheckUsername {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -337,15 +330,14 @@ public final class ProtoChannelCheckUsername {
             // @@protoc_insertion_point(builder_implements:proto.ChannelCheckUsername)
         net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.Builder.class);
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -374,23 +366,23 @@ public final class ProtoChannelCheckUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsername_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername build() {
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername result = buildPartial();
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername build() {
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername buildPartial() {
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername result = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername(this);
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername buildPartial() {
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername result = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -426,16 +418,16 @@ public final class ProtoChannelCheckUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) {
-              return mergeFrom((net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) other);
+        if (other instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) {
+          return mergeFrom((net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername other) {
-            if (other == net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername other) {
+        if (other == net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -455,11 +447,11 @@ public final class ProtoChannelCheckUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parsedMessage = null;
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -469,9 +461,8 @@ public final class ProtoChannelCheckUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -483,7 +474,7 @@ public final class ProtoChannelCheckUsername {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -523,7 +514,7 @@ public final class ProtoChannelCheckUsername {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -563,7 +554,7 @@ public final class ProtoChannelCheckUsername {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -571,9 +562,7 @@ public final class ProtoChannelCheckUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
-                    getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -683,10 +672,10 @@ public final class ProtoChannelCheckUsername {
     // @@protoc_insertion_point(class_scope:proto.ChannelCheckUsername)
     private static final net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername();
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -705,7 +694,7 @@ public final class ProtoChannelCheckUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsername getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -774,11 +763,11 @@ public final class ProtoChannelCheckUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -804,12 +793,11 @@ public final class ProtoChannelCheckUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
+      return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Builder.class);
     }
 
     /**
@@ -901,7 +889,7 @@ public final class ProtoChannelCheckUsername {
       }
 
       public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
-          return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDescriptor().getEnumTypes().get(0);
+        return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDescriptor().getEnumTypes().get(0);
       }
 
       private static final Status[] VALUES = values();
@@ -926,7 +914,7 @@ public final class ProtoChannelCheckUsername {
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -937,7 +925,7 @@ public final class ProtoChannelCheckUsername {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -958,8 +946,8 @@ public final class ProtoChannelCheckUsername {
      * <code>optional .proto.ChannelCheckUsernameResponse.Status status = 2;</code>
      */
     public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status getStatus() {
-        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status result = net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.valueOf(status_);
-        return result == null ? net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.UNRECOGNIZED : result;
+      net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status result = net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.valueOf(status_);
+      return result == null ? net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -976,7 +964,7 @@ public final class ProtoChannelCheckUsername {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
-        if (status_ != net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID.getNumber()) {
+      if (status_ != net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID.getNumber()) {
         output.writeEnum(2, status_);
       }
     }
@@ -989,7 +977,7 @@ public final class ProtoChannelCheckUsername {
       if (response_ != null) {
         size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
       }
-        if (status_ != net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID.getNumber()) {
+      if (status_ != net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID.getNumber()) {
         size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, status_);
       }
       memoizedSize = size;
@@ -1002,10 +990,10 @@ public final class ProtoChannelCheckUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse other = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) obj;
+      net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse other = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -1034,48 +1022,43 @@ public final class ProtoChannelCheckUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -1085,8 +1068,7 @@ public final class ProtoChannelCheckUsername {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -1105,15 +1087,14 @@ public final class ProtoChannelCheckUsername {
             // @@protoc_insertion_point(builder_implements:proto.ChannelCheckUsernameResponse)
         net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.class, net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1140,23 +1121,23 @@ public final class ProtoChannelCheckUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoChannelCheckUsername.internal_static_proto_ChannelCheckUsernameResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse build() {
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse result = buildPartial();
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse build() {
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse buildPartial() {
-            net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse result = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse(this);
+      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse buildPartial() {
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse result = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1191,16 +1172,16 @@ public final class ProtoChannelCheckUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) {
-              return mergeFrom((net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) other);
+        if (other instanceof net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) {
+          return mergeFrom((net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse other) {
-            if (other == net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse other) {
+        if (other == net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1216,11 +1197,11 @@ public final class ProtoChannelCheckUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parsedMessage = null;
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1230,9 +1211,8 @@ public final class ProtoChannelCheckUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1244,7 +1224,7 @@ public final class ProtoChannelCheckUsername {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1284,7 +1264,7 @@ public final class ProtoChannelCheckUsername {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1324,7 +1304,7 @@ public final class ProtoChannelCheckUsername {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1332,9 +1312,7 @@ public final class ProtoChannelCheckUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
-                    getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1359,8 +1337,8 @@ public final class ProtoChannelCheckUsername {
        * <code>optional .proto.ChannelCheckUsernameResponse.Status status = 2;</code>
        */
       public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status getStatus() {
-          net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status result = net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.valueOf(status_);
-          return result == null ? net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.UNRECOGNIZED : result;
+        net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status result = net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.valueOf(status_);
+        return result == null ? net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.UNRECOGNIZED : result;
       }
       /**
        * <code>optional .proto.ChannelCheckUsernameResponse.Status status = 2;</code>
@@ -1399,10 +1377,10 @@ public final class ProtoChannelCheckUsername {
     // @@protoc_insertion_point(class_scope:proto.ChannelCheckUsernameResponse)
     private static final net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse();
     }
 
-      public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1421,7 +1399,7 @@ public final class ProtoChannelCheckUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelCheckUsername.ChannelCheckUsernameResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1447,7 +1425,8 @@ public final class ProtoChannelCheckUsername {
                     "nse\030\001 \001(\0132\017.proto.Response\022:\n\006status\030\002 \001" +
                     "(\0162*.proto.ChannelCheckUsernameResponse." +
                     "Status\"M\n\006Status\022\013\n\007INVALID\020\000\022\t\n\005TAKEN\020\001" +
-                    "\022\r\n\tAVAILABLE\020\002\022\034\n\030OCCUPYING_LIMIT_EXCEE" + "DED\020\003B+\n\016net.iGap.protoB\031ProtoChannelChe", "ckUsernameb\006proto3"
+                    "\022\r\n\tAVAILABLE\020\002\022\034\n\030OCCUPYING_LIMIT_EXCEE" +
+                    "DED\020\003B+\n\016net.iGap.protoB\031ProtoChannelChe", "ckUsernameb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
       public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
@@ -1456,7 +1435,7 @@ public final class ProtoChannelCheckUsername {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_ChannelCheckUsername_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ChannelCheckUsername_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChannelCheckUsername_descriptor, new java.lang.String[]{"Request", "Username", "RoomId",});
@@ -1466,8 +1445,8 @@ public final class ProtoChannelCheckUsername {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ChannelCheckUsernameResponse_descriptor,
         new java.lang.String[] { "Response", "Status", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

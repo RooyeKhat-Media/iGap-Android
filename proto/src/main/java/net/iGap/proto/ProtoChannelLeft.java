@@ -77,11 +77,11 @@ public final class ProtoChannelLeft {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -107,17 +107,16 @@ public final class ProtoChannelLeft {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
+      return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeft.class, net.iGap.proto.ProtoChannelLeft.ChannelLeft.Builder.class);
+      return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeft.class, net.iGap.proto.ProtoChannelLeft.ChannelLeft.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -128,7 +127,7 @@ public final class ProtoChannelLeft {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -189,10 +188,10 @@ public final class ProtoChannelLeft {
       if (obj == this) {
        return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeft)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeft)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelLeft.ChannelLeft other = (net.iGap.proto.ProtoChannelLeft.ChannelLeft) obj;
+      net.iGap.proto.ProtoChannelLeft.ChannelLeft other = (net.iGap.proto.ProtoChannelLeft.ChannelLeft) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -224,67 +223,58 @@ public final class ProtoChannelLeft {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(byte[] data)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(java.io.InputStream input)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseDelimitedFrom(java.io.InputStream input)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseDelimitedFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -296,8 +286,7 @@ public final class ProtoChannelLeft {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelLeft.ChannelLeft prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelLeft.ChannelLeft prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -320,16 +309,15 @@ public final class ProtoChannelLeft {
         net.iGap.proto.ProtoChannelLeft.ChannelLeftOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeft.class, net.iGap.proto.ProtoChannelLeft.ChannelLeft.Builder.class);
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeft.class, net.iGap.proto.ProtoChannelLeft.ChannelLeft.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelLeft.ChannelLeft.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelLeft.ChannelLeft.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -359,23 +347,23 @@ public final class ProtoChannelLeft {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeft_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelLeft.ChannelLeft.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelLeft.ChannelLeft.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeft build() {
-            net.iGap.proto.ProtoChannelLeft.ChannelLeft result = buildPartial();
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeft build() {
+        net.iGap.proto.ProtoChannelLeft.ChannelLeft result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeft buildPartial() {
-            net.iGap.proto.ProtoChannelLeft.ChannelLeft result = new net.iGap.proto.ProtoChannelLeft.ChannelLeft(this);
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeft buildPartial() {
+        net.iGap.proto.ProtoChannelLeft.ChannelLeft result = new net.iGap.proto.ProtoChannelLeft.ChannelLeft(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -413,16 +401,16 @@ public final class ProtoChannelLeft {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeft) {
-              return mergeFrom((net.iGap.proto.ProtoChannelLeft.ChannelLeft) other);
+        if (other instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeft) {
+          return mergeFrom((net.iGap.proto.ProtoChannelLeft.ChannelLeft) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelLeft.ChannelLeft other) {
-            if (other == net.iGap.proto.ProtoChannelLeft.ChannelLeft.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelLeft.ChannelLeft other) {
+        if (other == net.iGap.proto.ProtoChannelLeft.ChannelLeft.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -441,11 +429,11 @@ public final class ProtoChannelLeft {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-          net.iGap.proto.ProtoChannelLeft.ChannelLeft parsedMessage = null;
+        net.iGap.proto.ProtoChannelLeft.ChannelLeft parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelLeft.ChannelLeft) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelLeft.ChannelLeft) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -455,7 +443,7 @@ public final class ProtoChannelLeft {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
@@ -468,7 +456,7 @@ public final class ProtoChannelLeft {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -608,10 +596,10 @@ public final class ProtoChannelLeft {
     // @@protoc_insertion_point(class_scope:proto.ChannelLeft)
     private static final net.iGap.proto.ProtoChannelLeft.ChannelLeft DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelLeft.ChannelLeft();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelLeft.ChannelLeft();
     }
 
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -634,7 +622,7 @@ public final class ProtoChannelLeft {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelLeft.ChannelLeft getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -709,11 +697,11 @@ public final class ProtoChannelLeft {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -744,17 +732,16 @@ public final class ProtoChannelLeft {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
+      return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.class, net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.class, net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -765,7 +752,7 @@ public final class ProtoChannelLeft {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -842,10 +829,10 @@ public final class ProtoChannelLeft {
       if (obj == this) {
        return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse other = (net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) obj;
+      net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse other = (net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -882,67 +869,58 @@ public final class ProtoChannelLeft {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(byte[] data)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(java.io.InputStream input)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseDelimitedFrom(java.io.InputStream input)
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseDelimitedFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -954,8 +932,7 @@ public final class ProtoChannelLeft {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-      public static Builder newBuilder(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -978,16 +955,15 @@ public final class ProtoChannelLeft {
         net.iGap.proto.ProtoChannelLeft.ChannelLeftResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.class, net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.class, net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1019,23 +995,23 @@ public final class ProtoChannelLeft {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-          return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
+        return net.iGap.proto.ProtoChannelLeft.internal_static_proto_ChannelLeftResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse build() {
-            net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse result = buildPartial();
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse build() {
+        net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse buildPartial() {
-            net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse result = new net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse(this);
+      public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse buildPartial() {
+        net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse result = new net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -1074,16 +1050,16 @@ public final class ProtoChannelLeft {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) {
-              return mergeFrom((net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) other);
+        if (other instanceof net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) {
+          return mergeFrom((net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse other) {
-            if (other == net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse other) {
+        if (other == net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1105,11 +1081,11 @@ public final class ProtoChannelLeft {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-          net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parsedMessage = null;
+        net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1119,9 +1095,8 @@ public final class ProtoChannelLeft {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-          responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1133,7 +1108,7 @@ public final class ProtoChannelLeft {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1299,10 +1274,10 @@ public final class ProtoChannelLeft {
     // @@protoc_insertion_point(class_scope:proto.ChannelLeftResponse)
     private static final net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse();
     }
 
-      public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1325,7 +1300,7 @@ public final class ProtoChannelLeft {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoChannelLeft.ChannelLeftResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1354,7 +1329,8 @@ public final class ProtoChannelLeft {
       "o\032\016Response.proto\"?\n\013ChannelLeft\022\037\n\007requ" +
       "est\030\001 \001(\0132\016.proto.Request\022\017\n\007room_id\030\002 \001" +
       "(\004\"\\\n\023ChannelLeftResponse\022!\n\010response\030\001 " +
-      "\001(\0132\017.proto.Response\022\017\n\007room_id\030\002 \001(\004\022\021\n" + "\tmember_id\030\003 \001(\004B\"\n\016net.iGap.protoB\020Prot" +
+              "\001(\0132\017.proto.Response\022\017\n\007room_id\030\002 \001(\004\022\021\n" +
+              "\tmember_id\030\003 \001(\004B\"\n\016net.iGap.protoB\020Prot" +
       "oChannelLeftb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -1368,7 +1344,7 @@ public final class ProtoChannelLeft {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+                net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
         }, assigner);
     internal_static_proto_ChannelLeft_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -1382,8 +1358,8 @@ public final class ProtoChannelLeft {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ChannelLeftResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "MemberId", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -6,31 +6,30 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperClientCondition;
+import net.iGap.helper.HelperLogout;
 import net.iGap.interfaces.OnSecuring;
 import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.interfaces.OnUserLogin;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.realm.RealmPhoneContacts;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestClientGetRoomList;
+import net.iGap.request.RequestGeoGetRegisterStatus;
 import net.iGap.request.RequestQueue;
-import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserContactsGetBlockedList;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserLogin;
+import net.iGap.request.RequestUserUpdateStatus;
 import net.iGap.request.RequestWrapper;
 
-import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
-import static net.iGap.G.displayName;
 import static net.iGap.G.firstEnter;
 import static net.iGap.G.firstTimeEnterToApp;
 import static net.iGap.G.isAppInFg;
 import static net.iGap.G.isSendContact;
-import static net.iGap.G.userId;
 
 /**
  * all actions that need doing after login
@@ -64,7 +63,8 @@ public class LoginActions extends Application {
             public void onLogin() {
 
                 G.handler.post(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         G.clientConditionGlobal = HelperClientCondition.computeClientCondition(null);
                         /**
                          * in first enter to app client send clientCondition after get room list
@@ -77,7 +77,7 @@ public class LoginActions extends Application {
                          * app is background send clientCondition (: .
                          */
                         if (!firstTimeEnterToApp || !isAppInFg) {
-                            getRoomList();
+                            new RequestClientGetRoomList().clientGetRoomList(0, 50, "0");
                         }
 
                         if (firstEnter) {
@@ -85,14 +85,17 @@ public class LoginActions extends Application {
                             new RequestUserContactsGetBlockedList().userContactsGetBlockedList();
                             importContact();
                         }
-                        getUserInfo();
-                        //sendWaitingRequestWrappers();
 
-                        //get Signaling Configuration
-                        if (G.needGetSignalingConfiguration) {
-                            new RequestSignalingGetConfiguration().signalingGetConfiguration();
+
+                        getUserInfo();
+                        if (G.isAppInFg) {
+                            new RequestUserUpdateStatus().userUpdateStatus(ProtoUserUpdateStatus.UserUpdateStatus.Status.ONLINE);
+                        } else {
+                            new RequestUserUpdateStatus().userUpdateStatus(ProtoUserUpdateStatus.UserUpdateStatus.Status.OFFLINE);
                         }
 
+                        new RequestGeoGetRegisterStatus().getRegisterStatus();
+                        //sendWaitingRequestWrappers();
                     }
                 });
 
@@ -112,21 +115,6 @@ public class LoginActions extends Application {
                 if (G.isSecure) {
                     Realm realm = Realm.getDefaultInstance();
                     RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
-
-                    if (userInfo != null) {
-
-                        userId = userInfo.getUserId();
-
-                        if (userInfo.getAuthorHash() != null) {
-                            authorHash = userInfo.getAuthorHash();
-                        }
-
-                        if (userInfo.getUserInfo().getDisplayName() != null) {
-                            displayName = userInfo.getUserInfo().getDisplayName();
-                        }
-
-                    }
-
                     if (!G.userLogin && userInfo != null && userInfo.getUserRegistrationState()) {
                         new RequestUserLogin().userLogin(userInfo.getToken());
                     }
@@ -138,33 +126,16 @@ public class LoginActions extends Application {
         }, 500);
     }
 
-    private static void getRoomList() {
 
-        int _limit = ActivityMain.curentMainRoomListPosition + 20;
-
-        if (_limit < 100) {
-            new RequestClientGetRoomList().clientGetRoomList(0, _limit, true);
-        } else {
-
-            new RequestClientGetRoomList().clientGetRoomList(0, 100, true);
-
-            int offset = 100;
-
-            for (int i = 100; i < _limit; i += 100) {
-                offset += 100;
-
-                new RequestClientGetRoomList().clientGetRoomList(i, 100);
-            }
-
-            if (offset < _limit) {
-                new RequestClientGetRoomList().clientGetRoomList(offset, 100);
-            }
-        }
-    }
 
     private static void getUserInfo() {
         Realm realm = Realm.getDefaultInstance();
-        final long userId = realm.where(RealmUserInfo.class).findFirst().getUserId();
+        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+        if (realmUserInfo == null) {
+            HelperLogout.logout();
+            return;
+        }
+        final long userId = realmUserInfo.getUserId();
         realm.close();
 
         G.onUserInfoResponse = new OnUserInfoResponse() {

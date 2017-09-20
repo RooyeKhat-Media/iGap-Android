@@ -76,11 +76,11 @@ public final class ProtoClientJoinByUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -106,16 +106,15 @@ public final class ProtoClientJoinByUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
+      return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.Builder.class);
+      return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -126,7 +125,7 @@ public final class ProtoClientJoinByUsername {
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -205,10 +204,10 @@ public final class ProtoClientJoinByUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername)) {
+      if (!(obj instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername other = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) obj;
+      net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername other = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -237,48 +236,43 @@ public final class ProtoClientJoinByUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -289,7 +283,7 @@ public final class ProtoClientJoinByUsername {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -308,15 +302,14 @@ public final class ProtoClientJoinByUsername {
             // @@protoc_insertion_point(builder_implements:proto.ClientJoinByUsername)
         net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.Builder.class);
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.newBuilder()
+      // Construct using net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -343,23 +336,23 @@ public final class ProtoClientJoinByUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsername_descriptor;
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.getDefaultInstance();
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername build() {
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername result = buildPartial();
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername build() {
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername buildPartial() {
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername result = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername(this);
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername buildPartial() {
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername result = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -394,16 +387,16 @@ public final class ProtoClientJoinByUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) {
-              return mergeFrom((net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) other);
+        if (other instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) {
+          return mergeFrom((net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername other) {
-            if (other == net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername other) {
+        if (other == net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -420,11 +413,11 @@ public final class ProtoClientJoinByUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parsedMessage = null;
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -434,9 +427,8 @@ public final class ProtoClientJoinByUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -448,7 +440,7 @@ public final class ProtoClientJoinByUsername {
        */
       public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -488,7 +480,7 @@ public final class ProtoClientJoinByUsername {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -528,7 +520,7 @@ public final class ProtoClientJoinByUsername {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
@@ -536,9 +528,7 @@ public final class ProtoClientJoinByUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
-                    getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -622,10 +612,10 @@ public final class ProtoClientJoinByUsername {
     // @@protoc_insertion_point(class_scope:proto.ClientJoinByUsername)
     private static final net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername();
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstance() {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -644,7 +634,7 @@ public final class ProtoClientJoinByUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsername getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -703,11 +693,11 @@ public final class ProtoClientJoinByUsername {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -727,16 +717,15 @@ public final class ProtoClientJoinByUsername {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
+      return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.Builder.class);
+      return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -747,7 +736,7 @@ public final class ProtoClientJoinByUsername {
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -790,10 +779,10 @@ public final class ProtoClientJoinByUsername {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse other = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) obj;
+      net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse other = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -819,48 +808,43 @@ public final class ProtoClientJoinByUsername {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -871,7 +855,7 @@ public final class ProtoClientJoinByUsername {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -891,15 +875,14 @@ public final class ProtoClientJoinByUsername {
             // @@protoc_insertion_point(builder_implements:proto.ClientJoinByUsernameResponse)
         net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.Builder.class);
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.class, net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -924,23 +907,23 @@ public final class ProtoClientJoinByUsername {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
+        return net.iGap.proto.ProtoClientJoinByUsername.internal_static_proto_ClientJoinByUsernameResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse build() {
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse result = buildPartial();
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse build() {
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse buildPartial() {
-            net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse result = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse(this);
+      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse buildPartial() {
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse result = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
@@ -974,16 +957,16 @@ public final class ProtoClientJoinByUsername {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) {
-              return mergeFrom((net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) other);
+        if (other instanceof net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) {
+          return mergeFrom((net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse other) {
-            if (other == net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse other) {
+        if (other == net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -996,11 +979,11 @@ public final class ProtoClientJoinByUsername {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parsedMessage = null;
+        net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1010,9 +993,8 @@ public final class ProtoClientJoinByUsername {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1024,7 +1006,7 @@ public final class ProtoClientJoinByUsername {
        */
       public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1064,7 +1046,7 @@ public final class ProtoClientJoinByUsername {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1104,7 +1086,7 @@ public final class ProtoClientJoinByUsername {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
@@ -1112,9 +1094,7 @@ public final class ProtoClientJoinByUsername {
        */
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
-                    getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1135,10 +1115,10 @@ public final class ProtoClientJoinByUsername {
     // @@protoc_insertion_point(class_scope:proto.ClientJoinByUsernameResponse)
     private static final net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse();
     }
 
-      public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1157,7 +1137,7 @@ public final class ProtoClientJoinByUsername {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoClientJoinByUsername.ClientJoinByUsernameResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1180,7 +1160,8 @@ public final class ProtoClientJoinByUsername {
                     "uest.proto\032\016Response.proto\"I\n\024ClientJoin" +
                     "ByUsername\022\037\n\007request\030\001 \001(\0132\016.proto.Requ" +
                     "est\022\020\n\010username\030\002 \001(\t\"A\n\034ClientJoinByUse" +
-                    "rnameResponse\022!\n\010response\030\001 \001(\0132\017.proto." + "ResponseB+\n\016net.iGap.protoB\031ProtoClientJ" +
+                    "rnameResponse\022!\n\010response\030\001 \001(\0132\017.proto." +
+                    "ResponseB+\n\016net.iGap.protoB\031ProtoClientJ" +
                     "oinByUsernameb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1190,7 +1171,7 @@ public final class ProtoClientJoinByUsername {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_ClientJoinByUsername_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_proto_ClientJoinByUsername_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ClientJoinByUsername_descriptor, new java.lang.String[]{"Request", "Username",});
@@ -1199,8 +1180,8 @@ public final class ProtoClientJoinByUsername {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClientJoinByUsernameResponse_descriptor,
         new java.lang.String[] { "Response", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -13,7 +13,6 @@ public final class ProtoClientJoinByInviteLink {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface ClientJoinByInviteLinkOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.ClientJoinByInviteLink)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoClientJoinByInviteLink {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -37,13 +34,11 @@ public final class ProtoClientJoinByInviteLink {
      * <code>optional string invite_token = 2;</code>
      */
     java.lang.String getInviteToken();
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
     com.google.protobuf.ByteString getInviteTokenBytes();
   }
-
   /**
    * Protobuf type {@code proto.ClientJoinByInviteLink}
    */
@@ -54,7 +49,6 @@ public final class ProtoClientJoinByInviteLink {
     private ClientJoinByInviteLink(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ClientJoinByInviteLink() {
       inviteToken_ = "";
     }
@@ -121,21 +115,18 @@ public final class ProtoClientJoinByInviteLink {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -145,7 +136,6 @@ public final class ProtoClientJoinByInviteLink {
 
     public static final int INVITE_TOKEN_FIELD_NUMBER = 2;
     private volatile java.lang.Object inviteToken_;
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
@@ -160,7 +150,6 @@ public final class ProtoClientJoinByInviteLink {
         return s;
       }
     }
-
     /**
      * <code>optional string invite_token = 2;</code>
      */
@@ -176,7 +165,6 @@ public final class ProtoClientJoinByInviteLink {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -211,7 +199,6 @@ public final class ProtoClientJoinByInviteLink {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -292,15 +279,12 @@ public final class ProtoClientJoinByInviteLink {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLink prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -310,7 +294,6 @@ public final class ProtoClientJoinByInviteLink {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ClientJoinByInviteLink}
      */
@@ -334,12 +317,10 @@ public final class ProtoClientJoinByInviteLink {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -404,7 +385,6 @@ public final class ProtoClientJoinByInviteLink {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLink) {
           return mergeFrom((net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLink) other);
@@ -448,14 +428,12 @@ public final class ProtoClientJoinByInviteLink {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -466,7 +444,6 @@ public final class ProtoClientJoinByInviteLink {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -483,7 +460,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -497,7 +473,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -515,7 +490,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -530,7 +504,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -539,7 +512,6 @@ public final class ProtoClientJoinByInviteLink {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -550,7 +522,6 @@ public final class ProtoClientJoinByInviteLink {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -563,7 +534,6 @@ public final class ProtoClientJoinByInviteLink {
       }
 
       private java.lang.Object inviteToken_ = "";
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -578,7 +548,6 @@ public final class ProtoClientJoinByInviteLink {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -592,7 +561,6 @@ public final class ProtoClientJoinByInviteLink {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -605,7 +573,6 @@ public final class ProtoClientJoinByInviteLink {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -615,7 +582,6 @@ public final class ProtoClientJoinByInviteLink {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string invite_token = 2;</code>
        */
@@ -644,7 +610,6 @@ public final class ProtoClientJoinByInviteLink {
 
     // @@protoc_insertion_point(class_scope:proto.ClientJoinByInviteLink)
     private static final net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLink DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLink();
     }
@@ -682,18 +647,15 @@ public final class ProtoClientJoinByInviteLink {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.ClientJoinByInviteLinkResponse}
    */
@@ -704,7 +666,6 @@ public final class ProtoClientJoinByInviteLink {
     private ClientJoinByInviteLinkResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ClientJoinByInviteLinkResponse() {
     }
 
@@ -764,21 +725,18 @@ public final class ProtoClientJoinByInviteLink {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -787,7 +745,6 @@ public final class ProtoClientJoinByInviteLink {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -816,7 +773,6 @@ public final class ProtoClientJoinByInviteLink {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -894,15 +850,12 @@ public final class ProtoClientJoinByInviteLink {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLinkResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -913,7 +866,6 @@ public final class ProtoClientJoinByInviteLink {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ClientJoinByInviteLinkResponse}
      */
@@ -937,12 +889,10 @@ public final class ProtoClientJoinByInviteLink {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1004,7 +954,6 @@ public final class ProtoClientJoinByInviteLink {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLinkResponse) {
           return mergeFrom((net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLinkResponse) other);
@@ -1044,14 +993,12 @@ public final class ProtoClientJoinByInviteLink {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1062,7 +1009,6 @@ public final class ProtoClientJoinByInviteLink {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1079,7 +1025,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1093,7 +1038,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1111,7 +1055,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1126,7 +1069,6 @@ public final class ProtoClientJoinByInviteLink {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1135,7 +1077,6 @@ public final class ProtoClientJoinByInviteLink {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1146,7 +1087,6 @@ public final class ProtoClientJoinByInviteLink {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1172,7 +1112,6 @@ public final class ProtoClientJoinByInviteLink {
 
     // @@protoc_insertion_point(class_scope:proto.ClientJoinByInviteLinkResponse)
     private static final net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLinkResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoClientJoinByInviteLink.ClientJoinByInviteLinkResponse();
     }
@@ -1212,14 +1151,14 @@ public final class ProtoClientJoinByInviteLink {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\034ClientJoinByInviteLink.proto\022\005proto\032\rR" +
                     "equest.proto\032\016Response.proto\"O\n\026ClientJo" +
                     "inByInviteLink\022\037\n\007request\030\001 \001(\0132\016.proto." +
                     "Request\022\024\n\014invite_token\030\002 \001(\t\"C\n\036ClientJ" +
-                    "oinByInviteLinkResponse\022!\n\010response\030\001 \001(" + "\0132\017.proto.ResponseB-\n\016net.iGap.protoB\033Pr" +
+                    "oinByInviteLinkResponse\022!\n\010response\030\001 \001(" +
+                    "\0132\017.proto.ResponseB-\n\016net.iGap.protoB\033Pr" +
                     "otoClientJoinByInviteLinkb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1238,8 +1177,8 @@ public final class ProtoClientJoinByInviteLink {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ClientJoinByInviteLinkResponse_descriptor,
         new java.lang.String[] { "Response", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

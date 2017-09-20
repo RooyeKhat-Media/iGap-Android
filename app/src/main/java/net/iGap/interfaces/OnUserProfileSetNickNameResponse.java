@@ -10,11 +10,9 @@
 
 package net.iGap.interfaces;
 
-import net.iGap.proto.ProtoResponse;
-
 public interface OnUserProfileSetNickNameResponse {
 
-    void onUserProfileNickNameResponse(String nickName, ProtoResponse.Response response);
+    void onUserProfileNickNameResponse(String nickName, String initials);
 
     void onUserProfileNickNameError(int majorCode, int minorCode);
 

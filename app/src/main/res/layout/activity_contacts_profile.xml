@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentContainer_contact_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:ignore="MissingPrefix"
+    >
+
+  <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chi_layoutParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:ignore="MissingPrefix"
     >
 
@@ -40,47 +53,10 @@
           app:layout_collapseMode="pin"
           >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_centerInParent="true"
-              android:gravity="center"
-              android:orientation="vertical"
-              >
-
-            <TextView
-                android:id="@+id/chi_txt_titleToolbar_DisplayName"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight=".5"
-                android:gravity="center|bottom"
-                android:text="@string/st_titleToolbar"
-                android:textColor="@color/whit_background"
-                android:textSize="@dimen/dp16"
-                fontPath="fonts/IRANSansMobile_Bold.ttf"
-                android:visibility="gone"
-                />
-
-
-            <TextView
-                android:id="@+id/chi_txt_titleToolbar_LastSeen"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight=".5"
-                android:gravity="center|top"
-                android:text="@string/last_seen_at"
-                android:textColor="@color/whit_background"
-                android:textSize="@dimen/dp14"
-                android:textStyle="normal"
-                android:visibility="gone"
-                />
-          </LinearLayout>
-
 
           <net.iGap.libs.rippleeffect.RippleView
               android:id="@+id/chi_ripple_back"
@@ -105,14 +81,47 @@
                 />
           </net.iGap.libs.rippleeffect.RippleView>
 
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center|left"
+              android:orientation="vertical"
+              >
+
+            <TextView
+                android:id="@+id/chi_txt_titleToolbar_DisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".5"
+                android:gravity="center|bottom"
+                android:text="@string/st_titleToolbar"
+                android:textColor="@color/whit_background"
+                android:textSize="@dimen/dp16"
+                android:visibility="gone"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                />
+
+
+            <TextView
+                android:id="@+id/chi_txt_titleToolbar_LastSeen"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight=".5"
+                android:gravity="center|top"
+                android:text="@string/last_seen_at"
+                android:textColor="@color/whit_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                android:visibility="gone"
+                />
+          </LinearLayout>
+
 
           <net.iGap.libs.rippleeffect.RippleView
               android:id="@+id/chi_ripple_call"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_marginRight="@dimen/dp52"
               android:visibility="gone"
               app:rv_alpha="200"
               app:rv_centered="true"
@@ -129,7 +138,9 @@
                 android:text="@string/md_phone"
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@color/whit_background"
+                android:textSize="@dimen/dp20"
                 />
+
 
           </net.iGap.libs.rippleeffect.RippleView>
 
@@ -157,7 +168,7 @@
                 />
 
           </net.iGap.libs.rippleeffect.RippleView>
-        </RelativeLayout>
+        </LinearLayout>
       </android.support.v7.widget.Toolbar>
 
       <LinearLayout
@@ -179,17 +190,20 @@
             android:src="@mipmap/empty"
             />
 
-        <TextView
+        <net.iGap.module.EmojiTextViewE
             android:id="@+id/chi_txt_lastSeen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dp4"
+            android:lineSpacingMultiplier=".8"
             android:maxLength="24"
+            android:padding="@dimen/dp4"
             android:text="Last Seen at 14:20 "
             android:textColor="@android:color/white"
             android:textSize="@dimen/dp14"
             android:textStyle="bold"
+            app:emojiSize="@dimen/dp14"
             />
 
       </LinearLayout>
@@ -261,11 +275,13 @@
               />
 
 
-          <TextView
+          <net.iGap.module.EmojiTextViewE
               android:id="@+id/chi_txt_nikName"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
+              android:lineSpacingMultiplier=".8"
+              android:padding="@dimen/dp4"
               android:paddingEnd="@dimen/dp4"
               android:paddingLeft="@dimen/dp4"
               android:paddingRight="@dimen/dp4"
@@ -273,6 +289,7 @@
               android:text="Alexander Smith"
               android:textColor="@color/gray_5c"
               android:textSize="@dimen/dp13"
+              app:emojiSize="@dimen/dp14"
               />
 
         </LinearLayout>
@@ -498,3 +515,4 @@
 
 </android.support.design.widget.CoordinatorLayout>
 
+</RelativeLayout>

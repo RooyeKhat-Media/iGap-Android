@@ -6,4 +6,10 @@
   <style name="NotificationTitle" parent="android:TextAppearance.Material.Notification.Title" />
 
   <style name="NotificationTime" parent="android:TextAppearance.Material.Notification.Time" />
+
+
+  <style name="AppTheme" parent="BaseTheme">
+    <item name="android:colorEdgeEffect">@color/gray</item>
+  </style>
+
 </resources>

@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import net.iGap.AESCrypt;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperClassNamePreparation;
 import net.iGap.helper.HelperNumerical;
 import net.iGap.helper.HelperString;
+import net.iGap.module.AESCrypt;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoResponse;
@@ -60,7 +60,8 @@ public class RequestQueue {
         if (!G.pullRequestQueueRunned.get()) {
             G.pullRequestQueueRunned.getAndSet(true);
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     requestQueuePullFunction();
                 }
             }, Config.TIME_OUT_DELAY_MS);
@@ -92,7 +93,6 @@ public class RequestQueue {
 
             if (G.isSecure) {
                 if (G.userLogin || G.unLogin.contains(requestWrapper.actionId + "")) {
-                    Log.i("PPP", "ActionId : " + requestWrapper.actionId + " Request => " + G.lookupMap.get(requestWrapper.actionId + 30000));
                     message = AESCrypt.encrypt(G.symmetricKey, message);
                     WebSocket webSocket = WebSocketClient.getInstance();
                     if (webSocket != null) {
@@ -159,7 +159,8 @@ public class RequestQueue {
 
         if (G.requestQueueMap.size() > 0) {
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     requestQueuePullFunction();
                 }
             }, Config.TIME_OUT_DELAY_MS);

@@ -10,6 +10,7 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
 import net.iGap.proto.ProtoPushLoginToken;
 
 public class PushLoginTokenResponse extends MessageHandler {
@@ -30,6 +31,10 @@ public class PushLoginTokenResponse extends MessageHandler {
         super.handler();
 
         ProtoPushLoginToken.PushLoginTokenResponse.Builder builder = (ProtoPushLoginToken.PushLoginTokenResponse.Builder) message;
+
+        if (G.onPushLoginToken != null) {
+            G.onPushLoginToken.pushLoginToken(builder.getToken(), builder.getUsername(), builder.getUserId(), builder.getAuthorHash());
+        }
     }
 
     @Override public void timeOut() {

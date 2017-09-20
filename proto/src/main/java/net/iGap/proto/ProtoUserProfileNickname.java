@@ -24,16 +24,16 @@ public final class ProtoUserProfileNickname {
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    net.iGap.proto.ProtoRequest.Request getRequest();
+    ProtoRequest.Request getRequest();
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder();
+    ProtoRequest.RequestOrBuilder getRequestOrBuilder();
 
     /**
      * <code>optional string nickname = 2;</code>
      */
-    java.lang.String getNickname();
+    String getNickname();
     /**
      * <code>optional string nickname = 2;</code>
      */
@@ -53,7 +53,7 @@ public final class ProtoUserProfileNickname {
       nickname_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -77,11 +77,11 @@ public final class ProtoUserProfileNickname {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-                request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -90,7 +90,7 @@ public final class ProtoUserProfileNickname {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               nickname_ = s;
               break;
@@ -107,16 +107,15 @@ public final class ProtoUserProfileNickname {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
+      return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.class, net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.Builder.class);
+    protected FieldAccessorTable internalGetFieldAccessorTable() {
+      return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_fieldAccessorTable.ensureFieldAccessorsInitialized(UserProfileSetNickname.class, Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoRequest.Request request_;
+    private ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -126,28 +125,28 @@ public final class ProtoUserProfileNickname {
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    public net.iGap.proto.ProtoRequest.Request getRequest() {
-        return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+    public ProtoRequest.Request getRequest() {
+      return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
     }
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+    public ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
       return getRequest();
     }
 
     public static final int NICKNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object nickname_;
+    private volatile Object nickname_;
     /**
      * <code>optional string nickname = 2;</code>
      */
-    public java.lang.String getNickname() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getNickname() {
+      Object ref = nickname_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         nickname_ = s;
         return s;
       }
@@ -156,9 +155,9 @@ public final class ProtoUserProfileNickname {
      * <code>optional string nickname = 2;</code>
      */
     public com.google.protobuf.ByteString getNicknameBytes() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      Object ref = nickname_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
         nickname_ = b;
         return b;
       } else {
@@ -201,15 +200,16 @@ public final class ProtoUserProfileNickname {
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname)) {
+      if (!(obj instanceof UserProfileSetNickname)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname other = (net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname) obj;
+      UserProfileSetNickname other = (UserProfileSetNickname) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
@@ -220,7 +220,7 @@ public final class ProtoUserProfileNickname {
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -238,48 +238,43 @@ public final class ProtoUserProfileNickname {
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNickname parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNickname parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNickname parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNickname parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static UserProfileSetNickname parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static UserProfileSetNickname parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static UserProfileSetNickname parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static UserProfileSetNickname parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static UserProfileSetNickname parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static UserProfileSetNickname parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
@@ -290,15 +285,15 @@ public final class ProtoUserProfileNickname {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname prototype) {
+    public static Builder newBuilder(UserProfileSetNickname prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    @Override
+    protected Builder newBuilderForType(BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -307,22 +302,21 @@ public final class ProtoUserProfileNickname {
      */
     public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
             // @@protoc_insertion_point(builder_implements:proto.UserProfileSetNickname)
-        net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameOrBuilder {
+            UserProfileSetNicknameOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.class, net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.Builder.class);
+      protected FieldAccessorTable internalGetFieldAccessorTable() {
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_fieldAccessorTable.ensureFieldAccessorsInitialized(UserProfileSetNickname.class, Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -345,23 +339,23 @@ public final class ProtoUserProfileNickname {
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNickname_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.getDefaultInstance();
+      public UserProfileSetNickname getDefaultInstanceForType() {
+        return UserProfileSetNickname.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname build() {
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname result = buildPartial();
+      public UserProfileSetNickname build() {
+        UserProfileSetNickname result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname buildPartial() {
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname result = new net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname(this);
+      public UserProfileSetNickname buildPartial() {
+        UserProfileSetNickname result = new UserProfileSetNickname(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -396,16 +390,16 @@ public final class ProtoUserProfileNickname {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname) other);
+        if (other instanceof UserProfileSetNickname) {
+          return mergeFrom((UserProfileSetNickname) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname other) {
-            if (other == net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname.getDefaultInstance()) return this;
+      public Builder mergeFrom(UserProfileSetNickname other) {
+        if (other == UserProfileSetNickname.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -422,11 +416,11 @@ public final class ProtoUserProfileNickname {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname parsedMessage = null;
+        UserProfileSetNickname parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname) e.getUnfinishedMessage();
+          parsedMessage = (UserProfileSetNickname) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -436,9 +430,8 @@ public final class ProtoUserProfileNickname {
         return this;
       }
 
-        private net.iGap.proto.ProtoRequest.Request request_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
-            requestBuilder_;
+      private ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -448,9 +441,9 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public net.iGap.proto.ProtoRequest.Request getRequest() {
+      public ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
@@ -458,7 +451,7 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request value) {
+      public Builder setRequest(ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -474,7 +467,7 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -487,10 +480,10 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
+      public Builder mergeRequest(ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-              request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ = ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -518,28 +511,27 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
-
+      public ProtoRequest.Request.Builder getRequestBuilder() {
+        
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+      public ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-            requestBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -548,28 +540,28 @@ public final class ProtoUserProfileNickname {
         return requestBuilder_;
       }
 
-      private java.lang.Object nickname_ = "";
+      private Object nickname_ = "";
       /**
        * <code>optional string nickname = 2;</code>
        */
-      public java.lang.String getNickname() {
-        java.lang.Object ref = nickname_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getNickname() {
+        Object ref = nickname_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           nickname_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <code>optional string nickname = 2;</code>
        */
       public com.google.protobuf.ByteString getNicknameBytes() {
-        java.lang.Object ref = nickname_;
+        Object ref = nickname_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
           nickname_ = b;
           return b;
         } else {
@@ -579,7 +571,7 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional string nickname = 2;</code>
        */
-      public Builder setNickname(java.lang.String value) {
+      public Builder setNickname(String value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -624,12 +616,12 @@ public final class ProtoUserProfileNickname {
     }
 
     // @@protoc_insertion_point(class_scope:proto.UserProfileSetNickname)
-    private static final net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname DEFAULT_INSTANCE;
+    private static final UserProfileSetNickname DEFAULT_INSTANCE;
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname();
+      DEFAULT_INSTANCE = new UserProfileSetNickname();
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname getDefaultInstance() {
+    public static UserProfileSetNickname getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -643,12 +635,12 @@ public final class ProtoUserProfileNickname {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<UserProfileSetNickname> getParserForType() {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNickname getDefaultInstanceForType() {
+    public UserProfileSetNickname getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -665,20 +657,30 @@ public final class ProtoUserProfileNickname {
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    net.iGap.proto.ProtoResponse.Response getResponse();
+    ProtoResponse.Response getResponse();
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
+    ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
 
     /**
      * <code>optional string nickname = 2;</code>
      */
-    java.lang.String getNickname();
+    String getNickname();
     /**
      * <code>optional string nickname = 2;</code>
      */
     com.google.protobuf.ByteString getNicknameBytes();
+
+    /**
+     * <code>optional string initials = 3;</code>
+     */
+    String getInitials();
+
+    /**
+     * <code>optional string initials = 3;</code>
+     */
+    com.google.protobuf.ByteString getInitialsBytes();
   }
   /**
    * Protobuf type {@code proto.UserProfileSetNicknameResponse}
@@ -692,9 +694,10 @@ public final class ProtoUserProfileNickname {
     }
     private UserProfileSetNicknameResponse() {
       nickname_ = "";
+      initials_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -718,11 +721,11 @@ public final class ProtoUserProfileNickname {
               break;
             }
             case 10: {
-                net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-                response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -731,9 +734,15 @@ public final class ProtoUserProfileNickname {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               nickname_ = s;
+              break;
+            }
+            case 26: {
+              String s = input.readStringRequireUtf8();
+
+              initials_ = s;
               break;
             }
           }
@@ -748,16 +757,15 @@ public final class ProtoUserProfileNickname {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
+      return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.class, net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder.class);
+    protected FieldAccessorTable internalGetFieldAccessorTable() {
+      return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(UserProfileSetNicknameResponse.class, Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
-      private net.iGap.proto.ProtoResponse.Response response_;
+    private ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -767,28 +775,28 @@ public final class ProtoUserProfileNickname {
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    public net.iGap.proto.ProtoResponse.Response getResponse() {
-        return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+    public ProtoResponse.Response getResponse() {
+      return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
     }
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+    public ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
       return getResponse();
     }
 
     public static final int NICKNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object nickname_;
+    private volatile Object nickname_;
     /**
      * <code>optional string nickname = 2;</code>
      */
-    public java.lang.String getNickname() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getNickname() {
+      Object ref = nickname_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         nickname_ = s;
         return s;
       }
@@ -797,10 +805,42 @@ public final class ProtoUserProfileNickname {
      * <code>optional string nickname = 2;</code>
      */
     public com.google.protobuf.ByteString getNicknameBytes() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      Object ref = nickname_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
         nickname_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int INITIALS_FIELD_NUMBER = 3;
+    private volatile Object initials_;
+
+    /**
+     * <code>optional string initials = 3;</code>
+     */
+    public String getInitials() {
+      Object ref = initials_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        initials_ = s;
+        return s;
+      }
+    }
+
+    /**
+     * <code>optional string initials = 3;</code>
+     */
+    public com.google.protobuf.ByteString getInitialsBytes() {
+      Object ref = initials_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+        initials_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -824,6 +864,9 @@ public final class ProtoUserProfileNickname {
       if (!getNicknameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nickname_);
       }
+      if (!getInitialsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, initials_);
+      }
     }
 
     public int getSerializedSize() {
@@ -837,20 +880,24 @@ public final class ProtoUserProfileNickname {
       if (!getNicknameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nickname_);
       }
+      if (!getInitialsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, initials_);
+      }
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
         return true;
       }
-        if (!(obj instanceof net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse)) {
+      if (!(obj instanceof UserProfileSetNicknameResponse)) {
         return super.equals(obj);
       }
-        net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse other = (net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse) obj;
+      UserProfileSetNicknameResponse other = (UserProfileSetNicknameResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
@@ -858,10 +905,11 @@ public final class ProtoUserProfileNickname {
         result = result && getResponse().equals(other.getResponse());
       }
       result = result && getNickname().equals(other.getNickname());
+      result = result && getInitials().equals(other.getInitials());
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -874,64 +922,59 @@ public final class ProtoUserProfileNickname {
       }
       hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
       hash = (53 * hash) + getNickname().hashCode();
+      hash = (37 * hash) + INITIALS_FIELD_NUMBER;
+      hash = (53 * hash) + getInitials().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNicknameResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNicknameResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNicknameResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
+    public static UserProfileSetNicknameResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parseFrom(com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+    public static UserProfileSetNicknameResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-      public static Builder newBuilder(net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse prototype) {
+    public static Builder newBuilder(UserProfileSetNicknameResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -939,8 +982,9 @@ public final class ProtoUserProfileNickname {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    @Override
+    protected Builder newBuilderForType(
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -949,22 +993,21 @@ public final class ProtoUserProfileNickname {
      */
     public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
             // @@protoc_insertion_point(builder_implements:proto.UserProfileSetNicknameResponse)
-        net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponseOrBuilder {
+            UserProfileSetNicknameResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(
-              net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.class, net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder.class);
+      protected FieldAccessorTable internalGetFieldAccessorTable() {
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(UserProfileSetNicknameResponse.class, Builder.class);
       }
 
-        // Construct using net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.newBuilder()
+      // Construct using net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -983,33 +1026,36 @@ public final class ProtoUserProfileNickname {
         }
         nickname_ = "";
 
+        initials_ = "";
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return net.iGap.proto.ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
+        return ProtoUserProfileNickname.internal_static_proto_UserProfileSetNicknameResponse_descriptor;
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse getDefaultInstanceForType() {
-            return net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.getDefaultInstance();
+      public UserProfileSetNicknameResponse getDefaultInstanceForType() {
+        return UserProfileSetNicknameResponse.getDefaultInstance();
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse build() {
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse result = buildPartial();
+      public UserProfileSetNicknameResponse build() {
+        UserProfileSetNicknameResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-        public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse buildPartial() {
-            net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse result = new net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse(this);
+      public UserProfileSetNicknameResponse buildPartial() {
+        UserProfileSetNicknameResponse result = new UserProfileSetNicknameResponse(this);
         if (responseBuilder_ == null) {
           result.response_ = response_;
         } else {
           result.response_ = responseBuilder_.build();
         }
         result.nickname_ = nickname_;
+        result.initials_ = initials_;
         onBuilt();
         return result;
       }
@@ -1018,7 +1064,8 @@ public final class ProtoUserProfileNickname {
         return (Builder) super.clone();
       }
 
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
 
@@ -1034,25 +1081,30 @@ public final class ProtoUserProfileNickname {
         return (Builder) super.setRepeatedField(field, index, value);
       }
 
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse) {
-              return mergeFrom((net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse) other);
+        if (other instanceof UserProfileSetNicknameResponse) {
+          return mergeFrom((UserProfileSetNicknameResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-        public Builder mergeFrom(net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse other) {
-            if (other == net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(UserProfileSetNicknameResponse other) {
+        if (other == UserProfileSetNicknameResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
         if (!other.getNickname().isEmpty()) {
           nickname_ = other.nickname_;
+          onChanged();
+        }
+        if (!other.getInitials().isEmpty()) {
+          initials_ = other.initials_;
           onChanged();
         }
         onChanged();
@@ -1064,11 +1116,11 @@ public final class ProtoUserProfileNickname {
       }
 
       public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse parsedMessage = null;
+        UserProfileSetNicknameResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse) e.getUnfinishedMessage();
+          parsedMessage = (UserProfileSetNicknameResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1078,9 +1130,8 @@ public final class ProtoUserProfileNickname {
         return this;
       }
 
-        private net.iGap.proto.ProtoResponse.Response response_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
-            responseBuilder_;
+      private ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1090,9 +1141,9 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public net.iGap.proto.ProtoResponse.Response getResponse() {
+      public ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
@@ -1100,7 +1151,7 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response value) {
+      public Builder setResponse(ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1116,7 +1167,7 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1129,10 +1180,10 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
+      public Builder mergeResponse(ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-              response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ = ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1160,28 +1211,27 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
-
+      public ProtoResponse.Response.Builder getResponseBuilder() {
+        
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+      public ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-            responseBuilder_ =
-                new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1190,28 +1240,28 @@ public final class ProtoUserProfileNickname {
         return responseBuilder_;
       }
 
-      private java.lang.Object nickname_ = "";
+      private Object nickname_ = "";
       /**
        * <code>optional string nickname = 2;</code>
        */
-      public java.lang.String getNickname() {
-        java.lang.Object ref = nickname_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getNickname() {
+        Object ref = nickname_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           nickname_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
        * <code>optional string nickname = 2;</code>
        */
       public com.google.protobuf.ByteString getNicknameBytes() {
-        java.lang.Object ref = nickname_;
+        Object ref = nickname_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
           nickname_ = b;
           return b;
         } else {
@@ -1221,10 +1271,11 @@ public final class ProtoUserProfileNickname {
       /**
        * <code>optional string nickname = 2;</code>
        */
-      public Builder setNickname(java.lang.String value) {
+      public Builder setNickname(
+          String value) {
         if (value == null) {
           throw new NullPointerException();
-        }
+  }
   
         nickname_ = value;
         onChanged();
@@ -1234,7 +1285,7 @@ public final class ProtoUserProfileNickname {
        * <code>optional string nickname = 2;</code>
        */
       public Builder clearNickname() {
-
+        
         nickname_ = getDefaultInstance().getNickname();
         onChanged();
         return this;
@@ -1246,9 +1297,77 @@ public final class ProtoUserProfileNickname {
         if (value == null) {
           throw new NullPointerException();
         }
-        checkByteStringIsUtf8(value);
+  checkByteStringIsUtf8(value);
         
         nickname_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object initials_ = "";
+
+      /**
+       * <code>optional string initials = 3;</code>
+       */
+      public String getInitials() {
+        Object ref = initials_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          initials_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+
+      /**
+       * <code>optional string initials = 3;</code>
+       */
+      public com.google.protobuf.ByteString getInitialsBytes() {
+        Object ref = initials_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          initials_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      /**
+       * <code>optional string initials = 3;</code>
+       */
+      public Builder setInitials(String value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+
+        initials_ = value;
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>optional string initials = 3;</code>
+       */
+      public Builder clearInitials() {
+
+        initials_ = getDefaultInstance().getInitials();
+        onChanged();
+        return this;
+      }
+
+      /**
+       * <code>optional string initials = 3;</code>
+       */
+      public Builder setInitialsBytes(com.google.protobuf.ByteString value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        checkByteStringIsUtf8(value);
+
+        initials_ = value;
         onChanged();
         return this;
       }
@@ -1257,7 +1376,8 @@ public final class ProtoUserProfileNickname {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -1266,18 +1386,19 @@ public final class ProtoUserProfileNickname {
     }
 
     // @@protoc_insertion_point(class_scope:proto.UserProfileSetNicknameResponse)
-    private static final net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse DEFAULT_INSTANCE;
+    private static final UserProfileSetNicknameResponse DEFAULT_INSTANCE;
+
     static {
-        DEFAULT_INSTANCE = new net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse();
+      DEFAULT_INSTANCE = new UserProfileSetNicknameResponse();
     }
 
-      public static net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse getDefaultInstance() {
+    public static UserProfileSetNicknameResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<UserProfileSetNicknameResponse> PARSER = new com.google.protobuf.AbstractParser<UserProfileSetNicknameResponse>() {
       public UserProfileSetNicknameResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new UserProfileSetNicknameResponse(input, extensionRegistry);
+          return new UserProfileSetNicknameResponse(input, extensionRegistry);
       }
     };
 
@@ -1285,12 +1406,12 @@ public final class ProtoUserProfileNickname {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<UserProfileSetNicknameResponse> getParserForType() {
       return PARSER;
     }
 
-      public net.iGap.proto.ProtoUserProfileNickname.UserProfileSetNicknameResponse getDefaultInstanceForType() {
+    public UserProfileSetNicknameResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1306,16 +1427,17 @@ public final class ProtoUserProfileNickname {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
             "\n\034UserProfileSetNickname.proto\022\005proto\032\rR" +
                     "equest.proto\032\016Response.proto\"K\n\026UserProf" +
                     "ileSetNickname\022\037\n\007request\030\001 \001(\0132\016.proto." +
-                    "Request\022\020\n\010nickname\030\002 \001(\t\"U\n\036UserProfile" +
+                    "Request\022\020\n\010nickname\030\002 \001(\t\"g\n\036UserProfile" +
                     "SetNicknameResponse\022!\n\010response\030\001 \001(\0132\017." +
-                    "proto.Response\022\020\n\010nickname\030\002 \001(\tB*\n\016com." +
-                    "iGap.protoB\030ProtoUserProfileNicknameb\006pr" +
-                    "oto3"
+                    "proto.Response\022\020\n\010nickname\030\002 \001(\t\022\020\n\010init" +
+                    "ials\030\003 \001(\tB*\n\016net.iGap.protoB\030ProtoUserP" +
+                    "rofileNicknameb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
       public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
@@ -1324,17 +1446,16 @@ public final class ProtoUserProfileNickname {
       }
     };
     com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-        net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+            ProtoRequest.getDescriptor(), ProtoResponse.getDescriptor(),
     }, assigner);
     internal_static_proto_UserProfileSetNickname_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_UserProfileSetNickname_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserProfileSetNickname_descriptor, new java.lang.String[]{"Request", "Nickname",});
-    internal_static_proto_UserProfileSetNicknameResponse_descriptor = getDescriptor().getMessageTypes().get(1);
+    internal_static_proto_UserProfileSetNickname_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserProfileSetNickname_descriptor, new String[]{"Request", "Nickname",});
+    internal_static_proto_UserProfileSetNicknameResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_proto_UserProfileSetNicknameResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_UserProfileSetNicknameResponse_descriptor,
-        new java.lang.String[] { "Response", "Nickname", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_UserProfileSetNicknameResponse_descriptor, new String[]{"Response", "Nickname", "Initials", });
+    ProtoRequest.getDescriptor();
+    ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

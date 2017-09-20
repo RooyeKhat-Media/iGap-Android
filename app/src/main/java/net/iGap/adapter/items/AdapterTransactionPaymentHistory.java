@@ -46,7 +46,7 @@ public class AdapterTransactionPaymentHistory extends AbstractItem<AdapterTransa
         switch (item.pyamentAction) {
             case pending:
                 h.txtCondition.setText(R.string.pending);
-                h.imvCircle.setImageResource(R.drawable.emoji_00a9);
+                h.imvCircle.setImageResource(R.drawable.circle_red);
                 break;
             case completed:
                 h.txtCondition.setText(R.string.completed);

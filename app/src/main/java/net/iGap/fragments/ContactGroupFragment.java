@@ -10,11 +10,9 @@
 
 package net.iGap.fragments;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,9 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityChat;
 import net.iGap.adapter.StickyHeaderAdapter;
 import net.iGap.adapter.items.ContactItemGroup;
+import net.iGap.helper.GoToChatActivity;
 import net.iGap.interfaces.OnChannelAddMember;
 import net.iGap.interfaces.OnGroupAddMember;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -58,7 +56,7 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChannelAddMember;
 import net.iGap.request.RequestGroupAddMember;
 
-public class ContactGroupFragment extends Fragment {
+public class ContactGroupFragment extends BaseFragment {
     private FastAdapter fastAdapter;
     private TextView txtStatus;
     private TextView txtNumberOfMember;
@@ -79,11 +77,14 @@ public class ContactGroupFragment extends Fragment {
         return new ContactGroupFragment();
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_contact_group, container, false);
     }
 
-    @Override public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         hideProgressBar(); // some times touch screen remind lock so this method do unlock
@@ -96,11 +97,10 @@ public class ContactGroupFragment extends Fragment {
         }
 
         view.findViewById(R.id.fcg_ll_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
-        view.findViewById(R.id.fcg_view_line).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         txtStatus = (TextView) view.findViewById(R.id.fcg_txt_status);
         txtNumberOfMember = (TextView) view.findViewById(R.id.fcg_txt_number_of_member);
-        txtNumberOfMember.setText("0" + "/" + participantsLimit + " " + getString(R.string.member));
+        txtNumberOfMember.setText("0" + "/" + participantsLimit + " " + G.context.getResources().getString(R.string.member));
 
         if (typeCreate.equals("CHANNEL")) {
             txtNumberOfMember.setText("Add Members");
@@ -110,32 +110,37 @@ public class ContactGroupFragment extends Fragment {
 
         RippleView rippleBack = (RippleView) view.findViewById(R.id.fcg_ripple_back);
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override public void onComplete(RippleView rippleView) {
-                getActivity().getSupportFragmentManager().beginTransaction().remove(ContactGroupFragment.this).commit();
+            @Override
+            public void onComplete(RippleView rippleView) {
+                G.fragmentActivity.onBackPressed();
             }
         });
 
         RippleView rippleDone = (RippleView) view.findViewById(R.id.fcg_ripple_done);
         rippleDone.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override public void onComplete(RippleView rippleView) {
+            @Override
+            public void onComplete(RippleView rippleView) {
 
                 if (typeCreate.equals("CHANNEL")) { // addMemberChannel
                     G.onChannelAddMember = new OnChannelAddMember() {
-                        @Override public void onChannelAddMember(Long RoomId, Long UserId, ProtoGlobal.ChannelRoom.Role role) {
+                        @Override
+                        public void onChannelAddMember(Long RoomId, Long UserId, ProtoGlobal.ChannelRoom.Role role) {
                             countAddMemberResponse++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 channelAddMember(RoomId);
                             }
                         }
 
-                        @Override public void onError(int majorCode, int minorCode) {
+                        @Override
+                        public void onError(int majorCode, int minorCode) {
                             countAddMemberResponse++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 channelAddMember(roomId);
                             }
                         }
 
-                        @Override public void onTimeOut() {
+                        @Override
+                        public void onTimeOut() {
 
                         }
                     };
@@ -146,23 +151,25 @@ public class ContactGroupFragment extends Fragment {
                             new RequestChannelAddMember().channelAddMember(roomId, peerId, 0);
                         }
                     } else {
-                        Intent intent = new Intent(G.context, ActivityChat.class);
-                        intent.putExtra("RoomId", ContactGroupFragment.this.roomId);
-                        startActivity(intent);
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(ContactGroupFragment.this).commit();
+                        if (isAdded()) {
+                            removeFromBaseFragment(ContactGroupFragment.this);
+                            new GoToChatActivity(ContactGroupFragment.this.roomId).startActivity();
+                        }
                     }
                 }
 
                 if (typeCreate.equals("GROUP")) { //  addMemberGroup
                     G.onGroupAddMember = new OnGroupAddMember() {
-                        @Override public void onGroupAddMember(Long roomId, Long UserId) {
+                        @Override
+                        public void onGroupAddMember(Long roomId, Long UserId) {
                             countAddMemberResponse++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 groupAddMember(roomId);
                             }
                         }
 
-                        @Override public void onError(int majorCode, int minorCode) {
+                        @Override
+                        public void onError(int majorCode, int minorCode) {
                             countAddMemberResponse++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 groupAddMember(roomId);
@@ -179,10 +186,12 @@ public class ContactGroupFragment extends Fragment {
                             new RequestGroupAddMember().groupAddMember(roomId, peerId, 0);
                         }
                     } else {
-                        Intent intent = new Intent(G.context, ActivityChat.class);
-                        intent.putExtra("RoomId", ContactGroupFragment.this.roomId);
-                        startActivity(intent);
-                        getActivity().getSupportFragmentManager().beginTransaction().remove(ContactGroupFragment.this).commit();
+
+                        if (isAdded()) {
+                            removeFromBaseFragment(ContactGroupFragment.this);
+                            new GoToChatActivity(ContactGroupFragment.this.roomId).startActivity();
+                        }
+
                     }
                 }
             }
@@ -196,13 +205,15 @@ public class ContactGroupFragment extends Fragment {
         final StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter();
         final HeaderAdapter headerAdapter = new HeaderAdapter();
         final ItemAdapter itemAdapter = new ItemAdapter();
-        itemAdapter.withFilterPredicate(new IItemAdapter.Predicate<ContactItemGroup>() {
-            @Override public boolean filter(ContactItemGroup item, CharSequence constraint) {
+        itemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<ContactItemGroup>() {
+            @Override
+            public boolean filter(ContactItemGroup item, CharSequence constraint) {
                 return !item.mContact.displayName.toLowerCase().startsWith(String.valueOf(constraint).toLowerCase());
             }
         });
         fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ContactItemGroup>() {
-            @Override public boolean onClick(View v, IAdapter adapter, ContactItemGroup item, int position) {
+            @Override
+            public boolean onClick(View v, IAdapter adapter, ContactItemGroup item, int position) {
 
                 item.mContact.isSelected = !item.mContact.isSelected;
                 fastAdapter.notifyItemChanged(position);
@@ -214,11 +225,13 @@ public class ContactGroupFragment extends Fragment {
         });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
-            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if (charSequence.length() + i + i1 + i2 > 0) itemAdapter.filter(charSequence);
 
@@ -232,13 +245,15 @@ public class ContactGroupFragment extends Fragment {
                 //edtSearch.setSelection(edtSearch.getText().length());
             }
 
-            @Override public void afterTextChanged(Editable editable) {
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
 
         edtSearch.setOnKeyListener(new View.OnKeyListener() {
-            @Override public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
                 if ((keyCode == KeyEvent.KEYCODE_DEL)) {
                     if (edtSearch.getText().length() <= sizeTextEditText) {
                         return true;
@@ -276,7 +291,8 @@ public class ContactGroupFragment extends Fragment {
 
         //so the headers are aware of changes
         stickyHeaderAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override public void onChanged() {
+            @Override
+            public void onChanged() {
                 decoration.invalidateHeaders();
             }
         });
@@ -292,17 +308,19 @@ public class ContactGroupFragment extends Fragment {
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 realmRoom.getGroupRoom().setParticipantsCountLabel(realmRoom.getGroupRoom().getMembers().size() + "");
-                realmRoom.getGroupRoom().setParticipants_count_limit_label(participantsLimit);
+                //realmRoom.getGroupRoom().setParticipants_count_limit_label(participantsLimit);
             }
         });
         realm.close();
 
-        Intent intent = new Intent(G.context, ActivityChat.class);
-        intent.putExtra("RoomId", roomId);
-        startActivity(intent);
-        getActivity().getSupportFragmentManager().beginTransaction().remove(ContactGroupFragment.this).commit();
+        if (isAdded()) {
+            removeFromBaseFragment(ContactGroupFragment.this);
+            new GoToChatActivity(roomId).startActivity();
+        }
+
     }
 
     private void channelAddMember(long roomId) {
@@ -312,16 +330,18 @@ public class ContactGroupFragment extends Fragment {
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
 
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 realmRoom.getChannelRoom().setParticipantsCountLabel(realmRoom.getChannelRoom().getMembers().size() + "");
             }
         });
         realm.close();
 
-        Intent intent = new Intent(G.context, ActivityChat.class);
-        intent.putExtra("RoomId", roomId);
-        startActivity(intent);
-        getActivity().getSupportFragmentManager().beginTransaction().remove(ContactGroupFragment.this).commit();
+        if (isAdded()) {
+            removeFromBaseFragment(ContactGroupFragment.this);
+            new GoToChatActivity(roomId).startActivity();
+        }
+
     }
 
     private void addOwnerToDatabase(Long roomId, ProtoGlobal.Room.Type type) {
@@ -344,7 +364,8 @@ public class ContactGroupFragment extends Fragment {
                     realmMember.setRole(ProtoGlobal.ChannelRoom.Role.OWNER.toString());
 
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
                             members.add(realmMember);
                         }
                     });
@@ -360,7 +381,8 @@ public class ContactGroupFragment extends Fragment {
                     realmMember.setRole(ProtoGlobal.GroupRoom.Role.OWNER.toString());
 
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
                             members.add(realmMember);
                         }
                     });
@@ -386,7 +408,7 @@ public class ContactGroupFragment extends Fragment {
             txtNumberOfMember.setVisibility(View.GONE);
         }
         //  sizeTextEditText = textString.length();
-        txtNumberOfMember.setText(selectedNumber + "/" + participantsLimit + " " + getString(R.string.member));
+        txtNumberOfMember.setText(selectedNumber + "/" + participantsLimit + " " + G.context.getResources().getString(R.string.member));
 
         edtSearch.setText("");
     }
@@ -404,7 +426,8 @@ public class ContactGroupFragment extends Fragment {
         return list;
     }
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         //add the values which need to be saved from the adapter to the bundle
         outState = fastAdapter.saveInstanceState(outState);
         super.onSaveInstanceState(outState);
@@ -412,10 +435,10 @@ public class ContactGroupFragment extends Fragment {
 
     private void showProgressBar() {
         G.handler.post(new Runnable() {
-            @Override public void run() {
-                //                prgWaiting.setVisibility(View.VISIBLE);
-                if (getActivity() != null) {
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            @Override
+            public void run() {
+                if (G.fragmentActivity != null) {
+                    G.fragmentActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             }
         });
@@ -423,13 +446,13 @@ public class ContactGroupFragment extends Fragment {
 
     private void hideProgressBar() {
         G.handler.post(new Runnable() {
-            @Override public void run() {
-
-                //                prgWaiting.setVisibility(View.GONE);
-                if (getActivity() != null) {
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            @Override
+            public void run() {
+                if (G.fragmentActivity != null) {
+                    G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             }
         });
     }
+
 }

@@ -17,7 +17,8 @@ import io.realm.RealmSchema;
 
 public class RealmMigration implements io.realm.RealmMigration {
 
-    @Override public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
+    @Override
+    public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
         RealmSchema schema = realm.getSchema();
 
         if (oldVersion == 1) {
@@ -47,19 +48,12 @@ public class RealmMigration implements io.realm.RealmMigration {
         }
 
         if (oldVersion == 3) {
-            schema.create(RealmWallpaper.class.getSimpleName())
-                .addField(RealmWallpaperFields.LAST_TIME_GET_LIST, long.class, FieldAttribute.REQUIRED)
-                .addField(RealmWallpaperFields.WALL_PAPER_LIST, byte[].class)
-                .addField(RealmWallpaperFields.LOCAL_LIST, byte[].class);
+            schema.create(RealmWallpaper.class.getSimpleName()).addField(RealmWallpaperFields.LAST_TIME_GET_LIST, long.class, FieldAttribute.REQUIRED).addField(RealmWallpaperFields.WALL_PAPER_LIST, byte[].class).addField(RealmWallpaperFields.LOCAL_LIST, byte[].class);
             oldVersion++;
         }
 
         if (oldVersion == 4) {
-            schema.create(RealmPrivacy.class.getSimpleName())
-                .addField("whoCanSeeMyAvatar", String.class)
-                .addField("whoCanInviteMeToChannel", String.class)
-                .addField("whoCanInviteMeToGroup", String.class)
-                .addField("whoCanSeeMyLastSeen", String.class);
+            schema.create(RealmPrivacy.class.getSimpleName()).addField("whoCanSeeMyAvatar", String.class).addField("whoCanInviteMeToChannel", String.class).addField("whoCanInviteMeToGroup", String.class).addField("whoCanSeeMyLastSeen", String.class);
             oldVersion++;
         }
 
@@ -83,10 +77,7 @@ public class RealmMigration implements io.realm.RealmMigration {
         }
 
         if (oldVersion == 7) {
-            RealmObjectSchema realmPhoneContacts = schema.create(RealmPhoneContacts.class.getSimpleName())
-                .addField(RealmPhoneContactsFields.PHONE, String.class)
-                .addField(RealmPhoneContactsFields.FIRST_NAME, String.class)
-                .addField(RealmPhoneContactsFields.LAST_NAME, String.class);
+            RealmObjectSchema realmPhoneContacts = schema.create(RealmPhoneContacts.class.getSimpleName()).addField(RealmPhoneContactsFields.PHONE, String.class).addField(RealmPhoneContactsFields.FIRST_NAME, String.class).addField(RealmPhoneContactsFields.LAST_NAME, String.class);
             realmPhoneContacts.addPrimaryKey(RealmPhoneContactsFields.PHONE);
             oldVersion++;
         }
@@ -109,6 +100,65 @@ public class RealmMigration implements io.realm.RealmMigration {
 
             RealmObjectSchema realmCallLog = schema.create(RealmCallLog.class.getSimpleName()).addField(RealmCallLogFields.ID, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.NAME, String.class).addField(RealmCallLogFields.TIME, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.LOG_PROTO, byte[].class);
             realmCallLog.addPrimaryKey(RealmCallLogFields.ID);
+            oldVersion++;
+        }
+
+        if (oldVersion == 10) {
+            RealmObjectSchema realmPrivacySchema = schema.get(RealmPrivacy.class.getSimpleName());
+            if (realmPrivacySchema != null) {
+                realmPrivacySchema.addField(RealmPrivacyFields.WHO_CAN_VOICE_CALL_TO_ME, String.class);
+            }
+
+            RealmObjectSchema realmGroupSchema = schema.get(RealmGroupRoom.class.getSimpleName());
+            if (realmGroupSchema != null) {
+                realmGroupSchema.addField("participants_count", int.class, FieldAttribute.REQUIRED);
+            }
+
+            RealmObjectSchema realmChannelSchema = schema.get(RealmChannelRoom.class.getSimpleName());
+            if (realmChannelSchema != null) {
+                realmChannelSchema.addField("participants_count", int.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == 11) {
+            RealmObjectSchema realmClientCondition = schema.get(RealmClientCondition.class.getSimpleName());
+
+            RealmObjectSchema realmOfflineListen = schema.create(RealmOfflineListen.class.getSimpleName()).addField(RealmOfflineListenFields.ID, long.class, FieldAttribute.REQUIRED).addField("offlineListen", long.class);
+            realmOfflineListen.addPrimaryKey(RealmOfflineListenFields.ID);
+
+            if (realmClientCondition != null) {
+                realmClientCondition.addRealmListField("offlineListen", realmOfflineListen);
+            }
+
+            RealmObjectSchema realmAvatar = schema.get(RealmAvatar.class.getSimpleName());
+            if (realmAvatar != null) {
+                realmAvatar.addIndex(RealmAvatarFields.OWNER_ID);
+            }
+
+            RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
+            if (realmRoom != null) {
+                realmRoom.addField(RealmRoomFields.IS_PINNED, boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == 12) {
+            RealmObjectSchema realmGeoNearbyDistance = schema.create(RealmGeoNearbyDistance.class.getSimpleName()).addField("userId", long.class).addField("hasComment", boolean.class).addField("distance", int.class).addField("comment", String.class);
+            realmGeoNearbyDistance.addPrimaryKey("userId");
+
+            schema.create(RealmGeoGetConfiguration.class.getSimpleName()).addField("mapCache", String.class);
+            oldVersion++;
+        }
+
+        if (oldVersion == 13) {
+            RealmObjectSchema realmUserInfo = schema.get(RealmUserInfo.class.getSimpleName());
+            if (realmUserInfo != null) {
+                realmUserInfo.addField(RealmUserInfoFields.IS_PASS_CODE, boolean.class).addField(RealmUserInfoFields.IS_FINGER_PRINT, boolean.class).addField(RealmUserInfoFields.KIND_PASS_CODE, int.class).addField(RealmUserInfoFields.PASS_CODE, String.class);
+            }
+            oldVersion++;
         }
     }
 }

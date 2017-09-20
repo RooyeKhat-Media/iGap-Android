@@ -13,7 +13,6 @@ public final class ProtoChatConvertToGroup {
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
     registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface ChatConvertToGroupOrBuilder extends
           // @@protoc_insertion_point(interface_extends:proto.ChatConvertToGroup)
           com.google.protobuf.MessageOrBuilder {
@@ -22,12 +21,10 @@ public final class ProtoChatConvertToGroup {
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     net.iGap.proto.ProtoRequest.Request getRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -42,7 +39,6 @@ public final class ProtoChatConvertToGroup {
      * <code>optional string name = 3;</code>
      */
     java.lang.String getName();
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -52,13 +48,11 @@ public final class ProtoChatConvertToGroup {
      * <code>optional string description = 4;</code>
      */
     java.lang.String getDescription();
-
     /**
      * <code>optional string description = 4;</code>
      */
     com.google.protobuf.ByteString getDescriptionBytes();
   }
-
   /**
    * Protobuf type {@code proto.ChatConvertToGroup}
    */
@@ -69,7 +63,6 @@ public final class ProtoChatConvertToGroup {
     private ChatConvertToGroup(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChatConvertToGroup() {
       roomId_ = 0L;
       name_ = "";
@@ -149,21 +142,18 @@ public final class ProtoChatConvertToGroup {
 
     public static final int REQUEST_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoRequest.Request request_;
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public net.iGap.proto.ProtoRequest.Request getRequest() {
       return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
@@ -173,7 +163,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -183,7 +172,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int NAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object name_;
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -198,7 +186,6 @@ public final class ProtoChatConvertToGroup {
         return s;
       }
     }
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -215,7 +202,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int DESCRIPTION_FIELD_NUMBER = 4;
     private volatile java.lang.Object description_;
-
     /**
      * <code>optional string description = 4;</code>
      */
@@ -230,7 +216,6 @@ public final class ProtoChatConvertToGroup {
         return s;
       }
     }
-
     /**
      * <code>optional string description = 4;</code>
      */
@@ -246,7 +231,6 @@ public final class ProtoChatConvertToGroup {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -293,7 +277,6 @@ public final class ProtoChatConvertToGroup {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -380,15 +363,12 @@ public final class ProtoChatConvertToGroup {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroup prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -398,7 +378,6 @@ public final class ProtoChatConvertToGroup {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChatConvertToGroup}
      */
@@ -422,12 +401,10 @@ public final class ProtoChatConvertToGroup {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -498,7 +475,6 @@ public final class ProtoChatConvertToGroup {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroup) {
           return mergeFrom((net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroup) other);
@@ -549,14 +525,12 @@ public final class ProtoChatConvertToGroup {
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -567,7 +541,6 @@ public final class ProtoChatConvertToGroup {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -584,7 +557,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -598,7 +570,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -616,7 +587,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -631,7 +601,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -640,7 +609,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -651,7 +619,6 @@ public final class ProtoChatConvertToGroup {
           return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -664,14 +631,12 @@ public final class ProtoChatConvertToGroup {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -681,7 +646,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -693,7 +657,6 @@ public final class ProtoChatConvertToGroup {
       }
 
       private java.lang.Object name_ = "";
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -708,7 +671,6 @@ public final class ProtoChatConvertToGroup {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -722,7 +684,6 @@ public final class ProtoChatConvertToGroup {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -735,7 +696,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -745,7 +705,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -761,7 +720,6 @@ public final class ProtoChatConvertToGroup {
       }
 
       private java.lang.Object description_ = "";
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -776,7 +734,6 @@ public final class ProtoChatConvertToGroup {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -790,7 +747,6 @@ public final class ProtoChatConvertToGroup {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -803,7 +759,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -813,7 +768,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -842,7 +796,6 @@ public final class ProtoChatConvertToGroup {
 
     // @@protoc_insertion_point(class_scope:proto.ChatConvertToGroup)
     private static final net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroup DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroup();
     }
@@ -880,12 +833,10 @@ public final class ProtoChatConvertToGroup {
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     net.iGap.proto.ProtoResponse.Response getResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -900,7 +851,6 @@ public final class ProtoChatConvertToGroup {
      * <code>optional string name = 3;</code>
      */
     java.lang.String getName();
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -910,7 +860,6 @@ public final class ProtoChatConvertToGroup {
      * <code>optional string description = 4;</code>
      */
     java.lang.String getDescription();
-
     /**
      * <code>optional string description = 4;</code>
      */
@@ -920,13 +869,11 @@ public final class ProtoChatConvertToGroup {
      * <code>optional .proto.GroupRoom.Role role = 5;</code>
      */
     int getRoleValue();
-
     /**
      * <code>optional .proto.GroupRoom.Role role = 5;</code>
      */
     net.iGap.proto.ProtoGlobal.GroupRoom.Role getRole();
   }
-
   /**
    * Protobuf type {@code proto.ChatConvertToGroupResponse}
    */
@@ -937,7 +884,6 @@ public final class ProtoChatConvertToGroup {
     private ChatConvertToGroupResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private ChatConvertToGroupResponse() {
       roomId_ = 0L;
       name_ = "";
@@ -1024,21 +970,18 @@ public final class ProtoChatConvertToGroup {
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
     private net.iGap.proto.ProtoResponse.Response response_;
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public net.iGap.proto.ProtoResponse.Response getResponse() {
       return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
@@ -1048,7 +991,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int ROOM_ID_FIELD_NUMBER = 2;
     private long roomId_;
-
     /**
      * <code>optional uint64 room_id = 2;</code>
      */
@@ -1058,7 +1000,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int NAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object name_;
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -1073,7 +1014,6 @@ public final class ProtoChatConvertToGroup {
         return s;
       }
     }
-
     /**
      * <code>optional string name = 3;</code>
      */
@@ -1090,7 +1030,6 @@ public final class ProtoChatConvertToGroup {
 
     public static final int DESCRIPTION_FIELD_NUMBER = 4;
     private volatile java.lang.Object description_;
-
     /**
      * <code>optional string description = 4;</code>
      */
@@ -1105,7 +1044,6 @@ public final class ProtoChatConvertToGroup {
         return s;
       }
     }
-
     /**
      * <code>optional string description = 4;</code>
      */
@@ -1122,14 +1060,12 @@ public final class ProtoChatConvertToGroup {
 
     public static final int ROLE_FIELD_NUMBER = 5;
     private int role_;
-
     /**
      * <code>optional .proto.GroupRoom.Role role = 5;</code>
      */
     public int getRoleValue() {
       return role_;
     }
-
     /**
      * <code>optional .proto.GroupRoom.Role role = 5;</code>
      */
@@ -1139,7 +1075,6 @@ public final class ProtoChatConvertToGroup {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1192,7 +1127,6 @@ public final class ProtoChatConvertToGroup {
     }
 
     private static final long serialVersionUID = 0L;
-
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
@@ -1282,15 +1216,12 @@ public final class ProtoChatConvertToGroup {
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroupResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
     }
@@ -1300,7 +1231,6 @@ public final class ProtoChatConvertToGroup {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.ChatConvertToGroupResponse}
      */
@@ -1324,12 +1254,10 @@ public final class ProtoChatConvertToGroup {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1403,7 +1331,6 @@ public final class ProtoChatConvertToGroup {
       public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroupResponse) {
           return mergeFrom((net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroupResponse) other);
@@ -1457,14 +1384,12 @@ public final class ProtoChatConvertToGroup {
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
       private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1475,7 +1400,6 @@ public final class ProtoChatConvertToGroup {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1492,7 +1416,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1506,7 +1429,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1524,7 +1446,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1539,7 +1460,6 @@ public final class ProtoChatConvertToGroup {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1548,7 +1468,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1559,7 +1478,6 @@ public final class ProtoChatConvertToGroup {
           return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1572,14 +1490,12 @@ public final class ProtoChatConvertToGroup {
       }
 
       private long roomId_;
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
       public long getRoomId() {
         return roomId_;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1589,7 +1505,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -1601,7 +1516,6 @@ public final class ProtoChatConvertToGroup {
       }
 
       private java.lang.Object name_ = "";
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -1616,7 +1530,6 @@ public final class ProtoChatConvertToGroup {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -1630,7 +1543,6 @@ public final class ProtoChatConvertToGroup {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -1643,7 +1555,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -1653,7 +1564,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string name = 3;</code>
        */
@@ -1669,7 +1579,6 @@ public final class ProtoChatConvertToGroup {
       }
 
       private java.lang.Object description_ = "";
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -1684,7 +1593,6 @@ public final class ProtoChatConvertToGroup {
           return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -1698,7 +1606,6 @@ public final class ProtoChatConvertToGroup {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -1711,7 +1618,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -1721,7 +1627,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string description = 4;</code>
        */
@@ -1737,14 +1642,12 @@ public final class ProtoChatConvertToGroup {
       }
 
       private int role_ = 0;
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 5;</code>
        */
       public int getRoleValue() {
         return role_;
       }
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 5;</code>
        */
@@ -1753,7 +1656,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 5;</code>
        */
@@ -1761,7 +1663,6 @@ public final class ProtoChatConvertToGroup {
         net.iGap.proto.ProtoGlobal.GroupRoom.Role result = net.iGap.proto.ProtoGlobal.GroupRoom.Role.valueOf(role_);
         return result == null ? net.iGap.proto.ProtoGlobal.GroupRoom.Role.UNRECOGNIZED : result;
       }
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 5;</code>
        */
@@ -1774,7 +1675,6 @@ public final class ProtoChatConvertToGroup {
         onChanged();
         return this;
       }
-
       /**
        * <code>optional .proto.GroupRoom.Role role = 5;</code>
        */
@@ -1799,7 +1699,6 @@ public final class ProtoChatConvertToGroup {
 
     // @@protoc_insertion_point(class_scope:proto.ChatConvertToGroupResponse)
     private static final net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroupResponse DEFAULT_INSTANCE;
-
     static {
       DEFAULT_INSTANCE = new net.iGap.proto.ProtoChatConvertToGroup.ChatConvertToGroupResponse();
     }
@@ -1839,7 +1738,6 @@ public final class ProtoChatConvertToGroup {
   }
 
   private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
   static {
     java.lang.String[] descriptorData = {
             "\n\030ChatConvertToGroup.proto\022\005proto\032\rReque" +
@@ -1849,7 +1747,8 @@ public final class ProtoChatConvertToGroup {
                     " \001(\t\022\023\n\013description\030\004 \001(\t\"\230\001\n\032ChatConver" +
                     "tToGroupResponse\022!\n\010response\030\001 \001(\0132\017.pro" +
                     "to.Response\022\017\n\007room_id\030\002 \001(\004\022\014\n\004name\030\003 \001" +
-                    "(\t\022\023\n\013description\030\004 \001(\t\022#\n\004role\030\005 \001(\0162\025." + "proto.GroupRoom.RoleB)\n\016net.iGap.protoB\027" +
+                    "(\t\022\023\n\013description\030\004 \001(\t\022#\n\004role\030\005 \001(\0162\025." +
+                    "proto.GroupRoom.RoleB)\n\016net.iGap.protoB\027" +
                     "ProtoChatConvertToGroupb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1870,9 +1769,9 @@ public final class ProtoChatConvertToGroup {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_ChatConvertToGroupResponse_descriptor,
         new java.lang.String[] { "Response", "RoomId", "Name", "Description", "Role", });
-      net.iGap.proto.ProtoRequest.getDescriptor();
-      net.iGap.proto.ProtoResponse.getDescriptor();
-      net.iGap.proto.ProtoGlobal.getDescriptor();
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+    net.iGap.proto.ProtoGlobal.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

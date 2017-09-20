@@ -54,9 +54,9 @@ public class ChannelKickModeratorResponse extends MessageHandler {
                         }
                     });
 
-                    if (onChannelKickModerator != null) {
-                        onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
-                    }
+                    //if (onChannelKickModerator != null) {
+                    //    onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
+                    //}
                     break;
                 }
             }

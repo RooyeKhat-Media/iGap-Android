@@ -10,7 +10,9 @@
 
 package net.iGap.module.structs;
 
-public class StructListOfContact {
+import android.support.annotation.NonNull;
+
+public class StructListOfContact implements Comparable<StructListOfContact> {
 
     public String phone;
     public String firstName;
@@ -63,5 +65,10 @@ public class StructListOfContact {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    @Override
+    public int compareTo(@NonNull StructListOfContact o) {
+        return this.displayName.compareTo(o.displayName);
     }
 }

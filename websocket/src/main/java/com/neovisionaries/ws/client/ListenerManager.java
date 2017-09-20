@@ -169,13 +169,10 @@ class ListenerManager {
     }
 
 
-    public void callOnDisconnected(
-            WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame,
-            boolean closedByServer) {
+    public void callOnDisconnected(WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) {
         for (WebSocketListener listener : getSynchronizedListeners()) {
             try {
-                listener.onDisconnected(
-                        mWebSocket, serverCloseFrame, clientCloseFrame, closedByServer);
+                listener.onDisconnected(mWebSocket, serverCloseFrame, clientCloseFrame, closedByServer);
             } catch (Throwable t) {
                 callHandleCallbackError(listener, t);
             }
@@ -308,6 +305,39 @@ class ListenerManager {
         for (WebSocketListener listener : getSynchronizedListeners()) {
             try {
                 listener.onFrameUnsent(mWebSocket, frame);
+            } catch (Throwable t) {
+                callHandleCallbackError(listener, t);
+            }
+        }
+    }
+
+
+    public void callOnThreadCreated(ThreadType threadType, Thread thread) {
+        for (WebSocketListener listener : getSynchronizedListeners()) {
+            try {
+                listener.onThreadCreated(mWebSocket, threadType, thread);
+            } catch (Throwable t) {
+                callHandleCallbackError(listener, t);
+            }
+        }
+    }
+
+
+    public void callOnThreadStarted(ThreadType threadType, Thread thread) {
+        for (WebSocketListener listener : getSynchronizedListeners()) {
+            try {
+                listener.onThreadStarted(mWebSocket, threadType, thread);
+            } catch (Throwable t) {
+                callHandleCallbackError(listener, t);
+            }
+        }
+    }
+
+
+    public void callOnThreadStopping(ThreadType threadType, Thread thread) {
+        for (WebSocketListener listener : getSynchronizedListeners()) {
+            try {
+                listener.onThreadStopping(mWebSocket, threadType, thread);
             } catch (Throwable t) {
                 callHandleCallbackError(listener, t);
             }

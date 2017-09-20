@@ -12,7 +12,6 @@ package net.iGap.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +28,7 @@ import java.util.List;
 import net.iGap.R;
 import net.iGap.adapter.items.AdapterTransactionPaymentHistory;
 
-public class FragmentTransactionPaymentHistory extends Fragment {
+public class FragmentTransactionPaymentHistory extends BaseFragment {
 
     public static String tag_payment_type = "tag_payment_type";
 
@@ -37,10 +36,9 @@ public class FragmentTransactionPaymentHistory extends Fragment {
     private ItemAdapter itemAdapter;
     private ArrayList<StructHistoryPayment> list = new ArrayList<>();
     private RecyclerView recyclerView;
-
     private PaymentTaype paymentTaype = PaymentTaype.weekly;
 
-    enum PaymentTaype {
+    public enum PaymentTaype {
         weekly, monthly, yearly;
     }
 
