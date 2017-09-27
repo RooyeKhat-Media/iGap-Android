@@ -40,6 +40,10 @@ public class ChatDeleteResponse extends MessageHandler {
         if (G.onChatDelete != null) {
             G.onChatDelete.onChatDelete(builder.getRoomId());
         }
+
+        if (G.onChatDeleteInRoomList != null) {
+            G.onChatDeleteInRoomList.onChatDelete(builder.getRoomId());
+        }
     }
 
     @Override

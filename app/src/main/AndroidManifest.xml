@@ -104,7 +104,7 @@
         android:launchMode="singleTask"
         android:maxRecents="1"
         android:windowSoftInputMode="stateUnchanged"
-        android:theme="@style/AppThemeTranslucent">
+        android:theme="@style/AppTheme.Launcher">
 
 
       <intent-filter>
@@ -242,7 +242,7 @@
 
     <meta-data
         android:name="io.fabric.ApiKey"
-        android:value="set fabric key here" />
+        android:value="your fabric key" />
 
     <!--
       The API key for Google Maps-based APIs is defined as a string resource.

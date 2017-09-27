@@ -618,7 +618,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                     @Override
                     public void onChange(final RealmModel element) {
 
-                        if (((RealmRoom) element).isValid()) {
+                        if (((RealmRoom) element).isValid() && !((RealmRoom) element).isDeleted()) {
                             G.handler.post(new Runnable() {
                                 @Override
                                 public void run() {

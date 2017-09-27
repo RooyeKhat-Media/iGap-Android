@@ -261,7 +261,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     }
 
                     fragment.appBarLayout = fab;
-                    new HelperFragment(fragment).setResourceContainer(R.id.fragmentContainer_contact_profile).load();
+                    new HelperFragment(fragment).setResourceContainer(R.id.container_contact_profile).load();
                 }
                 realm.close();
             }
@@ -425,7 +425,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     layoutNickname.addView(inputLastName, lastNameLayoutParams);
 
                     final MaterialDialog dialog =
-                        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.pu_nikname_profileUser)).positiveText(G.context.getResources().getString(R.string.B_ok)).customView(layoutNickname, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel)).build();
+                            new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.pu_nikname_profileUser)).positiveText(G.context.getResources().getString(R.string.B_ok)).customView(layoutNickname, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel)).build();
 
                     final View positive = dialog.getActionButton(DialogAction.POSITIVE);
                     positive.setEnabled(false);
@@ -730,11 +730,11 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                                 }
                                 String countText = ((RealmRoom) element).getSharedMediaCount();
 
-                                    if (HelperCalander.isLanguagePersian) {
-                                        txtCountOfShearedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
-                                    } else {
-                                        txtCountOfShearedMedia.setText(countText);
-                                    }
+                                if (HelperCalander.isLanguagePersian) {
+                                    txtCountOfShearedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
+                                } else {
+                                    txtCountOfShearedMedia.setText(countText);
+                                }
                             }
                         });
                     }
@@ -1054,7 +1054,10 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
-                clearHistory();
+                //clearHistory();
+                if (FragmentChat.onComplete != null) {
+                    FragmentChat.onComplete.complete(false, roomId + "", "");
+                }
             }
         }).negativeText(negitive).show();
     }
@@ -1085,7 +1088,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
     private void deleteContact() {
         G.onUserContactdelete = new OnUserContactDelete() {
             @Override
-            public void onContactDelete() {
+            public void onContactDelete(long userId) {
                 /**
                  * get user info after delete it for show nickname
                  */

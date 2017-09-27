@@ -38,7 +38,8 @@ public class GroupLeftResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoGroupLeft.GroupLeftResponse.Builder builder = (ProtoGroupLeft.GroupLeftResponse.Builder) message;
         final long roomId = builder.getRoomId();
@@ -46,7 +47,8 @@ public class GroupLeftResponse extends MessageHandler {
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
 
                 if (G.userId == memberId) {
                     RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
@@ -65,6 +67,9 @@ public class GroupLeftResponse extends MessageHandler {
                     if (G.onGroupLeft != null) {
                         G.onGroupLeft.onGroupLeft(roomId, memberId);
                     }
+                    if (G.onGroupDeleteInRoomList != null) {
+                        G.onGroupDeleteInRoomList.onGroupDelete(roomId);
+                    }
                 } else {
                     RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                     if (realmRoom != null && realmRoom.getGroupRoom() != null) {
@@ -75,7 +80,7 @@ public class GroupLeftResponse extends MessageHandler {
                                 member.deleteFromRealm();
                             }
                         } catch (NullPointerException e) {
-
+                            e.printStackTrace();
                         }
                     }
                 }
@@ -84,13 +89,15 @@ public class GroupLeftResponse extends MessageHandler {
         realm.close();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
         G.onGroupLeft.onTimeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

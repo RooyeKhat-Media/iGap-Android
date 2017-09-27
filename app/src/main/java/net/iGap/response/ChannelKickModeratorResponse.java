@@ -35,7 +35,8 @@ public class ChannelKickModeratorResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder builder = (ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder) message;
@@ -49,14 +50,14 @@ public class ChannelKickModeratorResponse extends MessageHandler {
             for (final RealmMember member : realmMembers) {
                 if (member.getPeerId() == builder.getMemberId()) {
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
                             member.setRole(ProtoGlobal.ChannelRoom.Role.MEMBER.toString());
                         }
                     });
-
-                    //if (onChannelKickModerator != null) {
-                    //    onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
-                    //}
+                    if (onChannelKickModerator != null) {
+                        onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
+                    }
                     break;
                 }
             }
@@ -64,12 +65,14 @@ public class ChannelKickModeratorResponse extends MessageHandler {
         realm.close();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         onChannelKickModerator.onTimeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

@@ -18,7 +18,6 @@ import net.iGap.helper.HelperError;
 import net.iGap.interfaces.ISignalingAccept;
 import net.iGap.interfaces.ISignalingCandidate;
 import net.iGap.interfaces.ISignalingErrore;
-import net.iGap.interfaces.ISignalingGetCallLog;
 import net.iGap.interfaces.ISignalingLeave;
 import net.iGap.interfaces.ISignalingOffer;
 import net.iGap.interfaces.ISignalingRinging;
@@ -40,7 +39,7 @@ import static net.iGap.G.iSignalingSessionHold;
 import static org.webrtc.SessionDescription.Type.ANSWER;
 import static org.webrtc.SessionDescription.Type.OFFER;
 
-public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignalingRinging, ISignalingAccept, ISignalingCandidate, ISignalingLeave, ISignalingSessionHold, ISignalingGetCallLog {
+public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignalingRinging, ISignalingAccept, ISignalingCandidate, ISignalingLeave, ISignalingSessionHold {
 
     public CallObserver() {
         iSignalingOffer = this;
@@ -129,10 +128,6 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
         });
     }
 
-    @Override
-    public void onGetList(int size) {
-
-    }
 
     @Override
     public void onLeave(final ProtoSignalingLeave.SignalingLeaveResponse.Type type) {

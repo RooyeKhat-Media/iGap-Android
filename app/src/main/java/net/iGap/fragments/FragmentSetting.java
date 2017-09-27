@@ -2455,16 +2455,16 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         });
 
         mRealmRegisteredInfo = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, G.userId).findFirst();
-        mRealmRegisteredInfo.addChangeListener(new RealmChangeListener<RealmModel>() {
-            @Override
-            public void onChange(RealmModel realmModel) {
-                updateUserInfoUI(realmUserInfo);
-            }
-        });
+        if (mRealmRegisteredInfo != null) {
+            mRealmRegisteredInfo.addChangeListener(new RealmChangeListener<RealmModel>() {
+                @Override
+                public void onChange(RealmModel realmModel) {
+                    updateUserInfoUI(realmUserInfo);
+                }
+            });
 
-        updateUserInfoUI(realmUserInfo);
-
-
+            updateUserInfoUI(realmUserInfo);
+        }
     }
 
     @Override

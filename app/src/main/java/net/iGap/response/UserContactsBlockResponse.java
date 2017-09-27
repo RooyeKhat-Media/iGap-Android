@@ -32,7 +32,8 @@ public class UserContactsBlockResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoUserContactsBlock.UserContactsBlockResponse.Builder builder = (ProtoUserContactsBlock.UserContactsBlockResponse.Builder) message;
@@ -44,7 +45,8 @@ public class UserContactsBlockResponse extends MessageHandler {
         final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userID).findFirst();
         if (realmRegisteredInfo != null) {
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
                     realmRegisteredInfo.setBlockUser(true);
                 }
             });
@@ -54,7 +56,8 @@ public class UserContactsBlockResponse extends MessageHandler {
         final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userID).findFirst();
         if (realmContacts != null) {
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
                     realmContacts.setBlockUser(true);
                 }
             });
@@ -65,13 +68,20 @@ public class UserContactsBlockResponse extends MessageHandler {
         if (G.onUserContactsBlock != null) {
             G.onUserContactsBlock.onUserContactsBlock(builder.getUserId());
         }
+
+        //+manually update (avoid use from realm-adapter)
+        if (G.onBlockStateChanged != null) {
+            G.onBlockStateChanged.onBlockStateChanged(true, builder.getUserId());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

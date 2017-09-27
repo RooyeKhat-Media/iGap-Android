@@ -1,4 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <item type="id" name="statusbarutil_fake_status_bar_view" />
+  <item name="statusbarutil_fake_status_bar_view" type="id" />
+  <item name="audioBox" type="id" />
+  <item name="txt_play_music" type="id" />
+
+  <!-- Contact Item -->
+  <item name="name" type="id" />
+  <item name="number" type="id" />
+
+  <!-- Video Item -->
+  <item name="songArtist" type="id" />
+  <item name="fileSize" type="id" />
+
+
+  <item name="messageSenderAvatar" type="id" />
+  <item name="messageSenderName" type="id" />
+
+  <item name="mainContainer" type="id" />
+  <item name="contentContainer" type="id" />
+  <item name="m_container" type="id" />
+  <item name="csliwt_layout_container_message" type="id" />
+  <item name="audioPlayerViewContainer" type="id" />
+  <item name="thumbnail" type="id" />
+  <item name="cslv_txt_author" type="id" />
+  <item name="csla_btn_play_music" type="id" />
+  <item name="csla_seekBar1" type="id" />
+  <item name="csla_txt_timer" type="id" />
+  <item name="duration" type="id" />
+  <item name="cslum_txt_unread_message" type="id" />
+  <item name="cslt_txt_time_date" type="id" />
+  <item name="cslp_progress_bar_waiting" type="id" />
+  <item name="csll_txt_log_text" type="id" />
+  <item name="csl_ll_time" type="id" />
+  <item name="txtEditedIndicator" type="id" />
+  <item name="cslr_txt_time" type="id" />
+  <item name="cslr_txt_tic" type="id" />
+  <item name="lyt_see" type="id" />
+  <item name="cslm_view_left_dis" type="id" />
+  <item name="lyt_signature" type="id" />
+  <item name="txt_signature" type="id" />
+  <item name="txt_views_label" type="id" />
+  <item name="img_eye" type="id" />
+  <item name="cslr_replay_layout" type="id" />
+  <item name="verticalLine" type="id" />
+  <item name="chslr_imv_replay_pic" type="id" />
+  <item name="chslr_txt_replay_from" type="id" />
+  <item name="chslr_txt_replay_message" type="id" />
+  <item name="cslr_ll_forward" type="id" />
+  <item name="cslr_txt_prefix_forward" type="id" />
+  <item name="cslr_txt_forward_from" type="id" />
+  <item name="lyt_vote" type="id" />
+  <item name="lyt_vote_up" type="id" />
+  <item name="txt_vote_up" type="id" />
+  <item name="img_vote_up" type="id" />
+  <item name="lyt_vote_down" type="id" />
+  <item name="img_vote_down" type="id" />
+  <item name="txt_vote_down" type="id" />
+  <item name="fileName" type="id" />
+  <item name="image" type="id" />
+  <item name="messageSenderTextMessage" type="id" />
+  <item name="root_chat_sub_layout" type="id" />
+  <item name="cs_img_contact_picture" type="id" />
+  <item name="cs_txt_chat_icon" type="id" />
+  <item name="cs_txt_contact_name" type="id" />
+  <item name="lyt_last_message_room" type="id" />
+  <item name="cs_txt_last_message_sender" type="id" />
+  <item name="cs_txt_last_message" type="id" />
+  <item name="cs_txt_last_message_file_text" type="id" />
+  <item name="cs_txt_mute" type="id" />
+  <item name="cs_txt_contact_time" type="id" />
+  <item name="cs_txt_unread_message" type="id" />
+  <item name="cs_txt_pinned_message" type="id" />
+  <item name="fcsl_imv_picture" type="id" />
+  <item name="fcsl_txt_name" type="id" />
+  <item name="fcsl_txt_time_info" type="id" />
+  <item name="fcsl_txt_icon" type="id" />
+  <item name="fcsl_txt_dureation_time" type="id" />
+  <item name="topLine" type="id" />
+  <item name="title" type="id" />
+  <item name="subtitle" type="id" />
+
+
 </resources>

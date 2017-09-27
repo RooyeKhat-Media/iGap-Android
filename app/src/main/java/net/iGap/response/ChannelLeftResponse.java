@@ -64,6 +64,9 @@ public class ChannelLeftResponse extends MessageHandler {
                     if (G.onChannelLeft != null) {
                         G.onChannelLeft.onChannelLeft(builder.getRoomId(), builder.getMemberId());
                     }
+                    if (G.onChannelDeleteInRoomList != null) {
+                        G.onChannelDeleteInRoomList.onChannelDelete(builder.getRoomId());
+                    }
                 } else {
                     RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
                     if (realmRoom != null && realmRoom.getChannelRoom() != null) {

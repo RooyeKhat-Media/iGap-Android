@@ -124,12 +124,11 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
         });
     }
 
-    public static void fetchMessages(final long roomId, final OnActivityChatStart callback) {
+    public static void fetchMessages(final Realm realm, final long roomId, final OnActivityChatStart callback) {
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
@@ -167,7 +166,7 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
                                                 if ((System.currentTimeMillis() - roomMessage.getCreateTime()) > Config.TIME_OUT_MS) {
                                                     if (roomMessage.getAttachment() != null) {
                                                         if (!HelperUploadFile.isUploading(roomMessage.getMessageId() + "")) {
-                                                            callback.resendMessageNeedsUpload(roomMessage);
+                                                            callback.resendMessageNeedsUpload(roomMessage, roomMessage.getMessageId());
                                                         }
                                                     } else {
                                                         callback.resendMessage(roomMessage);
@@ -183,12 +182,12 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
                     public void onSuccess() {
-                        realm.close();
+                        //realm.close();
                     }
                 }, new Realm.Transaction.OnError() {
                     @Override
                     public void onError(Throwable error) {
-                        realm.close();
+                        //realm.close();
                     }
                 });
             }

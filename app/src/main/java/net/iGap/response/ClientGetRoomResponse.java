@@ -41,14 +41,16 @@ public class ClientGetRoomResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoClientGetRoom.ClientGetRoomResponse.Builder clientGetRoom = (ProtoClientGetRoom.ClientGetRoomResponse.Builder) message;
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(final Realm realm) {
+            @Override
+            public void execute(final Realm realm) {
 
                 String[] identityParams = identity.split("\\*");
                 final String identity = identityParams[0];
@@ -62,7 +64,8 @@ public class ClientGetRoomResponse extends MessageHandler {
                     if (G.logMessageUpdatList.containsKey(clientGetRoom.getRoom().getId())) {
 
                         G.handler.postDelayed(new Runnable() {
-                            @Override public void run() {
+                            @Override
+                            public void run() {
                                 HelperLogMessage.updateLogMessageAfterGetUserInfo(clientGetRoom.getRoom().getId());
                             }
                         }, 500);
@@ -74,32 +77,38 @@ public class ClientGetRoomResponse extends MessageHandler {
                 if (clientGetRoom.getRoom().getType() == ProtoGlobal.Room.Type.CHAT) {
 
                     new HelperGetUserInfo(new OnGetUserInfo() {
-                        @Override public void onGetUserInfo(ProtoGlobal.RegisteredUser registeredUser) {
+                        @Override
+                        public void onGetUserInfo(ProtoGlobal.RegisteredUser registeredUser) {
 
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
-                                @Override public void run() {
+                                @Override
+                                public void run() {
                                     final Realm realm = Realm.getDefaultInstance();
 
                                     realm.executeTransactionAsync(new Realm.Transaction() {
-                                        @Override public void execute(Realm realm) {
+                                        @Override
+                                        public void execute(Realm realm) {
                                             putOrUpdate(clientGetRoom.getRoom(), realm);
                                         }
                                     }, new Realm.Transaction.OnSuccess() {
-                                        @Override public void onSuccess() {
-
-                                            if (G.onClientGetRoomResponse != null) {
-
-                                                G.handler.post(new Runnable() {
-                                                    @Override public void run() {
+                                        @Override
+                                        public void onSuccess() {
+                                            G.handler.post(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (G.onClientGetRoomResponse != null) {
                                                         G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identity);
                                                     }
-                                                });
-                                            }
-
+                                                    if (G.onClientGetRoomResponseRoomList != null) {
+                                                        G.onClientGetRoomResponseRoomList.onClientGetRoomResponse(clientGetRoom.getRoom().getId());
+                                                    }
+                                                }
+                                            });
                                             realm.close();
                                         }
                                     }, new Realm.Transaction.OnError() {
-                                        @Override public void onError(Throwable error) {
+                                        @Override
+                                        public void onError(Throwable error) {
                                             realm.close();
                                         }
                                     });
@@ -111,9 +120,13 @@ public class ClientGetRoomResponse extends MessageHandler {
                     putOrUpdate(clientGetRoom.getRoom(), realm);
 
                     G.handler.postDelayed(new Runnable() {
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             if (G.onClientGetRoomResponse != null) {
                                 G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identity);
+                            }
+                            if (G.onClientGetRoomResponseRoomList != null) {
+                                G.onClientGetRoomResponseRoomList.onClientGetRoomResponse(clientGetRoom.getRoom().getId());
                             }
                         }
                     }, 500);
@@ -134,14 +147,16 @@ public class ClientGetRoomResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onClientGetRoomResponse != null) {
             G.onClientGetRoomResponse.onTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

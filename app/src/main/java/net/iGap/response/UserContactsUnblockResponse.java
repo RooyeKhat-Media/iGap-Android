@@ -32,7 +32,8 @@ public class UserContactsUnblockResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoUserContactsUnblock.UserContactsUnblockResponse.Builder builder = (ProtoUserContactsUnblock.UserContactsUnblockResponse.Builder) message;
@@ -44,7 +45,8 @@ public class UserContactsUnblockResponse extends MessageHandler {
         final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userID).findFirst();
         if (realmRegisteredInfo != null) {
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
                     realmRegisteredInfo.setBlockUser(false);
                 }
             });
@@ -54,7 +56,8 @@ public class UserContactsUnblockResponse extends MessageHandler {
         final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userID).findFirst();
         if (realmContacts != null) {
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
                     realmContacts.setBlockUser(false);
                 }
             });
@@ -65,13 +68,20 @@ public class UserContactsUnblockResponse extends MessageHandler {
         if (G.onUserContactsUnBlock != null) {
             G.onUserContactsUnBlock.onUserContactsUnBlock(builder.getUserId());
         }
+
+        //+manually update (avoid use from realm-adapter)
+        if (G.onBlockStateChanged != null) {
+            G.onBlockStateChanged.onBlockStateChanged(false, builder.getUserId());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

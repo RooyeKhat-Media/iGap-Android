@@ -1514,7 +1514,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
              * update progress when user trying to upload or download also if
              * file is compressing do this action for add listener and use later
              */
-            if (HelperUploadFile.isUploading(mMessage.messageID) || FragmentChat.compressingFiles.containsKey(Long.parseLong(mMessage.messageID))) {
+            if (HelperUploadFile.isUploading(mMessage.messageID) || (mMessage.status.equals(ProtoGlobal.RoomMessageStatus.SENDING.toString()) || FragmentChat.compressingFiles.containsKey(Long.parseLong(mMessage.messageID)))) {//(mMessage.status.equals(ProtoGlobal.RoomMessageStatus.SENDING.toString()) this code newly added
                 hideThumbnailIf(holder);
 
                 HelperUploadFile.AddListener(mMessage.messageID, new HelperUploadFile.UpdateListener() {
@@ -1601,7 +1601,9 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             downLoadFile(holder, attachment, 0);
         } else {
             if (attachment.isFileExistsOnLocal()) {
-                progress.performProgress();
+                if (!(mMessage.status.equals(ProtoGlobal.RoomMessageStatus.SENDING.toString()) && !(mMessage.status.equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())))) {
+                    progress.performProgress();
+                }
             } else {
                 hideThumbnailIf(holder);
                 progress.withDrawable(R.drawable.ic_download, true);

@@ -21,9 +21,14 @@ import net.iGap.request.RequestGroupUpdateStatus;
  */
 public class ChatUpdateStatusUtil implements OnChatUpdateStatusResponse {
     private OnChatUpdateStatusResponse onChatUpdateStatusResponse;
+    private OnChatUpdateStatusResponse onChatUpdateStatusResponseFragmentMain;
 
     public void setOnChatUpdateStatusResponse(OnChatUpdateStatusResponse response) {
         this.onChatUpdateStatusResponse = response;
+    }
+
+    public void setOnChatUpdateStatusResponseFragmentMain(OnChatUpdateStatusResponse response) {
+        this.onChatUpdateStatusResponseFragmentMain = response;
     }
 
     public void sendUpdateStatus(ProtoGlobal.Room.Type roomType, long roomId, long messageId, ProtoGlobal.RoomMessageStatus roomMessageStatus) {
@@ -34,9 +39,13 @@ public class ChatUpdateStatusUtil implements OnChatUpdateStatusResponse {
         }
     }
 
-    @Override public void onChatUpdateStatus(long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, long statusVersion) {
+    @Override
+    public void onChatUpdateStatus(long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, long statusVersion) {
         if (onChatUpdateStatusResponse != null) {
             onChatUpdateStatusResponse.onChatUpdateStatus(roomId, messageId, status, statusVersion);
+        }
+        if (onChatUpdateStatusResponseFragmentMain != null) {
+            onChatUpdateStatusResponseFragmentMain.onChatUpdateStatus(roomId, messageId, status, statusVersion);
         }
     }
 }

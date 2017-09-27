@@ -1449,8 +1449,8 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                                     Bundle bundle = new Bundle();
                                     bundle.putLong(FragmentRegistrationNickname.ARG_USER_ID, userId);
                                     fragment.setArguments(bundle);
-                                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().add(R.id.ar_layout_root, fragment).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left).commit();
-                                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(FragmentRegister.this).commit();
+                                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().add(R.id.ar_layout_root, fragment).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left).commitAllowingStateLoss();
+                                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(FragmentRegister.this).commitAllowingStateLoss();
                                 }
                             });
                         } else {

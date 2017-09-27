@@ -1681,6 +1681,7 @@ public class ViewMaker {
     public static View getViewItemCall() {
 
         LinearLayout linearLayout_205 = new LinearLayout(G.context);
+        linearLayout_205.setId(R.id.mainContainer);
         LinearLayout.LayoutParams layout_218 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         linearLayout_205.setLayoutParams(layout_218);
 
@@ -1788,6 +1789,7 @@ public class ViewMaker {
     public static View getViewRegisteredContacts() {
 
         LinearLayout linearLayout_578 = new LinearLayout(G.context);
+        linearLayout_578.setId(R.id.mainContainer);
         linearLayout_578.setOrientation(VERTICAL);
         if (HelperCalander.isLanguagePersian) {
             linearLayout_578.setPadding(i_Dp(R.dimen.dp20), 0, i_Dp(R.dimen.dp20), 0);

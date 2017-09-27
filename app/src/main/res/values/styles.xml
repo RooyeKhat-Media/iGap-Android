@@ -14,7 +14,12 @@
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
-    <style name="AppTheme.Widget" />
+  <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--<item name="android:windowDisablePreview">true</item>-->
+    <item name="android:windowBackground">@drawable/theme</item>
+  </style>
+
+  <style name="AppTheme.Widget" />
 
     <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
         <item name="fontPath">fonts/IRANSansMobile.ttf</item>

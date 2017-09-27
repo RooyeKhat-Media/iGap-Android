@@ -372,10 +372,6 @@ public class FragmentShowAvatars extends BaseFragment {
             txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
         }
 
-        //if (avatarList.get(0).getFile() != null) {
-        //    txtImageName.setText(avatarList.get(0).getFile().getName());
-        //}
-
         viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,14 +387,10 @@ public class FragmentShowAvatars extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-
                 txtImageNumber.setText(position + 1 + " " + G.context.getResources().getString(R.string.of) + " " + avatarList.size());
                 if (HelperCalander.isLanguagePersian) {
                     txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
                 }
-                //if (avatarList.get(position).getFile() != null) {
-                //    txtImageName.setText(avatarList.get(position).getFile().getName());
-                //}
             }
 
             @Override

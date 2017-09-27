@@ -34,7 +34,8 @@ public class GroupKickModeratorResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoGroupKickModerator.GroupKickModeratorResponse.Builder builder = (ProtoGroupKickModerator.GroupKickModeratorResponse.Builder) message;
 
@@ -48,14 +49,14 @@ public class GroupKickModeratorResponse extends MessageHandler {
             for (final RealmMember member : realmMembers) {
                 if (member.getPeerId() == builder.getMemberId()) {
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
                             member.setRole(ProtoGlobal.GroupRoom.Role.MEMBER.toString());
                         }
                     });
-
-                    //if (G.onGroupKickModerator != null) {
-                    //    G.onGroupKickModerator.onGroupKickModerator(builder.getRoomId(), builder.getMemberId());
-                    //}
+                    if (G.onGroupKickModerator != null) {
+                        G.onGroupKickModerator.onGroupKickModerator(builder.getRoomId(), builder.getMemberId());
+                    }
                     break;
                 }
             }
@@ -64,7 +65,8 @@ public class GroupKickModeratorResponse extends MessageHandler {
         realm.close();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
