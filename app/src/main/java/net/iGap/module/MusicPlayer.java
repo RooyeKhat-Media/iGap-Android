@@ -425,20 +425,21 @@ public class MusicPlayer extends Service {
 
     public static void stopSound() {
 
-        String zeroTime = "00";
+        String zeroTime = "0:00";
 
         if (HelperCalander.isLanguagePersian) {
             zeroTime = HelperCalander.convertToUnicodeFarsiNumber(zeroTime);
         }
 
         if (txt_music_time_counter != null) {
-            txt_music_time_counter.setText(zeroTime + "/");
+            txt_music_time_counter.setText(zeroTime);
         }
 
         try {
             remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
             notificationManager.notify(notificationId, notification);
         } catch (RuntimeException e) {
+            e.printStackTrace();
         }
 
         try {
@@ -981,7 +982,7 @@ public class MusicPlayer extends Service {
             G.handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    txt_music_time_counter.setText(strTimer + "/");
+                    txt_music_time_counter.setText(strTimer);
                 }
             });
         }

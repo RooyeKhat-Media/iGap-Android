@@ -17,5 +17,5 @@ public interface OnActivityChatStart {
 
     void resendMessage(RealmRoomMessage message);
 
-    void resendMessageNeedsUpload(RealmRoomMessage message);
+    void resendMessageNeedsUpload(RealmRoomMessage message, long messageId);
 }

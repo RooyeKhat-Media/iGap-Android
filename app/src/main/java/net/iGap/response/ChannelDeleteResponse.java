@@ -29,7 +29,8 @@ public class ChannelDeleteResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoChannelDelete.ChannelDeleteResponse.Builder builder = (ProtoChannelDelete.ChannelDeleteResponse.Builder) message;
 
@@ -38,16 +39,21 @@ public class ChannelDeleteResponse extends MessageHandler {
         if (G.onChannelDelete != null) {
             G.onChannelDelete.onChannelDelete(builder.getRoomId());
         }
+        if (G.onChannelDeleteInRoomList != null) {
+            G.onChannelDeleteInRoomList.onChannelDelete(builder.getRoomId());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onChannelDelete != null) {
             G.onChannelDelete.onTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

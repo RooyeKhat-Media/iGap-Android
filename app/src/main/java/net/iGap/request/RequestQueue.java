@@ -10,6 +10,7 @@
 
 package net.iGap.request;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.neovisionaries.ws.client.WebSocket;
 import java.lang.reflect.InvocationTargetException;
@@ -68,6 +69,7 @@ public class RequestQueue {
         }
 
         //requestWrapper.time = System.currentTimeMillis(); // here the client was previously recorded time
+        requestWrapper.setRandomId(randomId);
         ProtoRequest.Request.Builder requestBuilder = ProtoRequest.Request.newBuilder();
         requestBuilder.setId(randomId);
 
@@ -112,8 +114,8 @@ public class RequestQueue {
                     webSocket.sendBinary(message, requestWrapper);
                 }
                 Log.i("SOC_REQ", "RequestQueue ********** sendRequest unSecure successful **********");
-            } else if (G.waitingActionIds.contains(requestWrapper.actionId + "")) {
-
+            } else { //if (G.waitingActionIds.contains(requestWrapper.actionId + "")) {
+                timeOutImmediately(randomId, false);
                 /**
                  * add to waiting request wrappers while user not logged-in yet
                  */
@@ -137,7 +139,9 @@ public class RequestQueue {
             String key = entry.getKey();
             RequestWrapper requestWrapper = entry.getValue();
             boolean delete = timeDifference(requestWrapper.getTime());
-
+            if (requestWrapper.getActionId() != 117) {
+                Log.i("UUU", "actionId timeOut: " + requestWrapper.getActionId());
+            }
             if (delete) {
                 if (key.contains(".")) {
                     String randomId = key.split("\\.")[0];
@@ -197,6 +201,36 @@ public class RequestQueue {
             setTimeoutMethod.invoke(object);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * timeOut request
+     *
+     * @param keyRandomId timeOut with this specific key
+     * @param allRequest timeOut all requests
+     */
+    public static void timeOutImmediately(@Nullable String keyRandomId, boolean allRequest) {
+        for (Iterator<Map.Entry<String, RequestWrapper>> it = G.requestQueueMap.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<String, RequestWrapper> entry = it.next();
+            String key = entry.getKey();
+            if (allRequest || (keyRandomId != null && key.equals(keyRandomId))) {
+                if (key.contains(".")) {
+                    String randomId = key.split("\\.")[0];
+
+                    if (!G.requestQueueRelationMap.containsKey(randomId)) continue;
+
+                    ArrayList<Object> array = G.requestQueueRelationMap.get(randomId);
+
+                    G.requestQueueRelationMap.remove(randomId);
+
+                    for (int i = 0; i < array.size(); i++) {
+                        requestQueueMapRemover(randomId + "." + i);
+                    }
+                } else {
+                    requestQueueMapRemover(key);
+                }
+            }
         }
     }
 

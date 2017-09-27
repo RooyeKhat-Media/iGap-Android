@@ -34,13 +34,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import io.realm.Case;
 import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +57,9 @@ import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperPublicMethod;
 import net.iGap.interfaces.OnAvatarGet;
+import net.iGap.interfaces.OnContactAdd;
 import net.iGap.interfaces.OnGetPermission;
+import net.iGap.interfaces.OnUserContactDelete;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
@@ -77,7 +81,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.context;
 import static net.iGap.R.string.contacts;
 
-public class RegisteredContactsFragment extends BaseFragment {
+public class RegisteredContactsFragment extends BaseFragment implements OnUserContactDelete, OnContactAdd {
 
     private TextView menu_txt_titleToolbar;
     private ViewGroup vgAddContact, vgRoot;
@@ -93,7 +97,7 @@ public class RegisteredContactsFragment extends BaseFragment {
     private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
     private FastItemAdapter fastItemAdapter;
     private ProgressBar prgWaitingLiadList;
-
+    private ContactListAdapterA mAdapter;
     private Realm realm;
 
     private Realm getRealm() {
@@ -120,6 +124,8 @@ public class RegisteredContactsFragment extends BaseFragment {
     public void onViewCreated(View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        G.onUserContactdelete = this;
+        G.onContactAdd = this;
 
         sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
 
@@ -224,20 +230,20 @@ public class RegisteredContactsFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
-
                 if (s.length() > 0) {
                     results = getRealm().where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAllSorted(RealmContactsFields.DISPLAY_NAME);
                 } else {
                     results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
                 }
-                realmRecyclerView.setAdapter(new ContactListAdapter(results));
+                mAdapter.clear();
+                for (RealmContacts contact : results) {
+                    mAdapter.add(new ContactItem().setInfo(contact).withIdentifier(contact.getId()));
+                }
+                realmRecyclerView.setAdapter(mAdapter);
 
                 realmRecyclerView.removeItemDecoration(decoration);
                 decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(results));
                 realmRecyclerView.addItemDecoration(decoration);
-
-
             }
 
             @Override
@@ -272,13 +278,43 @@ public class RegisteredContactsFragment extends BaseFragment {
         realmRecyclerView.setLayoutManager(new LinearLayoutManager(G.fragmentActivity));
         realmRecyclerView.setNestedScrollingEnabled(false);
 
+        mAdapter = new ContactListAdapterA();
         results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
-        realmRecyclerView.setAdapter(new ContactListAdapter(results));
+        for (RealmContacts contact : results) {
+            mAdapter.add(new ContactItem().setInfo(contact).withIdentifier(contact.getId()));
+        }
+        realmRecyclerView.setAdapter(mAdapter);
+        mAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
+            @Override
+            public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
+                if (isCallAction) {
+                    popBackStackFragment();
+                    long userId = ((ContactItem) item).contact.getId();
+                    if (userId != 134 && G.userId != userId) {
+                        FragmentCall.call(userId, false);
+                    }
+                } else {
+                    showProgress();
+                    HelperPublicMethod.goToChatRoom(((ContactItem) item).contact.getId(), new HelperPublicMethod.OnComplete() {
+                        @Override
+                        public void complete() {
+                            hideProgress();
+                            popBackStackFragment();
+                        }
+                    }, new HelperPublicMethod.OnError() {
+                        @Override
+                        public void error() {
+                            hideProgress();
+                        }
+                    });
+                }
+                return true;
+            }
+        });
 
         StickyHeader stickyHeader = new StickyHeader(results);
         decoration = new StickyRecyclerHeadersDecoration(stickyHeader);
         realmRecyclerView.addItemDecoration(decoration);
-
 
         RecyclerView rcvListContact = (RecyclerView) view.findViewById(R.id.rcv_friends_to_invite);
         fastItemAdapter = new FastItemAdapter();
@@ -298,8 +334,6 @@ public class RegisteredContactsFragment extends BaseFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
         rcvListContact.setLayoutManager(new LinearLayoutManager(getContext()));
         rcvListContact.setItemAnimator(new DefaultItemAnimator());
@@ -347,10 +381,11 @@ public class RegisteredContactsFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         if (realm != null && !realm.isClosed()) {
             realm.close();
         }
+        G.onUserContactdelete = null;
+        G.onContactAdd = null;
     }
 
     @Override
@@ -359,106 +394,70 @@ public class RegisteredContactsFragment extends BaseFragment {
         //super.onSaveInstanceState(outState); //
     }
 
-    //********************************************************************************************
+    @Override
+    public void onContactDelete(final long userId) {
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.remove(mAdapter.getPosition(userId));
+                edtSearch.setText("");
+            }
+        });
+    }
 
-    public class ContactListAdapter extends RealmRecyclerViewAdapter<RealmContacts, ContactListAdapter.ViewHolder> {
+    @Override
+    public void onError(int majorCode, int minorCode) {
 
+    }
+
+    @Override
+    public void onContactAdd() {
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                // set text here for call onTextChanged and reset item again
+                edtSearch.setText("");
+            }
+        });
+    }
+
+    /**
+     * ************************************* show iGap contacts *************************************
+     */
+
+    //+ manually update
+    public class ContactListAdapterA<Item extends ContactItem> extends FastItemAdapter<Item> {
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return super.onCreateViewHolder(parent, viewType);
+        }
+    }
+
+    public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolder> {
         String lastHeader = "";
-        int count;
+        RealmContacts contact;
 
-        ContactListAdapter(RealmResults<RealmContacts> realmResults) {
-            super(realmResults, true);
-            count = realmResults.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            private RealmContacts realmContacts;
-            protected CircleImageView image;
-            protected TextView title;
-            protected TextView subtitle;
-            protected View topLine;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                image = (CircleImageView) view.findViewById(R.id.imageView);
-                title = (TextView) view.findViewById(R.id.title);
-                subtitle = (TextView) view.findViewById(R.id.subtitle);
-                topLine = (View) view.findViewById(R.id.topLine);
-
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (isCallAction) {
-                            //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
-
-                            popBackStackFragment();
-
-                            long userId = realmContacts.getId();
-                            if (userId != 134 && G.userId != userId) {
-                                FragmentCall.call(userId, false);
-                            }
-
-
-                        } else {
-                            showProgress();
-
-                            HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
-                                @Override
-                                public void complete() {
-                                    hideProgress();
-                                    //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
-
-                                    popBackStackFragment();
-
-                                }
-                            }, new HelperPublicMethod.OnError() {
-                                @Override
-                                public void error() {
-                                    hideProgress();
-                                }
-                            });
-                        }
-
-
-
-
-                    }
-                });
-            }
+        public ContactItem setInfo(RealmContacts contact) {
+            this.contact = contact;
+            return this;
         }
 
         @Override
-        public ContactListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            // View v = inflater.inflate(R.layout.contact_item, viewGroup, false);
+        public void bindView(final ViewHolder viewHolder, List payloads) throws IllegalStateException {
+            super.bindView(viewHolder, payloads);
 
-            View v = ViewMaker.getViewRegisteredContacts();
-
-            if (getData() != null && count != getData().size()) {
-                count = getData().size();
-
-                realmRecyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        realmRecyclerView.removeItemDecoration(decoration);
-                        decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(getData().sort(RealmContactsFields.DISPLAY_NAME)));
-                        realmRecyclerView.addItemDecoration(decoration);
-                    }
-                });
-            }
-
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(final ContactListAdapter.ViewHolder viewHolder, int i) {
-
-            final RealmContacts contact = viewHolder.realmContacts = getItem(i);
-            if (contact == null) {
+            if (contact == null || !contact.isValid()) {
                 return;
             }
+
+            if (viewHolder.itemView.findViewById(R.id.mainContainer) == null) {
+                ((ViewGroup) viewHolder.itemView).addView(ViewMaker.getViewRegisteredContacts());
+            }
+
+            viewHolder.image = (CircleImageView) viewHolder.itemView.findViewById(R.id.imageView);
+            viewHolder.title = (TextView) viewHolder.itemView.findViewById(R.id.title);
+            viewHolder.subtitle = (TextView) viewHolder.itemView.findViewById(R.id.subtitle);
+            viewHolder.topLine = (View) viewHolder.itemView.findViewById(R.id.topLine);
 
             String header = contact.getDisplay_name();
 
@@ -512,7 +511,6 @@ public class RegisteredContactsFragment extends BaseFragment {
         }
 
         private void setAvatar(final ViewHolder holder, final long userId) {
-
             HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
                 @Override
                 public void onAvatarGet(final String avatarPath, long ownerId) {
@@ -525,10 +523,262 @@ public class RegisteredContactsFragment extends BaseFragment {
                 }
             });
         }
+
+        @Override
+        public int getType() {
+            return 0;
+        }
+
+        @Override
+        public int getLayoutRes() {
+            return R.layout.contact_item_code;
+        }
+
+        @Override
+        public ViewHolder getViewHolder(View viewGroup) {
+            //View v = ViewMaker.getViewRegisteredContacts();
+            //
+            //if (getData() != null && count != getData().size()) {
+            //    count = getData().size();
+            //
+            //    realmRecyclerView.post(new Runnable() {
+            //        @Override
+            //        public void run() {
+            //            realmRecyclerView.removeItemDecoration(decoration);
+            //            decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(getData().sort(RealmContactsFields.DISPLAY_NAME)));
+            //            realmRecyclerView.addItemDecoration(decoration);
+            //        }
+            //    });
+            //}
+            //View v = ViewMaker.getViewRegisteredContacts();
+            return new ViewHolder(viewGroup);
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            private RealmContacts realmContacts;
+            protected CircleImageView image;
+            protected TextView title;
+            protected TextView subtitle;
+            protected View topLine;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                //image = (CircleImageView) view.findViewById(R.id.imageView);
+                //title = (TextView) view.findViewById(R.id.title);
+                //subtitle = (TextView) view.findViewById(R.id.subtitle);
+                //topLine = (View) view.findViewById(R.id.topLine);
+                //
+                //itemView.setOnClickListener(new View.OnClickListener() {
+                //    @Override
+                //    public void onClick(View v) {
+                //
+                //        if (isCallAction) {
+                //            //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
+                //
+                //            popBackStackFragment();
+                //
+                //            long userId = realmContacts.getId();
+                //            if (userId != 134 && G.userId != userId) {
+                //                FragmentCall.call(userId, false);
+                //            }
+                //
+                //
+                //        } else {
+                //            showProgress();
+                //
+                //            HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
+                //                @Override
+                //                public void complete() {
+                //                    hideProgress();
+                //                    //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
+                //
+                //                    popBackStackFragment();
+                //
+                //                }
+                //            }, new HelperPublicMethod.OnError() {
+                //                @Override
+                //                public void error() {
+                //                    hideProgress();
+                //                }
+                //            });
+                //        }
+                //    }
+                //});
+            }
+        }
     }
 
-    //********************************************************************************************
+    //public class ContactListAdapter extends RealmRecyclerViewAdapter<RealmContacts, ContactListAdapter.ViewHolder> {
+    //
+    //    String lastHeader = "";
+    //    int count;
+    //
+    //    ContactListAdapter(RealmResults<RealmContacts> realmResults) {
+    //        super(realmResults, true);
+    //        count = realmResults.size();
+    //    }
+    //
+    //    public class ViewHolder extends RecyclerView.ViewHolder {
+    //
+    //        private RealmContacts realmContacts;
+    //        protected CircleImageView image;
+    //        protected TextView title;
+    //        protected TextView subtitle;
+    //        protected View topLine;
+    //
+    //        public ViewHolder(View view) {
+    //            super(view);
+    //
+    //            image = (CircleImageView) view.findViewById(R.id.imageView);
+    //            title = (TextView) view.findViewById(R.id.title);
+    //            subtitle = (TextView) view.findViewById(R.id.subtitle);
+    //            topLine = (View) view.findViewById(R.id.topLine);
+    //
+    //            itemView.setOnClickListener(new View.OnClickListener() {
+    //                @Override
+    //                public void onClick(View v) {
+    //
+    //                    if (isCallAction) {
+    //                        //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
+    //
+    //                        popBackStackFragment();
+    //
+    //                        long userId = realmContacts.getId();
+    //                        if (userId != 134 && G.userId != userId) {
+    //                            FragmentCall.call(userId, false);
+    //                        }
+    //
+    //
+    //                    } else {
+    //                        showProgress();
+    //
+    //                        HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
+    //                            @Override
+    //                            public void complete() {
+    //                                hideProgress();
+    //                                //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
+    //
+    //                                popBackStackFragment();
+    //
+    //                            }
+    //                        }, new HelperPublicMethod.OnError() {
+    //                            @Override
+    //                            public void error() {
+    //                                hideProgress();
+    //                            }
+    //                        });
+    //                    }
+    //
+    //
+    //
+    //
+    //                }
+    //            });
+    //        }
+    //    }
+    //
+    //    @Override
+    //    public ContactListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    //        // View v = inflater.inflate(R.layout.contact_item, viewGroup, false);
+    //
+    //        View v = ViewMaker.getViewRegisteredContacts();
+    //
+    //        if (getData() != null && count != getData().size()) {
+    //            count = getData().size();
+    //
+    //            realmRecyclerView.post(new Runnable() {
+    //                @Override
+    //                public void run() {
+    //                    realmRecyclerView.removeItemDecoration(decoration);
+    //                    decoration = new StickyRecyclerHeadersDecoration(new StickyHeader(getData().sort(RealmContactsFields.DISPLAY_NAME)));
+    //                    realmRecyclerView.addItemDecoration(decoration);
+    //                }
+    //            });
+    //        }
+    //
+    //        return new ViewHolder(v);
+    //    }
+    //
+    //    @Override
+    //    public void onBindViewHolder(final ContactListAdapter.ViewHolder viewHolder, int i) {
+    //
+    //        final RealmContacts contact = viewHolder.realmContacts = getItem(i);
+    //        if (contact == null) {
+    //            return;
+    //        }
+    //
+    //        String header = contact.getDisplay_name();
+    //
+    //        if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {
+    //            viewHolder.topLine.setVisibility(View.VISIBLE);
+    //        } else {
+    //            viewHolder.topLine.setVisibility(View.GONE);
+    //        }
+    //
+    //        lastHeader = header;
+    //
+    //        viewHolder.title.setText(contact.getDisplay_name());
+    //
+    //        final RealmRegisteredInfo realmRegisteredInfo = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, contact.getId()).findFirst();
+    //        if (realmRegisteredInfo != null) {
+    //            viewHolder.subtitle.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
+    //            if (realmRegisteredInfo.getStatus() != null) {
+    //                if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
+    //                    viewHolder.subtitle.setText(LastSeenTimeUtil.computeTime(contact.getId(), realmRegisteredInfo.getLastSeen(), false));
+    //                } else {
+    //                    if (realmRegisteredInfo.getMainStatus().equals(ProtoGlobal.RegisteredUser.Status.ONLINE.toString())) {
+    //                        viewHolder.subtitle.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
+    //                    }
+    //                    viewHolder.subtitle.setText(realmRegisteredInfo.getStatus());
+    //                }
+    //            }
+    //
+    //            if (HelperCalander.isLanguagePersian) {
+    //                viewHolder.subtitle.setText(viewHolder.subtitle.getText().toString());
+    //            }
+    //        }
+    //
+    //        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+    //            @Override
+    //            public boolean onLongClick(View v) {
+    //
+    //                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+    //                    @Override
+    //                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+    //
+    //                        new RequestUserContactsDelete().contactsDelete(realmRegisteredInfo.getPhoneNumber());
+    //                    }
+    //                }).negativeText(R.string.B_cancel).show();
+    //
+    //                return false;
+    //            }
+    //        });
+    //
+    //        hashMapAvatar.put(contact.getId(), viewHolder.image);
+    //        setAvatar(viewHolder, contact.getId());
+    //    }
+    //
+    //    private void setAvatar(final ViewHolder holder, final long userId) {
+    //
+    //        HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
+    //            @Override
+    //            public void onAvatarGet(final String avatarPath, long ownerId) {
+    //                G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(ownerId));
+    //            }
+    //
+    //            @Override
+    //            public void onShowInitials(final String initials, final String color) {
+    //                hashMapAvatar.get(userId).setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+    //            }
+    //        });
+    //    }
+    //}
 
+    /**
+     * ************************************* show all phone contact *************************************
+     */
     private class StickyHeader implements StickyRecyclerHeadersAdapter {
 
         RealmResults<RealmContacts> realmResults;
@@ -606,7 +856,7 @@ public class RegisteredContactsFragment extends BaseFragment {
                 public void onClick(View v) {
                     new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.igap))
 
-                        .content(G.context.getResources().getString(R.string.invite_friend)).positiveText(G.context.getResources().getString(R.string.ok)).negativeText(G.context.getResources().getString(R.string.cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
+                            .content(G.context.getResources().getString(R.string.invite_friend)).positiveText(G.context.getResources().getString(R.string.ok)).negativeText(G.context.getResources().getString(R.string.cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 

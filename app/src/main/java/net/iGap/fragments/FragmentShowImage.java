@@ -422,7 +422,12 @@ public class FragmentShowImage extends BaseFragment {
             String path = getFilePath(viewPager.getCurrentItem());
             File file = new File(path);
             if (file.exists()) {
-                HelperSaveFile.savePicToGallary(path, true);
+                if (rm.getMessageType() == ProtoGlobal.RoomMessageType.VIDEO) {
+                    HelperSaveFile.saveVideoToGallary(path, true);
+                } else {
+                    HelperSaveFile.savePicToGallary(path, true);
+                }
+
             }
         }
     }

@@ -12,7 +12,6 @@ package net.iGap.helper;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.util.Log;
 import java.util.ArrayList;
 import net.iGap.G;
 
@@ -26,7 +25,6 @@ public class HelperAddContact {
         } else {
             saveNumber = codeNumber + phone;
         }
-        Log.i("GGGGGGGG", "1 addContact: " + saveNumber);
 
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 

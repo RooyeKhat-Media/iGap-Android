@@ -52,7 +52,7 @@ public class BaseFragment extends Fragment {
     public void onDetach() {
 
         super.onDetach();
-
+        hideKeyboard();
         try {
 
             for (int i = G.fragmentManager.getFragments().size() - 1; i >= 0; i--) {

@@ -32,14 +32,16 @@ public class UserContactsDeleteResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserContactsDelete.UserContactsDeleteResponse.Builder builder = (ProtoUserContactsDelete.UserContactsDeleteResponse.Builder) message;
         final long phone = builder.getPhone();
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 RealmContacts realmUserContactsGetListResponse = realm.where(RealmContacts.class).equalTo("phone", phone).findFirst();
                 if (realmUserContactsGetListResponse != null) {
                     realmUserContactsGetListResponse.deleteFromRealm();
@@ -48,19 +50,22 @@ public class UserContactsDeleteResponse extends MessageHandler {
                 RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.PHONE_NUMBER, phone + "").findFirst();
                 if (realmRegisteredInfo != null) {
                     realmRegisteredInfo.setMutual(false);
+                    if (G.onUserContactdelete != null) {
+                        G.onUserContactdelete.onContactDelete(realmRegisteredInfo.getId());
+                    }
                 }
             }
         });
         realm.close();
-
-        G.onUserContactdelete.onContactDelete();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int MajorCode = errorResponse.getMajorCode();

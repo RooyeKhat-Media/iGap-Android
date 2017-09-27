@@ -61,11 +61,10 @@
           android:gravity="bottom"
           android:imeOptions="flagNoExtractUi"
           android:hint="@string/type_message"
-          android:lineSpacingMultiplier=".8"
           android:maxLines="4"
           android:textColorHint="@color/light_gray"
           android:textSize="@dimen/dp16"
-          app:emojiSize="@dimen/dp26"
+          app:emojiSize="@dimen/dp22"
           />
 
       <net.iGap.module.MaterialDesignTextView

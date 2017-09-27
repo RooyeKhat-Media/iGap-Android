@@ -24,6 +24,7 @@ import net.iGap.helper.HelperConnectionState;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.module.enums.ConnectionState;
+import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
 import net.iGap.response.HandleResponse;
 
@@ -95,7 +96,9 @@ public class WebSocketClient {
                     /**
                      * set time after that actually frame was sent
                      */
-                    ((RequestWrapper) frame.getRequestWrapper()).time = System.currentTimeMillis();
+                    RequestWrapper requestWrapper = G.requestQueueMap.get(((RequestWrapper) frame.getRequestWrapper()).getRandomId());
+                    requestWrapper.setTime(System.currentTimeMillis());
+                    G.requestQueueMap.put(requestWrapper.getRandomId(), requestWrapper);
                 }
 
                 @Override
@@ -108,6 +111,7 @@ public class WebSocketClient {
                 public void onDisconnected(WebSocket websocket, com.neovisionaries.ws.client.WebSocketFrame serverCloseFrame, com.neovisionaries.ws.client.WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception {
                     allowForReconnecting = true;
                     G.socketConnection = false;
+                    RequestQueue.timeOutImmediately(null, true);
                     resetMainInfo();
                     reconnect(true);
                     super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);

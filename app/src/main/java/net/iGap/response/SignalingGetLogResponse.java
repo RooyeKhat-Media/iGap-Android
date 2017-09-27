@@ -39,7 +39,7 @@ public class SignalingGetLogResponse extends MessageHandler {
         RealmCallLog.addLogList(list);
 
         if (G.iSignalingGetCallLog != null) {
-            G.iSignalingGetCallLog.onGetList(list.size());
+            G.iSignalingGetCallLog.onGetList(list.size(), list);
         }
 
         //for (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item : list) {
@@ -60,7 +60,7 @@ public class SignalingGetLogResponse extends MessageHandler {
         super.timeOut();
 
         if (G.iSignalingGetCallLog != null) {
-            G.iSignalingGetCallLog.onGetList(-1);
+            G.iSignalingGetCallLog.onGetList(-1, null);
         }
     }
 
@@ -69,7 +69,7 @@ public class SignalingGetLogResponse extends MessageHandler {
         super.error();
 
         if (G.iSignalingGetCallLog != null) {
-            G.iSignalingGetCallLog.onGetList(-1);
+            G.iSignalingGetCallLog.onGetList(-1, null);
         }
 
 

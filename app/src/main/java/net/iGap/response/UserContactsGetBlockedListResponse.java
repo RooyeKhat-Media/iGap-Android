@@ -33,68 +33,69 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder builder = (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder) message;
-        List<ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User> list = builder.getUserList();
+        final List<ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User> list = builder.getUserList();
 
         Realm realm = Realm.getDefaultInstance();
 
         // reset blocked user in RealmRegisteredInfo
-        RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
+        final RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
         if (results != null) {
-            for (final RealmRegisteredInfo item : results) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    for (final RealmRegisteredInfo item : results) {
                         item.setBlockUser(false);
                     }
-                });
-            }
+                }
+            });
         }
 
         // reset blocked user in RealmContacts
-        RealmResults<RealmContacts> resultsContacts = realm.where(RealmContacts.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
+        final RealmResults<RealmContacts> resultsContacts = realm.where(RealmContacts.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
         if (resultsContacts != null) {
-            for (final RealmContacts item : resultsContacts) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    for (final RealmContacts item : resultsContacts) {
                         item.setBlockUser(false);
                     }
-                });
-            }
+                }
+            });
         }
 
-        // add blocked user to RealmRegisteredInfo and  realmContacts
-        for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
-
-            final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, user.getUserId()).findFirst();
-            if (realmRegisteredInfo != null) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                // add blocked user to RealmRegisteredInfo and  realmContacts
+                for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
+                    final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, user.getUserId()).findFirst();
+                    if (realmRegisteredInfo != null) {
                         realmRegisteredInfo.setBlockUser(true);
                     }
-                });
-            }
 
-            final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, user.getUserId()).findFirst();
-            if (realmContacts != null) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, user.getUserId()).findFirst();
+                    if (realmContacts != null) {
                         realmContacts.setBlockUser(true);
                     }
-                });
+                }
             }
-        }
+        });
 
         realm.close();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

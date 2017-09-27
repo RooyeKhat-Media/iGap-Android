@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
 import net.iGap.Config;
+import net.iGap.G;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoUserContactsGetList;
@@ -38,7 +39,8 @@ public class UserContactsGetListResponse extends MessageHandler {
 
     private static long getListTime;
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoUserContactsGetList.UserContactsGetListResponse.Builder builder = (ProtoUserContactsGetList.UserContactsGetListResponse.Builder) message;
 
@@ -51,11 +53,13 @@ public class UserContactsGetListResponse extends MessageHandler {
             getListTime = System.currentTimeMillis();
 
             new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     final Realm realm = Realm.getDefaultInstance();
 
                     realm.executeTransactionAsync(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
 
                             realm.delete(RealmContacts.class);
 
@@ -84,12 +88,18 @@ public class UserContactsGetListResponse extends MessageHandler {
                             }
                         }
                     }, new Realm.Transaction.OnSuccess() {
-                        @Override public void onSuccess() {
+                        @Override
+                        public void onSuccess() {
+
+                            if (G.onContactAdd != null) {
+                                G.onContactAdd.onContactAdd();
+                            }
 
                             realm.close();
                         }
                     }, new Realm.Transaction.OnError() {
-                        @Override public void onError(Throwable error) {
+                        @Override
+                        public void onError(Throwable error) {
                             realm.close();
                         }
                     });
@@ -98,11 +108,13 @@ public class UserContactsGetListResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

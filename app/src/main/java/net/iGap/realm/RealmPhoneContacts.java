@@ -10,7 +10,6 @@
 
 package net.iGap.realm;
 
-import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -63,7 +62,8 @@ public class RealmPhoneContacts extends RealmObject {
     public static void sendContactList(final ArrayList<StructListOfContact> list, final boolean force) {
 
         new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
 
                 ArrayList<StructListOfContact> _list = fillContactsToDB(list);
                 if (_list.size() > 0) {
@@ -77,88 +77,72 @@ public class RealmPhoneContacts extends RealmObject {
     }
 
     private static void addContactToDB(final StructListOfContact item, Realm realm) {
-
         try {
-
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-
-                    //RealmPhoneContacts _realmPhoneContacts = realm.createObject(RealmPhoneContacts.class, item.getPhone());
-                    //_realmPhoneContacts.setFirstName(item.firstName);
-                    //_realmPhoneContacts.setLastName(item.lastName);
-
-                    RealmPhoneContacts realmPhoneContacts = new RealmPhoneContacts();
-                    realmPhoneContacts.setPhone(item.getPhone());
-                    realmPhoneContacts.setFirstName(item.firstName);
-                    realmPhoneContacts.setLastName(item.lastName);
-
-                    realm.copyToRealmOrUpdate(realmPhoneContacts);
-                }
-            });
+            RealmPhoneContacts realmPhoneContacts = new RealmPhoneContacts();
+            realmPhoneContacts.setPhone(item.getPhone());
+            realmPhoneContacts.setFirstName(item.firstName);
+            realmPhoneContacts.setLastName(item.lastName);
+            realm.copyToRealmOrUpdate(realmPhoneContacts);
         } catch (Exception e) {
-            Log.e("dddd", "realm phone contact   addContactToDB   " + e.toString());
+            e.printStackTrace();
         }
     }
 
-    private static ArrayList<StructListOfContact> fillContactsToDB(ArrayList<StructListOfContact> list) {
+    private static ArrayList<StructListOfContact> fillContactsToDB(final ArrayList<StructListOfContact> list) {
 
-        ArrayList<StructListOfContact> notImportedList = new ArrayList<>();
+        final ArrayList<StructListOfContact> notImportedList = new ArrayList<>();
 
         if (list == null) {
             return notImportedList;
         }
 
         Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                for (int i = 0; i < list.size(); i++) {
 
-        for (int i = 0; i < list.size(); i++) {
+                    boolean _addItem = false;
+                    final StructListOfContact _item = list.get(i);
 
-            boolean _addItem = false;
-            final StructListOfContact _item = list.get(i);
+                    if (_item.getPhone() == null || _item.getPhone().length() == 0) {
+                        continue;
+                    }
 
-            if (_item.getPhone() == null || _item.getPhone().length() == 0) {
-                continue;
-            }
+                    final RealmPhoneContacts _realmPhoneContacts = realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, _item.getPhone()).findFirst();
 
-            final RealmPhoneContacts _realmPhoneContacts = realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, _item.getPhone()).findFirst();
+                    if (_realmPhoneContacts == null) {
+                        _addItem = true;
+                        addContactToDB(_item, realm);
+                    } else {
+                        if (!_item.getFirstName().equals(_realmPhoneContacts.getFirstName()) || !_item.getLastName().equals(_realmPhoneContacts.getLastName())) {
+                            _addItem = true;
 
-            if (_realmPhoneContacts == null) {
-                _addItem = true;
+                            // if one number save with tow or more different name
+                            int count = 0;
+                            for (int j = 0; j < list.size(); j++) {
+                                if (list.get(j).getPhone().equals(_item.getPhone())) {
+                                    count++;
+                                    if (count > 1) {
+                                        _addItem = false;
+                                        break;
+                                    }
+                                }
+                            }
 
-                addContactToDB(_item, realm);
-            } else {
-                if (!_item.getFirstName().equals(_realmPhoneContacts.getFirstName()) || !_item.getLastName().equals(_realmPhoneContacts.getLastName())) {
-                    _addItem = true;
-
-                    // if one number save with tow or more different name
-                    int count = 0;
-                    for (int j = 0; j < list.size(); j++) {
-                        if (list.get(j).getPhone().equals(_item.getPhone())) {
-                            count++;
-                            if (count > 1) {
-                                _addItem = false;
-                                break;
+                            if (_addItem) {
+                                _realmPhoneContacts.setFirstName(_item.getFirstName());
+                                _realmPhoneContacts.setLastName(_item.getLastName());
                             }
                         }
                     }
 
                     if (_addItem) {
-                        if (_realmPhoneContacts != null) {
-
-                            realm.executeTransaction(new Realm.Transaction() {
-                                @Override public void execute(Realm realm) {
-                                    _realmPhoneContacts.setFirstName(_item.getFirstName());
-                                    _realmPhoneContacts.setLastName(_item.getLastName());
-                                }
-                            });
-                        }
+                        notImportedList.add(_item);
                     }
                 }
             }
-
-            if (_addItem) {
-                notImportedList.add(_item);
-            }
-        }
+        });
 
         realm.close();
 

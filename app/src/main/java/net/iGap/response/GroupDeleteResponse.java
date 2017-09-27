@@ -39,6 +39,9 @@ public class GroupDeleteResponse extends MessageHandler {
         if (G.onGroupDelete != null) {
             G.onGroupDelete.onGroupDelete(roomId);
         }
+        if (G.onGroupDeleteInRoomList != null) {
+            G.onGroupDeleteInRoomList.onGroupDelete(roomId);
+        }
     }
 
     @Override

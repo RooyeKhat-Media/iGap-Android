@@ -533,7 +533,7 @@
           android:layout_height="match_parent"
             android:background="@android:color/transparent"
           android:scrollbars="vertical"
-          android:fadeScrollbars="false"
+            android:fadeScrollbars="true"
           android:scrollbarStyle="outsideOverlay"
           android:scrollbarSize="@dimen/dp4"
           >
