@@ -1,19 +1,29 @@
 package net.iGap.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import java.util.HashMap;
@@ -23,10 +33,14 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
 import net.iGap.activities.ActivityRegisteration;
-import net.iGap.adapter.RoomsAdapter;
-import net.iGap.adapter.items.RoomItem;
+import net.iGap.adapter.items.chat.ViewMaker;
+import net.iGap.helper.GoToChatActivity;
+import net.iGap.helper.HelperAvatar;
+import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperClientCondition;
 import net.iGap.helper.HelperGetAction;
+import net.iGap.helper.HelperImageBackColor;
+import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnChannelDeleteInRoomList;
 import net.iGap.interfaces.OnChatDeleteInRoomList;
 import net.iGap.interfaces.OnChatSendMessageResponse;
@@ -41,13 +55,19 @@ import net.iGap.interfaces.OnMute;
 import net.iGap.interfaces.OnRemoveFragment;
 import net.iGap.interfaces.OnSelectMenu;
 import net.iGap.interfaces.OnSetActionInRoom;
+import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.CircleImageView;
+import net.iGap.module.EmojiTextViewE;
+import net.iGap.module.MaterialDesignTextView;
+import net.iGap.module.MyDialog;
 import net.iGap.module.PreCachingLayoutManager;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
@@ -60,14 +80,11 @@ import net.iGap.request.RequestGroupDelete;
 import net.iGap.request.RequestGroupLeft;
 
 import static net.iGap.G.clientConditionGlobal;
+import static net.iGap.G.context;
 import static net.iGap.G.firstTimeEnterToApp;
-import static net.iGap.G.onClientGetRoomResponseRoomList;
+import static net.iGap.G.userId;
 import static net.iGap.fragments.FragmentMain.MainType.all;
-import static net.iGap.fragments.FragmentMain.MainType.channel;
-import static net.iGap.fragments.FragmentMain.MainType.chat;
-import static net.iGap.fragments.FragmentMain.MainType.group;
 import static net.iGap.proto.ProtoGlobal.Room.Type.CHANNEL;
-import static net.iGap.proto.ProtoGlobal.Room.Type.CHAT;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 import static net.iGap.realm.RealmRoom.putChatToDatabase;
 
@@ -90,7 +107,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     public MainType mainType;
     private long tagId;
     private Realm realmFragmentMain;
-    public static HashMap<MainType, RoomsAdapter> adapterHashMap = new HashMap<>();
+    public static HashMap<MainType, RoomAdapter> adapterHashMap = new HashMap<>();
 
     public enum MainType {
         all, chat, group, channel
@@ -121,7 +138,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        G.chatUpdateStatusUtil.setOnChatUpdateStatusResponse(this);
+        //G.chatUpdateStatusUtil.setOnChatUpdateStatusResponse(this);
         mComplete = this;
         tagId = System.currentTimeMillis();
 
@@ -191,15 +208,20 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 break;
         }
 
-        final RoomsAdapter roomsAdapter = new RoomsAdapter(getRealmFragmentMain());
-        for (RealmRoom realmRoom : results) {
-            roomsAdapter.add(new RoomItem(this, mainType).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
-        }
 
-        // put adapters in hashMap
-        adapterHashMap.put(mainType, roomsAdapter);
-
+        final RoomAdapter roomsAdapter = new RoomAdapter(results, this);
         mRecyclerView.setAdapter(roomsAdapter);
+
+        //fastAdapter
+        //final RoomsAdapter roomsAdapter = new RoomsAdapter(getRealmFragmentMain());
+        //for (RealmRoom realmRoom : results) {
+        //    roomsAdapter.add(new RoomItem(this, mainType).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
+        //}
+        //
+        //// put adapters in hashMap
+        //adapterHashMap.put(mainType, roomsAdapter);
+        //
+        //mRecyclerView.setAdapter(roomsAdapter);
 
         roomsAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
 
@@ -293,10 +315,10 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                             if (G.currentActivity != null) {
                                 G.currentActivity.finish();
                             }
-                            Intent intent = new Intent(G.context, ActivityRegisteration.class);
+                            Intent intent = new Intent(context, ActivityRegisteration.class);
                             intent.putExtra(ActivityRegisteration.showProfile, true);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            G.context.startActivity(intent);
+                            context.startActivity(intent);
                         }
                     }
 
@@ -399,12 +421,13 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
         putChatToDatabase(roomList, deleteBefore, cleanAfter);
 
-        G.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initRecycleView(null);
-            }
-        }, 200);
+        //fastAdapter
+        //G.handler.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        initRecycleView(null);
+        //    }
+        //}, 200);
 
         /**
          * to first enter to app , client first compute clientCondition then
@@ -600,25 +623,27 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             }
         });
 
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        });
+        //fastAdapter
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //});
         //realm.close();
     }
 
     private void clearHistory(final long roomId) {
         RealmRoomMessage.clearHistoryMessage(roomId);
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        });
+        //fastAdapter
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //});
     }
 
     private void pinToTop(final long roomId, final boolean isPinned) {
@@ -633,62 +658,64 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
             }
         });
-        if (!isPinned) {
-            G.handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    adapterHashMap.get(all).goToTop(roomId, true);
-                    getAdapterMain(roomId).goToTop(roomId, true);
-                }
-            });
-        } else {
-            updateUnPin(roomId, all);
-
-            ProtoGlobal.Room.Type type = getRoomType(roomId);
-            if (type == CHAT) {
-                updateUnPin(roomId, chat);
-            } else if (type == GROUP) {
-                updateUnPin(roomId, group);
-            } else if (type == CHANNEL) {
-                updateUnPin(roomId, channel);
-            }
-        }
+        //fastAdapter
+        //if (!isPinned) {
+        //    G.handler.post(new Runnable() {
+        //        @Override
+        //        public void run() {
+        //            adapterHashMap.get(all).goToTop(roomId, true);
+        //            getAdapterMain(roomId).goToTop(roomId, true);
+        //        }
+        //    });
+        //} else {
+        //    updateUnPin(roomId, all);
+        //
+        //    ProtoGlobal.Room.Type type = getRoomType(roomId);
+        //    if (type == CHAT) {
+        //        updateUnPin(roomId, chat);
+        //    } else if (type == GROUP) {
+        //        updateUnPin(roomId, group);
+        //    } else if (type == CHANNEL) {
+        //        updateUnPin(roomId, channel);
+        //    }
+        //}
         //realm.close();
     }
 
-    private void updateUnPin(final long roomId, final MainType type) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                RealmResults<RealmRoom> results = null;
-                String[] fieldNames = {RealmRoomFields.IS_PINNED, RealmRoomFields.UPDATED_TIME};
-                Sort[] sort = {Sort.DESCENDING, Sort.DESCENDING};
-                switch (type) {
-                    case all:
-                        results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).findAll().sort(fieldNames, sort);
-                        break;
-                    case chat:
-                        results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHAT.toString()).findAll().sort(fieldNames, sort);
-                        break;
-                    case group:
-                        results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.GROUP.toString()).findAll().sort(fieldNames, sort);
-                        break;
-                    case channel:
-                        results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHANNEL.toString()).findAll().sort(fieldNames, sort);
-                        break;
-                }
-
-                int position = 0;
-                for (RealmRoom room : results) {
-                    if (room.getId() == roomId) {
-                        break;
-                    }
-                    position++;
-                }
-                adapterHashMap.get(type).goToPosition(roomId, position);
-            }
-        });
-    }
+    //fastAdapter
+    //private void updateUnPin(final long roomId, final MainType type) {
+    //    G.handler.post(new Runnable() {
+    //        @Override
+    //        public void run() {
+    //            RealmResults<RealmRoom> results = null;
+    //            String[] fieldNames = {RealmRoomFields.IS_PINNED, RealmRoomFields.UPDATED_TIME};
+    //            Sort[] sort = {Sort.DESCENDING, Sort.DESCENDING};
+    //            switch (type) {
+    //                case all:
+    //                    results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).findAll().sort(fieldNames, sort);
+    //                    break;
+    //                case chat:
+    //                    results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHAT.toString()).findAll().sort(fieldNames, sort);
+    //                    break;
+    //                case group:
+    //                    results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.GROUP.toString()).findAll().sort(fieldNames, sort);
+    //                    break;
+    //                case channel:
+    //                    results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHANNEL.toString()).findAll().sort(fieldNames, sort);
+    //                    break;
+    //            }
+    //
+    //            int position = 0;
+    //            for (RealmRoom room : results) {
+    //                if (room.getId() == roomId) {
+    //                    break;
+    //                }
+    //                position++;
+    //            }
+    //            adapterHashMap.get(type).goToPosition(roomId, position);
+    //        }
+    //    });
+    //}
 
     private void goToTop() {
         G.handler.postDelayed(new Runnable() {
@@ -701,27 +728,28 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         }, 50);
     }
 
-    private ProtoGlobal.Room.Type getRoomType(long roomId) {
-        RealmRoom realmRoom = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null) {
-            return realmRoom.getType();
-        }
-        return null;
-    }
-
-    private RoomsAdapter getAdapterMain(long roomId) {
-        ProtoGlobal.Room.Type roomType = getRoomType(roomId);
-        if (roomType != null) {
-            if (roomType == CHAT) {
-                return adapterHashMap.get(chat);
-            } else if (roomType == GROUP) {
-                return adapterHashMap.get(group);
-            } else if (roomType == CHANNEL) {
-                return adapterHashMap.get(channel);
-            }
-        }
-        return adapterHashMap.get(all);
-    }
+    //fastAdapter
+    //private ProtoGlobal.Room.Type getRoomType(long roomId) {
+    //    RealmRoom realmRoom = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+    //    if (realmRoom != null) {
+    //        return realmRoom.getType();
+    //    }
+    //    return null;
+    //}
+    //
+    //private RoomsAdapter getAdapterMain(long roomId) {
+    //    ProtoGlobal.Room.Type roomType = getRoomType(roomId);
+    //    if (roomType != null) {
+    //        if (roomType == CHAT) {
+    //            return adapterHashMap.get(chat);
+    //        } else if (roomType == GROUP) {
+    //            return adapterHashMap.get(group);
+    //        } else if (roomType == CHANNEL) {
+    //            return adapterHashMap.get(channel);
+    //        }
+    //    }
+    //    return adapterHashMap.get(all);
+    //}
 
     private boolean checkValidationForRealm(RealmRoom realmRoom) {
         if (realmRoom != null && realmRoom.isManaged() && realmRoom.isValid() && realmRoom.isLoaded()) {
@@ -747,12 +775,13 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                             realmRoom.setActionState(action, userId);
                         }
                     }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        adapterHashMap.get(all).updateItem(roomId);
-                        getAdapterMain(roomId).updateItem(roomId);
-                    }
+                    //fastAdapter
+                    //}, new Realm.Transaction.OnSuccess() {
+                    //    @Override
+                    //    public void onSuccess() {
+                    //        adapterHashMap.get(all).updateItem(roomId);
+                    //        getAdapterMain(roomId).updateItem(roomId);
+                    //    }
                 });
             }
         });
@@ -770,64 +799,71 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
     @Override
     public void onDraftMessage(final long roomId, String draftMessage) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        });
+        //G.handler.post(new Runnable() {
+        //fastAdapter
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //});
     }
 
     @Override
     public void onChatUpdateStatus(final long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, long statusVersion) {
-        G.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        }, 200);
+        //fastAdapter
+        //G.handler.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //}, 200);
     }
 
     @Override
     public void onChatDelete(final long roomId) {
-        adapterHashMap.get(all).removeChat(roomId);
-        adapterHashMap.get(chat).removeChat(roomId);
+        //fastAdapter
+        //adapterHashMap.get(all).removeChat(roomId);
+        //adapterHashMap.get(chat).removeChat(roomId);
     }
 
     @Override
     public void onGroupDelete(long roomId) {
-        adapterHashMap.get(all).removeChat(roomId);
-        adapterHashMap.get(group).removeChat(roomId);
+        //fastAdapter
+        //adapterHashMap.get(all).removeChat(roomId);
+        //adapterHashMap.get(group).removeChat(roomId);
     }
 
     @Override
     public void onChannelDelete(long roomId) {
-        adapterHashMap.get(all).removeChat(roomId);
-        adapterHashMap.get(channel).removeChat(roomId);
+        //fastAdapter
+        //adapterHashMap.get(all).removeChat(roomId);
+        //adapterHashMap.get(channel).removeChat(roomId);
     }
 
     @Override
     public void onMessageUpdate(final long roomId, long messageId, ProtoGlobal.RoomMessageStatus status, String identity, ProtoGlobal.RoomMessage roomMessage) {
-        G.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).goToTop(roomId, false);
-                getAdapterMain(roomId).goToTop(roomId, false);
-            }
-        }, 200);
+        //fastAdapter
+        //G.handler.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).goToTop(roomId, false);
+        //        getAdapterMain(roomId).goToTop(roomId, false);
+        //    }
+        //}, 200);
     }
 
     @Override
     public void onMessageReceive(final long roomId, String message, ProtoGlobal.RoomMessageType messageType, ProtoGlobal.RoomMessage roomMessage, ProtoGlobal.Room.Type roomType) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).goToTop(roomId, false);
-                getAdapterMain(roomId).goToTop(roomId, false);
-            }
-        });
+        //fastAdapter
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).goToTop(roomId, false);
+        //        getAdapterMain(roomId).goToTop(roomId, false);
+        //    }
+        //});
     }
 
     @Override
@@ -837,46 +873,49 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
     @Override
     public void onClearUnread(final long roomId) {
-        G.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        }, 200);
+        //fastAdapter
+        //G.handler.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //}, 200);
     }
 
     @Override
     public void onClientGetRoomResponse(final long roomId) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                RealmRoom realmRoom = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (realmRoom != null && getAdapterMain(roomId).getPosition(realmRoom.getId()) == -1) {
-                    adapterHashMap.get(all).add(0, new RoomItem(mComplete, all).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
-                    MainType type = all;
-                    if (realmRoom.getType() == CHAT) {
-                        type = chat;
-                    } else if (realmRoom.getType() == GROUP) {
-                        type = group;
-                    } else if (realmRoom.getType() == CHANNEL) {
-                        type = channel;
-                    }
-                    getAdapterMain(roomId).add(0, new RoomItem(mComplete, type).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
-                }
-            }
-        });
+        //fastAdapter
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        RealmRoom realmRoom = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        //        if (realmRoom != null && getAdapterMain(roomId).getPosition(realmRoom.getId()) == -1) {
+        //            adapterHashMap.get(all).add(0, new RoomItem(mComplete, all).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
+        //            MainType type = all;
+        //            if (realmRoom.getType() == CHAT) {
+        //                type = chat;
+        //            } else if (realmRoom.getType() == GROUP) {
+        //                type = group;
+        //            } else if (realmRoom.getType() == CHANNEL) {
+        //                type = channel;
+        //            }
+        //            getAdapterMain(roomId).add(0, new RoomItem(mComplete, type).setInfo(realmRoom).withIdentifier(realmRoom.getId()));
+        //        }
+        //    }
+        //});
     }
 
     @Override
     public void onChangeMuteState(final long roomId, boolean mute) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapterHashMap.get(all).updateItem(roomId);
-                getAdapterMain(roomId).updateItem(roomId);
-            }
-        });
+        //fastAdapter
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        adapterHashMap.get(all).updateItem(roomId);
+        //        getAdapterMain(roomId).updateItem(roomId);
+        //    }
+        //});
     }
 
     @Override
@@ -914,501 +953,504 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     //**************************************************************************************************************************************
 
 
+    /**
+     * **********************************************************************************
+     * ********************************** RealmAdapter **********************************
+     * **********************************************************************************
+     */
 
-    //public class RoomAdapter extends RealmRecyclerViewAdapter<RealmRoom, RoogetAdapterMain(roomId).ViewHolder> {
-    //
-    //    public OnComplete mComplete;
-    //    public String action;
-    //    private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
-    //
-    //    public RoomAdapter(@Nullable OrderedRealmCollection<RealmRoom> data, OnComplete complete) {
-    //        super(data, true);
-    //        this.mComplete = complete;
-    //    }
-    //
-    //    @Override
-    //    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    //
-    //        // View v = inflater.inflate(R.layout.chat_sub_layout, parent, false);
-    //
-    //        return new RoogetAdapterMain(roomId).ViewHolder(ViewMaker.getViewItemRoom());
-    //    }
-    //
-    //    @Override
-    //    public void onBindViewHolder(final ViewHolder holder, final int i) {
-    //
-    //
-    //        final RealmRoom mInfo = holder.mInfo = getItem(i);
-    //        if (mInfo == null) {
-    //            return;
-    //        }
-    //
-    //        final boolean isMyCloud;
-    //
-    //        if (mInfo.getChatRoom() != null && mInfo.getChatRoom().getPeerId() > 0 && mInfo.getChatRoom().getPeerId() == G.userId) {
-    //            isMyCloud = true;
-    //        } else {
-    //            isMyCloud = false;
-    //        }
-    //
-    //        if (mInfo.isValid()) {
-    //
-    //            setLastMessage(mInfo, holder, isMyCloud);
-    //
-    //            if (isMyCloud) {
-    //
-    //                if (holder.txtCloud == null) {
-    //
-    //                    MaterialDesignTextView cs_txt_contact_initials = new MaterialDesignTextView(G.context);
-    //                    cs_txt_contact_initials.setId(R.id.cs_txt_contact_initials);
-    //                    cs_txt_contact_initials.setGravity(Gravity.CENTER);
-    //                    cs_txt_contact_initials.setText(G.context.getResources().getString(R.string.md_cloud));
-    //                    cs_txt_contact_initials.setTextColor(Color.parseColor("#ad333333"));
-    //                    ViewMaker.setTextSize(cs_txt_contact_initials, R.dimen.dp32);
-    //                    LinearLayout.LayoutParams layout_936 = new LinearLayout.LayoutParams(ViewMaker.i_Dp(R.dimen.dp52), ViewMaker.i_Dp(R.dimen.dp52));
-    //                    layout_936.gravity = Gravity.CENTER;
-    //                    layout_936.setMargins(ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6));
-    //                    cs_txt_contact_initials.setVisibility(View.GONE);
-    //                    cs_txt_contact_initials.setLayoutParams(layout_936);
-    //
-    //                    holder.txtCloud = cs_txt_contact_initials;
-    //
-    //                    holder.rootChat.addView(cs_txt_contact_initials, 0);
-    //                }
-    //
-    //                holder.txtCloud.setVisibility(View.VISIBLE);
-    //                holder.image.setVisibility(View.GONE);
-    //            } else {
-    //
-    //                if (holder.txtCloud != null) {
-    //                    holder.txtCloud.setVisibility(View.GONE);
-    //                }
-    //
-    //                if (holder.image.getVisibility() == View.GONE) {
-    //                    holder.image.setVisibility(View.VISIBLE);
-    //                }
-    //
-    //                setAvatar(mInfo, holder.image);
-    //            }
-    //
-    //            setChatIcon(mInfo, holder.txtChatIcon);
-    //
-    //            holder.name.setText(mInfo.getTitle());
-    //
-    //            if (mInfo.getLastMessage() != null && mInfo.getLastMessage().getUpdateOrCreateTime() != 0) {
-    //                holder.txtTime.setText(HelperCalander.getTimeForMainRoom(mInfo.getLastMessage().getUpdateOrCreateTime()));
-    //            }
-    //
-    //            /**
-    //             * ********************* unread *********************
-    //             */
-    //
-    //            if (mInfo.isPinned()) {
-    //                holder.rootChat.setBackgroundColor(ContextCompat.getColor(context, R.color.pin_color));
-    //                holder.txtPinIcon.setVisibility(View.VISIBLE);
-    //
-    //            } else {
-    //                holder.rootChat.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-    //                holder.txtPinIcon.setVisibility(View.GONE);
-    //            }
-    //
-    //            if (mInfo.getUnreadCount() < 1) {
-    //
-    //                holder.txtUnread.setVisibility(View.GONE);
-    //
-    //            } else {
-    //                holder.txtUnread.setVisibility(View.VISIBLE);
-    //                holder.txtPinIcon.setVisibility(View.GONE);
-    //                holder.txtUnread.setText(mInfo.getUnreadCount() + "");
-    //
-    //                if (HelperCalander.isLanguagePersian) {
-    //                    holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red);
-    //                } else {
-    //                    holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red_left);
-    //                }
-    //
-    //                if (mInfo.getMute()) {
-    //                    AndroidUtils.setBackgroundShapeColor(holder.txtUnread, Color.parseColor("#c6c1c1"));
-    //                } else {
-    //                    AndroidUtils.setBackgroundShapeColor(holder.txtUnread, Color.parseColor(G.notificationColor));
-    //                }
-    //            }
-    //
-    //            if (mInfo.getMute()) {
-    //                holder.mute.setVisibility(View.VISIBLE);
-    //            } else {
-    //                holder.mute.setVisibility(View.GONE);
-    //            }
-    //        }
-    //
-    //        /**
-    //         * for change english number to persian number
-    //         */
-    //        if (HelperCalander.isLanguagePersian) {
-    //            holder.txtLastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtLastMessage.getText().toString()));
-    //            holder.txtUnread.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtUnread.getText().toString()));
-    //        }
-    //    }
-    //
-    //    public class ViewHolder extends RecyclerView.ViewHolder {
-    //
-    //        RealmRoom mInfo;
-    //
-    //        protected CircleImageView image;
-    //        protected EmojiTextViewE name;
-    //        private ViewGroup rootChat;
-    //        private EmojiTextViewE txtLastMessage;
-    //        private EmojiTextViewE txtLastMessageFileText;
-    //        private MaterialDesignTextView txtChatIcon;
-    //        private TextView txtTime;
-    //        private MaterialDesignTextView txtPinIcon;
-    //        private TextView txtUnread;
-    //        protected MaterialDesignTextView mute;
-    //        private EmojiTextViewE lastMessageSender;
-    //        private ImageView txtTic;
-    //        private MaterialDesignTextView txtCloud;
-    //
-    //
-    //        public ViewHolder(View view) {
-    //            super(view);
-    //
-    //            image = (CircleImageView) view.findViewById(R.id.cs_img_contact_picture);
-    //            name = (EmojiTextViewE) view.findViewById(R.id.cs_txt_contact_name);
-    //            name.setTypeface(G.typeface_IRANSansMobile_Bold);
-    //
-    //            rootChat = (ViewGroup) view.findViewById(R.id.root_chat_sub_layout);
-    //            txtLastMessage = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message);
-    //            txtLastMessageFileText = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message_file_text);
-    //            txtChatIcon = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_chat_icon);
-    //
-    //            txtTime = ((TextView) view.findViewById(R.id.cs_txt_contact_time));
-    //            txtTime.setTypeface(G.typeface_IRANSansMobile);
-    //
-    //            txtPinIcon = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_pinned_message);
-    //            txtPinIcon.setTypeface(G.typeface_Fontico);
-    //
-    //            txtUnread = (TextView) view.findViewById(R.id.cs_txt_unread_message);
-    //            txtUnread.setTypeface(G.typeface_IRANSansMobile);
-    //
-    //            mute = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_mute);
-    //
-    //            lastMessageSender = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message_sender);
-    //            lastMessageSender.setTypeface(G.typeface_IRANSansMobile);
-    //
-    //            txtTic = (ImageView) view.findViewById(R.id.cslr_txt_tic);
-    //
-    //            txtCloud = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_contact_initials);
-    //
-    //            view.setOnClickListener(new View.OnClickListener() {
-    //                @Override
-    //                public void onClick(View v) {
-    //
-    //                    if (ActivityMain.isMenuButtonAddShown) {
-    //                        mComplete.complete(true, "closeMenuButton", "");
-    //                    } else {
-    //                        if (mInfo.isValid() && G.fragmentActivity != null) {
-    //
-    //                            boolean openChat = true;
-    //
-    //                            if (G.twoPaneMode) {
-    //                                Fragment fragment = G.fragmentManager.findFragmentByTag(FragmentChat.class.getName());
-    //                                if (fragment != null) {
-    //
-    //                                    FragmentChat fm = (FragmentChat) fragment;
-    //                                    if (fm.isAdded() && fm.mRoomId == mInfo.getId()) {
-    //                                        openChat = false;
-    //                                    } else {
-    //                                        removeFromBaseFragment(fragment);
-    //                                    }
-    //
-    //
-    //                                }
-    //                            }
-    //
-    //                            if (openChat) {
-    //                                new GoToChatActivity(mInfo.getId()).startActivity();
-    //
-    //                                if (((ActivityMain) G.fragmentActivity).arcMenu != null && ((ActivityMain) G.fragmentActivity).arcMenu.isMenuOpened()) {
-    //                                    ((ActivityMain) G.fragmentActivity).arcMenu.toggleMenu();
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            });
-    //
-    //            view.setOnLongClickListener(new View.OnLongClickListener() {
-    //                @Override
-    //                public boolean onLongClick(View v) {
-    //
-    //                    if (ActivityMain.isMenuButtonAddShown) {
-    //
-    //                        if (mComplete != null) {
-    //                            mComplete.complete(true, "closeMenuButton", "");
-    //                        }
-    //
-    //                    } else {
-    //                        if (mInfo.isValid() && G.fragmentActivity != null) {
-    //                            String role = null;
-    //                            if (mInfo.getType() == GROUP) {
-    //                                role = mInfo.getGroupRoom().getRole().toString();
-    //                            } else if (mInfo.getType() == CHANNEL) {
-    //                                role = mInfo.getChannelRoom().getRole().toString();
-    //                            }
-    //
-    //                            MyDialog.showDialogMenuItemRooms(G.fragmentActivity, mInfo.getTitle(), mInfo.getType(), mInfo.getMute(), role, new OnComplete() {
-    //                                @Override
-    //                                public void complete(boolean result, String messageOne, String MessageTow) {
-    //                                    onSelectRoomMenu(messageOne, mInfo);
-    //                                }
-    //                            }, mInfo.isPinned());
-    //                        }
-    //                    }
-    //                    return true;
-    //                }
-    //            });
-    //        }
-    //    }
-    //
-    //    private String subStringInternal(String text) {
-    //        if (text == null || text.length() == 0) {
-    //            return "";
-    //        }
-    //
-    //        int subLength = 150;
-    //        if (text.length() > subLength) {
-    //            return text.substring(0, subLength);
-    //        } else {
-    //            return text;
-    //        }
-    //    }
-    //
-    //    //*******************************************************************************************
-    //    private void setLastMessage(RealmRoom mInfo, ViewHolder holder, boolean isMyCloud) {
-    //
-    //        holder.txtTic.setVisibility(View.GONE);
-    //        holder.txtLastMessageFileText.setVisibility(View.GONE);
-    //        holder.txtLastMessage.setText("");
-    //
-    //        if (mInfo.getActionState() != null && ((mInfo.getType() == GROUP || mInfo.getType() == CHANNEL) || ((isMyCloud || (mInfo.getActionStateUserId() != userId))))) {
-    //
-    //            holder.lastMessageSender.setVisibility(View.GONE);
-    //            holder.txtLastMessage.setText(mInfo.getActionState());
-    //            holder.txtLastMessage.setTextColor(ContextCompat.getColor(G.context, R.color.room_message_blue));
-    //            holder.txtLastMessage.setEllipsize(TextUtils.TruncateAt.MIDDLE);
-    //        } else if (mInfo.getDraft() != null && !TextUtils.isEmpty(mInfo.getDraft().getMessage())) {
-    //
-    //            holder.txtLastMessage.setText(subStringInternal(mInfo.getDraft().getMessage()));
-    //            holder.txtLastMessage.setTextColor(ContextCompat.getColor(G.context, R.color.room_message_gray));
-    //
-    //            holder.lastMessageSender.setVisibility(View.VISIBLE);
-    //            holder.lastMessageSender.setText(R.string.txt_draft);
-    //            holder.lastMessageSender.setTextColor(G.context.getResources().getColor(R.color.toolbar_background));
-    //            holder.lastMessageSender.setTypeface(G.typeface_IRANSansMobile);
-    //        } else {
-    //
-    //            if (mInfo.getLastMessage() != null) {
-    //                String lastMessage = AppUtils.rightLastMessage(mInfo.getId(), holder.itemView.getResources(), mInfo.getType(), mInfo.getLastMessage(), mInfo.getLastMessage().getForwardMessage() != null ? mInfo.getLastMessage().getForwardMessage().getAttachment() : mInfo.getLastMessage().getAttachment());
-    //
-    //                if (lastMessage == null) {
-    //                    lastMessage = mInfo.getLastMessage().getMessage();
-    //                }
-    //
-    //                if (lastMessage == null || lastMessage.isEmpty()) {
-    //
-    //                    holder.lastMessageSender.setVisibility(View.GONE);
-    //                } else {
-    //                    if (mInfo.getLastMessage().isAuthorMe()) {
-    //
-    //                        holder.txtTic.setVisibility(View.VISIBLE);
-    //                        AppUtils.rightMessageStatus(holder.txtTic, ProtoGlobal.RoomMessageStatus.valueOf(mInfo.getLastMessage().getStatus()), mInfo.getLastMessage().isAuthorMe());
-    //                    }
-    //
-    //                    if (mInfo.getType() == GROUP) {
-    //                        /**
-    //                         * here i get latest message from chat history with chatId and
-    //                         * get DisplayName with that . when login app client get latest
-    //                         * message for each group from server , if latest message that
-    //                         * send server and latest message that exist in client for that
-    //                         * room be different latest message sender showing will be wrong
-    //                         */
-    //
-    //                        String lastMessageSender = "";
-    //                        if (mInfo.getLastMessage().isAuthorMe()) {
-    //                            lastMessageSender = holder.itemView.getResources().getString(R.string.txt_you);
-    //                        } else {
-    //
-    //                            RealmRegisteredInfo realmRegisteredInfo = getRealmFragmentMain().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mInfo.getLastMessage().getUserId()).findFirst();
-    //                            if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName() != null) {
-    //
-    //                                String _name = realmRegisteredInfo.getDisplayName();
-    //                                if (_name.length() > 0) {
-    //
-    //                                    if (Character.getDirectionality(_name.charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
-    //                                        if (HelperCalander.isLanguagePersian) {
-    //                                            lastMessageSender = _name + ": ";
-    //                                        } else {
-    //                                            lastMessageSender = " :" + _name;
-    //                                        }
-    //                                    } else {
-    //                                        if (HelperCalander.isLanguagePersian) {
-    //                                            lastMessageSender = " :" + _name;
-    //                                        } else {
-    //                                            lastMessageSender = _name + ": ";
-    //                                        }
-    //                                    }
-    //                                }
-    //                            }
-    //                        }
-    //
-    //                        holder.lastMessageSender.setVisibility(View.VISIBLE);
-    //
-    //                        holder.lastMessageSender.setText(lastMessageSender);
-    //                        holder.lastMessageSender.setTextColor(Color.parseColor("#2bbfbd"));
-    //                    } else {
-    //                        holder.lastMessageSender.setVisibility(View.GONE);
-    //                    }
-    //
-    //                    if (mInfo.getLastMessage() != null) {
-    //                        ProtoGlobal.RoomMessageType _type, tmp;
-    //
-    //                        _type = mInfo.getLastMessage().getMessageType();
-    //                        String fileText = mInfo.getLastMessage().getMessage();
-    //
-    //                        //don't use from reply , in reply message just get type and fileText from main message
-    //                        //try {
-    //                        //    if (mInfo.getLastMessage().getReplyTo() != null) {
-    //                        //        tmp = mInfo.getLastMessage().getReplyTo().getMessageType();
-    //                        //        if (tmp != null) {
-    //                        //            _type = tmp;
-    //                        //        }
-    //                        //        //if (mInfo.getLastMessage().getReplyTo().getMessage() != null) {
-    //                        //        //    fileText = mInfo.getLastMessage().getReplyTo().getMessage();
-    //                        //        //}
-    //                        //    }
-    //                        //} catch (NullPointerException e) {
-    //                        //    e.printStackTrace();
-    //                        //}
-    //                        //
-    //                        try {
-    //                            if (mInfo.getLastMessage().getForwardMessage() != null) {
-    //                                tmp = mInfo.getLastMessage().getForwardMessage().getMessageType();
-    //                                if (tmp != null) {
-    //                                    _type = tmp;
-    //                                }
-    //                                if (mInfo.getLastMessage().getForwardMessage().getMessage() != null) {
-    //                                    fileText = mInfo.getLastMessage().getForwardMessage().getMessage();
-    //                                }
-    //                            }
-    //                        } catch (NullPointerException e) {
-    //                            e.printStackTrace();
-    //                        }
-    //
-    //                        String result = AppUtils.conversionMessageType(_type, holder.txtLastMessage, R.color.room_message_blue);
-    //                        if (result.isEmpty()) {
-    //                            if (!HelperCalander.isLanguagePersian) {
-    //                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-    //                                    holder.txtLastMessage.setTextDirection(View.TEXT_DIRECTION_LTR);
-    //                                }
-    //                            }
-    //                            holder.txtLastMessage.setTextColor(ContextCompat.getColor(G.context, R.color.room_message_gray));
-    //                            holder.txtLastMessage.setText(subStringInternal(lastMessage));
-    //                            holder.txtLastMessage.setEllipsize(TextUtils.TruncateAt.END);
-    //                        } else {
-    //                            if (fileText != null && !fileText.isEmpty()) {
-    //                                holder.txtLastMessageFileText.setVisibility(View.VISIBLE);
-    //                                holder.txtLastMessageFileText.setText(fileText);
-    //
-    //                                holder.txtLastMessage.setText(holder.txtLastMessage.getText() + " : ");
-    //                            } else {
-    //                                holder.txtLastMessageFileText.setVisibility(View.GONE);
-    //                            }
-    //                        }
-    //                    } else {
-    //                        holder.txtLastMessage.setText(subStringInternal(lastMessage));
-    //                    }
-    //                }
-    //            } else {
-    //
-    //                holder.lastMessageSender.setVisibility(View.GONE);
-    //                holder.txtTime.setVisibility(View.GONE);
-    //            }
-    //        }
-    //    }
-    //
-    //    private void setAvatar(final RealmRoom mInfo, CircleImageView imageView) {
-    //        long idForGetAvatar;
-    //        HelperAvatar.AvatarType avatarType;
-    //        if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
-    //            idForGetAvatar = mInfo.getChatRoom().getPeerId();
-    //            avatarType = HelperAvatar.AvatarType.USER;
-    //        } else {
-    //            idForGetAvatar = mInfo.getId();
-    //            avatarType = HelperAvatar.AvatarType.ROOM;
-    //        }
-    //
-    //        hashMapAvatar.put(idForGetAvatar, imageView);
-    //
-    //        HelperAvatar.getAvatar(idForGetAvatar, avatarType, false, new OnAvatarGet() {
-    //            @Override
-    //            public void onAvatarGet(String avatarPath, long idForGetAvatar) {
-    //                if (hashMapAvatar.get(idForGetAvatar) != null) {
-    //                    G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(idForGetAvatar));
-    //                }
-    //            }
-    //
-    //            @Override
-    //            public void onShowInitials(String initials, String color) {
-    //                long idForGetAvatar;
-    //                if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
-    //                    idForGetAvatar = mInfo.getChatRoom().getPeerId();
-    //                } else {
-    //                    idForGetAvatar = mInfo.getId();
-    //                }
-    //                if (hashMapAvatar.get(idForGetAvatar) != null) {
-    //                    hashMapAvatar.get(idForGetAvatar).setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) G.context.getResources().getDimension(R.dimen.dp52), initials, color));
-    //                }
-    //            }
-    //        });
-    //    }
-    //
-    //    private void setChatIcon(RealmRoom mInfo, MaterialDesignTextView textView) {
-    //        /**
-    //         * ********************* chat icon *********************
-    //         */
-    //        if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT || mainType != MainType.all) {
-    //            textView.setVisibility(View.GONE);
-    //        } else {
-    //
-    //            if (mInfo.getType() == GROUP) {
-    //                textView.setText(getStringChatIcon(RoomType.GROUP));
-    //            } else if (mInfo.getType() == CHANNEL) {
-    //                textView.setText(getStringChatIcon(RoomType.CHANNEL));
-    //            }
-    //        }
-    //    }
-    //
-    //    //*******************************************************************************************
-    //
-    //    /**
-    //     * get string chat icon
-    //     *
-    //     * @param chatType chat type
-    //     * @return String
-    //     */
-    //    private String getStringChatIcon(RoomType chatType) {
-    //        switch (chatType) {
-    //            case CHAT:
-    //                return "";
-    //            case CHANNEL:
-    //                return G.context.getString(R.string.md_channel_icon);
-    //            case GROUP:
-    //                return G.context.getString(R.string.md_users_social_symbol);
-    //            default:
-    //                return null;
-    //        }
-    //    }
-    //}
+    public class RoomAdapter extends RealmRecyclerViewAdapter<RealmRoom, RoomAdapter.ViewHolder> {
+
+        public OnComplete mComplete;
+        public String action;
+        private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
+
+        public RoomAdapter(@Nullable OrderedRealmCollection<RealmRoom> data, OnComplete complete) {
+            super(data, true);
+            this.mComplete = complete;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            // View v = inflater.inflate(R.layout.chat_sub_layout, parent, false);
+            return new ViewHolder(ViewMaker.getViewItemRoom());
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, final int i) {
+
+
+            final RealmRoom mInfo = holder.mInfo = getItem(i);
+            if (mInfo == null) {
+                return;
+            }
+
+            final boolean isMyCloud;
+
+            if (mInfo.getChatRoom() != null && mInfo.getChatRoom().getPeerId() > 0 && mInfo.getChatRoom().getPeerId() == userId) {
+                isMyCloud = true;
+            } else {
+                isMyCloud = false;
+            }
+
+            if (mInfo.isValid()) {
+
+                setLastMessage(mInfo, holder, isMyCloud);
+
+                if (isMyCloud) {
+
+                    if (holder.txtCloud == null) {
+
+                        MaterialDesignTextView cs_txt_contact_initials = new MaterialDesignTextView(context);
+                        cs_txt_contact_initials.setId(R.id.cs_txt_contact_initials);
+                        cs_txt_contact_initials.setGravity(Gravity.CENTER);
+                        cs_txt_contact_initials.setText(context.getResources().getString(R.string.md_cloud));
+                        cs_txt_contact_initials.setTextColor(Color.parseColor("#ad333333"));
+                        ViewMaker.setTextSize(cs_txt_contact_initials, R.dimen.dp32);
+                        LinearLayout.LayoutParams layout_936 = new LinearLayout.LayoutParams(ViewMaker.i_Dp(R.dimen.dp52), ViewMaker.i_Dp(R.dimen.dp52));
+                        layout_936.gravity = Gravity.CENTER;
+                        layout_936.setMargins(ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6), ViewMaker.i_Dp(R.dimen.dp6));
+                        cs_txt_contact_initials.setVisibility(View.GONE);
+                        cs_txt_contact_initials.setLayoutParams(layout_936);
+
+                        holder.txtCloud = cs_txt_contact_initials;
+
+                        holder.rootChat.addView(cs_txt_contact_initials, 0);
+                    }
+
+                    holder.txtCloud.setVisibility(View.VISIBLE);
+                    holder.image.setVisibility(View.GONE);
+                } else {
+
+                    if (holder.txtCloud != null) {
+                        holder.txtCloud.setVisibility(View.GONE);
+                    }
+
+                    if (holder.image.getVisibility() == View.GONE) {
+                        holder.image.setVisibility(View.VISIBLE);
+                    }
+
+                    setAvatar(mInfo, holder.image);
+                }
+
+                setChatIcon(mInfo, holder.txtChatIcon);
+
+                holder.name.setText(mInfo.getTitle());
+
+                if (mInfo.getLastMessage() != null && mInfo.getLastMessage().getUpdateOrCreateTime() != 0) {
+                    holder.txtTime.setText(HelperCalander.getTimeForMainRoom(mInfo.getLastMessage().getUpdateOrCreateTime()));
+                }
+
+                /**
+                 * ********************* unread *********************
+                 */
+
+                if (mInfo.isPinned()) {
+                    holder.rootChat.setBackgroundColor(ContextCompat.getColor(context, R.color.pin_color));
+                    holder.txtPinIcon.setVisibility(View.VISIBLE);
+
+                } else {
+                    holder.rootChat.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                    holder.txtPinIcon.setVisibility(View.GONE);
+                }
+
+                if (mInfo.getUnreadCount() < 1) {
+
+                    holder.txtUnread.setVisibility(View.GONE);
+
+                } else {
+                    holder.txtUnread.setVisibility(View.VISIBLE);
+                    holder.txtPinIcon.setVisibility(View.GONE);
+                    holder.txtUnread.setText(mInfo.getUnreadCount() + "");
+
+                    if (HelperCalander.isLanguagePersian) {
+                        holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red);
+                    } else {
+                        holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red_left);
+                    }
+
+                    if (mInfo.getMute()) {
+                        AndroidUtils.setBackgroundShapeColor(holder.txtUnread, Color.parseColor("#c6c1c1"));
+                    } else {
+                        AndroidUtils.setBackgroundShapeColor(holder.txtUnread, Color.parseColor(G.notificationColor));
+                    }
+                }
+
+                if (mInfo.getMute()) {
+                    holder.mute.setVisibility(View.VISIBLE);
+                } else {
+                    holder.mute.setVisibility(View.GONE);
+                }
+            }
+
+            /**
+             * for change english number to persian number
+             */
+            if (HelperCalander.isLanguagePersian) {
+                holder.txtLastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtLastMessage.getText().toString()));
+                holder.txtUnread.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtUnread.getText().toString()));
+            }
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            RealmRoom mInfo;
+
+            protected CircleImageView image;
+            protected EmojiTextViewE name;
+            private ViewGroup rootChat;
+            private EmojiTextViewE txtLastMessage;
+            private EmojiTextViewE txtLastMessageFileText;
+            private MaterialDesignTextView txtChatIcon;
+            private TextView txtTime;
+            private MaterialDesignTextView txtPinIcon;
+            private TextView txtUnread;
+            protected MaterialDesignTextView mute;
+            private EmojiTextViewE lastMessageSender;
+            private ImageView txtTic;
+            private MaterialDesignTextView txtCloud;
+
+
+            public ViewHolder(View view) {
+                super(view);
+
+                image = (CircleImageView) view.findViewById(R.id.cs_img_contact_picture);
+                name = (EmojiTextViewE) view.findViewById(R.id.cs_txt_contact_name);
+                name.setTypeface(G.typeface_IRANSansMobile_Bold);
+
+                rootChat = (ViewGroup) view.findViewById(R.id.root_chat_sub_layout);
+                txtLastMessage = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message);
+                txtLastMessageFileText = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message_file_text);
+                txtChatIcon = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_chat_icon);
+
+                txtTime = ((TextView) view.findViewById(R.id.cs_txt_contact_time));
+                txtTime.setTypeface(G.typeface_IRANSansMobile);
+
+                txtPinIcon = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_pinned_message);
+                txtPinIcon.setTypeface(G.typeface_Fontico);
+
+                txtUnread = (TextView) view.findViewById(R.id.cs_txt_unread_message);
+                txtUnread.setTypeface(G.typeface_IRANSansMobile);
+
+                mute = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_mute);
+
+                lastMessageSender = (EmojiTextViewE) view.findViewById(R.id.cs_txt_last_message_sender);
+                lastMessageSender.setTypeface(G.typeface_IRANSansMobile);
+
+                txtTic = (ImageView) view.findViewById(R.id.cslr_txt_tic);
+
+                txtCloud = (MaterialDesignTextView) view.findViewById(R.id.cs_txt_contact_initials);
+
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (ActivityMain.isMenuButtonAddShown) {
+                            mComplete.complete(true, "closeMenuButton", "");
+                        } else {
+                            if (mInfo.isValid() && G.fragmentActivity != null) {
+
+                                boolean openChat = true;
+
+                                if (G.twoPaneMode) {
+                                    Fragment fragment = G.fragmentManager.findFragmentByTag(FragmentChat.class.getName());
+                                    if (fragment != null) {
+
+                                        FragmentChat fm = (FragmentChat) fragment;
+                                        if (fm.isAdded() && fm.mRoomId == mInfo.getId()) {
+                                            openChat = false;
+                                        } else {
+                                            removeFromBaseFragment(fragment);
+                                        }
+
+
+                                    }
+                                }
+
+                                if (openChat) {
+                                    new GoToChatActivity(mInfo.getId()).startActivity();
+
+                                    if (((ActivityMain) G.fragmentActivity).arcMenu != null && ((ActivityMain) G.fragmentActivity).arcMenu.isMenuOpened()) {
+                                        ((ActivityMain) G.fragmentActivity).arcMenu.toggleMenu();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                view.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        if (ActivityMain.isMenuButtonAddShown) {
+
+                            if (mComplete != null) {
+                                mComplete.complete(true, "closeMenuButton", "");
+                            }
+
+                        } else {
+                            if (mInfo.isValid() && G.fragmentActivity != null) {
+                                String role = null;
+                                if (mInfo.getType() == GROUP) {
+                                    role = mInfo.getGroupRoom().getRole().toString();
+                                } else if (mInfo.getType() == CHANNEL) {
+                                    role = mInfo.getChannelRoom().getRole().toString();
+                                }
+
+                                MyDialog.showDialogMenuItemRooms(G.fragmentActivity, mInfo.getTitle(), mInfo.getType(), mInfo.getMute(), role, new OnComplete() {
+                                    @Override
+                                    public void complete(boolean result, String messageOne, String MessageTow) {
+                                        onSelectRoomMenu(messageOne, mInfo);
+                                    }
+                                }, mInfo.isPinned());
+                            }
+                        }
+                        return true;
+                    }
+                });
+            }
+        }
+
+        private String subStringInternal(String text) {
+            if (text == null || text.length() == 0) {
+                return "";
+            }
+
+            int subLength = 150;
+            if (text.length() > subLength) {
+                return text.substring(0, subLength);
+            } else {
+                return text;
+            }
+        }
+
+        //*******************************************************************************************
+        private void setLastMessage(RealmRoom mInfo, ViewHolder holder, boolean isMyCloud) {
+
+            holder.txtTic.setVisibility(View.GONE);
+            holder.txtLastMessageFileText.setVisibility(View.GONE);
+            holder.txtLastMessage.setText("");
+
+            if (mInfo.getActionState() != null && ((mInfo.getType() == GROUP || mInfo.getType() == CHANNEL) || ((isMyCloud || (mInfo.getActionStateUserId() != G.userId))))) {
+
+                holder.lastMessageSender.setVisibility(View.GONE);
+                holder.txtLastMessage.setText(mInfo.getActionState());
+                holder.txtLastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_blue));
+                holder.txtLastMessage.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+            } else if (mInfo.getDraft() != null && !TextUtils.isEmpty(mInfo.getDraft().getMessage())) {
+
+                holder.txtLastMessage.setText(subStringInternal(mInfo.getDraft().getMessage()));
+                holder.txtLastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
+
+                holder.lastMessageSender.setVisibility(View.VISIBLE);
+                holder.lastMessageSender.setText(R.string.txt_draft);
+                holder.lastMessageSender.setTextColor(context.getResources().getColor(R.color.toolbar_background));
+                holder.lastMessageSender.setTypeface(G.typeface_IRANSansMobile);
+            } else {
+
+                if (mInfo.getLastMessage() != null) {
+                    String lastMessage = AppUtils.rightLastMessage(mInfo.getId(), holder.itemView.getResources(), mInfo.getType(), mInfo.getLastMessage(), mInfo.getLastMessage().getForwardMessage() != null ? mInfo.getLastMessage().getForwardMessage().getAttachment() : mInfo.getLastMessage().getAttachment());
+
+                    if (lastMessage == null) {
+                        lastMessage = mInfo.getLastMessage().getMessage();
+                    }
+
+                    if (lastMessage == null || lastMessage.isEmpty()) {
+
+                        holder.lastMessageSender.setVisibility(View.GONE);
+                    } else {
+                        if (mInfo.getLastMessage().isAuthorMe()) {
+
+                            holder.txtTic.setVisibility(View.VISIBLE);
+                            AppUtils.rightMessageStatus(holder.txtTic, ProtoGlobal.RoomMessageStatus.valueOf(mInfo.getLastMessage().getStatus()), mInfo.getLastMessage().isAuthorMe());
+                        }
+
+                        if (mInfo.getType() == GROUP) {
+                            /**
+                             * here i get latest message from chat history with chatId and
+                             * get DisplayName with that . when login app client get latest
+                             * message for each group from server , if latest message that
+                             * send server and latest message that exist in client for that
+                             * room be different latest message sender showing will be wrong
+                             */
+
+                            String lastMessageSender = "";
+                            if (mInfo.getLastMessage().isAuthorMe()) {
+                                lastMessageSender = holder.itemView.getResources().getString(R.string.txt_you);
+                            } else {
+
+                                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(getRealmFragmentMain(), mInfo.getLastMessage().getUserId());
+                                if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName() != null) {
+
+                                    String _name = realmRegisteredInfo.getDisplayName();
+                                    if (_name.length() > 0) {
+
+                                        if (Character.getDirectionality(_name.charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
+                                            if (HelperCalander.isLanguagePersian) {
+                                                lastMessageSender = _name + ": ";
+                                            } else {
+                                                lastMessageSender = " :" + _name;
+                                            }
+                                        } else {
+                                            if (HelperCalander.isLanguagePersian) {
+                                                lastMessageSender = " :" + _name;
+                                            } else {
+                                                lastMessageSender = _name + ": ";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            holder.lastMessageSender.setVisibility(View.VISIBLE);
+
+                            holder.lastMessageSender.setText(lastMessageSender);
+                            holder.lastMessageSender.setTextColor(Color.parseColor("#2bbfbd"));
+                        } else {
+                            holder.lastMessageSender.setVisibility(View.GONE);
+                        }
+
+                        if (mInfo.getLastMessage() != null) {
+                            ProtoGlobal.RoomMessageType _type, tmp;
+
+                            _type = mInfo.getLastMessage().getMessageType();
+                            String fileText = mInfo.getLastMessage().getMessage();
+
+                            //don't use from reply , in reply message just get type and fileText from main message
+                            //try {
+                            //    if (mInfo.getLastMessage().getReplyTo() != null) {
+                            //        tmp = mInfo.getLastMessage().getReplyTo().getMessageType();
+                            //        if (tmp != null) {
+                            //            _type = tmp;
+                            //        }
+                            //        //if (mInfo.getLastMessage().getReplyTo().getMessage() != null) {
+                            //        //    fileText = mInfo.getLastMessage().getReplyTo().getMessage();
+                            //        //}
+                            //    }
+                            //} catch (NullPointerException e) {
+                            //    e.printStackTrace();
+                            //}
+                            //
+                            try {
+                                if (mInfo.getLastMessage().getForwardMessage() != null) {
+                                    tmp = mInfo.getLastMessage().getForwardMessage().getMessageType();
+                                    if (tmp != null) {
+                                        _type = tmp;
+                                    }
+                                    if (mInfo.getLastMessage().getForwardMessage().getMessage() != null) {
+                                        fileText = mInfo.getLastMessage().getForwardMessage().getMessage();
+                                    }
+                                }
+                            } catch (NullPointerException e) {
+                                e.printStackTrace();
+                            }
+
+                            String result = AppUtils.conversionMessageType(_type, holder.txtLastMessage, R.color.room_message_blue);
+                            if (result.isEmpty()) {
+                                if (!HelperCalander.isLanguagePersian) {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                        holder.txtLastMessage.setTextDirection(View.TEXT_DIRECTION_LTR);
+                                    }
+                                }
+                                holder.txtLastMessage.setTextColor(ContextCompat.getColor(context, R.color.room_message_gray));
+                                holder.txtLastMessage.setText(subStringInternal(lastMessage));
+                                holder.txtLastMessage.setEllipsize(TextUtils.TruncateAt.END);
+                            } else {
+                                if (fileText != null && !fileText.isEmpty()) {
+                                    holder.txtLastMessageFileText.setVisibility(View.VISIBLE);
+                                    holder.txtLastMessageFileText.setText(fileText);
+
+                                    holder.txtLastMessage.setText(holder.txtLastMessage.getText() + " : ");
+                                } else {
+                                    holder.txtLastMessageFileText.setVisibility(View.GONE);
+                                }
+                            }
+                        } else {
+                            holder.txtLastMessage.setText(subStringInternal(lastMessage));
+                        }
+                    }
+                } else {
+
+                    holder.lastMessageSender.setVisibility(View.GONE);
+                    holder.txtTime.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        private void setAvatar(final RealmRoom mInfo, CircleImageView imageView) {
+            long idForGetAvatar;
+            HelperAvatar.AvatarType avatarType;
+            if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
+                idForGetAvatar = mInfo.getChatRoom().getPeerId();
+                avatarType = HelperAvatar.AvatarType.USER;
+            } else {
+                idForGetAvatar = mInfo.getId();
+                avatarType = HelperAvatar.AvatarType.ROOM;
+            }
+
+            hashMapAvatar.put(idForGetAvatar, imageView);
+
+            HelperAvatar.getAvatar(idForGetAvatar, avatarType, false, new OnAvatarGet() {
+                @Override
+                public void onAvatarGet(String avatarPath, long idForGetAvatar) {
+                    if (hashMapAvatar.get(idForGetAvatar) != null) {
+                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(idForGetAvatar));
+                    }
+                }
+
+                @Override
+                public void onShowInitials(String initials, String color) {
+                    long idForGetAvatar;
+                    if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
+                        idForGetAvatar = mInfo.getChatRoom().getPeerId();
+                    } else {
+                        idForGetAvatar = mInfo.getId();
+                    }
+                    if (hashMapAvatar.get(idForGetAvatar) != null) {
+                        hashMapAvatar.get(idForGetAvatar).setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) context.getResources().getDimension(R.dimen.dp52), initials, color));
+                    }
+                }
+            });
+        }
+
+        private void setChatIcon(RealmRoom mInfo, MaterialDesignTextView textView) {
+            /**
+             * ********************* chat icon *********************
+             */
+            if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT || mainType != MainType.all) {
+                textView.setVisibility(View.GONE);
+            } else {
+
+                if (mInfo.getType() == GROUP) {
+                    textView.setText(getStringChatIcon(RoomType.GROUP));
+                } else if (mInfo.getType() == CHANNEL) {
+                    textView.setText(getStringChatIcon(RoomType.CHANNEL));
+                }
+            }
+        }
+
+        //*******************************************************************************************
+
+        /**
+         * get string chat icon
+         *
+         * @param chatType chat type
+         * @return String
+         */
+        private String getStringChatIcon(RoomType chatType) {
+            switch (chatType) {
+                case CHAT:
+                    return "";
+                case CHANNEL:
+                    return context.getString(R.string.md_channel_icon);
+                case GROUP:
+                    return context.getString(R.string.md_users_social_symbol);
+                default:
+                    return null;
+            }
+        }
+    }
 
     private Realm getRealmFragmentMain() {
         if (realmFragmentMain == null || realmFragmentMain.isClosed()) {
@@ -1431,18 +1473,18 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         super.onResume();
 
         G.onSetActionInRoom = this;
-        G.onSelectMenu = this;
-        G.onRemoveFragment = this;
-        G.onDraftMessage = this;
-        G.onChatDeleteInRoomList = this;
-        G.onGroupDeleteInRoomList = this;
-        G.onChannelDeleteInRoomList = this;
-        G.onClearUnread = this;
-        onClientGetRoomResponseRoomList = this;
-        G.onMute = this;
-        G.onClearRoomHistory = this;
-        G.chatUpdateStatusUtil.setOnChatUpdateStatusResponseFragmentMain(this);
-        G.chatSendMessageUtil.setOnChatSendMessageResponseFragmentMainRoomList(this);
+        //G.onSelectMenu = this;
+        //G.onRemoveFragment = this;
+        //G.onDraftMessage = this;
+        //G.onChatDeleteInRoomList = this;
+        //G.onGroupDeleteInRoomList = this;
+        //G.onChannelDeleteInRoomList = this;
+        //G.onClearUnread = this;
+        //onClientGetRoomResponseRoomList = this;
+        //G.onMute = this;
+        //G.onClearRoomHistory = this;
+        //G.chatUpdateStatusUtil.setOnChatUpdateStatusResponseFragmentMain(this);
+        //G.chatSendMessageUtil.setOnChatSendMessageResponseFragmentMainRoomList(this);
 
         if (progressBar != null) {
             AppUtils.setProgresColler(progressBar);

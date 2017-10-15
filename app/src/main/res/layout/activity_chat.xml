@@ -5,8 +5,8 @@
     android:id="@+id/ac_ll_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="ltr"
     android:clickable="true"
+    android:layoutDirection="ltr"
     tools:ignore="MissingPrefix"
     >
 
@@ -71,15 +71,15 @@
               android:id="@+id/ac_txt_cloud"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginTop="@dimen/dp6"
               android:padding="4dp"
               android:singleLine="true"
-              android:layout_marginTop="@dimen/dp6"
               android:text="@string/md_cloud"
               android:textAppearance="@style/TextIconAppearance_toolbar"
               android:textColor="#adffffff"
               android:textSize="@dimen/dp32"
               android:visibility="gone"
-              android:layout_gravity="center"
               />
 
           <net.iGap.module.CircleImageView
@@ -157,11 +157,11 @@
                   android:id="@+id/chl_txt_last_seen"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:ellipsize="middle"
                   android:lineSpacingMultiplier=".8"
                   android:singleLine="true"
                   android:textColor="@android:color/white"
                   android:textSize="@dimen/dp12"
-                  android:maxLength="25"
                   app:emojiSize="@dimen/dp14"
                   />
 
@@ -373,30 +373,30 @@
 
 
               <net.iGap.libs.rippleeffect.RippleView
-                android:id="@+id/chl_ripple_delete_selected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:rv_alpha="200"
-                app:rv_centered="true"
-                app:rv_color="@color/toolbar_background"
-                app:rv_rippleDuration="100"
-                app:rv_ripplePadding="5dp"
-                rv_centered="true"
+                  android:id="@+id/chl_ripple_delete_selected"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:rv_alpha="200"
+                  app:rv_centered="true"
+                  app:rv_color="@color/toolbar_background"
+                  app:rv_rippleDuration="100"
+                  app:rv_ripplePadding="5dp"
+                  rv_centered="true"
 
-                >
+                  >
 
-              <net.iGap.module.MaterialDesignTextView
-                  android:id="@+id/chl_btn_delete_selected"
-                  android:layout_width="@dimen/dp60"
-                  android:layout_height="match_parent"
-                  android:background="@null"
-                  android:gravity="center"
-                  android:text="@string/md_rubbish_delete_file"
-                  android:textAppearance="@style/TextIconAppearance.all"
-                  android:textColor="@color/gray"
-                  android:textSize="@dimen/dp20"
-                  />
-            </net.iGap.libs.rippleeffect.RippleView>
+                <net.iGap.module.MaterialDesignTextView
+                    android:id="@+id/chl_btn_delete_selected"
+                    android:layout_width="@dimen/dp60"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="@string/md_rubbish_delete_file"
+                    android:textAppearance="@style/TextIconAppearance.all"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/dp20"
+                    />
+              </net.iGap.libs.rippleeffect.RippleView>
             </LinearLayout>
           </LinearLayout>
 
@@ -445,12 +445,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/dp16"
             android:hint="@string/search"
             android:padding="@dimen/dp8"
             android:textColor="@color/white"
             android:textColorHint="#dededd"
             android:textCursorDrawable="@drawable/white_cursor_color"
+            android:textSize="@dimen/dp16"
             />
 
         <net.iGap.libs.rippleeffect.RippleView
@@ -528,18 +528,18 @@
             />
 
         <android.support.v7.widget.RecyclerView
-          android:id="@+id/chl_recycler_view_chat"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+            android:id="@+id/chl_recycler_view_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-          android:scrollbars="vertical"
             android:fadeScrollbars="true"
-          android:scrollbarStyle="outsideOverlay"
-          android:scrollbarSize="@dimen/dp4"
-          >
+            android:scrollbarSize="@dimen/dp4"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            >
 
-        <!-- android:scrollbars="none"   android:overScrollMode="never"-->
-      </android.support.v7.widget.RecyclerView>
+          <!-- android:scrollbars="none"   android:overScrollMode="never"-->
+        </android.support.v7.widget.RecyclerView>
 
       </RelativeLayout>
       <FrameLayout
@@ -556,9 +556,9 @@
             android:id="@+id/ac_txt_down_navigation"
             android:layout_width="@dimen/dp44"
             android:layout_height="@dimen/dp44"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp12"
             android:background="@drawable/circle_mic"
-            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/md_downwards_arrow"
             android:textAppearance="@style/TextIconAppearance_toolbar"
@@ -596,8 +596,8 @@
           android:paddingTop="@dimen/dp4"
           android:text="@string/No_messages_here_yet"
           android:textColor="@color/black90"
-          android:visibility="gone"
           android:textSize="@dimen/dp14"
+          android:visibility="gone"
           />
 
 
@@ -762,8 +762,6 @@
     </LinearLayout>
 
 
-
-
     <android.support.v7.widget.ViewStubCompat
         android:id="@+id/replayLayoutStub"
         android:layout_width="match_parent"
@@ -827,9 +825,9 @@
             android:id="@+id/chl_txt_mute_channel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_gravity="center"
             android:text="Mute"
             android:textColor="@color/green"
             android:textSize="@dimen/dp16"

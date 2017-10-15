@@ -85,7 +85,7 @@ public class FragmentPassCode extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pass_code, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_pass_code, container, false));
     }
 
     @Override
@@ -207,7 +207,7 @@ public class FragmentPassCode extends BaseFragment {
             rootEnterPassword.setVisibility(View.VISIBLE);
             rootSettingPassword.setVisibility(View.GONE);
             rippleOk.setVisibility(View.VISIBLE);
-            txtSetPassword.setText(G.context.getResources().getString(R.string.enter_pass_code));
+            txtSetPassword.setText(G.fragmentActivity.getResources().getString(R.string.enter_pass_code));
             txtChangePassCode.setEnabled(true);
             txtChangePassCode.setTextColor(G.context.getResources().getColor(R.color.black_register));
             togglePassCode.setChecked(true);
@@ -232,7 +232,7 @@ public class FragmentPassCode extends BaseFragment {
                     rootEnterPassword.setVisibility(View.VISIBLE);
                     rootSettingPassword.setVisibility(View.GONE);
                     rippleOk.setVisibility(View.VISIBLE);
-                    //txtSetPassword.setText(G.context.getResources().getString(R.string.enter_a_password));
+                    //txtSetPassword.setText(G.fragmentActivity.getResources().getString(R.string.enter_a_password));
                     //titlePassCode.setText("PIN");
                     titlePassCode.setVisibility(View.GONE);
                     layoutModePassCode.setVisibility(View.VISIBLE);
@@ -289,7 +289,7 @@ public class FragmentPassCode extends BaseFragment {
                 //titlePassCode.setText("PIN");
                 titlePassCode.setVisibility(View.GONE);
                 layoutModePassCode.setVisibility(View.VISIBLE);
-                txtSetPassword.setText(G.context.getResources().getString(R.string.enter_change_pass_code));
+                txtSetPassword.setText(G.fragmentActivity.getResources().getString(R.string.enter_change_pass_code));
                 if (kindPassword == PIN) {
                     edtSetPassword.setInputType(InputType.TYPE_CLASS_NUMBER);
                 } else {
@@ -415,11 +415,11 @@ public class FragmentPassCode extends BaseFragment {
                     if (edtSetPassword.getText().length() >= 4) {
                         password = edtSetPassword.getText().toString();
                         edtSetPassword.setText("");
-                        txtSetPassword.setText(G.context.getResources().getString(R.string.re_enter_pass_code));
+                        txtSetPassword.setText(G.fragmentActivity.getResources().getString(R.string.re_enter_pass_code));
                         page = 1;
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.limit_passcode));
+                        error(G.fragmentActivity.getResources().getString(R.string.limit_passcode));
                     }
 
                 } else if (page == 1 && edtSetPassword.getText().length() > 0) {
@@ -436,7 +436,7 @@ public class FragmentPassCode extends BaseFragment {
                             vgFingerPrint.setVisibility(View.GONE);
                         }
                         rippleOk.setVisibility(View.GONE);
-                        titlePassCode.setText(G.context.getResources().getString(R.string.two_step_pass_code));
+                        titlePassCode.setText(G.fragmentActivity.getResources().getString(R.string.two_step_pass_code));
                         titlePassCode.setVisibility(View.VISIBLE);
                         layoutModePassCode.setVisibility(View.GONE);
 
@@ -457,7 +457,7 @@ public class FragmentPassCode extends BaseFragment {
                         edtSetPassword.setText("");
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Password_dose_not_match));
+                        error(G.fragmentActivity.getResources().getString(R.string.Password_dose_not_match));
                     }
 
                 } else if (page == 3 && edtSetPassword.getText().length() > 0) {
@@ -472,7 +472,7 @@ public class FragmentPassCode extends BaseFragment {
                             vgFingerPrint.setVisibility(View.GONE);
                         }
                         rippleOk.setVisibility(View.GONE);
-                        titlePassCode.setText(G.context.getResources().getString(R.string.two_step_pass_code));
+                        titlePassCode.setText(G.fragmentActivity.getResources().getString(R.string.two_step_pass_code));
                         titlePassCode.setVisibility(View.VISIBLE);
                         layoutModePassCode.setVisibility(View.GONE);
                         txtChangePassCode.setEnabled(true);
@@ -480,28 +480,28 @@ public class FragmentPassCode extends BaseFragment {
                         closeKeyboard(v);
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.invalid_password));
+                        error(G.fragmentActivity.getResources().getString(R.string.invalid_password));
                         edtSetPassword.setText("");
                     }
 
                 } else {
                     closeKeyboard(v);
-                    error(G.context.getResources().getString(R.string.enter_pass_code));
+                    error(G.fragmentActivity.getResources().getString(R.string.enter_pass_code));
                     edtSetPassword.setText("");
                 }
             }
         });
         long valuNumberPic = sharedPreferences.getLong(SHP_SETTING.KEY_TIME_LOCK, 0);
         if (valuNumberPic == 0) {
-            txtAutoLock.setText(G.context.getResources().getString(R.string.Disable));
+            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.Disable));
         } else if (valuNumberPic == 60) {
-            txtAutoLock.setText(G.context.getResources().getString(R.string.in_1_minutes));
+            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_1_minutes));
         } else if (valuNumberPic == 60 * 5) {
-            txtAutoLock.setText(G.context.getResources().getString(R.string.in_5_minutes));
+            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_5_minutes));
         } else if (valuNumberPic == 60 * 60) {
-            txtAutoLock.setText(G.context.getResources().getString(R.string.in_1_hours));
+            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_1_hours));
         } else if (valuNumberPic == 60 * 60 * 5) {
-            txtAutoLock.setText(G.context.getResources().getString(R.string.in_5_hours));
+            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_5_hours));
         }
 
 
@@ -511,7 +511,7 @@ public class FragmentPassCode extends BaseFragment {
             public void onClick(View view) {
 
                 boolean wrapInScrollView = true;
-                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.auto_lock)).customView(R.layout.dialog_auto_lock, wrapInScrollView).positiveText(R.string.B_ok).negativeText(R.string.B_cancel).build();
+                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.auto_lock)).customView(R.layout.dialog_auto_lock, wrapInScrollView).positiveText(R.string.B_ok).negativeText(R.string.B_cancel).build();
 
                 View view1 = dialog.getCustomView();
 
@@ -539,15 +539,15 @@ public class FragmentPassCode extends BaseFragment {
                     @Override
                     public String format(int value) {
                         if (value == 0) {
-                            return G.context.getResources().getString(R.string.Disable);
+                            return G.fragmentActivity.getResources().getString(R.string.Disable);
                         } else if (value == 1) {
-                            return G.context.getResources().getString(R.string.in_1_minutes);
+                            return G.fragmentActivity.getResources().getString(R.string.in_1_minutes);
                         } else if (value == 2) {
-                            return G.context.getResources().getString(R.string.in_5_minutes);
+                            return G.fragmentActivity.getResources().getString(R.string.in_5_minutes);
                         } else if (value == 3) {
-                            return G.context.getResources().getString(R.string.in_1_hours);
+                            return G.fragmentActivity.getResources().getString(R.string.in_1_hours);
                         } else if (value == 4) {
-                            return G.context.getResources().getString(R.string.in_5_hours);
+                            return G.fragmentActivity.getResources().getString(R.string.in_5_hours);
                         }
                         return "";
                     }
@@ -564,19 +564,19 @@ public class FragmentPassCode extends BaseFragment {
                         int which = numberPickerMinutes.getValue();
                         if (which == 0) {
                             editor.putLong(SHP_SETTING.KEY_TIME_LOCK, 0);
-                            txtAutoLock.setText(G.context.getResources().getString(R.string.Disable));
+                            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.Disable));
                         } else if (which == 1) {
                             editor.putLong(SHP_SETTING.KEY_TIME_LOCK, 60);
-                            txtAutoLock.setText(G.context.getResources().getString(R.string.in_1_minutes));
+                            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_1_minutes));
                         } else if (which == 2) {
                             editor.putLong(SHP_SETTING.KEY_TIME_LOCK, 60 * 5);
-                            txtAutoLock.setText(G.context.getResources().getString(R.string.in_5_minutes));
+                            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_5_minutes));
                         } else if (which == 3) {
                             editor.putLong(SHP_SETTING.KEY_TIME_LOCK, 60 * 60);
-                            txtAutoLock.setText(G.context.getResources().getString(R.string.in_1_hours));
+                            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_1_hours));
                         } else if (which == 4) {
                             editor.putLong(SHP_SETTING.KEY_TIME_LOCK, 60 * 60 * 5);
-                            txtAutoLock.setText(G.context.getResources().getString(R.string.in_5_hours));
+                            txtAutoLock.setText(G.fragmentActivity.getResources().getString(R.string.in_5_hours));
                         }
                         editor.apply();
                         dialog.dismiss();
@@ -641,7 +641,7 @@ public class FragmentPassCode extends BaseFragment {
                 Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
                 vShort.vibrate(200);
                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();

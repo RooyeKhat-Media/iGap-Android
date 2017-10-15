@@ -69,6 +69,9 @@ public class GeoGetConfigurationResponse extends MessageHandler {
     @Override
     public void timeOut() {
         super.timeOut();
+        if (G.onGeoGetConfiguration != null) {
+            G.onGeoGetConfiguration.getConfigurationTimeOut();
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 <net.iGap.module.CustomTextViewMedium xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp26"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="-26dp"
     android:layout_marginLeft="@dimen/dp8"
     android:layout_marginStart="@dimen/dp8"
     android:textColor="@color/gray_4c"

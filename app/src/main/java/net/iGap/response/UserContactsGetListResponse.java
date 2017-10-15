@@ -21,7 +21,6 @@ import net.iGap.proto.ProtoUserContactsGetList;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 public class UserContactsGetListResponse extends MessageHandler {
 
@@ -64,7 +63,7 @@ public class UserContactsGetListResponse extends MessageHandler {
                             realm.delete(RealmContacts.class);
 
                             for (ProtoGlobal.RegisteredUser registerUser : builder.getRegisteredUserList()) {
-                                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, registerUser.getId()).findFirst();
+                                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, registerUser.getId());
                                 if (realmRegisteredInfo == null) {
                                     realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class, registerUser.getId());
                                     realmRegisteredInfo.setDoNotshowSpamBar(false);

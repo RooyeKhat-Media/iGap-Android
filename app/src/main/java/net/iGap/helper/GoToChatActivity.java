@@ -9,7 +9,6 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 
@@ -76,7 +75,7 @@ public class GoToChatActivity {
                     return;
                 }
             } else if (peerID > 0) {
-                RealmRegisteredInfo _RegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, peerID).findFirst();
+                RealmRegisteredInfo _RegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, peerID);
 
                 if (_RegisteredInfo != null) {
                     roomName = _RegisteredInfo.getDisplayName();

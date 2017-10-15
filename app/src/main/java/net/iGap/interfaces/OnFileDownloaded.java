@@ -19,5 +19,5 @@ import net.iGap.proto.ProtoFileDownload;
 public interface OnFileDownloaded {
     void onFileDownload(String fileName, String token, long fileSize, long offset, ProtoFileDownload.FileDownload.Selector selector, int progress);
 
-    void onError(int major, String identity);
+    void onError(int major, Object identity);
 }

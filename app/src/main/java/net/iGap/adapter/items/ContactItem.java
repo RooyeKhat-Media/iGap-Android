@@ -27,7 +27,6 @@ import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 /**
  * Contact item used with FastAdapter for Navigation drawer contacts fragment.
@@ -58,7 +57,7 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
 
         holder.title.setText(mContact.displayName);
         Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, mContact.peerId).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, mContact.peerId);
         if (realmRegisteredInfo != null) {
 
             if (realmRegisteredInfo.getStatus() != null) {

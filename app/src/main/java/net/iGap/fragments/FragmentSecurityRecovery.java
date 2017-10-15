@@ -55,7 +55,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_security_recovery, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_security_recovery, container, false));
     }
 
     @Override
@@ -125,7 +125,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
                 new RequestUserTwoStepVerificationRequestRecoveryToken().requestRecovertyToken();
                 closeKeyboard(v);
                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.resend_verify_email_code, Snackbar.LENGTH_LONG);
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();
@@ -209,7 +209,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
                         @Override
                         public void run() {
                             closeKeyboard(view);
-                            error(G.context.getResources().getString(R.string.invalid_email_token));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_email_token));
                         }
                     });
                 }
@@ -229,7 +229,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
                         @Override
                         public void run() {
                             closeKeyboard(view);
-                            error(G.context.getResources().getString(R.string.invalid_question_token));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_question_token));
 
                         }
                     });
@@ -248,7 +248,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
                         closeKeyboard(v);
                         edtSetRecoveryEmail.setText("");
                     } else {
-                        error(G.context.getResources().getString(R.string.please_enter_code));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_enter_code));
                     }
                 } else {
                     if (edtSetRecoveryAnswerPassOne.length() > 0 && edtSetRecoveryAnswerPassTwo.length() > 0) {
@@ -259,7 +259,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
 
                     } else {
 
-                        error(G.context.getResources().getString(R.string.please_complete_all_item));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_complete_all_item));
                     }
                 }
             }
@@ -301,7 +301,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
                 Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
                 vShort.vibrate(200);
                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();

@@ -13,6 +13,7 @@ package net.iGap.response;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.List;
+import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserContactsGetBlockedList;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
@@ -41,8 +42,9 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
         final List<ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User> list = builder.getUserList();
 
         Realm realm = Realm.getDefaultInstance();
-
-        // reset blocked user in RealmRegisteredInfo
+        /**
+         * reset blocked user in RealmRegisteredInfo
+         */
         final RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
         if (results != null) {
             realm.executeTransaction(new Realm.Transaction() {
@@ -55,7 +57,9 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
             });
         }
 
-        // reset blocked user in RealmContacts
+        /**
+         * reset blocked user in RealmContacts
+         */
         final RealmResults<RealmContacts> resultsContacts = realm.where(RealmContacts.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
         if (resultsContacts != null) {
             realm.executeTransaction(new Realm.Transaction() {
@@ -67,26 +71,30 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
                 }
             });
         }
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                // add blocked user to RealmRegisteredInfo and  realmContacts
-                for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
-                    final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, user.getUserId()).findFirst();
-                    if (realmRegisteredInfo != null) {
-                        realmRegisteredInfo.setBlockUser(true);
-                    }
-
-                    final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, user.getUserId()).findFirst();
-                    if (realmContacts != null) {
-                        realmContacts.setBlockUser(true);
-                    }
-                }
-            }
-        });
-
         realm.close();
+
+        for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
+            RealmRegisteredInfo.getRegistrationInfo(user.getUserId(), new OnInfo() {
+                @Override
+                public void onInfo(final RealmRegisteredInfo registeredInfo) {
+                    Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, registeredInfo.getId());
+                            RealmContacts realmContact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, registeredInfo.getId()).findFirst();
+                            if (realmRegisteredInfo != null) {
+                                realmRegisteredInfo.setBlockUser(true);
+                            }
+                            if (realmContact != null) {
+                                realmContact.setBlockUser(true);
+                            }
+                        }
+                    });
+                    realm.close();
+                }
+            });
+        }
     }
 
     @Override

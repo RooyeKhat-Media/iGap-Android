@@ -16,7 +16,6 @@ import net.iGap.proto.ProtoUserContactsBlock;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 public class UserContactsBlockResponse extends MessageHandler {
 
@@ -37,12 +36,12 @@ public class UserContactsBlockResponse extends MessageHandler {
         super.handler();
 
         ProtoUserContactsBlock.UserContactsBlockResponse.Builder builder = (ProtoUserContactsBlock.UserContactsBlockResponse.Builder) message;
-        long userID = builder.getUserId();
+        long userId = builder.getUserId();
 
         Realm realm = Realm.getDefaultInstance();
 
         // set block to realm registeredInfo
-        final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userID).findFirst();
+        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
         if (realmRegisteredInfo != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -53,7 +52,7 @@ public class UserContactsBlockResponse extends MessageHandler {
         }
 
         // set block to realm contact
-        final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userID).findFirst();
+        final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
         if (realmContacts != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override

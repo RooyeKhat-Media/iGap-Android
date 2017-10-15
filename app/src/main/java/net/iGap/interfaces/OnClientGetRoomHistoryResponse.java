@@ -10,8 +10,10 @@
 
 package net.iGap.interfaces;
 
-public interface OnClientGetRoomHistoryResponse {
-    void onGetRoomHistory(long roomId, long startMessageId, long endMessageId, long reachMessageId, String direction);
+import net.iGap.proto.ProtoClientGetRoomHistory;
 
-    void onGetRoomHistoryError(int majorCode, int minorCode, long messageIdGetHistory, String direction);
+public interface OnClientGetRoomHistoryResponse {
+    void onGetRoomHistory(long roomId, long startMessageId, long endMessageId, long reachMessageId, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction);
+
+    void onGetRoomHistoryError(int majorCode, int minorCode, long messageIdGetHistory, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction);
 }

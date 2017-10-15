@@ -20,6 +20,7 @@ import net.iGap.request.RequestClientGetRoomList;
 import net.iGap.request.RequestGeoGetRegisterStatus;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestUserContactsGetBlockedList;
+import net.iGap.request.RequestUserContactsGetList;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserLogin;
 import net.iGap.request.RequestUserUpdateStatus;
@@ -189,6 +190,8 @@ public class LoginActions extends Application {
                         RealmPhoneContacts.sendContactList(Contacts.getListOfContact(), false);
                     }
                 });
+            } else {
+                new RequestUserContactsGetList().userContactGetList();
             }
         } else {
             G.handler.postDelayed(new Runnable() {

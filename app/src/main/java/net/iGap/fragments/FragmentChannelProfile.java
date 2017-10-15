@@ -109,7 +109,6 @@ import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmChannelRoom;
 import net.iGap.realm.RealmMember;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChannelAddAdmin;
@@ -194,7 +193,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_profile_channel, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.activity_profile_channel, container, false));
     }
 
     @Override
@@ -336,9 +335,9 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         TextView txtDeletChannel = (TextView) view.findViewById(R.id.txt_delete_channel);
         if (role == ChannelChatRole.OWNER) {
-            txtDeletChannel.setText(G.context.getResources().getString(R.string.channel_delete));
+            txtDeletChannel.setText(G.fragmentActivity.getResources().getString(R.string.channel_delete));
         } else {
-            txtDeletChannel.setText(G.context.getResources().getString(R.string.channel_left));
+            txtDeletChannel.setText(G.fragmentActivity.getResources().getString(R.string.channel_left));
         }
         lytDeleteChannel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -412,7 +411,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                 if (getRealm().where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, roomId).findFirst() != null) {
                     FragmentShowAvatars fragment = FragmentShowAvatars.newInstance(roomId, FragmentShowAvatars.From.channel);
                     fragment.appBarLayout = fab;
-                    new HelperFragment(fragment).setResourceContainer(R.id.fragmentContainer_channel_profile).load();
+                    //new HelperFragment(fragment).setResourceContainer(R.id.fragmentContainer_channel_profile).load();
+                    new HelperFragment(fragment).setReplace(false).load();
                 }
             }
         });
@@ -560,8 +560,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                     @Override
                     public void run() {
 
-                        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
-                        snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
+                        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 snack.dismiss();
@@ -613,25 +613,22 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         if (mRoom != null) {
 
             if (changeListener == null) {
-
                 changeListener = new RealmChangeListener<RealmModel>() {
                     @Override
                     public void onChange(final RealmModel element) {
-
-                        if (((RealmRoom) element).isValid() && !((RealmRoom) element).isDeleted()) {
-                            G.handler.post(new Runnable() {
-                                @Override
-                                public void run() {
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (((RealmRoom) element).isValid()) {
                                     String countText = ((RealmRoom) element).getSharedMediaCount();
-
-                                        if (HelperCalander.isLanguagePersian) {
-                                            txtSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
-                                        } else {
-                                            txtSharedMedia.setText(countText);
-                                        }
+                                    if (HelperCalander.isLanguagePersian) {
+                                        txtSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
+                                    } else {
+                                        txtSharedMedia.setText(countText);
+                                    }
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 };
             }
@@ -639,7 +636,9 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
             mRoom.addChangeListener(changeListener);
             changeListener.onChange(mRoom);
         } else {
-            txtSharedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
+            if (txtSharedMedia != null) {
+                txtSharedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
+            }
         }
     }
 
@@ -679,10 +678,10 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         if (isPrivate) {
             txtChannelLink.setText(inviteLink);
-            txtLinkTitle.setText(G.context.getResources().getString(R.string.channel_link));
+            txtLinkTitle.setText(G.fragmentActivity.getResources().getString(R.string.channel_link));
         } else {
             txtChannelLink.setText("" + linkUsername);
-            txtLinkTitle.setText(G.context.getResources().getString(R.string.st_username));
+            txtLinkTitle.setText(G.fragmentActivity.getResources().getString(R.string.st_username));
         }
     }
 
@@ -698,7 +697,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         final TextInputLayout inputRevoke = new TextInputLayout(G.fragmentActivity);
         edtRevoke = new MEditText(G.fragmentActivity);
-        edtRevoke.setHint(G.context.getResources().getString(R.string.channel_link_hint_revoke));
+        edtRevoke.setHint(G.fragmentActivity.getResources().getString(R.string.channel_link_hint_revoke));
         edtRevoke.setTypeface(G.typeface_IRANSansMobile);
         edtRevoke.setText(link);
         edtRevoke.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
@@ -718,8 +717,11 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         layoutRevoke.addView(inputRevoke, layoutParams);
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.channel_link_title_revoke)).positiveText(G.context.getResources().getString(R.string.revoke))
-                .customView(layoutRevoke, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel))
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link_title_revoke))
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
+                .customView(layoutRevoke, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                 .neutralText(R.string.array_Copy)
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
@@ -755,7 +757,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         final TextInputLayout inputChannelLink = new TextInputLayout(G.fragmentActivity);
         MEditText edtLink = new MEditText(G.fragmentActivity);
-        edtLink.setHint(G.context.getResources().getString(R.string.channel_public_hint_revoke));
+        edtLink.setHint(G.fragmentActivity.getResources().getString(R.string.channel_public_hint_revoke));
         edtLink.setTypeface(G.typeface_IRANSansMobile);
         edtLink.setText(link);
         edtLink.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
@@ -780,12 +782,12 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         layoutChannelLink.addView(inputChannelLink, layoutParams);
         layoutChannelLink.addView(txtLink, layoutParams);
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.channel_link))
-            .positiveText(G.context.getResources().getString(R.string.array_Copy))
-            .customView(layoutChannelLink, true)
-            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-            .negativeText(G.context.getResources().getString(R.string.B_cancel))
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link))
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
+                .customView(layoutChannelLink, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String copy;
@@ -794,7 +796,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                         ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
                         clipboard.setPrimaryClip(clip);
                     }
-                }).build();
+                })
+                .build();
 
         dialog.show();
     }
@@ -986,7 +989,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.choose_picture).negativeText(R.string.cansel).items(r).itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
-                if (text.toString().equals(G.context.getResources().getString(R.string.from_camera))) {
+                if (text.toString().equals(G.fragmentActivity.getResources().getString(R.string.from_camera))) {
 
                     if (G.fragmentActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
 
@@ -1081,7 +1084,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
             setMemberCount(roomId, true);
 
             //+Realm realm = Realm.getDefaultInstance();
-            RealmRegisteredInfo realmRegistered = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+            RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
             if (realmRegistered == null) {
                 new RequestUserInfo().userInfo(userId, roomId + "");
             }
@@ -1101,13 +1104,13 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
     private String dialogName;
 
     private void ChangeGroupDescription() {
-        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.channel_description).positiveText(G.context.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
+        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.channel_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 editChannelRequest(txtChannelNameInfo.getText().toString(), dialogDesc);
                 showProgressBar();
             }
-        }).negativeText(G.context.getResources().getString(R.string.cancel)).inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT).input(G.context.getResources().getString(R.string.please_enter_group_description), txtDescription.getText().toString(), new MaterialDialog.InputCallback() {
+        }).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel)).inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT).input(G.fragmentActivity.getResources().getString(R.string.please_enter_group_description), txtDescription.getText().toString(), new MaterialDialog.InputCallback() {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 // Do something
@@ -1143,7 +1146,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         final TextInputLayout inputUserName = new TextInputLayout(G.fragmentActivity);
         final EmojiEditTextE edtNameChannel = new EmojiEditTextE(G.fragmentActivity);
-        edtNameChannel.setHint(G.context.getResources().getString(R.string.st_username));
+        edtNameChannel.setHint(G.fragmentActivity.getResources().getString(R.string.st_username));
         edtNameChannel.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         edtNameChannel.setTypeface(G.typeface_IRANSansMobile);
         edtNameChannel.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
@@ -1163,7 +1166,12 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         layoutUserName.addView(inputUserName, layoutParams);
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.channel_name)).positiveText(G.context.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel)).build();
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_name))
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.save))
+                .customView(layoutUserName, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
 
@@ -1506,9 +1514,9 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
+                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
 
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();
@@ -1525,9 +1533,9 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
+                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
 
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();
@@ -1553,11 +1561,11 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         TextView iconItem1 = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
 
         if (isPrivate) {
-            txtItem1.setText(G.context.getResources().getString(R.string.channel_title_convert_to_public));
-            iconItem1.setText(G.context.getResources().getString(R.string.md_convert_to_public));
+            txtItem1.setText(G.fragmentActivity.getResources().getString(R.string.channel_title_convert_to_public));
+            iconItem1.setText(G.fragmentActivity.getResources().getString(R.string.md_convert_to_public));
         } else {
-            txtItem1.setText(G.context.getResources().getString(R.string.channel_title_convert_to_private));
-            iconItem1.setText(G.context.getResources().getString(R.string.md_convert_to_private));
+            txtItem1.setText(G.fragmentActivity.getResources().getString(R.string.channel_title_convert_to_private));
+            iconItem1.setText(G.fragmentActivity.getResources().getString(R.string.md_convert_to_private));
 
         }
 
@@ -1606,7 +1614,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
             }
         };
 
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.channel_title_convert_to_private)).content(G.context.getResources().getString(R.string.channel_text_convert_to_private)).positiveText(R.string.yes).onPositive(new MaterialDialog.SingleButtonCallback() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_title_convert_to_private)).content(G.fragmentActivity.getResources().getString(R.string.channel_text_convert_to_private)).positiveText(R.string.yes).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
@@ -1617,7 +1625,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
     private void convertToPublic() {
 
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.channel_title_convert_to_public)).content(G.context.getResources().getString(R.string.channel_text_convert_to_public)).positiveText(R.string.yes).onPositive(new MaterialDialog.SingleButtonCallback() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_title_convert_to_public)).content(G.fragmentActivity.getResources().getString(R.string.channel_text_convert_to_public)).positiveText(R.string.yes).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
@@ -1636,7 +1644,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         final TextInputLayout inputUserName = new TextInputLayout(G.fragmentActivity);
         final MEditText edtUserName = new MEditText(G.fragmentActivity);
-        edtUserName.setHint(G.context.getResources().getString(R.string.channel_title_channel_set_username));
+        edtUserName.setHint(G.fragmentActivity.getResources().getString(R.string.channel_title_channel_set_username));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             edtUserName.setTextDirection(View.TEXT_DIRECTION_LTR);
         }
@@ -1664,7 +1672,12 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
         layoutUserName.addView(inputUserName, layoutParams);
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.st_username)).positiveText(G.context.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel)).build();
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username))
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.save))
+                .customView(layoutUserName, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -1684,15 +1697,15 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                         } else if (status == ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID) {
                             positive.setEnabled(false);
                             inputUserName.setErrorEnabled(true);
-                            inputUserName.setError("" + G.context.getResources().getString(R.string.INVALID));
+                            inputUserName.setError("" + G.fragmentActivity.getResources().getString(R.string.INVALID));
                         } else if (status == ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.TAKEN) {
                             positive.setEnabled(false);
                             inputUserName.setErrorEnabled(true);
-                            inputUserName.setError("" + G.context.getResources().getString(R.string.TAKEN));
+                            inputUserName.setError("" + G.fragmentActivity.getResources().getString(R.string.TAKEN));
                         } else if (status == ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.OCCUPYING_LIMIT_EXCEEDED) {
                             positive.setEnabled(false);
                             inputUserName.setErrorEnabled(true);
-                            inputUserName.setError("" + G.context.getResources().getString(R.string.OCCUPYING_LIMIT_EXCEEDED));
+                            inputUserName.setError("" + G.fragmentActivity.getResources().getString(R.string.OCCUPYING_LIMIT_EXCEEDED));
                         }
                     }
                 });
@@ -1733,7 +1746,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                 } else {
                     positive.setEnabled(false);
                     inputUserName.setErrorEnabled(true);
-                    inputUserName.setError("" + G.context.getResources().getString(R.string.INVALID));
+                    inputUserName.setError("" + G.fragmentActivity.getResources().getString(R.string.INVALID));
                 }
             }
         });

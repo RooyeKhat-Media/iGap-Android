@@ -17,14 +17,15 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmChannelExtra;
 import net.iGap.realm.RealmChannelExtraFields;
+import net.iGap.request.RequestChannelAddMessageReaction;
 
 public class ChannelAddMessageReactionResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public ChannelAddMessageReactionResponse(int actionId, Object protoClass, String identity) { // here identity is roomId and messageId
+    public ChannelAddMessageReactionResponse(int actionId, Object protoClass, Object identity) { // here identity is roomId and messageId
         super(actionId, protoClass, identity);
 
         this.message = protoClass;
@@ -32,51 +33,51 @@ public class ChannelAddMessageReactionResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder builder = (ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder) message;
         if (G.onChannelAddMessageReaction != null && identity != null) {
 
-            final String[] identityParams = identity.split("\\*");
-            String roomId = identityParams[0];
-            final String messageId = identityParams[1];
-            final String messageReaction = identityParams[2];
+            final RequestChannelAddMessageReaction.IdentityChannelAddMessageReaction IdentityChannelAddMessageReaction = ((RequestChannelAddMessageReaction.IdentityChannelAddMessageReaction) identity);
+            long roomId = IdentityChannelAddMessageReaction.roomId;
+            final long messageId = IdentityChannelAddMessageReaction.messageId;
+            final ProtoGlobal.RoomMessageReaction messageReaction = IdentityChannelAddMessageReaction.roomMessageReaction;
 
             ProtoGlobal.RoomMessageReaction reaction = null;
-            if (messageReaction.equals(ProtoGlobal.RoomMessageReaction.THUMBS_UP.toString())) {
+            if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
                 reaction = ProtoGlobal.RoomMessageReaction.THUMBS_UP;
-            } else if (messageReaction.equals(ProtoGlobal.RoomMessageReaction.THUMBS_DOWN.toString())) {
+            } else if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_DOWN) {
                 reaction = ProtoGlobal.RoomMessageReaction.THUMBS_DOWN;
             }
 
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-
+                @Override
+                public void execute(Realm realm) {
                     ProtoGlobal.RoomMessageReaction reaction1 = null;
-                    if (messageReaction.equals(ProtoGlobal.RoomMessageReaction.THUMBS_UP.toString())) {
+                    if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
                         reaction1 = ProtoGlobal.RoomMessageReaction.THUMBS_UP;
-                    } else if (messageReaction.equals(ProtoGlobal.RoomMessageReaction.THUMBS_DOWN.toString())) {
+                    } else if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_DOWN) {
                         reaction1 = ProtoGlobal.RoomMessageReaction.THUMBS_DOWN;
                     }
 
                     /**
                      * vote in chat or group to forwarded message from channel
                      */
-                    if (identityParams.length > 3) {
-                        long forwardMessageId = Long.parseLong(identityParams[3]);
-                        //RealmRoomMessage realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, forwardMessageId).findFirst();
+                    if (IdentityChannelAddMessageReaction.forwardedMessageId != 0) {
+                        long forwardMessageId = IdentityChannelAddMessageReaction.forwardedMessageId;
                         RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, forwardMessageId).findFirst();
                         if (realmChannelExtra != null) {
-                            if (messageReaction.equals(ProtoGlobal.RoomMessageReaction.THUMBS_UP.toString())) {
+                            if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
                                 realmChannelExtra.setThumbsUp(builder.getReactionCounterLabel());
                             } else {
                                 realmChannelExtra.setThumbsDown(builder.getReactionCounterLabel());
                             }
                         }
                     } else {
-                        RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, Long.parseLong(messageId)).findFirst();
+                        RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, messageId).findFirst();
                         if (realmChannelExtra != null) {
                             realmChannelExtra.setVote(reaction1, builder.getReactionCounterLabel());
                         }
@@ -85,21 +86,21 @@ public class ChannelAddMessageReactionResponse extends MessageHandler {
             });
             realm.close();
 
-            if (identityParams.length > 3) {
-                String forwardedMessageId = identityParams[3];
-                G.onChannelAddMessageReaction.onChannelAddMessageReaction(Long.parseLong(roomId), Long.parseLong(messageId), builder.getReactionCounterLabel(), reaction,
-                    Long.parseLong(forwardedMessageId));
+            if (IdentityChannelAddMessageReaction.forwardedMessageId != 0) {
+                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), reaction, IdentityChannelAddMessageReaction.forwardedMessageId);
             } else {
-                G.onChannelAddMessageReaction.onChannelAddMessageReaction(Long.parseLong(roomId), Long.parseLong(messageId), builder.getReactionCounterLabel(), reaction, 0);
+                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), reaction, 0);
             }
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

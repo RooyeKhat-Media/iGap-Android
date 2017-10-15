@@ -186,7 +186,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                         public void run() {
 
                             txtInputNickName.setErrorEnabled(true);
-                            txtInputNickName.setError(G.context.getResources().getString(R.string.Toast_Write_NickName));
+                            txtInputNickName.setError(G.fragmentActivity.getResources().getString(R.string.Toast_Write_NickName));
                             txtInputNickName.setHintTextAppearance(R.style.error_appearance);
                             edtNikName.setTextColor(G.context.getResources().getColor(R.color.red));
                             lineEditText.setBackgroundColor(G.context.getResources().getColor(R.color.red));
@@ -408,7 +408,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
     }
 
     private void startDialog() {
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.choose_picture)).negativeText(G.context.getResources().getString(R.string.B_cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
@@ -449,8 +449,8 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                                 e.printStackTrace();
                             }
                         } else {
-                            final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.please_check_your_camera), Snackbar.LENGTH_LONG);
-                            snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                            final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.please_check_your_camera), Snackbar.LENGTH_LONG);
+                            snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     snack.dismiss();

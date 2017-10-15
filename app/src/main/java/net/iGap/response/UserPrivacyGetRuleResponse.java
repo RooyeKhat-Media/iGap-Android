@@ -18,9 +18,9 @@ public class UserPrivacyGetRuleResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public UserPrivacyGetRuleResponse(int actionId, Object protoClass, String identity) {
+    public UserPrivacyGetRuleResponse(int actionId, Object protoClass, Object identity) {
         super(actionId, protoClass, identity);
 
         this.message = protoClass;
@@ -28,19 +28,20 @@ public class UserPrivacyGetRuleResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoUserPrivacyGetRule.UserPrivacyGetRuleResponse.Builder builder = (ProtoUserPrivacyGetRule.UserPrivacyGetRuleResponse.Builder) message;
-
-        RealmPrivacy.updateRealmPrivacy(ProtoGlobal.PrivacyType.valueOf(identity), builder.getLevel());
+        RealmPrivacy.updateRealmPrivacy(((ProtoGlobal.PrivacyType) identity), builder.getLevel());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

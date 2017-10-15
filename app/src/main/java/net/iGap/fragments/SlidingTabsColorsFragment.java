@@ -37,7 +37,7 @@ public class SlidingTabsColorsFragment extends BaseFragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_transaction_sliding_tabs, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_transaction_sliding_tabs, container, false));
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

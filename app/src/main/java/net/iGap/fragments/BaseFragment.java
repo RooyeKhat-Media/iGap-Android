@@ -16,19 +16,23 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import net.iGap.G;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperFragment;
+import net.iGap.libs.swipeback.SwipeBackFragment;
+import net.iGap.libs.swipeback.SwipeBackLayout;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static net.iGap.G.fragmentActivity;
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends SwipeBackFragment {
 
     protected Fragment currentFragment;
     public boolean isNeedResume = false;
+
 
     @Override
     public void onAttach(Context context) {
@@ -45,13 +49,35 @@ public class BaseFragment extends Fragment {
         checkFont();
         super.onCreate(savedInstanceState);
 
+        getSwipeBackLayout().setEdgeOrientation(SwipeBackLayout.EDGE_LEFT);
+
+        if (G.oneFragmentIsOpen != null) {
+            G.oneFragmentIsOpen.justOne();
+        }
+
+        getSwipeBackLayout().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+
+                if (ActivityMain.disableSwipe) {
+                    getSwipeBackLayout().setEnableGesture(false);
+                } else {
+                    getSwipeBackLayout().setEnableGesture(true);
+                }
+                return false;
+            }
+        });
     }
 
 
     @Override
     public void onDetach() {
-
         super.onDetach();
+
+        if (G.oneFragmentIsOpen != null) {
+            G.oneFragmentIsOpen.justOne();
+        }
         hideKeyboard();
         try {
 

@@ -29,12 +29,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
-import com.mikepenz.fastadapter.items.AbstractItem;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmQuery;
+import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,6 +87,7 @@ import net.iGap.request.RequestChannelGetMemberList;
 import net.iGap.request.RequestGroupGetMemberList;
 import net.iGap.request.RequestUserInfo;
 
+import static net.iGap.G.inflater;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
 public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin, OnGroupKickAdmin, OnGroupAddModerator, OnGroupKickModerator, OnGroupKickMember, OnChannelAddAdmin, OnChannelKickAdmin, OnChannelAddModerator, OnChannelKickModerator, OnChannelKickMember {
@@ -101,7 +101,8 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     private long mRoomID = 0;
 
     private RecyclerView mRecyclerView;
-    private MemberAdapterA mAdapter;
+    //private MemberAdapterA mAdapter;
+    private MemberAdapter mAdapter;
     private String mMainRole = "";
     private ProgressBar progressBar;
 
@@ -150,23 +151,23 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_show_member, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_show_member, container, false));
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        G.onGroupAddAdmin = this;
-        G.onGroupAddModerator = this;
-        G.onGroupKickAdmin = this;
-        G.onGroupKickModerator = this;
-        G.onGroupKickMember = this;
-        G.onChannelAddAdmin = this;
-        G.onChannelAddModerator = this;
-        G.onChannelKickAdmin = this;
-        G.onChannelKickModerator = this;
-        G.onChannelKickMember = this;
+        //G.onGroupAddAdmin = this;
+        //G.onGroupAddModerator = this;
+        //G.onGroupKickAdmin = this;
+        //G.onGroupKickModerator = this;
+        //G.onGroupKickMember = this;
+        //G.onChannelAddAdmin = this;
+        //G.onChannelAddModerator = this;
+        //G.onChannelKickAdmin = this;
+        //G.onChannelKickModerator = this;
+        //G.onChannelKickMember = this;
 
         if (getArguments() != null) {
 
@@ -499,10 +500,13 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
                         query = query.equalTo(RealmMemberFields.PEER_ID, findMember.get(i).getId());
                     }
                     RealmResults<RealmMember> searchMember = query.findAll();
-                    mAdapter = new MemberAdapterA();
-                    for (RealmMember member : searchMember) {
-                        mAdapter.add(new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(member).withIdentifier(member.getPeerId()));
-                    }
+                    mAdapter = new MemberAdapter(searchMember, realmRoom.getType(), mMainRole, userID);
+
+                    //fastAdapter
+                    //mAdapter = new MemberAdapterA();
+                    //for (RealmMember member : searchMember) {
+                    //    mAdapter.add(new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(member).withIdentifier(member.getPeerId()));
+                    //}
                     mRecyclerView.setAdapter(mAdapter);
                 } catch (Exception e) {
                     e.getMessage();
@@ -539,11 +543,11 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
         //TextView txtNumberOfMember = (TextView) view.findViewById(R.id.fcg_txt_member);
 
         //if (selectedRole.toString().equals(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.MODERATOR.toString())) {
-        //    txtNumberOfMember.setText(G.context.getResources().getString(R.string.list_modereator));
+        //    txtNumberOfMember.setText(G.fragmentActivity.getResources().getString(R.string.list_modereator));
         //} else if (selectedRole.toString().equals(ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.ADMIN.toString())) {
-        //    txtNumberOfMember.setText(G.context.getResources().getString(R.string.list_admin));
+        //    txtNumberOfMember.setText(G.fragmentActivity.getResources().getString(R.string.list_admin));
         //} else {
-        //    txtNumberOfMember.setText(G.context.getResources().getString(member));
+        //    txtNumberOfMember.setText(G.fragmentActivity.getResources().getString(member));
         //}
 
         scrollListener = new EndlessRecyclerViewScrollListener(preCachingLayoutManager) {
@@ -612,10 +616,13 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
                 }
 
                 if (mList.size() > 0 && G.fragmentActivity != null) {
-                    mAdapter = new MemberAdapterA();
-                    for (RealmMember member : mList) {
-                        mAdapter.add(new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(member).withIdentifier(member.getPeerId()));
-                    }
+                    mAdapter = new MemberAdapter(mList, realmRoom.getType(), mMainRole, userID);
+
+                    //fastAdpater
+                    //mAdapter = new MemberAdapterA();
+                    //for (RealmMember member : mList) {
+                    //    mAdapter.add(new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(member).withIdentifier(member.getPeerId()));
+                    //}
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -697,361 +704,65 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     }
 
     private void resetMemberState(final long roomId, final long memberId) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Realm realm = Realm.getDefaultInstance();
-                RealmMember realmMember = realm.where(RealmMember.class).equalTo(RealmMemberFields.PEER_ID, memberId).findFirst();
-                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (realmRoom != null && realmMember != null) {
-                    mAdapter.set(mAdapter.getPosition(memberId), new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(realmMember).withIdentifier(memberId));
-                }
-                realm.close();
-            }
-        });
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        Realm realm = Realm.getDefaultInstance();
+        //        RealmMember realmMember = realm.where(RealmMember.class).equalTo(RealmMemberFields.PEER_ID, memberId).findFirst();
+        //        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        //        if (realmRoom != null && realmMember != null) {
+        //            mAdapter.set(mAdapter.getPosition(memberId), new MemberItem(realmRoom.getType(), mMainRole, userID).setInfo(realmMember).withIdentifier(memberId));
+        //        }
+        //        realm.close();
+        //    }
+        //});
     }
 
     private void removeMember(long roomId, final long memberId) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.remove(mAdapter.getPosition(memberId));
-            }
-        });
+        //G.handler.post(new Runnable() {
+        //    @Override
+        //    public void run() {
+        //        mAdapter.remove(mAdapter.getPosition(memberId));
+        //    }
+        //});
     }
 
     /**
-     * ****************************** Adapter ******************************
+     * ***********************************************************************************
+     * *********************************** FastAdapter ***********************************
+     * ***********************************************************************************
      */
 
-    public class MemberAdapterA<Item extends MemberItem> extends FastItemAdapter<Item> {
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return super.onCreateViewHolder(parent, viewType);
-        }
-    }
-
-    class MemberItem extends AbstractItem<MemberItem, MemberItem.ViewHolder> {
-        RealmMember realmMember;
-        public String mainRole;
-        public ProtoGlobal.Room.Type roomType;
-        public long userId;
-        private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
-
-        public MemberItem(ProtoGlobal.Room.Type roomType, String mainRole, long userId) {
-            this.roomType = roomType;
-            this.mainRole = mainRole;
-            this.userId = userId;
-        }
-
-        public MemberItem setInfo(RealmMember realmMember) {
-            this.realmMember = realmMember;
-            return this;
-        }
-
-        @Override
-        public void bindView(final ViewHolder holder, List payloads) throws IllegalStateException {
-            super.bindView(holder, payloads);
-
-            final StructContactInfo mContact = convertRealmToStruct(realmMember);
-
-            if (mContact == null) {
-                return;
-            }
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
-                            @Override
-                            public void Allow() {
-                                if (mContact.peerId == userID) {
-                                    new HelperFragment(new FragmentSetting()).setReplace(false).load();
-                                } else {
-                                    new HelperFragment(FragmentContactsProfile.newInstance(mRoomID, mContact.peerId, GROUP.toString())).setReplace(false).load();
-                                }
-                            }
-
-                            @Override
-                            public void deny() {
-
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    if (fragment instanceof FragmentGroupProfile) {
-
-                        if (role.equals(GroupChatRole.OWNER.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-
-                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
-
-                                ((FragmentGroupProfile) fragment).kickAdmin(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-
-                                ((FragmentGroupProfile) fragment).kickModerator(mContact.peerId);
-                            }
-                        } else if (role.equals(GroupChatRole.ADMIN.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-                                ((FragmentGroupProfile) fragment).kickModerator(mContact.peerId);
-                            }
-                        } else if (role.equals(GroupChatRole.MODERATOR.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
-                            }
-                        }
-                    } else if (fragment instanceof FragmentChannelProfile) {
-
-                        if (role.equals(GroupChatRole.OWNER.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-
-                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
-
-                                ((FragmentChannelProfile) fragment).kickAdmin(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-
-                                ((FragmentChannelProfile) fragment).kickModerator(mContact.peerId);
-                            }
-                        } else if (role.equals(GroupChatRole.ADMIN.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
-                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-                                ((FragmentChannelProfile) fragment).kickModerator(mContact.peerId);
-                            }
-                        } else if (role.equals(GroupChatRole.MODERATOR.toString())) {
-
-                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
-                            }
-                        }
-                    }
-
-                    return true;
-                }
-            });
-
-            if (mContact.isHeader) {
-                holder.topLine.setVisibility(View.VISIBLE);
-            } else {
-                holder.topLine.setVisibility(View.GONE);
-            }
-
-            holder.title.setText(mContact.displayName);
-
-            setRoleStarColor(holder.roleStar, mContact);
-
-            hashMapAvatar.put(mContact.peerId, holder.image);
-
-            HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
-                @Override
-                public void onAvatarGet(String avatarPath, long userId) {
-                    G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(userId));
-                }
-
-                @Override
-                public void onShowInitials(String initials, String color) {
-                    holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
-                }
-            });
-
-            if (mContact.status != null) {
-                if (mContact.status.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
-                    holder.subtitle.setText(LastSeenTimeUtil.computeTime(mContact.peerId, mContact.lastSeen, false));
-                } else {
-                    holder.subtitle.setText(mContact.status);
-                }
-            }
-
-            if (mainRole.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
-                holder.btnMenu.setVisibility(View.INVISIBLE);
-            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-
-                if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString()) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString()))) {
-                    holder.btnMenu.setVisibility(View.INVISIBLE);
-                } else {
-                    showPopup(holder, mContact);
-                }
-            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
-
-                if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString()) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString()))) {
-                    holder.btnMenu.setVisibility(View.INVISIBLE);
-                } else {
-                    showPopup(holder, mContact);
-                }
-            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString())) {
-                showPopup(holder, mContact);
-            }
-
-            /**
-             * don't allow for use dialog if this item
-             * is for own user
-             */
-            if (mContact.peerId == mContact.userID) {
-                holder.btnMenu.setVisibility(View.INVISIBLE);
-            }
-        }
-
-        @Override
-        public int getType() {
-            return 0;
-        }
-
-        @Override
-        public int getLayoutRes() {
-            return R.layout.contact_item_group_profile;
-        }
-
-        @Override
-        public ViewHolder getViewHolder(View viewGroup) {
-            return new ViewHolder(viewGroup);
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            protected CircleImageView image;
-            protected CustomTextViewMedium title;
-            protected CustomTextViewMedium subtitle;
-            protected View topLine;
-            protected TextView txtNumberOfSharedMedia;
-            protected MaterialDesignTextView roleStar;
-            protected MaterialDesignTextView btnMenu;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
-                title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
-                subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
-                topLine = itemView.findViewById(R.id.cigp_view_topLine);
-                txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
-                roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
-                btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
-            }
-        }
-
-        private void showPopup(ViewHolder holder, final StructContactInfo mContact) {
-            holder.btnMenu.setVisibility(View.VISIBLE);
-
-            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (roomType == ProtoGlobal.Room.Type.CHANNEL) {
-                        if (FragmentChannelProfile.onMenuClick != null) {
-                            FragmentChannelProfile.onMenuClick.clicked(v, mContact);
-                        }
-                    } else if (roomType == GROUP) {
-                        if (FragmentGroupProfile.onMenuClick != null) {
-                            FragmentGroupProfile.onMenuClick.clicked(v, mContact);
-                        }
-                    }
-                }
-            });
-        }
-
-        private void setRoleStarColor(MaterialDesignTextView view, StructContactInfo mContact) {
-
-            view.setVisibility(View.GONE);
-
-            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
-                view.setVisibility(View.VISIBLE);
-                view.setTextColor(Color.CYAN);
-            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
-                view.setVisibility(View.VISIBLE);
-                view.setTextColor(Color.GREEN);
-            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString())) {
-                view.setVisibility(View.VISIBLE);
-                view.setTextColor(Color.BLUE);
-            }
-        }
-
-        StructContactInfo convertRealmToStruct(RealmMember realmMember) {
-            Realm realm = Realm.getDefaultInstance();
-            String role = realmMember.getRole();
-            long id = realmMember.getPeerId();
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, id).findFirst();
-            if (realmRegisteredInfo != null) {
-                StructContactInfo s = new StructContactInfo(realmRegisteredInfo.getId(), realmRegisteredInfo.getDisplayName(), realmRegisteredInfo.getStatus(), false, false, realmRegisteredInfo.getPhoneNumber() + "");
-                s.role = role;
-                s.avatar = realmRegisteredInfo.getLastAvatar();
-                s.initials = realmRegisteredInfo.getInitials();
-                s.color = realmRegisteredInfo.getColor();
-                s.lastSeen = realmRegisteredInfo.getLastSeen();
-                s.status = realmRegisteredInfo.getStatus();
-                s.userID = userId;
-                return s;
-            }
-
-            realm.close();
-            return null;
-        }
-    }
-
-    //private class MemberAdapter extends RealmRecyclerViewAdapter<RealmMember, MemberAdapter.ViewHolder> {
+    //public class MemberAdapterA<Item extends MemberItem> extends FastItemAdapter<Item> {
+    //    @Override
+    //    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    //        return super.onCreateViewHolder(parent, viewType);
+    //    }
+    //}
     //
+    //class MemberItem extends AbstractItem<MemberItem, MemberItem.ViewHolder> {
+    //    RealmMember realmMember;
     //    public String mainRole;
     //    public ProtoGlobal.Room.Type roomType;
     //    public long userId;
     //    private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
     //
-    //    public MemberAdapter(RealmResults<RealmMember> realmResults, ProtoGlobal.Room.Type roomType, String mainRole, long userId) {
-    //        super(realmResults, true);
+    //    public MemberItem(ProtoGlobal.Room.Type roomType, String mainRole, long userId) {
     //        this.roomType = roomType;
     //        this.mainRole = mainRole;
     //        this.userId = userId;
     //    }
     //
-    //    @Override
-    //    public MemberAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-    //        View v = inflater.inflate(R.layout.contact_item_group_profile, viewGroup, false);
-    //        return new ViewHolder(v);
-    //    }
-    //
-    //    public class ViewHolder extends RecyclerView.ViewHolder {
-    //
-    //        protected CircleImageView image;
-    //        protected CustomTextViewMedium title;
-    //        protected CustomTextViewMedium subtitle;
-    //        protected View topLine;
-    //        protected TextView txtNumberOfSharedMedia;
-    //        protected MaterialDesignTextView roleStar;
-    //        protected MaterialDesignTextView btnMenu;
-    //
-    //        public ViewHolder(View itemView) {
-    //            super(itemView);
-    //
-    //            image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
-    //            title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
-    //            subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
-    //            topLine = itemView.findViewById(R.id.cigp_view_topLine);
-    //            txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
-    //            roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
-    //            btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
-    //        }
+    //    public MemberItem setInfo(RealmMember realmMember) {
+    //        this.realmMember = realmMember;
+    //        return this;
     //    }
     //
     //    @Override
-    //    public void onBindViewHolder(final MemberAdapter.ViewHolder holder, int i) {
+    //    public void bindView(final ViewHolder holder, List payloads) throws IllegalStateException {
+    //        super.bindView(holder, payloads);
     //
-    //        final StructContactInfo mContact = convertRealmToStruct(getItem(i));
+    //        final StructContactInfo mContact = convertRealmToStruct(realmMember);
     //
     //        if (mContact == null) {
     //            return;
@@ -1166,12 +877,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     //
     //            @Override
     //            public void onShowInitials(String initials, String color) {
-    //                //CircleImageView imageView;
-    //                //if (hashMapAvatar.get(userId) != null) {
-    //                //    imageView = hashMapAvatar.get(userId);
-    //                //} else {
-    //                //    imageView = holder.image;
-    //                //}
     //                holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
     //            }
     //        });
@@ -1210,6 +915,44 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     //         */
     //        if (mContact.peerId == mContact.userID) {
     //            holder.btnMenu.setVisibility(View.INVISIBLE);
+    //        }
+    //    }
+    //
+    //    @Override
+    //    public int getType() {
+    //        return 0;
+    //    }
+    //
+    //    @Override
+    //    public int getLayoutRes() {
+    //        return R.layout.contact_item_group_profile;
+    //    }
+    //
+    //    @Override
+    //    public ViewHolder getViewHolder(View viewGroup) {
+    //        return new ViewHolder(viewGroup);
+    //    }
+    //
+    //    public class ViewHolder extends RecyclerView.ViewHolder {
+    //
+    //        protected CircleImageView image;
+    //        protected CustomTextViewMedium title;
+    //        protected CustomTextViewMedium subtitle;
+    //        protected View topLine;
+    //        protected TextView txtNumberOfSharedMedia;
+    //        protected MaterialDesignTextView roleStar;
+    //        protected MaterialDesignTextView btnMenu;
+    //
+    //        public ViewHolder(View itemView) {
+    //            super(itemView);
+    //
+    //            image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
+    //            title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
+    //            subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
+    //            topLine = itemView.findViewById(R.id.cigp_view_topLine);
+    //            txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
+    //            roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
+    //            btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
     //        }
     //    }
     //
@@ -1270,4 +1013,277 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     //        return null;
     //    }
     //}
+
+
+    /**
+     * **********************************************************************************
+     * ********************************** RealmAdapter **********************************
+     * **********************************************************************************
+     */
+
+    private class MemberAdapter extends RealmRecyclerViewAdapter<RealmMember, MemberAdapter.ViewHolder> {
+
+        public String mainRole;
+        public ProtoGlobal.Room.Type roomType;
+        public long userId;
+        private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
+
+        public MemberAdapter(RealmResults<RealmMember> realmResults, ProtoGlobal.Room.Type roomType, String mainRole, long userId) {
+            super(realmResults, true);
+            this.roomType = roomType;
+            this.mainRole = mainRole;
+            this.userId = userId;
+        }
+
+        @Override
+        public MemberAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View v = inflater.inflate(R.layout.contact_item_group_profile, viewGroup, false);
+            return new ViewHolder(v);
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            protected CircleImageView image;
+            protected CustomTextViewMedium title;
+            protected CustomTextViewMedium subtitle;
+            protected View topLine;
+            protected TextView txtNumberOfSharedMedia;
+            protected MaterialDesignTextView roleStar;
+            protected MaterialDesignTextView btnMenu;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
+                title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
+                subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
+                topLine = itemView.findViewById(R.id.cigp_view_topLine);
+                txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
+                roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
+                btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(final MemberAdapter.ViewHolder holder, int i) {
+
+            final StructContactInfo mContact = convertRealmToStruct(getItem(i));
+
+            if (mContact == null) {
+                return;
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                            @Override
+                            public void Allow() {
+                                if (mContact.peerId == userID) {
+                                    new HelperFragment(new FragmentSetting()).setReplace(false).load();
+                                } else {
+                                    new HelperFragment(FragmentContactsProfile.newInstance(mRoomID, mContact.peerId, GROUP.toString())).setReplace(false).load();
+                                }
+                            }
+
+                            @Override
+                            public void deny() {
+
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    if (fragment instanceof FragmentGroupProfile) {
+
+                        if (role.equals(GroupChatRole.OWNER.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+
+                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
+
+                                ((FragmentGroupProfile) fragment).kickAdmin(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+
+                                ((FragmentGroupProfile) fragment).kickModerator(mContact.peerId);
+                            }
+                        } else if (role.equals(GroupChatRole.ADMIN.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+                                ((FragmentGroupProfile) fragment).kickModerator(mContact.peerId);
+                            }
+                        } else if (role.equals(GroupChatRole.MODERATOR.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+                                ((FragmentGroupProfile) fragment).kickMember(mContact.peerId);
+                            }
+                        }
+                    } else if (fragment instanceof FragmentChannelProfile) {
+
+                        if (role.equals(GroupChatRole.OWNER.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+
+                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
+
+                                ((FragmentChannelProfile) fragment).kickAdmin(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+
+                                ((FragmentChannelProfile) fragment).kickModerator(mContact.peerId);
+                            }
+                        } else if (role.equals(GroupChatRole.ADMIN.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
+                            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+                                ((FragmentChannelProfile) fragment).kickModerator(mContact.peerId);
+                            }
+                        } else if (role.equals(GroupChatRole.MODERATOR.toString())) {
+
+                            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+                                ((FragmentChannelProfile) fragment).kickMember(mContact.peerId);
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            });
+
+            if (mContact.isHeader) {
+                holder.topLine.setVisibility(View.VISIBLE);
+            } else {
+                holder.topLine.setVisibility(View.GONE);
+            }
+
+            holder.title.setText(mContact.displayName);
+
+            setRoleStarColor(holder.roleStar, mContact);
+
+            hashMapAvatar.put(mContact.peerId, holder.image);
+
+            HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
+                @Override
+                public void onAvatarGet(String avatarPath, long userId) {
+                    G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(userId));
+                }
+
+                @Override
+                public void onShowInitials(String initials, String color) {
+                    //CircleImageView imageView;
+                    //if (hashMapAvatar.get(userId) != null) {
+                    //    imageView = hashMapAvatar.get(userId);
+                    //} else {
+                    //    imageView = holder.image;
+                    //}
+                    holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+                }
+            });
+
+            if (mContact.status != null) {
+                if (mContact.status.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
+                    holder.subtitle.setText(LastSeenTimeUtil.computeTime(mContact.peerId, mContact.lastSeen, false));
+                } else {
+                    holder.subtitle.setText(mContact.status);
+                }
+            }
+
+            if (mainRole.equals(ProtoGlobal.GroupRoom.Role.MEMBER.toString())) {
+                holder.btnMenu.setVisibility(View.INVISIBLE);
+            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+
+                if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString()) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString()))) {
+                    holder.btnMenu.setVisibility(View.INVISIBLE);
+                } else {
+                    showPopup(holder, mContact);
+                }
+            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
+
+                if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString()) || (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString()))) {
+                    holder.btnMenu.setVisibility(View.INVISIBLE);
+                } else {
+                    showPopup(holder, mContact);
+                }
+            } else if (mainRole.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString())) {
+                showPopup(holder, mContact);
+            }
+
+            /**
+             * don't allow for use dialog if this item
+             * is for own user
+             */
+            if (mContact.peerId == mContact.userID) {
+                holder.btnMenu.setVisibility(View.INVISIBLE);
+            }
+        }
+
+        private void showPopup(ViewHolder holder, final StructContactInfo mContact) {
+            holder.btnMenu.setVisibility(View.VISIBLE);
+
+            holder.btnMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (roomType == ProtoGlobal.Room.Type.CHANNEL) {
+                        if (FragmentChannelProfile.onMenuClick != null) {
+                            FragmentChannelProfile.onMenuClick.clicked(v, mContact);
+                        }
+                    } else if (roomType == GROUP) {
+                        if (FragmentGroupProfile.onMenuClick != null) {
+                            FragmentGroupProfile.onMenuClick.clicked(v, mContact);
+                        }
+                    }
+                }
+            });
+        }
+
+        private void setRoleStarColor(MaterialDesignTextView view, StructContactInfo mContact) {
+
+            view.setVisibility(View.GONE);
+
+            if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.MODERATOR.toString())) {
+                view.setVisibility(View.VISIBLE);
+                view.setTextColor(Color.CYAN);
+            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.ADMIN.toString())) {
+                view.setVisibility(View.VISIBLE);
+                view.setTextColor(Color.GREEN);
+            } else if (mContact.role.equals(ProtoGlobal.GroupRoom.Role.OWNER.toString())) {
+                view.setVisibility(View.VISIBLE);
+                view.setTextColor(Color.BLUE);
+            }
+        }
+
+        StructContactInfo convertRealmToStruct(RealmMember realmMember) {
+            Realm realm = Realm.getDefaultInstance();
+            String role = realmMember.getRole();
+            long id = realmMember.getPeerId();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, id);
+            if (realmRegisteredInfo != null) {
+                StructContactInfo s = new StructContactInfo(realmRegisteredInfo.getId(), realmRegisteredInfo.getDisplayName(), realmRegisteredInfo.getStatus(), false, false, realmRegisteredInfo.getPhoneNumber() + "");
+                s.role = role;
+                s.avatar = realmRegisteredInfo.getLastAvatar();
+                s.initials = realmRegisteredInfo.getInitials();
+                s.color = realmRegisteredInfo.getColor();
+                s.lastSeen = realmRegisteredInfo.getLastSeen();
+                s.status = realmRegisteredInfo.getStatus();
+                s.userID = userId;
+                return s;
+            }
+
+            realm.close();
+            return null;
+        }
+    }
 }

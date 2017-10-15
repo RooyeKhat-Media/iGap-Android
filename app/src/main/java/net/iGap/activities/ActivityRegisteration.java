@@ -23,7 +23,7 @@ public class ActivityRegisteration extends ActivityEnhanced {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        isOnGetPermistion = true;
+        isOnGetPermission = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registeration);
 

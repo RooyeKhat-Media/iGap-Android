@@ -50,7 +50,7 @@ public class FragmentSetSecurityPassword extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_set_security_password, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_set_security_password, container, false));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class FragmentSetSecurityPassword extends BaseFragment {
             public void onClick(View v) {
                 new RequestUserTwoStepVerificationResendVerifyEmail().ResendVerifyEmail();
                 closeKeyboard(v);
-                error(G.context.getResources().getString(R.string.resend_verify_email_code));
+                error(G.fragmentActivity.getResources().getString(R.string.resend_verify_email_code));
             }
         });
 
@@ -134,13 +134,13 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                     if (edtSetPassword.length() >= 2) {
 
                         page = 2;
-                        txtToolbar.setText(G.context.getResources().getString(R.string.your_password));
+                        txtToolbar.setText(G.fragmentActivity.getResources().getString(R.string.your_password));
                         txtPassword = edtSetPassword.getText().toString();
                         rootEnterPassword.setVisibility(View.GONE);
                         rootReEnterPassword.setVisibility(View.VISIBLE);
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Password_has_to_mor_than_character));
+                        error(G.fragmentActivity.getResources().getString(R.string.Password_has_to_mor_than_character));
                     }
 
 
@@ -150,17 +150,17 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                         if (txtPassword.equals(edtSetRePassword.getText().toString())) {
 
                             page = 3;
-                            txtToolbar.setText(G.context.getResources().getString(R.string.password_hint));
+                            txtToolbar.setText(G.fragmentActivity.getResources().getString(R.string.password_hint));
                             rootReEnterPassword.setVisibility(View.GONE);
                             rootHintPassword.setVisibility(View.VISIBLE);
                         } else {
                             closeKeyboard(v);
-                            error(G.context.getResources().getString(R.string.Password_dose_not_match));
+                            error(G.fragmentActivity.getResources().getString(R.string.Password_dose_not_match));
                         }
 
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Password_has_to_mor_than_character));
+                        error(G.fragmentActivity.getResources().getString(R.string.Password_has_to_mor_than_character));
                     }
 
                 } else if (page == 3) {
@@ -170,29 +170,29 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                         if (!txtPassword.equals(edtSetHintPassword.getText().toString())) {
 
                             page = 4;
-                            txtToolbar.setText(G.context.getResources().getString(R.string.recovery_question));
+                            txtToolbar.setText(G.fragmentActivity.getResources().getString(R.string.recovery_question));
                             rootHintPassword.setVisibility(View.GONE);
                             rootQuestionPassword.setVisibility(View.VISIBLE);
 
                         } else {
                             closeKeyboard(v);
-                            error(G.context.getResources().getString(R.string.Hint_cant_the_same_password));
+                            error(G.fragmentActivity.getResources().getString(R.string.Hint_cant_the_same_password));
                         }
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.please_set_hint));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_set_hint));
                     }
 
                 } else if (page == 4) {
                     if (edtSetQuestionPassOne.length() > 0 && edtSetQuestionPassTwo.length() > 0 && edtSetAnswerPassOne.length() > 0 && edtSetAnswerPassTwo.length() > 0) {
                         page = 5;
-                        txtToolbar.setText(G.context.getResources().getString(R.string.recovery_email));
+                        txtToolbar.setText(G.fragmentActivity.getResources().getString(R.string.recovery_email));
                         rootQuestionPassword.setVisibility(View.GONE);
                         rootEmail.setVisibility(View.VISIBLE);
 
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.please_complete_all_item));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_complete_all_item));
                     }
                 } else if (page == 5) {
 
@@ -204,12 +204,12 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                             page = 6;
                             new RequestUserTwoStepVerificationSetPassword().setPassword(oldPassword, txtPassword, edtSetEmail.getText().toString(), edtSetQuestionPassOne.getText().toString(), edtSetAnswerPassOne.getText().toString(), edtSetQuestionPassTwo.getText().toString(), edtSetAnswerPassTwo.getText().toString(), edtSetHintPassword.getText().toString());
 
-                            txtToolbar.setText(G.context.getResources().getString(R.string.recovery_email));
+                            txtToolbar.setText(G.fragmentActivity.getResources().getString(R.string.recovery_email));
                             rootEmail.setVisibility(View.GONE);
                             rootConfirmEmail.setVisibility(View.VISIBLE);
                         } else {
                             closeKeyboard(v);
-                            error(G.context.getResources().getString(R.string.invalid_email));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_email));
                         }
                     } else {
                         page = 0;
@@ -237,7 +237,7 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                     if (edtSetConfirmEmail.length() > 0) {
                         new RequestUserTwoStepVerificationVerifyRecoveryEmail().recoveryEmail(edtSetConfirmEmail.getText().toString());
                     } else {
-                        error(G.context.getResources().getString(R.string.enter_verify_email_code));
+                        error(G.fragmentActivity.getResources().getString(R.string.enter_verify_email_code));
                     }
                     closeKeyboard(v);
                 }
@@ -286,7 +286,7 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (isAdded()) error(G.context.getResources().getString(R.string.invalid_verify_email_code));
+                        if (isAdded()) error(G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code));
                     }
                 });
             }
@@ -329,7 +329,7 @@ public class FragmentSetSecurityPassword extends BaseFragment {
                 Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
                 vShort.vibrate(200);
                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();

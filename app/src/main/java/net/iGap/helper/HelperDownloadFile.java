@@ -39,7 +39,8 @@ public class HelperDownloadFile {
     public HelperDownloadFile() {
 
         onFileDownloadResponse = new OnFileDownloadResponse() {
-            @Override public void onFileDownload(String cashId, long offset, ProtoFileDownload.FileDownload.Selector selector, int progress) {
+            @Override
+            public void onFileDownload(String cashId, long offset, ProtoFileDownload.FileDownload.Selector selector, int progress) {
 
                 String PrimaryKey = cashId + selector;
 
@@ -68,7 +69,8 @@ public class HelperDownloadFile {
                 }
             }
 
-            @Override public void onError(int majorCode, int minorCode, String cashId, ProtoFileDownload.FileDownload.Selector selector) {
+            @Override
+            public void onError(int majorCode, int minorCode, String cashId, ProtoFileDownload.FileDownload.Selector selector) {
 
                 String primaryKey = cashId + selector;
 
@@ -169,12 +171,14 @@ public class HelperDownloadFile {
                 if (priority > mQueue.get(i).priority) {
                     continue;
                 } else {
-                    mQueue.add(i + 1, sq);
-                    additem = true;
-                    break;
+                    if (mQueue.size() >= (i + 1)) {
+                        mQueue.add(i + 1, sq);
+                        additem = true;
+                        break;
+                    }
                 }
-            } catch (NullPointerException e) {
-
+            } catch (NullPointerException | IndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
         }
 
@@ -183,8 +187,7 @@ public class HelperDownloadFile {
         }
     }
 
-    public static void startDownload(String messageID, String token, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority,
-        UpdateListener update) {
+    public static void startDownload(String messageID, String token, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority, UpdateListener update) {
 
         StructDownLoad item;
 
@@ -341,10 +344,7 @@ public class HelperDownloadFile {
         }
 
         updateView(item);
-
-        ProtoFileDownload.FileDownload.Selector selector = item.selector;
-        item.identity = item.cashId + '*' + selector.toString() + '*' + item.size + '*' + item.path + '*' + item.offset + '*' + true;
-        new RequestFileDownload().download(item.Token, item.offset, (int) item.size, selector, item.identity);
+        new RequestFileDownload().download(item.Token, item.offset, (int) item.size, item.selector, new RequestFileDownload.IdentityFileDownload(item.cashId, item.path, item.selector, item.size, item.offset, true));
     }
 
     private static void moveTmpFileToOrginFolder(String token, ProtoFileDownload.FileDownload.Selector selector, String cashId) {
@@ -380,7 +380,8 @@ public class HelperDownloadFile {
 
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 RealmResults<RealmAttachment> attachments = realm.where(RealmAttachment.class).equalTo(RealmAttachmentFields.CACHE_ID, cashID).findAll();
                 for (RealmAttachment attachment : attachments) {
                     attachment.setLocalThumbnailPath(path);
@@ -404,7 +405,8 @@ public class HelperDownloadFile {
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 RealmResults<RealmAttachment> attachments = realm.where(RealmAttachment.class).equalTo(RealmAttachmentFields.CACHE_ID, cashID).findAll();
 
                 for (RealmAttachment attachment : attachments) {
@@ -428,7 +430,7 @@ public class HelperDownloadFile {
         for (Iterator<Map.Entry<String, RequestWrapper>> it = G.requestQueueMap.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, RequestWrapper> entry = it.next();
 
-            if (entry.getValue().identity != null && entry.getValue().identity.contains(identity)) {
+            if (entry.getValue().identity != null && entry.getValue().identity.toString().contains(identity)) {
                 G.requestQueueMap.remove(entry.getKey());
                 return true;
             }

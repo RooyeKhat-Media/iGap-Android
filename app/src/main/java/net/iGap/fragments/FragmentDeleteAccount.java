@@ -120,7 +120,7 @@ public class FragmentDeleteAccount extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_delete_account, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_delete_account, container, false));
     }
 
     @Override
@@ -201,11 +201,9 @@ public class FragmentDeleteAccount extends BaseFragment {
 
                 if (edtDeleteAccount.getText().length() > 0) {
 
-                    new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.delete_account))
+                    new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.delete_account))
                         .titleColor(G.context.getResources().getColor(android.R.color.black))
-                        .content(R.string.sure_delete_account)
-                        .positiveText(G.context.getResources().getString(R.string.B_ok))
-                        .negativeText(G.context.getResources().getString(R.string.B_cancel))
+                        .content(R.string.sure_delete_account).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
@@ -247,8 +245,8 @@ public class FragmentDeleteAccount extends BaseFragment {
                                         G.handler.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
+                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
                                                         snack.dismiss();
@@ -269,7 +267,7 @@ public class FragmentDeleteAccount extends BaseFragment {
 
                     final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.please_enter_code_for_verify, Snackbar.LENGTH_LONG);
 
-                    snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                    snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             snack.dismiss();

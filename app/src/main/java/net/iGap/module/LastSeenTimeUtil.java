@@ -24,7 +24,6 @@ import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 public class LastSeenTimeUtil {
     private LastSeenTimeUtil() throws InstantiationException {
@@ -88,36 +87,36 @@ public class LastSeenTimeUtil {
                     date.setTimeInMillis(beforeMillis * DateUtils.SECOND_IN_MILLIS);
 
                     if (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) != date.get(Calendar.DAY_OF_YEAR)) {
-                        time = G.context.getResources().getString(R.string.yesterday) + " " + time;
+                        time = G.fragmentActivity.getResources().getString(R.string.yesterday) + " " + time;
                     }
 
                     break;
                 case 1:
-                    //time = G.context.getResources().getString(R.string.last_seen) + " " + G.context.getResources().getString(R.string.yesterday) + " " + exactlyTime;
-                    time = G.context.getResources().getString(R.string.yesterday) + " " + exactlyTime;
+                    //time = G.fragmentActivity.getResources().getString(R.string.last_seen) + " " + G.fragmentActivity.getResources().getString(R.string.yesterday) + " " + exactlyTime;
+                    time = G.fragmentActivity.getResources().getString(R.string.yesterday) + " " + exactlyTime;
                     break;
                 case 2:
-                    time = G.context.getResources().getString(R.string.two_day);//+ exactlyTime
+                    time = G.fragmentActivity.getResources().getString(R.string.two_day);//+ exactlyTime
                     break;
                 case 3:
-                    time = G.context.getResources().getString(R.string.three_day);//+ exactlyTime
+                    time = G.fragmentActivity.getResources().getString(R.string.three_day);//+ exactlyTime
                     break;
                 case 4:
-                    time = G.context.getResources().getString(R.string.four_day);// + exactlyTime
+                    time = G.fragmentActivity.getResources().getString(R.string.four_day);// + exactlyTime
                     break;
                 case 5:
-                    time = G.context.getResources().getString(R.string.five_day);// + exactlyTime
+                    time = G.fragmentActivity.getResources().getString(R.string.five_day);// + exactlyTime
                     break;
                 case 6:
-                    time = G.context.getResources().getString(R.string.six_day);// + exactlyTime
+                    time = G.fragmentActivity.getResources().getString(R.string.six_day);// + exactlyTime
                     break;
                 case 7:
-                    time = G.context.getResources().getString(R.string.last_week);
+                    time = G.fragmentActivity.getResources().getString(R.string.last_week);
                     break;
             }
         } else {
             if (beforeMillis == 0) {
-                time = G.context.getResources().getString(R.string.last_seen_recently);
+                time = G.fragmentActivity.getResources().getString(R.string.last_seen_recently);
             } else {
                 time = HelperCalander.checkHijriAndReturnTime(beforeMillis) + " " + exactlyTime;
             }
@@ -143,7 +142,7 @@ public class LastSeenTimeUtil {
             Map.Entry<Long, Long> entry = it.next();
             long userId = entry.getKey();
             long value = entry.getValue();
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
             if (realmRegisteredInfo != null) {
                 if (realmRegisteredInfo.getStatus() != null && realmRegisteredInfo.getMainStatus() != null && !realmRegisteredInfo.getStatus().equals("online") && !realmRegisteredInfo.getStatus().equals("آنلاین") && !realmRegisteredInfo.getMainStatus().equals(ProtoGlobal.RegisteredUser.Status.LONG_TIME_AGO.toString())) {
                     String showLastSeen;
@@ -198,17 +197,17 @@ public class LastSeenTimeUtil {
         long difference = (currentTime - (time * DateUtils.SECOND_IN_MILLIS));
         //difference = -(70 * DateUtils.MINUTE_IN_MILLIS);
         if (TimeUnit.MILLISECONDS.toMinutes(difference) <= 0) {
-            return G.context.getResources().getString(R.string.last_seen_recently);
+            return G.fragmentActivity.getResources().getString(R.string.last_seen_recently);
         }
 
         /*else if (TimeUnit.MILLISECONDS.toMinutes(difference) >= 61) {
-            return "*"+G.context.getResources().getString(R.string.last_seen_recently);
+            return "*"+G.fragmentActivity.getResources().getString(R.string.last_seen_recently);
         }*/
         String str;
         if (HelperCalander.isLanguagePersian) {
-            str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + "\u200F" + G.context.getResources().getString(R.string.minute_ago);
+            str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + "\u200F" + G.fragmentActivity.getResources().getString(R.string.minute_ago);
         } else {
-            str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + G.context.getResources().getString(R.string.minute_ago);
+            str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + G.fragmentActivity.getResources().getString(R.string.minute_ago);
         }
 
         if (HelperCalander.isLanguagePersian) {

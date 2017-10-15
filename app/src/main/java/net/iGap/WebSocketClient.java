@@ -112,6 +112,7 @@ public class WebSocketClient {
                     allowForReconnecting = true;
                     G.socketConnection = false;
                     RequestQueue.timeOutImmediately(null, true);
+                    RequestQueue.clearPriorityQueue();
                     resetMainInfo();
                     reconnect(true);
                     super.onDisconnected(websocket, serverCloseFrame, clientCloseFrame, closedByServer);
@@ -202,23 +203,22 @@ public class WebSocketClient {
             G.handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-                    if (timeDifference(latestConnectionTryTiming) && connectionState != WebSocketState.CONNECTING && (connectionState != WebSocketState.OPEN || (HelperTimeOut.timeoutChecking(0, latestConnectionOpenTime, Config.CONNECTION_OPEN_TIME_OUT)))) {
+                    if (retryConnectionAllowing(latestConnectionTryTiming) && connectionState != WebSocketState.CONNECTING && (connectionState != WebSocketState.OPEN || (HelperTimeOut.timeoutChecking(0, latestConnectionOpenTime, Config.CONNECTION_OPEN_TIME_OUT)))) {
                         if (reconnectQueueLimitation > 0) {
                             reconnectQueueLimitation--;
                         }
 
-                        if (allowForReconnecting) {
-                            allowForReconnecting = false;
-                            HelperConnectionState.connectionState(ConnectionState.CONNECTING);
-                            if (G.allowForConnect) {
-                                latestConnectionTryTiming = System.currentTimeMillis();
-                                waitingForReconnecting = false;
-                                resetWebsocketInfo();
-                                WebSocketClient.getInstance();
-                                checkSocketConnection();
-                            }
+                        //if (allowForReconnecting) { // i checked this step, due to the other changes this clause not need
+                        //    allowForReconnecting = false;
+                        HelperConnectionState.connectionState(ConnectionState.CONNECTING);
+                        if (G.allowForConnect) {
+                            latestConnectionTryTiming = System.currentTimeMillis();
+                            waitingForReconnecting = false;
+                            resetWebsocketInfo();
+                            WebSocketClient.getInstance();
+                            checkSocketConnection();
                         }
+                        //}
                     } else {
                         if (reconnectQueueLimitation < Config.TRY_CONNECTION_COUNT) {
                             reconnectQueueLimitation++;
@@ -244,7 +244,7 @@ public class WebSocketClient {
             G.handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (timeDifference(latestConnectionTryTiming)) {
+                    if (retryConnectionAllowing(latestConnectionTryTiming)) {
                         allowForReconnecting = true;
                         waitingForReconnecting = false;
                         reconnect(false);
@@ -267,10 +267,9 @@ public class WebSocketClient {
      * compute time difference between latest try for connecting to socket and current time
      *
      * @param beforeTime when try for connect to socket (currentTimeMillis)
-     * @return return true if difference is bigger than 10 second
+     * @return return true if difference is bigger than ALLOW_RECONNECT_AGAIN_NORMAL  second
      */
-
-    private static boolean timeDifference(long beforeTime) {
+    private static boolean retryConnectionAllowing(long beforeTime) {
         long difference;
         long currentTime = System.currentTimeMillis();
         difference = (currentTime - beforeTime);
@@ -278,27 +277,17 @@ public class WebSocketClient {
         return difference >= ALLOW_RECONNECT_AGAIN_NORMAL;
     }
 
-    public static boolean checkConnection() {
-        if (webSocketClient != null && webSocketClient.isOpen()) {
-            return true;
-        }
-        /**
-         * set allowForReconnecting = true; for allow that to reconnecting
-         */
-        waitingForReconnecting = false;
-        allowForReconnecting = true;
-        reconnect(false);
-        return false;
-    }
-
     /**
      * role back main data for preparation reconnecting to socket
      */
-
     private static void resetWebsocketInfo() {
         count = 0;
         G.canRunReceiver = true;
         G.symmetricKey = null;
+
+        if (webSocketClient != null && webSocketClient.isOpen()) {
+            webSocketClient.disconnect();
+        }
         webSocketClient = null;
         /**
          * when secure is false set useMask true otherwise set false
@@ -311,7 +300,6 @@ public class WebSocketClient {
     /**
      * reset some info after connection is lost
      */
-
     private static void resetMainInfo() {
         HelperSetAction.clearAllActions();
     }
@@ -319,7 +307,6 @@ public class WebSocketClient {
     /**
      * if not secure yet send fake message to server for securing preparation
      */
-
     private static void checkFirstResponse() {
 
         Thread thread = new Thread(new Runnable() {

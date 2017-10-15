@@ -25,7 +25,6 @@ import net.iGap.fragments.FragmentContactsProfile;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
@@ -103,7 +102,7 @@ public class HelperLogMessage {
 
             updateID = author.getUser().getUserId();
 
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, author.getUser().getUserId()).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, author.getUser().getUserId());
             if (realmRegisteredInfo != null) {
                 authorName = realmRegisteredInfo.getDisplayName();
             } else {
@@ -147,7 +146,7 @@ public class HelperLogMessage {
          */
         if (messageLog.hasTargetUser()) {
 
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, messageLog.getTargetUser().getId()).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, messageLog.getTargetUser().getId());
             if (realmRegisteredInfo != null) {
                 targetName = realmRegisteredInfo.getDisplayName();
             } else {
@@ -178,17 +177,17 @@ public class HelperLogMessage {
             typeRoom = realmRoom.getType();
 
             if (typeRoom.toString().equals("CHANNEL")) {
-                //   finalTypeRoom = G.context.getResources().getString(R.string.channel);
+                //   finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.channel);
                 finalTypeRoom = "کانال";
             } else if (typeRoom.toString().equals("GROUP")) {
-                // finalTypeRoom = G.context.getResources().getString(R.string.group);
+                // finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.group);
                 finalTypeRoom = "گروه";
             } else {
-                //  finalTypeRoom = G.context.getResources().getString(R.string.conversation);
+                //  finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.conversation);
                 finalTypeRoom = "صفحه";
             }
         } else {
-            // finalTypeRoom = G.context.getResources().getString(R.string.conversation);
+            // finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.conversation);
             finalTypeRoom = "صفحه";
         }
 

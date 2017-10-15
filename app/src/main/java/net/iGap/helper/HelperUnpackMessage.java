@@ -22,6 +22,7 @@ import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
 
 /**
@@ -152,6 +153,7 @@ public class HelperUnpackMessage {
                         instanceResponseClass(actionId, protoObject, requestWrapper.identity, "handler");
                     }
                 }
+                RequestQueue.sendRequest();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -160,7 +162,7 @@ public class HelperUnpackMessage {
         return true;
     }
 
-    public static synchronized String getResponseId(Object protoObject) {
+    private static synchronized String getResponseId(Object protoObject) {
         String responseId = null;
         try {
             Method method = protoObject.getClass().getMethod("getResponse");
@@ -175,7 +177,7 @@ public class HelperUnpackMessage {
         return responseId;
     }
 
-    public static synchronized String getRequestId(RequestWrapper requestWrapper) {
+    private static synchronized String getRequestId(RequestWrapper requestWrapper) {
 
         String requestId = null;
         try {
@@ -195,7 +197,7 @@ public class HelperUnpackMessage {
      *
      * @return objects[0] == actionId , objects[1] == className , objects[2] == payload
      */
-    public static synchronized Object[] fetchMessage(byte[] message) {
+    private static synchronized Object[] fetchMessage(byte[] message) {
 
         int actionId = getId(message);
 
@@ -222,19 +224,19 @@ public class HelperUnpackMessage {
         return value;
     }
 
-    public static synchronized String getClassName(int value) {
+    private static synchronized String getClassName(int value) {
 
         if (!G.lookupMap.containsKey(value)) return null;
 
         return G.lookupMap.get(value);
     }
 
-    public static synchronized byte[] getProtoInfo(byte[] byteArray) {
+    private static synchronized byte[] getProtoInfo(byte[] byteArray) {
         byteArray = Arrays.copyOfRange(byteArray, 2, byteArray.length);
         return byteArray;
     }
 
-    public static synchronized Object fillProtoClassData(String protoClassName, byte[] protoMessage) {
+    private static synchronized Object fillProtoClassData(String protoClassName, byte[] protoMessage) {
         Object object3 = null;
         try {
 
@@ -248,42 +250,31 @@ public class HelperUnpackMessage {
             object3 = method2.invoke(object2, protoMessage);
             Method method3 = object3.getClass().getMethod("build");
             method3.invoke(object3);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
         return object3;
     }
 
-    public static synchronized Object instanceResponseClass(int actionId, Object protoObject, String identity, String optionalMethod) {
+    private static synchronized Object instanceResponseClass(int actionId, Object protoObject, Object identity, String optionalMethod) {
         Object object = null;
         try {
             String className = getClassName(actionId);
             String responseClassName = HelperClassNamePreparation.preparationResponseClassName(className);
             Class<?> responseClass = Class.forName(responseClassName);
-            Constructor<?> constructor = responseClass.getDeclaredConstructor(int.class, Object.class, String.class);
+            Constructor<?> constructor;
+            try {
+                constructor = responseClass.getDeclaredConstructor(int.class, Object.class, Object.class);
+            } catch (NoSuchMethodException e) {
+                constructor = responseClass.getDeclaredConstructor(int.class, Object.class, String.class);
+            }
             constructor.setAccessible(true);
             object = constructor.newInstance(actionId, protoObject, identity);
             if (optionalMethod != null) {
                 responseClass.getMethod(optionalMethod).invoke(object);
             }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return object;

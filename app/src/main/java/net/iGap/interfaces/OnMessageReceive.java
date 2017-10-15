@@ -10,13 +10,15 @@
 
 package net.iGap.interfaces;
 
+import net.iGap.proto.ProtoClientGetRoomHistory;
+
 public interface OnMessageReceive {
 
     /**
      * message that reached from server
      */
-    void onMessage(long roomId, long startMessageId, long endMessageId, boolean gapReached, boolean jumpOverLocal, String direction);
+    void onMessage(long roomId, long startMessageId, long endMessageId, boolean gapReached, boolean jumpOverLocal, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction);
 
-    void onError(int majorCode, int minorCode, long messageIdGetHistory, String direction);
+    void onError(int majorCode, int minorCode, long messageIdGetHistory, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction);
 
 }

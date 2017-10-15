@@ -21,9 +21,6 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.WebSocketClient;
 import net.iGap.adapter.items.chat.ViewMaker;
-import net.iGap.fragments.FragmentQrCodeNewDevice;
-import net.iGap.fragments.FragmentShowAvatars;
-import net.iGap.fragments.FragmentShowImage;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperFillLookUpClass;
@@ -51,7 +48,6 @@ import static net.iGap.G.attachmentColor;
 import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
 import static net.iGap.G.displayName;
-import static net.iGap.G.generalImmovableClasses;
 import static net.iGap.G.headerTextColor;
 import static net.iGap.G.helperNotificationAndBadge;
 import static net.iGap.G.imageFile;
@@ -60,12 +56,8 @@ import static net.iGap.G.isSaveToGallery;
 import static net.iGap.G.notificationColor;
 import static net.iGap.G.selectedLanguage;
 import static net.iGap.G.toggleButtonColor;
-import static net.iGap.G.unLogin;
-import static net.iGap.G.unSecure;
-import static net.iGap.G.unSecureResponseActionId;
 import static net.iGap.G.userId;
 import static net.iGap.G.userTextSize;
-import static net.iGap.G.waitingActionIds;
 
 /**
  * all actions that need doing after open app
@@ -261,12 +253,7 @@ public final class StartupActions {
                 imageLoader = ImageLoader.getInstance();
                 helperNotificationAndBadge = new HelperNotificationAndBadge();
 
-                HelperFillLookUpClass.fillLookUpClassArray();
-                fillUnSecureList();
-                fillUnSecureServerActionId();
-                fillUnLoginList();
-                fillImmovableClasses();
-                fillWaitingRequestActionIdAllowed();
+                HelperFillLookUpClass.fillArrays();
             }
         }).start();
 
@@ -297,69 +284,6 @@ public final class StartupActions {
         }
 
         realm.close();
-    }
-
-    /**
-     * list of actionId that can be doing without secure
-     * (for send request)
-     */
-    private void fillUnSecureList() {
-        unSecure.add("2");
-    }
-
-    /**
-     * list of actionIds that allowed continue processing even communication is not secure
-     * (for receive response)
-     */
-    private void fillUnSecureServerActionId() {
-        unSecureResponseActionId.add("30001");
-        unSecureResponseActionId.add("30002");
-        unSecureResponseActionId.add("30003");
-    }
-
-    /**
-     * list of actionId that can be doing without login
-     * (for send request)
-     */
-    private void fillUnLoginList() {
-        unLogin.add("100");
-        unLogin.add("101");
-        unLogin.add("102");
-        unLogin.add("500");
-        unLogin.add("501");
-        unLogin.add("502");
-        unLogin.add("503");
-        unLogin.add("131");
-        unLogin.add("132");
-        unLogin.add("138");
-        unLogin.add("139");
-        unLogin.add("140");
-        unLogin.add("802");
-    }
-
-    /**
-     * list off classes(fragments) that don't have any animations for open and close state
-     */
-    private void fillImmovableClasses() {
-        generalImmovableClasses.add(FragmentShowAvatars.class.getName());
-        generalImmovableClasses.add(FragmentShowImage.class.getName());
-        generalImmovableClasses.add(FragmentQrCodeNewDevice.class.getName());
-    }
-
-    /**
-     * list of actionId that will be storing in waitingActionIds list
-     * and after that user login send this request again
-     * (for send request)
-     */
-    private void fillWaitingRequestActionIdAllowed() {
-        waitingActionIds.add("201");
-        waitingActionIds.add("310");
-        waitingActionIds.add("410");
-        //waitingActionIds.add("700");
-        //waitingActionIds.add("701");
-        //waitingActionIds.add("702");
-        //waitingActionIds.add("703");
-        //waitingActionIds.add("705");
     }
 
     /**

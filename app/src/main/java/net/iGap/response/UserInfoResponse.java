@@ -22,8 +22,9 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserInfo;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.request.RequestUserInfo;
+
+import static net.iGap.G.userId;
 
 public class UserInfoResponse extends MessageHandler {
 
@@ -53,7 +54,7 @@ public class UserInfoResponse extends MessageHandler {
                     @Override
                     public void execute(Realm realm) {
 
-                        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, builder.getUser().getId()).findFirst();
+                        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUser().getId());
                         if (realmRegisteredInfo == null) {
                             realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class, builder.getUser().getId());
                         }
@@ -86,7 +87,7 @@ public class UserInfoResponse extends MessageHandler {
                     return;
                 }
 
-                if ((builder.getUser().getId() == G.userId)) {
+                if ((builder.getUser().getId() == userId)) {
                     canGetInfo = true;
                 }
 

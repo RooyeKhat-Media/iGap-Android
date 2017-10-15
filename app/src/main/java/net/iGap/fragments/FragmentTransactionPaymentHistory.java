@@ -65,7 +65,7 @@ public class FragmentTransactionPaymentHistory extends BaseFragment {
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_transaction_payment_history, container, false);
-        return fragmentView;
+        return attachToSwipeBack(fragmentView);
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

@@ -35,7 +35,6 @@ import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestFileDownload;
@@ -374,7 +373,7 @@ public class HelperAvatar {
             @Override
             public void execute(Realm realm) {
 
-                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, registeredUser.getId()).findFirst();
+                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, registeredUser.getId());
                 if (realmRegisteredInfo == null) {
                     realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class, registeredUser.getId());
                 }
@@ -423,7 +422,7 @@ public class HelperAvatar {
         String color = null;
         if (avatarType == AvatarType.USER) {
 
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, ownerId).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, ownerId);
             if (realmRegisteredInfo != null) {
                 initials = realmRegisteredInfo.getInitials();
                 color = realmRegisteredInfo.getColor();
@@ -506,9 +505,7 @@ public class HelperAvatar {
                 fileSize = realmAttachment.getSmallThumbnail().getSize();
             }
 
-            String identity = realmAttachment.getToken() + '*' + selector.toString() + '*' + fileSize + '*' + filePath + '*' + 0 + '*' + false;
-
-            new RequestFileDownload().download(realmAttachment.getToken(), 0, (int) fileSize, selector, identity);
+            new RequestFileDownload().download(realmAttachment.getToken(), 0, (int) fileSize, selector, new RequestFileDownload.IdentityFileDownload(realmAttachment.getToken(), filePath, selector, fileSize, 0, false));
         }
 
         @Override
@@ -527,8 +524,7 @@ public class HelperAvatar {
                  * don't use offset in getting thumbnail
                  */
                 try {
-                    String identity = token + '*' + selector.toString() + '*' + fileSize + '*' + filePath + '*' + offset + '*' + false;
-                    new RequestFileDownload().download(token, offset, (int) fileSize, selector, identity);
+                    new RequestFileDownload().download(token, offset, (int) fileSize, selector, new RequestFileDownload.IdentityFileDownload(token, filePath, selector, fileSize, 0, false));
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
@@ -536,15 +532,13 @@ public class HelperAvatar {
         }
 
         @Override
-        public void onError(int major, String identity) {
+        public void onError(int major, Object identity) {
             if (major == 5 && identity != null) { //if is time out reDownload once
-                String[] identityParams = identity.split("\\*");
-                String token = identityParams[0];
+                RequestFileDownload.IdentityFileDownload identityFileDownload = ((RequestFileDownload.IdentityFileDownload) identity);
+                String token = identityFileDownload.cacheId;
                 if (!reDownloadFiles.contains(token)) {
                     reDownloadFiles.add(token);
-                    ProtoFileDownload.FileDownload.Selector selector = ProtoFileDownload.FileDownload.Selector.valueOf(identityParams[1]);
-                    long fileSize = Long.parseLong(identityParams[2]);
-                    new RequestFileDownload().download(token, 0, (int) fileSize, selector, identity);
+                    new RequestFileDownload().download(token, 0, (int) identityFileDownload.size, identityFileDownload.selector, identity);
                 }
             }
         }
@@ -566,7 +560,7 @@ public class HelperAvatar {
                 public void execute(Realm realm) {
                     for (RealmRoom realmRoom : realm.where(RealmRoom.class).findAll()) {
                         if (realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == user.getId()) {
-                            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, user.getId()).findFirst();
+                            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, user.getId());
                             if (realmRegisteredInfo != null) {
                                 realmRoom.setAvatar(getLastAvatar(realmRegisteredInfo.getId(), realm));
                             }

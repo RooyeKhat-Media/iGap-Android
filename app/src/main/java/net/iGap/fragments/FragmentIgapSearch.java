@@ -69,7 +69,7 @@ public class FragmentIgapSearch extends BaseFragment {
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment_layout, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.search_fragment_layout, container, false));
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

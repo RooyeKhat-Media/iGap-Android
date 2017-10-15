@@ -155,7 +155,7 @@ public class FragmentShearedMedia extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_sheared_media, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.activity_sheared_media, container, false));
     }
 
     @Override
@@ -442,25 +442,25 @@ public class FragmentShearedMedia extends BaseFragment {
         TextView txtLink = (TextView) v.findViewById(R.id.dialog_text_item7_notification);
 
         TextView iconImage = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
-        iconImage.setText(G.context.getResources().getString(R.string.md_photo));
+        iconImage.setText(G.fragmentActivity.getResources().getString(R.string.md_photo));
 
         TextView iconVideo = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
-        iconVideo.setText(G.context.getResources().getString(R.string.md_videocam));
+        iconVideo.setText(G.fragmentActivity.getResources().getString(R.string.md_videocam));
 
         TextView iconAudio = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
-        iconAudio.setText(G.context.getResources().getString(R.string.icon_music));
+        iconAudio.setText(G.fragmentActivity.getResources().getString(R.string.icon_music));
 
         TextView iconVoice = (TextView) v.findViewById(R.id.dialog_icon_item4_notification);
-        iconVoice.setText(G.context.getResources().getString(R.string.md_surround_sound));
+        iconVoice.setText(G.fragmentActivity.getResources().getString(R.string.md_surround_sound));
 
         TextView iconGif = (TextView) v.findViewById(R.id.dialog_icon_item5_notification);
-        iconGif.setText(G.context.getResources().getString(R.string.md_emby));
+        iconGif.setText(G.fragmentActivity.getResources().getString(R.string.md_emby));
 
         TextView iconFile = (TextView) v.findViewById(R.id.dialog_icon_item6_notification);
-        iconFile.setText(G.context.getResources().getString(R.string.icon_file));
+        iconFile.setText(G.fragmentActivity.getResources().getString(R.string.icon_file));
 
         TextView iconLink = (TextView) v.findViewById(R.id.dialog_icon_item7_notification);
-        iconLink.setText(G.context.getResources().getString(R.string.md_link));
+        iconLink.setText(G.fragmentActivity.getResources().getString(R.string.md_link));
 
         root1.setVisibility(View.VISIBLE);
         root2.setVisibility(View.VISIBLE);
@@ -470,13 +470,13 @@ public class FragmentShearedMedia extends BaseFragment {
         root6.setVisibility(View.VISIBLE);
         root7.setVisibility(View.VISIBLE);
 
-        txtImage.setText(G.context.getResources().getString(R.string.shared_image));
-        txtVideo.setText(G.context.getResources().getString(R.string.shared_video));
-        txtAudio.setText(G.context.getResources().getString(R.string.shared_audio));
-        txtVoice.setText(G.context.getResources().getString(R.string.shared_voice));
-        txtGif.setText(G.context.getResources().getString(R.string.shared_gif));
-        txtFile.setText(G.context.getResources().getString(R.string.shared_file));
-        txtLink.setText(G.context.getResources().getString(R.string.shared_links));
+        txtImage.setText(G.fragmentActivity.getResources().getString(R.string.shared_image));
+        txtVideo.setText(G.fragmentActivity.getResources().getString(R.string.shared_video));
+        txtAudio.setText(G.fragmentActivity.getResources().getString(R.string.shared_audio));
+        txtVoice.setText(G.fragmentActivity.getResources().getString(R.string.shared_voice));
+        txtGif.setText(G.fragmentActivity.getResources().getString(R.string.shared_gif));
+        txtFile.setText(G.fragmentActivity.getResources().getString(R.string.shared_file));
+        txtLink.setText(G.fragmentActivity.getResources().getString(R.string.shared_links));
 
         root1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -797,7 +797,7 @@ public class FragmentShearedMedia extends BaseFragment {
 
         G.onClientSearchRoomHistory = new OnClientSearchRoomHistory() {
             @Override
-            public void onClientSearchRoomHistory(int totalCount, final int notDeletedCount, final List<ProtoGlobal.RoomMessage> resultList, String identity) {
+            public void onClientSearchRoomHistory(int totalCount, final int notDeletedCount, final List<ProtoGlobal.RoomMessage> resultList, ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter identity) {
 
                 G.handler.post(new Runnable() {
                     @Override
@@ -836,7 +836,7 @@ public class FragmentShearedMedia extends BaseFragment {
             }
 
             @Override
-            public void onError(final int majorCode, int minorCode, String identity) {
+            public void onError(final int majorCode, int minorCode, ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter identity) {
 
                 G.handler.post(new Runnable() {
                     @Override

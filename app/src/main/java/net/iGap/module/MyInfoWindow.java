@@ -19,7 +19,6 @@ import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnGeoGetComment;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.request.RequestGeoGetComment;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
@@ -73,7 +72,7 @@ public class MyInfoWindow extends InfoWindow {
         }
 
         Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
         if (realmRegisteredInfo == null) {
             RealmRegisteredInfo.getRegistrationInfo(userId, new OnInfo() {
                 @Override
@@ -110,9 +109,9 @@ public class MyInfoWindow extends InfoWindow {
         txtName.setTypeface(G.typeface_IRANSansMobile_Bold, Typeface.BOLD);
 
         if (G.selectedLanguage.equals("en")) {
-            txtOpenComment.setText(G.context.getResources().getString(R.string.md_back_arrow));
+            txtOpenComment.setText(G.fragmentActivity.getResources().getString(R.string.md_back_arrow));
         } else {
-            txtOpenComment.setText(G.context.getResources().getString(R.string.md_right_arrow));
+            txtOpenComment.setText(G.fragmentActivity.getResources().getString(R.string.md_right_arrow));
         }
 
         txtClose.setOnClickListener(new View.OnClickListener() {
@@ -212,10 +211,10 @@ public class MyInfoWindow extends InfoWindow {
                     });
                 }
             };
-            txtComment.setText(G.context.getResources().getString(R.string.comment_waiting));
+            txtComment.setText(G.fragmentActivity.getResources().getString(R.string.comment_waiting));
             new RequestGeoGetComment().getComment(userId);
         } else {
-            txtComment.setText(G.context.getResources().getString(R.string.comment_no));
+            txtComment.setText(G.fragmentActivity.getResources().getString(R.string.comment_no));
         }
 
         //for show old comment
@@ -228,10 +227,10 @@ public class MyInfoWindow extends InfoWindow {
         //}
         //
         //if (hasComment) {
-        //    txtComment.setText(G.context.getResources().getString(R.string.comment_waiting));
+        //    txtComment.setText(G.fragmentActivity.getResources().getString(R.string.comment_waiting));
         //    new RequestGeoGetComment().getComment(userId);
         //} else {
-        //    txtComment.setText(G.context.getResources().getString(R.string.comment_no));
+        //    txtComment.setText(G.fragmentActivity.getResources().getString(R.string.comment_no));
         //}
 
         realm.close();

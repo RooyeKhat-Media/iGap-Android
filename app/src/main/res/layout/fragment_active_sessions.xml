@@ -7,7 +7,7 @@
                 android:orientation="vertical"
     android:clickable="true"
                 android:id="@+id/stas_rootActiveSession"
-                android:elevation="999dp"
+
     tools:ignore="MissingPrefix"
     tools:context="net.iGap.fragments.FragmentActiveSessions"
     >

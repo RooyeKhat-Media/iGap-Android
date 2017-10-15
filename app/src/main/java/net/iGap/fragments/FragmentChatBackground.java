@@ -67,7 +67,7 @@ public class FragmentChatBackground extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         realmChatBackground = Realm.getDefaultInstance();
-        return inflater.inflate(R.layout.activity_chat_background, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.activity_chat_background, container, false));
     }
 
     @Override

@@ -12,7 +12,7 @@ import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentMain;
 
-import static net.iGap.fragments.FragmentCall.strGonTitle;
+import static net.iGap.fragments.FragmentCall.OPEN_IN_FRAGMENT_MAIN;
 
 public class HelperFragment {
 
@@ -124,6 +124,10 @@ public class HelperFragment {
         } else {
             fragmentTransaction.commit();
         }
+
+        if (G.oneFragmentIsOpen != null && G.twoPaneMode) {
+            G.oneFragmentIsOpen.justOne();
+        }
     }
 
     public void remove() {
@@ -139,26 +143,28 @@ public class HelperFragment {
     }
 
     public void removeAll(boolean keepMain) {
-        for (Fragment fragment : G.fragmentActivity.getSupportFragmentManager().getFragments()) {
-            if (fragment != null) {
+        if (G.fragmentActivity != null) {
+            for (Fragment fragment : G.fragmentActivity.getSupportFragmentManager().getFragments()) {
+                if (fragment != null) {
 
-                if (keepMain) {
-                    if (fragment.getClass().getName().equals(FragmentMain.class.getName())) {
-                        continue;
-                    }
-                    if (fragment instanceof FragmentCall) {
-                        if (fragment.getArguments().getBoolean(strGonTitle)) {
+                    if (keepMain) {
+                        if (fragment.getClass().getName().equals(FragmentMain.class.getName())) {
                             continue;
                         }
-                    }
+                        if (fragment instanceof FragmentCall) {
+                            if (fragment.getArguments().getBoolean(OPEN_IN_FRAGMENT_MAIN)) {
+                                continue;
+                            }
+                        }
 
-                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                } else {
-                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                        G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                    } else {
+                        G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
                 }
             }
+            G.fragmentActivity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        G.fragmentActivity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         if (G.iTowPanModDesinLayout != null) {
             G.iTowPanModDesinLayout.onLayout(ActivityMain.chatLayoutMode.none);

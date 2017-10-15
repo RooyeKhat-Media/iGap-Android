@@ -17,8 +17,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import net.iGap.Config;
 import net.iGap.G;
@@ -31,14 +34,50 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoResponse;
 
+import static net.iGap.G.forcePriorityActionId;
+
 public class RequestQueue {
 
+    private static final int QUEUE_LIMIT = 50;
+    private static final int DEFAULT_PRIORITY = 100;
     public static final CopyOnWriteArrayList<RequestWrapper> WAITING_REQUEST_WRAPPERS = new CopyOnWriteArrayList<>(); // if not logged-in
     public static CopyOnWriteArrayList<RequestWrapper> RUNNING_REQUEST_WRAPPERS = new CopyOnWriteArrayList<>(); // when logged-in and WAITING_REQUEST_WRAPPERS is full
+    private static ConcurrentHashMap<Integer, ArrayList<RequestWrapper[]>> priorityRequestWrapper = new ConcurrentHashMap<>();
+    public static PriorityQueue<Integer> actionIdPriority = new PriorityQueue<>(1000, new Comparator<Integer>() {
+        @Override
+        public int compare(Integer a, Integer b) {
+            if (a < b) {
+                return 1;
+            }
+            if (a > b) {
+                return -1;
+            }
+            return 0;
+        }
+    });
 
     public static synchronized void sendRequest(RequestWrapper... requestWrappers) throws IllegalAccessException {
         int length = requestWrappers.length;
         String randomId = HelperString.generateKey();
+
+        if (G.requestQueueMap.size() > QUEUE_LIMIT && !forcePriorityActionId.contains(requestWrappers[0].actionId)) {
+            Object priority = G.priorityActionId.get(requestWrappers[0].actionId);
+            if (priority == null) {
+                priority = (int) DEFAULT_PRIORITY;
+            }
+            ArrayList<RequestWrapper[]> arrayWrapper = new ArrayList<>();
+            if (actionIdPriority.contains((int) priority)) {
+                arrayWrapper = priorityRequestWrapper.get((int) priority);
+                arrayWrapper.add(requestWrappers);
+                priorityRequestWrapper.put((int) priority, arrayWrapper);
+            } else {
+                arrayWrapper.add(requestWrappers);
+                priorityRequestWrapper.put((int) priority, arrayWrapper);
+            }
+            actionIdPriority.offer((int) priority);
+            return;
+        }
+
         if (length == 1) {
             prepareRequest(randomId, requestWrappers[0]);
         } else if (length > 1) {
@@ -57,7 +96,22 @@ public class RequestQueue {
         }
     }
 
-    protected static synchronized void prepareRequest(String randomId, RequestWrapper requestWrapper) {
+    public static synchronized void sendRequest() throws IllegalAccessException {
+        if (actionIdPriority.size() <= 0) {
+            return;
+        }
+
+        ArrayList<RequestWrapper[]> arrayWrapper = priorityRequestWrapper.get(actionIdPriority.poll());
+        if (arrayWrapper != null && arrayWrapper.size() > 0) {
+            RequestWrapper[] requestWrappers = arrayWrapper.get(0);
+            arrayWrapper.remove(0);
+            priorityRequestWrapper.put(requestWrappers[0].getActionId(), arrayWrapper);
+
+            sendRequest(requestWrappers);
+        }
+    }
+
+    private static synchronized void prepareRequest(String randomId, RequestWrapper requestWrapper) {
         if (!G.pullRequestQueueRunned.get()) {
             G.pullRequestQueueRunned.getAndSet(true);
             G.handler.postDelayed(new Runnable() {
@@ -113,7 +167,6 @@ public class RequestQueue {
                 if (webSocket != null) {
                     webSocket.sendBinary(message, requestWrapper);
                 }
-                Log.i("SOC_REQ", "RequestQueue ********** sendRequest unSecure successful **********");
             } else { //if (G.waitingActionIds.contains(requestWrapper.actionId + "")) {
                 timeOutImmediately(randomId, false);
                 /**
@@ -139,9 +192,6 @@ public class RequestQueue {
             String key = entry.getKey();
             RequestWrapper requestWrapper = entry.getValue();
             boolean delete = timeDifference(requestWrapper.getTime());
-            if (requestWrapper.getActionId() != 117) {
-                Log.i("UUU", "actionId timeOut: " + requestWrapper.getActionId());
-            }
             if (delete) {
                 if (key.contains(".")) {
                     String randomId = key.split("\\.")[0];
@@ -231,6 +281,12 @@ public class RequestQueue {
                     requestQueueMapRemover(key);
                 }
             }
+        }
+    }
+
+    public static void clearPriorityQueue() {
+        if (actionIdPriority != null) {
+            actionIdPriority.clear();
         }
     }
 

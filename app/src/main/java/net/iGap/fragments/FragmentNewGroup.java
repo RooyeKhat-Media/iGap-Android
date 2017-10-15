@@ -124,7 +124,7 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_new_group, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.activity_new_group, container, false));
     }
 
     @Override
@@ -146,7 +146,7 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
     }
 
     private void showDialogSelectGallery() {
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.choose_picture)).negativeText(G.context.getResources().getString(R.string.cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture)).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
@@ -289,9 +289,9 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
 
         txtTitleToolbar = (TextView) view.findViewById(R.id.ng_txt_titleToolbar);
         if (prefix.equals("NewChanel")) {
-            txtTitleToolbar.setText(G.context.getResources().getString(R.string.New_Chanel));
+            txtTitleToolbar.setText(G.fragmentActivity.getResources().getString(R.string.New_Chanel));
         } else if (prefix.equals("ConvertToGroup")) {
-            txtTitleToolbar.setText(G.context.getResources().getString(R.string.chat_to_group));
+            txtTitleToolbar.setText(G.fragmentActivity.getResources().getString(R.string.chat_to_group));
         }
 
         parent = (RelativeLayout) view.findViewById(R.id.ng_fragmentContainer);
@@ -351,13 +351,13 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
 
         switch (prefix) {
             case "NewChanel":
-                txtInputNewGroup.setHint(G.context.getResources().getString(R.string.channel_name) + " " + G.context.getResources().getString(R.string.mandatory));
+                txtInputNewGroup.setHint(G.fragmentActivity.getResources().getString(R.string.channel_name) + " " + G.fragmentActivity.getResources().getString(R.string.mandatory));
                 break;
             case "ConvertToGroup":
-                txtInputNewGroup.setHint(G.context.getResources().getString(R.string.group_name) + " " + G.context.getResources().getString(R.string.mandatory));
+                txtInputNewGroup.setHint(G.fragmentActivity.getResources().getString(R.string.group_name) + " " + G.fragmentActivity.getResources().getString(R.string.mandatory));
                 break;
             default:
-                txtInputNewGroup.setHint(G.context.getResources().getString(R.string.group_name) + " " + G.context.getResources().getString(R.string.mandatory));
+                txtInputNewGroup.setHint(G.fragmentActivity.getResources().getString(R.string.group_name) + " " + G.fragmentActivity.getResources().getString(R.string.mandatory));
                 break;
         }
 
@@ -621,9 +621,11 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
 
         G.onClientGetRoomResponse = new OnClientGetRoomResponse() {
             @Override
-            public void onClientGetRoomResponse(final ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, String identity) {
+            public void onClientGetRoomResponse(final ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, RequestClientGetRoom.IdentityClientGetRoom identity) {
 
-                if (!identity.equals(RequestClientGetRoom.CreateRoomMode.requestFromOwner.toString())) return;
+                if (identity.createRoomMode != RequestClientGetRoom.CreateRoomMode.requestFromOwner) {
+                    return;
+                }
 
                 try {
                     G.handler.post(new Runnable() {

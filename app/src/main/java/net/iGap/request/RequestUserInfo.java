@@ -11,8 +11,8 @@
 package net.iGap.request;
 
 import android.text.format.DateUtils;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.HashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserInfo;
 

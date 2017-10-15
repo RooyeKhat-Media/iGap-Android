@@ -107,6 +107,7 @@ import net.iGap.interfaces.OnUpdating;
 import net.iGap.interfaces.OnUserInfoMyClient;
 import net.iGap.interfaces.OnUserSessionLogout;
 import net.iGap.interfaces.OnVerifyNewDevice;
+import net.iGap.interfaces.OneFragmentIsOpen;
 import net.iGap.interfaces.OpenFragment;
 import net.iGap.libs.floatingAddButton.ArcMenu;
 import net.iGap.libs.floatingAddButton.StateChangeListener;
@@ -195,6 +196,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     public static boolean isLock = true;
     public static boolean isActivityEnterPassCode = false;
     public static FinishActivity finishActivity;
+    public static boolean disableSwipe = false;
 
     public enum MainAction {
         downScrool, clinetCondition
@@ -287,7 +289,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             isNeedToRegister = true;
-            isOnGetPermistion = true;
+            isOnGetPermission = true;
         }
         super.onCreate(savedInstanceState);
 
@@ -389,6 +391,20 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
             frameFragmentBack = (FrameLayout) findViewById(R.id.am_frame_fragment_back);
             frameFragmentContainer = (FrameLayout) findViewById(R.id.am_frame_fragment_container);
+
+            G.oneFragmentIsOpen = new OneFragmentIsOpen() {
+                @Override
+                public void justOne() {
+
+                    if (frameFragmentContainer.getChildCount() == 0) {
+                        disableSwipe = true;
+                    } else {
+                        disableSwipe = false;
+                    }
+
+
+                }
+            };
 
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -1240,48 +1256,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         itemNavMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (!waitingForConfiguration) {
-                    waitingForConfiguration = true;
-                    if (mapUrls == null || mapUrls.isEmpty() || mapUrls.size() == 0) {
-                        G.onGeoGetConfiguration = new OnGeoGetConfiguration() {
-                            @Override
-                            public void onGetConfiguration() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        G.handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                waitingForConfiguration = false;
-                                            }
-                                        }, 2000);
-                                        openMapFragment();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void getConfigurationTimeOut() {
-                                G.handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        waitingForConfiguration = false;
-                                    }
-                                }, 2000);
-                            }
-                        };
-                        new RequestGeoGetConfiguration().getConfiguration();
-                    } else {
-                        G.handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                waitingForConfiguration = false;
-                            }
-                        }, 2000);
-                        openMapFragment();
-                    }
-                }
+                openMapFragment();
             }
         });
 
@@ -1646,7 +1621,48 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 @Override
                 public void Allow() throws IOException {
                     try {
-                        new HelperFragment(FragmentiGapMap.getInstance()).load();
+                        if (!waitingForConfiguration) {
+                            waitingForConfiguration = true;
+                            if (mapUrls == null || mapUrls.isEmpty() || mapUrls.size() == 0) {
+                                G.onGeoGetConfiguration = new OnGeoGetConfiguration() {
+                                    @Override
+                                    public void onGetConfiguration() {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                G.handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        waitingForConfiguration = false;
+                                                    }
+                                                }, 2000);
+                                                new HelperFragment(FragmentiGapMap.getInstance()).load();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void getConfigurationTimeOut() {
+                                        G.handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                waitingForConfiguration = false;
+                                            }
+                                        }, 2000);
+                                    }
+                                };
+                                new RequestGeoGetConfiguration().getConfiguration();
+                            } else {
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        waitingForConfiguration = false;
+                                    }
+                                }, 2000);
+                                new HelperFragment(FragmentiGapMap.getInstance()).load();
+                            }
+                        }
+
                     } catch (Exception e) {
                         e.getStackTrace();
                     }
@@ -1901,9 +1917,22 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
             }
             if (updateFromServer) {
-                new RequestUserInfo().userInfo(realmUserInfo.getUserId());
+                getUserInfo(realmUserInfo);
             }
             setImage(realmUserInfo.getUserId());
+        }
+    }
+
+    private void getUserInfo(final RealmUserInfo realmUserInfo) {
+        if (G.userLogin) {
+            new RequestUserInfo().userInfo(realmUserInfo.getUserId());
+        } else {
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getUserInfo(realmUserInfo);
+                }
+            }, 1000);
         }
     }
 
@@ -2451,8 +2480,20 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             @Override
             public void run() {
                 if (G.twoPaneMode) {
-                    if (frameFragmentContainer == null || frameFragmentContainer.getChildCount() == 0) {
-                        frameFragmentBack.setVisibility(View.GONE);
+                    if (frameFragmentContainer != null) {
+                        if (frameFragmentContainer.getChildCount() == 0) {
+                            if (frameFragmentBack != null) {
+                                frameFragmentBack.setVisibility(View.GONE);
+                            }
+                        } else if (frameFragmentContainer.getChildCount() == 1) {
+                            disableSwipe = true;
+                        } else {
+                            disableSwipe = false;
+                        }
+                    } else {
+                        if (frameFragmentBack != null) {
+                            frameFragmentBack.setVisibility(View.GONE);
+                        }
                     }
 
                     if (G.isLandscape) {

@@ -15,24 +15,9 @@ import net.iGap.proto.ProtoChatGetRoom;
 public class RequestChatGetRoom {
 
     public void chatGetRoom(long peerId) {
-
         ProtoChatGetRoom.ChatGetRoom.Builder chatGetRoom = ProtoChatGetRoom.ChatGetRoom.newBuilder();
         chatGetRoom.setPeerId(peerId);
-
         RequestWrapper requestWrapper = new RequestWrapper(200, chatGetRoom);
-        try {
-            RequestQueue.sendRequest(requestWrapper);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void chatGetRoomWithIdentity(long peerId) {
-
-        ProtoChatGetRoom.ChatGetRoom.Builder chatGetRoom = ProtoChatGetRoom.ChatGetRoom.newBuilder();
-        chatGetRoom.setPeerId(peerId);
-
-        RequestWrapper requestWrapper = new RequestWrapper(30200, chatGetRoom, "Identity");
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

@@ -21,7 +21,7 @@ public class RequestUserProfileSetEmail {
         userProfileEmail.setRequest(ProtoRequest.Request.newBuilder().setId(HelperString.generateKey()));
         userProfileEmail.setEmail(email);
 
-        RequestWrapper requestWrapper = new RequestWrapper(103, userProfileEmail, null);
+        RequestWrapper requestWrapper = new RequestWrapper(103, userProfileEmail);
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

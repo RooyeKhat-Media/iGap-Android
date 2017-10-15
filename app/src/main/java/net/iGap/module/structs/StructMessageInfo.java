@@ -19,11 +19,12 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmChannelExtra;
 import net.iGap.realm.RealmChannelExtraFields;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.realm.RealmRoomMessageLocation;
 import org.parceler.Parcels;
+
+import static net.iGap.G.userId;
 
 /**
  * chat message struct info
@@ -86,7 +87,7 @@ public class StructMessageInfo implements Parcelable {
         this.messageID = messageID;
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, Long.parseLong(senderID)).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, Long.parseLong(senderID));
         this.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
         //realm.close();
 
@@ -111,7 +112,7 @@ public class StructMessageInfo implements Parcelable {
         this.roomId = roomId;
         this.messageID = messageID;
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, Long.parseLong(senderID)).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, Long.parseLong(senderID));
         this.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
 
         this.senderID = senderID;
@@ -137,7 +138,7 @@ public class StructMessageInfo implements Parcelable {
         this.messageID = messageID;
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, Long.parseLong(senderID)).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, Long.parseLong(senderID));
         this.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
         //realm.close();
 
@@ -159,7 +160,7 @@ public class StructMessageInfo implements Parcelable {
         this.messageID = messageID;
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, Long.parseLong(senderID)).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, Long.parseLong(senderID));
         this.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
         //realm.close();
 
@@ -182,7 +183,7 @@ public class StructMessageInfo implements Parcelable {
         this.messageID = messageID;
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, Long.parseLong(senderID)).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, Long.parseLong(senderID));
         this.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
 
         this.senderID = senderID;
@@ -240,7 +241,7 @@ public class StructMessageInfo implements Parcelable {
         info.messageID = Long.toString(messageID);
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, senderID).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, senderID);
         info.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
 
         info.senderID = Long.toString(senderID);
@@ -270,7 +271,7 @@ public class StructMessageInfo implements Parcelable {
         info.senderID = Long.toString(senderID);
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, senderID).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, senderID);
         info.senderAvatar = realmRegisteredInfo != null ? StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar()) : null;
 
         info.status = status.toString();
@@ -299,7 +300,7 @@ public class StructMessageInfo implements Parcelable {
         messageInfo.messageID = Long.toString(roomMessage.getMessageId());
         messageInfo.isEdited = roomMessage.isEdited();
         if (!roomMessage.isSenderMe()) {
-            RealmRegisteredInfo realmRegisteredInfo = realmChat.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, roomMessage.getUserId()).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realmChat, roomMessage.getUserId());
             if (realmRegisteredInfo != null) {
                 messageInfo.senderAvatar = StructMessageAttachment.convert(realmRegisteredInfo.getLastAvatar());
                 messageInfo.senderColor = realmRegisteredInfo.getColor();
@@ -316,9 +317,9 @@ public class StructMessageInfo implements Parcelable {
         messageInfo.messageText = roomMessage.getMessage();
         messageInfo.senderID = Long.toString(roomMessage.getUserId());
         messageInfo.authorHash = roomMessage.getAuthorHash();
-        if (roomMessage.getUserId() == G.userId) {
+        if (roomMessage.getUserId() == userId) {
             messageInfo.sendType = MyType.SendType.send;
-        } else if (roomMessage.getUserId() != G.userId) {
+        } else if (roomMessage.getUserId() != userId) {
             messageInfo.sendType = MyType.SendType.recvive;
         }
         if (roomMessage.getMessageType() == ProtoGlobal.RoomMessageType.CONTACT) {
@@ -359,7 +360,7 @@ public class StructMessageInfo implements Parcelable {
         boolean result = false;
 
         try {
-            result = Long.parseLong(senderID) == G.userId;
+            result = Long.parseLong(senderID) == userId;
         } catch (Exception e) {
             e.printStackTrace();
         }

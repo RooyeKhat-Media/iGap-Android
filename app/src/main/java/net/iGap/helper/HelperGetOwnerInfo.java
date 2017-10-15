@@ -17,7 +17,6 @@ import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.proto.ProtoClientGetRoom;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientGetRoom;
@@ -56,21 +55,23 @@ public class HelperGetOwnerInfo {
         if (realmRoom == null) {
 
             G.onClientGetRoomResponse = new OnClientGetRoomResponse() {
-                @Override public void onClientGetRoomResponse(ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, String identity) {
+                @Override
+                public void onClientGetRoomResponse(ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, RequestClientGetRoom.IdentityClientGetRoom identity) {
 
-                    if (identity.equals(RequestClientGetRoom.CreateRoomMode.requestFromOwner.toString())) {
-
+                    if (identity.createRoomMode == RequestClientGetRoom.CreateRoomMode.requestFromOwner) {
                         if (listener != null) {
                             listener.OnResponse();
                         }
                     }
                 }
 
-                @Override public void onError(int majorCode, int minorCode) {
+                @Override
+                public void onError(int majorCode, int minorCode) {
 
                 }
 
-                @Override public void onTimeOut() {
+                @Override
+                public void onTimeOut() {
 
                 }
             };
@@ -90,23 +91,26 @@ public class HelperGetOwnerInfo {
 
         Realm realm = Realm.getDefaultInstance();
 
-        RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
 
         if (registeredInfo == null) {
 
             G.onUserInfoResponse = new OnUserInfoResponse() {
-                @Override public void onUserInfo(ProtoGlobal.RegisteredUser user, String identity) {
+                @Override
+                public void onUserInfo(ProtoGlobal.RegisteredUser user, String identity) {
 
                     if (listener != null) {
                         listener.OnResponse();
                     }
                 }
 
-                @Override public void onUserInfoTimeOut() {
+                @Override
+                public void onUserInfoTimeOut() {
 
                 }
 
-                @Override public void onUserInfoError(int majorCode, int minorCode) {
+                @Override
+                public void onUserInfoError(int majorCode, int minorCode) {
 
                 }
             };

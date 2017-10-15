@@ -19,14 +19,15 @@ import net.iGap.proto.ProtoClientGetRoomHistory;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
+import net.iGap.request.RequestClientGetRoomHistory;
 
 public class ClientGetRoomHistoryResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public ClientGetRoomHistoryResponse(int actionId, Object protoClass, String identity) {
+    public ClientGetRoomHistoryResponse(int actionId, Object protoClass, Object identity) {
         super(actionId, protoClass, identity);
 
         this.actionId = actionId;
@@ -38,10 +39,10 @@ public class ClientGetRoomHistoryResponse extends MessageHandler {
     public void handler() {
         super.handler();
 
-        String[] identityParams = identity.split("\\*");
-        final long roomId = Long.parseLong(identityParams[0]);
-        final long reachMessageId = Long.parseLong(identityParams[2]);
-        final String direction = identityParams[3];
+        RequestClientGetRoomHistory.IdentityClientGetRoomHistory identityParams = ((RequestClientGetRoomHistory.IdentityClientGetRoomHistory) identity);
+        final long roomId = identityParams.roomId;
+        final long reachMessageId = identityParams.reachMessageId;
+        final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction = identityParams.direction;
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -53,14 +54,11 @@ public class ClientGetRoomHistoryResponse extends MessageHandler {
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-
                         for (ProtoGlobal.RoomMessage roomMessage : builder.getMessageList()) {
                             if (roomMessage.getAuthor().hasUser()) {
                                 HelperInfo.needUpdateUser(roomMessage.getAuthor().getUser().getUserId(), roomMessage.getAuthor().getUser().getCacheId());
                             }
-
                             RealmRoomMessage.putOrUpdate(roomMessage, roomId);
-
                         }
                     }
                 }, new Realm.Transaction.OnSuccess() {
@@ -93,14 +91,10 @@ public class ClientGetRoomHistoryResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
-        String[] identityParams = identity.split("\\*");
-        long messageIdGetHistory = Long.parseLong(identityParams[1]);
-        String direction = identityParams[3];
+        RequestClientGetRoomHistory.IdentityClientGetRoomHistory identityParams = ((RequestClientGetRoomHistory.IdentityClientGetRoomHistory) identity);
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int majorCode = errorResponse.getMajorCode();
-        int minorCode = errorResponse.getMinorCode();
         if (G.onClientGetRoomHistoryResponse != null) {
-            G.onClientGetRoomHistoryResponse.onGetRoomHistoryError(majorCode, minorCode, messageIdGetHistory, direction);
+            G.onClientGetRoomHistoryResponse.onGetRoomHistoryError(errorResponse.getMajorCode(), errorResponse.getMinorCode(), identityParams.messageIdGetHistory, identityParams.direction);
         }
     }
 }

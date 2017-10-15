@@ -78,7 +78,7 @@ public class FragmentNotification extends BaseFragment {
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_notification, container, false));
     }
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -175,26 +175,25 @@ public class FragmentNotification extends BaseFragment {
         int popupNotification = realmNotification;
         switch (popupNotification) {
             case DEFAULT:
-                txtPopupNotification.setText(G.context.getResources().getString(R.string.array_Default));
+                txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_Default));
                 break;
             case ENABLE:
-                txtPopupNotification.setText(G.context.getResources().getString(R.string.array_enable));
+                txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_enable));
                 break;
             case DISABLE:
-                txtPopupNotification.setText(G.context.getResources().getString(R.string.array_Disable));
+                txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_Disable));
                 break;
         }
 
         ltPopupNotification.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
 
-                new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.st_popupNotification))
-                    .items(R.array.notifications_notification).negativeText(G.context.getResources().getString(R.string.B_cancel))
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_popupNotification)).items(R.array.notifications_notification).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                     .itemsCallback(new MaterialDialog.ListCallback() {
                         @Override public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                             switch (which) {
                                 case 0: {
-                                    txtPopupNotification.setText(G.context.getResources().getString(R.string.array_Default));
+                                    txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_Default));
                                     Realm realm = Realm.getDefaultInstance();
                                     realm.executeTransaction(new Realm.Transaction() {
                                         @Override public void execute(Realm realm) {
@@ -231,7 +230,7 @@ public class FragmentNotification extends BaseFragment {
                                     break;
                                 }
                                 case 1: {
-                                    txtPopupNotification.setText(G.context.getResources().getString(R.string.array_enable));
+                                    txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_enable));
                                     Realm realm = Realm.getDefaultInstance();
                                     realm.executeTransaction(new Realm.Transaction() {
                                         @Override public void execute(Realm realm) {
@@ -269,7 +268,7 @@ public class FragmentNotification extends BaseFragment {
                                     break;
                                 }
                                 case 2: {
-                                    txtPopupNotification.setText(G.context.getResources().getString(R.string.array_Disable));
+                                    txtPopupNotification.setText(G.fragmentActivity.getResources().getString(R.string.array_Disable));
                                     Realm realm = Realm.getDefaultInstance();
                                     realm.executeTransaction(new Realm.Transaction() {
                                         @Override public void execute(Realm realm) {
@@ -316,13 +315,13 @@ public class FragmentNotification extends BaseFragment {
 
         //========================================================sound
         if (realmIdSound == 0 || realmIdSound == -1) {
-            txtSound.setText(G.context.getResources().getString(R.string.array_Default_Notification_tone));
+            txtSound.setText(G.fragmentActivity.getResources().getString(R.string.array_Default_Notification_tone));
         } else {
             txtSound.setText(realmSound);
         }
         ltSound.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.Ringtone))
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.Ringtone))
                     .titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black))
                     .items(R.array.sound_message)
                     .alwaysCallSingleChoiceCallback()
@@ -414,7 +413,7 @@ public class FragmentNotification extends BaseFragment {
                             realm.close();
                             return true;
                         }
-                    }).positiveText(G.context.getResources().getString(R.string.B_ok)).negativeText(G.context.getResources().getString(R.string.B_cancel))
+                    }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                     .show();
             }
         });
@@ -423,27 +422,26 @@ public class FragmentNotification extends BaseFragment {
 
         switch (realmVibrate) {
             case 0:
-                txtVibrate.setText(G.context.getResources().getString(array_Disable));
+                txtVibrate.setText(G.fragmentActivity.getResources().getString(array_Disable));
                 break;
             case 1:
-                txtVibrate.setText(G.context.getResources().getString(array_Default));
+                txtVibrate.setText(G.fragmentActivity.getResources().getString(array_Default));
                 break;
             case 2:
-                txtVibrate.setText(G.context.getResources().getString(R.string.array_Short));
+                txtVibrate.setText(G.fragmentActivity.getResources().getString(R.string.array_Short));
                 break;
             case 3:
-                txtVibrate.setText(G.context.getResources().getString(R.string.array_Long));
+                txtVibrate.setText(G.fragmentActivity.getResources().getString(R.string.array_Long));
                 break;
             case 4:
-                txtVibrate.setText(G.context.getResources().getString(R.string.array_Only_if_silent));
+                txtVibrate.setText(G.fragmentActivity.getResources().getString(R.string.array_Only_if_silent));
                 break;
         }
 
         ltVibrate.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
 
-                new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.st_vibrate))
-                    .items(R.array.vibrate).negativeText(G.context.getResources().getString(R.string.B_cancel))
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_vibrate)).items(R.array.vibrate).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                     .itemsCallback(new MaterialDialog.ListCallback() {
                         @Override public void onSelection(MaterialDialog dialog, View view, final int which, CharSequence text) {
 
@@ -608,7 +606,7 @@ public class FragmentNotification extends BaseFragment {
         ltLedColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 boolean wrapInScrollView = true;
-                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.stns_popup_colorpicer, wrapInScrollView).positiveText(G.context.getResources().getString(R.string.set)).negativeText(G.context.getResources().getString(DISCARD)).title(G.context.getResources().getString(R.string.st_led_color))
+                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.stns_popup_colorpicer, wrapInScrollView).positiveText(G.fragmentActivity.getResources().getString(R.string.set)).negativeText(G.fragmentActivity.getResources().getString(DISCARD)).title(G.fragmentActivity.getResources().getString(R.string.st_led_color))
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
@@ -686,9 +684,9 @@ public class FragmentNotification extends BaseFragment {
 
                 realmNotificationSetting.setNotification(0);
                 realmNotificationSetting.setVibrate(-1);
-                realmNotificationSetting.setSound(G.context.getResources().getString(R.string.array_Default_Notification_tone));
+                realmNotificationSetting.setSound(G.fragmentActivity.getResources().getString(R.string.array_Default_Notification_tone));
                 realmNotificationSetting.setIdRadioButtonSound(-1);
-                realmNotificationSetting.setSmartNotification(G.context.getResources().getString(R.string.array_Default));
+                realmNotificationSetting.setSmartNotification(G.fragmentActivity.getResources().getString(R.string.array_Default));
                 realmNotificationSetting.setTimes(-1);
                 realmNotificationSetting.setMinutes(-1);
                 realmNotificationSetting.setLedColor(-1);

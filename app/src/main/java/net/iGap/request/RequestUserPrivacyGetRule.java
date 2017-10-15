@@ -19,7 +19,7 @@ public class RequestUserPrivacyGetRule {
         ProtoUserPrivacyGetRule.UserPrivacyGetRule.Builder builder = ProtoUserPrivacyGetRule.UserPrivacyGetRule.newBuilder();
         builder.setType(privacyType);
 
-        RequestWrapper requestWrapper = new RequestWrapper(143, builder, privacyType.toString());
+        RequestWrapper requestWrapper = new RequestWrapper(143, builder, privacyType);
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

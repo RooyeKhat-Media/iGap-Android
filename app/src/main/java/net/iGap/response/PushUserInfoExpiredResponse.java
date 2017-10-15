@@ -13,7 +13,6 @@ package net.iGap.response;
 import io.realm.Realm;
 import net.iGap.proto.ProtoPushUserInfoExpired;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.request.RequestUserInfo;
 
 public class PushUserInfoExpiredResponse extends MessageHandler {
@@ -36,7 +35,7 @@ public class PushUserInfoExpiredResponse extends MessageHandler {
         ProtoPushUserInfoExpired.PushUserInfoExpiredResponse.Builder builder = (ProtoPushUserInfoExpired.PushUserInfoExpiredResponse.Builder) message;
 
         Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, builder.getUserId()).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUserId());
         if (realmRegisteredInfo != null) {
             new RequestUserInfo().userInfo(builder.getUserId());
         }

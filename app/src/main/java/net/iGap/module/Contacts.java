@@ -13,7 +13,6 @@ package net.iGap.module;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmInviteFriend;
 import net.iGap.realm.RealmInviteFriendFields;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 /**
  * work with saved contacts in database
@@ -52,10 +50,12 @@ public class Contacts {
 
         String lastHeader = "";
         for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i) == null) {
+                continue;
+            }
             String header = contacts.get(i).getDisplay_name();
             long peerId = contacts.get(i).getId();
-            Log.i("MMMM", "retrieve getDisplay_name : " + header);
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, contacts.get(i).getId()).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, contacts.get(i).getId());
 
             // new header exists
             if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {

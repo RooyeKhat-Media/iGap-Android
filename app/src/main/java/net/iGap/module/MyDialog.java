@@ -97,9 +97,7 @@ public class MyDialog {
 
                 new MaterialDialog.Builder(context).title(itemName)
                     .titleColor(G.context.getResources().getColor(R.color.toolbar_background))
-                    .content(context.getString(R.string.do_you_want_clear_history_this))
-                    .positiveText(G.context.getResources().getString(R.string.B_ok))
-                    .negativeText(G.context.getResources().getString(R.string.B_cancel))
+                    .content(context.getString(R.string.do_you_want_clear_history_this)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -183,9 +181,7 @@ public class MyDialog {
     public static void showDialogNotification(Context context, String title, String Message, final OnComplete complete, final String result) {
 
         new MaterialDialog.Builder(context).title(title)
-            .content(Message)
-            .positiveText(G.context.getResources().getString(R.string.B_ok))
-            .negativeText(G.context.getResources().getString(R.string.B_cancel))
+            .content(Message).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
             .onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     if (complete != null) complete.complete(true, result, "yes");

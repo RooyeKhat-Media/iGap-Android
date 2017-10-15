@@ -31,9 +31,9 @@ public class ClientGetRoomResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public ClientGetRoomResponse(int actionId, Object protoClass, String identity) {
+    public ClientGetRoomResponse(int actionId, Object protoClass, Object identity) {
         super(actionId, protoClass, identity);
 
         this.message = protoClass;
@@ -52,17 +52,18 @@ public class ClientGetRoomResponse extends MessageHandler {
             @Override
             public void execute(final Realm realm) {
 
-                String[] identityParams = identity.split("\\*");
-                final String identity = identityParams[0];
+                final RequestClientGetRoom.IdentityClientGetRoom identityClientGetRoom = ((RequestClientGetRoom.IdentityClientGetRoom) identity);
+                final RequestClientGetRoom.CreateRoomMode roomMode = identityClientGetRoom.createRoomMode;
 
-                if (identity.equals(RequestClientGetRoom.CreateRoomMode.justInfo.toString())) {
+                if (roomMode != null && roomMode == RequestClientGetRoom.CreateRoomMode.justInfo) {
                     RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom(), realm);
                     realmRoom.setDeleted(true);
                     realmRoom.setKeepRoom(true);
 
-                    // update log message in realm room message after get room info
+                    /**
+                     * update log message in realm room message after get room info
+                     */
                     if (G.logMessageUpdatList.containsKey(clientGetRoom.getRoom().getId())) {
-
                         G.handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -97,7 +98,7 @@ public class ClientGetRoomResponse extends MessageHandler {
                                                 @Override
                                                 public void run() {
                                                     if (G.onClientGetRoomResponse != null) {
-                                                        G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identity);
+                                                        G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identityClientGetRoom);
                                                     }
                                                     if (G.onClientGetRoomResponseRoomList != null) {
                                                         G.onClientGetRoomResponseRoomList.onClientGetRoomResponse(clientGetRoom.getRoom().getId());
@@ -123,7 +124,7 @@ public class ClientGetRoomResponse extends MessageHandler {
                         @Override
                         public void run() {
                             if (G.onClientGetRoomResponse != null) {
-                                G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identity);
+                                G.onClientGetRoomResponse.onClientGetRoomResponse(clientGetRoom.getRoom(), clientGetRoom, identityClientGetRoom);
                             }
                             if (G.onClientGetRoomResponseRoomList != null) {
                                 G.onClientGetRoomResponseRoomList.onClientGetRoomResponse(clientGetRoom.getRoom().getId());
@@ -162,9 +163,8 @@ public class ClientGetRoomResponse extends MessageHandler {
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
         if (majorCode == 614 && minorCode == 1) {
-            String[] identityParams = identity.split("\\*");
-            final long roomId = Long.parseLong(identityParams[1]);
-            RealmRoom.createEmptyRoom(roomId);
+            final RequestClientGetRoom.IdentityClientGetRoom identityClientGetRoom = ((RequestClientGetRoom.IdentityClientGetRoom) identity);
+            RealmRoom.createEmptyRoom(identityClientGetRoom.roomId);
         }
         if (G.onClientGetRoomResponse != null) {
             G.onClientGetRoomResponse.onError(majorCode, minorCode);

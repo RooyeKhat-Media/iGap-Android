@@ -41,33 +41,6 @@ public class RealmRegisteredInfo extends RealmObject {
     private boolean blockUser = false;
     private boolean DoNotshowSpamBar = false;
 
-    public static RealmRegisteredInfo putOrUpdate(ProtoGlobal.RegisteredUser input) {
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, input.getId()).findFirst();
-        if (registeredInfo == null) {
-            registeredInfo = realm.createObject(RealmRegisteredInfo.class, input.getId());
-            registeredInfo.setDoNotshowSpamBar(false);
-        }
-
-        registeredInfo.setUsername(input.getUsername());
-        registeredInfo.setDisplayName(input.getDisplayName());
-        registeredInfo.setStatus(input.getStatus().toString());
-        registeredInfo.setAvatarCount(input.getAvatarCount());
-        registeredInfo.setCacheId(input.getCacheId());
-        registeredInfo.setColor(input.getColor());
-        registeredInfo.setFirstName(input.getFirstName());
-        registeredInfo.setInitials(input.getInitials());
-        registeredInfo.setLastName(input.getLastName());
-        registeredInfo.setLastSeen(input.getLastSeen());
-        registeredInfo.setMutual(input.getMutual());
-        registeredInfo.setPhoneNumber(Long.toString(input.getPhone()));
-        registeredInfo.setUsername(input.getUsername());
-
-        realm.close();
-        return registeredInfo;
-    }
-
     public long getId() {
         return id;
     }
@@ -211,6 +184,34 @@ public class RealmRegisteredInfo extends RealmObject {
         DoNotshowSpamBar = doNotshowSpamBar;
     }
 
+
+    public static RealmRegisteredInfo putOrUpdate(ProtoGlobal.RegisteredUser input) {
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, input.getId());
+        if (registeredInfo == null) {
+            registeredInfo = realm.createObject(RealmRegisteredInfo.class, input.getId());
+            registeredInfo.setDoNotshowSpamBar(false);
+        }
+
+        registeredInfo.setUsername(input.getUsername());
+        registeredInfo.setDisplayName(input.getDisplayName());
+        registeredInfo.setStatus(input.getStatus().toString());
+        registeredInfo.setAvatarCount(input.getAvatarCount());
+        registeredInfo.setCacheId(input.getCacheId());
+        registeredInfo.setColor(input.getColor());
+        registeredInfo.setFirstName(input.getFirstName());
+        registeredInfo.setInitials(input.getInitials());
+        registeredInfo.setLastName(input.getLastName());
+        registeredInfo.setLastSeen(input.getLastSeen());
+        registeredInfo.setMutual(input.getMutual());
+        registeredInfo.setPhoneNumber(Long.toString(input.getPhone()));
+        registeredInfo.setUsername(input.getUsername());
+
+        realm.close();
+        return registeredInfo;
+    }
+
     public RealmList<RealmAvatar> getAvatars() {
         RealmList<RealmAvatar> avatars = new RealmList<>();
         Realm realm = Realm.getDefaultInstance();
@@ -268,7 +269,7 @@ public class RealmRegisteredInfo extends RealmObject {
      */
     public static void getRegistrationInfo(long userId, final OnInfo onRegistrationInfo) {
         Realm realm = Realm.getDefaultInstance();
-        final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
         if (realmRegisteredInfo != null) {
             onRegistrationInfo.onInfo(realmRegisteredInfo);
         } else {
@@ -279,7 +280,7 @@ public class RealmRegisteredInfo extends RealmObject {
                     Realm realm1 = Realm.getDefaultInstance();
                     OnInfo InfoListener = RequestUserInfo.infoHashMap.get(registeredInfo.getId());
                     if (InfoListener != null) {
-                        RealmRegisteredInfo realmRegisteredInfo = realm1.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, registeredInfo.getId()).findFirst();
+                        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm1, registeredInfo.getId());
                         if (realmRegisteredInfo != null) {
                             InfoListener.onInfo(realmRegisteredInfo);
                         }
@@ -291,5 +292,9 @@ public class RealmRegisteredInfo extends RealmObject {
             new RequestUserInfo().userInfo(userId, RequestUserInfo.InfoType.JUST_INFO.toString());
         }
         realm.close();
+    }
+
+    public static RealmRegisteredInfo getRegistrationInfo(Realm realm, long userId) {
+        return realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
     }
 }

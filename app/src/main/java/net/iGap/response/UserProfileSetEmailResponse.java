@@ -30,22 +30,30 @@ public class UserProfileSetEmailResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder userProfileEmail = (ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder) message;
 
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                realm.where(RealmUserInfo.class).findFirst().setEmail(userProfileEmail.getEmail());
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setEmail(userProfileEmail.getEmail());
+                }
             }
         });
         realm.close();
 
-        G.onUserProfileSetEmailResponse.onUserProfileEmailResponse(userProfileEmail.getEmail(), userProfileEmail.getResponse());
+        if (G.onUserProfileSetEmailResponse != null) {
+            G.onUserProfileSetEmailResponse.onUserProfileEmailResponse(userProfileEmail.getEmail(), userProfileEmail.getResponse());
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
@@ -56,7 +64,8 @@ public class UserProfileSetEmailResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onUserProfileSetEmailResponse != null) {
             G.onUserProfileSetEmailResponse.onTimeOut();

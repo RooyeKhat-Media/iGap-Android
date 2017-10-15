@@ -84,7 +84,7 @@ public class FragmentSecurity extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_security, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_fragment_security, container, false));
     }
 
     @Override
@@ -180,7 +180,7 @@ public class FragmentSecurity extends BaseFragment {
             public void onClick(View v) {
                 new RequestUserTwoStepVerificationResendVerifyEmail().ResendVerifyEmail();
                 closeKeyboard(v);
-                error(G.context.getResources().getString(R.string.resend_verify_email_code));
+                error(G.fragmentActivity.getResources().getString(R.string.resend_verify_email_code));
             }
         });
 
@@ -208,7 +208,7 @@ public class FragmentSecurity extends BaseFragment {
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                        if (text.equals(G.context.getResources().getString(R.string.recovery_by_email_dialog))) {
+                        if (text.equals(G.fragmentActivity.getResources().getString(R.string.recovery_by_email_dialog))) {
                             isRecoveryByEmail = true;
                         } else {
                             isRecoveryByEmail = false;
@@ -290,14 +290,14 @@ public class FragmentSecurity extends BaseFragment {
         txtTurnPasswordOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.turn_Password_off).content(R.string.turn_Password_off_desc).positiveText(G.context.getResources().getString(R.string.yes)).onPositive(new MaterialDialog.SingleButtonCallback() {
+                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.turn_Password_off).content(R.string.turn_Password_off_desc).positiveText(G.fragmentActivity.getResources().getString(R.string.yes)).onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
                         isFirstSetPassword = true;
                         new RequestUserTwoStepVerificationUnsetPassword().unsetPassword(password);
                     }
-                }).negativeText(G.context.getResources().getString(R.string.no)).onNegative(new MaterialDialog.SingleButtonCallback() {
+                }).negativeText(G.fragmentActivity.getResources().getString(R.string.no)).onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
@@ -510,7 +510,7 @@ public class FragmentSecurity extends BaseFragment {
                     G.handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            error(G.context.getResources().getString(R.string.invalid_verify_email_code));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code));
                         }
                     });
                 }
@@ -522,7 +522,7 @@ public class FragmentSecurity extends BaseFragment {
                     G.handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            error(G.context.getResources().getString(R.string.invalid_password));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_password));
                         }
                     });
                 }
@@ -544,7 +544,7 @@ public class FragmentSecurity extends BaseFragment {
                         edtCheckPassword.setText("");
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.please_set_password));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_set_password));
                     }
                     return;
                 }
@@ -561,7 +561,7 @@ public class FragmentSecurity extends BaseFragment {
                         edtSetAnswerPassTwo.setText("");
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Please_complete_all_Item));
+                        error(G.fragmentActivity.getResources().getString(R.string.Please_complete_all_Item));
                     }
                     return;
                 }
@@ -577,11 +577,11 @@ public class FragmentSecurity extends BaseFragment {
                             edtSetEmail.setText("");
                         } else {
                             closeKeyboard(v);
-                            error(G.context.getResources().getString(R.string.invalid_email));
+                            error(G.fragmentActivity.getResources().getString(R.string.invalid_email));
                         }
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Please_enter_your_email));
+                        error(G.fragmentActivity.getResources().getString(R.string.Please_enter_your_email));
                     }
 
                     return;
@@ -597,11 +597,11 @@ public class FragmentSecurity extends BaseFragment {
                             edtChangeHint.setText("");
                         } else {
                             closeKeyboard(v);
-                            error(G.context.getResources().getString(R.string.hint_can_same_password));
+                            error(G.fragmentActivity.getResources().getString(R.string.hint_can_same_password));
                         }
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.Please_enter_your_hint));
+                        error(G.fragmentActivity.getResources().getString(R.string.Please_enter_your_hint));
                     }
                     return;
                 }
@@ -616,7 +616,7 @@ public class FragmentSecurity extends BaseFragment {
                         closeKeyboard(v);
                     } else {
                         closeKeyboard(v);
-                        error(G.context.getResources().getString(R.string.please_enter_code));
+                        error(G.fragmentActivity.getResources().getString(R.string.please_enter_code));
                     }
                 }
             }
@@ -750,7 +750,7 @@ public class FragmentSecurity extends BaseFragment {
                 Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
                 vShort.vibrate(200);
                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         snack.dismiss();

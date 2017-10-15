@@ -56,12 +56,12 @@ public class AdapterActiveSessions extends AbstractItem<AdapterActiveSessions, A
         super.bindView(holder, payloads);
 
         if (item.isCurrent()) {
-            holder.txtCurrentSession.setText(G.context.getResources().getString(R.string.current_session));
+            holder.txtCurrentSession.setText(G.fragmentActivity.getResources().getString(R.string.current_session));
             holder.vgRootLayout.setBackgroundColor(G.context.getResources().getColor(android.R.color.white));
             holder.line.setVisibility(View.GONE);
             holder.txtTerminate.setVisibility(View.GONE);
         } else {
-            holder.txtCurrentSession.setText(G.context.getResources().getString(R.string.Active_session));
+            holder.txtCurrentSession.setText(G.fragmentActivity.getResources().getString(R.string.Active_session));
             holder.vgRootLayout.setBackgroundColor(G.context.getResources().getColor(R.color.st_background2));
             holder.line.setVisibility(View.VISIBLE);
             holder.txtTerminate.setVisibility(View.VISIBLE);

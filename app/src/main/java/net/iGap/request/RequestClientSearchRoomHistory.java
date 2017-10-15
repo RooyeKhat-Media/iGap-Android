@@ -21,7 +21,7 @@ public class RequestClientSearchRoomHistory {
         builder.setFilter(filter);
         builder.setOffsetMessageId(messageId);
 
-        RequestWrapper requestWrapper = new RequestWrapper(605, builder, filter.toString());
+        RequestWrapper requestWrapper = new RequestWrapper(605, builder, filter);
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

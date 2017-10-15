@@ -284,14 +284,16 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                snack.dismiss();
-                            }
-                        });
-                        snack.show();
+                        if (v != null) {
+                            final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                            snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    snack.dismiss();
+                                }
+                            });
+                            snack.show();
+                        }
                     }
                 });
             }
@@ -301,14 +303,16 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                        snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                snack.dismiss();
-                            }
-                        });
-                        snack.show();
+                        if (v != null) {
+                            final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
+                            snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    snack.dismiss();
+                                }
+                            });
+                            snack.show();
+                        }
                     }
                 });
             }

@@ -58,7 +58,6 @@ import net.iGap.module.enums.CallState;
 import net.iGap.proto.ProtoFileDownload;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.request.RequestSignalingGetLog;
 import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestUserInfo;
@@ -535,7 +534,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
             @Override
             public void onClick(View v) {
 
-                if (btnSpeaker.getText().toString().equals(G.context.getResources().getString(R.string.md_Mute))) {
+                if (btnSpeaker.getText().toString().equals(G.fragmentActivity.getResources().getString(R.string.md_Mute))) {
                     btnSpeaker.setText(R.string.md_unMuted);
                     setSpeakerphoneOn(true);
                 } else {
@@ -550,7 +549,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
             @Override
             public void onClick(View v) {
 
-                if (btnMic.getText().toString().equals(G.context.getResources().getString(R.string.md_mic))) {
+                if (btnMic.getText().toString().equals(G.fragmentActivity.getResources().getString(R.string.md_mic))) {
                     btnMic.setText(R.string.md_mic_off);
                     WebRTC.muteSound();
                 } else {
@@ -744,7 +743,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
     private void setPicture() {
         Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
 
         if (registeredInfo != null) {
             loadOrDownloadPicture(registeredInfo);
@@ -754,7 +753,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
                 @Override
                 public void run() {
                     Realm realm = Realm.getDefaultInstance();
-                    RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+                    RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
 
                     if (registeredInfo != null) {
                         loadOrDownloadPicture(registeredInfo);

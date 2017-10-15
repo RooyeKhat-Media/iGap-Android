@@ -75,7 +75,7 @@ public class SearchFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment_layout, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.search_fragment_layout, container, false));
     }
 
     @Override
@@ -207,11 +207,11 @@ public class SearchFragment extends BaseFragment {
         imvNothingFound.setVisibility(View.GONE);
 
         list.clear();
-        addHeader(G.context.getResources().getString(R.string.chats));
+        addHeader(G.fragmentActivity.getResources().getString(R.string.chats));
         fillRoomList(text);
-        addHeader(G.context.getResources().getString(R.string.contacts));
+        addHeader(G.fragmentActivity.getResources().getString(R.string.contacts));
         fillContacts(text);
-        addHeader(G.context.getResources().getString(R.string.messages));
+        addHeader(G.fragmentActivity.getResources().getString(R.string.messages));
         fillMessages(text);
 
         List<IItem> items = new ArrayList<>();

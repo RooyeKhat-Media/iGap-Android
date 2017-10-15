@@ -12,10 +12,11 @@ package net.iGap.interfaces;
 
 import net.iGap.proto.ProtoClientGetRoom;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.request.RequestClientGetRoom;
 
 public interface OnClientGetRoomResponse {
 
-    void onClientGetRoomResponse(ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, String identity);
+    void onClientGetRoomResponse(ProtoGlobal.Room room, ProtoClientGetRoom.ClientGetRoomResponse.Builder builder, RequestClientGetRoom.IdentityClientGetRoom identity);
 
     void onError(int majorCode, int minorCode);
 

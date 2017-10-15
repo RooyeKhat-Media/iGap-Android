@@ -10,15 +10,36 @@
 
 package net.iGap.helper;
 
+import net.iGap.fragments.FragmentQrCodeNewDevice;
+import net.iGap.fragments.FragmentShowAvatars;
+import net.iGap.fragments.FragmentShowImage;
+
+import static net.iGap.G.forcePriorityActionId;
+import static net.iGap.G.generalImmovableClasses;
 import static net.iGap.G.lookupMap;
+import static net.iGap.G.priorityActionId;
+import static net.iGap.G.unLogin;
+import static net.iGap.G.unSecure;
+import static net.iGap.G.unSecureResponseActionId;
+import static net.iGap.G.waitingActionIds;
 
 public class HelperFillLookUpClass {
+
+    public static void fillArrays() {
+        HelperFillLookUpClass.fillLookUpClassArray();
+        HelperFillLookUpClass.fillUnSecureList();
+        HelperFillLookUpClass.fillUnSecureServerActionId();
+        HelperFillLookUpClass.fillUnLoginList();
+        HelperFillLookUpClass.fillImmovableClasses();
+        HelperFillLookUpClass.fillWaitingRequestActionIdAllowed();
+        HelperFillLookUpClass.fillPriorityActionId();
+        HelperFillLookUpClass.fillForcePriorityActionId();
+    }
 
     /**
      * fill static hashMap with actionId and proto class name
      */
-
-    public static void fillLookUpClassArray() {
+    private static void fillLookUpClassArray() {
 
         lookupMap.put(0, "ProtoError.ErrorResponse");
         lookupMap.put(30001, "ProtoConnectionSecuring.ConnectionSecuringResponse");
@@ -168,7 +189,7 @@ public class HelperFillLookUpClass {
         lookupMap.put(30612, "ProtoClientSearchUsername.ClientSearchUsernameResponse");
         lookupMap.put(30613, "ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse");
 
-        // FileUpload 7xx , 307xx
+        // FileUpload,Download 7xx , 307xx
         lookupMap.put(30700, "ProtoFileUploadOption.FileUploadOptionResponse");
         lookupMap.put(30701, "ProtoFileUploadInit.FileUploadInitResponse");
         lookupMap.put(30702, "ProtoFileUpload.FileUploadResponse");
@@ -211,5 +232,82 @@ public class HelperFillLookUpClass {
         lookupMap.put(60002, "ProtoPushUserInfoExpired.PushUserInfoExpiredResponse");
         lookupMap.put(60003, "ProtoPushRateSignaling.PushRateSignalingResponse");
 
+    }
+
+    /**
+     * list of actionId that can be doing without secure
+     * (for send request)
+     */
+    private static void fillUnSecureList() {
+        unSecure.add("2");
+    }
+
+    /**
+     * list of actionIds that allowed continue processing even communication is not secure
+     * (for receive response)
+     */
+    private static void fillUnSecureServerActionId() {
+        unSecureResponseActionId.add("30001");
+        unSecureResponseActionId.add("30002");
+        unSecureResponseActionId.add("30003");
+    }
+
+    /**
+     * list of actionId that can be doing without login
+     * (for send request)
+     */
+    private static void fillUnLoginList() {
+        unLogin.add("100");
+        unLogin.add("101");
+        unLogin.add("102");
+        unLogin.add("500");
+        unLogin.add("501");
+        unLogin.add("502");
+        unLogin.add("503");
+        unLogin.add("131");
+        unLogin.add("132");
+        unLogin.add("138");
+        unLogin.add("139");
+        unLogin.add("140");
+        unLogin.add("802");
+    }
+
+    /**
+     * list off classes(fragments) that don't have any animations for open and close state
+     */
+    private static void fillImmovableClasses() {
+        generalImmovableClasses.add(FragmentShowAvatars.class.getName());
+        generalImmovableClasses.add(FragmentShowImage.class.getName());
+        generalImmovableClasses.add(FragmentQrCodeNewDevice.class.getName());
+    }
+
+    /**
+     * list of actionId that will be storing in waitingActionIds list
+     * and after that user login send this request again
+     * (for send request)
+     */
+    private static void fillWaitingRequestActionIdAllowed() {
+        waitingActionIds.add("201");
+        waitingActionIds.add("310");
+        waitingActionIds.add("410");
+        //waitingActionIds.add("700");
+        //waitingActionIds.add("701");
+        //waitingActionIds.add("702");
+        //waitingActionIds.add("703");
+        //waitingActionIds.add("705");
+    }
+
+
+    private static void fillPriorityActionId() {
+        priorityActionId.put(700, 50);
+        priorityActionId.put(701, 50);
+        priorityActionId.put(702, 50);
+        priorityActionId.put(703, 50);
+        priorityActionId.put(704, 50);
+    }
+
+    private static void fillForcePriorityActionId() {
+        forcePriorityActionId.add(210);
+        forcePriorityActionId.add(319);
     }
 }

@@ -57,7 +57,6 @@ import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 
@@ -257,7 +256,7 @@ public class FragmentShowImage extends BaseFragment {
 
         viewPager.setCurrentItem(selectedFile);
 
-        txtImageNumber.setText(selectedFile + 1 + " " + G.context.getResources().getString(R.string.of) + " " + mFList.size());
+        txtImageNumber.setText(selectedFile + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + mFList.size());
         if (HelperCalander.isLanguagePersian) {
             txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
         }
@@ -307,7 +306,7 @@ public class FragmentShowImage extends BaseFragment {
         }
 
         //+Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = getRealm().where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmRoomMessageFinal.getUserId()).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(getRealm(), realmRoomMessageFinal.getUserId());
 
         if (realmRegisteredInfo != null) {
             txtImageName.setText(realmRegisteredInfo.getDisplayName());
@@ -350,16 +349,16 @@ public class FragmentShowImage extends BaseFragment {
         TextView txtSaveToGallery = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
 
         TextView iconSaveToGallery = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
-        iconSaveToGallery.setText(G.context.getResources().getString(R.string.md_save));
+        iconSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.md_save));
 
         root1.setVisibility(View.VISIBLE);
         root2.setVisibility(View.VISIBLE);
 
-        txtShare.setText(G.context.getResources().getString(R.string.save_to_gallery));
-        txtSaveToGallery.setText(G.context.getResources().getString(R.string.share_image));
+        txtShare.setText(getResources().getString(R.string.save_to_gallery));
+        txtSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.share_image));
 
         TextView iconShare = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
-        iconShare.setText(G.context.getResources().getString(R.string.md_share_button));
+        iconShare.setText(G.fragmentActivity.getResources().getString(R.string.md_share_button));
 
         root1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,7 +394,7 @@ public class FragmentShowImage extends BaseFragment {
                 intent.setType("image/*");
                 //+Realm realm = Realm.getDefaultInstance();
                 putExtra(intent, StructMessageInfo.convert(getRealm(), rm));
-                startActivity(Intent.createChooser(intent, G.context.getResources().getString(R.string.share_image_from_igap)));
+                startActivity(Intent.createChooser(intent, G.fragmentActivity.getResources().getString(R.string.share_image_from_igap)));
             }
         }
     }
@@ -630,7 +629,7 @@ public class FragmentShowImage extends BaseFragment {
                 @Override
                 public void onPageSelected(final int position) {
 
-                    txtImageNumber.setText(position + 1 + " " + G.context.getResources().getString(R.string.of) + " " + mFList.size());
+                    txtImageNumber.setText(position + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + mFList.size());
                     if (HelperCalander.isLanguagePersian) {
                         txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
                     }

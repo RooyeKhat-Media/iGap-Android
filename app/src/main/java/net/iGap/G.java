@@ -193,6 +193,7 @@ import net.iGap.interfaces.OnUserUpdateStatus;
 import net.iGap.interfaces.OnUserUsernameToId;
 import net.iGap.interfaces.OnUserVerification;
 import net.iGap.interfaces.OnVerifyNewDevice;
+import net.iGap.interfaces.OneFragmentIsOpen;
 import net.iGap.interfaces.OpenFragment;
 import net.iGap.interfaces.TwoStepSecurityConfirmEmail;
 import net.iGap.interfaces.UpdateListAfterKick;
@@ -228,10 +229,12 @@ public class G extends MultiDexApplication {
     public static ArrayList<String> unLogin = new ArrayList<>();// list of actionId that can be doing without secure
     public static ArrayList<String> waitingActionIds = new ArrayList<>();
     public static ArrayList<String> generalImmovableClasses = new ArrayList<>();
+    public static ArrayList<Integer> forcePriorityActionId = new ArrayList<>();
 
     public static HashMap<Integer, String> lookupMap = new HashMap<>();
     public static HashMap<String, ArrayList<Object>> requestQueueRelationMap = new HashMap<>();
     public static HashMap<Long, HelperLogMessage.StructLog> logMessageUpdatList = new HashMap<>();
+    public static HashMap<Integer, Integer> priorityActionId = new HashMap<>();
 
     public static Activity currentActivity;
     public static FragmentActivity fragmentActivity;
@@ -482,7 +485,7 @@ public class G extends MultiDexApplication {
     public static Typeface typeface_neuropolitical;
     public static boolean isPassCode;
     public static FingerPrint fingerPrint;
-
+    public static OneFragmentIsOpen oneFragmentIsOpen;
     public static boolean isFragmentMapActive = false; // for check network
     public static boolean isRestartActivity = false; // for check passCode
     public static boolean isFirstPassCode = true; // for check passCode

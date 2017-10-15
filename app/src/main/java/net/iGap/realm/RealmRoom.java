@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateUtils;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
@@ -21,6 +22,7 @@ import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
+import net.iGap.module.SUID;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
@@ -62,6 +64,189 @@ public class RealmRoom extends RealmObject {
 
     public RealmRoom(long id) {
         this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ProtoGlobal.Room.Type getType() {
+        return (type != null) ? ProtoGlobal.Room.Type.valueOf(type) : null;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type.toString();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        try {
+            this.title = title;
+        } catch (Exception e) {
+            this.title = HelperString.getUtf8String(title);
+        }
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
+    }
+
+    public boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public boolean getMute() {
+        return mute;
+    }
+
+    public void setMute(boolean mute) {
+        this.mute = mute;
+    }
+
+    public RealmChatRoom getChatRoom() {
+        return chatRoom;
+    }
+
+    public void setChatRoom(RealmChatRoom chatRoom) {
+        this.chatRoom = chatRoom;
+    }
+
+    public RealmGroupRoom getGroupRoom() {
+        return groupRoom;
+    }
+
+    public void setGroupRoom(RealmGroupRoom groupRoom) {
+        this.groupRoom = groupRoom;
+    }
+
+    public RealmChannelRoom getChannelRoom() {
+        return channelRoom;
+    }
+
+    public void setChannelRoom(RealmChannelRoom channelRoom) {
+        this.channelRoom = channelRoom;
+    }
+
+    public RealmRoomDraft getDraft() {
+        return draft;
+    }
+
+    public void setDraft(RealmRoomDraft draft) {
+        this.draft = draft;
+    }
+
+    public RealmDraftFile getDraftFile() {
+        return draftFile;
+    }
+
+    public void setDraftFile(RealmDraftFile draftFile) {
+        this.draftFile = draftFile;
+    }
+
+    public RealmAvatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(RealmAvatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSharedMediaCount() {
+
+        if (sharedMediaCount == null || sharedMediaCount.length() == 0) {
+            return G.context.getString(R.string.there_is_no_sheared_media);
+        }
+
+        String countList[] = sharedMediaCount.split("\n");
+        try {
+
+            int countOFImage = Integer.parseInt(countList[0]);
+            int countOFVIDEO = Integer.parseInt(countList[1]);
+            int countOFAUDIO = Integer.parseInt(countList[2]);
+            int countOFVOICE = Integer.parseInt(countList[3]);
+            int countOFGIF = Integer.parseInt(countList[4]);
+            int countOFFILE = Integer.parseInt(countList[5]);
+            int countOFLink = Integer.parseInt(countList[6]);
+
+            String result = "";
+
+            if (countOFImage > 0) result += "\n" + countOFImage + " " + G.context.getString(R.string.shared_image);
+            if (countOFVIDEO > 0) result += "\n" + countOFVIDEO + " " + G.context.getString(R.string.shared_video);
+            if (countOFAUDIO > 0) result += "\n" + countOFAUDIO + " " + G.context.getString(R.string.shared_audio);
+            if (countOFVOICE > 0) result += "\n" + countOFVOICE + " " + G.context.getString(R.string.shared_voice);
+            if (countOFGIF > 0) result += "\n" + countOFGIF + " " + G.context.getString(R.string.shared_gif);
+            if (countOFFILE > 0) result += "\n" + countOFFILE + " " + G.context.getString(R.string.shared_file);
+            if (countOFLink > 0) result += "\n" + countOFLink + " " + G.context.getString(R.string.shared_links);
+
+            result = result.trim();
+
+            if (result.length() < 1) {
+                result = G.context.getString(R.string.there_is_no_sheared_media);
+            }
+
+            return result;
+        } catch (Exception e) {
+
+            return sharedMediaCount;
+        }
+
+
+    }
+
+    public void setSharedMediaCount(String sharedMediaCount) {
+        this.sharedMediaCount = sharedMediaCount;
+    }
+
+    public String getActionState() {
+        return actionState;
+    }
+
+    public void setActionState(String actionState, long userId) {
+        this.actionState = actionState;
+        this.actionStateUserId = userId;
+    }
+
+    public long getActionStateUserId() {
+        return actionStateUserId;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
     }
 
     public long getUpdatedTime() {
@@ -247,7 +432,7 @@ public class RealmRoom extends RealmObject {
      *
      * @param rooms ProtoGlobal.Room
      */
-    public static void putChatToDatabase(final List<ProtoGlobal.Room> rooms, final boolean deleteBefore, final boolean cleanDeletedRoommessage) {
+    public static void putChatToDatabase(final List<ProtoGlobal.Room> rooms, final boolean deleteBefore, final boolean cleanDeletedRoomMessage) {
 
         /**
          * (( hint : i don't used from mRealm instance ,because i have an error
@@ -275,7 +460,7 @@ public class RealmRoom extends RealmObject {
                             RealmRoom.putOrUpdate(room, realm);
                         }
 
-                        if (cleanDeletedRoommessage) {
+                        if (cleanDeletedRoomMessage) {
                             // delete messages and rooms that was deleted
                             RealmResults<RealmRoom> deletedRoomsList = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).findAll();
                             for (RealmRoom item : deletedRoomsList) {
@@ -456,186 +641,67 @@ public class RealmRoom extends RealmObject {
         realm.close();
     }
 
-    public long getId() {
-        return id;
-    }
+    public static void addOwnerToDatabase(Long roomId, ProtoGlobal.Room.Type roomType) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        if (realmRoom != null) {
+            if (roomType == ProtoGlobal.Room.Type.CHANNEL) {
+                RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
+                if (realmChannelRoom != null) {
+                    final RealmList<RealmMember> members = realmChannelRoom.getMembers();
 
-    public void setId(long id) {
-        this.id = id;
-    }
+                    final RealmMember realmMember = new RealmMember();
+                    realmMember.setId(SUID.id().get());
+                    realmMember.setPeerId(G.userId);
+                    realmMember.setRole(ProtoGlobal.ChannelRoom.Role.OWNER.toString());
 
-    public ProtoGlobal.Room.Type getType() {
-        return (type != null) ? ProtoGlobal.Room.Type.valueOf(type) : null;
-    }
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            members.add(realmMember);
+                        }
+                    });
+                }
+            } else if (roomType == ProtoGlobal.Room.Type.GROUP) {
+                RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
+                if (realmGroupRoom != null) {
+                    final RealmList<RealmMember> members = realmGroupRoom.getMembers();
 
-    public void setType(RoomType type) {
-        this.type = type.toString();
-    }
+                    final RealmMember realmMember = new RealmMember();
+                    realmMember.setId(SUID.id().get());
+                    realmMember.setPeerId(G.userId);
+                    realmMember.setRole(ProtoGlobal.GroupRoom.Role.OWNER.toString());
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        try {
-            this.title = title;
-        } catch (Exception e) {
-            this.title = HelperString.getUtf8String(title);
-        }
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public int getUnreadCount() {
-        return unreadCount;
-    }
-
-    public void setUnreadCount(int unreadCount) {
-        this.unreadCount = unreadCount;
-    }
-
-    public boolean getReadOnly() {
-        return readOnly;
-    }
-
-    public void setReadOnly(boolean readOnly) {
-        this.readOnly = readOnly;
-    }
-
-    public boolean getMute() {
-        return mute;
-    }
-
-    public void setMute(boolean mute) {
-        this.mute = mute;
-    }
-
-    public RealmChatRoom getChatRoom() {
-        return chatRoom;
-    }
-
-    public void setChatRoom(RealmChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
-    }
-
-    public RealmGroupRoom getGroupRoom() {
-        return groupRoom;
-    }
-
-    public void setGroupRoom(RealmGroupRoom groupRoom) {
-        this.groupRoom = groupRoom;
-    }
-
-    public RealmChannelRoom getChannelRoom() {
-        return channelRoom;
-    }
-
-    public void setChannelRoom(RealmChannelRoom channelRoom) {
-        this.channelRoom = channelRoom;
-    }
-
-    public RealmRoomDraft getDraft() {
-        return draft;
-    }
-
-    public void setDraft(RealmRoomDraft draft) {
-        this.draft = draft;
-    }
-
-    public RealmDraftFile getDraftFile() {
-        return draftFile;
-    }
-
-    public void setDraftFile(RealmDraftFile draftFile) {
-        this.draftFile = draftFile;
-    }
-
-    public RealmAvatar getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(RealmAvatar avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getSharedMediaCount() {
-
-        if (sharedMediaCount == null || sharedMediaCount.length() == 0) {
-            return G.context.getString(R.string.there_is_no_sheared_media);
-        }
-
-        String countList[] = sharedMediaCount.split("\n");
-        try {
-
-            int countOFImage = Integer.parseInt(countList[0]);
-            int countOFVIDEO = Integer.parseInt(countList[1]);
-            int countOFAUDIO = Integer.parseInt(countList[2]);
-            int countOFVOICE = Integer.parseInt(countList[3]);
-            int countOFGIF = Integer.parseInt(countList[4]);
-            int countOFFILE = Integer.parseInt(countList[5]);
-            int countOFLink = Integer.parseInt(countList[6]);
-
-            String result = "";
-
-            if (countOFImage > 0) result += "\n" + countOFImage + " " + G.context.getString(R.string.shared_image);
-            if (countOFVIDEO > 0) result += "\n" + countOFVIDEO + " " + G.context.getString(R.string.shared_video);
-            if (countOFAUDIO > 0) result += "\n" + countOFAUDIO + " " + G.context.getString(R.string.shared_audio);
-            if (countOFVOICE > 0) result += "\n" + countOFVOICE + " " + G.context.getString(R.string.shared_voice);
-            if (countOFGIF > 0) result += "\n" + countOFGIF + " " + G.context.getString(R.string.shared_gif);
-            if (countOFFILE > 0) result += "\n" + countOFFILE + " " + G.context.getString(R.string.shared_file);
-            if (countOFLink > 0) result += "\n" + countOFLink + " " + G.context.getString(R.string.shared_links);
-
-            result = result.trim();
-
-            if (result.length() < 1) {
-                result = G.context.getString(R.string.there_is_no_sheared_media);
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            members.add(realmMember);
+                        }
+                    });
+                }
             }
-
-            return result;
-        } catch (Exception e) {
-
-            return sharedMediaCount;
         }
 
-
+        realm.close();
     }
 
-    public void setSharedMediaCount(String sharedMediaCount) {
-        this.sharedMediaCount = sharedMediaCount;
-    }
-
-    public String getActionState() {
-        return actionState;
-    }
-
-    public void setActionState(String actionState, long userId) {
-        this.actionState = actionState;
-        this.actionStateUserId = userId;
-    }
-
-    public long getActionStateUserId() {
-        return actionStateUserId;
-    }
-
-    public boolean isPinned() {
-        return isPinned;
-    }
-
-    public void setPinned(boolean pinned) {
-        isPinned = pinned;
+    public static void updateMemberCount(long roomId, final ProtoGlobal.Room.Type roomType, final long memberCount) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if (roomType == ProtoGlobal.Room.Type.CHANNEL) {
+                    if (realmRoom != null && realmRoom.getChannelRoom() != null) {
+                        realmRoom.getChannelRoom().setParticipantsCountLabel(memberCount + "");
+                    }
+                } else {
+                    if (realmRoom != null && realmRoom.getGroupRoom() != null) {
+                        realmRoom.getGroupRoom().setParticipantsCountLabel(memberCount + "");
+                    }
+                }
+            }
+        });
+        realm.close();
     }
 }

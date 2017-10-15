@@ -71,9 +71,9 @@ public class FragmentMediaPlayer extends BaseFragment {
             return inflater.inflate(R.layout.activity_media_player, container, false);
         } else {
             if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                return inflater.inflate(R.layout.activity_media_player_land, container, false);
+                return attachToSwipeBack(inflater.inflate(R.layout.activity_media_player_land, container, false));
             } else {
-                return inflater.inflate(R.layout.activity_media_player, container, false);
+                return attachToSwipeBack(inflater.inflate(R.layout.activity_media_player, container, false));
             }
         }
     }
@@ -384,16 +384,16 @@ public class FragmentMediaPlayer extends BaseFragment {
         TextView txtSaveToGallery = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
 
         TextView iconSaveToGallery = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
-        iconSaveToGallery.setText(G.context.getResources().getString(R.string.md_save));
+        iconSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.md_save));
 
-        txtShare.setText(G.context.getResources().getString(R.string.save_to_Music));
-        txtSaveToGallery.setText(G.context.getResources().getString(R.string.share_item_dialog));
+        txtShare.setText(G.fragmentActivity.getResources().getString(R.string.save_to_Music));
+        txtSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.share_item_dialog));
 
         root1.setVisibility(View.VISIBLE);
         root2.setVisibility(View.VISIBLE);
 
         TextView iconShare = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
-        iconShare.setText(G.context.getResources().getString(R.string.md_share_button));
+        iconShare.setText(G.fragmentActivity.getResources().getString(R.string.md_share_button));
 
         root1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -425,7 +425,7 @@ public class FragmentMediaPlayer extends BaseFragment {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("audio/*");
         share.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(share, G.context.getResources().getString(R.string.shate_audio_file)));
+        startActivity(Intent.createChooser(share, G.fragmentActivity.getResources().getString(R.string.shate_audio_file)));
     }
 
     private void updateUi() {
@@ -436,9 +436,9 @@ public class FragmentMediaPlayer extends BaseFragment {
 
         if (MusicPlayer.mp != null) {
             if (MusicPlayer.mp.isPlaying()) {
-                btnPlay.setText(G.context.getResources().getString(R.string.md_round_pause_button));
+                btnPlay.setText(G.fragmentActivity.getResources().getString(R.string.md_round_pause_button));
             } else {
-                btnPlay.setText(G.context.getResources().getString(R.string.md_play_rounded_button));
+                btnPlay.setText(G.fragmentActivity.getResources().getString(R.string.md_play_rounded_button));
             }
 
             if (MusicPlayer.mediaThumpnail != null) {

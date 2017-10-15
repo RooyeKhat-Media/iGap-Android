@@ -508,15 +508,15 @@ public class FileUtils {
         DecimalFormat dec = new DecimalFormat("0.0");
 
         if (t > 1) {
-            hrSize = dec.format(t).concat(" " + G.context.getResources().getString(R.string.c_TB));
+            hrSize = dec.format(t).concat(" " + G.fragmentActivity.getResources().getString(R.string.c_TB));
         } else if (g > 1) {
-            hrSize = dec.format(g).concat(" " + G.context.getResources().getString(R.string.c_GB));
+            hrSize = dec.format(g).concat(" " + G.fragmentActivity.getResources().getString(R.string.c_GB));
         } else if (m > 1) {
-            hrSize = dec.format(m).concat(" " + G.context.getResources().getString(R.string.c_MB));
+            hrSize = dec.format(m).concat(" " + G.fragmentActivity.getResources().getString(R.string.c_MB));
         } else if (k > 1) {
-            hrSize = dec.format(k).concat(" " + G.context.getResources().getString(R.string.c_KB));
+            hrSize = dec.format(k).concat(" " + G.fragmentActivity.getResources().getString(R.string.c_KB));
         } else {
-            hrSize = dec.format(b).concat(" " + G.context.getResources().getString(R.string.c_byte));
+            hrSize = dec.format(b).concat(" " + G.fragmentActivity.getResources().getString(R.string.c_byte));
         }
 
         return HelperCalander.isLanguagePersian ? HelperCalander.convertToUnicodeFarsiNumber(hrSize) : hrSize;

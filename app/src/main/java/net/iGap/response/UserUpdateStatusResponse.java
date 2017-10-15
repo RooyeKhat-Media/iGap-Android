@@ -14,7 +14,8 @@ import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
+
+import static net.iGap.G.userId;
 
 public class UserUpdateStatusResponse extends MessageHandler {
 
@@ -34,7 +35,7 @@ public class UserUpdateStatusResponse extends MessageHandler {
         final ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder builder = (ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder) message;
 
         Realm realm = Realm.getDefaultInstance();
-        final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, builder.getUserId()).findFirst();
+        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUserId());
         if (realmRegisteredInfo != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override public void execute(Realm realm) {
@@ -42,7 +43,7 @@ public class UserUpdateStatusResponse extends MessageHandler {
                     realmRegisteredInfo.setStatus(builder.getStatus().toString());
                     realmRegisteredInfo.setLastSeen(builder.getResponse().getTimestamp());
 
-                    if (builder.getUserId() == G.userId) {
+                    if (builder.getUserId() == userId) {
                         if (builder.getStatus() == ProtoUserUpdateStatus.UserUpdateStatus.Status.ONLINE) {
                             G.isUserStatusOnline = true;
                         } else {

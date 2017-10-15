@@ -79,7 +79,6 @@ import net.iGap.realm.RealmCallConfig;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
@@ -153,7 +152,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_contacts_profile, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.activity_contacts_profile, container, false));
     }
 
     @Override
@@ -180,7 +179,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             shearedId = roomId;
         }
 
-        rrg = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        rrg = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
 
         if (rrg != null) {
 
@@ -194,7 +193,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             });
         }
 
-        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
 
         if (realmRegisteredInfo != null) {
             if (realmRegisteredInfo.getLastAvatar() != null) {
@@ -261,7 +260,8 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     }
 
                     fragment.appBarLayout = fab;
-                    new HelperFragment(fragment).setResourceContainer(R.id.container_contact_profile).load();
+                    //new HelperFragment(fragment).setResourceContainer(R.id.container_contact_profile).load();
+                    new HelperFragment(fragment).setReplace(false).load();
                 }
                 realm.close();
             }
@@ -424,8 +424,12 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     layoutNickname.addView(inputFirstName, layoutParams);
                     layoutNickname.addView(inputLastName, lastNameLayoutParams);
 
-                    final MaterialDialog dialog =
-                            new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.pu_nikname_profileUser)).positiveText(G.context.getResources().getString(R.string.B_ok)).customView(layoutNickname, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.context.getResources().getString(R.string.B_cancel)).build();
+                    final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.pu_nikname_profileUser))
+                            .positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
+                            .customView(layoutNickname, true)
+                            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                            .build();
 
                     final View positive = dialog.getActionButton(DialogAction.POSITIVE);
                     positive.setEnabled(false);
@@ -535,7 +539,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                                         contact.setDisplay_name(displayName.trim());
                                     }
 
-                                    RealmRegisteredInfo registeredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+                                    RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
                                     if (registeredInfo != null) {
                                         registeredInfo.setFirstName(firstName);
                                         registeredInfo.setLastName(lastName);
@@ -684,7 +688,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         txtClearChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog(G.context.getResources().getString(R.string.clear_this_chat), G.context.getResources().getString(R.string.clear), G.context.getResources().getString(R.string.cancel));
+                showAlertDialog(G.fragmentActivity.getResources().getString(R.string.clear_this_chat), G.fragmentActivity.getResources().getString(R.string.clear), G.fragmentActivity.getResources().getString(R.string.cancel));
             }
         });
         txtNotifyAndSound = (TextView) view.findViewById(R.id.chi_txtNotifyAndSound);
@@ -725,7 +729,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                if (!((RealmRoom) element).isValid() || ((RealmRoom) element).isDeleted()) {
+                                if (!((RealmRoom) element).isValid()) {
                                     return;
                                 }
                                 String countText = ((RealmRoom) element).getSharedMediaCount();
@@ -897,7 +901,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                                 Toast.makeText(G.context, R.string.save_ok, Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(G.context, G.context.getResources().getString(R.string.exception) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(G.context, G.fragmentActivity.getResources().getString(R.string.exception) + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
                             break;
@@ -939,7 +943,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
 
         contacts.add(contact);
 
-        new RequestUserContactImport().contactImportAndGetResponse(contacts, true);
+        new RequestUserContactImport().contactImport(contacts, true);
     }
 
     private void showPopUp() {
@@ -961,10 +965,10 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         TextView iconBlockUser = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
 
         TextView iconClearHistory = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
-        iconClearHistory.setText(G.context.getResources().getString(R.string.md_clearHistory));
+        iconClearHistory.setText(G.fragmentActivity.getResources().getString(R.string.md_clearHistory));
 
         TextView iconDeleteContact = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
-        iconDeleteContact.setText(G.context.getResources().getString(R.string.md_rubbish_delete_file));
+        iconDeleteContact.setText(G.fragmentActivity.getResources().getString(R.string.md_rubbish_delete_file));
 
         root1.setVisibility(View.VISIBLE);
         root2.setVisibility(View.VISIBLE);
@@ -979,14 +983,14 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         }
 
         if (isBlockUser) {
-            txtBlockUser.setText(G.context.getResources().getString(R.string.un_block_user));
-            iconBlockUser.setText(G.context.getResources().getString(R.string.md_unblock));
+            txtBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.un_block_user));
+            iconBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.md_unblock));
         } else {
-            txtBlockUser.setText(G.context.getResources().getString(R.string.block_user));
-            iconBlockUser.setText(G.context.getResources().getString(R.string.md_block));
+            txtBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.block_user));
+            iconBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.md_block));
         }
-        txtClearHistory.setText(G.context.getResources().getString(R.string.clear_history));
-        txtDeleteContact.setText(G.context.getResources().getString(R.string.delete_contact));
+        txtClearHistory.setText(G.fragmentActivity.getResources().getString(R.string.clear_history));
+        txtDeleteContact.setText(G.fragmentActivity.getResources().getString(R.string.delete_contact));
 
         root1.setOnClickListener(new View.OnClickListener() {
             @Override

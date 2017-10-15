@@ -37,46 +37,46 @@ public class HelperConvertEnumToString {
             case CANCEL:
                 break;
             case TYPING:
-                finalActionName = G.context.getResources().getString(R.string.typing);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.typing);
                 break;
             case SENDING_IMAGE:
-                finalActionName = G.context.getResources().getString(R.string.sending_image);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_image);
                 break;
             case CAPTURING_IMAGE:
-                finalActionName = G.context.getResources().getString(R.string.capturing_image);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.capturing_image);
                 break;
             case SENDING_VIDEO:
-                finalActionName = G.context.getResources().getString(R.string.sending_video);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_video);
                 break;
             case CAPTURING_VIDEO:
-                finalActionName = G.context.getResources().getString(R.string.capturing_video);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.capturing_video);
                 break;
             case SENDING_AUDIO:
-                finalActionName = G.context.getResources().getString(R.string.sending_audio);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_audio);
                 break;
             case RECORDING_VOICE:
-                finalActionName = G.context.getResources().getString(R.string.recording_voice);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.recording_voice);
                 break;
             case SENDING_VOICE:
-                finalActionName = G.context.getResources().getString(R.string.sending_voice);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_voice);
                 break;
             case SENDING_DOCUMENT:
-                finalActionName = G.context.getResources().getString(R.string.sending_document);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_document);
                 break;
             case SENDING_GIF:
-                finalActionName = G.context.getResources().getString(R.string.sending_gif);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_gif);
                 break;
             case SENDING_FILE:
-                finalActionName = G.context.getResources().getString(R.string.sending_file);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_file);
                 break;
             case SENDING_LOCATION:
-                finalActionName = G.context.getResources().getString(R.string.sending_location);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.sending_location);
                 break;
             case CHOOSING_CONTACT:
-                finalActionName = G.context.getResources().getString(R.string.choosing_contact);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.choosing_contact);
                 break;
             case PAINTING:
-                finalActionName = G.context.getResources().getString(R.string.painting);
+                finalActionName = G.fragmentActivity.getResources().getString(R.string.painting);
                 break;
         }
 

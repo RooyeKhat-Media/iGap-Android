@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:clickable="true"
     android:id="@+id/rootFragmentLanguage"
-    android:elevation="999dp"
+
     >
 
   <android.support.design.widget.AppBarLayout

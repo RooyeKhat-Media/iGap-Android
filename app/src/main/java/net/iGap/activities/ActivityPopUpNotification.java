@@ -63,7 +63,6 @@ import net.iGap.module.enums.StructPopUp;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmChatRoom;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
@@ -219,7 +218,7 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     private void setLastSeen(RealmRoom realmRoom, Realm realm) {
         RealmChatRoom realmChatRoom = realmRoom.getChatRoom();
         if (realmRoom.getChatRoom() != null) {
-            RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmChatRoom.getPeerId()).findFirst();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmChatRoom.getPeerId());
             if (realmRegisteredInfo != null) {
                 if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
                     txtLastSeen.setText(LastSeenTimeUtil.computeTime(realmRegisteredInfo.getId(), realmRegisteredInfo.getLastSeen(), false));
@@ -227,6 +226,8 @@ public class ActivityPopUpNotification extends AppCompatActivity {
                     txtLastSeen.setText(realmRegisteredInfo.getStatus());
                 }
             }
+        } else {
+            txtLastSeen.setText("");
         }
     }
 
@@ -234,7 +235,7 @@ public class ActivityPopUpNotification extends AppCompatActivity {
 
         String avatarPath = null;
 
-        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, chatPeerId).findFirst();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, chatPeerId);
         if (realmRegisteredInfo != null && realmRegisteredInfo.getAvatars() != null && realmRegisteredInfo.getLastAvatar() != null) {
 
             String mainFilePath = realmRegisteredInfo.getLastAvatar().getFile().getLocalFilePath();

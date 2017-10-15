@@ -18,29 +18,31 @@ public class ClientSearchRoomHistoryResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public ClientSearchRoomHistoryResponse(int actionId, Object protoClass, String identity) {
+    public ClientSearchRoomHistoryResponse(int actionId, Object protoClass, Object identity) {
         super(actionId, protoClass, identity);
         this.message = protoClass;
         this.identity = identity;
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        ProtoClientSearchRoomHistory.ClientSearchRoomHistoryResponse.Builder builder = (ProtoClientSearchRoomHistory.ClientSearchRoomHistoryResponse.Builder) message;
-        G.onClientSearchRoomHistory.onClientSearchRoomHistory(builder.getTotalCount(), builder.getNotDeletedCount(), builder.getResultList(), identity);
+        if (G.onClientSearchRoomHistory != null) {
+            ProtoClientSearchRoomHistory.ClientSearchRoomHistoryResponse.Builder builder = (ProtoClientSearchRoomHistory.ClientSearchRoomHistoryResponse.Builder) message;
+            G.onClientSearchRoomHistory.onClientSearchRoomHistory(builder.getTotalCount(), builder.getNotDeletedCount(), builder.getResultList(), ((ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter) identity));
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-
-        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int majorCode = errorResponse.getMajorCode();
-        int minorCode = errorResponse.getMinorCode();
-
-        G.onClientSearchRoomHistory.onError(majorCode, minorCode, identity);
+        if (G.onClientSearchRoomHistory != null) {
+            ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+            G.onClientSearchRoomHistory.onError(errorResponse.getMajorCode(), errorResponse.getMinorCode(), ((ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter) identity));
+        }
     }
 }
 

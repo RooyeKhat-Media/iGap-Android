@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_call_fragment"
     android:clickable="true"
-    android:elevation="999dp"
     android:layoutDirection="ltr"
     android:orientation="vertical"
     tools:ignore="MissingPrefix"
@@ -140,7 +139,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:layout_marginBottom="@dimen/dp24"
+              android:layout_marginTop="@dimen/dp68"
               android:orientation="vertical"
               ></net.iGap.module.AvlDirectCall>
 

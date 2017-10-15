@@ -69,7 +69,7 @@ public class FragmentActiveSessions extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_active_sessions, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_active_sessions, container, false));
     }
 
     @Override
@@ -171,7 +171,7 @@ public class FragmentActiveSessions extends BaseFragment {
                         G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         prgWaiting.setVisibility(View.GONE);
                         final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                        snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 snack.dismiss();
@@ -189,8 +189,8 @@ public class FragmentActiveSessions extends BaseFragment {
                     public void run() {
                         G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         prgWaiting.setVisibility(View.GONE);
-                        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.context.getResources().getString(R.string.error), Snackbar.LENGTH_LONG);
-                        snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.error), Snackbar.LENGTH_LONG);
+                        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 snack.dismiss();
@@ -237,7 +237,7 @@ public class FragmentActiveSessions extends BaseFragment {
                                                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                                 prgWaiting.setVisibility(View.GONE);
                                                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
                                                         snack.dismiss();
@@ -256,7 +256,7 @@ public class FragmentActiveSessions extends BaseFragment {
                                                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                                 prgWaiting.setVisibility(View.GONE);
                                                 final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.context.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
                                                         snack.dismiss();

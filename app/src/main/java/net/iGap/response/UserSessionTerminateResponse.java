@@ -27,20 +27,29 @@ public class UserSessionTerminateResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder builder = (ProtoUserSessionTerminate.UserSessionTerminateResponse.Builder) message;
-        G.onUserSessionTerminate.onUserSessionTerminate(Long.parseLong(identity));
+        if (G.onUserSessionTerminate != null) {
+            G.onUserSessionTerminate.onUserSessionTerminate(Long.parseLong(identity));
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
-        G.onUserSessionTerminate.onTimeOut();
+        if (G.onUserSessionTerminate != null) {
+            G.onUserSessionTerminate.onTimeOut();
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-        G.onUserSessionTerminate.onError();
+        if (G.onUserSessionTerminate != null) {
+            G.onUserSessionTerminate.onError();
+        }
     }
 }
 

@@ -10,7 +10,7 @@
     tools:ignore="MissingPrefix"
     android:clickable="true"
     android:layoutDirection="ltr"
-    android:elevation="999dp"
+
     >
 
 

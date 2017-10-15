@@ -21,7 +21,6 @@ import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChatGetRoom;
@@ -102,7 +101,7 @@ public class HelperPublicMethod {
 
                             realm.executeTransactionAsync(new Realm.Transaction() {
                                 @Override public void execute(Realm realm) {
-                                    RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, user.getId()).findFirst();
+                                    RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, user.getId());
                                     if (realmRegisteredInfo == null) {
                                         realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class);
                                         realmRegisteredInfo.setId(user.getId());

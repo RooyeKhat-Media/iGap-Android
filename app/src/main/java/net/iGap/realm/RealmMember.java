@@ -74,7 +74,7 @@ public class RealmMember extends RealmObject {
                             newMembers.clear();
                             for (ProtoChannelGetMemberList.ChannelGetMemberListResponse.Member member : builder.getMemberList()) {
 
-                                final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, member.getUserId()).findFirst();
+                                final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, member.getUserId());
                                 if (realmRegisteredInfo != null) {
                                     RealmMember realmMem = realm.createObject(RealmMember.class, SUID.id().get());
                                     realmMem.setRole(member.getRole().toString());
@@ -128,7 +128,7 @@ public class RealmMember extends RealmObject {
                             newMembers.clear();
                             for (ProtoGroupGetMemberList.GroupGetMemberListResponse.Member member : builder.getMemberList()) {
 
-                                final RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, member.getUserId()).findFirst();
+                                final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, member.getUserId());
                                 if (realmRegisteredInfo != null) {
                                     RealmMember realmMem = realm.createObject(RealmMember.class, SUID.id().get());
                                     realmMem.setRole(member.getRole().toString());

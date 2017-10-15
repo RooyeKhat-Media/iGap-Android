@@ -27,6 +27,8 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 
+import static net.iGap.fragments.FragmentChat.getRealmChat;
+
 public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
 
     public FileItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
@@ -86,7 +88,7 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
             setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
         }
 
-        RealmRoomMessage roomMessage = realmChat.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.valueOf(mMessage.messageID)).findFirst();
+        RealmRoomMessage roomMessage = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.valueOf(mMessage.messageID)).findFirst();
         if (roomMessage != null) {
             holder.thumbnail.setVisibility(View.VISIBLE);
             if (roomMessage.getForwardMessage() != null) {

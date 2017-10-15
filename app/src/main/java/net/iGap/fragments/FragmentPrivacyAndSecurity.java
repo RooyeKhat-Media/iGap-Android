@@ -78,7 +78,7 @@ public class FragmentPrivacyAndSecurity extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_privacy_and_security, container, false);
+        return attachToSwipeBack(inflater.inflate(R.layout.fragment_privacy_and_security, container, false));
     }
 
     @Override
@@ -279,67 +279,67 @@ public class FragmentPrivacyAndSecurity extends BaseFragment {
 
     private void selfDestructs() {
 
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(R.string.self_destructs)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.account_self_destruct).itemsCallbackSingleChoice(poSelfRemove, new MaterialDialog.ListCallbackSingleChoice() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.self_destructs)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.account_self_destruct).itemsCallbackSingleChoice(poSelfRemove, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
                 switch (which) {
                     case 0: {
-                        txtDestruction.setText(G.context.getResources().getString(R.string.month_1));
+                        txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_1));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(1);
                         break;
                     }
                     case 1: {
-                        txtDestruction.setText(G.context.getResources().getString(R.string.month_3));
+                        txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_3));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(3);
                         break;
                     }
                     case 2: {
 
-                        txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
+                        txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_6));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(6);
                         break;
                     }
                     case 3: {
 
-                        txtDestruction.setText(G.context.getResources().getString(R.string.year_1));
+                        txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.year_1));
                         new RequestUserProfileSetSelfRemove().userProfileSetSelfRemove(12);
                         break;
                     }
                 }
                 return false;
             }
-        }).positiveText(G.context.getResources().getString(R.string.B_ok)).negativeText(G.context.getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).show();
     }
 
     private void setTextSelfDestructs() throws IllegalStateException {
         if (selfRemove != 0) {
             switch (selfRemove) {
                 case 1:
-                    txtDestruction.setText(G.context.getResources().getString(R.string.month_1));
+                    txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_1));
                     poSelfRemove = 0;
                     break;
                 case 3:
-                    txtDestruction.setText(G.context.getResources().getString(R.string.month_3));
+                    txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_3));
                     poSelfRemove = 1;
                     break;
                 case 6:
-                    txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
+                    txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_6));
                     poSelfRemove = 2;
                     break;
                 case 12:
-                    txtDestruction.setText(G.context.getResources().getString(R.string.year_1));
+                    txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.year_1));
                     poSelfRemove = 3;
                     break;
             }
         } else {
-            txtDestruction.setText(G.context.getResources().getString(R.string.month_6));
+            txtDestruction.setText(G.fragmentActivity.getResources().getString(R.string.month_6));
         }
     }
 
     private void openDialogWhoCan(final ProtoGlobal.PrivacyType privacyType, int position, int title) {
 
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.context.getResources().getString(title)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.privacy_setting_array).itemsCallbackSingleChoice(position, new MaterialDialog.ListCallbackSingleChoice() {
+        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(title)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.privacy_setting_array).itemsCallbackSingleChoice(position, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
@@ -360,7 +360,7 @@ public class FragmentPrivacyAndSecurity extends BaseFragment {
                 }
                 return false;
             }
-        }).positiveText(G.context.getResources().getString(R.string.B_ok)).negativeText(G.context.getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).show();
     }
 
     private void updatePrivacyUI(RealmPrivacy realmPrivacy) {

@@ -13,12 +13,12 @@ package net.iGap.request;
 public class RequestWrapper {
 
     public long time = 0;
-    public String identity;
+    public Object identity;
     private Object protoObject;
     protected int actionId;
     private String randomId;
 
-    public RequestWrapper(int actionId, Object protoObject, String identity) {
+    public RequestWrapper(int actionId, Object protoObject, Object identity) {
         this.actionId = actionId;
         this.protoObject = protoObject;
         this.identity = identity;
@@ -61,7 +61,7 @@ public class RequestWrapper {
         return protoObject;
     }
 
-    public String getIdentity() {
+    public Object getIdentity() {
         return identity;
     }
 

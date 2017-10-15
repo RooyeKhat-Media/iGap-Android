@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:elevation="999dp"
+
     android:clickable="true"
     tools:context="net.iGap.fragments.FragmentPrivacyAndSecurity"
     tools:ignore="MissingPrefix"

@@ -15,8 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import com.daimajia.swipe.SwipeLayout;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -33,12 +35,14 @@ import static android.support.design.R.id.center;
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER;
 import static android.view.Gravity.CENTER_HORIZONTAL;
+import static android.view.Gravity.CENTER_VERTICAL;
 import static android.view.Gravity.LEFT;
 import static android.view.Gravity.RIGHT;
 import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
 import static java.lang.Boolean.TRUE;
 import static net.iGap.G.context;
+import static net.iGap.R.dimen.dp1_minus;
 import static net.iGap.R.dimen.dp32;
 import static net.iGap.R.dimen.dp4;
 import static net.iGap.R.dimen.dp52;
@@ -176,7 +180,7 @@ public class ViewMaker {
         csla_btn_play_music.setBackgroundResource(0);
         csla_btn_play_music.setGravity(Gravity.CENTER);
         csla_btn_play_music.setEnabled(false);
-        csla_btn_play_music.setText(G.context.getResources().getString(R.string.md_play_arrow));
+        csla_btn_play_music.setText(G.fragmentActivity.getResources().getString(R.string.md_play_arrow));
         csla_btn_play_music.setTextColor(G.context.getResources().getColor(R.color.toolbar_background));
         setTextSize(csla_btn_play_music, R.dimen.dp20);
         csla_btn_play_music.setTypeface(G.typeface_Fontico);
@@ -293,7 +297,7 @@ public class ViewMaker {
         setTextSize(cslum_txt_unread_message, R.dimen.dp12);
         setTypeFace(cslum_txt_unread_message);
         cslum_txt_unread_message.setGravity(CENTER);
-        cslum_txt_unread_message.setText(G.context.getResources().getString(R.string.unread_message));
+        cslum_txt_unread_message.setText(G.fragmentActivity.getResources().getString(R.string.unread_message));
         cslum_txt_unread_message.setTextColor(G.context.getResources().getColor(R.color.white));
         LinearLayout.LayoutParams layout_692 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_692.bottomMargin = i_Dp(R.dimen.dp8);
@@ -506,7 +510,7 @@ public class ViewMaker {
         //AppUtils.setImageDrawable(cslr_txt_tic, R.drawable.ic_double_check);
         LinearLayout.LayoutParams layout_311 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp16), ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_311.leftMargin = i_Dp(dp4);
-        layout_311.topMargin = dpToPixel(-5);
+        layout_311.topMargin = i_Dp(dp1_minus);
         cslr_txt_tic.setLayoutParams(layout_311);
 
         csl_ll_time.addView(txtEditedIndicator);
@@ -941,7 +945,7 @@ public class ViewMaker {
         txt_play_music.setBackgroundResource(0); //txt_play_music.setBackgroundResource(@null);
         txt_play_music.setTypeface(G.typeface_Fontico);
         txt_play_music.setGravity(CENTER);
-        txt_play_music.setText(G.context.getResources().getString(R.string.md_play_arrow));
+        txt_play_music.setText(G.fragmentActivity.getResources().getString(R.string.md_play_arrow));
         txt_play_music.setTextColor(G.context.getResources().getColor(R.color.toolbar_background));
         setTextSize(txt_play_music, R.dimen.dp20);
         LinearLayout.LayoutParams layout_326 = new LinearLayout.LayoutParams((int) G.context.getResources().getDimension(R.dimen.dp32), LinearLayout.LayoutParams.MATCH_PARENT);
@@ -1596,7 +1600,7 @@ public class ViewMaker {
 
         MaterialDesignTextView cs_txt_mute = new MaterialDesignTextView(G.context);
         cs_txt_mute.setId(R.id.cs_txt_mute);
-        cs_txt_mute.setText(G.context.getResources().getString(R.string.md_muted));
+        cs_txt_mute.setText(G.fragmentActivity.getResources().getString(R.string.md_muted));
         cs_txt_mute.setTextColor(G.context.getResources().getColor(R.color.grayNew));
         setTextSize(cs_txt_mute, R.dimen.dp13);
         LinearLayout.LayoutParams layout_152 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1652,7 +1656,7 @@ public class ViewMaker {
         MaterialDesignTextView cs_txt_pinned_message = new MaterialDesignTextView(G.context);
         cs_txt_pinned_message.setId(R.id.cs_txt_pinned_message);
         cs_txt_pinned_message.setGravity(CENTER);
-        cs_txt_pinned_message.setText(G.context.getResources().getString(R.string.md_circlePin));
+        cs_txt_pinned_message.setText(G.fragmentActivity.getResources().getString(R.string.md_circlePin));
         cs_txt_pinned_message.setTextColor(Color.BLACK);
         cs_txt_pinned_message.setTextSize(i_Dp(R.dimen.dp20));
         setTextSize(cs_txt_pinned_message, R.dimen.dp20);
@@ -1756,7 +1760,7 @@ public class ViewMaker {
 
         MaterialDesignTextView fcsl_txt_icon = new MaterialDesignTextView(G.context);
         fcsl_txt_icon.setId(R.id.fcsl_txt_icon);
-        fcsl_txt_icon.setText(G.context.getResources().getString(R.string.md_call_made));
+        fcsl_txt_icon.setText(G.fragmentActivity.getResources().getString(R.string.md_call_made));
         fcsl_txt_icon.setTextColor(G.context.getResources().getColor(R.color.green));
         setTextSize(fcsl_txt_icon, R.dimen.dp18);
         LinearLayout.LayoutParams layout_178 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1788,9 +1792,53 @@ public class ViewMaker {
 
     public static View getViewRegisteredContacts() {
 
+        LinearLayout linearLayout_main = new LinearLayout(G.context);
+        linearLayout_main.setOrientation(VERTICAL);
+
+        LinearLayout.LayoutParams layout_main = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        linearLayout_main.setLayoutParams(layout_main);
+
+        SwipeLayout swipeRevealLayout = new SwipeLayout(G.context);
+        swipeRevealLayout.setId(R.id.swipeRevealLayout);
+
+        ViewGroup.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        swipeRevealLayout.setLayoutParams(layoutParams);
+
+        RelativeLayout LinearLayout = new RelativeLayout(G.context);
+        LinearLayout.setBackgroundColor(G.context.getResources().getColor(R.color.red_swipe));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            LinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.setLayoutParams(layoutParams1);
+
+        TextView textView = new TextView(G.context);
+        textView.setText(G.context.getResources().getString(R.string.to_delete_contact));
+        textView.setGravity(Gravity.CENTER);
+        setTypeFace(textView);
+        textView.setTextColor(G.context.getResources().getColor(R.color.white));
+
+        ViewGroup.LayoutParams layoutParams2 = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        textView.setLayoutParams(layoutParams2);
+
+        MaterialDesignTextView fcsl_txt_icon = new MaterialDesignTextView(G.context);
+        fcsl_txt_icon.setGravity(CENTER_VERTICAL);
+        fcsl_txt_icon.setText(G.fragmentActivity.getResources().getString(R.string.md_rubbish_delete_file));
+        fcsl_txt_icon.setTextColor(G.context.getResources().getColor(R.color.white));
+        setTextSize(fcsl_txt_icon, R.dimen.dp22);
+        LinearLayout.LayoutParams layout_178 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp52), ViewGroup.LayoutParams.MATCH_PARENT);
+        layout_178.gravity = Gravity.LEFT;
+        layout_178.leftMargin = i_Dp(R.dimen.dp32);
+        fcsl_txt_icon.setLayoutParams(layout_178);
+
+        LinearLayout.addView(fcsl_txt_icon);
+        LinearLayout.addView(textView);
+        swipeRevealLayout.addView(LinearLayout);
+
         LinearLayout linearLayout_578 = new LinearLayout(G.context);
         linearLayout_578.setId(R.id.mainContainer);
         linearLayout_578.setOrientation(VERTICAL);
+        linearLayout_578.setBackgroundColor(G.context.getResources().getColor(R.color.white));
         if (HelperCalander.isLanguagePersian) {
             linearLayout_578.setPadding(i_Dp(R.dimen.dp20), 0, i_Dp(R.dimen.dp20), 0);
         } else {
@@ -1804,6 +1852,7 @@ public class ViewMaker {
         topLine.setId(R.id.topLine);
         topLine.setBackgroundColor(G.context.getResources().getColor(R.color.gray));
         LinearLayout.LayoutParams layout_323 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        layout_323.bottomMargin = i_Dp(R.dimen.dp6);
 
         if (HelperCalander.isLanguagePersian) {
             layout_323.leftMargin = i_Dp(R.dimen.dp20);
@@ -1814,7 +1863,7 @@ public class ViewMaker {
         }
 
         topLine.setLayoutParams(layout_323);
-        linearLayout_578.addView(topLine);
+
 
         LinearLayout linearLayout_823 = new LinearLayout(G.context);
         linearLayout_823.setOrientation(HORIZONTAL);
@@ -1852,7 +1901,7 @@ public class ViewMaker {
         TextView subtitle = new TextView(G.context);
         subtitle.setId(R.id.subtitle);
         subtitle.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-        subtitle.setText(G.context.getResources().getString(R.string.last_seen_recently));
+        subtitle.setText(G.fragmentActivity.getResources().getString(R.string.last_seen_recently));
         setTextSize(subtitle, R.dimen.dp14);
         subtitle.setSingleLine(true);
         setTypeFace(subtitle);
@@ -1863,6 +1912,11 @@ public class ViewMaker {
         linearLayout_823.addView(linearLayout_673);
         linearLayout_578.addView(linearLayout_823);
 
-        return linearLayout_578;
+        swipeRevealLayout.addView(linearLayout_578);
+        linearLayout_main.addView(topLine);
+        linearLayout_main.addView(swipeRevealLayout);
+
+
+        return linearLayout_main;
     }
 }

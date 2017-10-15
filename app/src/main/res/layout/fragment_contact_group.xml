@@ -5,7 +5,6 @@
     android:id="@+id/fcg_layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="999dp"
     android:background="@android:color/white"
     tools:ignore="MissingPrefix"
     android:clickable="true"
@@ -129,17 +128,19 @@
         android:orientation="vertical"
         >
 
-        <EditText
-            android:id="@+id/fcg_edt_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:autoText="false"
-            android:hint="@string/search"
-            android:maxLines="5"
-            android:padding="@dimen/dp20"
-            android:textSize="@dimen/dp15"
-            />
+      <com.pchmn.materialchips.ChipsInput
+          android:id="@+id/chips_input"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:hint="Enter a name"
+
+          app:chip_deletable="true"
+          app:showChipDetailed="false"
+          app:chip_deleteIconColor="@color/green"
+          app:deleteIconColor="@android:color/white"
+          android:textSize="@dimen/dp15"
+          />
+
     </LinearLayout>
 
 
