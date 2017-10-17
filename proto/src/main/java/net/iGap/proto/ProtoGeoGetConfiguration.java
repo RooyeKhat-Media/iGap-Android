@@ -4,56 +4,56 @@
 package net.iGap.proto;
 
 public final class ProtoGeoGetConfiguration {
-  private ProtoGeoGetConfiguration() {
+  private ProtoGeoGetConfiguration() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-
   public interface GeoGetConfigurationOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.GeoGetConfiguration)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.GeoGetConfiguration)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     boolean hasRequest();
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    ProtoRequest.Request getRequest();
-
+    net.iGap.proto.ProtoRequest.Request getRequest();
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    ProtoRequest.RequestOrBuilder getRequestOrBuilder();
+    net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder();
   }
-
   /**
    * Protobuf type {@code proto.GeoGetConfiguration}
    */
-  public static final class GeoGetConfiguration extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.GeoGetConfiguration)
-          GeoGetConfigurationOrBuilder {
+  public  static final class GeoGetConfiguration extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GeoGetConfiguration)
+      GeoGetConfigurationOrBuilder {
     // Use GeoGetConfiguration.newBuilder() to construct.
     private GeoGetConfiguration(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GeoGetConfiguration() {
     }
 
-    @Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private GeoGetConfiguration(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private GeoGetConfiguration(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -71,11 +71,11 @@ public final class ProtoGeoGetConfiguration {
               break;
             }
             case 10: {
-              ProtoRequest.Request.Builder subBuilder = null;
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
               if (request_ != null) {
                 subBuilder = request_.toBuilder();
               }
-              request_ = input.readMessage(ProtoRequest.Request.parser(), extensionRegistry);
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(request_);
                 request_ = subBuilder.buildPartial();
@@ -88,46 +88,46 @@ public final class ProtoGeoGetConfiguration {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
     }
 
-    protected FieldAccessorTable internalGetFieldAccessorTable() {
-      return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_fieldAccessorTable.ensureFieldAccessorsInitialized(GeoGetConfiguration.class, Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
-    private ProtoRequest.Request request_;
-
+    private net.iGap.proto.ProtoRequest.Request request_;
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
     public boolean hasRequest() {
       return request_ != null;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    public ProtoRequest.Request getRequest() {
-      return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
+    public net.iGap.proto.ProtoRequest.Request getRequest() {
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
     }
-
     /**
      * <code>optional .proto.Request request = 1;</code>
      */
-    public ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+    public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
       return getRequest();
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -137,7 +137,8 @@ public final class ProtoGeoGetConfiguration {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (request_ != null) {
         output.writeMessage(1, getRequest());
       }
@@ -149,33 +150,34 @@ public final class ProtoGeoGetConfiguration {
 
       size = 0;
       if (request_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
       }
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
-      if (!(obj instanceof GeoGetConfiguration)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration)) {
         return super.equals(obj);
       }
-      GeoGetConfiguration other = (GeoGetConfiguration) obj;
+      net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration other = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration) obj;
 
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
       if (hasRequest()) {
-        result = result && getRequest().equals(other.getRequest());
+        result = result && getRequest()
+            .equals(other.getRequest());
       }
       return result;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -191,80 +193,100 @@ public final class ProtoGeoGetConfiguration {
       return hash;
     }
 
-    public static GeoGetConfiguration parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static GeoGetConfiguration parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static GeoGetConfiguration parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static GeoGetConfiguration parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static GeoGetConfiguration parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static GeoGetConfiguration parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static GeoGetConfiguration parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static GeoGetConfiguration parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static GeoGetConfiguration parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static GeoGetConfiguration parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-    public static Builder newBuilder(GeoGetConfiguration prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
-    protected Builder newBuilderForType(BuilderParent parent) {
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GeoGetConfiguration}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.GeoGetConfiguration)
-            GeoGetConfigurationOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GeoGetConfiguration)
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
       }
 
-      protected FieldAccessorTable internalGetFieldAccessorTable() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_fieldAccessorTable.ensureFieldAccessorsInitialized(GeoGetConfiguration.class, Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.newBuilder()
@@ -272,16 +294,16 @@ public final class ProtoGeoGetConfiguration {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
-
       public Builder clear() {
         super.clear();
         if (requestBuilder_ == null) {
@@ -293,24 +315,25 @@ public final class ProtoGeoGetConfiguration {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfiguration_descriptor;
       }
 
-      public GeoGetConfiguration getDefaultInstanceForType() {
-        return GeoGetConfiguration.getDefaultInstance();
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.getDefaultInstance();
       }
 
-      public GeoGetConfiguration build() {
-        GeoGetConfiguration result = buildPartial();
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration build() {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public GeoGetConfiguration buildPartial() {
-        GeoGetConfiguration result = new GeoGetConfiguration(this);
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration buildPartial() {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration result = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration(this);
         if (requestBuilder_ == null) {
           result.request_ = request_;
         } else {
@@ -323,38 +346,40 @@ public final class ProtoGeoGetConfiguration {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof GeoGetConfiguration) {
-          return mergeFrom((GeoGetConfiguration) other);
+        if (other instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration) {
+          return mergeFrom((net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(GeoGetConfiguration other) {
-        if (other == GeoGetConfiguration.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration other) {
+        if (other == net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration.getDefaultInstance()) return this;
         if (other.hasRequest()) {
           mergeRequest(other.getRequest());
         }
@@ -366,12 +391,15 @@ public final class ProtoGeoGetConfiguration {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        GeoGetConfiguration parsedMessage = null;
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (GeoGetConfiguration) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -381,31 +409,29 @@ public final class ProtoGeoGetConfiguration {
         return this;
       }
 
-      private ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder> requestBuilder_;
-
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
       public boolean hasRequest() {
         return requestBuilder_ != null || request_ != null;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public ProtoRequest.Request getRequest() {
+      public net.iGap.proto.ProtoRequest.Request getRequest() {
         if (requestBuilder_ == null) {
-          return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         } else {
           return requestBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(ProtoRequest.Request value) {
+      public Builder setRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -418,11 +444,11 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -432,14 +458,14 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder mergeRequest(ProtoRequest.Request value) {
+      public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -450,7 +476,6 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -465,43 +490,48 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public ProtoRequest.Request.Builder getRequestBuilder() {
-
+      public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
+        
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+      public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
-
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<ProtoRequest.Request, ProtoRequest.Request.Builder, ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+                  getRequest(),
+                  getParentForChildren(),
+                  isClean());
           request_ = null;
         }
         return requestBuilder_;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -510,19 +540,22 @@ public final class ProtoGeoGetConfiguration {
     }
 
     // @@protoc_insertion_point(class_scope:proto.GeoGetConfiguration)
-    private static final GeoGetConfiguration DEFAULT_INSTANCE;
-
+    private static final net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new GeoGetConfiguration();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration();
     }
 
-    public static GeoGetConfiguration getDefaultInstance() {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GeoGetConfiguration> PARSER = new com.google.protobuf.AbstractParser<GeoGetConfiguration>() {
-      public GeoGetConfiguration parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GeoGetConfiguration(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<GeoGetConfiguration>
+        PARSER = new com.google.protobuf.AbstractParser<GeoGetConfiguration>() {
+      public GeoGetConfiguration parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GeoGetConfiguration(input, extensionRegistry);
       }
     };
 
@@ -530,94 +563,93 @@ public final class ProtoGeoGetConfiguration {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<GeoGetConfiguration> getParserForType() {
       return PARSER;
     }
 
-    public GeoGetConfiguration getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfiguration getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface GeoGetConfigurationResponseOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.GeoGetConfigurationResponse)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.GeoGetConfigurationResponse)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     boolean hasResponse();
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    ProtoResponse.Response getResponse();
-
+    net.iGap.proto.ProtoResponse.Response getResponse();
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
+    net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
 
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    java.util.List<GeoGetConfigurationResponse.TileServer> getTileServerList();
-
+    java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> 
+        getTileServerList();
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    GeoGetConfigurationResponse.TileServer getTileServer(int index);
-
+    net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getTileServer(int index);
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
     int getTileServerCount();
-
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    java.util.List<? extends GeoGetConfigurationResponse.TileServerOrBuilder> getTileServerOrBuilderList();
-
+    java.util.List<? extends net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder> 
+        getTileServerOrBuilderList();
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    GeoGetConfigurationResponse.TileServerOrBuilder getTileServerOrBuilder(int index);
+    net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder getTileServerOrBuilder(
+        int index);
 
     /**
      * <code>optional string cache_id = 3;</code>
      */
-    String getCacheId();
-
+    java.lang.String getCacheId();
     /**
      * <code>optional string cache_id = 3;</code>
      */
-    com.google.protobuf.ByteString getCacheIdBytes();
+    com.google.protobuf.ByteString
+        getCacheIdBytes();
   }
-
   /**
    * Protobuf type {@code proto.GeoGetConfigurationResponse}
    */
-  public static final class GeoGetConfigurationResponse extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.GeoGetConfigurationResponse)
-          GeoGetConfigurationResponseOrBuilder {
+  public  static final class GeoGetConfigurationResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GeoGetConfigurationResponse)
+      GeoGetConfigurationResponseOrBuilder {
     // Use GeoGetConfigurationResponse.newBuilder() to construct.
     private GeoGetConfigurationResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private GeoGetConfigurationResponse() {
       tileServer_ = java.util.Collections.emptyList();
       cacheId_ = "";
     }
 
-    @Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private GeoGetConfigurationResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private GeoGetConfigurationResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -635,11 +667,11 @@ public final class ProtoGeoGetConfiguration {
               break;
             }
             case 10: {
-              ProtoResponse.Response.Builder subBuilder = null;
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
               if (response_ != null) {
                 subBuilder = response_.toBuilder();
               }
-              response_ = input.readMessage(ProtoResponse.Response.parser(), extensionRegistry);
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(response_);
                 response_ = subBuilder.buildPartial();
@@ -649,14 +681,15 @@ public final class ProtoGeoGetConfiguration {
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                tileServer_ = new java.util.ArrayList<TileServer>();
+                tileServer_ = new java.util.ArrayList<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              tileServer_.add(input.readMessage(TileServer.parser(), extensionRegistry));
+              tileServer_.add(
+                  input.readMessage(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.parser(), extensionRegistry));
               break;
             }
             case 26: {
-              String s = input.readStringRequireUtf8();
+              java.lang.String s = input.readStringRequireUtf8();
 
               cacheId_ = s;
               break;
@@ -666,7 +699,8 @@ public final class ProtoGeoGetConfiguration {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           tileServer_ = java.util.Collections.unmodifiableList(tileServer_);
@@ -674,51 +708,56 @@ public final class ProtoGeoGetConfiguration {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-      return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
     }
 
-    protected FieldAccessorTable internalGetFieldAccessorTable() {
-      return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(GeoGetConfigurationResponse.class, Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.Builder.class);
     }
 
     public interface TileServerOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:proto.GeoGetConfigurationResponse.TileServer)
-            com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:proto.GeoGetConfigurationResponse.TileServer)
+        com.google.protobuf.MessageOrBuilder {
 
       /**
        * <code>optional string base_url = 1;</code>
        */
-      String getBaseUrl();
-
+      java.lang.String getBaseUrl();
       /**
        * <code>optional string base_url = 1;</code>
        */
-      com.google.protobuf.ByteString getBaseUrlBytes();
+      com.google.protobuf.ByteString
+          getBaseUrlBytes();
     }
-
     /**
      * Protobuf type {@code proto.GeoGetConfigurationResponse.TileServer}
      */
-    public static final class TileServer extends com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:proto.GeoGetConfigurationResponse.TileServer)
-            TileServerOrBuilder {
+    public  static final class TileServer extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:proto.GeoGetConfigurationResponse.TileServer)
+        TileServerOrBuilder {
       // Use TileServer.newBuilder() to construct.
       private TileServer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
       }
-
       private TileServer() {
         baseUrl_ = "";
       }
 
-      @Override
-      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
         return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
       }
-
-      private TileServer(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      private TileServer(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         this();
         int mutable_bitField0_ = 0;
         try {
@@ -736,7 +775,7 @@ public final class ProtoGeoGetConfiguration {
                 break;
               }
               case 10: {
-                String s = input.readStringRequireUtf8();
+                java.lang.String s = input.readStringRequireUtf8();
 
                 baseUrl_ = s;
                 break;
@@ -746,45 +785,51 @@ public final class ProtoGeoGetConfiguration {
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           throw e.setUnfinishedMessage(this);
         } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
         } finally {
           makeExtensionsImmutable();
         }
       }
-
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
       }
 
-      protected FieldAccessorTable internalGetFieldAccessorTable() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable.ensureFieldAccessorsInitialized(TileServer.class, Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder.class);
       }
 
       public static final int BASE_URL_FIELD_NUMBER = 1;
-      private volatile Object baseUrl_;
-
+      private volatile java.lang.Object baseUrl_;
       /**
        * <code>optional string base_url = 1;</code>
        */
-      public String getBaseUrl() {
-        Object ref = baseUrl_;
-        if (ref instanceof String) {
-          return (String) ref;
+      public java.lang.String getBaseUrl() {
+        java.lang.Object ref = baseUrl_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
         } else {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           baseUrl_ = s;
           return s;
         }
       }
-
       /**
        * <code>optional string base_url = 1;</code>
        */
-      public com.google.protobuf.ByteString getBaseUrlBytes() {
-        Object ref = baseUrl_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+      public com.google.protobuf.ByteString
+          getBaseUrlBytes() {
+        java.lang.Object ref = baseUrl_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           baseUrl_ = b;
           return b;
         } else {
@@ -793,7 +838,6 @@ public final class ProtoGeoGetConfiguration {
       }
 
       private byte memoizedIsInitialized = -1;
-
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -803,7 +847,8 @@ public final class ProtoGeoGetConfiguration {
         return true;
       }
 
-      public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
         if (!getBaseUrlBytes().isEmpty()) {
           com.google.protobuf.GeneratedMessageV3.writeString(output, 1, baseUrl_);
         }
@@ -822,23 +867,23 @@ public final class ProtoGeoGetConfiguration {
       }
 
       private static final long serialVersionUID = 0L;
-
-      @Override
-      public boolean equals(final Object obj) {
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
-          return true;
+         return true;
         }
-        if (!(obj instanceof TileServer)) {
+        if (!(obj instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer)) {
           return super.equals(obj);
         }
-        TileServer other = (TileServer) obj;
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer other = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer) obj;
 
         boolean result = true;
-        result = result && getBaseUrl().equals(other.getBaseUrl());
+        result = result && getBaseUrl()
+            .equals(other.getBaseUrl());
         return result;
       }
 
-      @Override
+      @java.lang.Override
       public int hashCode() {
         if (memoizedHashCode != 0) {
           return memoizedHashCode;
@@ -852,80 +897,100 @@ public final class ProtoGeoGetConfiguration {
         return hash;
       }
 
-      public static TileServer parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-
-      public static TileServer parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-
-      public static TileServer parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-
-      public static TileServer parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-
-      public static TileServer parseFrom(java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
-      public static TileServer parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public static TileServer parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-      }
-
-      public static TileServer parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public static TileServer parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-      }
-
-      public static TileServer parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public Builder newBuilderForType() {
-        return newBuilder();
-      }
-
+      public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
-
-      public static Builder newBuilder(TileServer prototype) {
+      public static Builder newBuilder(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
-
       public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
       }
 
-      @Override
-      protected Builder newBuilderForType(BuilderParent parent) {
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
       }
-
       /**
        * Protobuf type {@code proto.GeoGetConfigurationResponse.TileServer}
        */
-      public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-              // @@protoc_insertion_point(builder_implements:proto.GeoGetConfigurationResponse.TileServer)
-              TileServerOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-          return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:proto.GeoGetConfigurationResponse.TileServer)
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
         }
 
-        protected FieldAccessorTable internalGetFieldAccessorTable() {
-          return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable.ensureFieldAccessorsInitialized(TileServer.class, Builder.class);
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder.class);
         }
 
         // Construct using net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.newBuilder()
@@ -933,16 +998,16 @@ public final class ProtoGeoGetConfiguration {
           maybeForceBuilderInitialization();
         }
 
-        private Builder(BuilderParent parent) {
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
           super(parent);
           maybeForceBuilderInitialization();
         }
-
         private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
           }
         }
-
         public Builder clear() {
           super.clear();
           baseUrl_ = "";
@@ -950,24 +1015,25 @@ public final class ProtoGeoGetConfiguration {
           return this;
         }
 
-        public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-          return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
         }
 
-        public TileServer getDefaultInstanceForType() {
-          return TileServer.getDefaultInstance();
+        public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getDefaultInstanceForType() {
+          return net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.getDefaultInstance();
         }
 
-        public TileServer build() {
-          TileServer result = buildPartial();
+        public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer build() {
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer result = buildPartial();
           if (!result.isInitialized()) {
             throw newUninitializedMessageException(result);
           }
           return result;
         }
 
-        public TileServer buildPartial() {
-          TileServer result = new TileServer(this);
+        public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer buildPartial() {
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer result = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer(this);
           result.baseUrl_ = baseUrl_;
           onBuilt();
           return result;
@@ -976,38 +1042,40 @@ public final class ProtoGeoGetConfiguration {
         public Builder clone() {
           return (Builder) super.clone();
         }
-
-        public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
           return (Builder) super.setField(field, value);
         }
-
-        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
-
-        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
-
-        public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
-
-        public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
-
         public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof TileServer) {
-            return mergeFrom((TileServer) other);
+          if (other instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer) {
+            return mergeFrom((net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer)other);
           } else {
             super.mergeFrom(other);
             return this;
           }
         }
 
-        public Builder mergeFrom(TileServer other) {
-          if (other == TileServer.getDefaultInstance()) return this;
+        public Builder mergeFrom(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer other) {
+          if (other == net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.getDefaultInstance()) return this;
           if (!other.getBaseUrl().isEmpty()) {
             baseUrl_ = other.baseUrl_;
             onChanged();
@@ -1020,12 +1088,15 @@ public final class ProtoGeoGetConfiguration {
           return true;
         }
 
-        public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-          TileServer parsedMessage = null;
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
           } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (TileServer) e.getUnfinishedMessage();
+            parsedMessage = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer) e.getUnfinishedMessage();
             throw e.unwrapIOException();
           } finally {
             if (parsedMessage != null) {
@@ -1035,79 +1106,81 @@ public final class ProtoGeoGetConfiguration {
           return this;
         }
 
-        private Object baseUrl_ = "";
-
+        private java.lang.Object baseUrl_ = "";
         /**
          * <code>optional string base_url = 1;</code>
          */
-        public String getBaseUrl() {
-          Object ref = baseUrl_;
-          if (!(ref instanceof String)) {
-            com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-            String s = bs.toStringUtf8();
+        public java.lang.String getBaseUrl() {
+          java.lang.Object ref = baseUrl_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
             baseUrl_ = s;
             return s;
           } else {
-            return (String) ref;
+            return (java.lang.String) ref;
           }
         }
-
         /**
          * <code>optional string base_url = 1;</code>
          */
-        public com.google.protobuf.ByteString getBaseUrlBytes() {
-          Object ref = baseUrl_;
+        public com.google.protobuf.ByteString
+            getBaseUrlBytes() {
+          java.lang.Object ref = baseUrl_;
           if (ref instanceof String) {
-            com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
             baseUrl_ = b;
             return b;
           } else {
             return (com.google.protobuf.ByteString) ref;
           }
         }
-
         /**
          * <code>optional string base_url = 1;</code>
          */
-        public Builder setBaseUrl(String value) {
+        public Builder setBaseUrl(
+            java.lang.String value) {
           if (value == null) {
-            throw new NullPointerException();
-          }
-
+    throw new NullPointerException();
+  }
+  
           baseUrl_ = value;
           onChanged();
           return this;
         }
-
         /**
          * <code>optional string base_url = 1;</code>
          */
         public Builder clearBaseUrl() {
-
+          
           baseUrl_ = getDefaultInstance().getBaseUrl();
           onChanged();
           return this;
         }
-
         /**
          * <code>optional string base_url = 1;</code>
          */
-        public Builder setBaseUrlBytes(com.google.protobuf.ByteString value) {
+        public Builder setBaseUrlBytes(
+            com.google.protobuf.ByteString value) {
           if (value == null) {
-            throw new NullPointerException();
-          }
-          checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
           baseUrl_ = value;
           onChanged();
           return this;
         }
-
-        public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
           return this;
         }
 
-        public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
           return this;
         }
 
@@ -1116,19 +1189,22 @@ public final class ProtoGeoGetConfiguration {
       }
 
       // @@protoc_insertion_point(class_scope:proto.GeoGetConfigurationResponse.TileServer)
-      private static final TileServer DEFAULT_INSTANCE;
-
+      private static final net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer DEFAULT_INSTANCE;
       static {
-        DEFAULT_INSTANCE = new TileServer();
+        DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer();
       }
 
-      public static TileServer getDefaultInstance() {
+      public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getDefaultInstance() {
         return DEFAULT_INSTANCE;
       }
 
-      private static final com.google.protobuf.Parser<TileServer> PARSER = new com.google.protobuf.AbstractParser<TileServer>() {
-        public TileServer parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-          return new TileServer(input, extensionRegistry);
+      private static final com.google.protobuf.Parser<TileServer>
+          PARSER = new com.google.protobuf.AbstractParser<TileServer>() {
+        public TileServer parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new TileServer(input, extensionRegistry);
         }
       };
 
@@ -1136,12 +1212,12 @@ public final class ProtoGeoGetConfiguration {
         return PARSER;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Parser<TileServer> getParserForType() {
         return PARSER;
       }
 
-      public TileServer getDefaultInstanceForType() {
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
 
@@ -1149,92 +1225,88 @@ public final class ProtoGeoGetConfiguration {
 
     private int bitField0_;
     public static final int RESPONSE_FIELD_NUMBER = 1;
-    private ProtoResponse.Response response_;
-
+    private net.iGap.proto.ProtoResponse.Response response_;
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
     public boolean hasResponse() {
       return response_ != null;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    public ProtoResponse.Response getResponse() {
-      return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
+    public net.iGap.proto.ProtoResponse.Response getResponse() {
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
     }
-
     /**
      * <code>optional .proto.Response response = 1;</code>
      */
-    public ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+    public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
       return getResponse();
     }
 
     public static final int TILE_SERVER_FIELD_NUMBER = 2;
-    private java.util.List<TileServer> tileServer_;
-
+    private java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> tileServer_;
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    public java.util.List<TileServer> getTileServerList() {
+    public java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> getTileServerList() {
       return tileServer_;
     }
-
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    public java.util.List<? extends TileServerOrBuilder> getTileServerOrBuilderList() {
+    public java.util.List<? extends net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder> 
+        getTileServerOrBuilderList() {
       return tileServer_;
     }
-
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
     public int getTileServerCount() {
       return tileServer_.size();
     }
-
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    public TileServer getTileServer(int index) {
+    public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getTileServer(int index) {
       return tileServer_.get(index);
     }
-
     /**
      * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
      */
-    public TileServerOrBuilder getTileServerOrBuilder(int index) {
+    public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder getTileServerOrBuilder(
+        int index) {
       return tileServer_.get(index);
     }
 
     public static final int CACHE_ID_FIELD_NUMBER = 3;
-    private volatile Object cacheId_;
-
+    private volatile java.lang.Object cacheId_;
     /**
      * <code>optional string cache_id = 3;</code>
      */
-    public String getCacheId() {
-      Object ref = cacheId_;
-      if (ref instanceof String) {
-        return (String) ref;
+    public java.lang.String getCacheId() {
+      java.lang.Object ref = cacheId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
         cacheId_ = s;
         return s;
       }
     }
-
     /**
      * <code>optional string cache_id = 3;</code>
      */
-    public com.google.protobuf.ByteString getCacheIdBytes() {
-      Object ref = cacheId_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+    public com.google.protobuf.ByteString
+        getCacheIdBytes() {
+      java.lang.Object ref = cacheId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         cacheId_ = b;
         return b;
       } else {
@@ -1243,7 +1315,6 @@ public final class ProtoGeoGetConfiguration {
     }
 
     private byte memoizedIsInitialized = -1;
-
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -1253,7 +1324,8 @@ public final class ProtoGeoGetConfiguration {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
@@ -1271,10 +1343,12 @@ public final class ProtoGeoGetConfiguration {
 
       size = 0;
       if (response_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
       }
       for (int i = 0; i < tileServer_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, tileServer_.get(i));
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, tileServer_.get(i));
       }
       if (!getCacheIdBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, cacheId_);
@@ -1284,28 +1358,30 @@ public final class ProtoGeoGetConfiguration {
     }
 
     private static final long serialVersionUID = 0L;
-
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
-      if (!(obj instanceof GeoGetConfigurationResponse)) {
+      if (!(obj instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse)) {
         return super.equals(obj);
       }
-      GeoGetConfigurationResponse other = (GeoGetConfigurationResponse) obj;
+      net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse other = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse) obj;
 
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
       if (hasResponse()) {
-        result = result && getResponse().equals(other.getResponse());
+        result = result && getResponse()
+            .equals(other.getResponse());
       }
-      result = result && getTileServerList().equals(other.getTileServerList());
-      result = result && getCacheId().equals(other.getCacheId());
+      result = result && getTileServerList()
+          .equals(other.getTileServerList());
+      result = result && getCacheId()
+          .equals(other.getCacheId());
       return result;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1327,80 +1403,100 @@ public final class ProtoGeoGetConfiguration {
       return hash;
     }
 
-    public static GeoGetConfigurationResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static GeoGetConfigurationResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static GeoGetConfigurationResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static GeoGetConfigurationResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static GeoGetConfigurationResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static GeoGetConfigurationResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static GeoGetConfigurationResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static GeoGetConfigurationResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static GeoGetConfigurationResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static GeoGetConfigurationResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
-
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
-    public static Builder newBuilder(GeoGetConfigurationResponse prototype) {
+    public static Builder newBuilder(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
-    protected Builder newBuilderForType(BuilderParent parent) {
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code proto.GeoGetConfigurationResponse}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.GeoGetConfigurationResponse)
-            GeoGetConfigurationResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GeoGetConfigurationResponse)
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
       }
 
-      protected FieldAccessorTable internalGetFieldAccessorTable() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(GeoGetConfigurationResponse.class, Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.class, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.newBuilder()
@@ -1408,17 +1504,17 @@ public final class ProtoGeoGetConfiguration {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
           getTileServerFieldBuilder();
         }
       }
-
       public Builder clear() {
         super.clear();
         if (responseBuilder_ == null) {
@@ -1438,24 +1534,25 @@ public final class ProtoGeoGetConfiguration {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-        return ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.internal_static_proto_GeoGetConfigurationResponse_descriptor;
       }
 
-      public GeoGetConfigurationResponse getDefaultInstanceForType() {
-        return GeoGetConfigurationResponse.getDefaultInstance();
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.getDefaultInstance();
       }
 
-      public GeoGetConfigurationResponse build() {
-        GeoGetConfigurationResponse result = buildPartial();
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse build() {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public GeoGetConfigurationResponse buildPartial() {
-        GeoGetConfigurationResponse result = new GeoGetConfigurationResponse(this);
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse buildPartial() {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse result = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (responseBuilder_ == null) {
@@ -1481,38 +1578,40 @@ public final class ProtoGeoGetConfiguration {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
-
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof GeoGetConfigurationResponse) {
-          return mergeFrom((GeoGetConfigurationResponse) other);
+        if (other instanceof net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse) {
+          return mergeFrom((net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(GeoGetConfigurationResponse other) {
-        if (other == GeoGetConfigurationResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse other) {
+        if (other == net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.getDefaultInstance()) return this;
         if (other.hasResponse()) {
           mergeResponse(other.getResponse());
         }
@@ -1534,7 +1633,9 @@ public final class ProtoGeoGetConfiguration {
               tileServerBuilder_ = null;
               tileServer_ = other.tileServer_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              tileServerBuilder_ = com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ? getTileServerFieldBuilder() : null;
+              tileServerBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getTileServerFieldBuilder() : null;
             } else {
               tileServerBuilder_.addAllMessages(other.tileServer_);
             }
@@ -1552,12 +1653,15 @@ public final class ProtoGeoGetConfiguration {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        GeoGetConfigurationResponse parsedMessage = null;
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (GeoGetConfigurationResponse) e.getUnfinishedMessage();
+          parsedMessage = (net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1566,34 +1670,31 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       private int bitField0_;
 
-      private ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
       public boolean hasResponse() {
         return responseBuilder_ != null || response_ != null;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public ProtoResponse.Response getResponse() {
+      public net.iGap.proto.ProtoResponse.Response getResponse() {
         if (responseBuilder_ == null) {
-          return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         } else {
           return responseBuilder_.getMessage();
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(ProtoResponse.Response value) {
+      public Builder setResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1606,11 +1707,11 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1620,14 +1721,14 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder mergeResponse(ProtoResponse.Response value) {
+      public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1638,7 +1739,6 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1653,60 +1753,64 @@ public final class ProtoGeoGetConfiguration {
 
         return this;
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public ProtoResponse.Response.Builder getResponseBuilder() {
-
+      public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
+        
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+      public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
-
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<ProtoResponse.Response, ProtoResponse.Response.Builder, ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
           response_ = null;
         }
         return responseBuilder_;
       }
 
-      private java.util.List<TileServer> tileServer_ = java.util.Collections.emptyList();
-
+      private java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> tileServer_ =
+        java.util.Collections.emptyList();
       private void ensureTileServerIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          tileServer_ = new java.util.ArrayList<TileServer>(tileServer_);
+          tileServer_ = new java.util.ArrayList<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer>(tileServer_);
           bitField0_ |= 0x00000002;
-        }
+         }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<TileServer, TileServer.Builder, TileServerOrBuilder> tileServerBuilder_;
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder> tileServerBuilder_;
 
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public java.util.List<TileServer> getTileServerList() {
+      public java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> getTileServerList() {
         if (tileServerBuilder_ == null) {
           return java.util.Collections.unmodifiableList(tileServer_);
         } else {
           return tileServerBuilder_.getMessageList();
         }
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
@@ -1717,22 +1821,21 @@ public final class ProtoGeoGetConfiguration {
           return tileServerBuilder_.getCount();
         }
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public TileServer getTileServer(int index) {
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer getTileServer(int index) {
         if (tileServerBuilder_ == null) {
           return tileServer_.get(index);
         } else {
           return tileServerBuilder_.getMessage(index);
         }
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder setTileServer(int index, TileServer value) {
+      public Builder setTileServer(
+          int index, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer value) {
         if (tileServerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1745,11 +1848,11 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder setTileServer(int index, TileServer.Builder builderForValue) {
+      public Builder setTileServer(
+          int index, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder builderForValue) {
         if (tileServerBuilder_ == null) {
           ensureTileServerIsMutable();
           tileServer_.set(index, builderForValue.build());
@@ -1759,11 +1862,10 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder addTileServer(TileServer value) {
+      public Builder addTileServer(net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer value) {
         if (tileServerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1776,11 +1878,11 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder addTileServer(int index, TileServer value) {
+      public Builder addTileServer(
+          int index, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer value) {
         if (tileServerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1793,11 +1895,11 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder addTileServer(TileServer.Builder builderForValue) {
+      public Builder addTileServer(
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder builderForValue) {
         if (tileServerBuilder_ == null) {
           ensureTileServerIsMutable();
           tileServer_.add(builderForValue.build());
@@ -1807,11 +1909,11 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder addTileServer(int index, TileServer.Builder builderForValue) {
+      public Builder addTileServer(
+          int index, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder builderForValue) {
         if (tileServerBuilder_ == null) {
           ensureTileServerIsMutable();
           tileServer_.add(index, builderForValue.build());
@@ -1821,21 +1923,21 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public Builder addAllTileServer(Iterable<? extends TileServer> values) {
+      public Builder addAllTileServer(
+          java.lang.Iterable<? extends net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer> values) {
         if (tileServerBuilder_ == null) {
           ensureTileServerIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(values, tileServer_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, tileServer_);
           onChanged();
         } else {
           tileServerBuilder_.addAllMessages(values);
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
@@ -1849,7 +1951,6 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
@@ -1863,138 +1964,146 @@ public final class ProtoGeoGetConfiguration {
         }
         return this;
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public TileServer.Builder getTileServerBuilder(int index) {
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder getTileServerBuilder(
+          int index) {
         return getTileServerFieldBuilder().getBuilder(index);
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public TileServerOrBuilder getTileServerOrBuilder(int index) {
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder getTileServerOrBuilder(
+          int index) {
         if (tileServerBuilder_ == null) {
-          return tileServer_.get(index);
-        } else {
+          return tileServer_.get(index);  } else {
           return tileServerBuilder_.getMessageOrBuilder(index);
         }
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public java.util.List<? extends TileServerOrBuilder> getTileServerOrBuilderList() {
+      public java.util.List<? extends net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder> 
+           getTileServerOrBuilderList() {
         if (tileServerBuilder_ != null) {
           return tileServerBuilder_.getMessageOrBuilderList();
         } else {
           return java.util.Collections.unmodifiableList(tileServer_);
         }
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public TileServer.Builder addTileServerBuilder() {
-        return getTileServerFieldBuilder().addBuilder(TileServer.getDefaultInstance());
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder addTileServerBuilder() {
+        return getTileServerFieldBuilder().addBuilder(
+            net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public TileServer.Builder addTileServerBuilder(int index) {
-        return getTileServerFieldBuilder().addBuilder(index, TileServer.getDefaultInstance());
+      public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder addTileServerBuilder(
+          int index) {
+        return getTileServerFieldBuilder().addBuilder(
+            index, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.getDefaultInstance());
       }
-
       /**
        * <code>repeated .proto.GeoGetConfigurationResponse.TileServer tile_server = 2;</code>
        */
-      public java.util.List<TileServer.Builder> getTileServerBuilderList() {
+      public java.util.List<net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder> 
+           getTileServerBuilderList() {
         return getTileServerFieldBuilder().getBuilderList();
       }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<TileServer, TileServer.Builder, TileServerOrBuilder> getTileServerFieldBuilder() {
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder> 
+          getTileServerFieldBuilder() {
         if (tileServerBuilder_ == null) {
-          tileServerBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<TileServer, TileServer.Builder, TileServerOrBuilder>(tileServer_, ((bitField0_ & 0x00000002) == 0x00000002), getParentForChildren(), isClean());
+          tileServerBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServer.Builder, net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse.TileServerOrBuilder>(
+                  tileServer_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
           tileServer_ = null;
         }
         return tileServerBuilder_;
       }
 
-      private Object cacheId_ = "";
-
+      private java.lang.Object cacheId_ = "";
       /**
        * <code>optional string cache_id = 3;</code>
        */
-      public String getCacheId() {
-        Object ref = cacheId_;
-        if (!(ref instanceof String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+      public java.lang.String getCacheId() {
+        java.lang.Object ref = cacheId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
           cacheId_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
-
       /**
        * <code>optional string cache_id = 3;</code>
        */
-      public com.google.protobuf.ByteString getCacheIdBytes() {
-        Object ref = cacheId_;
+      public com.google.protobuf.ByteString
+          getCacheIdBytes() {
+        java.lang.Object ref = cacheId_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           cacheId_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>optional string cache_id = 3;</code>
        */
-      public Builder setCacheId(String value) {
+      public Builder setCacheId(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         cacheId_ = value;
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string cache_id = 3;</code>
        */
       public Builder clearCacheId() {
-
+        
         cacheId_ = getDefaultInstance().getCacheId();
         onChanged();
         return this;
       }
-
       /**
        * <code>optional string cache_id = 3;</code>
        */
-      public Builder setCacheIdBytes(com.google.protobuf.ByteString value) {
+      public Builder setCacheIdBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
         cacheId_ = value;
         onChanged();
         return this;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -2003,19 +2112,22 @@ public final class ProtoGeoGetConfiguration {
     }
 
     // @@protoc_insertion_point(class_scope:proto.GeoGetConfigurationResponse)
-    private static final GeoGetConfigurationResponse DEFAULT_INSTANCE;
-
+    private static final net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new GeoGetConfigurationResponse();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse();
     }
 
-    public static GeoGetConfigurationResponse getDefaultInstance() {
+    public static net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GeoGetConfigurationResponse> PARSER = new com.google.protobuf.AbstractParser<GeoGetConfigurationResponse>() {
-      public GeoGetConfigurationResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GeoGetConfigurationResponse(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<GeoGetConfigurationResponse>
+        PARSER = new com.google.protobuf.AbstractParser<GeoGetConfigurationResponse>() {
+      public GeoGetConfigurationResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GeoGetConfigurationResponse(input, extensionRegistry);
       }
     };
 
@@ -2023,66 +2135,85 @@ public final class ProtoGeoGetConfiguration {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<GeoGetConfigurationResponse> getParserForType() {
       return PARSER;
     }
 
-    public GeoGetConfigurationResponse getDefaultInstanceForType() {
+    public net.iGap.proto.ProtoGeoGetConfiguration.GeoGetConfigurationResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GeoGetConfiguration_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GeoGetConfiguration_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GeoGetConfigurationResponse_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GeoGetConfiguration_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GeoGetConfiguration_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GeoGetConfigurationResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
     return descriptor;
   }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
-    String[] descriptorData = {
-            "\n\031GeoGetConfiguration.proto\022\005proto\032\rRequ" +
-                    "est.proto\032\016Response.proto\"6\n\023GeoGetConfi" +
-                    "guration\022\037\n\007request\030\001 \001(\0132\016.proto.Reques" +
-                    "t\"\266\001\n\033GeoGetConfigurationResponse\022!\n\010res" +
-                    "ponse\030\001 \001(\0132\017.proto.Response\022B\n\013tile_ser" +
-                    "ver\030\002 \003(\0132-.proto.GeoGetConfigurationRes" +
-                    "ponse.TileServer\022\020\n\010cache_id\030\003 \001(\t\032\036\n\nTi" +
-                    "leServer\022\020\n\010base_url\030\001 \001(\tB*\n\016net.iGap.p" +
-                    "rotoB\030ProtoGeoGetConfigurationb\006proto3"
+    java.lang.String[] descriptorData = {
+      "\n\031GeoGetConfiguration.proto\022\005proto\032\rRequ" +
+      "est.proto\032\016Response.proto\"6\n\023GeoGetConfi" +
+      "guration\022\037\n\007request\030\001 \001(\0132\016.proto.Reques" +
+      "t\"\266\001\n\033GeoGetConfigurationResponse\022!\n\010res" +
+      "ponse\030\001 \001(\0132\017.proto.Response\022B\n\013tile_ser" +
+      "ver\030\002 \003(\0132-.proto.GeoGetConfigurationRes" +
+      "ponse.TileServer\022\020\n\010cache_id\030\003 \001(\t\032\036\n\nTi" +
+      "leServer\022\020\n\010base_url\030\001 \001(\tB*\n\016net.iGap.p" +
+      "rotoB\030ProtoGeoGetConfigurationb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-        descriptor = root;
-        return null;
-      }
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-            ProtoRequest.getDescriptor(), ProtoResponse.getDescriptor(),
-    }, assigner);
-    internal_static_proto_GeoGetConfiguration_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_GeoGetConfiguration_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GeoGetConfiguration_descriptor, new String[]{"Request",});
-    internal_static_proto_GeoGetConfigurationResponse_descriptor = getDescriptor().getMessageTypes().get(1);
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+        }, assigner);
+    internal_static_proto_GeoGetConfiguration_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_GeoGetConfiguration_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_GeoGetConfiguration_descriptor,
+        new java.lang.String[] { "Request", });
+    internal_static_proto_GeoGetConfigurationResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_proto_GeoGetConfigurationResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GeoGetConfigurationResponse_descriptor,
-        new String[] { "Response", "TileServer", "CacheId", });
+        new java.lang.String[] { "Response", "TileServer", "CacheId", });
     internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor =
       internal_static_proto_GeoGetConfigurationResponse_descriptor.getNestedTypes().get(0);
     internal_static_proto_GeoGetConfigurationResponse_TileServer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GeoGetConfigurationResponse_TileServer_descriptor,
-        new String[] { "BaseUrl", });
-    ProtoRequest.getDescriptor();
-    ProtoResponse.getDescriptor();
+        new java.lang.String[] { "BaseUrl", });
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -123,7 +123,9 @@ public final class ProtoChannelAddAdmin {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdmin_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.Builder.class);
+      return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdmin_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -346,7 +348,9 @@ public final class ProtoChannelAddAdmin {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdmin_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.Builder.class);
+        return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdmin_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin.newBuilder()
@@ -437,7 +441,7 @@ public final class ProtoChannelAddAdmin {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin) {
-          return mergeFrom((net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdmin)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -482,7 +486,8 @@ public final class ProtoChannelAddAdmin {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -518,7 +523,8 @@ public final class ProtoChannelAddAdmin {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -534,7 +540,8 @@ public final class ProtoChannelAddAdmin {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -574,16 +581,19 @@ public final class ProtoChannelAddAdmin {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
           getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -801,7 +811,9 @@ public final class ProtoChannelAddAdmin {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdminResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdminResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
@@ -1024,7 +1036,9 @@ public final class ProtoChannelAddAdmin {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdminResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelAddAdmin.internal_static_proto_ChannelAddAdminResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.class, net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse.newBuilder()
@@ -1115,7 +1129,7 @@ public final class ProtoChannelAddAdmin {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse) {
-          return mergeFrom((net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelAddAdmin.ChannelAddAdminResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1160,7 +1174,8 @@ public final class ProtoChannelAddAdmin {
       }
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1196,7 +1211,8 @@ public final class ProtoChannelAddAdmin {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1212,7 +1228,8 @@ public final class ProtoChannelAddAdmin {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1252,16 +1269,19 @@ public final class ProtoChannelAddAdmin {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
           getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1392,10 +1412,10 @@ public final class ProtoChannelAddAdmin {
       "\n\025ChannelAddAdmin.proto\022\005proto\032\rRequest." +
       "proto\032\016Response.proto\"V\n\017ChannelAddAdmin" +
       "\022\037\n\007request\030\001 \001(\0132\016.proto.Request\022\017\n\007roo" +
-              "m_id\030\002 \001(\004\022\021\n\tmember_id\030\003 \001(\004\"`\n\027Channel" +
-              "AddAdminResponse\022!\n\010response\030\001 \001(\0132\017.pro" +
-              "to.Response\022\017\n\007room_id\030\002 \001(\004\022\021\n\tmember_i" +
-              "d\030\003 \001(\004B&\n\016net.iGap.protoB\024ProtoChannelA" +
+      "m_id\030\002 \001(\004\022\021\n\tmember_id\030\003 \001(\004\"`\n\027Channel" +
+      "AddAdminResponse\022!\n\010response\030\001 \001(\0132\017.pro" +
+      "to.Response\022\017\n\007room_id\030\002 \001(\004\022\021\n\tmember_i" +
+      "d\030\003 \001(\004B&\n\016net.iGap.protoB\024ProtoChannelA" +
       "ddAdminb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -1409,7 +1429,8 @@ public final class ProtoChannelAddAdmin {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-                net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
         }, assigner);
     internal_static_proto_ChannelAddAdmin_descriptor =
       getDescriptor().getMessageTypes().get(0);

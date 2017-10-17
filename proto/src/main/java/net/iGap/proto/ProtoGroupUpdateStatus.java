@@ -4,18 +4,19 @@
 package net.iGap.proto;
 
 public final class ProtoGroupUpdateStatus {
-  private ProtoGroupUpdateStatus() {
+  private ProtoGroupUpdateStatus() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface GroupUpdateStatusOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.GroupUpdateStatus)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.GroupUpdateStatus)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -52,9 +53,10 @@ public final class ProtoGroupUpdateStatus {
   /**
    * Protobuf type {@code proto.GroupUpdateStatus}
    */
-  public static final class GroupUpdateStatus extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.GroupUpdateStatus)
-          GroupUpdateStatusOrBuilder {
+  public  static final class GroupUpdateStatus extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GroupUpdateStatus)
+      GroupUpdateStatusOrBuilder {
     // Use GroupUpdateStatus.newBuilder() to construct.
     private GroupUpdateStatus(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -70,8 +72,10 @@ public final class ProtoGroupUpdateStatus {
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private GroupUpdateStatus(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private GroupUpdateStatus(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -122,18 +126,22 @@ public final class ProtoGroupUpdateStatus {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -201,7 +209,8 @@ public final class ProtoGroupUpdateStatus {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (request_ != null) {
         output.writeMessage(1, getRequest());
       }
@@ -222,16 +231,20 @@ public final class ProtoGroupUpdateStatus {
 
       size = 0;
       if (request_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
       }
       if (roomId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt64Size(2, roomId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(2, roomId_);
       }
       if (messageId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt64Size(3, messageId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(3, messageId_);
       }
       if (status_ != net.iGap.proto.ProtoGlobal.RoomMessageStatus.FAILED.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, status_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(4, status_);
       }
       memoizedSize = size;
       return size;
@@ -241,7 +254,7 @@ public final class ProtoGroupUpdateStatus {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus)) {
         return super.equals(obj);
@@ -251,10 +264,13 @@ public final class ProtoGroupUpdateStatus {
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
       if (hasRequest()) {
-        result = result && getRequest().equals(other.getRequest());
+        result = result && getRequest()
+            .equals(other.getRequest());
       }
-      result = result && (getRoomId() == other.getRoomId());
-      result = result && (getMessageId() == other.getMessageId());
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && (getMessageId()
+          == other.getMessageId());
       result = result && status_ == other.status_;
       return result;
     }
@@ -271,9 +287,11 @@ public final class ProtoGroupUpdateStatus {
         hash = (53 * hash) + getRequest().hashCode();
       }
       hash = (37 * hash) + ROOM_ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getRoomId());
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getRoomId());
       hash = (37 * hash) + MESSAGE_ID_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getMessageId());
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMessageId());
       hash = (37 * hash) + STATUS_FIELD_NUMBER;
       hash = (53 * hash) + status_;
       hash = (29 * hash) + unknownFields.hashCode();
@@ -281,77 +299,100 @@ public final class ProtoGroupUpdateStatus {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.GroupUpdateStatus}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.GroupUpdateStatus)
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GroupUpdateStatus)
         net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus.newBuilder()
@@ -359,7 +400,8 @@ public final class ProtoGroupUpdateStatus {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -385,7 +427,8 @@ public final class ProtoGroupUpdateStatus {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatus_descriptor;
       }
 
@@ -418,29 +461,32 @@ public final class ProtoGroupUpdateStatus {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus) {
-          return mergeFrom((net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus) other);
+          return mergeFrom((net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -469,7 +515,10 @@ public final class ProtoGroupUpdateStatus {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatus parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -485,7 +534,8 @@ public final class ProtoGroupUpdateStatus {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -521,7 +571,8 @@ public final class ProtoGroupUpdateStatus {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -537,7 +588,8 @@ public final class ProtoGroupUpdateStatus {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -577,15 +629,19 @@ public final class ProtoGroupUpdateStatus {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -594,7 +650,7 @@ public final class ProtoGroupUpdateStatus {
         return requestBuilder_;
       }
 
-      private long roomId_;
+      private long roomId_ ;
       /**
        * <code>optional uint64 room_id = 2;</code>
        */
@@ -605,7 +661,7 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional uint64 room_id = 2;</code>
        */
       public Builder setRoomId(long value) {
-
+        
         roomId_ = value;
         onChanged();
         return this;
@@ -614,13 +670,13 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional uint64 room_id = 2;</code>
        */
       public Builder clearRoomId() {
-
+        
         roomId_ = 0L;
         onChanged();
         return this;
       }
 
-      private long messageId_;
+      private long messageId_ ;
       /**
        * <code>optional uint64 message_id = 3;</code>
        */
@@ -631,7 +687,7 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional uint64 message_id = 3;</code>
        */
       public Builder setMessageId(long value) {
-
+        
         messageId_ = value;
         onChanged();
         return this;
@@ -640,7 +696,7 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional uint64 message_id = 3;</code>
        */
       public Builder clearMessageId() {
-
+        
         messageId_ = 0L;
         onChanged();
         return this;
@@ -675,7 +731,7 @@ public final class ProtoGroupUpdateStatus {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         status_ = value.getNumber();
         onChanged();
         return this;
@@ -684,17 +740,18 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional .proto.RoomMessageStatus status = 4;</code>
        */
       public Builder clearStatus() {
-
+        
         status_ = 0;
         onChanged();
         return this;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -712,9 +769,13 @@ public final class ProtoGroupUpdateStatus {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GroupUpdateStatus> PARSER = new com.google.protobuf.AbstractParser<GroupUpdateStatus>() {
-      public GroupUpdateStatus parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GroupUpdateStatus(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<GroupUpdateStatus>
+        PARSER = new com.google.protobuf.AbstractParser<GroupUpdateStatus>() {
+      public GroupUpdateStatus parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GroupUpdateStatus(input, extensionRegistry);
       }
     };
 
@@ -734,8 +795,8 @@ public final class ProtoGroupUpdateStatus {
   }
 
   public interface GroupUpdateStatusResponseOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.GroupUpdateStatusResponse)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.GroupUpdateStatusResponse)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -781,14 +842,16 @@ public final class ProtoGroupUpdateStatus {
     /**
      * <code>optional string updater_author_hash = 6;</code>
      */
-    com.google.protobuf.ByteString getUpdaterAuthorHashBytes();
+    com.google.protobuf.ByteString
+        getUpdaterAuthorHashBytes();
   }
   /**
    * Protobuf type {@code proto.GroupUpdateStatusResponse}
    */
-  public static final class GroupUpdateStatusResponse extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.GroupUpdateStatusResponse)
-          GroupUpdateStatusResponseOrBuilder {
+  public  static final class GroupUpdateStatusResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GroupUpdateStatusResponse)
+      GroupUpdateStatusResponseOrBuilder {
     // Use GroupUpdateStatusResponse.newBuilder() to construct.
     private GroupUpdateStatusResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -806,8 +869,10 @@ public final class ProtoGroupUpdateStatus {
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private GroupUpdateStatusResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private GroupUpdateStatusResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -869,18 +934,22 @@ public final class ProtoGroupUpdateStatus {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
@@ -957,7 +1026,8 @@ public final class ProtoGroupUpdateStatus {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         updaterAuthorHash_ = s;
         return s;
@@ -966,10 +1036,13 @@ public final class ProtoGroupUpdateStatus {
     /**
      * <code>optional string updater_author_hash = 6;</code>
      */
-    public com.google.protobuf.ByteString getUpdaterAuthorHashBytes() {
+    public com.google.protobuf.ByteString
+        getUpdaterAuthorHashBytes() {
       java.lang.Object ref = updaterAuthorHash_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         updaterAuthorHash_ = b;
         return b;
       } else {
@@ -987,7 +1060,8 @@ public final class ProtoGroupUpdateStatus {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
@@ -1014,19 +1088,24 @@ public final class ProtoGroupUpdateStatus {
 
       size = 0;
       if (response_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
       }
       if (roomId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt64Size(2, roomId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(2, roomId_);
       }
       if (messageId_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt64Size(3, messageId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(3, messageId_);
       }
       if (status_ != net.iGap.proto.ProtoGlobal.RoomMessageStatus.FAILED.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(4, status_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(4, status_);
       }
       if (statusVersion_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt64Size(5, statusVersion_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(5, statusVersion_);
       }
       if (!getUpdaterAuthorHashBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, updaterAuthorHash_);
@@ -1039,7 +1118,7 @@ public final class ProtoGroupUpdateStatus {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse)) {
         return super.equals(obj);
@@ -1049,13 +1128,18 @@ public final class ProtoGroupUpdateStatus {
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
       if (hasResponse()) {
-        result = result && getResponse().equals(other.getResponse());
+        result = result && getResponse()
+            .equals(other.getResponse());
       }
-      result = result && (getRoomId() == other.getRoomId());
-      result = result && (getMessageId() == other.getMessageId());
+      result = result && (getRoomId()
+          == other.getRoomId());
+      result = result && (getMessageId()
+          == other.getMessageId());
       result = result && status_ == other.status_;
-      result = result && (getStatusVersion() == other.getStatusVersion());
-      result = result && getUpdaterAuthorHash().equals(other.getUpdaterAuthorHash());
+      result = result && (getStatusVersion()
+          == other.getStatusVersion());
+      result = result && getUpdaterAuthorHash()
+          .equals(other.getUpdaterAuthorHash());
       return result;
     }
 
@@ -1079,7 +1163,8 @@ public final class ProtoGroupUpdateStatus {
       hash = (37 * hash) + STATUS_FIELD_NUMBER;
       hash = (53 * hash) + status_;
       hash = (37 * hash) + STATUS_VERSION_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getStatusVersion());
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getStatusVersion());
       hash = (37 * hash) + UPDATER_AUTHOR_HASH_FIELD_NUMBER;
       hash = (53 * hash) + getUpdaterAuthorHash().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -1087,75 +1172,100 @@ public final class ProtoGroupUpdateStatus {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
     }
-
-    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
+    public static net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.GroupUpdateStatusResponse}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.GroupUpdateStatusResponse)
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GroupUpdateStatusResponse)
         net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.class, net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse.newBuilder()
@@ -1163,7 +1273,8 @@ public final class ProtoGroupUpdateStatus {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1193,7 +1304,8 @@ public final class ProtoGroupUpdateStatus {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoGroupUpdateStatus.internal_static_proto_GroupUpdateStatusResponse_descriptor;
       }
 
@@ -1228,31 +1340,32 @@ public final class ProtoGroupUpdateStatus {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field,
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
           Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field,
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
           Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse) {
-          return mergeFrom((net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1288,7 +1401,10 @@ public final class ProtoGroupUpdateStatus {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoGroupUpdateStatus.GroupUpdateStatusResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -1304,7 +1420,8 @@ public final class ProtoGroupUpdateStatus {
       }
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1340,7 +1457,8 @@ public final class ProtoGroupUpdateStatus {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1356,7 +1474,8 @@ public final class ProtoGroupUpdateStatus {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1396,15 +1515,19 @@ public final class ProtoGroupUpdateStatus {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1542,7 +1665,8 @@ public final class ProtoGroupUpdateStatus {
       public java.lang.String getUpdaterAuthorHash() {
         java.lang.Object ref = updaterAuthorHash_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           updaterAuthorHash_ = s;
           return s;
@@ -1553,10 +1677,13 @@ public final class ProtoGroupUpdateStatus {
       /**
        * <code>optional string updater_author_hash = 6;</code>
        */
-      public com.google.protobuf.ByteString getUpdaterAuthorHashBytes() {
+      public com.google.protobuf.ByteString
+          getUpdaterAuthorHashBytes() {
         java.lang.Object ref = updaterAuthorHash_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           updaterAuthorHash_ = b;
           return b;
         } else {
@@ -1566,10 +1693,11 @@ public final class ProtoGroupUpdateStatus {
       /**
        * <code>optional string updater_author_hash = 6;</code>
        */
-      public Builder setUpdaterAuthorHash(java.lang.String value) {
+      public Builder setUpdaterAuthorHash(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
+    throw new NullPointerException();
+  }
   
         updaterAuthorHash_ = value;
         onChanged();
@@ -1579,7 +1707,7 @@ public final class ProtoGroupUpdateStatus {
        * <code>optional string updater_author_hash = 6;</code>
        */
       public Builder clearUpdaterAuthorHash() {
-
+        
         updaterAuthorHash_ = getDefaultInstance().getUpdaterAuthorHash();
         onChanged();
         return this;
@@ -1587,18 +1715,19 @@ public final class ProtoGroupUpdateStatus {
       /**
        * <code>optional string updater_author_hash = 6;</code>
        */
-      public Builder setUpdaterAuthorHashBytes(com.google.protobuf.ByteString value) {
+      public Builder setUpdaterAuthorHashBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
         
         updaterAuthorHash_ = value;
         onChanged();
         return this;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -1621,8 +1750,12 @@ public final class ProtoGroupUpdateStatus {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GroupUpdateStatusResponse> PARSER = new com.google.protobuf.AbstractParser<GroupUpdateStatusResponse>() {
-      public GroupUpdateStatusResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private static final com.google.protobuf.Parser<GroupUpdateStatusResponse>
+        PARSER = new com.google.protobuf.AbstractParser<GroupUpdateStatusResponse>() {
+      public GroupUpdateStatusResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
           return new GroupUpdateStatusResponse(input, extensionRegistry);
       }
     };
@@ -1642,43 +1775,65 @@ public final class ProtoGroupUpdateStatus {
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GroupUpdateStatus_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GroupUpdateStatus_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GroupUpdateStatusResponse_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GroupUpdateStatus_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GroupUpdateStatus_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GroupUpdateStatusResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
     return descriptor;
   }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\027GroupUpdateStatus.proto\022\005proto\032\rReques" +
-                    "t.proto\032\016Response.proto\032\014Global.proto\"\203\001" +
-                    "\n\021GroupUpdateStatus\022\037\n\007request\030\001 \001(\0132\016.p" +
-                    "roto.Request\022\017\n\007room_id\030\002 \001(\004\022\022\n\nmessage" +
-                    "_id\030\003 \001(\004\022(\n\006status\030\004 \001(\0162\030.proto.RoomMe" +
-                    "ssageStatus\"\302\001\n\031GroupUpdateStatusRespons" +
-                    "e\022!\n\010response\030\001 \001(\0132\017.proto.Response\022\017\n\007" +
-                    "room_id\030\002 \001(\004\022\022\n\nmessage_id\030\003 \001(\004\022(\n\006sta" +
-                    "tus\030\004 \001(\0162\030.proto.RoomMessageStatus\022\026\n\016s" +
-                    "tatus_version\030\005 \001(\004\022\033\n\023updater_author_ha", "sh\030\006 \001(\tB(\n\016net.iGap.protoB\026ProtoGroupUp" + "dateStatusb\006proto3"
+      "\n\027GroupUpdateStatus.proto\022\005proto\032\rReques" +
+      "t.proto\032\016Response.proto\032\014Global.proto\"\203\001" +
+      "\n\021GroupUpdateStatus\022\037\n\007request\030\001 \001(\0132\016.p" +
+      "roto.Request\022\017\n\007room_id\030\002 \001(\004\022\022\n\nmessage" +
+      "_id\030\003 \001(\004\022(\n\006status\030\004 \001(\0162\030.proto.RoomMe" +
+      "ssageStatus\"\302\001\n\031GroupUpdateStatusRespons" +
+      "e\022!\n\010response\030\001 \001(\0132\017.proto.Response\022\017\n\007" +
+      "room_id\030\002 \001(\004\022\022\n\nmessage_id\030\003 \001(\004\022(\n\006sta" +
+      "tus\030\004 \001(\0162\030.proto.RoomMessageStatus\022\026\n\016s" +
+      "tatus_version\030\005 \001(\004\022\033\n\023updater_author_ha",
+      "sh\030\006 \001(\tB(\n\016net.iGap.protoB\026ProtoGroupUp" +
+      "dateStatusb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-        descriptor = root;
-        return null;
-      }
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
-    }, assigner);
-    internal_static_proto_GroupUpdateStatus_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_GroupUpdateStatus_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GroupUpdateStatus_descriptor, new java.lang.String[]{"Request", "RoomId", "MessageId", "Status",});
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoGlobal.getDescriptor(),
+        }, assigner);
+    internal_static_proto_GroupUpdateStatus_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_GroupUpdateStatus_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_GroupUpdateStatus_descriptor,
+        new java.lang.String[] { "Request", "RoomId", "MessageId", "Status", });
     internal_static_proto_GroupUpdateStatusResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GroupUpdateStatusResponse_descriptor, new java.lang.String[]{"Response", "RoomId", "MessageId", "Status", "StatusVersion", "UpdaterAuthorHash",});
+    internal_static_proto_GroupUpdateStatusResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_GroupUpdateStatusResponse_descriptor,
+        new java.lang.String[] { "Response", "RoomId", "MessageId", "Status", "StatusVersion", "UpdaterAuthorHash", });
     net.iGap.proto.ProtoRequest.getDescriptor();
     net.iGap.proto.ProtoResponse.getDescriptor();
     net.iGap.proto.ProtoGlobal.getDescriptor();

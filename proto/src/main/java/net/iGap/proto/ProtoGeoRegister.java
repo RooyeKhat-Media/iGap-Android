@@ -4,1236 +4,1319 @@
 package net.iGap.proto;
 
 public final class ProtoGeoRegister {
-    private ProtoGeoRegister() {
+  private ProtoGeoRegister() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+  public interface GeoRegisterOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.GeoRegister)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    boolean hasRequest();
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    net.iGap.proto.ProtoRequest.Request getRequest();
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder();
+
+    /**
+     * <code>optional bool enable = 2;</code>
+     */
+    boolean getEnable();
+  }
+  /**
+   * Protobuf type {@code proto.GeoRegister}
+   */
+  public  static final class GeoRegister extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GeoRegister)
+      GeoRegisterOrBuilder {
+    // Use GeoRegister.newBuilder() to construct.
+    private GeoRegister(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GeoRegister() {
+      enable_ = false;
     }
 
-    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private GeoRegister(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
+              if (request_ != null) {
+                subBuilder = request_.toBuilder();
+              }
+              request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(request_);
+                request_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 16: {
+
+              enable_ = input.readBool();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
     }
 
-    public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-        registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGeoRegister.GeoRegister.class, net.iGap.proto.ProtoGeoRegister.GeoRegister.Builder.class);
     }
 
-    public interface GeoRegisterOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:proto.GeoRegister)
-            com.google.protobuf.MessageOrBuilder {
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        boolean hasRequest();
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        net.iGap.proto.ProtoRequest.Request getRequest();
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder();
-
-        /**
-         * <code>optional bool enable = 2;</code>
-         */
-        boolean getEnable();
+    public static final int REQUEST_FIELD_NUMBER = 1;
+    private net.iGap.proto.ProtoRequest.Request request_;
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    public boolean hasRequest() {
+      return request_ != null;
+    }
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    public net.iGap.proto.ProtoRequest.Request getRequest() {
+      return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+    }
+    /**
+     * <code>optional .proto.Request request = 1;</code>
+     */
+    public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+      return getRequest();
     }
 
+    public static final int ENABLE_FIELD_NUMBER = 2;
+    private boolean enable_;
+    /**
+     * <code>optional bool enable = 2;</code>
+     */
+    public boolean getEnable() {
+      return enable_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (request_ != null) {
+        output.writeMessage(1, getRequest());
+      }
+      if (enable_ != false) {
+        output.writeBool(2, enable_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (request_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
+      }
+      if (enable_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, enable_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof net.iGap.proto.ProtoGeoRegister.GeoRegister)) {
+        return super.equals(obj);
+      }
+      net.iGap.proto.ProtoGeoRegister.GeoRegister other = (net.iGap.proto.ProtoGeoRegister.GeoRegister) obj;
+
+      boolean result = true;
+      result = result && (hasRequest() == other.hasRequest());
+      if (hasRequest()) {
+        result = result && getRequest()
+            .equals(other.getRequest());
+      }
+      result = result && (getEnable()
+          == other.getEnable());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasRequest()) {
+        hash = (37 * hash) + REQUEST_FIELD_NUMBER;
+        hash = (53 * hash) + getRequest().hashCode();
+      }
+      hash = (37 * hash) + ENABLE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getEnable());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(net.iGap.proto.ProtoGeoRegister.GeoRegister prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * Protobuf type {@code proto.GeoRegister}
      */
-    public static final class GeoRegister extends com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:proto.GeoRegister)
-            GeoRegisterOrBuilder {
-        // Use GeoRegister.newBuilder() to construct.
-        private GeoRegister(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-            super(builder);
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GeoRegister)
+        net.iGap.proto.ProtoGeoRegister.GeoRegisterOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGeoRegister.GeoRegister.class, net.iGap.proto.ProtoGeoRegister.GeoRegister.Builder.class);
+      }
+
+      // Construct using net.iGap.proto.ProtoGeoRegister.GeoRegister.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (requestBuilder_ == null) {
+          request_ = null;
+        } else {
+          request_ = null;
+          requestBuilder_ = null;
+        }
+        enable_ = false;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGeoRegister.GeoRegister.getDefaultInstance();
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegister build() {
+        net.iGap.proto.ProtoGeoRegister.GeoRegister result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegister buildPartial() {
+        net.iGap.proto.ProtoGeoRegister.GeoRegister result = new net.iGap.proto.ProtoGeoRegister.GeoRegister(this);
+        if (requestBuilder_ == null) {
+          result.request_ = request_;
+        } else {
+          result.request_ = requestBuilder_.build();
+        }
+        result.enable_ = enable_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof net.iGap.proto.ProtoGeoRegister.GeoRegister) {
+          return mergeFrom((net.iGap.proto.ProtoGeoRegister.GeoRegister)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(net.iGap.proto.ProtoGeoRegister.GeoRegister other) {
+        if (other == net.iGap.proto.ProtoGeoRegister.GeoRegister.getDefaultInstance()) return this;
+        if (other.hasRequest()) {
+          mergeRequest(other.getRequest());
+        }
+        if (other.getEnable() != false) {
+          setEnable(other.getEnable());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        net.iGap.proto.ProtoGeoRegister.GeoRegister parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (net.iGap.proto.ProtoGeoRegister.GeoRegister) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private net.iGap.proto.ProtoRequest.Request request_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public boolean hasRequest() {
+        return requestBuilder_ != null || request_ != null;
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public net.iGap.proto.ProtoRequest.Request getRequest() {
+        if (requestBuilder_ == null) {
+          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+        } else {
+          return requestBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public Builder setRequest(net.iGap.proto.ProtoRequest.Request value) {
+        if (requestBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          request_ = value;
+          onChanged();
+        } else {
+          requestBuilder_.setMessage(value);
         }
 
-        private GeoRegister() {
-            enable_ = false;
+        return this;
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+        if (requestBuilder_ == null) {
+          request_ = builderForValue.build();
+          onChanged();
+        } else {
+          requestBuilder_.setMessage(builderForValue.build());
         }
 
-        @java.lang.Override
-        public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-            return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+        return this;
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
+        if (requestBuilder_ == null) {
+          if (request_ != null) {
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+          } else {
+            request_ = value;
+          }
+          onChanged();
+        } else {
+          requestBuilder_.mergeFrom(value);
         }
 
-        private GeoRegister(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            this();
-            int mutable_bitField0_ = 0;
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        default: {
-                            if (!input.skipField(tag)) {
-                                done = true;
-                            }
-                            break;
-                        }
-                        case 10: {
-                            net.iGap.proto.ProtoRequest.Request.Builder subBuilder = null;
-                            if (request_ != null) {
-                                subBuilder = request_.toBuilder();
-                            }
-                            request_ = input.readMessage(net.iGap.proto.ProtoRequest.Request.parser(), extensionRegistry);
-                            if (subBuilder != null) {
-                                subBuilder.mergeFrom(request_);
-                                request_ = subBuilder.buildPartial();
-                            }
-
-                            break;
-                        }
-                        case 16: {
-
-                            enable_ = input.readBool();
-                            break;
-                        }
-                    }
-                }
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(this);
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
-            } finally {
-                makeExtensionsImmutable();
-            }
+        return this;
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public Builder clearRequest() {
+        if (requestBuilder_ == null) {
+          request_ = null;
+          onChanged();
+        } else {
+          request_ = null;
+          requestBuilder_ = null;
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-            return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
+        return this;
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
+        
+        onChanged();
+        return getRequestFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
+        if (requestBuilder_ != null) {
+          return requestBuilder_.getMessageOrBuilder();
+        } else {
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
-
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-            return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGeoRegister.GeoRegister.class, net.iGap.proto.ProtoGeoRegister.GeoRegister.Builder.class);
+      }
+      /**
+       * <code>optional .proto.Request request = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
+        if (requestBuilder_ == null) {
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+                  getRequest(),
+                  getParentForChildren(),
+                  isClean());
+          request_ = null;
         }
-
-        public static final int REQUEST_FIELD_NUMBER = 1;
-        private net.iGap.proto.ProtoRequest.Request request_;
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        public boolean hasRequest() {
-            return request_ != null;
-        }
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        public net.iGap.proto.ProtoRequest.Request getRequest() {
-            return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
-        }
-
-        /**
-         * <code>optional .proto.Request request = 1;</code>
-         */
-        public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
-            return getRequest();
-        }
-
-        public static final int ENABLE_FIELD_NUMBER = 2;
-        private boolean enable_;
-
-        /**
-         * <code>optional bool enable = 2;</code>
-         */
-        public boolean getEnable() {
-            return enable_;
-        }
-
-        private byte memoizedIsInitialized = -1;
-
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized == 1) return true;
-            if (isInitialized == 0) return false;
-
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-            if (request_ != null) {
-                output.writeMessage(1, getRequest());
-            }
-            if (enable_ != false) {
-                output.writeBool(2, enable_);
-            }
-        }
-
-        public int getSerializedSize() {
-            int size = memoizedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            if (request_ != null) {
-                size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
-            }
-            if (enable_ != false) {
-                size += com.google.protobuf.CodedOutputStream.computeBoolSize(2, enable_);
-            }
-            memoizedSize = size;
-            return size;
-        }
-
-        private static final long serialVersionUID = 0L;
-
-        @java.lang.Override
-        public boolean equals(final java.lang.Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof net.iGap.proto.ProtoGeoRegister.GeoRegister)) {
-                return super.equals(obj);
-            }
-            net.iGap.proto.ProtoGeoRegister.GeoRegister other = (net.iGap.proto.ProtoGeoRegister.GeoRegister) obj;
-
-            boolean result = true;
-            result = result && (hasRequest() == other.hasRequest());
-            if (hasRequest()) {
-                result = result && getRequest().equals(other.getRequest());
-            }
-            result = result && (getEnable() == other.getEnable());
-            return result;
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            if (memoizedHashCode != 0) {
-                return memoizedHashCode;
-            }
-            int hash = 41;
-            hash = (19 * hash) + getDescriptorForType().hashCode();
-            if (hasRequest()) {
-                hash = (37 * hash) + REQUEST_FIELD_NUMBER;
-                hash = (53 * hash) + getRequest().hashCode();
-            }
-            hash = (37 * hash) + ENABLE_FIELD_NUMBER;
-            hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getEnable());
-            hash = (29 * hash) + unknownFields.hashCode();
-            memoizedHashCode = hash;
-            return hash;
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(java.io.InputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public Builder newBuilderForType() {
-            return newBuilder();
-        }
-
-        public static Builder newBuilder() {
-            return DEFAULT_INSTANCE.toBuilder();
-        }
-
-        public static Builder newBuilder(net.iGap.proto.ProtoGeoRegister.GeoRegister prototype) {
-            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-        }
-
-        public Builder toBuilder() {
-            return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-        }
-
-        @java.lang.Override
-        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-            Builder builder = new Builder(parent);
-            return builder;
-        }
-
-        /**
-         * Protobuf type {@code proto.GeoRegister}
-         */
-        public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:proto.GeoRegister)
-                net.iGap.proto.ProtoGeoRegister.GeoRegisterOrBuilder {
-            public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
-            }
-
-            protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGeoRegister.GeoRegister.class, net.iGap.proto.ProtoGeoRegister.GeoRegister.Builder.class);
-            }
-
-            // Construct using net.iGap.proto.ProtoGeoRegister.GeoRegister.newBuilder()
-            private Builder() {
-                maybeForceBuilderInitialization();
-            }
-
-            private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-                super(parent);
-                maybeForceBuilderInitialization();
-            }
-
-            private void maybeForceBuilderInitialization() {
-                if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-                }
-            }
-
-            public Builder clear() {
-                super.clear();
-                if (requestBuilder_ == null) {
-                    request_ = null;
-                } else {
-                    request_ = null;
-                    requestBuilder_ = null;
-                }
-                enable_ = false;
-
-                return this;
-            }
-
-            public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegister_descriptor;
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstanceForType() {
-                return net.iGap.proto.ProtoGeoRegister.GeoRegister.getDefaultInstance();
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegister build() {
-                net.iGap.proto.ProtoGeoRegister.GeoRegister result = buildPartial();
-                if (!result.isInitialized()) {
-                    throw newUninitializedMessageException(result);
-                }
-                return result;
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegister buildPartial() {
-                net.iGap.proto.ProtoGeoRegister.GeoRegister result = new net.iGap.proto.ProtoGeoRegister.GeoRegister(this);
-                if (requestBuilder_ == null) {
-                    result.request_ = request_;
-                } else {
-                    result.request_ = requestBuilder_.build();
-                }
-                result.enable_ = enable_;
-                onBuilt();
-                return result;
-            }
-
-            public Builder clone() {
-                return (Builder) super.clone();
-            }
-
-            public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
-                return (Builder) super.setField(field, value);
-            }
-
-            public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-                return (Builder) super.clearField(field);
-            }
-
-            public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-                return (Builder) super.clearOneof(oneof);
-            }
-
-            public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
-                return (Builder) super.setRepeatedField(field, index, value);
-            }
-
-            public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
-                return (Builder) super.addRepeatedField(field, value);
-            }
-
-            public Builder mergeFrom(com.google.protobuf.Message other) {
-                if (other instanceof net.iGap.proto.ProtoGeoRegister.GeoRegister) {
-                    return mergeFrom((net.iGap.proto.ProtoGeoRegister.GeoRegister) other);
-                } else {
-                    super.mergeFrom(other);
-                    return this;
-                }
-            }
-
-            public Builder mergeFrom(net.iGap.proto.ProtoGeoRegister.GeoRegister other) {
-                if (other == net.iGap.proto.ProtoGeoRegister.GeoRegister.getDefaultInstance()) return this;
-                if (other.hasRequest()) {
-                    mergeRequest(other.getRequest());
-                }
-                if (other.getEnable() != false) {
-                    setEnable(other.getEnable());
-                }
-                onChanged();
-                return this;
-            }
-
-            public final boolean isInitialized() {
-                return true;
-            }
-
-            public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-                net.iGap.proto.ProtoGeoRegister.GeoRegister parsedMessage = null;
-                try {
-                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                    parsedMessage = (net.iGap.proto.ProtoGeoRegister.GeoRegister) e.getUnfinishedMessage();
-                    throw e.unwrapIOException();
-                } finally {
-                    if (parsedMessage != null) {
-                        mergeFrom(parsedMessage);
-                    }
-                }
-                return this;
-            }
-
-            private net.iGap.proto.ProtoRequest.Request request_ = null;
-            private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public boolean hasRequest() {
-                return requestBuilder_ != null || request_ != null;
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public net.iGap.proto.ProtoRequest.Request getRequest() {
-                if (requestBuilder_ == null) {
-                    return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
-                } else {
-                    return requestBuilder_.getMessage();
-                }
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public Builder setRequest(net.iGap.proto.ProtoRequest.Request value) {
-                if (requestBuilder_ == null) {
-                    if (value == null) {
-                        throw new NullPointerException();
-                    }
-                    request_ = value;
-                    onChanged();
-                } else {
-                    requestBuilder_.setMessage(value);
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
-                if (requestBuilder_ == null) {
-                    request_ = builderForValue.build();
-                    onChanged();
-                } else {
-                    requestBuilder_.setMessage(builderForValue.build());
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
-                if (requestBuilder_ == null) {
-                    if (request_ != null) {
-                        request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
-                    } else {
-                        request_ = value;
-                    }
-                    onChanged();
-                } else {
-                    requestBuilder_.mergeFrom(value);
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public Builder clearRequest() {
-                if (requestBuilder_ == null) {
-                    request_ = null;
-                    onChanged();
-                } else {
-                    request_ = null;
-                    requestBuilder_ = null;
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
-
-                onChanged();
-                return getRequestFieldBuilder().getBuilder();
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            public net.iGap.proto.ProtoRequest.RequestOrBuilder getRequestOrBuilder() {
-                if (requestBuilder_ != null) {
-                    return requestBuilder_.getMessageOrBuilder();
-                } else {
-                    return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
-                }
-            }
-
-            /**
-             * <code>optional .proto.Request request = 1;</code>
-             */
-            private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
-                if (requestBuilder_ == null) {
-                    requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
-                    request_ = null;
-                }
-                return requestBuilder_;
-            }
-
-            private boolean enable_;
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public boolean getEnable() {
-                return enable_;
-            }
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public Builder setEnable(boolean value) {
-
-                enable_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public Builder clearEnable() {
-
-                enable_ = false;
-                onChanged();
-                return this;
-            }
-
-            public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return this;
-            }
-
-            public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return this;
-            }
-
-
-            // @@protoc_insertion_point(builder_scope:proto.GeoRegister)
-        }
-
-        // @@protoc_insertion_point(class_scope:proto.GeoRegister)
-        private static final net.iGap.proto.ProtoGeoRegister.GeoRegister DEFAULT_INSTANCE;
-
-        static {
-            DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoRegister.GeoRegister();
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstance() {
-            return DEFAULT_INSTANCE;
-        }
-
-        private static final com.google.protobuf.Parser<GeoRegister> PARSER = new com.google.protobuf.AbstractParser<GeoRegister>() {
-            public GeoRegister parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-                return new GeoRegister(input, extensionRegistry);
-            }
-        };
-
-        public static com.google.protobuf.Parser<GeoRegister> parser() {
-            return PARSER;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Parser<GeoRegister> getParserForType() {
-            return PARSER;
-        }
-
-        public net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstanceForType() {
-            return DEFAULT_INSTANCE;
-        }
-
+        return requestBuilder_;
+      }
+
+      private boolean enable_ ;
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public boolean getEnable() {
+        return enable_;
+      }
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public Builder setEnable(boolean value) {
+        
+        enable_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public Builder clearEnable() {
+        
+        enable_ = false;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.GeoRegister)
     }
 
-    public interface GeoRegisterResponseOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:proto.GeoRegisterResponse)
-            com.google.protobuf.MessageOrBuilder {
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        boolean hasResponse();
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        net.iGap.proto.ProtoResponse.Response getResponse();
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
-
-        /**
-         * <code>optional bool enable = 2;</code>
-         */
-        boolean getEnable();
+    // @@protoc_insertion_point(class_scope:proto.GeoRegister)
+    private static final net.iGap.proto.ProtoGeoRegister.GeoRegister DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoRegister.GeoRegister();
     }
 
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GeoRegister>
+        PARSER = new com.google.protobuf.AbstractParser<GeoRegister>() {
+      public GeoRegister parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GeoRegister(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GeoRegister> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GeoRegister> getParserForType() {
+      return PARSER;
+    }
+
+    public net.iGap.proto.ProtoGeoRegister.GeoRegister getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GeoRegisterResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:proto.GeoRegisterResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    boolean hasResponse();
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    net.iGap.proto.ProtoResponse.Response getResponse();
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder();
+
+    /**
+     * <code>optional bool enable = 2;</code>
+     */
+    boolean getEnable();
+  }
+  /**
+   * Protobuf type {@code proto.GeoRegisterResponse}
+   */
+  public  static final class GeoRegisterResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.GeoRegisterResponse)
+      GeoRegisterResponseOrBuilder {
+    // Use GeoRegisterResponse.newBuilder() to construct.
+    private GeoRegisterResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GeoRegisterResponse() {
+      enable_ = false;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private GeoRegisterResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
+              if (response_ != null) {
+                subBuilder = response_.toBuilder();
+              }
+              response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(response_);
+                response_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 16: {
+
+              enable_ = input.readBool();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.class, net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.Builder.class);
+    }
+
+    public static final int RESPONSE_FIELD_NUMBER = 1;
+    private net.iGap.proto.ProtoResponse.Response response_;
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    public boolean hasResponse() {
+      return response_ != null;
+    }
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    public net.iGap.proto.ProtoResponse.Response getResponse() {
+      return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+    }
+    /**
+     * <code>optional .proto.Response response = 1;</code>
+     */
+    public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+      return getResponse();
+    }
+
+    public static final int ENABLE_FIELD_NUMBER = 2;
+    private boolean enable_;
+    /**
+     * <code>optional bool enable = 2;</code>
+     */
+    public boolean getEnable() {
+      return enable_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (response_ != null) {
+        output.writeMessage(1, getResponse());
+      }
+      if (enable_ != false) {
+        output.writeBool(2, enable_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (response_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
+      }
+      if (enable_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, enable_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse)) {
+        return super.equals(obj);
+      }
+      net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse other = (net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) obj;
+
+      boolean result = true;
+      result = result && (hasResponse() == other.hasResponse());
+      if (hasResponse()) {
+        result = result && getResponse()
+            .equals(other.getResponse());
+      }
+      result = result && (getEnable()
+          == other.getEnable());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      if (hasResponse()) {
+        hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
+        hash = (53 * hash) + getResponse().hashCode();
+      }
+      hash = (37 * hash) + ENABLE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getEnable());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
     /**
      * Protobuf type {@code proto.GeoRegisterResponse}
      */
-    public static final class GeoRegisterResponse extends com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:proto.GeoRegisterResponse)
-            GeoRegisterResponseOrBuilder {
-        // Use GeoRegisterResponse.newBuilder() to construct.
-        private GeoRegisterResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-            super(builder);
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.GeoRegisterResponse)
+        net.iGap.proto.ProtoGeoRegister.GeoRegisterResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.class, net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.Builder.class);
+      }
+
+      // Construct using net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        if (responseBuilder_ == null) {
+          response_ = null;
+        } else {
+          response_ = null;
+          responseBuilder_ = null;
+        }
+        enable_ = false;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstanceForType() {
+        return net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.getDefaultInstance();
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse build() {
+        net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse buildPartial() {
+        net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse result = new net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse(this);
+        if (responseBuilder_ == null) {
+          result.response_ = response_;
+        } else {
+          result.response_ = responseBuilder_.build();
+        }
+        result.enable_ = enable_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) {
+          return mergeFrom((net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse other) {
+        if (other == net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.getDefaultInstance()) return this;
+        if (other.hasResponse()) {
+          mergeResponse(other.getResponse());
+        }
+        if (other.getEnable() != false) {
+          setEnable(other.getEnable());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private net.iGap.proto.ProtoResponse.Response response_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public boolean hasResponse() {
+        return responseBuilder_ != null || response_ != null;
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public net.iGap.proto.ProtoResponse.Response getResponse() {
+        if (responseBuilder_ == null) {
+          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+        } else {
+          return responseBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public Builder setResponse(net.iGap.proto.ProtoResponse.Response value) {
+        if (responseBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          response_ = value;
+          onChanged();
+        } else {
+          responseBuilder_.setMessage(value);
         }
 
-        private GeoRegisterResponse() {
-            enable_ = false;
+        return this;
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+        if (responseBuilder_ == null) {
+          response_ = builderForValue.build();
+          onChanged();
+        } else {
+          responseBuilder_.setMessage(builderForValue.build());
         }
 
-        @java.lang.Override
-        public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-            return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+        return this;
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
+        if (responseBuilder_ == null) {
+          if (response_ != null) {
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+          } else {
+            response_ = value;
+          }
+          onChanged();
+        } else {
+          responseBuilder_.mergeFrom(value);
         }
 
-        private GeoRegisterResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            this();
-            int mutable_bitField0_ = 0;
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        default: {
-                            if (!input.skipField(tag)) {
-                                done = true;
-                            }
-                            break;
-                        }
-                        case 10: {
-                            net.iGap.proto.ProtoResponse.Response.Builder subBuilder = null;
-                            if (response_ != null) {
-                                subBuilder = response_.toBuilder();
-                            }
-                            response_ = input.readMessage(net.iGap.proto.ProtoResponse.Response.parser(), extensionRegistry);
-                            if (subBuilder != null) {
-                                subBuilder.mergeFrom(response_);
-                                response_ = subBuilder.buildPartial();
-                            }
-
-                            break;
-                        }
-                        case 16: {
-
-                            enable_ = input.readBool();
-                            break;
-                        }
-                    }
-                }
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(this);
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
-            } finally {
-                makeExtensionsImmutable();
-            }
+        return this;
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public Builder clearResponse() {
+        if (responseBuilder_ == null) {
+          response_ = null;
+          onChanged();
+        } else {
+          response_ = null;
+          responseBuilder_ = null;
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-            return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
+        return this;
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
+        
+        onChanged();
+        return getResponseFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
+        if (responseBuilder_ != null) {
+          return responseBuilder_.getMessageOrBuilder();
+        } else {
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
-
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-            return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.class, net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.Builder.class);
+      }
+      /**
+       * <code>optional .proto.Response response = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
+        if (responseBuilder_ == null) {
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
+          response_ = null;
         }
-
-        public static final int RESPONSE_FIELD_NUMBER = 1;
-        private net.iGap.proto.ProtoResponse.Response response_;
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        public boolean hasResponse() {
-            return response_ != null;
-        }
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        public net.iGap.proto.ProtoResponse.Response getResponse() {
-            return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
-        }
-
-        /**
-         * <code>optional .proto.Response response = 1;</code>
-         */
-        public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
-            return getResponse();
-        }
-
-        public static final int ENABLE_FIELD_NUMBER = 2;
-        private boolean enable_;
-
-        /**
-         * <code>optional bool enable = 2;</code>
-         */
-        public boolean getEnable() {
-            return enable_;
-        }
-
-        private byte memoizedIsInitialized = -1;
-
-        public final boolean isInitialized() {
-            byte isInitialized = memoizedIsInitialized;
-            if (isInitialized == 1) return true;
-            if (isInitialized == 0) return false;
-
-            memoizedIsInitialized = 1;
-            return true;
-        }
-
-        public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
-            if (response_ != null) {
-                output.writeMessage(1, getResponse());
-            }
-            if (enable_ != false) {
-                output.writeBool(2, enable_);
-            }
-        }
-
-        public int getSerializedSize() {
-            int size = memoizedSize;
-            if (size != -1) return size;
-
-            size = 0;
-            if (response_ != null) {
-                size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
-            }
-            if (enable_ != false) {
-                size += com.google.protobuf.CodedOutputStream.computeBoolSize(2, enable_);
-            }
-            memoizedSize = size;
-            return size;
-        }
-
-        private static final long serialVersionUID = 0L;
-
-        @java.lang.Override
-        public boolean equals(final java.lang.Object obj) {
-            if (obj == this) {
-                return true;
-            }
-            if (!(obj instanceof net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse)) {
-                return super.equals(obj);
-            }
-            net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse other = (net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) obj;
-
-            boolean result = true;
-            result = result && (hasResponse() == other.hasResponse());
-            if (hasResponse()) {
-                result = result && getResponse().equals(other.getResponse());
-            }
-            result = result && (getEnable() == other.getEnable());
-            return result;
-        }
-
-        @java.lang.Override
-        public int hashCode() {
-            if (memoizedHashCode != 0) {
-                return memoizedHashCode;
-            }
-            int hash = 41;
-            hash = (19 * hash) + getDescriptorForType().hashCode();
-            if (hasResponse()) {
-                hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
-                hash = (53 * hash) + getResponse().hashCode();
-            }
-            hash = (37 * hash) + ENABLE_FIELD_NUMBER;
-            hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getEnable());
-            hash = (29 * hash) + unknownFields.hashCode();
-            memoizedHashCode = hash;
-            return hash;
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-            return PARSER.parseFrom(data, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-            return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-        }
-
-        public Builder newBuilderForType() {
-            return newBuilder();
-        }
-
-        public static Builder newBuilder() {
-            return DEFAULT_INSTANCE.toBuilder();
-        }
-
-        public static Builder newBuilder(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse prototype) {
-            return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-        }
-
-        public Builder toBuilder() {
-            return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
-        }
-
-        @java.lang.Override
-        protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-            Builder builder = new Builder(parent);
-            return builder;
-        }
-
-        /**
-         * Protobuf type {@code proto.GeoRegisterResponse}
-         */
-        public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-                // @@protoc_insertion_point(builder_implements:proto.GeoRegisterResponse)
-                net.iGap.proto.ProtoGeoRegister.GeoRegisterResponseOrBuilder {
-            public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
-            }
-
-            protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.class, net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.Builder.class);
-            }
-
-            // Construct using net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.newBuilder()
-            private Builder() {
-                maybeForceBuilderInitialization();
-            }
-
-            private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-                super(parent);
-                maybeForceBuilderInitialization();
-            }
-
-            private void maybeForceBuilderInitialization() {
-                if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
-                }
-            }
-
-            public Builder clear() {
-                super.clear();
-                if (responseBuilder_ == null) {
-                    response_ = null;
-                } else {
-                    response_ = null;
-                    responseBuilder_ = null;
-                }
-                enable_ = false;
-
-                return this;
-            }
-
-            public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-                return net.iGap.proto.ProtoGeoRegister.internal_static_proto_GeoRegisterResponse_descriptor;
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstanceForType() {
-                return net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.getDefaultInstance();
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse build() {
-                net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse result = buildPartial();
-                if (!result.isInitialized()) {
-                    throw newUninitializedMessageException(result);
-                }
-                return result;
-            }
-
-            public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse buildPartial() {
-                net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse result = new net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse(this);
-                if (responseBuilder_ == null) {
-                    result.response_ = response_;
-                } else {
-                    result.response_ = responseBuilder_.build();
-                }
-                result.enable_ = enable_;
-                onBuilt();
-                return result;
-            }
-
-            public Builder clone() {
-                return (Builder) super.clone();
-            }
-
-            public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
-                return (Builder) super.setField(field, value);
-            }
-
-            public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-                return (Builder) super.clearField(field);
-            }
-
-            public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-                return (Builder) super.clearOneof(oneof);
-            }
-
-            public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
-                return (Builder) super.setRepeatedField(field, index, value);
-            }
-
-            public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
-                return (Builder) super.addRepeatedField(field, value);
-            }
-
-            public Builder mergeFrom(com.google.protobuf.Message other) {
-                if (other instanceof net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) {
-                    return mergeFrom((net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) other);
-                } else {
-                    super.mergeFrom(other);
-                    return this;
-                }
-            }
-
-            public Builder mergeFrom(net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse other) {
-                if (other == net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse.getDefaultInstance()) return this;
-                if (other.hasResponse()) {
-                    mergeResponse(other.getResponse());
-                }
-                if (other.getEnable() != false) {
-                    setEnable(other.getEnable());
-                }
-                onChanged();
-                return this;
-            }
-
-            public final boolean isInitialized() {
-                return true;
-            }
-
-            public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-                net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse parsedMessage = null;
-                try {
-                    parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-                } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                    parsedMessage = (net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse) e.getUnfinishedMessage();
-                    throw e.unwrapIOException();
-                } finally {
-                    if (parsedMessage != null) {
-                        mergeFrom(parsedMessage);
-                    }
-                }
-                return this;
-            }
-
-            private net.iGap.proto.ProtoResponse.Response response_ = null;
-            private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public boolean hasResponse() {
-                return responseBuilder_ != null || response_ != null;
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public net.iGap.proto.ProtoResponse.Response getResponse() {
-                if (responseBuilder_ == null) {
-                    return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
-                } else {
-                    return responseBuilder_.getMessage();
-                }
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public Builder setResponse(net.iGap.proto.ProtoResponse.Response value) {
-                if (responseBuilder_ == null) {
-                    if (value == null) {
-                        throw new NullPointerException();
-                    }
-                    response_ = value;
-                    onChanged();
-                } else {
-                    responseBuilder_.setMessage(value);
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
-                if (responseBuilder_ == null) {
-                    response_ = builderForValue.build();
-                    onChanged();
-                } else {
-                    responseBuilder_.setMessage(builderForValue.build());
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
-                if (responseBuilder_ == null) {
-                    if (response_ != null) {
-                        response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
-                    } else {
-                        response_ = value;
-                    }
-                    onChanged();
-                } else {
-                    responseBuilder_.mergeFrom(value);
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public Builder clearResponse() {
-                if (responseBuilder_ == null) {
-                    response_ = null;
-                    onChanged();
-                } else {
-                    response_ = null;
-                    responseBuilder_ = null;
-                }
-
-                return this;
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
-
-                onChanged();
-                return getResponseFieldBuilder().getBuilder();
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            public net.iGap.proto.ProtoResponse.ResponseOrBuilder getResponseOrBuilder() {
-                if (responseBuilder_ != null) {
-                    return responseBuilder_.getMessageOrBuilder();
-                } else {
-                    return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
-                }
-            }
-
-            /**
-             * <code>optional .proto.Response response = 1;</code>
-             */
-            private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
-                if (responseBuilder_ == null) {
-                    responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
-                    response_ = null;
-                }
-                return responseBuilder_;
-            }
-
-            private boolean enable_;
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public boolean getEnable() {
-                return enable_;
-            }
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public Builder setEnable(boolean value) {
-
-                enable_ = value;
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>optional bool enable = 2;</code>
-             */
-            public Builder clearEnable() {
-
-                enable_ = false;
-                onChanged();
-                return this;
-            }
-
-            public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return this;
-            }
-
-            public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return this;
-            }
-
-
-            // @@protoc_insertion_point(builder_scope:proto.GeoRegisterResponse)
-        }
-
-        // @@protoc_insertion_point(class_scope:proto.GeoRegisterResponse)
-        private static final net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse DEFAULT_INSTANCE;
-
-        static {
-            DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse();
-        }
-
-        public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstance() {
-            return DEFAULT_INSTANCE;
-        }
-
-        private static final com.google.protobuf.Parser<GeoRegisterResponse> PARSER = new com.google.protobuf.AbstractParser<GeoRegisterResponse>() {
-            public GeoRegisterResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-                return new GeoRegisterResponse(input, extensionRegistry);
-            }
-        };
-
-        public static com.google.protobuf.Parser<GeoRegisterResponse> parser() {
-            return PARSER;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Parser<GeoRegisterResponse> getParserForType() {
-            return PARSER;
-        }
-
-        public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstanceForType() {
-            return DEFAULT_INSTANCE;
-        }
-
+        return responseBuilder_;
+      }
+
+      private boolean enable_ ;
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public boolean getEnable() {
+        return enable_;
+      }
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public Builder setEnable(boolean value) {
+        
+        enable_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool enable = 2;</code>
+       */
+      public Builder clearEnable() {
+        
+        enable_ = false;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:proto.GeoRegisterResponse)
     }
 
-    private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GeoRegister_descriptor;
-    private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GeoRegister_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_GeoRegisterResponse_descriptor;
-    private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_GeoRegisterResponse_fieldAccessorTable;
-
-    public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
-        return descriptor;
-    }
-
-    private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
-
+    // @@protoc_insertion_point(class_scope:proto.GeoRegisterResponse)
+    private static final net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse DEFAULT_INSTANCE;
     static {
-        java.lang.String[] descriptorData = {
-                "\n\021GeoRegister.proto\022\005proto\032\rRequest.prot" +
-                        "o\032\016Response.proto\">\n\013GeoRegister\022\037\n\007requ" +
-                        "est\030\001 \001(\0132\016.proto.Request\022\016\n\006enable\030\002 \001(" +
-                        "\010\"H\n\023GeoRegisterResponse\022!\n\010response\030\001 \001" +
-                        "(\0132\017.proto.Response\022\016\n\006enable\030\002 \001(\010B\"\n\016n" +
-                        "et.iGap.protoB\020ProtoGeoRegisterb\006proto3"
-        };
-        com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-            public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-                descriptor = root;
-                return null;
-            }
-        };
-        com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-                net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
-        }, assigner);
-        internal_static_proto_GeoRegister_descriptor = getDescriptor().getMessageTypes().get(0);
-        internal_static_proto_GeoRegister_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GeoRegister_descriptor, new java.lang.String[]{"Request", "Enable",});
-        internal_static_proto_GeoRegisterResponse_descriptor = getDescriptor().getMessageTypes().get(1);
-        internal_static_proto_GeoRegisterResponse_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_GeoRegisterResponse_descriptor, new java.lang.String[]{"Response", "Enable",});
-        net.iGap.proto.ProtoRequest.getDescriptor();
-        net.iGap.proto.ProtoResponse.getDescriptor();
+      DEFAULT_INSTANCE = new net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse();
     }
 
-    // @@protoc_insertion_point(outer_class_scope)
+    public static net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GeoRegisterResponse>
+        PARSER = new com.google.protobuf.AbstractParser<GeoRegisterResponse>() {
+      public GeoRegisterResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GeoRegisterResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<GeoRegisterResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GeoRegisterResponse> getParserForType() {
+      return PARSER;
+    }
+
+    public net.iGap.proto.ProtoGeoRegister.GeoRegisterResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GeoRegister_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GeoRegister_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_GeoRegisterResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_GeoRegisterResponse_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\021GeoRegister.proto\022\005proto\032\rRequest.prot" +
+      "o\032\016Response.proto\">\n\013GeoRegister\022\037\n\007requ" +
+      "est\030\001 \001(\0132\016.proto.Request\022\016\n\006enable\030\002 \001(" +
+      "\010\"H\n\023GeoRegisterResponse\022!\n\010response\030\001 \001" +
+      "(\0132\017.proto.Response\022\016\n\006enable\030\002 \001(\010B\"\n\016n" +
+      "et.iGap.protoB\020ProtoGeoRegisterb\006proto3"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+        }, assigner);
+    internal_static_proto_GeoRegister_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_GeoRegister_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_GeoRegister_descriptor,
+        new java.lang.String[] { "Request", "Enable", });
+    internal_static_proto_GeoRegisterResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_proto_GeoRegisterResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_GeoRegisterResponse_descriptor,
+        new java.lang.String[] { "Response", "Enable", });
+    net.iGap.proto.ProtoRequest.getDescriptor();
+    net.iGap.proto.ProtoResponse.getDescriptor();
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
 }

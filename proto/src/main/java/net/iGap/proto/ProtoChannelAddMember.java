@@ -138,7 +138,9 @@ public final class ProtoChannelAddMember {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Builder.class);
+      return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Builder.class);
     }
 
     public interface MemberOrBuilder extends
@@ -213,7 +215,9 @@ public final class ProtoChannelAddMember {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_Member_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder.class);
+        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_Member_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder.class);
       }
 
       public static final int USER_ID_FIELD_NUMBER = 1;
@@ -378,7 +382,9 @@ public final class ProtoChannelAddMember {
 
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_Member_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder.class);
+          return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_Member_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder.class);
         }
 
         // Construct using net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.newBuilder()
@@ -455,7 +461,7 @@ public final class ProtoChannelAddMember {
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member) {
-            return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member) other);
+            return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member)other);
           } else {
             super.mergeFrom(other);
             return this;
@@ -803,7 +809,9 @@ public final class ProtoChannelAddMember {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Builder.class);
+        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMember_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.newBuilder()
@@ -902,7 +910,7 @@ public final class ProtoChannelAddMember {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelAddMember.ChannelAddMember) {
-          return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMember) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMember)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -947,7 +955,8 @@ public final class ProtoChannelAddMember {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -983,7 +992,8 @@ public final class ProtoChannelAddMember {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -999,7 +1009,8 @@ public final class ProtoChannelAddMember {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -1039,16 +1050,19 @@ public final class ProtoChannelAddMember {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
           getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -1084,7 +1098,8 @@ public final class ProtoChannelAddMember {
       }
 
       private net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member member_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder> memberBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder> memberBuilder_;
       /**
        * <code>optional .proto.ChannelAddMember.Member member = 3;</code>
        */
@@ -1120,7 +1135,8 @@ public final class ProtoChannelAddMember {
       /**
        * <code>optional .proto.ChannelAddMember.Member member = 3;</code>
        */
-      public Builder setMember(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder builderForValue) {
+      public Builder setMember(
+          net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder builderForValue) {
         if (memberBuilder_ == null) {
           member_ = builderForValue.build();
           onChanged();
@@ -1136,7 +1152,8 @@ public final class ProtoChannelAddMember {
       public Builder mergeMember(net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member value) {
         if (memberBuilder_ == null) {
           if (member_ != null) {
-            member_ = net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.newBuilder(member_).mergeFrom(value).buildPartial();
+            member_ =
+              net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.newBuilder(member_).mergeFrom(value).buildPartial();
           } else {
             member_ = value;
           }
@@ -1176,16 +1193,19 @@ public final class ProtoChannelAddMember {
         if (memberBuilder_ != null) {
           return memberBuilder_.getMessageOrBuilder();
         } else {
-          return member_ == null ? net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.getDefaultInstance() : member_;
+          return member_ == null ?
+              net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.getDefaultInstance() : member_;
         }
       }
       /**
        * <code>optional .proto.ChannelAddMember.Member member = 3;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder> 
           getMemberFieldBuilder() {
         if (memberBuilder_ == null) {
-          memberBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder>(
+          memberBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.Member.Builder, net.iGap.proto.ProtoChannelAddMember.ChannelAddMember.MemberOrBuilder>(
                   getMember(),
                   getParentForChildren(),
                   isClean());
@@ -1367,7 +1387,9 @@ public final class ProtoChannelAddMember {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMemberResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMemberResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
@@ -1616,7 +1638,9 @@ public final class ProtoChannelAddMember {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMemberResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelAddMember.internal_static_proto_ChannelAddMemberResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.class, net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse.newBuilder()
@@ -1710,7 +1734,7 @@ public final class ProtoChannelAddMember {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse) {
-          return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelAddMember.ChannelAddMemberResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1758,7 +1782,8 @@ public final class ProtoChannelAddMember {
       }
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1794,7 +1819,8 @@ public final class ProtoChannelAddMember {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1810,7 +1836,8 @@ public final class ProtoChannelAddMember {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1850,16 +1877,19 @@ public final class ProtoChannelAddMember {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
           getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -2037,15 +2067,16 @@ public final class ProtoChannelAddMember {
   static {
     java.lang.String[] descriptorData = {
       "\n\026ChannelAddMember.proto\022\005proto\032\rRequest" +
-              ".proto\032\016Response.proto\032\014Global.proto\"\217\001\n" +
+      ".proto\032\016Response.proto\032\014Global.proto\"\217\001\n" +
       "\020ChannelAddMember\022\037\n\007request\030\001 \001(\0132\016.pro" +
       "to.Request\022\017\n\007room_id\030\002 \001(\004\022.\n\006member\030\003 " +
-              "\001(\0132\036.proto.ChannelAddMember.Member\032\031\n\006M" +
-              "ember\022\017\n\007user_id\030\001 \001(\004\"\206\001\n\030ChannelAddMem" +
-              "berResponse\022!\n\010response\030\001 \001(\0132\017.proto.Re" +
-              "sponse\022\017\n\007room_id\030\002 \001(\004\022\017\n\007user_id\030\003 \001(\004" +
-              "\022%\n\004role\030\004 \001(\0162\027.proto.ChannelRoom.RoleB" +
-              "\'\n\016net.iGap.protoB\025ProtoChannelAddMember", "b\006proto3"
+      "\001(\0132\036.proto.ChannelAddMember.Member\032\031\n\006M" +
+      "ember\022\017\n\007user_id\030\001 \001(\004\"\206\001\n\030ChannelAddMem" +
+      "berResponse\022!\n\010response\030\001 \001(\0132\017.proto.Re" +
+      "sponse\022\017\n\007room_id\030\002 \001(\004\022\017\n\007user_id\030\003 \001(\004" +
+      "\022%\n\004role\030\004 \001(\0162\027.proto.ChannelRoom.RoleB" +
+      "\'\n\016net.iGap.protoB\025ProtoChannelAddMember",
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2058,7 +2089,9 @@ public final class ProtoChannelAddMember {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-                net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoGlobal.getDescriptor(),
         }, assigner);
     internal_static_proto_ChannelAddMember_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -2068,7 +2101,10 @@ public final class ProtoChannelAddMember {
         new java.lang.String[] { "Request", "RoomId", "Member", });
     internal_static_proto_ChannelAddMember_Member_descriptor =
       internal_static_proto_ChannelAddMember_descriptor.getNestedTypes().get(0);
-    internal_static_proto_ChannelAddMember_Member_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ChannelAddMember_Member_descriptor, new java.lang.String[]{"UserId",});
+    internal_static_proto_ChannelAddMember_Member_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_ChannelAddMember_Member_descriptor,
+        new java.lang.String[] { "UserId", });
     internal_static_proto_ChannelAddMemberResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_proto_ChannelAddMemberResponse_fieldAccessorTable = new

@@ -4,18 +4,19 @@
 package net.iGap.proto;
 
 public final class ProtoQrCodeNewDevice {
-  private ProtoQrCodeNewDevice() {
+  private ProtoQrCodeNewDevice() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface QrCodeNewDeviceOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.QrCodeNewDevice)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.QrCodeNewDevice)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -37,7 +38,8 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string app_name = 2;</code>
      */
-    com.google.protobuf.ByteString getAppNameBytes();
+    com.google.protobuf.ByteString
+        getAppNameBytes();
 
     /**
      * <code>optional uint32 app_id = 3;</code>
@@ -56,7 +58,8 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string app_version = 5;</code>
      */
-    com.google.protobuf.ByteString getAppVersionBytes();
+    com.google.protobuf.ByteString
+        getAppVersionBytes();
 
     /**
      * <code>optional .proto.Platform platform = 6;</code>
@@ -74,7 +77,8 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string platform_version = 7;</code>
      */
-    com.google.protobuf.ByteString getPlatformVersionBytes();
+    com.google.protobuf.ByteString
+        getPlatformVersionBytes();
 
     /**
      * <code>optional .proto.Device device = 8;</code>
@@ -92,14 +96,16 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string device_name = 9;</code>
      */
-    com.google.protobuf.ByteString getDeviceNameBytes();
+    com.google.protobuf.ByteString
+        getDeviceNameBytes();
   }
   /**
    * Protobuf type {@code proto.QrCodeNewDevice}
    */
-  public static final class QrCodeNewDevice extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.QrCodeNewDevice)
-          QrCodeNewDeviceOrBuilder {
+  public  static final class QrCodeNewDevice extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.QrCodeNewDevice)
+      QrCodeNewDeviceOrBuilder {
     // Use QrCodeNewDevice.newBuilder() to construct.
     private QrCodeNewDevice(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -116,11 +122,14 @@ public final class ProtoQrCodeNewDevice {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private QrCodeNewDevice(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private QrCodeNewDevice(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -201,18 +210,22 @@ public final class ProtoQrCodeNewDevice {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -246,7 +259,8 @@ public final class ProtoQrCodeNewDevice {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         appName_ = s;
         return s;
@@ -255,10 +269,13 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string app_name = 2;</code>
      */
-    public com.google.protobuf.ByteString getAppNameBytes() {
+    public com.google.protobuf.ByteString
+        getAppNameBytes() {
       java.lang.Object ref = appName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         appName_ = b;
         return b;
       } else {
@@ -294,7 +311,8 @@ public final class ProtoQrCodeNewDevice {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         appVersion_ = s;
         return s;
@@ -303,10 +321,13 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string app_version = 5;</code>
      */
-    public com.google.protobuf.ByteString getAppVersionBytes() {
+    public com.google.protobuf.ByteString
+        getAppVersionBytes() {
       java.lang.Object ref = appVersion_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         appVersion_ = b;
         return b;
       } else {
@@ -340,7 +361,8 @@ public final class ProtoQrCodeNewDevice {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         platformVersion_ = s;
         return s;
@@ -349,10 +371,13 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string platform_version = 7;</code>
      */
-    public com.google.protobuf.ByteString getPlatformVersionBytes() {
+    public com.google.protobuf.ByteString
+        getPlatformVersionBytes() {
       java.lang.Object ref = platformVersion_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         platformVersion_ = b;
         return b;
       } else {
@@ -386,7 +411,8 @@ public final class ProtoQrCodeNewDevice {
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
-        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         deviceName_ = s;
         return s;
@@ -395,10 +421,13 @@ public final class ProtoQrCodeNewDevice {
     /**
      * <code>optional string device_name = 9;</code>
      */
-    public com.google.protobuf.ByteString getDeviceNameBytes() {
+    public com.google.protobuf.ByteString
+        getDeviceNameBytes() {
       java.lang.Object ref = deviceName_;
       if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
         deviceName_ = b;
         return b;
       } else {
@@ -416,7 +445,8 @@ public final class ProtoQrCodeNewDevice {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (request_ != null) {
         output.writeMessage(1, getRequest());
       }
@@ -452,28 +482,33 @@ public final class ProtoQrCodeNewDevice {
 
       size = 0;
       if (request_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
       }
       if (!getAppNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, appName_);
       }
       if (appId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt32Size(3, appId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, appId_);
       }
       if (appBuildVersion_ != 0) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt32Size(4, appBuildVersion_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, appBuildVersion_);
       }
       if (!getAppVersionBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, appVersion_);
       }
       if (platform_ != net.iGap.proto.ProtoGlobal.Platform.UNKNOWN_PLATFORM.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(6, platform_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(6, platform_);
       }
       if (!getPlatformVersionBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, platformVersion_);
       }
       if (device_ != net.iGap.proto.ProtoGlobal.Device.UNKNOWN_DEVICE.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream.computeEnumSize(8, device_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(8, device_);
       }
       if (!getDeviceNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, deviceName_);
@@ -486,7 +521,7 @@ public final class ProtoQrCodeNewDevice {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice)) {
         return super.equals(obj);
@@ -496,16 +531,23 @@ public final class ProtoQrCodeNewDevice {
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
       if (hasRequest()) {
-        result = result && getRequest().equals(other.getRequest());
+        result = result && getRequest()
+            .equals(other.getRequest());
       }
-      result = result && getAppName().equals(other.getAppName());
-      result = result && (getAppId() == other.getAppId());
-      result = result && (getAppBuildVersion() == other.getAppBuildVersion());
-      result = result && getAppVersion().equals(other.getAppVersion());
+      result = result && getAppName()
+          .equals(other.getAppName());
+      result = result && (getAppId()
+          == other.getAppId());
+      result = result && (getAppBuildVersion()
+          == other.getAppBuildVersion());
+      result = result && getAppVersion()
+          .equals(other.getAppVersion());
       result = result && platform_ == other.platform_;
-      result = result && getPlatformVersion().equals(other.getPlatformVersion());
+      result = result && getPlatformVersion()
+          .equals(other.getPlatformVersion());
       result = result && device_ == other.device_;
-      result = result && getDeviceName().equals(other.getDeviceName());
+      result = result && getDeviceName()
+          .equals(other.getDeviceName());
       return result;
     }
 
@@ -541,77 +583,100 @@ public final class ProtoQrCodeNewDevice {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.QrCodeNewDevice}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.QrCodeNewDevice)
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.QrCodeNewDevice)
         net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice.newBuilder()
@@ -619,12 +684,14 @@ public final class ProtoQrCodeNewDevice {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
@@ -654,7 +721,8 @@ public final class ProtoQrCodeNewDevice {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDevice_descriptor;
       }
 
@@ -692,29 +760,32 @@ public final class ProtoQrCodeNewDevice {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice) {
-          return mergeFrom((net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice) other);
+          return mergeFrom((net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -762,7 +833,10 @@ public final class ProtoQrCodeNewDevice {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDevice parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -778,7 +852,8 @@ public final class ProtoQrCodeNewDevice {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -814,7 +889,8 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -830,7 +906,8 @@ public final class ProtoQrCodeNewDevice {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -859,7 +936,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional .proto.Request request = 1;</code>
        */
       public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
-
+        
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
@@ -870,15 +947,22 @@ public final class ProtoQrCodeNewDevice {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+                  getRequest(),
+                  getParentForChildren(),
+                  isClean());
           request_ = null;
         }
         return requestBuilder_;
@@ -891,7 +975,8 @@ public final class ProtoQrCodeNewDevice {
       public java.lang.String getAppName() {
         java.lang.Object ref = appName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           appName_ = s;
           return s;
@@ -902,10 +987,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_name = 2;</code>
        */
-      public com.google.protobuf.ByteString getAppNameBytes() {
+      public com.google.protobuf.ByteString
+          getAppNameBytes() {
         java.lang.Object ref = appName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           appName_ = b;
           return b;
         } else {
@@ -915,11 +1003,12 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_name = 2;</code>
        */
-      public Builder setAppName(java.lang.String value) {
+      public Builder setAppName(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         appName_ = value;
         onChanged();
         return this;
@@ -928,7 +1017,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional string app_name = 2;</code>
        */
       public Builder clearAppName() {
-
+        
         appName_ = getDefaultInstance().getAppName();
         onChanged();
         return this;
@@ -936,18 +1025,19 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_name = 2;</code>
        */
-      public Builder setAppNameBytes(com.google.protobuf.ByteString value) {
+      public Builder setAppNameBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
         appName_ = value;
         onChanged();
         return this;
       }
 
-      private int appId_;
+      private int appId_ ;
       /**
        * <code>optional uint32 app_id = 3;</code>
        */
@@ -958,7 +1048,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 app_id = 3;</code>
        */
       public Builder setAppId(int value) {
-
+        
         appId_ = value;
         onChanged();
         return this;
@@ -967,13 +1057,13 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 app_id = 3;</code>
        */
       public Builder clearAppId() {
-
+        
         appId_ = 0;
         onChanged();
         return this;
       }
 
-      private int appBuildVersion_;
+      private int appBuildVersion_ ;
       /**
        * <code>optional uint32 app_build_version = 4;</code>
        */
@@ -984,7 +1074,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 app_build_version = 4;</code>
        */
       public Builder setAppBuildVersion(int value) {
-
+        
         appBuildVersion_ = value;
         onChanged();
         return this;
@@ -993,7 +1083,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 app_build_version = 4;</code>
        */
       public Builder clearAppBuildVersion() {
-
+        
         appBuildVersion_ = 0;
         onChanged();
         return this;
@@ -1006,7 +1096,8 @@ public final class ProtoQrCodeNewDevice {
       public java.lang.String getAppVersion() {
         java.lang.Object ref = appVersion_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           appVersion_ = s;
           return s;
@@ -1017,10 +1108,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_version = 5;</code>
        */
-      public com.google.protobuf.ByteString getAppVersionBytes() {
+      public com.google.protobuf.ByteString
+          getAppVersionBytes() {
         java.lang.Object ref = appVersion_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           appVersion_ = b;
           return b;
         } else {
@@ -1030,11 +1124,12 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_version = 5;</code>
        */
-      public Builder setAppVersion(java.lang.String value) {
+      public Builder setAppVersion(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         appVersion_ = value;
         onChanged();
         return this;
@@ -1043,7 +1138,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional string app_version = 5;</code>
        */
       public Builder clearAppVersion() {
-
+        
         appVersion_ = getDefaultInstance().getAppVersion();
         onChanged();
         return this;
@@ -1051,12 +1146,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string app_version = 5;</code>
        */
-      public Builder setAppVersionBytes(com.google.protobuf.ByteString value) {
+      public Builder setAppVersionBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
         appVersion_ = value;
         onChanged();
         return this;
@@ -1091,7 +1187,7 @@ public final class ProtoQrCodeNewDevice {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         platform_ = value.getNumber();
         onChanged();
         return this;
@@ -1100,7 +1196,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional .proto.Platform platform = 6;</code>
        */
       public Builder clearPlatform() {
-
+        
         platform_ = 0;
         onChanged();
         return this;
@@ -1113,7 +1209,8 @@ public final class ProtoQrCodeNewDevice {
       public java.lang.String getPlatformVersion() {
         java.lang.Object ref = platformVersion_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           platformVersion_ = s;
           return s;
@@ -1124,10 +1221,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string platform_version = 7;</code>
        */
-      public com.google.protobuf.ByteString getPlatformVersionBytes() {
+      public com.google.protobuf.ByteString
+          getPlatformVersionBytes() {
         java.lang.Object ref = platformVersion_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           platformVersion_ = b;
           return b;
         } else {
@@ -1137,11 +1237,12 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string platform_version = 7;</code>
        */
-      public Builder setPlatformVersion(java.lang.String value) {
+      public Builder setPlatformVersion(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         platformVersion_ = value;
         onChanged();
         return this;
@@ -1150,7 +1251,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional string platform_version = 7;</code>
        */
       public Builder clearPlatformVersion() {
-
+        
         platformVersion_ = getDefaultInstance().getPlatformVersion();
         onChanged();
         return this;
@@ -1158,12 +1259,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string platform_version = 7;</code>
        */
-      public Builder setPlatformVersionBytes(com.google.protobuf.ByteString value) {
+      public Builder setPlatformVersionBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
         platformVersion_ = value;
         onChanged();
         return this;
@@ -1198,7 +1300,7 @@ public final class ProtoQrCodeNewDevice {
         if (value == null) {
           throw new NullPointerException();
         }
-
+        
         device_ = value.getNumber();
         onChanged();
         return this;
@@ -1207,7 +1309,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional .proto.Device device = 8;</code>
        */
       public Builder clearDevice() {
-
+        
         device_ = 0;
         onChanged();
         return this;
@@ -1220,7 +1322,8 @@ public final class ProtoQrCodeNewDevice {
       public java.lang.String getDeviceName() {
         java.lang.Object ref = deviceName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           deviceName_ = s;
           return s;
@@ -1231,10 +1334,13 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string device_name = 9;</code>
        */
-      public com.google.protobuf.ByteString getDeviceNameBytes() {
+      public com.google.protobuf.ByteString
+          getDeviceNameBytes() {
         java.lang.Object ref = deviceName_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
           deviceName_ = b;
           return b;
         } else {
@@ -1244,11 +1350,12 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string device_name = 9;</code>
        */
-      public Builder setDeviceName(java.lang.String value) {
+      public Builder setDeviceName(
+          java.lang.String value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         deviceName_ = value;
         onChanged();
         return this;
@@ -1257,7 +1364,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional string device_name = 9;</code>
        */
       public Builder clearDeviceName() {
-
+        
         deviceName_ = getDefaultInstance().getDeviceName();
         onChanged();
         return this;
@@ -1265,22 +1372,24 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional string device_name = 9;</code>
        */
-      public Builder setDeviceNameBytes(com.google.protobuf.ByteString value) {
+      public Builder setDeviceNameBytes(
+          com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-        checkByteStringIsUtf8(value);
-
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
         deviceName_ = value;
         onChanged();
         return this;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -1298,9 +1407,13 @@ public final class ProtoQrCodeNewDevice {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<QrCodeNewDevice> PARSER = new com.google.protobuf.AbstractParser<QrCodeNewDevice>() {
-      public QrCodeNewDevice parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new QrCodeNewDevice(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<QrCodeNewDevice>
+        PARSER = new com.google.protobuf.AbstractParser<QrCodeNewDevice>() {
+      public QrCodeNewDevice parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new QrCodeNewDevice(input, extensionRegistry);
       }
     };
 
@@ -1320,8 +1433,8 @@ public final class ProtoQrCodeNewDevice {
   }
 
   public interface QrCodeNewDeviceResponseOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.QrCodeNewDeviceResponse)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.QrCodeNewDeviceResponse)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -1349,9 +1462,10 @@ public final class ProtoQrCodeNewDevice {
   /**
    * Protobuf type {@code proto.QrCodeNewDeviceResponse}
    */
-  public static final class QrCodeNewDeviceResponse extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.QrCodeNewDeviceResponse)
-          QrCodeNewDeviceResponseOrBuilder {
+  public  static final class QrCodeNewDeviceResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.QrCodeNewDeviceResponse)
+      QrCodeNewDeviceResponseOrBuilder {
     // Use QrCodeNewDeviceResponse.newBuilder() to construct.
     private QrCodeNewDeviceResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -1362,11 +1476,14 @@ public final class ProtoQrCodeNewDevice {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private QrCodeNewDeviceResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private QrCodeNewDeviceResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -1411,18 +1528,22 @@ public final class ProtoQrCodeNewDevice {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
@@ -1474,7 +1595,8 @@ public final class ProtoQrCodeNewDevice {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
@@ -1492,13 +1614,16 @@ public final class ProtoQrCodeNewDevice {
 
       size = 0;
       if (response_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
       }
       if (!qrCodeImage_.isEmpty()) {
-        size += com.google.protobuf.CodedOutputStream.computeBytesSize(2, qrCodeImage_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, qrCodeImage_);
       }
       if (expireTime_ != 0) {
-        size += com.google.protobuf.CodedOutputStream.computeUInt32Size(3, expireTime_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, expireTime_);
       }
       memoizedSize = size;
       return size;
@@ -1508,7 +1633,7 @@ public final class ProtoQrCodeNewDevice {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse)) {
         return super.equals(obj);
@@ -1518,10 +1643,13 @@ public final class ProtoQrCodeNewDevice {
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
       if (hasResponse()) {
-        result = result && getResponse().equals(other.getResponse());
+        result = result && getResponse()
+            .equals(other.getResponse());
       }
-      result = result && getQrCodeImage().equals(other.getQrCodeImage());
-      result = result && (getExpireTime() == other.getExpireTime());
+      result = result && getQrCodeImage()
+          .equals(other.getQrCodeImage());
+      result = result && (getExpireTime()
+          == other.getExpireTime());
       return result;
     }
 
@@ -1545,78 +1673,100 @@ public final class ProtoQrCodeNewDevice {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.QrCodeNewDeviceResponse}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.QrCodeNewDeviceResponse)
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.QrCodeNewDeviceResponse)
         net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.class, net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.newBuilder()
@@ -1624,12 +1774,14 @@ public final class ProtoQrCodeNewDevice {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
@@ -1647,7 +1799,8 @@ public final class ProtoQrCodeNewDevice {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoQrCodeNewDevice.internal_static_proto_QrCodeNewDeviceResponse_descriptor;
       }
 
@@ -1679,29 +1832,32 @@ public final class ProtoQrCodeNewDevice {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse) {
-          return mergeFrom((net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1727,7 +1883,10 @@ public final class ProtoQrCodeNewDevice {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoQrCodeNewDevice.QrCodeNewDeviceResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -1743,7 +1902,8 @@ public final class ProtoQrCodeNewDevice {
       }
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1779,7 +1939,8 @@ public final class ProtoQrCodeNewDevice {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1795,7 +1956,8 @@ public final class ProtoQrCodeNewDevice {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1824,7 +1986,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional .proto.Response response = 1;</code>
        */
       public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
-
+        
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
@@ -1835,15 +1997,22 @@ public final class ProtoQrCodeNewDevice {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
           response_ = null;
         }
         return responseBuilder_;
@@ -1861,9 +2030,9 @@ public final class ProtoQrCodeNewDevice {
        */
       public Builder setQrCodeImage(com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
-        }
-
+    throw new NullPointerException();
+  }
+  
         qrCodeImage_ = value;
         onChanged();
         return this;
@@ -1872,13 +2041,13 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional bytes qr_code_image = 2;</code>
        */
       public Builder clearQrCodeImage() {
-
+        
         qrCodeImage_ = getDefaultInstance().getQrCodeImage();
         onChanged();
         return this;
       }
 
-      private int expireTime_;
+      private int expireTime_ ;
       /**
        * <code>optional uint32 expire_time = 3;</code>
        */
@@ -1889,7 +2058,7 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 expire_time = 3;</code>
        */
       public Builder setExpireTime(int value) {
-
+        
         expireTime_ = value;
         onChanged();
         return this;
@@ -1898,17 +2067,18 @@ public final class ProtoQrCodeNewDevice {
        * <code>optional uint32 expire_time = 3;</code>
        */
       public Builder clearExpireTime() {
-
+        
         expireTime_ = 0;
         onChanged();
         return this;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -1926,9 +2096,13 @@ public final class ProtoQrCodeNewDevice {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<QrCodeNewDeviceResponse> PARSER = new com.google.protobuf.AbstractParser<QrCodeNewDeviceResponse>() {
-      public QrCodeNewDeviceResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new QrCodeNewDeviceResponse(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<QrCodeNewDeviceResponse>
+        PARSER = new com.google.protobuf.AbstractParser<QrCodeNewDeviceResponse>() {
+      public QrCodeNewDeviceResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new QrCodeNewDeviceResponse(input, extensionRegistry);
       }
     };
 
@@ -1947,38 +2121,53 @@ public final class ProtoQrCodeNewDevice {
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_QrCodeNewDevice_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_QrCodeNewDevice_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_QrCodeNewDeviceResponse_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_QrCodeNewDevice_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_QrCodeNewDevice_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_QrCodeNewDeviceResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_QrCodeNewDeviceResponse_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
     return descriptor;
   }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\025QrCodeNewDevice.proto\022\005proto\032\rRequest." +
-                    "proto\032\016Response.proto\032\014Global.proto\"\365\001\n\017" +
-                    "QrCodeNewDevice\022\037\n\007request\030\001 \001(\0132\016.proto" +
-                    ".Request\022\020\n\010app_name\030\002 \001(\t\022\016\n\006app_id\030\003 \001" +
-                    "(\r\022\031\n\021app_build_version\030\004 \001(\r\022\023\n\013app_ver" +
-                    "sion\030\005 \001(\t\022!\n\010platform\030\006 \001(\0162\017.proto.Pla" +
-                    "tform\022\030\n\020platform_version\030\007 \001(\t\022\035\n\006devic" +
-                    "e\030\010 \001(\0162\r.proto.Device\022\023\n\013device_name\030\t " +
-                    "\001(\t\"h\n\027QrCodeNewDeviceResponse\022!\n\010respon" +
-                    "se\030\001 \001(\0132\017.proto.Response\022\025\n\rqr_code_ima", "ge\030\002 \001(\014\022\023\n\013expire_time\030\003 \001(\rB&\n\016net.iGa" + "p.protoB\024ProtoQrCodeNewDeviceb\006proto3"
+      "\n\025QrCodeNewDevice.proto\022\005proto\032\rRequest." +
+      "proto\032\016Response.proto\032\014Global.proto\"\365\001\n\017" +
+      "QrCodeNewDevice\022\037\n\007request\030\001 \001(\0132\016.proto" +
+      ".Request\022\020\n\010app_name\030\002 \001(\t\022\016\n\006app_id\030\003 \001" +
+      "(\r\022\031\n\021app_build_version\030\004 \001(\r\022\023\n\013app_ver" +
+      "sion\030\005 \001(\t\022!\n\010platform\030\006 \001(\0162\017.proto.Pla" +
+      "tform\022\030\n\020platform_version\030\007 \001(\t\022\035\n\006devic" +
+      "e\030\010 \001(\0162\r.proto.Device\022\023\n\013device_name\030\t " +
+      "\001(\t\"h\n\027QrCodeNewDeviceResponse\022!\n\010respon" +
+      "se\030\001 \001(\0132\017.proto.Response\022\025\n\rqr_code_ima",
+      "ge\030\002 \001(\014\022\023\n\013expire_time\030\003 \001(\rB&\n\016net.iGa" +
+      "p.protoB\024ProtoQrCodeNewDeviceb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-        descriptor = root;
-        return null;
-      }
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
-    }, assigner);
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoGlobal.getDescriptor(),
+        }, assigner);
     internal_static_proto_QrCodeNewDevice_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_proto_QrCodeNewDevice_fieldAccessorTable = new

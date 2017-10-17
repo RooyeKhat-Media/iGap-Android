@@ -4,18 +4,19 @@
 package net.iGap.proto;
 
 public final class ProtoClientGetRoomList {
-  private ProtoClientGetRoomList() {
+  private ProtoClientGetRoomList() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ClientGetRoomListOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.ClientGetRoomList)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.ClientGetRoomList)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -46,9 +47,10 @@ public final class ProtoClientGetRoomList {
   /**
    * Protobuf type {@code proto.ClientGetRoomList}
    */
-  public static final class ClientGetRoomList extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.ClientGetRoomList)
-          ClientGetRoomListOrBuilder {
+  public  static final class ClientGetRoomList extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.ClientGetRoomList)
+      ClientGetRoomListOrBuilder {
     // Use ClientGetRoomList.newBuilder() to construct.
     private ClientGetRoomList(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -57,11 +59,14 @@ public final class ProtoClientGetRoomList {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private ClientGetRoomList(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private ClientGetRoomList(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -109,18 +114,22 @@ public final class ProtoClientGetRoomList {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -175,7 +184,8 @@ public final class ProtoClientGetRoomList {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (request_ != null) {
         output.writeMessage(1, getRequest());
       }
@@ -190,10 +200,12 @@ public final class ProtoClientGetRoomList {
 
       size = 0;
       if (request_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
       }
       if (pagination_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getPagination());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getPagination());
       }
       memoizedSize = size;
       return size;
@@ -203,7 +215,7 @@ public final class ProtoClientGetRoomList {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList)) {
         return super.equals(obj);
@@ -213,11 +225,13 @@ public final class ProtoClientGetRoomList {
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
       if (hasRequest()) {
-        result = result && getRequest().equals(other.getRequest());
+        result = result && getRequest()
+            .equals(other.getRequest());
       }
       result = result && (hasPagination() == other.hasPagination());
       if (hasPagination()) {
-        result = result && getPagination().equals(other.getPagination());
+        result = result && getPagination()
+            .equals(other.getPagination());
       }
       return result;
     }
@@ -242,49 +256,66 @@ public final class ProtoClientGetRoomList {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
@@ -292,26 +323,33 @@ public final class ProtoClientGetRoomList {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.ClientGetRoomList}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.ClientGetRoomList)
-            net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.ClientGetRoomList)
+        net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList.newBuilder()
@@ -319,12 +357,14 @@ public final class ProtoClientGetRoomList {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
@@ -344,7 +384,8 @@ public final class ProtoClientGetRoomList {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomList_descriptor;
       }
 
@@ -379,29 +420,32 @@ public final class ProtoClientGetRoomList {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList) {
-          return mergeFrom((net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList) other);
+          return mergeFrom((net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -424,7 +468,10 @@ public final class ProtoClientGetRoomList {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomList parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -440,7 +487,8 @@ public final class ProtoClientGetRoomList {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -476,7 +524,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -492,7 +541,8 @@ public final class ProtoClientGetRoomList {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -521,7 +571,7 @@ public final class ProtoClientGetRoomList {
        * <code>optional .proto.Request request = 1;</code>
        */
       public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
-
+        
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
@@ -532,22 +582,30 @@ public final class ProtoClientGetRoomList {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+                  getRequest(),
+                  getParentForChildren(),
+                  isClean());
           request_ = null;
         }
         return requestBuilder_;
       }
 
       private net.iGap.proto.ProtoGlobal.Pagination pagination_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> paginationBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> paginationBuilder_;
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
@@ -583,7 +641,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
-      public Builder setPagination(net.iGap.proto.ProtoGlobal.Pagination.Builder builderForValue) {
+      public Builder setPagination(
+          net.iGap.proto.ProtoGlobal.Pagination.Builder builderForValue) {
         if (paginationBuilder_ == null) {
           pagination_ = builderForValue.build();
           onChanged();
@@ -599,7 +658,8 @@ public final class ProtoClientGetRoomList {
       public Builder mergePagination(net.iGap.proto.ProtoGlobal.Pagination value) {
         if (paginationBuilder_ == null) {
           if (pagination_ != null) {
-            pagination_ = net.iGap.proto.ProtoGlobal.Pagination.newBuilder(pagination_).mergeFrom(value).buildPartial();
+            pagination_ =
+              net.iGap.proto.ProtoGlobal.Pagination.newBuilder(pagination_).mergeFrom(value).buildPartial();
           } else {
             pagination_ = value;
           }
@@ -628,7 +688,7 @@ public final class ProtoClientGetRoomList {
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Pagination.Builder getPaginationBuilder() {
-
+        
         onChanged();
         return getPaginationFieldBuilder().getBuilder();
       }
@@ -639,25 +699,33 @@ public final class ProtoClientGetRoomList {
         if (paginationBuilder_ != null) {
           return paginationBuilder_.getMessageOrBuilder();
         } else {
-          return pagination_ == null ? net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
+          return pagination_ == null ?
+              net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
         }
       }
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> getPaginationFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> 
+          getPaginationFieldBuilder() {
         if (paginationBuilder_ == null) {
-          paginationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder>(getPagination(), getParentForChildren(), isClean());
+          paginationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder>(
+                  getPagination(),
+                  getParentForChildren(),
+                  isClean());
           pagination_ = null;
         }
         return paginationBuilder_;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -675,9 +743,13 @@ public final class ProtoClientGetRoomList {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ClientGetRoomList> PARSER = new com.google.protobuf.AbstractParser<ClientGetRoomList>() {
-      public ClientGetRoomList parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ClientGetRoomList(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<ClientGetRoomList>
+        PARSER = new com.google.protobuf.AbstractParser<ClientGetRoomList>() {
+      public ClientGetRoomList parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ClientGetRoomList(input, extensionRegistry);
       }
     };
 
@@ -697,8 +769,8 @@ public final class ProtoClientGetRoomList {
   }
 
   public interface ClientGetRoomListResponseOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.ClientGetRoomListResponse)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.ClientGetRoomListResponse)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -716,7 +788,8 @@ public final class ProtoClientGetRoomList {
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
-    java.util.List<net.iGap.proto.ProtoGlobal.Room> getRoomsList();
+    java.util.List<net.iGap.proto.ProtoGlobal.Room> 
+        getRoomsList();
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
@@ -728,18 +801,21 @@ public final class ProtoClientGetRoomList {
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
-    java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> getRoomsOrBuilderList();
+    java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> 
+        getRoomsOrBuilderList();
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
-    net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(int index);
+    net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code proto.ClientGetRoomListResponse}
    */
-  public static final class ClientGetRoomListResponse extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.ClientGetRoomListResponse)
-          ClientGetRoomListResponseOrBuilder {
+  public  static final class ClientGetRoomListResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.ClientGetRoomListResponse)
+      ClientGetRoomListResponseOrBuilder {
     // Use ClientGetRoomListResponse.newBuilder() to construct.
     private ClientGetRoomListResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -749,11 +825,14 @@ public final class ProtoClientGetRoomList {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private ClientGetRoomListResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private ClientGetRoomListResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -788,7 +867,8 @@ public final class ProtoClientGetRoomList {
                 rooms_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Room>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              rooms_.add(input.readMessage(net.iGap.proto.ProtoGlobal.Room.parser(), extensionRegistry));
+              rooms_.add(
+                  input.readMessage(net.iGap.proto.ProtoGlobal.Room.parser(), extensionRegistry));
               break;
             }
           }
@@ -796,7 +876,8 @@ public final class ProtoClientGetRoomList {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           rooms_ = java.util.Collections.unmodifiableList(rooms_);
@@ -804,13 +885,16 @@ public final class ProtoClientGetRoomList {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.Builder.class);
     }
 
     private int bitField0_;
@@ -846,7 +930,8 @@ public final class ProtoClientGetRoomList {
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
-    public java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> getRoomsOrBuilderList() {
+    public java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> 
+        getRoomsOrBuilderList() {
       return rooms_;
     }
     /**
@@ -864,7 +949,8 @@ public final class ProtoClientGetRoomList {
     /**
      * <code>repeated .proto.Room rooms = 2;</code>
      */
-    public net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(int index) {
+    public net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(
+        int index) {
       return rooms_.get(index);
     }
 
@@ -878,7 +964,8 @@ public final class ProtoClientGetRoomList {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
@@ -893,10 +980,12 @@ public final class ProtoClientGetRoomList {
 
       size = 0;
       if (response_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
       }
       for (int i = 0; i < rooms_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, rooms_.get(i));
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, rooms_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -906,7 +995,7 @@ public final class ProtoClientGetRoomList {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse)) {
         return super.equals(obj);
@@ -916,9 +1005,11 @@ public final class ProtoClientGetRoomList {
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
       if (hasResponse()) {
-        result = result && getResponse().equals(other.getResponse());
+        result = result && getResponse()
+            .equals(other.getResponse());
       }
-      result = result && getRoomsList().equals(other.getRoomsList());
+      result = result && getRoomsList()
+          .equals(other.getRoomsList());
       return result;
     }
 
@@ -942,49 +1033,66 @@ public final class ProtoClientGetRoomList {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
@@ -992,26 +1100,33 @@ public final class ProtoClientGetRoomList {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.ClientGetRoomListResponse}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.ClientGetRoomListResponse)
-            net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.ClientGetRoomListResponse)
+        net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.class, net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse.newBuilder()
@@ -1019,12 +1134,14 @@ public final class ProtoClientGetRoomList {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
           getRoomsFieldBuilder();
         }
       }
@@ -1045,7 +1162,8 @@ public final class ProtoClientGetRoomList {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoClientGetRoomList.internal_static_proto_ClientGetRoomListResponse_descriptor;
       }
 
@@ -1087,29 +1205,32 @@ public final class ProtoClientGetRoomList {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse) {
-          return mergeFrom((net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1139,7 +1260,9 @@ public final class ProtoClientGetRoomList {
               roomsBuilder_ = null;
               rooms_ = other.rooms_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              roomsBuilder_ = com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ? getRoomsFieldBuilder() : null;
+              roomsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getRoomsFieldBuilder() : null;
             } else {
               roomsBuilder_.addAllMessages(other.rooms_);
             }
@@ -1153,7 +1276,10 @@ public final class ProtoClientGetRoomList {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoClientGetRoomList.ClientGetRoomListResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -1170,7 +1296,8 @@ public final class ProtoClientGetRoomList {
       private int bitField0_;
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1206,7 +1333,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1222,7 +1350,8 @@ public final class ProtoClientGetRoomList {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1251,7 +1380,7 @@ public final class ProtoClientGetRoomList {
        * <code>optional .proto.Response response = 1;</code>
        */
       public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
-
+        
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
@@ -1262,29 +1391,38 @@ public final class ProtoClientGetRoomList {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
           response_ = null;
         }
         return responseBuilder_;
       }
 
-      private java.util.List<net.iGap.proto.ProtoGlobal.Room> rooms_ = java.util.Collections.emptyList();
+      private java.util.List<net.iGap.proto.ProtoGlobal.Room> rooms_ =
+        java.util.Collections.emptyList();
       private void ensureRoomsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           rooms_ = new java.util.ArrayList<net.iGap.proto.ProtoGlobal.Room>(rooms_);
           bitField0_ |= 0x00000002;
-        }
+         }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder> roomsBuilder_;
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder> roomsBuilder_;
 
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
@@ -1319,7 +1457,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder setRooms(int index, net.iGap.proto.ProtoGlobal.Room value) {
+      public Builder setRooms(
+          int index, net.iGap.proto.ProtoGlobal.Room value) {
         if (roomsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1335,7 +1474,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder setRooms(int index, net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
+      public Builder setRooms(
+          int index, net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
         if (roomsBuilder_ == null) {
           ensureRoomsIsMutable();
           rooms_.set(index, builderForValue.build());
@@ -1364,7 +1504,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder addRooms(int index, net.iGap.proto.ProtoGlobal.Room value) {
+      public Builder addRooms(
+          int index, net.iGap.proto.ProtoGlobal.Room value) {
         if (roomsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1380,7 +1521,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder addRooms(net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
+      public Builder addRooms(
+          net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
         if (roomsBuilder_ == null) {
           ensureRoomsIsMutable();
           rooms_.add(builderForValue.build());
@@ -1393,7 +1535,8 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder addRooms(int index, net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
+      public Builder addRooms(
+          int index, net.iGap.proto.ProtoGlobal.Room.Builder builderForValue) {
         if (roomsBuilder_ == null) {
           ensureRoomsIsMutable();
           rooms_.add(index, builderForValue.build());
@@ -1406,10 +1549,12 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public Builder addAllRooms(java.lang.Iterable<? extends net.iGap.proto.ProtoGlobal.Room> values) {
+      public Builder addAllRooms(
+          java.lang.Iterable<? extends net.iGap.proto.ProtoGlobal.Room> values) {
         if (roomsBuilder_ == null) {
           ensureRoomsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(values, rooms_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, rooms_);
           onChanged();
         } else {
           roomsBuilder_.addAllMessages(values);
@@ -1445,23 +1590,25 @@ public final class ProtoClientGetRoomList {
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public net.iGap.proto.ProtoGlobal.Room.Builder getRoomsBuilder(int index) {
+      public net.iGap.proto.ProtoGlobal.Room.Builder getRoomsBuilder(
+          int index) {
         return getRoomsFieldBuilder().getBuilder(index);
       }
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(int index) {
+      public net.iGap.proto.ProtoGlobal.RoomOrBuilder getRoomsOrBuilder(
+          int index) {
         if (roomsBuilder_ == null) {
-          return rooms_.get(index);
-        } else {
+          return rooms_.get(index);  } else {
           return roomsBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> getRoomsOrBuilderList() {
+      public java.util.List<? extends net.iGap.proto.ProtoGlobal.RoomOrBuilder> 
+           getRoomsOrBuilderList() {
         if (roomsBuilder_ != null) {
           return roomsBuilder_.getMessageOrBuilderList();
         } else {
@@ -1472,34 +1619,45 @@ public final class ProtoClientGetRoomList {
        * <code>repeated .proto.Room rooms = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Room.Builder addRoomsBuilder() {
-        return getRoomsFieldBuilder().addBuilder(net.iGap.proto.ProtoGlobal.Room.getDefaultInstance());
+        return getRoomsFieldBuilder().addBuilder(
+            net.iGap.proto.ProtoGlobal.Room.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public net.iGap.proto.ProtoGlobal.Room.Builder addRoomsBuilder(int index) {
-        return getRoomsFieldBuilder().addBuilder(index, net.iGap.proto.ProtoGlobal.Room.getDefaultInstance());
+      public net.iGap.proto.ProtoGlobal.Room.Builder addRoomsBuilder(
+          int index) {
+        return getRoomsFieldBuilder().addBuilder(
+            index, net.iGap.proto.ProtoGlobal.Room.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.Room rooms = 2;</code>
        */
-      public java.util.List<net.iGap.proto.ProtoGlobal.Room.Builder> getRoomsBuilderList() {
+      public java.util.List<net.iGap.proto.ProtoGlobal.Room.Builder> 
+           getRoomsBuilderList() {
         return getRoomsFieldBuilder().getBuilderList();
       }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder> getRoomsFieldBuilder() {
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder> 
+          getRoomsFieldBuilder() {
         if (roomsBuilder_ == null) {
-          roomsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder>(rooms_, ((bitField0_ & 0x00000002) == 0x00000002), getParentForChildren(), isClean());
+          roomsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              net.iGap.proto.ProtoGlobal.Room, net.iGap.proto.ProtoGlobal.Room.Builder, net.iGap.proto.ProtoGlobal.RoomOrBuilder>(
+                  rooms_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
           rooms_ = null;
         }
         return roomsBuilder_;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -1517,9 +1675,13 @@ public final class ProtoClientGetRoomList {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<ClientGetRoomListResponse> PARSER = new com.google.protobuf.AbstractParser<ClientGetRoomListResponse>() {
-      public ClientGetRoomListResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ClientGetRoomListResponse(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<ClientGetRoomListResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ClientGetRoomListResponse>() {
+      public ClientGetRoomListResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new ClientGetRoomListResponse(input, extensionRegistry);
       }
     };
 
@@ -1538,38 +1700,54 @@ public final class ProtoClientGetRoomList {
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_ClientGetRoomList_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_ClientGetRoomList_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_ClientGetRoomListResponse_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_ClientGetRoomList_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_ClientGetRoomList_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_ClientGetRoomListResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_ClientGetRoomListResponse_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
     return descriptor;
   }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\027ClientGetRoomList.proto\022\005proto\032\rReques" +
-                    "t.proto\032\016Response.proto\032\014Global.proto\"[\n" +
-                    "\021ClientGetRoomList\022\037\n\007request\030\001 \001(\0132\016.pr" +
-                    "oto.Request\022%\n\npagination\030\002 \001(\0132\021.proto." +
-                    "Pagination\"Z\n\031ClientGetRoomListResponse\022" +
-                    "!\n\010response\030\001 \001(\0132\017.proto.Response\022\032\n\005ro" +
-                    "oms\030\002 \003(\0132\013.proto.RoomB(\n\016net.iGap.proto" +
-                    "B\026ProtoClientGetRoomListb\006proto3"
+      "\n\027ClientGetRoomList.proto\022\005proto\032\rReques" +
+      "t.proto\032\016Response.proto\032\014Global.proto\"[\n" +
+      "\021ClientGetRoomList\022\037\n\007request\030\001 \001(\0132\016.pr" +
+      "oto.Request\022%\n\npagination\030\002 \001(\0132\021.proto." +
+      "Pagination\"Z\n\031ClientGetRoomListResponse\022" +
+      "!\n\010response\030\001 \001(\0132\017.proto.Response\022\032\n\005ro" +
+      "oms\030\002 \003(\0132\013.proto.RoomB(\n\016net.iGap.proto" +
+      "B\026ProtoClientGetRoomListb\006proto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-        descriptor = root;
-        return null;
-      }
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(),
-    }, assigner);
-    internal_static_proto_ClientGetRoomList_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_ClientGetRoomList_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(internal_static_proto_ClientGetRoomList_descriptor,
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoGlobal.getDescriptor(),
+        }, assigner);
+    internal_static_proto_ClientGetRoomList_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_ClientGetRoomList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_proto_ClientGetRoomList_descriptor,
         new java.lang.String[] { "Request", "Pagination", });
     internal_static_proto_ClientGetRoomListResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);

@@ -123,7 +123,9 @@ public final class ProtoChannelKickModerator {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModerator_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.Builder.class);
+      return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModerator_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -346,7 +348,9 @@ public final class ProtoChannelKickModerator {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModerator_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.Builder.class);
+        return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModerator_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator.newBuilder()
@@ -437,7 +441,7 @@ public final class ProtoChannelKickModerator {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator) {
-          return mergeFrom((net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelKickModerator.ChannelKickModerator)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -482,7 +486,8 @@ public final class ProtoChannelKickModerator {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -518,7 +523,8 @@ public final class ProtoChannelKickModerator {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -534,7 +540,8 @@ public final class ProtoChannelKickModerator {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -574,16 +581,19 @@ public final class ProtoChannelKickModerator {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
           getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
                   getRequest(),
                   getParentForChildren(),
                   isClean());
@@ -801,7 +811,9 @@ public final class ProtoChannelKickModerator {
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModeratorResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder.class);
+      return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModeratorResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder.class);
     }
 
     public static final int RESPONSE_FIELD_NUMBER = 1;
@@ -1024,7 +1036,9 @@ public final class ProtoChannelKickModerator {
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModeratorResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder.class);
+        return net.iGap.proto.ProtoChannelKickModerator.internal_static_proto_ChannelKickModeratorResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.class, net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse.newBuilder()
@@ -1115,7 +1129,7 @@ public final class ProtoChannelKickModerator {
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse) {
-          return mergeFrom((net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoChannelKickModerator.ChannelKickModeratorResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1160,7 +1174,8 @@ public final class ProtoChannelKickModerator {
       }
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -1196,7 +1211,8 @@ public final class ProtoChannelKickModerator {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -1212,7 +1228,8 @@ public final class ProtoChannelKickModerator {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -1252,16 +1269,19 @@ public final class ProtoChannelKickModerator {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
           getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
                   getResponse(),
                   getParentForChildren(),
                   isClean());
@@ -1394,8 +1414,8 @@ public final class ProtoChannelKickModerator {
       "kModerator\022\037\n\007request\030\001 \001(\0132\016.proto.Requ" +
       "est\022\017\n\007room_id\030\002 \001(\004\022\021\n\tmember_id\030\003 \001(\004\"" +
       "e\n\034ChannelKickModeratorResponse\022!\n\010respo" +
-              "nse\030\001 \001(\0132\017.proto.Response\022\017\n\007room_id\030\002 " +
-              "\001(\004\022\021\n\tmember_id\030\003 \001(\004B+\n\016net.iGap.proto" +
+      "nse\030\001 \001(\0132\017.proto.Response\022\017\n\007room_id\030\002 " +
+      "\001(\004\022\021\n\tmember_id\030\003 \001(\004B+\n\016net.iGap.proto" +
       "B\031ProtoChannelKickModeratorb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -1409,7 +1429,8 @@ public final class ProtoChannelKickModerator {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-                net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
         }, assigner);
     internal_static_proto_ChannelKickModerator_descriptor =
       getDescriptor().getMessageTypes().get(0);

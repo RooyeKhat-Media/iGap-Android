@@ -4,18 +4,19 @@
 package net.iGap.proto;
 
 public final class ProtoSignalingGetLog {
-  private ProtoSignalingGetLog() {
+  private ProtoSignalingGetLog() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
   }
 
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions((com.google.protobuf.ExtensionRegistryLite) registry);
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface SignalingGetLogOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.SignalingGetLog)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.SignalingGetLog)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Request request = 1;</code>
@@ -46,9 +47,10 @@ public final class ProtoSignalingGetLog {
   /**
    * Protobuf type {@code proto.SignalingGetLog}
    */
-  public static final class SignalingGetLog extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.SignalingGetLog)
-          SignalingGetLogOrBuilder {
+  public  static final class SignalingGetLog extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.SignalingGetLog)
+      SignalingGetLogOrBuilder {
     // Use SignalingGetLog.newBuilder() to construct.
     private SignalingGetLog(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -57,11 +59,14 @@ public final class ProtoSignalingGetLog {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private SignalingGetLog(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private SignalingGetLog(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -109,18 +114,22 @@ public final class ProtoSignalingGetLog {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.Builder.class);
     }
 
     public static final int REQUEST_FIELD_NUMBER = 1;
@@ -175,7 +184,8 @@ public final class ProtoSignalingGetLog {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (request_ != null) {
         output.writeMessage(1, getRequest());
       }
@@ -190,10 +200,12 @@ public final class ProtoSignalingGetLog {
 
       size = 0;
       if (request_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getRequest());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getRequest());
       }
       if (pagination_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getPagination());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getPagination());
       }
       memoizedSize = size;
       return size;
@@ -203,7 +215,7 @@ public final class ProtoSignalingGetLog {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog)) {
         return super.equals(obj);
@@ -213,11 +225,13 @@ public final class ProtoSignalingGetLog {
       boolean result = true;
       result = result && (hasRequest() == other.hasRequest());
       if (hasRequest()) {
-        result = result && getRequest().equals(other.getRequest());
+        result = result && getRequest()
+            .equals(other.getRequest());
       }
       result = result && (hasPagination() == other.hasPagination());
       if (hasPagination()) {
-        result = result && getPagination().equals(other.getPagination());
+        result = result && getPagination()
+            .equals(other.getPagination());
       }
       return result;
     }
@@ -242,49 +256,66 @@ public final class ProtoSignalingGetLog {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
@@ -292,26 +323,33 @@ public final class ProtoSignalingGetLog {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.SignalingGetLog}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.SignalingGetLog)
-            net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.SignalingGetLog)
+        net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog.newBuilder()
@@ -319,12 +357,14 @@ public final class ProtoSignalingGetLog {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
         }
       }
       public Builder clear() {
@@ -344,7 +384,8 @@ public final class ProtoSignalingGetLog {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLog_descriptor;
       }
 
@@ -379,29 +420,32 @@ public final class ProtoSignalingGetLog {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog) {
-          return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog) other);
+          return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -424,7 +468,10 @@ public final class ProtoSignalingGetLog {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoSignalingGetLog.SignalingGetLog parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -440,7 +487,8 @@ public final class ProtoSignalingGetLog {
       }
 
       private net.iGap.proto.ProtoRequest.Request request_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> requestBuilder_;
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
@@ -476,7 +524,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      public Builder setRequest(net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
+      public Builder setRequest(
+          net.iGap.proto.ProtoRequest.Request.Builder builderForValue) {
         if (requestBuilder_ == null) {
           request_ = builderForValue.build();
           onChanged();
@@ -492,7 +541,8 @@ public final class ProtoSignalingGetLog {
       public Builder mergeRequest(net.iGap.proto.ProtoRequest.Request value) {
         if (requestBuilder_ == null) {
           if (request_ != null) {
-            request_ = net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
+            request_ =
+              net.iGap.proto.ProtoRequest.Request.newBuilder(request_).mergeFrom(value).buildPartial();
           } else {
             request_ = value;
           }
@@ -521,7 +571,7 @@ public final class ProtoSignalingGetLog {
        * <code>optional .proto.Request request = 1;</code>
        */
       public net.iGap.proto.ProtoRequest.Request.Builder getRequestBuilder() {
-
+        
         onChanged();
         return getRequestFieldBuilder().getBuilder();
       }
@@ -532,22 +582,30 @@ public final class ProtoSignalingGetLog {
         if (requestBuilder_ != null) {
           return requestBuilder_.getMessageOrBuilder();
         } else {
-          return request_ == null ? net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
+          return request_ == null ?
+              net.iGap.proto.ProtoRequest.Request.getDefaultInstance() : request_;
         }
       }
       /**
        * <code>optional .proto.Request request = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> getRequestFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder> 
+          getRequestFieldBuilder() {
         if (requestBuilder_ == null) {
-          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(getRequest(), getParentForChildren(), isClean());
+          requestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoRequest.Request, net.iGap.proto.ProtoRequest.Request.Builder, net.iGap.proto.ProtoRequest.RequestOrBuilder>(
+                  getRequest(),
+                  getParentForChildren(),
+                  isClean());
           request_ = null;
         }
         return requestBuilder_;
       }
 
       private net.iGap.proto.ProtoGlobal.Pagination pagination_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> paginationBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> paginationBuilder_;
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
@@ -583,7 +641,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
-      public Builder setPagination(net.iGap.proto.ProtoGlobal.Pagination.Builder builderForValue) {
+      public Builder setPagination(
+          net.iGap.proto.ProtoGlobal.Pagination.Builder builderForValue) {
         if (paginationBuilder_ == null) {
           pagination_ = builderForValue.build();
           onChanged();
@@ -599,7 +658,8 @@ public final class ProtoSignalingGetLog {
       public Builder mergePagination(net.iGap.proto.ProtoGlobal.Pagination value) {
         if (paginationBuilder_ == null) {
           if (pagination_ != null) {
-            pagination_ = net.iGap.proto.ProtoGlobal.Pagination.newBuilder(pagination_).mergeFrom(value).buildPartial();
+            pagination_ =
+              net.iGap.proto.ProtoGlobal.Pagination.newBuilder(pagination_).mergeFrom(value).buildPartial();
           } else {
             pagination_ = value;
           }
@@ -628,7 +688,7 @@ public final class ProtoSignalingGetLog {
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
       public net.iGap.proto.ProtoGlobal.Pagination.Builder getPaginationBuilder() {
-
+        
         onChanged();
         return getPaginationFieldBuilder().getBuilder();
       }
@@ -639,25 +699,33 @@ public final class ProtoSignalingGetLog {
         if (paginationBuilder_ != null) {
           return paginationBuilder_.getMessageOrBuilder();
         } else {
-          return pagination_ == null ? net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
+          return pagination_ == null ?
+              net.iGap.proto.ProtoGlobal.Pagination.getDefaultInstance() : pagination_;
         }
       }
       /**
        * <code>optional .proto.Pagination pagination = 2;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> getPaginationFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder> 
+          getPaginationFieldBuilder() {
         if (paginationBuilder_ == null) {
-          paginationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder>(getPagination(), getParentForChildren(), isClean());
+          paginationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoGlobal.Pagination, net.iGap.proto.ProtoGlobal.Pagination.Builder, net.iGap.proto.ProtoGlobal.PaginationOrBuilder>(
+                  getPagination(),
+                  getParentForChildren(),
+                  isClean());
           pagination_ = null;
         }
         return paginationBuilder_;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -675,9 +743,13 @@ public final class ProtoSignalingGetLog {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SignalingGetLog> PARSER = new com.google.protobuf.AbstractParser<SignalingGetLog>() {
-      public SignalingGetLog parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SignalingGetLog(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<SignalingGetLog>
+        PARSER = new com.google.protobuf.AbstractParser<SignalingGetLog>() {
+      public SignalingGetLog parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new SignalingGetLog(input, extensionRegistry);
       }
     };
 
@@ -697,8 +769,8 @@ public final class ProtoSignalingGetLog {
   }
 
   public interface SignalingGetLogResponseOrBuilder extends
-          // @@protoc_insertion_point(interface_extends:proto.SignalingGetLogResponse)
-          com.google.protobuf.MessageOrBuilder {
+      // @@protoc_insertion_point(interface_extends:proto.SignalingGetLogResponse)
+      com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>optional .proto.Response response = 1;</code>
@@ -716,7 +788,8 @@ public final class ProtoSignalingGetLog {
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
-    java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> getSignalingLogList();
+    java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> 
+        getSignalingLogList();
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
@@ -728,18 +801,21 @@ public final class ProtoSignalingGetLog {
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
-    java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> getSignalingLogOrBuilderList();
+    java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> 
+        getSignalingLogOrBuilderList();
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
-    net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(int index);
+    net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code proto.SignalingGetLogResponse}
    */
-  public static final class SignalingGetLogResponse extends com.google.protobuf.GeneratedMessageV3 implements
-          // @@protoc_insertion_point(message_implements:proto.SignalingGetLogResponse)
-          SignalingGetLogResponseOrBuilder {
+  public  static final class SignalingGetLogResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:proto.SignalingGetLogResponse)
+      SignalingGetLogResponseOrBuilder {
     // Use SignalingGetLogResponse.newBuilder() to construct.
     private SignalingGetLogResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -749,11 +825,14 @@ public final class ProtoSignalingGetLog {
     }
 
     @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-
-    private SignalingGetLogResponse(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    private SignalingGetLogResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       int mutable_bitField0_ = 0;
       try {
@@ -788,7 +867,8 @@ public final class ProtoSignalingGetLog {
                 signalingLog_ = new java.util.ArrayList<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              signalingLog_.add(input.readMessage(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.parser(), extensionRegistry));
+              signalingLog_.add(
+                  input.readMessage(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.parser(), extensionRegistry));
               break;
             }
           }
@@ -796,7 +876,8 @@ public final class ProtoSignalingGetLog {
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           signalingLog_ = java.util.Collections.unmodifiableList(signalingLog_);
@@ -804,18 +885,21 @@ public final class ProtoSignalingGetLog {
         makeExtensionsImmutable();
       }
     }
-
-    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
       return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-      return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.Builder.class);
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.Builder.class);
     }
 
     public interface SignalingLogOrBuilder extends
-            // @@protoc_insertion_point(interface_extends:proto.SignalingGetLogResponse.SignalingLog)
-            com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:proto.SignalingGetLogResponse.SignalingLog)
+        com.google.protobuf.MessageOrBuilder {
 
       /**
        * <code>optional uint64 id = 1;</code>
@@ -866,9 +950,10 @@ public final class ProtoSignalingGetLog {
     /**
      * Protobuf type {@code proto.SignalingGetLogResponse.SignalingLog}
      */
-    public static final class SignalingLog extends com.google.protobuf.GeneratedMessageV3 implements
-            // @@protoc_insertion_point(message_implements:proto.SignalingGetLogResponse.SignalingLog)
-            SignalingLogOrBuilder {
+    public  static final class SignalingLog extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:proto.SignalingGetLogResponse.SignalingLog)
+        SignalingLogOrBuilder {
       // Use SignalingLog.newBuilder() to construct.
       private SignalingLog(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
@@ -882,11 +967,14 @@ public final class ProtoSignalingGetLog {
       }
 
       @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
         return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
       }
-
-      private SignalingLog(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      private SignalingLog(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         this();
         int mutable_bitField0_ = 0;
         try {
@@ -948,24 +1036,29 @@ public final class ProtoSignalingGetLog {
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           throw e.setUnfinishedMessage(this);
         } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
         } finally {
           makeExtensionsImmutable();
         }
       }
-
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder.class);
       }
 
       /**
        * Protobuf enum {@code proto.SignalingGetLogResponse.SignalingLog.Status}
        */
-      public enum Status implements com.google.protobuf.ProtocolMessageEnum {
+      public enum Status
+          implements com.google.protobuf.ProtocolMessageEnum {
         /**
          * <code>MISSED = 0;</code>
          */
@@ -982,7 +1075,8 @@ public final class ProtoSignalingGetLog {
          * <code>OUTGOING = 3;</code>
          */
         OUTGOING(3),
-        UNRECOGNIZED(-1),;
+        UNRECOGNIZED(-1),
+        ;
 
         /**
          * <code>MISSED = 0;</code>
@@ -1004,7 +1098,8 @@ public final class ProtoSignalingGetLog {
 
         public final int getNumber() {
           if (this == UNRECOGNIZED) {
-            throw new java.lang.IllegalArgumentException("Can't get the number of an unknown enum value.");
+            throw new java.lang.IllegalArgumentException(
+                "Can't get the number of an unknown enum value.");
           }
           return value;
         }
@@ -1019,46 +1114,46 @@ public final class ProtoSignalingGetLog {
 
         public static Status forNumber(int value) {
           switch (value) {
-            case 0:
-              return MISSED;
-            case 1:
-              return CANCELED;
-            case 2:
-              return INCOMING;
-            case 3:
-              return OUTGOING;
-            default:
-              return null;
+            case 0: return MISSED;
+            case 1: return CANCELED;
+            case 2: return INCOMING;
+            case 3: return OUTGOING;
+            default: return null;
           }
         }
 
-        public static com.google.protobuf.Internal.EnumLiteMap<Status> internalGetValueMap() {
+        public static com.google.protobuf.Internal.EnumLiteMap<Status>
+            internalGetValueMap() {
           return internalValueMap;
         }
+        private static final com.google.protobuf.Internal.EnumLiteMap<
+            Status> internalValueMap =
+              new com.google.protobuf.Internal.EnumLiteMap<Status>() {
+                public Status findValueByNumber(int number) {
+                  return Status.forNumber(number);
+                }
+              };
 
-        private static final com.google.protobuf.Internal.EnumLiteMap<Status> internalValueMap = new com.google.protobuf.Internal.EnumLiteMap<Status>() {
-          public Status findValueByNumber(int number) {
-            return Status.forNumber(number);
-          }
-        };
-
-        public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+        public final com.google.protobuf.Descriptors.EnumValueDescriptor
+            getValueDescriptor() {
           return getDescriptor().getValues().get(ordinal());
         }
-
-        public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+        public final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptorForType() {
           return getDescriptor();
         }
-
-        public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+        public static final com.google.protobuf.Descriptors.EnumDescriptor
+            getDescriptor() {
           return net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.getDescriptor().getEnumTypes().get(0);
         }
 
         private static final Status[] VALUES = values();
 
-        public static Status valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        public static Status valueOf(
+            com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
           if (desc.getType() != getDescriptor()) {
-            throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+            throw new java.lang.IllegalArgumentException(
+              "EnumValueDescriptor is not for this type.");
           }
           if (desc.getIndex() == -1) {
             return UNRECOGNIZED;
@@ -1165,7 +1260,8 @@ public final class ProtoSignalingGetLog {
         return true;
       }
 
-      public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
         if (id_ != 0L) {
           output.writeUInt64(1, id_);
         }
@@ -1192,22 +1288,28 @@ public final class ProtoSignalingGetLog {
 
         size = 0;
         if (id_ != 0L) {
-          size += com.google.protobuf.CodedOutputStream.computeUInt64Size(1, id_);
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt64Size(1, id_);
         }
         if (type_ != net.iGap.proto.ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING.getNumber()) {
-          size += com.google.protobuf.CodedOutputStream.computeEnumSize(2, type_);
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(2, type_);
         }
         if (status_ != net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Status.MISSED.getNumber()) {
-          size += com.google.protobuf.CodedOutputStream.computeEnumSize(3, status_);
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(3, status_);
         }
         if (peer_ != null) {
-          size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, getPeer());
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(4, getPeer());
         }
         if (offerTime_ != 0) {
-          size += com.google.protobuf.CodedOutputStream.computeUInt32Size(5, offerTime_);
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt32Size(5, offerTime_);
         }
         if (duration_ != 0) {
-          size += com.google.protobuf.CodedOutputStream.computeUInt32Size(6, duration_);
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt32Size(6, duration_);
         }
         memoizedSize = size;
         return size;
@@ -1217,7 +1319,7 @@ public final class ProtoSignalingGetLog {
       @java.lang.Override
       public boolean equals(final java.lang.Object obj) {
         if (obj == this) {
-          return true;
+         return true;
         }
         if (!(obj instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog)) {
           return super.equals(obj);
@@ -1225,15 +1327,19 @@ public final class ProtoSignalingGetLog {
         net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog other = (net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) obj;
 
         boolean result = true;
-        result = result && (getId() == other.getId());
+        result = result && (getId()
+            == other.getId());
         result = result && type_ == other.type_;
         result = result && status_ == other.status_;
         result = result && (hasPeer() == other.hasPeer());
         if (hasPeer()) {
-          result = result && getPeer().equals(other.getPeer());
+          result = result && getPeer()
+              .equals(other.getPeer());
         }
-        result = result && (getOfferTime() == other.getOfferTime());
-        result = result && (getDuration() == other.getDuration());
+        result = result && (getOfferTime()
+            == other.getOfferTime());
+        result = result && (getDuration()
+            == other.getDuration());
         return result;
       }
 
@@ -1245,7 +1351,8 @@ public final class ProtoSignalingGetLog {
         int hash = 41;
         hash = (19 * hash) + getDescriptorForType().hashCode();
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getId());
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getId());
         hash = (37 * hash) + TYPE_FIELD_NUMBER;
         hash = (53 * hash) + type_;
         hash = (37 * hash) + STATUS_FIELD_NUMBER;
@@ -1263,49 +1370,66 @@ public final class ProtoSignalingGetLog {
         return hash;
       }
 
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
       }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
       }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-      }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-      }
-
-      public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public Builder newBuilderForType() {
-        return newBuilder();
-      }
+      public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
       }
@@ -1313,26 +1437,33 @@ public final class ProtoSignalingGetLog {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
       public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
       }
 
       @java.lang.Override
-      protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
       }
       /**
        * Protobuf type {@code proto.SignalingGetLogResponse.SignalingLog}
        */
-      public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-              // @@protoc_insertion_point(builder_implements:proto.SignalingGetLogResponse.SignalingLog)
-              net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:proto.SignalingGetLogResponse.SignalingLog)
+          net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
           return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_descriptor;
         }
 
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-          return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder.class);
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder.class);
         }
 
         // Construct using net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.newBuilder()
@@ -1340,12 +1471,14 @@ public final class ProtoSignalingGetLog {
           maybeForceBuilderInitialization();
         }
 
-        private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
           super(parent);
           maybeForceBuilderInitialization();
         }
         private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
           }
         }
         public Builder clear() {
@@ -1369,7 +1502,8 @@ public final class ProtoSignalingGetLog {
           return this;
         }
 
-        public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
           return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_SignalingLog_descriptor;
         }
 
@@ -1404,29 +1538,32 @@ public final class ProtoSignalingGetLog {
         public Builder clone() {
           return (Builder) super.clone();
         }
-
-        public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
           return (Builder) super.setField(field, value);
         }
-
-        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
-
-        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
-
-        public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
-
-        public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) {
-            return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) other);
+            return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog)other);
           } else {
             super.mergeFrom(other);
             return this;
@@ -1461,7 +1598,10 @@ public final class ProtoSignalingGetLog {
           return true;
         }
 
-        public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
           net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog parsedMessage = null;
           try {
             parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -1476,7 +1616,7 @@ public final class ProtoSignalingGetLog {
           return this;
         }
 
-        private long id_;
+        private long id_ ;
         /**
          * <code>optional uint64 id = 1;</code>
          */
@@ -1487,7 +1627,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint64 id = 1;</code>
          */
         public Builder setId(long value) {
-
+          
           id_ = value;
           onChanged();
           return this;
@@ -1496,7 +1636,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint64 id = 1;</code>
          */
         public Builder clearId() {
-
+          
           id_ = 0L;
           onChanged();
           return this;
@@ -1531,7 +1671,7 @@ public final class ProtoSignalingGetLog {
           if (value == null) {
             throw new NullPointerException();
           }
-
+          
           type_ = value.getNumber();
           onChanged();
           return this;
@@ -1540,7 +1680,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional .proto.SignalingOffer.Type type = 2;</code>
          */
         public Builder clearType() {
-
+          
           type_ = 0;
           onChanged();
           return this;
@@ -1575,7 +1715,7 @@ public final class ProtoSignalingGetLog {
           if (value == null) {
             throw new NullPointerException();
           }
-
+          
           status_ = value.getNumber();
           onChanged();
           return this;
@@ -1584,14 +1724,15 @@ public final class ProtoSignalingGetLog {
          * <code>optional .proto.SignalingGetLogResponse.SignalingLog.Status status = 3;</code>
          */
         public Builder clearStatus() {
-
+          
           status_ = 0;
           onChanged();
           return this;
         }
 
         private net.iGap.proto.ProtoGlobal.RegisteredUser peer_ = null;
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder> peerBuilder_;
+        private com.google.protobuf.SingleFieldBuilderV3<
+            net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder> peerBuilder_;
         /**
          * <code>optional .proto.RegisteredUser peer = 4;</code>
          */
@@ -1627,7 +1768,8 @@ public final class ProtoSignalingGetLog {
         /**
          * <code>optional .proto.RegisteredUser peer = 4;</code>
          */
-        public Builder setPeer(net.iGap.proto.ProtoGlobal.RegisteredUser.Builder builderForValue) {
+        public Builder setPeer(
+            net.iGap.proto.ProtoGlobal.RegisteredUser.Builder builderForValue) {
           if (peerBuilder_ == null) {
             peer_ = builderForValue.build();
             onChanged();
@@ -1643,7 +1785,8 @@ public final class ProtoSignalingGetLog {
         public Builder mergePeer(net.iGap.proto.ProtoGlobal.RegisteredUser value) {
           if (peerBuilder_ == null) {
             if (peer_ != null) {
-              peer_ = net.iGap.proto.ProtoGlobal.RegisteredUser.newBuilder(peer_).mergeFrom(value).buildPartial();
+              peer_ =
+                net.iGap.proto.ProtoGlobal.RegisteredUser.newBuilder(peer_).mergeFrom(value).buildPartial();
             } else {
               peer_ = value;
             }
@@ -1672,7 +1815,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional .proto.RegisteredUser peer = 4;</code>
          */
         public net.iGap.proto.ProtoGlobal.RegisteredUser.Builder getPeerBuilder() {
-
+          
           onChanged();
           return getPeerFieldBuilder().getBuilder();
         }
@@ -1683,21 +1826,28 @@ public final class ProtoSignalingGetLog {
           if (peerBuilder_ != null) {
             return peerBuilder_.getMessageOrBuilder();
           } else {
-            return peer_ == null ? net.iGap.proto.ProtoGlobal.RegisteredUser.getDefaultInstance() : peer_;
+            return peer_ == null ?
+                net.iGap.proto.ProtoGlobal.RegisteredUser.getDefaultInstance() : peer_;
           }
         }
         /**
          * <code>optional .proto.RegisteredUser peer = 4;</code>
          */
-        private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder> getPeerFieldBuilder() {
+        private com.google.protobuf.SingleFieldBuilderV3<
+            net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder> 
+            getPeerFieldBuilder() {
           if (peerBuilder_ == null) {
-            peerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder>(getPeer(), getParentForChildren(), isClean());
+            peerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                net.iGap.proto.ProtoGlobal.RegisteredUser, net.iGap.proto.ProtoGlobal.RegisteredUser.Builder, net.iGap.proto.ProtoGlobal.RegisteredUserOrBuilder>(
+                    getPeer(),
+                    getParentForChildren(),
+                    isClean());
             peer_ = null;
           }
           return peerBuilder_;
         }
 
-        private int offerTime_;
+        private int offerTime_ ;
         /**
          * <code>optional uint32 offer_time = 5;</code>
          */
@@ -1708,7 +1858,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint32 offer_time = 5;</code>
          */
         public Builder setOfferTime(int value) {
-
+          
           offerTime_ = value;
           onChanged();
           return this;
@@ -1717,13 +1867,13 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint32 offer_time = 5;</code>
          */
         public Builder clearOfferTime() {
-
+          
           offerTime_ = 0;
           onChanged();
           return this;
         }
 
-        private int duration_;
+        private int duration_ ;
         /**
          * <code>optional uint32 duration = 6;</code>
          */
@@ -1734,7 +1884,7 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint32 duration = 6;</code>
          */
         public Builder setDuration(int value) {
-
+          
           duration_ = value;
           onChanged();
           return this;
@@ -1743,17 +1893,18 @@ public final class ProtoSignalingGetLog {
          * <code>optional uint32 duration = 6;</code>
          */
         public Builder clearDuration() {
-
+          
           duration_ = 0;
           onChanged();
           return this;
         }
-
-        public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
           return this;
         }
 
-        public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
           return this;
         }
 
@@ -1771,9 +1922,13 @@ public final class ProtoSignalingGetLog {
         return DEFAULT_INSTANCE;
       }
 
-      private static final com.google.protobuf.Parser<SignalingLog> PARSER = new com.google.protobuf.AbstractParser<SignalingLog>() {
-        public SignalingLog parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-          return new SignalingLog(input, extensionRegistry);
+      private static final com.google.protobuf.Parser<SignalingLog>
+          PARSER = new com.google.protobuf.AbstractParser<SignalingLog>() {
+        public SignalingLog parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new SignalingLog(input, extensionRegistry);
         }
       };
 
@@ -1825,7 +1980,8 @@ public final class ProtoSignalingGetLog {
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
-    public java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> getSignalingLogOrBuilderList() {
+    public java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> 
+        getSignalingLogOrBuilderList() {
       return signalingLog_;
     }
     /**
@@ -1843,7 +1999,8 @@ public final class ProtoSignalingGetLog {
     /**
      * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
      */
-    public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(int index) {
+    public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(
+        int index) {
       return signalingLog_.get(index);
     }
 
@@ -1857,7 +2014,8 @@ public final class ProtoSignalingGetLog {
       return true;
     }
 
-    public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
       if (response_ != null) {
         output.writeMessage(1, getResponse());
       }
@@ -1872,10 +2030,12 @@ public final class ProtoSignalingGetLog {
 
       size = 0;
       if (response_ != null) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getResponse());
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getResponse());
       }
       for (int i = 0; i < signalingLog_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, signalingLog_.get(i));
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, signalingLog_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -1885,7 +2045,7 @@ public final class ProtoSignalingGetLog {
     @java.lang.Override
     public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
-        return true;
+       return true;
       }
       if (!(obj instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse)) {
         return super.equals(obj);
@@ -1895,9 +2055,11 @@ public final class ProtoSignalingGetLog {
       boolean result = true;
       result = result && (hasResponse() == other.hasResponse());
       if (hasResponse()) {
-        result = result && getResponse().equals(other.getResponse());
+        result = result && getResponse()
+            .equals(other.getResponse());
       }
-      result = result && getSignalingLogList().equals(other.getSignalingLogList());
+      result = result && getSignalingLogList()
+          .equals(other.getSignalingLogList());
       return result;
     }
 
@@ -1921,49 +2083,66 @@ public final class ProtoSignalingGetLog {
       return hash;
     }
 
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(com.google.protobuf.ByteString data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(com.google.protobuf.ByteString data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(byte[] data) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(byte[] data, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseDelimitedFrom(java.io.InputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseDelimitedFrom(java.io.InputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(com.google.protobuf.CodedInputStream input) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input);
-    }
-
-    public static net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parseFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3.parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() {
-      return newBuilder();
-    }
+    public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
@@ -1971,26 +2150,33 @@ public final class ProtoSignalingGetLog {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE ? new Builder() : new Builder().mergeFrom(this);
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
-    protected Builder newBuilderForType(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
      * Protobuf type {@code proto.SignalingGetLogResponse}
      */
-    public static final class Builder extends com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:proto.SignalingGetLogResponse)
-            net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:proto.SignalingGetLogResponse)
+        net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
         return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
-        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_fieldAccessorTable.ensureFieldAccessorsInitialized(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.Builder.class);
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.class, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.Builder.class);
       }
 
       // Construct using net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.newBuilder()
@@ -1998,12 +2184,14 @@ public final class ProtoSignalingGetLog {
         maybeForceBuilderInitialization();
       }
 
-      private Builder(com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
           getSignalingLogFieldBuilder();
         }
       }
@@ -2024,7 +2212,8 @@ public final class ProtoSignalingGetLog {
         return this;
       }
 
-      public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
         return net.iGap.proto.ProtoSignalingGetLog.internal_static_proto_SignalingGetLogResponse_descriptor;
       }
 
@@ -2066,29 +2255,32 @@ public final class ProtoSignalingGetLog {
       public Builder clone() {
         return (Builder) super.clone();
       }
-
-      public Builder setField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.setField(field, value);
       }
-
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
-
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
-
-      public Builder setRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, int index, Object value) {
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
-
-      public Builder addRepeatedField(com.google.protobuf.Descriptors.FieldDescriptor field, Object value) {
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse) {
-          return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse) other);
+          return mergeFrom((net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -2118,7 +2310,9 @@ public final class ProtoSignalingGetLog {
               signalingLogBuilder_ = null;
               signalingLog_ = other.signalingLog_;
               bitField0_ = (bitField0_ & ~0x00000002);
-              signalingLogBuilder_ = com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ? getSignalingLogFieldBuilder() : null;
+              signalingLogBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getSignalingLogFieldBuilder() : null;
             } else {
               signalingLogBuilder_.addAllMessages(other.signalingLog_);
             }
@@ -2132,7 +2326,10 @@ public final class ProtoSignalingGetLog {
         return true;
       }
 
-      public Builder mergeFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws java.io.IOException {
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
         net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
@@ -2149,7 +2346,8 @@ public final class ProtoSignalingGetLog {
       private int bitField0_;
 
       private net.iGap.proto.ProtoResponse.Response response_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> responseBuilder_;
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
@@ -2185,7 +2383,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      public Builder setResponse(net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
+      public Builder setResponse(
+          net.iGap.proto.ProtoResponse.Response.Builder builderForValue) {
         if (responseBuilder_ == null) {
           response_ = builderForValue.build();
           onChanged();
@@ -2201,7 +2400,8 @@ public final class ProtoSignalingGetLog {
       public Builder mergeResponse(net.iGap.proto.ProtoResponse.Response value) {
         if (responseBuilder_ == null) {
           if (response_ != null) {
-            response_ = net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
+            response_ =
+              net.iGap.proto.ProtoResponse.Response.newBuilder(response_).mergeFrom(value).buildPartial();
           } else {
             response_ = value;
           }
@@ -2230,7 +2430,7 @@ public final class ProtoSignalingGetLog {
        * <code>optional .proto.Response response = 1;</code>
        */
       public net.iGap.proto.ProtoResponse.Response.Builder getResponseBuilder() {
-
+        
         onChanged();
         return getResponseFieldBuilder().getBuilder();
       }
@@ -2241,29 +2441,38 @@ public final class ProtoSignalingGetLog {
         if (responseBuilder_ != null) {
           return responseBuilder_.getMessageOrBuilder();
         } else {
-          return response_ == null ? net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
+          return response_ == null ?
+              net.iGap.proto.ProtoResponse.Response.getDefaultInstance() : response_;
         }
       }
       /**
        * <code>optional .proto.Response response = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> getResponseFieldBuilder() {
+      private com.google.protobuf.SingleFieldBuilderV3<
+          net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder> 
+          getResponseFieldBuilder() {
         if (responseBuilder_ == null) {
-          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(getResponse(), getParentForChildren(), isClean());
+          responseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              net.iGap.proto.ProtoResponse.Response, net.iGap.proto.ProtoResponse.Response.Builder, net.iGap.proto.ProtoResponse.ResponseOrBuilder>(
+                  getResponse(),
+                  getParentForChildren(),
+                  isClean());
           response_ = null;
         }
         return responseBuilder_;
       }
 
-      private java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> signalingLog_ = java.util.Collections.emptyList();
+      private java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> signalingLog_ =
+        java.util.Collections.emptyList();
       private void ensureSignalingLogIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           signalingLog_ = new java.util.ArrayList<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog>(signalingLog_);
           bitField0_ |= 0x00000002;
-        }
+         }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> signalingLogBuilder_;
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> signalingLogBuilder_;
 
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
@@ -2298,7 +2507,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder setSignalingLog(int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog value) {
+      public Builder setSignalingLog(
+          int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog value) {
         if (signalingLogBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2314,7 +2524,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder setSignalingLog(int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
+      public Builder setSignalingLog(
+          int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
         if (signalingLogBuilder_ == null) {
           ensureSignalingLogIsMutable();
           signalingLog_.set(index, builderForValue.build());
@@ -2343,7 +2554,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder addSignalingLog(int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog value) {
+      public Builder addSignalingLog(
+          int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog value) {
         if (signalingLogBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -2359,7 +2571,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder addSignalingLog(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
+      public Builder addSignalingLog(
+          net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
         if (signalingLogBuilder_ == null) {
           ensureSignalingLogIsMutable();
           signalingLog_.add(builderForValue.build());
@@ -2372,7 +2585,8 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder addSignalingLog(int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
+      public Builder addSignalingLog(
+          int index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder builderForValue) {
         if (signalingLogBuilder_ == null) {
           ensureSignalingLogIsMutable();
           signalingLog_.add(index, builderForValue.build());
@@ -2385,10 +2599,12 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public Builder addAllSignalingLog(java.lang.Iterable<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> values) {
+      public Builder addAllSignalingLog(
+          java.lang.Iterable<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> values) {
         if (signalingLogBuilder_ == null) {
           ensureSignalingLogIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(values, signalingLog_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, signalingLog_);
           onChanged();
         } else {
           signalingLogBuilder_.addAllMessages(values);
@@ -2424,23 +2640,25 @@ public final class ProtoSignalingGetLog {
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder getSignalingLogBuilder(int index) {
+      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder getSignalingLogBuilder(
+          int index) {
         return getSignalingLogFieldBuilder().getBuilder(index);
       }
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(int index) {
+      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder getSignalingLogOrBuilder(
+          int index) {
         if (signalingLogBuilder_ == null) {
-          return signalingLog_.get(index);
-        } else {
+          return signalingLog_.get(index);  } else {
           return signalingLogBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> getSignalingLogOrBuilderList() {
+      public java.util.List<? extends net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> 
+           getSignalingLogOrBuilderList() {
         if (signalingLogBuilder_ != null) {
           return signalingLogBuilder_.getMessageOrBuilderList();
         } else {
@@ -2451,35 +2669,45 @@ public final class ProtoSignalingGetLog {
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
       public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder addSignalingLogBuilder() {
-        return getSignalingLogFieldBuilder().addBuilder(net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.getDefaultInstance());
+        return getSignalingLogFieldBuilder().addBuilder(
+            net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder addSignalingLogBuilder(int index) {
-        return getSignalingLogFieldBuilder().addBuilder(index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.getDefaultInstance());
+      public net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder addSignalingLogBuilder(
+          int index) {
+        return getSignalingLogFieldBuilder().addBuilder(
+            index, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.getDefaultInstance());
       }
       /**
        * <code>repeated .proto.SignalingGetLogResponse.SignalingLog signaling_log = 2;</code>
        */
-      public java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder> getSignalingLogBuilderList() {
+      public java.util.List<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder> 
+           getSignalingLogBuilderList() {
         return getSignalingLogFieldBuilder().getBuilderList();
       }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> getSignalingLogFieldBuilder() {
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder> 
+          getSignalingLogFieldBuilder() {
         if (signalingLogBuilder_ == null) {
-          signalingLogBuilder_ =
-                  new com.google.protobuf.RepeatedFieldBuilderV3<net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder>(signalingLog_, ((bitField0_ & 0x00000002) == 0x00000002), getParentForChildren(), isClean());
+          signalingLogBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog.Builder, net.iGap.proto.ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLogOrBuilder>(
+                  signalingLog_,
+                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  getParentForChildren(),
+                  isClean());
           signalingLog_ = null;
         }
         return signalingLogBuilder_;
       }
-
-      public final Builder setUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
-      public final Builder mergeUnknownFields(final com.google.protobuf.UnknownFieldSet unknownFields) {
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
       }
 
@@ -2497,9 +2725,13 @@ public final class ProtoSignalingGetLog {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SignalingGetLogResponse> PARSER = new com.google.protobuf.AbstractParser<SignalingGetLogResponse>() {
-      public SignalingGetLogResponse parsePartialFrom(com.google.protobuf.CodedInputStream input, com.google.protobuf.ExtensionRegistryLite extensionRegistry) throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SignalingGetLogResponse(input, extensionRegistry);
+    private static final com.google.protobuf.Parser<SignalingGetLogResponse>
+        PARSER = new com.google.protobuf.AbstractParser<SignalingGetLogResponse>() {
+      public SignalingGetLogResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new SignalingGetLogResponse(input, extensionRegistry);
       }
     };
 
@@ -2518,49 +2750,68 @@ public final class ProtoSignalingGetLog {
 
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_SignalingGetLog_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_SignalingGetLog_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_SignalingGetLogResponse_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_SignalingGetLogResponse_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor internal_static_proto_SignalingGetLogResponse_SignalingLog_descriptor;
-  private static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_SignalingGetLog_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_SignalingGetLog_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_SignalingGetLogResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_SignalingGetLogResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_proto_SignalingGetLogResponse_SignalingLog_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_proto_SignalingGetLogResponse_SignalingLog_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
     return descriptor;
   }
-
-  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
   static {
     java.lang.String[] descriptorData = {
-            "\n\025SignalingGetLog.proto\022\005proto\032\rRequest." +
-                    "proto\032\016Response.proto\032\014Global.proto\032\024Sig" +
-                    "nalingOffer.proto\"Y\n\017SignalingGetLog\022\037\n\007" +
-                    "request\030\001 \001(\0132\016.proto.Request\022%\n\npaginat" +
-                    "ion\030\002 \001(\0132\021.proto.Pagination\"\226\003\n\027Signali" +
-                    "ngGetLogResponse\022!\n\010response\030\001 \001(\0132\017.pro" +
-                    "to.Response\022B\n\rsignaling_log\030\002 \003(\0132+.pro" +
-                    "to.SignalingGetLogResponse.SignalingLog\032" +
-                    "\223\002\n\014SignalingLog\022\n\n\002id\030\001 \001(\004\022(\n\004type\030\002 \001" +
-                    "(\0162\032.proto.SignalingOffer.Type\022B\n\006status",
+      "\n\025SignalingGetLog.proto\022\005proto\032\rRequest." +
+      "proto\032\016Response.proto\032\014Global.proto\032\024Sig" +
+      "nalingOffer.proto\"Y\n\017SignalingGetLog\022\037\n\007" +
+      "request\030\001 \001(\0132\016.proto.Request\022%\n\npaginat" +
+      "ion\030\002 \001(\0132\021.proto.Pagination\"\226\003\n\027Signali" +
+      "ngGetLogResponse\022!\n\010response\030\001 \001(\0132\017.pro" +
+      "to.Response\022B\n\rsignaling_log\030\002 \003(\0132+.pro" +
+      "to.SignalingGetLogResponse.SignalingLog\032" +
+      "\223\002\n\014SignalingLog\022\n\n\002id\030\001 \001(\004\022(\n\004type\030\002 \001" +
+      "(\0162\032.proto.SignalingOffer.Type\022B\n\006status",
       "\030\003 \001(\01622.proto.SignalingGetLogResponse.S" +
-              "ignalingLog.Status\022#\n\004peer\030\004 \001(\0132\025.proto" +
-              ".RegisteredUser\022\022\n\noffer_time\030\005 \001(\r\022\020\n\010d" +
-              "uration\030\006 \001(\r\">\n\006Status\022\n\n\006MISSED\020\000\022\014\n\010C" +
-              "ANCELED\020\001\022\014\n\010INCOMING\020\002\022\014\n\010OUTGOING\020\003B&\n" +
-              "\016net.iGap.protoB\024ProtoSignalingGetLogb\006p" +
-              "roto3"
+      "ignalingLog.Status\022#\n\004peer\030\004 \001(\0132\025.proto" +
+      ".RegisteredUser\022\022\n\noffer_time\030\005 \001(\r\022\020\n\010d" +
+      "uration\030\006 \001(\r\">\n\006Status\022\n\n\006MISSED\020\000\022\014\n\010C" +
+      "ANCELED\020\001\022\014\n\010INCOMING\020\002\022\014\n\010OUTGOING\020\003B&\n" +
+      "\016net.iGap.protoB\024ProtoSignalingGetLogb\006p" +
+      "roto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner = new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-      public com.google.protobuf.ExtensionRegistry assignDescriptors(com.google.protobuf.Descriptors.FileDescriptor root) {
-        descriptor = root;
-        return null;
-      }
-    };
-    com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[]{
-            net.iGap.proto.ProtoRequest.getDescriptor(), net.iGap.proto.ProtoResponse.getDescriptor(), net.iGap.proto.ProtoGlobal.getDescriptor(), net.iGap.proto.ProtoSignalingOffer.getDescriptor(),
-    }, assigner);
-    internal_static_proto_SignalingGetLog_descriptor = getDescriptor().getMessageTypes().get(0);
-    internal_static_proto_SignalingGetLog_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+          net.iGap.proto.ProtoRequest.getDescriptor(),
+          net.iGap.proto.ProtoResponse.getDescriptor(),
+          net.iGap.proto.ProtoGlobal.getDescriptor(),
+          net.iGap.proto.ProtoSignalingOffer.getDescriptor(),
+        }, assigner);
+    internal_static_proto_SignalingGetLog_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_proto_SignalingGetLog_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_SignalingGetLog_descriptor,
         new java.lang.String[] { "Request", "Pagination", });
     internal_static_proto_SignalingGetLogResponse_descriptor =
