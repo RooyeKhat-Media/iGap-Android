@@ -10,8 +10,11 @@
 
 package net.iGap.realm;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import net.iGap.module.SUID;
+import net.iGap.proto.ProtoGlobal;
 
 // note: realm doesn't support enum
 // as a workaround, we save its toString() value
@@ -20,6 +23,7 @@ public class RealmOfflineDelete extends RealmObject {
 
     @PrimaryKey private long id;
     private long offlineDelete;
+    private boolean both;
 
     public long getId() {
         return id;
@@ -35,5 +39,23 @@ public class RealmOfflineDelete extends RealmObject {
 
     public void setOfflineDelete(long offlineDelete) {
         this.offlineDelete = offlineDelete;
+    }
+
+    public boolean isBoth() {
+        return both;
+    }
+
+    public void setBoth(boolean both) {
+        this.both = both;
+    }
+
+    public static RealmOfflineDelete setOfflineDeleted(Realm realm, long messageId, ProtoGlobal.Room.Type roomType, boolean both) {
+        if (roomType != ProtoGlobal.Room.Type.CHAT) {
+            both = false;
+        }
+        RealmOfflineDelete realmOfflineDelete = realm.createObject(RealmOfflineDelete.class, SUID.id().get());
+        realmOfflineDelete.setOfflineDelete(messageId);
+        realmOfflineDelete.setBoth(both);
+        return realmOfflineDelete;
     }
 }

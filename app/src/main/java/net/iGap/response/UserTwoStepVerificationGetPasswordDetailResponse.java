@@ -28,20 +28,13 @@ public class UserTwoStepVerificationGetPasswordDetailResponse extends MessageHan
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetailResponse.Builder builder =
-            (ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetailResponse.Builder) message;
-        builder.getQuestionOne();
-        builder.getQuestionTwo();
-        builder.getHint();
-        builder.getHasConfirmedRecoveryEmail();
-        builder.getUnconfirmedEmailPattern();
+        ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetailResponse.Builder builder = (ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetailResponse.Builder) message;
 
         if (G.onTwoStepPassword != null) {
             G.onTwoStepPassword.getPasswordDetail(builder.getQuestionOne(), builder.getQuestionTwo(), builder.getHint(), builder.getHasConfirmedRecoveryEmail(), builder.getUnconfirmedEmailPattern());
-
         }
 
         if (G.onSecurityCheckPassword != null) {
@@ -49,7 +42,8 @@ public class UserTwoStepVerificationGetPasswordDetailResponse extends MessageHan
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onTwoStepPassword != null) {
             G.onTwoStepPassword.timeOutGetPasswordDetail();
@@ -57,7 +51,8 @@ public class UserTwoStepVerificationGetPasswordDetailResponse extends MessageHan
     }
 
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

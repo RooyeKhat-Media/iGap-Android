@@ -28,9 +28,10 @@ public class UserGetDeleteTokenResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserGetDeleteToken.UserGetDeleteTokenResponse.Builder builder = (ProtoUserGetDeleteToken.UserGetDeleteTokenResponse.Builder) message;
+        ProtoUserGetDeleteToken.UserGetDeleteTokenResponse.Builder builder = (ProtoUserGetDeleteToken.UserGetDeleteTokenResponse.Builder) message;
 
         G.smsNumbers = builder.getSmsNumberList();
         if (G.onUserGetDeleteToken != null) {
@@ -38,11 +39,13 @@ public class UserGetDeleteTokenResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

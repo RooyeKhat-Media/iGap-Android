@@ -12,24 +12,39 @@ package net.iGap.module;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
+
 import net.iGap.G;
+import net.iGap.helper.HelperPermision;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
-import net.iGap.realm.RealmInviteFriend;
-import net.iGap.realm.RealmInviteFriendFields;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * work with saved contacts in database
  */
 public class Contacts {
+
+    private static final int PHONE_CONTACT_FETCH_LIMIT = 100;
+
+    //Online Fetch Contacts Fields
+    public static int onlinePhoneContactId = 0;
+
+    //Local Fetch Contacts Fields
+    public static boolean getContact = true;
+    public static boolean isEndLocal = false;
+    public static int localPhoneContactId = 0;
+
 
     /**
      * retrieve contacts from database
@@ -50,24 +65,25 @@ public class Contacts {
 
         String lastHeader = "";
         for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i) == null) {
+            RealmContacts realmContacts = contacts.get(i);
+            if (realmContacts == null) {
                 continue;
             }
-            String header = contacts.get(i).getDisplay_name();
-            long peerId = contacts.get(i).getId();
-            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, contacts.get(i).getId());
+            String header = realmContacts.getDisplay_name();
+            long peerId = realmContacts.getId();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmContacts.getId());
 
             // new header exists
             if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {
                 StructContactInfo structContactInfo = new StructContactInfo(peerId, header, "", true, false, "");
-                structContactInfo.initials = contacts.get(i).getInitials();
-                structContactInfo.color = contacts.get(i).getColor();
+                structContactInfo.initials = realmContacts.getInitials();
+                structContactInfo.color = realmContacts.getColor();
                 structContactInfo.avatar = realmRegisteredInfo.getLastAvatar();
                 items.add(structContactInfo);
             } else {
                 StructContactInfo structContactInfo = new StructContactInfo(peerId, header, "", false, false, "");
-                structContactInfo.initials = contacts.get(i).getInitials();
-                structContactInfo.color = contacts.get(i).getColor();
+                structContactInfo.initials = realmContacts.getInitials();
+                structContactInfo.color = realmContacts.getColor();
                 structContactInfo.avatar = realmRegisteredInfo.getLastAvatar();
                 items.add(structContactInfo);
             }
@@ -78,50 +94,49 @@ public class Contacts {
         return items;
     }
 
-    public static ArrayList<StructListOfContact> getListOfContact() { //get List Of Contact
+    public static void getPhoneContactForServer() { //get List Of Contact
+        if (!HelperPermision.grantedContactPermission()) {
+            return;
+        }
+
+        int fetchCount = 0;
+        boolean isEnd = false;
 
         ArrayList<StructListOfContact> contactList = new ArrayList<>();
         ContentResolver cr = G.context.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+
+        String startContactId = ">=" + onlinePhoneContactId;
+        String selection = ContactsContract.Contacts._ID + startContactId;
+
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);
 
         if (cur != null) {
             if (cur.getCount() > 0) {
                 while (cur.moveToNext()) {
-
-                    int id = 0;
-                    id = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
-
+                    int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                    onlinePhoneContactId = contactId + 1;
                     if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(id)}, null);
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
 
                         if (pCur != null) {
-
                             while (pCur.moveToNext()) {
-
+                                Log.i("III", "name : " + cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
                                 StructListOfContact itemContact = new StructListOfContact();
                                 itemContact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
                                 itemContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
                                 contactList.add(itemContact);
-                                //                        Log.i("BBBBB", "getListOfContact: " + pCur.getString(pCur.getColumnIndex(
-                                //                                ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                /**
-                                 * this part filter phone contact
-                                 * and get just mobile number
-                                 */
-                                //                        int phoneType = pCur.getInt(
-                                //                                pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-
-                                //                        if (phoneType == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) { //
-                                //                            itemContact.setPhone(pCur.getString(pCur.getColumnIndex(
-                                //                                    ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                //                        }
                             }
                             pCur.close();
                         }
                     }
+                    fetchCount++;
                 }
             }
             cur.close();
+        }
+
+        if (fetchCount < PHONE_CONTACT_FETCH_LIMIT) {
+            isEnd = true;
         }
 
         ArrayList<StructListOfContact> resultContactList = new ArrayList<>();
@@ -157,106 +172,48 @@ public class Contacts {
             }
         }
 
-        return resultContactList;
-    }
+        if (G.onContactFetchForServer != null) {
+            G.onContactFetchForServer.onFetch(resultContactList);
+        }
 
-    public static void FillRealmInviteFriend() {
-
-        final ArrayList<StructListOfContact> contactList = getListOfContact();
-        final int size = contactList.size();
-
-        if (size > 0) {
-            Realm realm = Realm.getDefaultInstance();
-            realm.executeTransaction(new Realm.Transaction() {
+        if (!isEnd) {
+            G.handler.postDelayed(new Runnable() {
                 @Override
-                public void execute(Realm realm) {
-                    realm.delete(RealmInviteFriend.class);  // delete all item in invite friend database
-                    for (int i = 0; i < size; i++) {
-                        RealmInviteFriend item = realm.createObject(RealmInviteFriend.class);
-                        item.setDisplayName(contactList.get(i).getDisplayName());
-                        item.setFirstName(contactList.get(i).getFirstName());
-                        item.setLastName(contactList.get(i).getLastName());
-                        item.setPhone(contactList.get(i).getPhone().replaceAll(" ", ""));
-                    }
+                public void run() {
+                    new FetchContactForServer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
-            });
-
-            //*****************************************************************************************************
-
-            final RealmResults<RealmContacts> results = realm.where(RealmContacts.class).findAll();
-            if (!results.isEmpty()) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        for (int i = 0; i < results.size(); i++) {
-                            if (results.get(i).isValid()) {
-                                long phone = results.get(i).getPhone();
-                                String str = Long.toString(phone).replaceAll(" ", "");
-                                if (str.length() > 10) {
-                                    str = str.substring(str.length() - 10, str.length());
-                                }
-
-                                realm.where(RealmInviteFriend.class).contains(RealmInviteFriendFields.PHONE, str).findAll().deleteAllFromRealm();
-                            }
-                        }
-                    }
-                });
-            }
-            realm.close();
-        } else {
-            // you can delete all item in realm contact  if there was no item
+            }, 100);
         }
     }
 
-    public static ArrayList<StructContactInfo> getInviteFriendList() {
-
-        ArrayList<StructContactInfo> list = new ArrayList<>();
-
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<RealmInviteFriend> results = realm.where(RealmInviteFriend.class).findAllSorted(RealmInviteFriendFields.DISPLAY_NAME);
-
-        if (results != null) {
-            String lastHeader = "";
-
-            for (int i = 0; i < results.size(); i++) {
-                String header = results.get(i).getDisplayName();
-
-                StructContactInfo item;
-
-                // new header exists
-                if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {
-                    item = new StructContactInfo(0, results.get(i).getDisplayName(), "", true, false, results.get(i).getPhone());
-                } else {
-                    item = new StructContactInfo(0, results.get(i).getDisplayName(), "", false, false, results.get(i).getPhone());
-                }
-                lastHeader = header;
-
-                list.add(item);
-            }
+    public static void getPhoneContactForClient() { //get List Of Contact
+        if (!HelperPermision.grantedContactPermission()) {
+            return;
         }
-        realm.close();
 
-        return list;
-    }
+        int fetchCount = 0;
+        isEndLocal = false;
 
-    private static ArrayList<String> arrayList = new ArrayList<>();
-    private static ArrayList<String> number = new ArrayList<>();
-
-    public static ArrayList<StructListOfContact> getMobileListContact() { //get List Of Contact
         ArrayList<String> tempList = new ArrayList<>();
         ArrayList<StructListOfContact> contactList = new ArrayList<>();
         ContentResolver cr = G.context.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
+
+        String startContactId = ">=" + localPhoneContactId;
+        String selection = ContactsContract.Contacts._ID + startContactId;
+
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);//ContactsContract.Contacts.DISPLAY_NAME + " ASC"
 
         if (cur != null) {
             if (cur.getCount() > 0) {
                 while (cur.moveToNext()) {
+                    if (!getContact) {
+                        return;
+                    }
 
-                    int id = 0;
-                    id = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
-
+                    int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                    localPhoneContactId = contactId + 1;//plus for fetch next contact in future query
                     if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(id)}, null);
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
                         if (pCur != null) {
                             while (pCur.moveToNext()) {
                                 String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -272,11 +229,54 @@ public class Contacts {
                             pCur.close();
                         }
                     }
+
+                    fetchCount++;
+
+                    if (fetchCount > PHONE_CONTACT_FETCH_LIMIT) {
+                        break;
+                    }
+
                 }
             }
             cur.close();
         }
 
-        return contactList;
+        if (fetchCount < PHONE_CONTACT_FETCH_LIMIT) {
+            isEndLocal = true;
+        }
+
+
+        if (G.onPhoneContact != null) {
+            G.onPhoneContact.onPhoneContact(contactList, isEndLocal);
+        }
+
+        if (!isEndLocal) {
+            //G.handler.postDelayed(new Runnable() {
+            //    @Override
+            //    public void run() {
+            //        new FetchContactForClient().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            //    }
+            //}, 500);
+        }
+    }
+
+
+    /**
+     * ******************************************** Inner Classes ********************************************
+     */
+    public static class FetchContactForClient extends AsyncTask<Void, Void, ArrayList<StructListOfContact>> {
+        @Override
+        protected ArrayList<StructListOfContact> doInBackground(Void... params) {
+            Contacts.getPhoneContactForClient();
+            return null;
+        }
+    }
+
+    public static class FetchContactForServer extends AsyncTask<Void, Void, ArrayList<StructListOfContact>> {
+        @Override
+        protected ArrayList<StructListOfContact> doInBackground(Void... params) {
+            Contacts.getPhoneContactForServer();
+            return null;
+        }
     }
 }

@@ -11,9 +11,9 @@
 package net.iGap.response;
 
 import net.iGap.G;
-import net.iGap.helper.HelperClientCondition;
 import net.iGap.proto.ProtoClientGetRoomList;
 import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmClientCondition;
 import net.iGap.request.RequestClientCondition;
 
 import static net.iGap.realm.RealmRoom.putChatToDatabase;
@@ -41,7 +41,7 @@ public class ClientGetRoomListResponse extends MessageHandler {
 
             new Thread(new Runnable() {
                 @Override public void run() {
-                    new RequestClientCondition().clientCondition(HelperClientCondition.computeClientCondition(null));
+                    new RequestClientCondition().clientCondition(RealmClientCondition.computeClientCondition(null));
                     putChatToDatabase(clientGetRoomListResponse.getRoomsList(), false, false);
                 }
             }).start();

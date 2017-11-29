@@ -22,6 +22,7 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserInfo;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
+import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestUserInfo;
 
 import static net.iGap.G.userId;
@@ -31,7 +32,6 @@ public class UserInfoResponse extends MessageHandler {
     public int actionId;
     public Object message;
     public String identity;
-    public boolean canGetInfo = false;
 
     public UserInfoResponse(int actionId, Object protoClass, String identity) {
         super(actionId, protoClass, identity);
@@ -49,29 +49,11 @@ public class UserInfoResponse extends MessageHandler {
             @Override
             public void run() {
                 final Realm realm = Realm.getDefaultInstance();
-                RealmRegisteredInfo realmRegisteredInfo;
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-
-                        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUser().getId());
-                        if (realmRegisteredInfo == null) {
-                            realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class, builder.getUser().getId());
-                        }
-
-                        realmRegisteredInfo.setAvatarCount(builder.getUser().getAvatarCount());
-                        realmRegisteredInfo.setColor(builder.getUser().getColor());
-                        realmRegisteredInfo.setDisplayName(builder.getUser().getDisplayName());
-                        realmRegisteredInfo.setFirstName(builder.getUser().getFirstName());
-                        realmRegisteredInfo.setInitials(builder.getUser().getInitials());
-                        realmRegisteredInfo.setLastSeen(builder.getUser().getLastSeen());
-                        realmRegisteredInfo.setPhoneNumber(Long.toString(builder.getUser().getPhone()));
-                        realmRegisteredInfo.setStatus(builder.getUser().getStatus().toString());
-                        realmRegisteredInfo.setUsername(builder.getUser().getUsername());
-                        realmRegisteredInfo.setMutual(builder.getUser().getMutual());
-                        realmRegisteredInfo.setCacheId(builder.getUser().getCacheId());
-
-                        RealmAvatar.putAndGet(realm, builder.getUser().getId(), builder.getUser().getAvatar());
+                        RealmRegisteredInfo.putOrUpdate(realm, builder.getUser());
+                        RealmAvatar.putOrUpdateAndManageDelete(realm, builder.getUser().getId(), builder.getUser().getAvatar());
                     }
                 });
 
@@ -82,13 +64,13 @@ public class UserInfoResponse extends MessageHandler {
                     }
                 }, RequestUserInfo.CLEAR_ARRAY_TIME);
 
+                if (identity != null && identity.equals(RequestUserInfo.InfoType.UPDATE_ROOM.toString())) {
+                    RealmRoom.updateChatRoom(builder.getUser().getId());
+                }
+
                 if (identity != null && identity.equals(RequestUserInfo.InfoType.JUST_INFO.toString())) {
                     G.onRegistrationInfo.onInfo(builder.getUser());
                     return;
-                }
-
-                if ((builder.getUser().getId() == userId)) {
-                    canGetInfo = true;
                 }
 
                 realm.close();
@@ -97,9 +79,9 @@ public class UserInfoResponse extends MessageHandler {
                     @Override
                     public void run() {
 
-                        if (canGetInfo) {
+                        if ((builder.getUser().getId() == userId)) {
                             if (G.onUserInfoMyClient != null) {
-                                G.onUserInfoMyClient.onUserInfoMyClient(builder.getUser(), identity);
+                                G.onUserInfoMyClient.onUserInfoMyClient();
                             }
                         }
 
@@ -111,9 +93,6 @@ public class UserInfoResponse extends MessageHandler {
                             G.onUserInfoResponse.onUserInfo(builder.getUser(), identity);
                         }
 
-                        if (G.onUserInfoForAvatar != null) {
-                            G.onUserInfoForAvatar.onUserInfoForAvatar(builder.getUser());
-                        }
                         if (FragmentShowMember.infoUpdateListenerCount != null) {
                             FragmentShowMember.infoUpdateListenerCount.complete(true, "" + builder.getUser().getId(), "OK");
                         }

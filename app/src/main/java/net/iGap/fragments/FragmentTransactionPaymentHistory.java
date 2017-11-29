@@ -19,14 +19,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import java.util.ArrayList;
-import java.util.List;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
+
 import net.iGap.R;
 import net.iGap.adapter.items.AdapterTransactionPaymentHistory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentTransactionPaymentHistory extends BaseFragment {
 
@@ -145,18 +149,17 @@ public class FragmentTransactionPaymentHistory extends BaseFragment {
 
     private void initRecycleView() {
 
-        fastAdapter = new FastAdapter();
         itemAdapter = new ItemAdapter();
+        fastAdapter = FastAdapter.with(itemAdapter);
 
-        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<IItem>() {
+        fastAdapter.withOnClickListener(new OnClickListener<IItem>() {
             @Override public boolean onClick(View v, IAdapter adapter, IItem currentItem, int position) {
-
                 return false;
             }
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemAdapter.wrap(fastAdapter));
+        recyclerView.setAdapter(fastAdapter);
     }
 }

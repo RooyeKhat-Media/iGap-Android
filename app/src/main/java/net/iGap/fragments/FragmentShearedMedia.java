@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -40,21 +41,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -80,12 +70,27 @@ import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestClientCountRoomHistory;
 import net.iGap.request.RequestClientSearchRoomHistory;
+
 import org.parceler.Parcels;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -97,6 +102,7 @@ public class FragmentShearedMedia extends BaseFragment {
     private RealmResults<RealmRoomMessage> mRealmList;
     private ArrayList<StructShearedMedia> mNewList;
     public ArrayList<Long> SelectedList = new ArrayList<>();
+    public ArrayList<Long> bothDeleteMessageId = new ArrayList<>();
     public static ArrayList<Long> list = new ArrayList<>();
     protected ArrayMap<Long, Boolean> needDownloadList = new ArrayMap<>();
     private RealmChangeListener<RealmResults<RealmRoomMessage>> changeListener;
@@ -112,6 +118,7 @@ public class FragmentShearedMedia extends BaseFragment {
     private LinearLayout mediaLayout;
     private TextView txtSharedMedia;
     private TextView txtNumberOfSelected;
+    private ProtoGlobal.Room.Type roomType;
 
     private int numberOfSelected = 0;
     private int listCount = 0;
@@ -167,6 +174,8 @@ public class FragmentShearedMedia extends BaseFragment {
         MusicPlayer.setMusicPlayer(mediaLayout);
 
         roomId = getArguments().getLong(ROOM_ID);
+        roomType = RealmRoom.detectType(roomId);
+
         initComponent(view);
     }
 
@@ -347,54 +356,82 @@ public class FragmentShearedMedia extends BaseFragment {
         rippleDeleteSelected.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
+                String count = SelectedList.size() + "";
+                final RealmRoom realmRoom = RealmRoom.getRealmRoom(getRealm(), roomId);
 
-                //+Realm realm = Realm.getDefaultInstance();
-                final RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (roomType == ProtoGlobal.Room.Type.CHAT && bothDeleteMessageId != null && bothDeleteMessageId.size() > 0) {
+                    // show both Delete check box
+                    String delete;
+                    if (HelperCalander.isPersianUnicode) {
+                        delete = HelperCalander.convertToUnicodeFarsiNumber(G.context.getResources().getString(R.string.st_desc_delete, count));
+                    } else {
+                        delete = HelperCalander.convertToUnicodeFarsiNumber(G.context.getResources().getString(R.string.st_desc_delete, "the"));
+                    }
+                    new MaterialDialog.Builder(G.fragmentActivity).limitIconToDefaultSize().content(delete).title(R.string.message).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (!dialog.isPromptCheckBoxChecked()) {
+                                bothDeleteMessageId = null;
+                            }
+                            if (realmRoom != null) {
+                                RealmRoomMessage.deleteSelectedMessages(getRealm(), roomId, SelectedList, bothDeleteMessageId, roomType);
+                            }
+                            resetItems();
+                        }
+                    }).checkBoxPromptRes(R.string.delete_item_dialog, false, null).show();
 
-                if (realmRoom != null) {
-                    RealmRoomMessage.deleteSelectedMessages(getRealm(), roomId, SelectedList, realmRoom.getType());
+                } else {
+                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.message).content(G.context.getResources().getString(R.string.st_desc_delete, count)).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            bothDeleteMessageId = null;
+                            if (realmRoom != null) {
+                                RealmRoomMessage.deleteSelectedMessages(getRealm(), roomId, SelectedList, bothDeleteMessageId, roomType);
+                            }
+                            resetItems();
+                        }
+                    }).show();
                 }
-
-                for (Long Id : SelectedList) {
-                    list.add(Id);
-                }
-
-
-                switch (mFilter) {
-                    case IMAGE:
-                        countOFImage -= SelectedList.size();
-                        break;
-                    case VIDEO:
-                        countOFVIDEO -= SelectedList.size();
-                        break;
-                    case AUDIO:
-                        countOFAUDIO -= SelectedList.size();
-                        break;
-                    case FILE:
-                        countOFFILE -= SelectedList.size();
-                        break;
-                    case GIF:
-                        countOFGIF -= SelectedList.size();
-                        break;
-                    case VOICE:
-                        countOFVOICE -= SelectedList.size();
-                        break;
-                    case URL:
-                        countOFLink -= SelectedList.size();
-                        break;
-                }
-
-                updateStringSharedMediaCount(null, roomId);
-
-                adapter.resetSelected();
-
-                //realm.close();
             }
         });
 
         txtNumberOfSelected = (TextView) view.findViewById(R.id.asm_txt_number_of_selected);
 
         ll_AppBarSelected = (LinearLayout) view.findViewById(R.id.asm_ll_appbar_selelected);
+    }
+
+    private void resetItems() {
+        for (Long Id : SelectedList) {
+            list.add(Id);
+        }
+
+        switch (mFilter) {
+            case IMAGE:
+                countOFImage -= SelectedList.size();
+                break;
+            case VIDEO:
+                countOFVIDEO -= SelectedList.size();
+                break;
+            case AUDIO:
+                countOFAUDIO -= SelectedList.size();
+                break;
+            case FILE:
+                countOFFILE -= SelectedList.size();
+                break;
+            case GIF:
+                countOFGIF -= SelectedList.size();
+                break;
+            case VOICE:
+                countOFVOICE -= SelectedList.size();
+                break;
+            case URL:
+                countOFLink -= SelectedList.size();
+                break;
+        }
+
+        updateStringSharedMediaCount(null, roomId);
+
+        adapter.resetSelected();
     }
 
     private void callBack(boolean result, int whatAction, String number) {
@@ -599,7 +636,7 @@ public class FragmentShearedMedia extends BaseFragment {
 
         txtSharedMedia.setText(R.string.shared_image);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.IMAGE;
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.IMAGE.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.IMAGE);
         adapter = new ImageAdapter(fragmentActivity, mNewList);
         initLayoutRecycleviewForImage();
 
@@ -613,7 +650,7 @@ public class FragmentShearedMedia extends BaseFragment {
         txtSharedMedia.setText(R.string.shared_video);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.VIDEO;
 
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.VIDEO.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.VIDEO);
         adapter = new VideoAdapter(fragmentActivity, mNewList);
         initLayoutRecycleviewForImage();
 
@@ -627,7 +664,7 @@ public class FragmentShearedMedia extends BaseFragment {
         txtSharedMedia.setText(R.string.shared_audio);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.AUDIO;
 
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.AUDIO.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.AUDIO);
         adapter = new VoiceAdapter(fragmentActivity, mNewList);
 
         recyclerView.setLayoutManager(new PreCachingLayoutManager(fragmentActivity, 5000));
@@ -643,7 +680,7 @@ public class FragmentShearedMedia extends BaseFragment {
         txtSharedMedia.setText(R.string.shared_voice);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.VOICE;
 
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.VOICE.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.VOICE);
         adapter = new VoiceAdapter(fragmentActivity, mNewList);
 
         recyclerView.setLayoutManager(new PreCachingLayoutManager(fragmentActivity, 5000));
@@ -659,7 +696,7 @@ public class FragmentShearedMedia extends BaseFragment {
         txtSharedMedia.setText(R.string.shared_gif);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.GIF;
 
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.GIF.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.GIF);
         adapter = new GifAdapter(fragmentActivity, mNewList);
 
         initLayoutRecycleviewForImage();
@@ -674,7 +711,7 @@ public class FragmentShearedMedia extends BaseFragment {
         txtSharedMedia.setText(R.string.shared_file);
         mFilter = ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter.FILE;
 
-        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.FILE.toString());
+        mNewList = loadLocalData(mFilter, ProtoGlobal.RoomMessageType.FILE);
         adapter = new FileAdapter(fragmentActivity, mNewList);
 
         recyclerView.setLayoutManager(new PreCachingLayoutManager(fragmentActivity, 5000));
@@ -693,11 +730,7 @@ public class FragmentShearedMedia extends BaseFragment {
         if (mRealmList != null) {
             mRealmList.removeAllChangeListeners();
         }
-        //+Realm realm = Realm.getDefaultInstance();
-        mRealmList = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
-                equalTo(RealmRoomMessageFields.MESSAGE_TYPE, ProtoGlobal.RoomMessageType.TEXT.toString()).
-                equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.HAS_MESSAGE_LINK, true).
-                findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.DESCENDING);
+        mRealmList = RealmRoomMessage.filterMessage(getRealm(), roomId, ProtoGlobal.RoomMessageType.TEXT);
 
         setListener();
 
@@ -720,33 +753,24 @@ public class FragmentShearedMedia extends BaseFragment {
 
     //********************************************************************************************
 
-    private ArrayList<StructShearedMedia> loadLocalData(ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter filter, String type) {
+    private ArrayList<StructShearedMedia> loadLocalData(ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter filter, ProtoGlobal.RoomMessageType type) {
 
         if (mRealmList != null) {
             mRealmList.removeAllChangeListeners();
         }
 
-        //+Realm realm = Realm.getDefaultInstance();
-
-        mRealmList = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
-                contains(RealmRoomMessageFields.MESSAGE_TYPE, type).equalTo(RealmRoomMessageFields.DELETED, false).findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.DESCENDING);
+        mRealmList = RealmRoomMessage.filterMessage(getRealm(), roomId, type);
 
         setListener();
 
         changeSize = mRealmList.size();
-
         isSendRequestForLoading = false;
         isThereAnyMoreItemToLoad = true;
-
 
         getDataFromServer(filter);
         listCount = mRealmList.size();
 
-        ArrayList<StructShearedMedia> list = addTimeToList(mRealmList);
-
-        //realm.close();
-
-        return list;
+        return addTimeToList(mRealmList);
     }
 
     private ArrayList<StructShearedMedia> addTimeToList(RealmResults<RealmRoomMessage> list) {
@@ -757,7 +781,7 @@ public class FragmentShearedMedia extends BaseFragment {
         String secondItemTime = "";
         SimpleDateFormat month_date = new SimpleDateFormat("yyyy/MM/dd");
 
-        boolean isTimeHijri = HelperCalander.isTimeHijri();
+        int isTimeHijri = HelperCalander.isTimeHijri();
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -767,8 +791,10 @@ public class FragmentShearedMedia extends BaseFragment {
 
                 StructShearedMedia timeItem = new StructShearedMedia();
 
-                if (isTimeHijri) {
+                if (isTimeHijri == 1) {
                     timeItem.messageTime = HelperCalander.getPersianCalander(time);
+                } else if (isTimeHijri == 2) {
+                    timeItem.messageTime = HelperCalander.getArabicCalander(time);
                 } else {
                     timeItem.messageTime = secondItemTime;
                 }
@@ -874,7 +900,7 @@ public class FragmentShearedMedia extends BaseFragment {
                     @Override
                     public void execute(Realm realm) {
                         for (final ProtoGlobal.RoomMessage roomMessage : RoomMessages) {
-                            RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, false, false, realm);
+                            RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, false, realm);
                         }
                     }
                     //}, new Realm.Transaction.OnSuccess() {
@@ -975,22 +1001,9 @@ public class FragmentShearedMedia extends BaseFragment {
             countOFFILE = proto.getFile();
             countOFLink = proto.getUrl();
 
-            final String result = countOFImage + "\n" + countOFVIDEO + "\n" + countOFAUDIO + "\n" + countOFVOICE + "\n" + countOFGIF + "\n" + countOFFILE + "\n" + countOFLink;
+            String result = countOFImage + "\n" + countOFVIDEO + "\n" + countOFAUDIO + "\n" + countOFVOICE + "\n" + countOFGIF + "\n" + countOFFILE + "\n" + countOFLink;
 
-            Realm realm = Realm.getDefaultInstance();
-
-            final RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-            if (room != null) {
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        room.setSharedMediaCount(result);
-                    }
-                });
-            }
-
-            realm.close();
+            RealmRoom.setCountShearedMedia(roomId, result);
         }
     }
 
@@ -1184,19 +1197,34 @@ public class FragmentShearedMedia extends BaseFragment {
 
         private void setSelectedItem(final int position) {
 
-            Long id = mList.get(position).messageId;
+            if (mList == null || mList.size() == 0) {
+                return;
+            }
 
-            int index = SelectedList.indexOf(id);
+            Long messageId = mList.get(position).messageId;
+
+            int index = SelectedList.indexOf(messageId);
 
             if (index >= 0) {
                 SelectedList.remove(index);
                 numberOfSelected--;
+                if (bothDeleteMessageId.contains(messageId)) {
+                    bothDeleteMessageId.remove(messageId);
+                }
 
                 if (numberOfSelected < 1) {
                     isSelectedMode = false;
                 }
             } else {
-                SelectedList.add(id);
+                SelectedList.add(messageId);
+
+                if (RealmRoomMessage.isBothDelete(RealmRoomMessage.getMessageTime(messageId))) {
+                    if (bothDeleteMessageId == null) {
+                        bothDeleteMessageId = new ArrayList<>();
+                    }
+                    bothDeleteMessageId.add(messageId);
+                }
+
                 numberOfSelected++;
             }
             notifyItemChanged(position);
@@ -1481,10 +1509,10 @@ public class FragmentShearedMedia extends BaseFragment {
 
         @Override
         void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-            showImage(position);
+            showImage(position, holder.itemView);
         }
 
-        private void showImage(int position) {
+        private void showImage(int position, View itemView) {
             long selectedFileToken = mList.get(position).messageId;
 
             FragmentShowImage fragment = FragmentShowImage.newInstance();
@@ -1493,6 +1521,8 @@ public class FragmentShearedMedia extends BaseFragment {
             bundle.putLong("SelectedImage", selectedFileToken);
             bundle.putString("TYPE", ProtoGlobal.RoomMessageType.IMAGE.toString());
             fragment.setArguments(bundle);
+
+            //FragmentTransitionLauncher.with(G.fragmentActivity).from(itemView).prepare(fragment);
 
             fragment.appBarLayout = appBarLayout;
             new HelperFragment(fragment).setReplace(false).load();
@@ -1622,10 +1652,10 @@ public class FragmentShearedMedia extends BaseFragment {
 
         @Override
         void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-            playVideo(position);
+            playVideo(position, holder.itemView);
         }
 
-        private void playVideo(int position) {
+        private void playVideo(int position, View itemView) {
             long selectedFileToken = mNewList.get(position).messageId;
 
             Fragment fragment = FragmentShowImage.newInstance();
@@ -1634,6 +1664,10 @@ public class FragmentShearedMedia extends BaseFragment {
             bundle.putLong("SelectedImage", selectedFileToken);
             bundle.putString("TYPE", ProtoGlobal.RoomMessageType.VIDEO.toString());
             fragment.setArguments(bundle);
+
+            //FragmentTransitionLauncher.with(G.fragmentActivity).from(itemView).prepare(fragment);
+
+
             new HelperFragment(fragment).setReplace(false).load();
         }
     }
@@ -1808,7 +1842,7 @@ public class FragmentShearedMedia extends BaseFragment {
 
                     holder1.gifDrawable = (GifDrawable) holder1.gifView.getDrawable();
 
-                    holder1.messageProgress.withDrawable(R.drawable.ic_play, true);
+                    holder1.messageProgress.withDrawable(R.drawable.photogif, true);
                     holder1.messageProgress.setVisibility(View.GONE);
                     holder1.messageProgress.setOnClickListener(new View.OnClickListener() {
                         @Override

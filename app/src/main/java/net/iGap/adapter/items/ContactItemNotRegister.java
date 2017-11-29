@@ -12,14 +12,17 @@ package net.iGap.adapter.items;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperImageBackColor;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.structs.StructContactInfo;
+
+import java.util.List;
 
 /**
  * Contact item used with FastAdapter for Navigation drawer contacts fragment.
@@ -52,7 +55,7 @@ public class ContactItemNotRegister extends AbstractItem<ContactItemNotRegister,
         holder.title.setText(mContact.displayName);
 
         holder.subtitle.setText(mContact.phone);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             holder.subtitle.setText(holder.subtitle.getText().toString());
         }
 

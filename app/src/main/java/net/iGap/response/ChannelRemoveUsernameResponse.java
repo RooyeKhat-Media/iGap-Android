@@ -28,20 +28,22 @@ public class ChannelRemoveUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChannelRemoveUsername.ChannelRemoveUsernameResponse.Builder builder = (ProtoChannelRemoveUsername.ChannelRemoveUsernameResponse.Builder) message;
         if (G.onChannelRemoveUsername != null) {
             G.onChannelRemoveUsername.onChannelRemoveUsername(builder.getRoomId());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

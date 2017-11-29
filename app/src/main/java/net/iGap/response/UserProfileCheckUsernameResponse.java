@@ -28,25 +28,31 @@ public class UserProfileCheckUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserProfileCheckUsername.UserProfileCheckUsernameResponse.Builder builder = (ProtoUserProfileCheckUsername.UserProfileCheckUsernameResponse.Builder) message;
 
-        G.onUserProfileCheckUsername.OnUserProfileCheckUsername(builder.getStatus());
+        if (G.onUserProfileCheckUsername != null) {
+            G.onUserProfileCheckUsername.OnUserProfileCheckUsername(builder.getStatus());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onUserProfileCheckUsername.Error(majorCode, minorCode);
+        if (G.onUserProfileCheckUsername != null) {
+            G.onUserProfileCheckUsername.Error(majorCode, minorCode);
+        }
     }
 }
 

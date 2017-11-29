@@ -63,7 +63,6 @@
               fontPath="fonts/IRANSansMobile_Bold.ttf"
               app:emojiSize="@dimen/dp14"
               android:lineSpacingMultiplier=".8"
-              android:padding="@dimen/dp4"
               />
 
           <TextView

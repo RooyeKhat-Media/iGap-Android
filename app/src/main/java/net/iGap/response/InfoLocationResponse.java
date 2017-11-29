@@ -27,18 +27,22 @@ public class InfoLocationResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoInfoLocation.InfoLocationResponse.Builder infoLocationResponse = (ProtoInfoLocation.InfoLocationResponse.Builder) message;
-        G.onReceiveInfoLocation.onReceive(infoLocationResponse.getIsoCode(), infoLocationResponse.getCallingCode(), infoLocationResponse.getName(), infoLocationResponse.getPattern(),
-            infoLocationResponse.getRegex());
+        if (G.onReceiveInfoLocation != null) {
+            G.onReceiveInfoLocation.onReceive(infoLocationResponse.getIsoCode(), infoLocationResponse.getCallingCode(), infoLocationResponse.getName(), infoLocationResponse.getPattern(), infoLocationResponse.getRegex());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

@@ -14,22 +14,21 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import io.realm.Realm;
-import net.iGap.G;
 import net.iGap.helper.HelperUploadFile;
-import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 
 public class UploadService extends Service {
 
-    @Nullable @Override public IBinder onBind(Intent intent) {
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
-    @Override public int onStartCommand(Intent intent, int flags, int startId) {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
         String path = intent.getStringExtra("Path");
         Long roomId = intent.getLongExtra("Roomid", 0);
@@ -40,37 +39,14 @@ public class UploadService extends Service {
     }
 
     private void sendVoice(final String savedPath, final Long mRoomId) {
-
-        Realm realm = Realm.getDefaultInstance();
-
-        ProtoGlobal.Room.Type chatType = null;
-
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mRoomId).findFirst();
-        if (realmRoom != null) {
-            chatType = realmRoom.getType();
-        }
+        ProtoGlobal.Room.Type chatType = RealmRoom.detectType(mRoomId);
 
         final long messageId = SUID.id().get();
         final long updateTime = TimeUtils.currentLocalTime();
-
         final long duration = AndroidUtils.getAudioDuration(getApplicationContext(), savedPath);
 
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                RealmRoomMessage roomMessage = realm.createObject(RealmRoomMessage.class, messageId);
-
-                roomMessage.setMessageType(ProtoGlobal.RoomMessageType.VOICE);
-                //  roomMessage.setMessage(getWrittenMessage());
-                roomMessage.setRoomId(mRoomId);
-                roomMessage.setStatus(ProtoGlobal.RoomMessageStatus.SENDING.toString());
-                roomMessage.setAttachment(messageId, savedPath, 0, 0, 0, null, duration, LocalFileType.FILE);
-                roomMessage.setUserId(G.userId);
-                roomMessage.setCreateTime(updateTime);
-            }
-        });
+        RealmRoomMessage.makeVoiceMessage(mRoomId, messageId, duration, updateTime, savedPath, "");
 
         HelperUploadFile.startUploadTaskChat(mRoomId, chatType, savedPath, messageId, ProtoGlobal.RoomMessageType.VOICE, "", 0, null);
-
-        realm.close();
     }
 }

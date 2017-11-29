@@ -23,7 +23,8 @@ public class HelperCalculateKeepMedia {
 
     public void calculateTime() { // calculate time for delete media in after 7 days
         new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 Realm realm = Realm.getDefaultInstance();
                 RealmResults<RealmRoomMessage> mRealmList = realm.where(RealmRoomMessage.class).findAll();
                 SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, Context.MODE_PRIVATE);
@@ -32,21 +33,13 @@ public class HelperCalculateKeepMedia {
                 editor.apply();
                 for (int i = 0; i < mRealmList.size(); i++) {
                     if (mRealmList.get(i).getAttachment() != null) {
-                        long timeMedia = mRealmList.get(i).getUpdateTime() / 1000;
-                        long currentTime = G.currentTime;
-                        long oneWeeks = (24L * 60L * 60L * 1000L);
-                        long b = currentTime - timeMedia;
-                        long last = b / oneWeeks;
-                        if (last >= 7) {
-                            String filePath = mRealmList.get(i).getAttachment().getLocalFilePath();
-                            if (filePath != null) {
-                                new File(filePath).delete();
-                            }
-
-                            String filePathThumbnail = mRealmList.get(i).getAttachment().getLocalThumbnailPath();
-                            if (filePathThumbnail != null) {
-                                new File(filePathThumbnail).delete();
-                            }
+                        String filePath = mRealmList.get(i).getAttachment().getLocalFilePath();
+                        if (filePath != null) {
+                            new File(filePath).delete();
+                        }
+                        String filePathThumbnail = mRealmList.get(i).getAttachment().getLocalThumbnailPath();
+                        if (filePathThumbnail != null) {
+                            new File(filePathThumbnail).delete();
                         }
                     }
                 }

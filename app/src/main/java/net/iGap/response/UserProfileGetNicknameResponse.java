@@ -27,17 +27,22 @@ public class UserProfileGetNicknameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserProfileGetNickname.UserProfileGetNicknameResponse.Builder builder = (ProtoUserProfileGetNickname.UserProfileGetNicknameResponse.Builder) message;
-        G.onUserProfileGetNickname.onUserProfileGetNickname(builder.getNickname());
+        if (G.onUserProfileGetNickname != null) {
+            G.onUserProfileGetNickname.onUserProfileGetNickname(builder.getNickname());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

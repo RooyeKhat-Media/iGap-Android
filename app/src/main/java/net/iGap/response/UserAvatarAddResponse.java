@@ -28,42 +28,51 @@ public class UserAvatarAddResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoUserAvatarAdd.UserAvatarAddResponse.Builder userAvatarAddResponse = (ProtoUserAvatarAdd.UserAvatarAddResponse.Builder) message;
 
         new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 Realm realm = Realm.getDefaultInstance();
-
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
-                            RealmAvatar.putAndGet(realm, G.userId, userAvatarAddResponse.getAvatar());
-                        }
-                    });
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmAvatar.putOrUpdate(realm, G.userId, userAvatarAddResponse.getAvatar());
+                    }
+                });
 
                 realm.close();
             }
         }).start();
 
         G.handler.postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (G.onUserAvatarResponse != null) {
                     G.onUserAvatarResponse.onAvatarAdd(userAvatarAddResponse.getAvatar());
+                }
+
+                if (G.onUserInfoMyClient != null) {
+                    G.onUserInfoMyClient.onUserInfoMyClient();
                 }
             }
         }, 1000);
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onUserAvatarResponse != null) {
             G.onUserAvatarResponse.onAvatarAddTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         if (G.onUserAvatarResponse != null) {
             G.onUserAvatarResponse.onAvatarError();

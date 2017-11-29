@@ -27,9 +27,22 @@ public class UserSessionGetActiveListResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserSessionGetActiveList.UserSessionGetActiveListResponse.Builder builder = (ProtoUserSessionGetActiveList.UserSessionGetActiveListResponse.Builder) message;
-        G.onUserSessionGetActiveList.onUserSessionGetActiveList(builder.getSessionList());
+        ProtoUserSessionGetActiveList.UserSessionGetActiveListResponse.Builder builder = (ProtoUserSessionGetActiveList.UserSessionGetActiveListResponse.Builder) message;
+        if (G.onUserSessionGetActiveList != null) {
+            G.onUserSessionGetActiveList.onUserSessionGetActiveList(builder.getSessionList());
+        }
+    }
+
+    @Override
+    public void timeOut() {
+        super.timeOut();
+    }
+
+    @Override
+    public void error() {
+        super.error();
     }
 }

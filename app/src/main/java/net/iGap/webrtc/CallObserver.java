@@ -219,9 +219,6 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
                 message = G.context.getString(R.string.e_906_1);
                 break;
 
-
-
-
         }
 
         if (G.onCallLeaveView != null) {
@@ -232,7 +229,7 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
         G.handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                HelperError.showSnackMessage(finalMessage);
+                HelperError.showSnackMessage(finalMessage, false);
             }
         }, 2500);
 

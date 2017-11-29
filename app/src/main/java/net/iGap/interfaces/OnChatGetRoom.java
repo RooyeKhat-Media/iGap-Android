@@ -14,20 +14,7 @@ import net.iGap.proto.ProtoGlobal;
 
 public interface OnChatGetRoom {
 
-    /**
-     * roomId that exist in server
-     *
-     * @param roomId long roomId
-     */
-
-    void onChatGetRoom(long roomId);
-
-    /**
-     * room that exist in server with complete info
-     *
-     * @param room ProtoGlobal.Room
-     */
-    void onChatGetRoomCompletely(ProtoGlobal.Room room);
+    void onChatGetRoom(ProtoGlobal.Room room);
 
     void onChatGetRoomTimeOut();
 

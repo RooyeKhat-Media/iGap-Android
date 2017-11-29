@@ -467,7 +467,7 @@
               </LinearLayout>
             </LinearLayout>
 
-            <com.uncopt.android.widget.text.justify.JustifiedTextView
+            <TextView
                 android:id="@+id/txtAgreement_register"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -487,6 +487,7 @@
                 android:scrollbarThumbVertical="@color/gray_5c"
                 android:scrollbars="vertical"
                 android:text="@string/rg_agreement_text_register"
+
                 android:textSize="@dimen/dp14"
                 />
           </LinearLayout>

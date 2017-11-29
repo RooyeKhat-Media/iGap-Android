@@ -18,12 +18,12 @@ import io.realm.annotations.PrimaryKey;
 import net.iGap.helper.HelperString;
 import net.iGap.module.SUID;
 import net.iGap.module.StringListParcelConverter;
+import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
-@Parcel(implementations = { RealmRoomMessageContactRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { RealmRoomMessageContact.class }) public class RealmRoomMessageContact
-    extends RealmObject {
+@Parcel(implementations = {RealmRoomMessageContactRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageContact.class}) public class RealmRoomMessageContact extends RealmObject {
 
     private String firstName;
     private String lastName;
@@ -32,21 +32,29 @@ import org.parceler.ParcelPropertyConverter;
     private RealmList<RealmString> emails = new RealmList<>();
     @PrimaryKey private long id;
 
-    public static RealmRoomMessageContact build(final ProtoGlobal.RoomMessageContact input) {
+    public static RealmRoomMessageContact put(final ProtoGlobal.RoomMessageContact input) {
         Realm realm = Realm.getDefaultInstance();
         RealmRoomMessageContact messageContact = realm.createObject(RealmRoomMessageContact.class, SUID.id().get());
+        messageContact.setLastName(input.getLastName());
+        messageContact.setFirstName(input.getFirstName());
+        messageContact.setNickName(input.getNickname());
         for (String phone : input.getPhoneList()) {
             messageContact.addPhone(phone);
         }
-        messageContact.setLastName(input.getLastName());
-        messageContact.setFirstName(input.getFirstName());
         for (String email : input.getEmailList()) {
             messageContact.addEmail(email);
         }
-        messageContact.setNickName(input.getNickname());
         realm.close();
 
         return messageContact;
+    }
+
+    public static RealmRoomMessageContact put(Realm realm, StructMessageInfo structMessageInfo) {
+        RealmRoomMessageContact realmRoomMessageContact = realm.createObject(RealmRoomMessageContact.class, SUID.id().get());
+        realmRoomMessageContact.setFirstName(structMessageInfo.userInfo.firstName);
+        realmRoomMessageContact.setLastName(structMessageInfo.userInfo.lastName);
+        realmRoomMessageContact.addPhone(structMessageInfo.userInfo.phone);
+        return realmRoomMessageContact;
     }
 
     public long getId() {
@@ -97,23 +105,20 @@ import org.parceler.ParcelPropertyConverter;
         return phones;
     }
 
-    @ParcelPropertyConverter(StringListParcelConverter.class) public void setPhones(RealmList<RealmString> phones) {
+    @ParcelPropertyConverter(StringListParcelConverter.class)
+    public void setPhones(RealmList<RealmString> phones) {
         this.phones = phones;
     }
 
     public void addPhone(String phone) {
         Realm realm = Realm.getDefaultInstance();
-        RealmString realmString = realm.createObject(RealmString.class);
-        realmString.setString(phone);
-        phones.add(realmString);
+        phones.add(RealmString.string(realm, phone));
         realm.close();
     }
 
     public void addEmail(String email) {
         Realm realm = Realm.getDefaultInstance();
-        RealmString realmString = realm.createObject(RealmString.class);
-        realmString.setString(email);
-        phones.add(realmString);
+        phones.add(RealmString.string(realm, email));
         realm.close();
     }
 
@@ -128,7 +133,8 @@ import org.parceler.ParcelPropertyConverter;
         return emails;
     }
 
-    @ParcelPropertyConverter(StringListParcelConverter.class) public void setEmails(RealmList<RealmString> emails) {
+    @ParcelPropertyConverter(StringListParcelConverter.class)
+    public void setEmails(RealmList<RealmString> emails) {
         this.emails = emails;
     }
 }

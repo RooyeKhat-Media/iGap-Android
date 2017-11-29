@@ -246,7 +246,12 @@ public class RequestQueue {
             errorBuilder.build();
 
             Class<?> c = Class.forName(responseClassName);
-            Object object = c.getConstructor(int.class, Object.class, String.class).newInstance(actionId, errorBuilder, requestWrapper.identity);
+            Object object;
+            try {
+                object = c.getConstructor(int.class, Object.class, Object.class).newInstance(actionId, errorBuilder, requestWrapper.identity);
+            } catch (NoSuchMethodException e) {
+                object = c.getConstructor(int.class, Object.class, String.class).newInstance(actionId, errorBuilder, requestWrapper.identity);
+            }
             Method setTimeoutMethod = object.getClass().getMethod("timeOut");
             setTimeoutMethod.invoke(object);
         } catch (Exception e) {

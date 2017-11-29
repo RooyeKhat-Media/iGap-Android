@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoChatGetRoom;
 import net.iGap.proto.ProtoError;
@@ -31,7 +30,8 @@ public class ChatGetRoomResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoChatGetRoom.ChatGetRoomResponse.Builder chatGetRoomResponse = (ProtoChatGetRoom.ChatGetRoomResponse.Builder) message;
 
@@ -45,33 +45,24 @@ public class ChatGetRoomResponse extends MessageHandler {
          */
 
         if ((chatGetRoomResponse.getRoom().getType() == ProtoGlobal.Room.Type.CHANNEL) || identity != null) {
-
-            Realm realm = Realm.getDefaultInstance();
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-                    RealmRoom.putOrUpdate(chatGetRoomResponse.getRoom(), realm);
-                }
-            });
-            realm.close();
-
-            if (G.onChatGetRoom != null) {
-                G.onChatGetRoom.onChatGetRoomCompletely(chatGetRoomResponse.getRoom());
-            }
+            RealmRoom.putOrUpdate(chatGetRoomResponse.getRoom());
         } else {
             if (G.onChatGetRoom != null) {
-                G.onChatGetRoom.onChatGetRoom(chatGetRoomResponse.getRoom().getId());
+                G.onChatGetRoom.onChatGetRoom(chatGetRoomResponse.getRoom());
             }
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onChatGetRoom != null) {
             G.onChatGetRoom.onChatGetRoomTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

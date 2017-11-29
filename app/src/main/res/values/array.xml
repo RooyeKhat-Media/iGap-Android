@@ -252,7 +252,8 @@
 
     <string-array name="keepMedia">
         <item>@string/keep_media_forever</item>
-        <item>@string/keep_media_1week</item>
+      <item>@string/keep_media_1month</item>
+      <item>@string/keep_media_6month</item>
     </string-array>
 
     <string-array name="delete_account">

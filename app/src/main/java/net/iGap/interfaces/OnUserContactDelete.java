@@ -12,7 +12,7 @@ package net.iGap.interfaces;
 
 public interface OnUserContactDelete {
 
-    void onContactDelete(long userId);
+    void onContactDelete();
 
     void onError(int majorCode, int minorCode);
 }

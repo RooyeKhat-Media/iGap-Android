@@ -11,6 +11,7 @@
 package net.iGap.response;
 
 import net.iGap.G;
+import net.iGap.realm.RealmClientCondition;
 
 public class ClientConditionResponse extends MessageHandler {
 
@@ -26,21 +27,26 @@ public class ClientConditionResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
+
+        RealmClientCondition.clearOfflineAction();
         if (G.onClientCondition != null) {
             G.onClientCondition.onClientCondition();
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         /**
          * timeOut call error also
          */
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         if (G.onClientCondition != null) {
             G.onClientCondition.onClientConditionError();

@@ -19,7 +19,6 @@ import net.iGap.activities.ActivityMain;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
@@ -53,29 +52,28 @@ public class HelperPublicMethod {
             goToRoom(realmRoom.getId(), -1);
         } else {
             G.onChatGetRoom = new OnChatGetRoom() {
-                @Override public void onChatGetRoom(final long roomId) {
+                @Override
+                public void onChatGetRoom(final ProtoGlobal.Room room) {
 
                     if (onError != null) {
                         onError.error();
                     }
 
-                    getUserInfo(peerId, roomId, onComplete, onError);
+                    getUserInfo(peerId, room.getId(), onComplete, onError);
 
                     G.onChatGetRoom = null;
                 }
 
-                @Override public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-
-                }
-
-                @Override public void onChatGetRoomTimeOut() {
+                @Override
+                public void onChatGetRoomTimeOut() {
 
                     if (onError != null) {
                         onError.error();
                     }
                 }
 
-                @Override public void onChatGetRoomError(int majorCode, int minorCode) {
+                @Override
+                public void onChatGetRoomError(int majorCode, int minorCode) {
 
                     if (onError != null) {
                         onError.error();
@@ -91,37 +89,24 @@ public class HelperPublicMethod {
     private static void getUserInfo(final long peerId, final long roomId, final OnComplete onComplete, final OnError onError) {
 
         G.onUserInfoResponse = new OnUserInfoResponse() {
-            @Override public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
+            @Override
+            public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
 
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
 
                         if (user.getId() == peerId) {
                             Realm realm = Realm.getDefaultInstance();
 
                             realm.executeTransactionAsync(new Realm.Transaction() {
-                                @Override public void execute(Realm realm) {
-                                    RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, user.getId());
-                                    if (realmRegisteredInfo == null) {
-                                        realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class);
-                                        realmRegisteredInfo.setId(user.getId());
-                                        realmRegisteredInfo.setDoNotshowSpamBar(false);
-                                    }
-
-                                    RealmAvatar.putAndGet(realm, user.getId(), user.getAvatar());
-                                    realmRegisteredInfo.setUsername(user.getUsername());
-                                    realmRegisteredInfo.setPhoneNumber(Long.toString(user.getPhone()));
-                                    realmRegisteredInfo.setFirstName(user.getFirstName());
-                                    realmRegisteredInfo.setLastName(user.getLastName());
-                                    realmRegisteredInfo.setDisplayName(user.getDisplayName());
-                                    realmRegisteredInfo.setInitials(user.getInitials());
-                                    realmRegisteredInfo.setColor(user.getColor());
-                                    realmRegisteredInfo.setStatus(user.getStatus().toString());
-                                    realmRegisteredInfo.setAvatarCount(user.getAvatarCount());
-                                    realmRegisteredInfo.setMutual(user.getMutual());
+                                @Override
+                                public void execute(Realm realm) {
+                                    RealmRegisteredInfo.putOrUpdate(realm, user);
                                 }
                             }, new Realm.Transaction.OnSuccess() {
-                                @Override public void onSuccess() {
+                                @Override
+                                public void onSuccess() {
                                     try {
 
                                         if (onComplete != null) {
@@ -144,14 +129,16 @@ public class HelperPublicMethod {
                 });
             }
 
-            @Override public void onUserInfoTimeOut() {
+            @Override
+            public void onUserInfoTimeOut() {
 
                 if (onError != null) {
                     onError.error();
                 }
             }
 
-            @Override public void onUserInfoError(int majorCode, int minorCode) {
+            @Override
+            public void onUserInfoError(int majorCode, int minorCode) {
 
                 if (onError != null) {
                     onError.error();

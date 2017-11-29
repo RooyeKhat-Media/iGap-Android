@@ -14,7 +14,7 @@ import net.iGap.proto.ProtoClientResolveUsername;
 
 public class RequestClientResolveUsername {
 
-    public void channelAddMessageReaction(String username) {
+    public void clientResolveUsername(String username) {
         ProtoClientResolveUsername.ClientResolveUsername.Builder builder = ProtoClientResolveUsername.ClientResolveUsername.newBuilder();
         builder.setUsername(username);
 

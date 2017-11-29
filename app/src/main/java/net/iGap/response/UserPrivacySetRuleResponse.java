@@ -29,9 +29,7 @@ public class UserPrivacySetRuleResponse extends MessageHandler {
 
     @Override public void handler() {
         super.handler();
-
         ProtoUserPrivacySetRule.UserPrivacySetRuleResponse.Builder builder = (ProtoUserPrivacySetRule.UserPrivacySetRuleResponse.Builder) message;
-
         RealmPrivacy.updateRealmPrivacy(builder.getType(), builder.getLevel());
     }
 

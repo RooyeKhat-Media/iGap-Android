@@ -113,7 +113,7 @@ public class RealmPhoneContacts extends RealmObject {
 
                     if (_realmPhoneContacts == null) {
                         _addItem = true;
-                        addContactToDB(_item, realm);
+                        //addContactToDB(_item, realm);
                     } else {
                         if (!_item.getFirstName().equals(_realmPhoneContacts.getFirstName()) || !_item.getLastName().equals(_realmPhoneContacts.getLastName())) {
                             _addItem = true;

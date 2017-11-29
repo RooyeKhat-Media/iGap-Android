@@ -20,183 +20,19 @@ import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
-import cat.ereza.customactivityoncrash.config.CaocConfig;
+
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import io.fabric.sdk.android.Fabric;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
-import javax.crypto.spec.SecretKeySpec;
+
 import net.iGap.activities.ActivityCustomError;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.helper.HelperNotificationAndBadge;
-import net.iGap.interfaces.FingerPrint;
-import net.iGap.interfaces.IActivityFinish;
-import net.iGap.interfaces.ICallFinish;
-import net.iGap.interfaces.IClientSearchUserName;
-import net.iGap.interfaces.IDispatchTochEvent;
-import net.iGap.interfaces.IMainFinish;
-import net.iGap.interfaces.IOnBackPressed;
-import net.iGap.interfaces.ISendPosition;
-import net.iGap.interfaces.ISignalingAccept;
-import net.iGap.interfaces.ISignalingCallBack;
-import net.iGap.interfaces.ISignalingCandidate;
-import net.iGap.interfaces.ISignalingErrore;
-import net.iGap.interfaces.ISignalingGetCallLog;
-import net.iGap.interfaces.ISignalingLeave;
-import net.iGap.interfaces.ISignalingOffer;
-import net.iGap.interfaces.ISignalingRinging;
-import net.iGap.interfaces.ISignalingSessionHold;
-import net.iGap.interfaces.ITowPanModDesinLayout;
-import net.iGap.interfaces.OnBackgroundChanged;
-import net.iGap.interfaces.OnBlockStateChanged;
-import net.iGap.interfaces.OnCallLeaveView;
-import net.iGap.interfaces.OnCallLogClear;
-import net.iGap.interfaces.OnChangeUserPhotoListener;
-import net.iGap.interfaces.OnChannelAddAdmin;
-import net.iGap.interfaces.OnChannelAddMember;
-import net.iGap.interfaces.OnChannelAddMessageReaction;
-import net.iGap.interfaces.OnChannelAddModerator;
-import net.iGap.interfaces.OnChannelAvatarAdd;
-import net.iGap.interfaces.OnChannelAvatarDelete;
-import net.iGap.interfaces.OnChannelCheckUsername;
-import net.iGap.interfaces.OnChannelCreate;
-import net.iGap.interfaces.OnChannelDelete;
-import net.iGap.interfaces.OnChannelDeleteInRoomList;
-import net.iGap.interfaces.OnChannelEdit;
-import net.iGap.interfaces.OnChannelGetMemberList;
-import net.iGap.interfaces.OnChannelGetMessagesStats;
-import net.iGap.interfaces.OnChannelKickAdmin;
-import net.iGap.interfaces.OnChannelKickMember;
-import net.iGap.interfaces.OnChannelKickModerator;
-import net.iGap.interfaces.OnChannelLeft;
-import net.iGap.interfaces.OnChannelRemoveUsername;
-import net.iGap.interfaces.OnChannelRevokeLink;
-import net.iGap.interfaces.OnChannelUpdateSignature;
-import net.iGap.interfaces.OnChannelUpdateUsername;
-import net.iGap.interfaces.OnChatConvertToGroup;
-import net.iGap.interfaces.OnChatDelete;
-import net.iGap.interfaces.OnChatDeleteInRoomList;
-import net.iGap.interfaces.OnChatDeleteMessageResponse;
-import net.iGap.interfaces.OnChatEditMessageResponse;
-import net.iGap.interfaces.OnChatGetRoom;
-import net.iGap.interfaces.OnChatSendMessage;
-import net.iGap.interfaces.OnClearChatHistory;
-import net.iGap.interfaces.OnClearRoomHistory;
-import net.iGap.interfaces.OnClearUnread;
-import net.iGap.interfaces.OnClientCheckInviteLink;
-import net.iGap.interfaces.OnClientCondition;
-import net.iGap.interfaces.OnClientGetRoomHistoryResponse;
-import net.iGap.interfaces.OnClientGetRoomListResponse;
-import net.iGap.interfaces.OnClientGetRoomMessage;
-import net.iGap.interfaces.OnClientGetRoomResponse;
-import net.iGap.interfaces.OnClientGetRoomResponseRoomList;
-import net.iGap.interfaces.OnClientJoinByInviteLink;
-import net.iGap.interfaces.OnClientJoinByUsername;
-import net.iGap.interfaces.OnClientResolveUsername;
-import net.iGap.interfaces.OnClientSearchRoomHistory;
-import net.iGap.interfaces.OnClientSubscribeToRoom;
-import net.iGap.interfaces.OnClientUnsubscribeFromRoom;
-import net.iGap.interfaces.OnConnectionChangeState;
-import net.iGap.interfaces.OnContactAdd;
-import net.iGap.interfaces.OnDeleteChatFinishActivity;
-import net.iGap.interfaces.OnDraftMessage;
-import net.iGap.interfaces.OnFileDownloadResponse;
-import net.iGap.interfaces.OnFileDownloaded;
-import net.iGap.interfaces.OnGeoCommentResponse;
-import net.iGap.interfaces.OnGeoGetComment;
-import net.iGap.interfaces.OnGeoGetConfiguration;
-import net.iGap.interfaces.OnGetNearbyCoordinate;
-import net.iGap.interfaces.OnGetUserInfo;
-import net.iGap.interfaces.OnGetWallpaper;
-import net.iGap.interfaces.OnGroupAddAdmin;
-import net.iGap.interfaces.OnGroupAddMember;
-import net.iGap.interfaces.OnGroupAddModerator;
-import net.iGap.interfaces.OnGroupAvatarDelete;
-import net.iGap.interfaces.OnGroupAvatarResponse;
-import net.iGap.interfaces.OnGroupCheckUsername;
-import net.iGap.interfaces.OnGroupClearMessage;
-import net.iGap.interfaces.OnGroupCreate;
-import net.iGap.interfaces.OnGroupDelete;
-import net.iGap.interfaces.OnGroupDeleteInRoomList;
-import net.iGap.interfaces.OnGroupEdit;
-import net.iGap.interfaces.OnGroupGetMemberList;
-import net.iGap.interfaces.OnGroupKickAdmin;
-import net.iGap.interfaces.OnGroupKickMember;
-import net.iGap.interfaces.OnGroupKickModerator;
-import net.iGap.interfaces.OnGroupLeft;
-import net.iGap.interfaces.OnGroupRemoveUsername;
-import net.iGap.interfaces.OnGroupRevokeLink;
-import net.iGap.interfaces.OnGroupUpdateUsername;
-import net.iGap.interfaces.OnHelperSetAction;
-import net.iGap.interfaces.OnInfoCountryResponse;
-import net.iGap.interfaces.OnInfoTime;
-import net.iGap.interfaces.OnLastSeenUpdateTiming;
-import net.iGap.interfaces.OnLocationChanged;
-import net.iGap.interfaces.OnMapClose;
-import net.iGap.interfaces.OnMapRegisterState;
-import net.iGap.interfaces.OnMapUsersGet;
-import net.iGap.interfaces.OnMute;
-import net.iGap.interfaces.OnPushLoginToken;
-import net.iGap.interfaces.OnPushTwoStepVerification;
-import net.iGap.interfaces.OnQrCodeNewDevice;
-import net.iGap.interfaces.OnReceiveInfoLocation;
-import net.iGap.interfaces.OnReceivePageInfoTOS;
-import net.iGap.interfaces.OnRecoveryEmailToken;
-import net.iGap.interfaces.OnRecoverySecurityPassword;
-import net.iGap.interfaces.OnRefreshActivity;
-import net.iGap.interfaces.OnRegistrationInfo;
-import net.iGap.interfaces.OnRemoveFragment;
-import net.iGap.interfaces.OnSecuring;
-import net.iGap.interfaces.OnSecurityCheckPassword;
-import net.iGap.interfaces.OnSelectMenu;
-import net.iGap.interfaces.OnSetAction;
-import net.iGap.interfaces.OnSetActionInRoom;
-import net.iGap.interfaces.OnTwoStepPassword;
-import net.iGap.interfaces.OnUpdateAvatar;
-import net.iGap.interfaces.OnUpdateUserStatusInChangePage;
-import net.iGap.interfaces.OnUpdating;
-import net.iGap.interfaces.OnUserAvatarDelete;
-import net.iGap.interfaces.OnUserAvatarGetList;
-import net.iGap.interfaces.OnUserAvatarResponse;
-import net.iGap.interfaces.OnUserContactDelete;
-import net.iGap.interfaces.OnUserContactEdit;
-import net.iGap.interfaces.OnUserContactsBlock;
-import net.iGap.interfaces.OnUserContactsUnBlock;
-import net.iGap.interfaces.OnUserDelete;
-import net.iGap.interfaces.OnUserGetDeleteToken;
-import net.iGap.interfaces.OnUserInfoForAvatar;
-import net.iGap.interfaces.OnUserInfoMyClient;
-import net.iGap.interfaces.OnUserInfoResponse;
-import net.iGap.interfaces.OnUserLogin;
-import net.iGap.interfaces.OnUserProfileCheckUsername;
-import net.iGap.interfaces.OnUserProfileGetNickname;
-import net.iGap.interfaces.OnUserProfileSetEmailResponse;
-import net.iGap.interfaces.OnUserProfileSetGenderResponse;
-import net.iGap.interfaces.OnUserProfileSetNickNameResponse;
-import net.iGap.interfaces.OnUserProfileUpdateUsername;
-import net.iGap.interfaces.OnUserRegistration;
-import net.iGap.interfaces.OnUserSessionGetActiveList;
-import net.iGap.interfaces.OnUserSessionLogout;
-import net.iGap.interfaces.OnUserSessionTerminate;
-import net.iGap.interfaces.OnUserUpdateStatus;
-import net.iGap.interfaces.OnUserUsernameToId;
-import net.iGap.interfaces.OnUserVerification;
-import net.iGap.interfaces.OnVerifyNewDevice;
-import net.iGap.interfaces.OneFragmentIsOpen;
-import net.iGap.interfaces.OpenFragment;
-import net.iGap.interfaces.TwoStepSecurityConfirmEmail;
-import net.iGap.interfaces.UpdateListAfterKick;
+import net.iGap.interfaces.*;
 import net.iGap.module.ChatSendMessageUtil;
 import net.iGap.module.ChatUpdateStatusUtil;
 import net.iGap.module.ClearMessagesUtil;
@@ -205,6 +41,21 @@ import net.iGap.module.StartupActions;
 import net.iGap.module.enums.ConnectionState;
 import net.iGap.proto.ProtoClientCondition;
 import net.iGap.request.RequestWrapper;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import cat.ereza.customactivityoncrash.config.CaocConfig;
+import io.fabric.sdk.android.Fabric;
+
+import static net.iGap.Config.DEFAULT_BOTH_CHAT_DELETE_TIME;
 
 public class G extends MultiDexApplication {
 
@@ -244,16 +95,25 @@ public class G extends MultiDexApplication {
     public static File IMAGE_NEW_CHANEL;
     public static File imageFile;
 
+    public static final String IGAP = "/iGap";
+    public static final String IMAGES = "/iGap Images";
+    public static final String VIDEOS = "/iGap Videos";
+    public static final String AUDIOS = "/iGap Audios";
+    public static final String DOCUMENT = "/iGap Document";
+    public static final String TEMP = "/.temp";
+    public static final String CHAT_BACKGROUND = "/.chat_background";
+    public static final String IMAGE_USER = "/.image_user";
+
     public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static final String DIR_APP = DIR_SDCARD + "/iGap";
-    public static final String DIR_IMAGES = DIR_APP + "/iGap Images";
-    public static final String DIR_VIDEOS = DIR_APP + "/iGap Videos";
-    public static final String DIR_AUDIOS = DIR_APP + "/iGap Audios";
-    public static final String DIR_DOCUMENT = DIR_APP + "/iGap Document";
-    public static final String DIR_TEMP = DIR_APP + "/.temp";
-    public static final String DIR_CHAT_BACKGROUND = DIR_APP + "/.chat_background";
-    public static final String DIR_IMAGE_USER = DIR_APP + "/.image_user";
-    public static final String CHAT_MESSAGE_TIME = "H:mm";
+    public static String DIR_APP = DIR_SDCARD + IGAP;
+    public static String DIR_IMAGES = DIR_APP + IMAGES;
+    public static String DIR_VIDEOS = DIR_APP + VIDEOS;
+    public static String DIR_AUDIOS = DIR_APP + AUDIOS;
+    public static String DIR_DOCUMENT = DIR_APP + DOCUMENT;
+    public static String DIR_TEMP = DIR_APP + TEMP;
+    public static String DIR_CHAT_BACKGROUND = DIR_APP + CHAT_BACKGROUND;
+    public static String DIR_IMAGE_USER = DIR_APP + IMAGE_USER;
+    public static String CHAT_MESSAGE_TIME = "H:mm";
 
     public static String selectedLanguage = "en";
     public static String symmetricMethod;
@@ -292,23 +152,25 @@ public class G extends MultiDexApplication {
     public static boolean isUpdateNotificaionColorGroup = false;
     public static boolean isUpdateNotificaionColorChat = false;
     public static boolean isUpdateNotificaionCall = false;
+    public static boolean isCalculatKeepMedia = true;
 
     public static boolean twoPaneMode = false;
     public static boolean isLandscape = false;
     public static boolean isAppRtl = false;
 
 
-    public static String salectedTabInMainActivity = "";
+    public static String selectedTabInMainActivity = "";
 
     public static int ivSize;
     public static int userTextSize = 0;
     public static int COPY_BUFFER_SIZE = 1024;
-    public static boolean isCalculatKeepMedia = true;
     public static int maxChatBox = 0;
+    public static int bothChatDeleteTime = DEFAULT_BOTH_CHAT_DELETE_TIME;
 
     public static long currentTime;
     public static long userId;
     public static long latestHearBeatTime = System.currentTimeMillis();
+    public static long currentServerTime;
     public static long latestResponse = System.currentTimeMillis();
     public static long serverHeartBeatTiming = 60 * 1000;
 
@@ -318,6 +180,7 @@ public class G extends MultiDexApplication {
     public static ConnectionState connectionState;
     public static ConnectionState latestConnectionState;
     public static OnConnectionChangeState onConnectionChangeState;
+    public static OnConnectionChangeStateChat onConnectionChangeStateChat;
     public static OnUpdating onUpdating;
     public static OnReceiveInfoLocation onReceiveInfoLocation;
     public static OnUserRegistration onUserRegistration;
@@ -354,7 +217,6 @@ public class G extends MultiDexApplication {
     public static OnGroupLeft onGroupLeft;
     public static OnFileDownloadResponse onFileDownloadResponse;
     public static OnUserInfoResponse onUserInfoResponse;
-    public static OnUserInfoForAvatar onUserInfoForAvatar;
     public static OnUserAvatarResponse onUserAvatarResponse;
     public static OnGroupAvatarResponse onGroupAvatarResponse;
     public static OnChangeUserPhotoListener onChangeUserPhotoListener;
@@ -362,7 +224,6 @@ public class G extends MultiDexApplication {
     public static OnDeleteChatFinishActivity onDeleteChatFinishActivity;
     public static OnClientGetRoomHistoryResponse onClientGetRoomHistoryResponse;
     public static OnUserAvatarDelete onUserAvatarDelete;
-    public static OnUserAvatarGetList onUserAvatarGetList;
     public static OnDraftMessage onDraftMessage;
     public static OnUserDelete onUserDelete;
     public static OnUserProfileCheckUsername onUserProfileCheckUsername;
@@ -418,7 +279,6 @@ public class G extends MultiDexApplication {
     public static OnClientUnsubscribeFromRoom onClientUnsubscribeFromRoom;
     public static OnGroupRemoveUsername onGroupRemoveUsername;
     public static OnGroupRevokeLink onGroupRevokeLink;
-    public static OnUpdateAvatar onUpdateAvatar;
     public static OnUserContactsBlock onUserContactsBlock;
     public static OnUserContactsUnBlock onUserContactsUnBlock;
     public static OnClientCondition onClientCondition;
@@ -440,7 +300,7 @@ public class G extends MultiDexApplication {
     public static IMainFinish iMainFinish;
     public static IActivityFinish iActivityFinish;
     public static OnBlockStateChanged onBlockStateChanged;
-    public static OnContactAdd onContactAdd;
+    public static OnContactsGetList onContactsGetList;
     public static OnCallLogClear onCallLogClear;
     public static OnMapUsersGet onMapUsersGet;
     public static OnSelectMenu onSelectMenu;
@@ -452,11 +312,15 @@ public class G extends MultiDexApplication {
     public static OnClientGetRoomResponseRoomList onClientGetRoomResponseRoomList;
     public static OnMute onMute;
     public static OnClearRoomHistory onClearRoomHistory;
+    public static OnReport onReport;
+    public static OnPhoneContact onPhoneContact;
+    public static OnContactFetchForServer onContactFetchForServer;
 
     public static IDispatchTochEvent dispatchTochEventChat;
     public static IOnBackPressed onBackPressedChat;
     public static ISendPosition iSendPositionChat;
     public static ITowPanModDesinLayout iTowPanModDesinLayout;
+    public static OnDateChanged onDateChanged;
 
     public static IOnBackPressed onBackPressedExplorer;
 
@@ -464,6 +328,7 @@ public class G extends MultiDexApplication {
     public static OnGetNearbyCoordinate onGetNearbyCoordinate;
     public static OnGeoGetComment onGeoGetComment;
     public static OnMapRegisterState onMapRegisterState;
+    public static OnMapRegisterStateMain onMapRegisterStateMain;
     public static OnMapClose onMapClose;
     public static OnRegistrationInfo onRegistrationInfo;
     public static OnGeoCommentResponse onGeoCommentResponse;
@@ -489,6 +354,7 @@ public class G extends MultiDexApplication {
     public static boolean isFragmentMapActive = false; // for check network
     public static boolean isRestartActivity = false; // for check passCode
     public static boolean isFirstPassCode = true; // for check passCode
+    public static boolean multiTab = false;
 
     public static FragmentManager fragmentManager;
 

@@ -40,10 +40,17 @@ public class HelperConnectionState {
             if (G.onConnectionChangeState != null) {
                 G.onConnectionChangeState.onChangeState(connectionState);
             }
+            if (G.onConnectionChangeStateChat != null) {
+                G.onConnectionChangeStateChat.onChangeState(connectionState);
+            }
+
             G.connectionState = connectionState;
         } else {
             if (G.onConnectionChangeState != null) {
                 G.onConnectionChangeState.onChangeState(ConnectionState.WAITING_FOR_NETWORK);
+            }
+            if (G.onConnectionChangeStateChat != null) {
+                G.onConnectionChangeStateChat.onChangeState(ConnectionState.WAITING_FOR_NETWORK);
             }
             G.connectionState = ConnectionState.WAITING_FOR_NETWORK;
         }

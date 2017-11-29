@@ -10,14 +10,8 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import net.iGap.G;
 import net.iGap.proto.ProtoGroupDeleteMessage;
-import net.iGap.realm.RealmClientCondition;
-import net.iGap.realm.RealmClientConditionFields;
-import net.iGap.realm.RealmOfflineDelete;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 
 public class GroupDeleteMessageResponse extends MessageHandler {
 
@@ -33,51 +27,20 @@ public class GroupDeleteMessageResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder groupDeleteMessage = (ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-
-                /**
-                 * if another account deleted this message set deleted true
-                 * otherwise before this state was set
-                 */
-                if (groupDeleteMessage.getResponse().getId().isEmpty()) {
-                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, groupDeleteMessage.getMessageId()).findFirst();
-                    if (roomMessage != null) {
-                        roomMessage.setDeleted(true);
-                    }
-                }
-
-                RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, groupDeleteMessage.getRoomId()).findFirst();
-                if (realmClientCondition != null) {
-                    realmClientCondition.setDeleteVersion(groupDeleteMessage.getDeleteVersion());
-                    for (RealmOfflineDelete realmOfflineDeleted : realmClientCondition.getOfflineDeleted()) {
-                        if (realmOfflineDeleted.getOfflineDelete() == groupDeleteMessage.getMessageId()) {
-                            realmOfflineDeleted.deleteFromRealm();
-                            break;
-                        }
-                    }
-                }
-                if (G.onChatDeleteMessageResponse != null) {
-                    G.onChatDeleteMessageResponse.onChatDeleteMessage(groupDeleteMessage.getDeleteVersion(), groupDeleteMessage.getMessageId(), groupDeleteMessage.getRoomId(),
-                        groupDeleteMessage.getResponse());
-                }
-            }
-        });
-        realm.close();
+        ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder builder = (ProtoGroupDeleteMessage.GroupDeleteMessageResponse.Builder) message;
+        RealmRoomMessage.deleteMessageServerResponse(builder.getRoomId(), builder.getMessageId(), builder.getDeleteVersion(), builder.getResponse());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

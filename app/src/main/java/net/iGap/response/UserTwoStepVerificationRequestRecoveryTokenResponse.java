@@ -27,12 +27,11 @@ public class UserTwoStepVerificationRequestRecoveryTokenResponse extends Message
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
-        ProtoUserTwoStepVerificationRequestRecoveryToken.UserTwoStepVerificationRequestRecoveryTokenResponse.Builder builder =
-            (ProtoUserTwoStepVerificationRequestRecoveryToken.UserTwoStepVerificationRequestRecoveryTokenResponse.Builder) message;
-        builder.getEmailPattern();
+        ProtoUserTwoStepVerificationRequestRecoveryToken.UserTwoStepVerificationRequestRecoveryTokenResponse.Builder builder = (ProtoUserTwoStepVerificationRequestRecoveryToken.UserTwoStepVerificationRequestRecoveryTokenResponse.Builder) message;
 
         if (G.onRecoveryEmailToken != null) {
             G.onRecoveryEmailToken.getEmailPatern(builder.getEmailPattern());
@@ -43,11 +42,13 @@ public class UserTwoStepVerificationRequestRecoveryTokenResponse extends Message
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

@@ -13,6 +13,7 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupRemoveUsername;
+import net.iGap.realm.RealmRoom;
 
 public class GroupRemoveUsernameResponse extends MessageHandler {
 
@@ -28,20 +29,23 @@ public class GroupRemoveUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder builder = (ProtoGroupRemoveUsername.GroupRemoveUsernameResponse.Builder) message;
+        RealmRoom.setPrivate(builder.getRoomId());
         if (G.onGroupRemoveUsername != null) {
             G.onGroupRemoveUsername.onGroupRemoveUsername(builder.getRoomId());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

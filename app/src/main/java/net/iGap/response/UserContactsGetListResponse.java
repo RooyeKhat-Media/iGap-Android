@@ -13,12 +13,10 @@ package net.iGap.response;
 import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
-import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoUserContactsGetList;
-import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmRegisteredInfo;
 
@@ -48,7 +46,7 @@ public class UserContactsGetListResponse extends MessageHandler {
          * (( hint : we have an error for this class and now use from timeout.
          * in next version of app will be checked that any of users get this error again or no ))
          */
-        if (HelperTimeOut.timeoutChecking(0, getListTime, Config.GET_CONTACT_LIST_TIME_OUT)) {
+        if (HelperTimeOut.timeoutChecking(0, getListTime, 0)) {//Config.GET_CONTACT_LIST_TIME_OUT
             getListTime = System.currentTimeMillis();
 
             new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -63,35 +61,16 @@ public class UserContactsGetListResponse extends MessageHandler {
                             realm.delete(RealmContacts.class);
 
                             for (ProtoGlobal.RegisteredUser registerUser : builder.getRegisteredUserList()) {
-                                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, registerUser.getId());
-                                if (realmRegisteredInfo == null) {
-                                    realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class, registerUser.getId());
-                                    realmRegisteredInfo.setDoNotshowSpamBar(false);
-                                }
-                                realmRegisteredInfo.fillRegisteredUserInfo(registerUser, realmRegisteredInfo);
-
-                                RealmContacts listResponse = realm.createObject(RealmContacts.class);
-                                listResponse.setId(registerUser.getId());
-                                listResponse.setUsername(registerUser.getUsername());
-                                listResponse.setPhone(registerUser.getPhone());
-                                listResponse.setFirst_name(registerUser.getFirstName());
-                                listResponse.setLast_name(registerUser.getLastName());
-                                listResponse.setDisplay_name(registerUser.getDisplayName());
-                                listResponse.setInitials(registerUser.getInitials());
-                                listResponse.setColor(registerUser.getColor());
-                                listResponse.setStatus(registerUser.getStatus().toString());
-                                listResponse.setLast_seen(registerUser.getLastSeen());
-                                listResponse.setAvatarCount(registerUser.getAvatarCount());
-                                listResponse.setCacheId(registerUser.getCacheId());
-                                listResponse.setAvatar(RealmAvatar.putAndGet(realm, registerUser.getId(), registerUser.getAvatar()));
+                                RealmRegisteredInfo.putOrUpdate(realm, registerUser);
+                                RealmContacts.putOrUpdate(realm, registerUser);
                             }
                         }
                     }, new Realm.Transaction.OnSuccess() {
                         @Override
                         public void onSuccess() {
 
-                            if (G.onContactAdd != null) {
-                                G.onContactAdd.onContactAdd();
+                            if (G.onContactsGetList != null) {
+                                G.onContactsGetList.onContactsGetList();
                             }
 
                             realm.close();

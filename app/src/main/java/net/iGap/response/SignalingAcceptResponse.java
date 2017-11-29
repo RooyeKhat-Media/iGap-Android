@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import android.util.Log;
 import net.iGap.G;
 import net.iGap.proto.ProtoSignalingAccept;
 
@@ -32,9 +31,7 @@ public class SignalingAcceptResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoSignalingAccept.SignalingAcceptResponse.Builder builder = (ProtoSignalingAccept.SignalingAcceptResponse.Builder) message;
-        Log.i("WWW", "SignalingAcceptResponse 1");
         if (builder.getResponse().getId().isEmpty()) {
-            Log.i("WWW", "SignalingAcceptResponse 2");
             String called_sdp = builder.getCalledSdp();
             if (G.iSignalingAccept != null) {
                 G.iSignalingAccept.onAccept(called_sdp);

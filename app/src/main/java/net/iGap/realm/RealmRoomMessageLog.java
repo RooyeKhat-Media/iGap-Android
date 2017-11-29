@@ -18,11 +18,11 @@ import net.iGap.module.SUID;
 import net.iGap.proto.ProtoGlobal;
 import org.parceler.Parcel;
 
-@Parcel(implementations = { RealmRoomMessageLogRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { RealmRoomMessageLog.class }) public class RealmRoomMessageLog extends RealmObject {
+@Parcel(implementations = {RealmRoomMessageLogRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLog.class}) public class RealmRoomMessageLog extends RealmObject {
     private String type;
     @PrimaryKey private long id;
 
-    public static RealmRoomMessageLog build(final ProtoGlobal.RoomMessageLog input) {
+    public static RealmRoomMessageLog put(final ProtoGlobal.RoomMessageLog input) {
         Realm realm = Realm.getDefaultInstance();
         RealmRoomMessageLog messageLocation = realm.createObject(RealmRoomMessageLog.class, SUID.id().get());
         messageLocation.setType(input.getType());

@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
 
-    android:orientation="vertical"
     android:clickable="true"
+    android:orientation="vertical"
     tools:ignore="MissingPrefix"
     >
 
@@ -35,6 +35,7 @@
           >
 
         <TextView
+            android:id="@+id/test"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -46,7 +47,6 @@
             android:textSize="@dimen/dp18"
             android:textStyle="bold"
             android:visibility="visible"
-            android:id="@+id/test"
             />
 
         <net.iGap.libs.rippleeffect.RippleView
@@ -214,6 +214,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
+          android:paddingRight="@dimen/dp8"
+          android:paddingEnd="@dimen/dp8"
           >
         <TextView
             android:id="@+id/ac_txt_codeCountry"
@@ -228,42 +230,45 @@
             android:singleLine="true"
             android:text="+98"
             android:textSize="@dimen/dp15"
+
             />
         <View
             android:layout_width="match_parent"
-            android:layout_height=".5dp"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
             android:background="@color/line_edit_text"
             />
       </LinearLayout>
 
-
-      <android.support.design.widget.TextInputLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/dp16"
-          android:layout_marginRight="@dimen/dp16"
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
           >
 
-        <net.iGap.module.MEditText
+        <com.vicmikhailau.maskededittext.MaskedEditText
             android:id="@+id/ac_edt_phoneNumber"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="@string/fac_Phone_Number"
+            android:imeOptions="flagNoExtractUi"
             android:inputType="phone"
-            android:singleLine="true"
+            android:padding="@dimen/dp4"
+            android:textAlignment="gravity"
+            android:textColor="@color/rg_black_register"
             android:textColorHint="@color/hint_edit_text"
             android:textSize="@dimen/dp15"
+            app:mask="###-###-####"
             />
-
         <View
             android:id="@+id/ac_view_phoneNumber"
             android:layout_width="match_parent"
-            android:layout_height=".5dp"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
             android:background="@color/line_edit_text"
+            android:layout_alignParentBottom="true"
             />
-
-      </android.support.design.widget.TextInputLayout>
+      </RelativeLayout>
 
     </LinearLayout>
 

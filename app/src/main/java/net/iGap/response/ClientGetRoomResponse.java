@@ -56,9 +56,11 @@ public class ClientGetRoomResponse extends MessageHandler {
                 final RequestClientGetRoom.CreateRoomMode roomMode = identityClientGetRoom.createRoomMode;
 
                 if (roomMode != null && roomMode == RequestClientGetRoom.CreateRoomMode.justInfo) {
-                    RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom(), realm);
-                    realmRoom.setDeleted(true);
-                    realmRoom.setKeepRoom(true);
+                    if (!RealmRoom.isMainRoom(clientGetRoom.getRoom().getId())) {
+                        RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom(), realm);
+                        realmRoom.setDeleted(true);
+                        realmRoom.setKeepRoom(true);
+                    }
 
                     /**
                      * update log message in realm room message after get room info

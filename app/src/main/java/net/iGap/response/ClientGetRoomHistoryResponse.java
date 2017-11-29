@@ -14,10 +14,10 @@ import android.os.Handler;
 import android.os.Looper;
 import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.helper.HelperInfo;
 import net.iGap.proto.ProtoClientGetRoomHistory;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestClientGetRoomHistory;
 
@@ -56,9 +56,9 @@ public class ClientGetRoomHistoryResponse extends MessageHandler {
                     public void execute(Realm realm) {
                         for (ProtoGlobal.RoomMessage roomMessage : builder.getMessageList()) {
                             if (roomMessage.getAuthor().hasUser()) {
-                                HelperInfo.needUpdateUser(roomMessage.getAuthor().getUser().getUserId(), roomMessage.getAuthor().getUser().getCacheId());
+                                RealmRegisteredInfo.needUpdateUser(roomMessage.getAuthor().getUser().getUserId(), roomMessage.getAuthor().getUser().getCacheId());
                             }
-                            RealmRoomMessage.putOrUpdate(roomMessage, roomId);
+                            RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, true, realm);
                         }
                     }
                 }, new Realm.Transaction.OnSuccess() {

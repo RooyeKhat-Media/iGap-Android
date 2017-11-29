@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import net.iGap.helper.HelperConnectionState;
-import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.module.enums.ConnectionState;
+import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
 import net.iGap.response.HandleResponse;
@@ -301,7 +301,7 @@ public class WebSocketClient {
      * reset some info after connection is lost
      */
     private static void resetMainInfo() {
-        HelperSetAction.clearAllActions();
+        RealmRoom.clearAllActions();
     }
 
     /**

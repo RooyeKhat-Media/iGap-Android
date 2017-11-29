@@ -19,7 +19,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.Display;
@@ -42,6 +41,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperString;
@@ -149,15 +149,9 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback {
                         G.currentActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                final Snackbar snack = Snackbar.make(G.currentActivity.findViewById(android.R.id.content), "Can not set position", Snackbar.LENGTH_LONG);
 
-                                snack.setAction(R.string.cancel, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        snack.dismiss();
-                                    }
-                                });
-                                snack.show();
+                                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.set_position), false);
+
                             }
                         });
                     } else {

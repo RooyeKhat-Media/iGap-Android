@@ -13,7 +13,7 @@ package net.iGap.module.enums;
 import net.iGap.proto.ProtoGlobal;
 
 public enum ChannelChatRole {
-    MEMBER, MODERATOR, ADMIN, OWNER;
+    MEMBER, MODERATOR, ADMIN, OWNER, UNRECOGNIZED;
 
     /**
      * convert ProtoGlobal.ChannelRoom.Role to ChannelChatRole
@@ -32,7 +32,7 @@ public enum ChannelChatRole {
             case OWNER:
                 return ChannelChatRole.OWNER;
             default:
-                return null;
+                return UNRECOGNIZED;
         }
     }
 }

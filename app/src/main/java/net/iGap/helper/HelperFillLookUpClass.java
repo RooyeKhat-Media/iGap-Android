@@ -96,6 +96,9 @@ public class HelperFillLookUpClass {
         lookupMap.put(30144, "ProtoUserPrivacySetRule.UserPrivacySetRuleResponse");
         lookupMap.put(30145, "ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse");
         lookupMap.put(30146, "ProtoUserTwoStepVerificationResendVerifyEmail.UserTwoStepVerificationResendVerifyEmailResponse");
+        lookupMap.put(30147, "ProtoUserProfileBio.UserProfileSetBioResponse");
+        lookupMap.put(30148, "ProtoUserProfileGetBio.UserProfileGetBioResponse");
+        lookupMap.put(30149, "ProtoUserReport.UserReportResponse");
 
         // Chat 2xx , 302xx
         lookupMap.put(30200, "ProtoChatGetRoom.ChatGetRoomResponse");
@@ -188,6 +191,9 @@ public class HelperFillLookUpClass {
         lookupMap.put(30611, "ProtoClientUnsubscribeFromRoom.ClientUnsubscribeFromRoomResponse");
         lookupMap.put(30612, "ProtoClientSearchUsername.ClientSearchUsernameResponse");
         lookupMap.put(30613, "ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse");
+        lookupMap.put(30614, "ProtoClientMuteRoom.ClientMuteRoomResponse");
+        lookupMap.put(30615, "ProtoClientPinRoom.ClientPinRoomResponse");
+        lookupMap.put(30616, "ProtoClientRoomReport.ClientRoomReportResponse");
 
         // FileUpload,Download 7xx , 307xx
         lookupMap.put(30700, "ProtoFileUploadOption.FileUploadOptionResponse");

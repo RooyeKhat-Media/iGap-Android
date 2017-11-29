@@ -9,15 +9,10 @@
 */
 package net.iGap.response;
 
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupEdit;
-import net.iGap.realm.RealmGroupRoom;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class GroupEditResponse extends MessageHandler {
 
@@ -33,44 +28,25 @@ public class GroupEditResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoGroupEdit.GroupEditResponse.Builder builder = (ProtoGroupEdit.GroupEditResponse.Builder) message;
-        long roomId = builder.getRoomId();
-        final String name = builder.getName();
-        final String descriptions = builder.getDescription();
+        RealmRoom.editRoom(builder.getRoomId(), builder.getName(), builder.getDescription());
 
-        Intent intent = new Intent("Intent_filter_on_change_group_name");
-        intent.putExtra("Name", name);
-        intent.putExtra("Description", descriptions);
-        intent.putExtra("RoomId", builder.getRoomId());
-        LocalBroadcastManager.getInstance(G.context).sendBroadcast(intent);
-
-        Realm realm = Realm.getDefaultInstance();
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-
-        if (realmRoom != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-
-                    realmRoom.setTitle(name);
-                    RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
-                    realmGroupRoom.setDescription(descriptions);
-                }
-            });
-
+        if (G.onGroupEdit != null) {
             G.onGroupEdit.onGroupEdit(builder.getRoomId(), builder.getName(), builder.getDescription());
         }
-
-        realm.close();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onGroupEdit.onError(majorCode, minorCode);
+        if (G.onGroupEdit != null) {
+            G.onGroupEdit.onError(majorCode, minorCode);
+        }
     }
 }

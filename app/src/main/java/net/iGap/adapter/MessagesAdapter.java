@@ -15,11 +15,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
-import com.mikepenz.fastadapter.FastAdapter;
+
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
-import java.util.ArrayList;
-import java.util.List;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
+import com.mikepenz.fastadapter.listeners.OnLongClickListener;
+
 import net.iGap.R;
 import net.iGap.adapter.items.chat.AbstractMessage;
 import net.iGap.adapter.items.chat.LogItem;
@@ -28,12 +29,16 @@ import net.iGap.helper.HelperUrl;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnChatMessageRemove;
 import net.iGap.interfaces.OnChatMessageSelectionChanged;
+import net.iGap.module.AndroidUtils;
 import net.iGap.module.structs.StructMessageAttachment;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
 
-public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapter<Item> implements FastAdapter.OnLongClickListener<Item> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapter<Item> implements OnLongClickListener<Item> {
     // contain sender id
     public static List<String> avatarsRequested = new ArrayList<>();
     public static List<String> usersInfoRequested = new ArrayList<>();
@@ -151,7 +156,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
     /**
      * update message text
      *
-     * @param messageId message id
+     * @param messageId   message id
      * @param updatedText new message text
      */
     public void updateMessageText(long messageId, String updatedText) {
@@ -180,8 +185,8 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
      * update message vote
      *
      * @param forwardedMessageId when forward message from channel to another chats , make new messageId.
-     * mainMessageId is new messageId that created and messageId is for message
-     * that forwarded to another chats
+     *                           mainMessageId is new messageId that created and messageId is for message
+     *                           that forwarded to another chats
      */
     public void updateVote(long roomId, long messageId, String vote, ProtoGlobal.RoomMessageReaction reaction, long forwardedMessageId) {
         List<Item> items = getAdapterItems();
@@ -299,7 +304,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
      * update message status
      *
      * @param messageId message id
-     * @param status ProtoGlobal.RoomMessageStatus
+     * @param status    ProtoGlobal.RoomMessageStatus
      */
     public void updateMessageStatus(long messageId, ProtoGlobal.RoomMessageStatus status) {
         List<Item> items = getAdapterItems();
@@ -321,11 +326,12 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
     /**
      * update message id and status
      *
-     * @param messageId new message id
-     * @param identity old manually defined as identity id
-     * @param status ProtoGlobal.RoomMessageStatus
+     * @param messageId   new message id
+     * @param identity    old manually defined as identity id
+     * @param status      ProtoGlobal.RoomMessageStatus
+     * @param roomMessage
      */
-    public void updateMessageIdAndStatus(long messageId, String identity, ProtoGlobal.RoomMessageStatus status) {
+    public void updateMessageIdAndStatus(long messageId, String identity, ProtoGlobal.RoomMessageStatus status, ProtoGlobal.RoomMessage roomMessage) {
         List<Item> items = getAdapterItems();
         for (int i = items.size() - 1; i >= 0; i--) {
             Item messageInfo = items.get(i);
@@ -334,6 +340,10 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
                     if (messageInfo.mMessage.messageID.equals(identity)) {
                         messageInfo.mMessage.status = status.toString();
                         messageInfo.mMessage.messageID = Long.toString(messageId);
+                        if (roomMessage.hasAttachment()) {
+                            messageInfo.mMessage.attachment.localFilePath = AndroidUtils.getFilePathWithCashId(roomMessage.getAttachment().getCacheId(), roomMessage.getAttachment().getName(), roomMessage.getMessageType());
+                            messageInfo.mMessage.attachment.size = roomMessage.getAttachment().getSize();
+                        }
                         set(i, messageInfo);
                         break;
                     }
@@ -345,9 +355,9 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
     /**
      * update video message time and name after that compressed file
      *
-     * @param messageId for find message in adapter
+     * @param messageId    for find message in adapter
      * @param fileDuration new duration for set in item
-     * @param fileSize new size for set in item
+     * @param fileSize     new size for set in item
      */
     public void updateVideoInfo(long messageId, long fileDuration, long fileSize) {
         List<Item> items = getAdapterItems();
@@ -358,7 +368,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
                     if (Long.parseLong(messageInfo.mMessage.messageID) == messageId) {
                         messageInfo.mMessage.attachment.duration = fileDuration;
                         messageInfo.mMessage.attachment.size = fileSize;
-                        messageInfo.mMessage.attachment.compressing = "";
+                        //messageInfo.mMessage.attachment.compressing = ""; // commented here because in video item we update compress text
                         set(i, messageInfo);
                         break;
                     }
@@ -428,7 +438,4 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
             }
         }
     }
-
-
-
 }

@@ -132,7 +132,8 @@ public class HelperGetDataFromOtherApp {
     //*****************************************************************************************************
 
     private void SetOutPutSingleFile(FileType type) {
-        Uri fileAddressUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        Uri fileAddressUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM); // get file attachment
+        //String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT); get text
         if (fileAddressUri != null) {
             hasSharedData = true;
             messageType = type;

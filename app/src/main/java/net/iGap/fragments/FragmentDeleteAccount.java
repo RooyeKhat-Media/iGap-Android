@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +31,7 @@ import java.io.IOException;
 import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnGetPermission;
@@ -245,14 +245,8 @@ public class FragmentDeleteAccount extends BaseFragment {
                                         G.handler.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        snack.dismiss();
-                                                    }
-                                                });
-                                                snack.show();
+
+                                                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
                                             }
                                         });
                                     }
@@ -265,15 +259,9 @@ public class FragmentDeleteAccount extends BaseFragment {
                     }).show();
                 } else {
 
-                    final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.please_enter_code_for_verify, Snackbar.LENGTH_LONG);
 
-                    snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
+                    HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.please_enter_code_for_verify), false);
+
                 }
             }
         });

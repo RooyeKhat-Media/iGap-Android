@@ -10,15 +10,17 @@
 
 package net.iGap.helper;
 
-import io.realm.Realm;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import io.realm.Realm;
 
 import static net.iGap.helper.HelperConvertEnumToString.convertActionEnum;
 
@@ -85,7 +87,7 @@ public class HelperGetAction {
                 if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName().length() > 0) {
                     String action;
 
-                    if (HelperCalander.isLanguagePersian) {
+                    if (HelperCalander.isPersianUnicode) {
                         action = "\u200F" + realmRegisteredInfo.getDisplayName() + " " + convertActionEnum(latestStruct.action);
                     } else {
                         action = "\u200E" + realmRegisteredInfo.getDisplayName() + " " + G.fragmentActivity.getResources().getString(R.string.is) + " " + convertActionEnum(latestStruct.action);
@@ -120,7 +122,7 @@ public class HelperGetAction {
                 }
                 concatenatedNames = concatenatedNames.substring(0, concatenatedNames.length() - 1);
 
-                if (HelperCalander.isLanguagePersian) {
+                if (HelperCalander.isPersianUnicode) {
 
                     return "\u200F" + concatenatedNames + " " + HelperConvertEnumToString.convertActionEnum(latestAction);
 
@@ -128,7 +130,7 @@ public class HelperGetAction {
                     return concatenatedNames + " " + G.fragmentActivity.getResources().getString(R.string.are) + " " + convertActionEnum(latestAction);
                 }
             } else {
-                if (HelperCalander.isLanguagePersian) {
+                if (HelperCalander.isPersianUnicode) {
 
                     return "\u200F" + count + " " + G.fragmentActivity.getResources().getString(R.string.members_are) + " " + convertActionEnum(latestAction);
                 } else {

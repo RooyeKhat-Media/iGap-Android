@@ -10,6 +10,7 @@
 
 package net.iGap.realm;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoGlobal;
@@ -130,5 +131,116 @@ public class RealmUserInfo extends RealmObject {
             return true;
         }
         return false;
+    }
+
+    public static RealmUserInfo getRealmUserInfo(Realm realm) {
+        return realm.where(RealmUserInfo.class).findFirst();
+    }
+
+    public static RealmUserInfo putOrUpdate(Realm realm, long userId, String username, String phoneNumber, String token, String authorHash) {
+        RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
+        if (userInfo == null) {
+            userInfo = realm.createObject(RealmUserInfo.class);
+            RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+            if (registeredInfo == null) {
+                registeredInfo = realm.createObject(RealmRegisteredInfo.class, userId);
+            }
+            userInfo.setUserInfo(registeredInfo);
+        }
+        userInfo.getUserInfo().setUsername(username);
+        userInfo.getUserInfo().setPhoneNumber(phoneNumber);
+        userInfo.setToken(token);
+        userInfo.setAuthorHash(authorHash);
+        userInfo.setUserRegistrationState(true);
+        return userInfo;
+    }
+
+    public static RealmUserInfo putOrUpdate(Realm realm, ProtoGlobal.RegisteredUser registeredUser) {
+        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+        if (realmUserInfo != null) {
+            realmUserInfo.setUserInfo(RealmRegisteredInfo.putOrUpdate(realm, registeredUser));
+            realmUserInfo.getUserInfo().setDisplayName(registeredUser.getDisplayName());
+            realmUserInfo.getUserInfo().setInitials(registeredUser.getInitials());
+            realmUserInfo.getUserInfo().setColor(registeredUser.getColor());
+            realmUserInfo.setUserRegistrationState(true);
+        }
+        return realmUserInfo;
+    }
+
+    public static void updateGender(final ProtoGlobal.Gender gender) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setGender(gender);
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateSelfRemove(final int selfRemove) {
+        Realm realm1 = Realm.getDefaultInstance();
+        realm1.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setSelfRemove(selfRemove);
+                }
+            }
+        });
+        realm1.close();
+    }
+
+    public static void updateEmail(final String email) {
+        Realm realm1 = Realm.getDefaultInstance();
+        realm1.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setEmail(email);
+                }
+            }
+        });
+        realm1.close();
+    }
+
+    public static void updateNickname(final String displayName, final String initials) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    RealmRegisteredInfo realmRegisteredInfo = realmUserInfo.getUserInfo();
+                    if (realmRegisteredInfo != null) {
+                        realmRegisteredInfo.setDisplayName(displayName);
+                        realmRegisteredInfo.setInitials(initials);
+                    }
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateUsername(final String username) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    RealmRegisteredInfo realmRegisteredInfo = realmUserInfo.getUserInfo();
+                    if (realmRegisteredInfo != null) {
+                        realmRegisteredInfo.setUsername(username);
+                    }
+                }
+            }
+        });
+        realm.close();
     }
 }

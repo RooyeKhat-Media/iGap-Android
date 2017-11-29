@@ -33,14 +33,12 @@ public class GroupDeleteResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoGroupDelete.GroupDeleteResponse.Builder builder = (ProtoGroupDelete.GroupDeleteResponse.Builder) message;
-        final long roomId = builder.getRoomId();
-
-        RealmRoom.deleteRoom(roomId);
+        RealmRoom.deleteRoom(builder.getRoomId());
         if (G.onGroupDelete != null) {
-            G.onGroupDelete.onGroupDelete(roomId);
+            G.onGroupDelete.onGroupDelete(builder.getRoomId());
         }
         if (G.onGroupDeleteInRoomList != null) {
-            G.onGroupDeleteInRoomList.onGroupDelete(roomId);
+            G.onGroupDeleteInRoomList.onGroupDelete(builder.getRoomId());
         }
     }
 

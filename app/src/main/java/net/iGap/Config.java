@@ -16,6 +16,21 @@ public class Config {
 
     public static final int ACCEPT = 1;
     public static final int REJECT = 0;
+    public static final int REALM_SCHEMA_VERSION = 15;
+    public static final int REALM_LATEST_MIGRATION_VERSION = REALM_SCHEMA_VERSION - 1;
+    public static final int LOOKUP_MAP_RESPONSE_OFFSET = 30000;
+    public static final int MAX_TEXT_ATTACHMENT_LENGTH = 200;
+    public static final int MAX_TEXT_LENGTH = 4096;
+    public static final int IMAGE_CORNER = 7;
+    public static final int TRY_CONNECTION_COUNT = 5;
+    public static final int ACTION_CHECKING = 500;
+    public static final int GROUP_SHOW_ACTIONS_COUNT = 3;
+    public static final int LIMIT_GET_HISTORY_LOW = 10;
+    public static final int LIMIT_GET_HISTORY_NORMAL = 100;
+    public static final int LIMIT_LOAD_ROOM = 50;
+    public static final int FAST_START_PAGE_TIME = (int) 20;
+    public static final int LOW_START_PAGE_TIME = (int) 25;
+
     public static final int TIME_OUT_DELAY_MS = (int) (DateUtils.SECOND_IN_MILLIS);
     public static final int FAKE_PM_DELAY = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     public static final int TIME_OUT_MS = (int) (10 * DateUtils.SECOND_IN_MILLIS);
@@ -25,28 +40,18 @@ public class Config {
     public static final int INSTANCE_SUCCESSFULLY_CHECKING = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     public static final int COUNTER_TIMER = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int COUNTER_TIMER_DELAY = (int) (DateUtils.SECOND_IN_MILLIS);
-    public static final int ACTION_CHECKING = 500;
     public static final int UPDATE_STATUS_TIME = (int) (3 * DateUtils.SECOND_IN_MILLIS);// after this time check that program is in background
     public static final int ACTION_TIME_OUT = (int) (2 * DateUtils.SECOND_IN_MILLIS);
     public static final int GET_MESSAGE_STATE_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
     public static final int GET_MESSAGE_STATE_TIME_OUT_CHECKING = (int) (DateUtils.SECOND_IN_MILLIS);
-    public static final int LOOKUP_MAP_RESPONSE_OFFSET = 30000;
-    public static final int MAX_TEXT_ATTACHMENT_LENGTH = 200;
-    public static final int MAX_TEXT_LENGTH = 4096;
     public static final int LAST_SEEN_DELAY_CHECKING = (int) (60 * DateUtils.SECOND_IN_MILLIS);
-    public static final int LAST_SEEN_TIME_OUT = (int) (60 * DateUtils.MINUTE_IN_MILLIS); // after this time show exactly time instead of minutes
-    public static final int GROUP_SHOW_ACTIONS_COUNT = 3;
-    public static final int IMAGE_CORNER = 7;
-    public static final int TRY_CONNECTION_COUNT = 5;
     public static final int GET_CONTACT_LIST_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int HEART_BEAT_CHECKING_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int UPDATING_TIME_SHOWING = (int) (2 * DateUtils.SECOND_IN_MILLIS);
     public static final int CONNECTION_OPEN_TIME_OUT = (int) (20 * DateUtils.SECOND_IN_MILLIS);
-    public static final int FAST_START_PAGE_TIME = (int) 20;
-    public static final int LOW_START_PAGE_TIME = (int) 25;
     public static final int FETCH_CONTACT_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
-    public static final int LIMIT_GET_HISTORY_LOW = 10;
-    public static final int LIMIT_GET_HISTORY_NORMAL = 100;
+    public static final int LAST_SEEN_TIME_OUT = (int) (60 * DateUtils.MINUTE_IN_MILLIS); // after this time show exactly time instead of minutes
+    public static final int DEFAULT_BOTH_CHAT_DELETE_TIME = (int) (2 * DateUtils.HOUR_IN_MILLIS);
 
     public static String default_appBarColor = "#00B0BF";
     public static String default_notificationColor = "#e51c23";

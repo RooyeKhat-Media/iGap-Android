@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rooShowImage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
@@ -15,6 +16,7 @@
       android:layout_height="match_parent"
       android:clipToPadding="false"
       />
+
 
   <LinearLayout
       android:id="@+id/toolbarShowImage"
@@ -100,11 +102,11 @@
         android:id="@+id/asi_txt_image_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="10"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:ellipsize="end"
         android:textColor="@android:color/white"
-        android:maxLines="10"
         android:textSize="@dimen/dp14"
         style="@style/ChatMessages.EmojiTextView"
         />
@@ -115,28 +117,27 @@
         android:layout_height="wrap_content"
         android:text="name"
         android:textColor="@android:color/white"
-        android:visibility="visible"
         android:textSize="@dimen/dp14"
+        android:visibility="visible"
         />
 
     <TextView
         android:id="@+id/asi_txt_image_time"
-        android:text="time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="time"
         android:textColor="@android:color/white"
         android:textSize="@dimen/dp14"
         />
 
     <TextView
         android:id="@+id/asi_txt_image_date"
-        android:text="date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="date"
         android:textColor="@android:color/white"
         android:textSize="@dimen/dp14"
         />
   </LinearLayout>
-
 
 </RelativeLayout>

@@ -8,8 +8,8 @@
 * All rights reserved.
 */
 
-package net.iGap.interfaces;
+package net.iGap.module.enums;
 
-public interface OnContactAdd {
-    void onContactAdd();
+public enum ClientConditionOffline {
+    DELETE, EDIT, SEEN, LISTEN
 }

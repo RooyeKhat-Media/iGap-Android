@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
@@ -40,21 +39,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCrop;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermision;
@@ -127,6 +121,16 @@ import net.iGap.request.RequestChannelRevokeLink;
 import net.iGap.request.RequestChannelUpdateSignature;
 import net.iGap.request.RequestChannelUpdateUsername;
 import net.iGap.request.RequestUserInfo;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
@@ -540,17 +544,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         G.onChannelUpdateSignature = new OnChannelUpdateSignature() {
             @Override
             public void onChannelUpdateSignatureResponse(final long roomId, final boolean signature) {
-
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                        realmRoom.getChannelRoom().setSignature(signature);
-                    }
-                });
-
-                realm.close();
+                // handle realm to response class
             }
 
             @Override
@@ -559,15 +553,6 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-
-                        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
-                        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                snack.dismiss();
-                            }
-                        });
-                        snack.show();
 
                         if (toggleEnableSignature.isChecked()) {
                             toggleEnableSignature.setChecked(false);
@@ -621,7 +606,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                             public void run() {
                                 if (((RealmRoom) element).isValid()) {
                                     String countText = ((RealmRoom) element).getSharedMediaCount();
-                                    if (HelperCalander.isLanguagePersian) {
+                                    if (HelperCalander.isPersianUnicode) {
                                         txtSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
                                     } else {
                                         txtSharedMedia.setText(countText);
@@ -865,9 +850,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
     private void addMemberToChannel() {
         List<StructContactInfo> userList = Contacts.retrieve(null);
-
-        RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        RealmList<RealmMember> memberList = realmRoom.getChannelRoom().getMembers();
+        RealmList<RealmMember> memberList = RealmMember.getMembers(getRealm(), roomId);
 
         for (int i = 0; i < memberList.size(); i++) {
             for (int j = 0; j < userList.size(); j++) {
@@ -883,7 +866,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
             public void getSelectedList(boolean result, String message, int countForShowLastMessage, final ArrayList<StructContactInfo> list) {
 
                 for (int i = 0; i < list.size(); i++) {
-                    new RequestChannelAddMember().channelAddMember(roomId, list.get(i).peerId, 0);
+                    new RequestChannelAddMember().channelAddMember(roomId, list.get(i).peerId);
                 }
             }
         });
@@ -994,23 +977,12 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                     if (G.fragmentActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
 
                         try {
-
-                            HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                            HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                                 @Override
-                                public void Allow() throws IOException {
-                                    HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                                        @Override
-                                        public void Allow() {
-                                            // this dialog show 2 way for choose image : gallery and camera
-                                            dialog.dismiss();
-                                            useCamera();
-                                        }
-
-                                        @Override
-                                        public void deny() {
-
-                                        }
-                                    });
+                                public void Allow() {
+                                    // this dialog show 2 way for choose image : gallery and camera
+                                    dialog.dismiss();
+                                    useCamera();
                                 }
 
                                 @Override
@@ -1055,25 +1027,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
     //********** update member count
 
     private void setMemberCount(final long roomId, final boolean plus) {
-        //Realm realm = Realm.getDefaultInstance();
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (realmRoom != null && realmRoom.getChannelRoom() != null) {
-                    if (HelperString.isNumeric(realmRoom.getChannelRoom().getParticipantsCountLabel())) {
-                        int memberCount = Integer.parseInt(realmRoom.getChannelRoom().getParticipantsCountLabel());
-                        if (plus) {
-                            memberCount++;
-                        } else {
-                            memberCount--;
-                        }
-                        realmRoom.getChannelRoom().setParticipantsCountLabel(memberCount + "");
-                    }
-                }
-            }
-        });
-        //realm.close();
+        RealmRoom.updateMemberCount(roomId, plus);
     }
 
     //********** channel Add Member
@@ -1083,12 +1037,10 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
             setMemberCount(roomId, true);
 
-            //+Realm realm = Realm.getDefaultInstance();
             RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
             if (realmRegistered == null) {
                 new RequestUserInfo().userInfo(userId, roomId + "");
             }
-            //realm.close();
         }
     }
 
@@ -1493,16 +1445,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
                 //+Realm realm = Realm.getDefaultInstance();
                 //channel info
-                final RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                final RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
-                getRealm().executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-
-                        realmChannelRoom.setInviteLink(inviteLink);
-                        realmChannelRoom.setInvite_token(inviteToken);
-                    }
-                });
+                RealmChannelRoom.revokeLink(inviteLink, inviteToken);
             }
         });
         //realm.close();
@@ -1514,15 +1457,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
 
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.normal_error), false);
             }
         });
     }
@@ -1533,15 +1469,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
 
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
             }
         });
     }
@@ -1594,16 +1523,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
                     public void run() {
                         isPrivate = true;
                         setTextChannelLik();
-                        //+Realm realm = Realm.getDefaultInstance();
-                        getRealm().executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                                RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
-                                realmChannelRoom.setPrivate(true);
-                            }
-                        });
-                        //realm.close();
+                        RealmRoom.setPrivate(roomId);
                     }
                 });
             }
@@ -1654,7 +1574,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
         if (isPopup) {
             edtUserName.setText("iGap.net/");
         } else {
-            edtUserName.setText("" + linkUsername);
+            edtUserName.setText("iGap.net/" + linkUsername);
         }
 
         edtUserName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
@@ -1735,8 +1655,8 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (!editable.toString().contains("iGap.net/")) {
-                    edtUserName.setText("iGap.net/");
+                if (editable.toString().contains("iGap.net/")) {
+                    //edtUserName.setText("iGap.net/");
                     Selection.setSelection(edtUserName.getText(), edtUserName.getText().length());
                 }
 
@@ -1764,18 +1684,6 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAdd
 
                         linkUsername = username;
                         setTextChannelLik();
-
-                        //+Realm realm = Realm.getDefaultInstance();
-                        getRealm().executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                                RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
-                                realmChannelRoom.setUsername("iGap.net" + edtUserName.getText().toString());
-                                realmChannelRoom.setPrivate(false);
-                            }
-                        });
-                        //realm.close();
                     }
                 });
             }

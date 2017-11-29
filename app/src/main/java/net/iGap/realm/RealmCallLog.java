@@ -58,9 +58,7 @@ public class RealmCallLog extends RealmObject {
     }
 
     public static void addLog(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog callLog, Realm realm) {
-
         RealmCallLog realmCallLog = realm.where(RealmCallLog.class).equalTo(RealmCallLogFields.ID, callLog.getId()).findFirst();
-
         if (realmCallLog == null) {
             realmCallLog = realm.createObject(RealmCallLog.class, callLog.getId());
         }
@@ -71,20 +69,26 @@ public class RealmCallLog extends RealmObject {
     }
 
     public static void addLogList(final List<ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog> list) {
-
         Realm realm = Realm.getDefaultInstance();
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
                 for (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item : list) {
-
                     addLog(item, realm);
                 }
             }
         });
+        realm.close();
+    }
 
+    public static void clearCallLog(final long clearId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(RealmCallLog.class).lessThanOrEqualTo(RealmCallLogFields.ID, clearId).findAll().deleteAllFromRealm();
+            }
+        });
         realm.close();
     }
 }

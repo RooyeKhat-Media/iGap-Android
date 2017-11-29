@@ -208,6 +208,7 @@
     </net.iGap.module.MyAppBarLayout>
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nestedScrollContact"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
@@ -228,6 +229,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp6"
+            android:visibility="gone"
+            />
+
+        <ProgressBar
+            android:id="@+id/prgWaitingLoadContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_horizontal"
+            android:indeterminate="true"
+            android:visibility="visible"
             />
 
         <View
@@ -240,12 +251,12 @@
             android:id="@+id/txtNon_User"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/list_contacts"
             android:gravity="start"
-            android:paddingTop="@dimen/dp10"
             android:paddingBottom="@dimen/dp10"
-            android:paddingStart="@dimen/dp20"
             android:paddingLeft="@dimen/dp20"
+            android:paddingStart="@dimen/dp20"
+            android:paddingTop="@dimen/dp10"
+            android:text="@string/list_contacts"
             android:textColor="@color/green"
             android:textSize="@dimen/dp16"
             android:textStyle="bold"

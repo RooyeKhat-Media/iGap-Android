@@ -11,19 +11,22 @@
 package net.iGap.module;
 
 import android.text.format.DateUtils;
-import io.realm.Realm;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import io.realm.Realm;
 
 public class LastSeenTimeUtil {
     private LastSeenTimeUtil() throws InstantiationException {
@@ -122,7 +125,7 @@ public class LastSeenTimeUtil {
             }
         }
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             time = HelperCalander.convertToUnicodeFarsiNumber(time);
         }
 
@@ -204,13 +207,13 @@ public class LastSeenTimeUtil {
             return "*"+G.fragmentActivity.getResources().getString(R.string.last_seen_recently);
         }*/
         String str;
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + "\u200F" + G.fragmentActivity.getResources().getString(R.string.minute_ago);
         } else {
             str = TimeUnit.MILLISECONDS.toMinutes(difference) + " " + G.fragmentActivity.getResources().getString(R.string.minute_ago);
         }
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             str = HelperCalander.convertToUnicodeFarsiNumber(str);
         }
         return str;

@@ -65,6 +65,7 @@
   <string name="Toast_waiting_fot_get_info">"در انتظار اتصال و موقعیت یابی"</string>
   <string name="Toast_Location_Not_Found">"موقعیت شما یافت نشد"</string>
   <string name="Toast_First_0">"در ابتدای شماره نیاز به 0 نیست"</string>
+  <string name="Toast_Minimum_Characters">تعداد کاراکترها کمتر از حد مجاز است</string>
   <string name="Toast_Enter_Phone_Number">"لطفاً شماره تلفن خود را بدون صفر ابتدای آن وارد کنید"</string>
   <string name="Toast_Enter_Code">"لطفاً کد تأیید را وارد نمایید"</string>
   <string name="Toast_Number_Block">"شماره وارد شده مسدود شده است"</string>
@@ -124,7 +125,7 @@
   <string name="igap">"آی گپ"</string>
   <string name="igapChanel">"آی گپ"</string>
   <string name="search">"جستجو"</string>
-  <string formatted="false" name="d_of_d">"%d از %d"</string>
+  <string name="d_of_d" formatted="false">"%d از %d"</string>
   <string name="add_to_contact">"افزودن به مخاطبین"</string>
   <string name="cancel">"انصراف"</string>
   <string name="B_cancel">"انصراف"</string>
@@ -158,7 +159,7 @@
   <string name="cannot_load_data_en">"عدم توانایی در بارگیری داده‌ها"</string>
   <string name="do_you_want_exit">"آیا می‌خواهید خارج شوید؟"</string>
   <string name="slide_to_cancel_en">"برای لغو بکشید"</string>
-  <string formatted="false" name="video_duration">"%s (%s)"</string>
+  <string name="video_duration" formatted="false">"%s (%s)"</string>
 
 
   <!-- setting -->
@@ -383,7 +384,7 @@
   <string name="private_channel">"کانال خصوصی"</string>
   <string name="desc_private_channel">"کاربران تنها زمانی می توانند به این کانال بپیوندند که توسط مدیر(ان) به عنوان اعضای کانال اضافه شوند."</string>
   <string name="desc_public_channel">"کاربران می توانند با جستوجوی نام کاربری یا دریافت لینک دعوت به این کانال بپیوندند."</string>
-  <string formatted="false" name="last_msg_format_chat">"%s"</string>
+  <string name="last_msg_format_chat" formatted="false">"%s"</string>
 
 
   <!-- Error -->
@@ -444,6 +445,11 @@
   <string name="E_300_1">Bad payload: Invalid description</string>
   <string name="E_300_2">"خطایی از سمت کلاینت: توضیحات اشتباه است."</string>
   <string name="E_301">"خطای درونی سرور"</string>
+
+  <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
+  <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
+  <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
+
   <string name="E_610">"خطایی از سمت کلاینت"</string>
   <string name="E_611">"خطای درونی سرور"</string>
   <string name="E_612">"خطایی از سمت کلاینت"</string>
@@ -453,6 +459,7 @@
   <string name="E_615_2">"خطایی از سمت کلاینت: شناسهٔ پیام اول اشتباه است."</string>
   <string name="E_616">"خطای درونی سرور"</string>
   <string name="E_617">"دیگر پیامی برای مشاهده وجود ندارد."</string>
+  <string name="E_623">"نام کاربری پیدا نشد."</string>
   <string name="E_713_1">"خطایی از سمت کلاینت: نشانه اشتباه است."</string>
   <string name="E_713_2">"خطایی از سمت کلاینت: آفست اشتباه است."</string>
   <string name="E_713_3">"خطایی از سمت کلاینت: سقف محدودیت بالااشتباه است."</string>
@@ -460,6 +467,16 @@
   <string name="E_713_5">"خطایی از سمت کلاینت: آفست اشتباه است."</string>
   <string name="E_714">"خطای درونی سرور"</string>
   <string name="E_715">"چنین فایلی یافت نشد."</string>
+
+
+  <string name="E_658">گزارش تخلف قبلاً ارسال شده است.</string>
+  <string name="E_659">در حال حاضر مجاز به ارسال گزارش تخلف نیستید.</string>
+
+  <string name="E_10165">Bad payload: User report</string>
+  <string name="E_10166">ServerError: User report internal</string>
+  <string name="E_10167">شما گزارش تخلف این کاربر را قبلاً ارسال کرده اید.</string>
+  <string name="E_10168">شما قادر به ارسال گزارش تخلف این کاربر نیستید.</string>
+
   <string name="E_209_1">"خطایی از کلاینت: شناسهٔ روم اشتباه است."</string>
   <string name="E_209_2">"خطایی از سمت کلاینت: شناسهٔ پیام اشتباه است."</string>
   <string name="E_209_3">"خطایی از سمت کلاینت: پیام اشتباه است."</string>
@@ -599,7 +616,7 @@
   <string name="new_group">گروه جدید</string>
   <string name="delete_from_cache">حذف از حافظهٔ نهان</string>
   <string name="leave_channel">ترک کردن کانال</string>
-  <string name="report">گزارش</string>
+  <string name="report">گزارش تخلف</string>
   <string name="replay">پاسخ دادن</string>
   <string name="members">اعضا</string>
   <string name="skip">رد کردن</string>
@@ -843,10 +860,10 @@
   <string name="OCCUPYING_LIMIT_EXCEEDED">محدودیت دریافت</string>
   <string name="st_trim">بریدن بخشی از ویدیو</string>
   <string name="st_compress">فشرده سازی ویدیو</string>
-  <string name="compressing"> فشرده سازی...</string>
+  <string name="compressing">فشرده سازی </string>
   <string name="selected_color_can_not_set_on_yout_device">رنگ انتخاب شده قابل نمایش در دستگاه شما نیست</string>
   <string name="keep_media_forever">برای همیشه</string>
-  <string name="keep_media_1week">یک هفته</string>
+  <string name="keep_media_1month">یک هفته</string>
   <string name="file_save_to_download_folder">"فایل در پوشه دانلود ذخیره شد"</string>
   <string name="first_download_file">ابتدا فایل را دانلود کنید</string>
   <string name="file_save_to_galary_folder">فایل در پوشه گالری ذخیره شد</string>
@@ -1032,7 +1049,7 @@
   <string name="map_registration">غیرفعال کردن قابلیت اطراف من</string>
   <string name="comment_waiting">در حال دریافت یادداشت</string>
   <string name="comment_no">بدون وضعیت</string>
-  <string formatted="false" name="distance">حدود %d متر</string>
+  <string name="distance" formatted="false">حدود %d متر</string>
   <string name="hint_gps">وضعیت شما</string>
 
   <string name="Visible_Status_title_dialog">فعال سازی</string>
@@ -1087,5 +1104,40 @@
   <string name="password">رمز</string>
   <string name="text_empty_user_map">متأسفانه هیچ کاربری اطراف شما نفشه خود را فعال نکرده است</string>
   <string name="send_message_to">ارسال پیام به  </string>
+
+  <string name="st_bio">بیو</string>
+  <string name="st_des_bio">شما می توانید توضیح مختصری دربارهٔ خود در پروفایل وارد کنید. لازم به ذکر است هر کاربر با ورود به پروفایل شما این متن را خواهد دید.</string>
+  <string name="st_Report">گزارش تخلف</string>
+  <string name="st_Spam">اسپم</string>
+  <string name="st_Violence">محتوای خشونت آمیز</string>
+  <string name="st_Pornography">محتوای پورنوگرافی</string>
+  <string name="st_Other">سایر موارد</string>
+  <string name="st_Abuse">محتوای توهین آمیز و آزاردهنده</string>
+  <string name="st_FakeAccount">حساب کاربری جعلی</string>
+  <string name="st_limit_bio">کاراکترهای استفاده شده بیش از حد مجاز است. تنها 70 کاراکتر در این قسمت قابل استفاده اند</string>
+  <string name="st_checkbox_delete">حذف برای</string>
+  <string name="st_desc_delete">آیا از حذف این %1$s پیام اطمینان دارید؟</string>
+  <string name="st_send_report">گزارش تخلف با موفقیت ارسال شد.</string>
+  <string name="set_position">عدم توانایی تنظیم موقعیت مکانی</string>
+  <string name="date">تاریخ</string>
+  <string name="miladi">میلادی</string>
+  <string name="shamsi">هجری شمسی</string>
+  <string name="ghamari">هجری قمری</string>
+  <string name="Uploading">بارگذاری </string>
+
+  <string name="moharam">محرم</string>
+  <string name="safar">صفر</string>
+  <string name="rabio_aval">ربیع‌الاول</string>
+  <string name="rabi_sani">ربیع‌الثانی</string>
+  <string name="jamado_aval">جمادی‌الاول</string>
+  <string name="jamado_sani">جمادی‌الثانی</string>
+  <string name="rajab">رجب</string>
+  <string name="shaban">شعبان</string>
+  <string name="ramezan">رمضان</string>
+  <string name="shaval">شوال</string>
+  <string name="zighade">ذیقعده</string>
+  <string name="zihaje">ذیحجه</string>
+
+  <string name="st_multi_tab">چند نواری</string>
 
 </resources>

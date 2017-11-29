@@ -23,10 +23,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.SearchView;
 import android.text.Editable;
@@ -53,16 +51,12 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.protobuf.ByteString;
 import com.vicmikhailau.maskededittext.MaskedEditText;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 import net.iGap.BuildConfig;
 import net.iGap.Config;
 import net.iGap.G;
@@ -70,6 +64,7 @@ import net.iGap.R;
 import net.iGap.activities.ActivityMain;
 import net.iGap.adapter.AdapterDialog;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperLogout;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperSaveFile;
@@ -99,7 +94,6 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoUserRegister;
 import net.iGap.proto.ProtoUserVerify;
-import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestInfoCountry;
 import net.iGap.request.RequestQrCodeNewDevice;
@@ -109,6 +103,14 @@ import net.iGap.request.RequestUserLogin;
 import net.iGap.request.RequestUserTwoStepVerificationGetPasswordDetail;
 import net.iGap.request.RequestUserTwoStepVerificationVerifyPassword;
 import net.iGap.request.RequestWrapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import io.realm.Realm;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static net.iGap.G.context;
@@ -281,7 +283,7 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                         }
                         File file = new File(_resultQrCode);
                         if (file.exists()) {
-                            HelperSaveFile.savePicToGallary(_resultQrCode, true);
+                            HelperSaveFile.savePicToGallery(_resultQrCode, true);
                         }
                     }
                 }).neutralText(R.string.cancel).onNeutral(new MaterialDialog.SingleButtonCallback() {
@@ -353,7 +355,8 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (dialogQrCode != null && dialogQrCode.isShowing()) dialogQrCode.dismiss();
+                        if (dialogQrCode != null && dialogQrCode.isShowing())
+                            dialogQrCode.dismiss();
 
                         userLogin(token);
                     }
@@ -373,7 +376,8 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (dialogQrCode != null && dialogQrCode.isShowing()) dialogQrCode.dismiss();
+                        if (dialogQrCode != null && dialogQrCode.isShowing())
+                            dialogQrCode.dismiss();
                     }
                 });
                 checkPassword("", true);
@@ -416,7 +420,7 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
 
         txtTitleToolbar = (TextView) view.findViewById(R.id.rg_txt_titleToolbar);
 
-        if (!HelperCalander.isLanguagePersian) {
+        if (!HelperCalander.isPersianUnicode) {
             titleTypeface = G.typeface_neuropolitical;
         } else {
             titleTypeface = G.typeface_IRANSansMobile;
@@ -436,6 +440,8 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+
                 if (editable.toString().equals("0")) {
                     Toast.makeText(G.fragmentActivity, G.fragmentActivity.getResources().getString(R.string.Toast_First_0), Toast.LENGTH_SHORT).show();
                     edtPhoneNumber.setText("");
@@ -652,7 +658,7 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                     return;
                 }
 
-                if (edtPhoneNumber.getText().length() > 0 && !regex.equals("") && edtPhoneNumber.getText().toString().replace("-", "").matches(regex)) {
+                if (edtPhoneNumber.getText().length() > 0 && (regex.equals("") || (!regex.equals("") && edtPhoneNumber.getText().toString().replace("-", "").matches(regex)))) {
 
                     phoneNumber = edtPhoneNumber.getText().toString();
 
@@ -693,22 +699,24 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                     assert view != null;
                     TextView phone = (TextView) view.findViewById(R.id.rg_dialog_txt_number);
                     phone.setText(edtCodeNumber.getText().toString() + "" + edtPhoneNumber.getText().toString());
-                    dialogRegistration.show();
+
+                    try {
+                        dialogRegistration.show();
+                    } catch (WindowManager.BadTokenException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
 
-                    if (regex.equals("")) {
-                        new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).content("regex.equals(\"\")").positiveText(R.string.B_ok).show();
-                    } else if (edtPhoneNumber.getText().toString().replace("-", "").matches(regex)) {
-                        new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).content("matches(regex)").positiveText(R.string.B_ok).show();
+                    if (edtPhoneNumber.getText().toString().replace("-", "").matches(regex)) {
+                        new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).content(R.string.Toast_Minimum_Characters).positiveText(R.string.B_ok).show();
                     } else {
-
                         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).content(R.string.Toast_Enter_Phone_Number).positiveText(R.string.B_ok).show();
                     }
                 }
             }
         });
         // enable scroll text view
-
     }
 
     @Override
@@ -812,13 +820,12 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                             btnStart.setEnabled(false);
                             long time = 0;
                             if (BuildConfig.DEBUG) {
-                                time = 10 * DateUtils.SECOND_IN_MILLIS;
+                                time = 2 * DateUtils.SECOND_IN_MILLIS;
                             } else if (smsPermission) {
                                 time = Config.COUNTER_TIMER;
                             } else {
                                 time = 5 * DateUtils.SECOND_IN_MILLIS;
                             }
-
 
 
                             txtTimer = (TextView) G.fragmentActivity.findViewById(R.id.rg_txt_verify_timer);
@@ -933,15 +940,18 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
             @Override
             public void onClick(View v) {
 
-                txtTimer.setVisibility(View.INVISIBLE);
+                try {
+                    txtTimer.setVisibility(View.INVISIBLE);
 
-                if (!edtEnterCodeVerify.getText().toString().equals("")) {
-                    verifyCode = edtEnterCodeVerify.getText().toString();
-                    userVerify(userName, verifyCode);
-                    dialog.dismiss();
-                } else {
-
-                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.Enter_Code).content(R.string.Toast_Enter_Code).positiveText(R.string.B_ok).show();
+                    if (!edtEnterCodeVerify.getText().toString().equals("")) {
+                        verifyCode = edtEnterCodeVerify.getText().toString();
+                        userVerify(userName, verifyCode);
+                        dialog.dismiss();
+                    } else {
+                        new MaterialDialog.Builder(G.fragmentActivity).title(R.string.Enter_Code).content(R.string.Toast_Enter_Code).positiveText(R.string.B_ok).show();
+                    }
+                } catch (WindowManager.BadTokenException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -959,13 +969,17 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
 
-        if (!mActivity.isFinishing() && !mActivity.isRestricted()) {
-            if (isAdded()) {
-                dialog.show();
-                if (dialog.isShowing()) {
-                    countDownTimer.cancel();
+        try {
+            if (!mActivity.isFinishing() && !mActivity.isRestricted()) {
+                if (isAdded()) {
+                    dialog.show();
+                    if (dialog.isShowing()) {
+                        countDownTimer.cancel();
+                    }
                 }
             }
+        } catch (WindowManager.BadTokenException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1381,7 +1395,6 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                                         replace(R.id.ar_layout_root, fragmentSecurityRecovery).commit();
 
 
-
                             }
                         }).show();
                     }
@@ -1422,27 +1435,14 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
-                                //RealmUserInfo userInfo = realm.where(RealmUserInfo.class).equalTo(RealmUserInfoFields.USER_INFO.ID, userId).findFirst();
-                                RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
-                                if (userInfo == null) {
-                                    userInfo = realm.createObject(RealmUserInfo.class);
-                                    RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-
-                                    if (registeredInfo == null) {
-                                        registeredInfo = realm.createObject(RealmRegisteredInfo.class, userId);
-                                    }
-                                    userInfo.setUserInfo(registeredInfo);
-                                }
-                                userInfo.getUserInfo().setUsername(userName);
-                                userInfo.getUserInfo().setPhoneNumber(phoneNumber);
-                                userInfo.setToken(token);
-                                userInfo.setAuthorHash(authorHash);
-                                userInfo.setUserRegistrationState(true);
+                                RealmUserInfo.putOrUpdate(realm, userId, userName, phoneNumber, token, authorHash);
                             }
                         });
 
-                        if (rg_prg_verify_register != null) rg_prg_verify_register.setVisibility(View.GONE);
-                        if (rg_img_verify_register != null) rg_img_verify_register.setVisibility(View.VISIBLE);
+                        if (rg_prg_verify_register != null)
+                            rg_prg_verify_register.setVisibility(View.GONE);
+                        if (rg_img_verify_register != null)
+                            rg_img_verify_register.setVisibility(View.VISIBLE);
                         if (rg_txt_verify_register != null) {
                             rg_txt_verify_register.setTextColor(G.context.getResources().getColor(R.color.rg_text_verify));
                             if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
@@ -1508,13 +1508,9 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                        realmUserInfo.getUserInfo().setDisplayName(user.getDisplayName());
                         G.displayName = user.getDisplayName();
 
-                        realmUserInfo.getUserInfo().setInitials(user.getInitials());
-                        realmUserInfo.getUserInfo().setColor(user.getColor());
-                        realmUserInfo.setUserRegistrationState(true);
+                        RealmUserInfo.putOrUpdate(realm, user);
 
                         G.handler.post(new Runnable() {
                             @Override
@@ -1664,16 +1660,7 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
     }
 
     private void error(String error) {
-        Vibrator vShort = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vShort.vibrate(200);
-        final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                snack.dismiss();
-            }
-        });
-        snack.show();
+        HelperError.showSnackMessage(error, true);
     }
 
     /**
@@ -1740,7 +1727,6 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                     prgWaiting.setVisibility(View.GONE);
                 }
                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                error(G.fragmentActivity.getResources().getString(R.string.invalid_password));
             }
         });
     }
@@ -1780,7 +1766,6 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                 }
                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 closeKeyboard(txtOk);
-                error(G.fragmentActivity.getResources().getString(R.string.invalid_email_token));
             }
         });
     }
@@ -1814,7 +1799,6 @@ public class FragmentRegister extends BaseFragment implements OnSecurityCheckPas
                 }
                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 closeKeyboard(txtOk);
-                error(G.fragmentActivity.getResources().getString(R.string.invalid_question_token));
             }
         });
     }

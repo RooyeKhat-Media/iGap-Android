@@ -188,7 +188,7 @@
 //                holder.txtPinIcon.setVisibility(View.GONE);
 //                holder.txtUnread.setText(mInfo.getUnreadCount() + "");
 //
-//                if (HelperCalander.isLanguagePersian) {
+//                if (HelperCalander.isPersianUnicode) {
 //                    holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red);
 //                } else {
 //                    holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red_left);
@@ -211,7 +211,7 @@
 //        /**
 //         * for change english number to persian number
 //         */
-//        if (HelperCalander.isLanguagePersian) {
+//        if (HelperCalander.isPersianUnicode) {
 //            holder.txtLastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtLastMessage.getText().toString()));
 //            holder.txtUnread.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtUnread.getText().toString()));
 //        }
@@ -428,13 +428,13 @@
 //                                if (_name.length() > 0) {
 //
 //                                    if (Character.getDirectionality(_name.charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
-//                                        if (HelperCalander.isLanguagePersian) {
+//                                        if (HelperCalander.isPersianUnicode) {
 //                                            lastMessageSender = _name + ": ";
 //                                        } else {
 //                                            lastMessageSender = " :" + _name;
 //                                        }
 //                                    } else {
-//                                        if (HelperCalander.isLanguagePersian) {
+//                                        if (HelperCalander.isPersianUnicode) {
 //                                            lastMessageSender = " :" + _name;
 //                                        } else {
 //                                            lastMessageSender = _name + ": ";
@@ -490,7 +490,7 @@
 //
 //                        String result = AppUtils.conversionMessageType(_type, holder.txtLastMessage, R.color.room_message_blue);
 //                        if (result.isEmpty()) {
-//                            if (!HelperCalander.isLanguagePersian) {
+//                            if (!HelperCalander.isPersianUnicode) {
 //                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //                                    holder.txtLastMessage.setTextDirection(View.TEXT_DIRECTION_LTR);
 //                                }

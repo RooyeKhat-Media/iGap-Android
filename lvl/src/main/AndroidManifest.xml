@@ -14,6 +14,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.android.vending.licensing"
+    android:allowBackup="false"
     android:versionCode="2"
     android:versionName="1.5">
   <!-- Devices >= 3 have version of Android Market that supports licensing. -->

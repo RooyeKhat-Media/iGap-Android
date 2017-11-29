@@ -30,9 +30,7 @@ public class RealmWallpaper extends RealmObject {
         try {
             return wallPaperList == null ? null : (List<net.iGap.proto.ProtoGlobal.Wallpaper>) SerializationUtils.deserialize(wallPaperList);
         } catch (Exception e) {
-
             HelperLog.setErrorLog(" RealmWallpaper     getWallPaperList()       " + e.toString());
-
             return null;
         }
 
@@ -58,14 +56,15 @@ public class RealmWallpaper extends RealmObject {
         this.lastTimeGetList = lastTimeGetList;
     }
 
-    public static void updateField(final List<ProtoGlobal.Wallpaper> protoList, final String lockaPath) {
+    public static void updateField(final List<ProtoGlobal.Wallpaper> protoList, final String localPath) {
 
         Realm realm = Realm.getDefaultInstance();
 
         final RealmWallpaper realmWallpaper = realm.where(RealmWallpaper.class).findFirst();
 
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
 
                 RealmWallpaper item;
 
@@ -81,17 +80,17 @@ public class RealmWallpaper extends RealmObject {
                     item.setLastTimeGetList(TimeUtils.currentLocalTime());
                 }
 
-                if (lockaPath.length() > 0) {
+                if (localPath.length() > 0) {
 
                     ArrayList<String> lockalList = item.getLocalList();
 
                     if (lockalList == null) {
 
                         lockalList = new ArrayList<String>();
-                        lockalList.add(lockaPath);
+                        lockalList.add(localPath);
                         item.setLocalList(lockalList);
-                    } else if (lockalList.indexOf(lockaPath) == -1) {
-                        lockalList.add(0, lockaPath);
+                    } else if (lockalList.indexOf(localPath) == -1) {
+                        lockalList.add(0, localPath);
                         item.setLocalList(lockalList);
                     }
                 }
@@ -100,8 +99,4 @@ public class RealmWallpaper extends RealmObject {
 
         realm.close();
     }
-
-
-
-
 }

@@ -10,18 +10,28 @@
 
 package net.iGap.request;
 
+import net.iGap.G;
+import net.iGap.R;
 import net.iGap.proto.ProtoInfoWallpaper;
 
 public class RequestInfoWallpaper {
 
-    public void infoWallpaper(ProtoInfoWallpaper.InfoWallpaper.Fit fit) {
+    public void infoWallpaper() {
         ProtoInfoWallpaper.InfoWallpaper.Builder builder = ProtoInfoWallpaper.InfoWallpaper.newBuilder();
-        builder.setFit(fit);
+        builder.setFit(getFit());
         RequestWrapper requestWrapper = new RequestWrapper(504, builder);
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    private ProtoInfoWallpaper.InfoWallpaper.Fit getFit() {
+        ProtoInfoWallpaper.InfoWallpaper.Fit fit = ProtoInfoWallpaper.InfoWallpaper.Fit.PHONE;
+        if (G.context.getResources().getBoolean(R.bool.isTablet)) {
+            fit = ProtoInfoWallpaper.InfoWallpaper.Fit.TABLET;
+        }
+        return fit;
     }
 }

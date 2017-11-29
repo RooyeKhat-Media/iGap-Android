@@ -10,15 +10,13 @@
 
 package net.iGap.interfaces;
 
-import net.iGap.proto.ProtoGlobal;
-
 /**
  * just use this callback for update item in group chats
  */
 
 public interface OnUserInfoMyClient {
 
-    void onUserInfoMyClient(ProtoGlobal.RegisteredUser user, String identity);
+    void onUserInfoMyClient();
 
     void onUserInfoTimeOut();
 

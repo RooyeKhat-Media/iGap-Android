@@ -13,6 +13,7 @@ package net.iGap.realm;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 import net.iGap.module.enums.AttachmentFor;
@@ -33,11 +34,11 @@ public class RealmAvatar extends RealmObject {
     }
 
     /**
-     * HINT : use this method in transaction.
+     * HINT : use this method in transaction. and never use this method in loop for one userId.
      *
-     * put avatar to realm and if exist just return
+     * put avatar to realm and manage need delete any avatar for this ownerId or no
      */
-    public static RealmAvatar putAndGet(Realm realm, final long ownerId, final ProtoGlobal.Avatar input) {
+    public static RealmAvatar putOrUpdateAndManageDelete(Realm realm, final long ownerId, final ProtoGlobal.Avatar input) {
         if (!input.hasFile()) {
             deleteAllAvatars(ownerId, realm);
             return null;
@@ -57,16 +58,65 @@ public class RealmAvatar extends RealmObject {
         return avatar;
     }
 
+    public static RealmAvatar putOrUpdate(Realm realm, final long ownerId, final ProtoGlobal.Avatar input) {
+        RealmAvatar realmAvatar = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.ID, input.getId()).findFirst();
+        if (realmAvatar == null) {
+            realmAvatar = realm.createObject(RealmAvatar.class, input.getId());
+        }
+        realmAvatar.setOwnerId(ownerId);
+        realmAvatar.setFile(RealmAttachment.build(input.getFile(), AttachmentFor.AVATAR, null));
+
+        return realmAvatar;
+    }
+
     /**
+     * Hint:use in transaction
      * delete all avatars from RealmAvatar
      *
      * @param ownerId use this id for delete from RealmAvatar
      */
-    private static void deleteAllAvatars(final long ownerId, Realm realm) {
+    public static void deleteAllAvatars(final long ownerId, Realm realm) {
         RealmResults<RealmAvatar> ownerAvatars = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAll();
         if (ownerAvatars.size() > 0) {
             ownerAvatars.deleteAllFromRealm();
         }
+    }
+
+    public static void deleteAvatar(Realm realm, final long avatarId) {
+        RealmAvatar realmAvatar = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.ID, avatarId).findFirst();
+        if (realmAvatar != null) {
+            realmAvatar.deleteFromRealm();
+        }
+    }
+
+    public static void deleteAvatarWithOwnerId(final long ownerId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmAvatar realmAvatar = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findFirst();
+                if (realmAvatar != null) {
+                    realmAvatar.deleteFromRealm();
+                }
+            }
+        });
+        realm.close();
+    }
+
+
+    /**
+     * return latest avatar with this ownerId
+     *
+     * @param ownerId if is user set userId and if is room set roomId
+     * @return return latest RealmAvatar for this ownerId
+     */
+    public static RealmAvatar getLastAvatar(long ownerId, Realm realm) {
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING)) {
+            if (avatar.getFile() != null) {
+                return avatar;
+            }
+        }
+        return null;
     }
 
     public static RealmAvatar convert(long userId, final RealmAttachment attachment) {

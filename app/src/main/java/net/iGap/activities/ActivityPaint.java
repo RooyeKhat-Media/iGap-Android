@@ -38,10 +38,9 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
@@ -49,6 +48,10 @@ import net.iGap.helper.ImageHelper;
 import net.iGap.interfaces.OnColorChangedListenerSelect;
 import net.iGap.module.AttachFile;
 import net.iGap.module.ColorPiker;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * for draw a paint and send to other user or save in device folder
@@ -112,7 +115,7 @@ public class ActivityPaint extends ActivityEnhanced {
 
             @Override
             public void onClick(View arg0) {
-                savePicToFile("paint", false);
+                savePicToFile(false);
             }
         });
 
@@ -122,7 +125,7 @@ public class ActivityPaint extends ActivityEnhanced {
 
             @Override
             public void onClick(View arg0) {
-                savePicToFile("paint", true);
+                savePicToFile(true);
             }
         });
 
@@ -276,16 +279,19 @@ public class ActivityPaint extends ActivityEnhanced {
         paint.setStrokeWidth(50);
     }
 
-    void savePicToFile(String fileName, Boolean send) {
+    void savePicToFile(Boolean send) {
+
+        String fileName = "paint_" + HelperString.getRandomFileName(3) + ".png";
 
         File dir = new File(G.DIR_IMAGES);
-        if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, fileName + ".png");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File f = new File(dir, fileName);
 
         int x = 0;
         while (f.exists()) {
-            //f = new File(G.DIR_IMAGES, fileName + Integer.toString(x) + ".png");
-            f = new File(G.DIR_IMAGES, "paint_" + HelperString.getRandomFileName(3) + ".png");
+            f = new File(G.DIR_IMAGES, fileName);
             x++;
         }
 

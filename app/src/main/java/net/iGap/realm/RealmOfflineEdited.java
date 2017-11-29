@@ -10,8 +10,10 @@
 
 package net.iGap.realm;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import net.iGap.module.SUID;
 
 // note: realm doesn't support enum
 // as a workaround, we save its toString() value
@@ -45,5 +47,14 @@ public class RealmOfflineEdited extends RealmObject {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public static RealmOfflineEdited put(Realm realm, long messageId, String message) {
+        RealmOfflineEdited realmOfflineEdited = realm.createObject(RealmOfflineEdited.class, SUID.id().get());
+        realmOfflineEdited.setMessageId(messageId);
+        realmOfflineEdited.setMessage(message);
+        realmOfflineEdited = realm.copyToRealm(realmOfflineEdited);
+
+        return realmOfflineEdited;
     }
 }

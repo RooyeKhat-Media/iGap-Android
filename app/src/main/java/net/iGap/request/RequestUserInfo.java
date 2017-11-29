@@ -20,7 +20,7 @@ public class RequestUserInfo {
     public static HashMap<Long, OnInfo> infoHashMap = new HashMap<>();
 
     public enum InfoType {
-        JUST_INFO
+        JUST_INFO, UPDATE_ROOM
     }
 
     public static CopyOnWriteArrayList<String> userIdArrayList = new CopyOnWriteArrayList<>(); // ids that exist in list don't allowed to send request again

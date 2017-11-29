@@ -18,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.daimajia.swipe.SwipeLayout;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -611,7 +613,7 @@ public class ViewMaker {
         verticalLine.setBackgroundColor(Color.parseColor("#f7ab07"));
         LinearLayout.LayoutParams layout_81 = new LinearLayout.LayoutParams(dpToPixel(3), ViewGroup.LayoutParams.MATCH_PARENT);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_81.leftMargin = i_Dp(dp8);
         } else {
             layout_81.rightMargin = i_Dp(dp8);
@@ -626,7 +628,7 @@ public class ViewMaker {
 
         LinearLayout.LayoutParams layout_760 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, i_Dp(R.dimen.dp40));
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_760.leftMargin = i_Dp(dp8);
         } else {
             layout_760.rightMargin = i_Dp(dp8);
@@ -1410,7 +1412,7 @@ public class ViewMaker {
         linearLayout_353.setOrientation(VERTICAL);
         linearLayout_353.setPadding(0, i_Dp(R.dimen.dp6), 0, 0);
         LinearLayout.LayoutParams layout_860 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_860.rightMargin = i_Dp(R.dimen.dp12);
         } else {
             layout_860.leftMargin = i_Dp(R.dimen.dp12);
@@ -1421,7 +1423,7 @@ public class ViewMaker {
         LinearLayout linearLayout_922 = new LinearLayout(G.context);
         linearLayout_922.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             linearLayout_922.setGravity(Gravity.RIGHT);
         } else {
             linearLayout_922.setGravity(Gravity.LEFT);
@@ -1439,7 +1441,7 @@ public class ViewMaker {
         setTextSize(cs_txt_chat_icon, R.dimen.dp14);
         LinearLayout.LayoutParams layout_525 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_525.gravity = Gravity.CENTER;
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_525.leftMargin = i_Dp(R.dimen.dp8);
         } else {
             layout_525.rightMargin = i_Dp(R.dimen.dp8);
@@ -1465,7 +1467,7 @@ public class ViewMaker {
         setTextSize(cs_txt_contact_name, R.dimen.dp15);
         LinearLayout.LayoutParams layout_115 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_115.gravity = Gravity.RIGHT;
             cs_txt_contact_name.setGravity(Gravity.RIGHT);
         } else {
@@ -1481,7 +1483,7 @@ public class ViewMaker {
         LinearLayout lyt_last_message_room = new LinearLayout(G.context);
         lyt_last_message_room.setId(R.id.lyt_last_message_room);
         // lyt_last_message_room.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             lyt_last_message_room.setGravity(Gravity.RIGHT);
         } else {
             lyt_last_message_room.setGravity(Gravity.LEFT);
@@ -1491,7 +1493,7 @@ public class ViewMaker {
         lyt_last_message_room.setLayoutParams(layout_338);
 
         LinearLayout lyt_last_message = new LinearLayout(G.context);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             lyt_last_message.setGravity(Gravity.RIGHT);
         } else {
             lyt_last_message.setGravity(Gravity.LEFT);
@@ -1538,7 +1540,7 @@ public class ViewMaker {
         cs_txt_last_message.setEmojiSize(i_Dp(R.dimen.dp13));
         LinearLayout.LayoutParams layout_1151 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_1151.leftMargin = dpToPixel(3);
         } else {
             layout_1151.rightMargin = dpToPixel(3);
@@ -1562,7 +1564,7 @@ public class ViewMaker {
         LinearLayout.LayoutParams layout_1151_file_text = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layout_1151_file_text.bottomMargin = dpToPixel(2);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_1151_file_text.leftMargin = dpToPixel(4);
         } else {
             layout_1151_file_text.rightMargin = dpToPixel(4);
@@ -1589,7 +1591,7 @@ public class ViewMaker {
         linearLayout_620.setPadding(i_Dp(R.dimen.dp8), i_Dp(R.dimen.dp4), i_Dp(R.dimen.dp8), 0);
         LinearLayout.LayoutParams layout_800 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_800.gravity = Gravity.LEFT;
         } else {
             layout_800.gravity = Gravity.RIGHT;
@@ -1614,7 +1616,7 @@ public class ViewMaker {
         cslr_txt_tic.setId(R.id.cslr_txt_tic);
         LinearLayout.LayoutParams layout_516 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp16), i_Dp(R.dimen.dp16));
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_516.leftMargin = i_Dp(R.dimen.dp4);
         } else {
             layout_516.rightMargin = i_Dp(R.dimen.dp4);
@@ -1839,7 +1841,7 @@ public class ViewMaker {
         linearLayout_578.setId(R.id.mainContainer);
         linearLayout_578.setOrientation(VERTICAL);
         linearLayout_578.setBackgroundColor(G.context.getResources().getColor(R.color.white));
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             linearLayout_578.setPadding(i_Dp(R.dimen.dp20), 0, i_Dp(R.dimen.dp20), 0);
         } else {
             linearLayout_578.setPadding(i_Dp(R.dimen.dp52), 0, i_Dp(R.dimen.dp20), 0);
@@ -1854,7 +1856,7 @@ public class ViewMaker {
         LinearLayout.LayoutParams layout_323 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         layout_323.bottomMargin = i_Dp(R.dimen.dp6);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_323.leftMargin = i_Dp(R.dimen.dp20);
             layout_323.rightMargin = i_Dp(R.dimen.dp8);
         } else {
@@ -1880,7 +1882,7 @@ public class ViewMaker {
         LinearLayout linearLayout_673 = new LinearLayout(G.context);
         linearLayout_673.setOrientation(VERTICAL);
         LinearLayout.LayoutParams layout_445 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             layout_445.rightMargin = i_Dp(R.dimen.dp8);
         } else {
             layout_445.leftMargin = i_Dp(R.dimen.dp8);

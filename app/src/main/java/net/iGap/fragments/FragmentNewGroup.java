@@ -514,41 +514,6 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
         G.onChatConvertToGroup = new OnChatConvertToGroup() {
             @Override
             public void onChatConvertToGroup(long roomId, final String name, final String description, ProtoGlobal.GroupRoom.Role role) {
-
-                //                if (existAvatar) {
-                //                    new RequestGroupAvatarAdd().groupAvatarAdd(roomId, fileUploadStructure.token);
-                ////                    G.handler.post(new Runnable() {
-                ////                        @Override
-                ////                        public void run() {
-                ////                            Realm realm = Realm.getDefaultInstance();
-                ////                            realm.executeTransaction(new Realm.Transaction() {
-                ////                                @Override
-                ////                                public void execute(Realm realm) {
-                ////                                    RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, groomId).findFirst();
-                ////                                    realmRoom.setId(roomId);
-                ////                                    realmRoom.setType(RoomType.GROUP);
-                ////                                    realmRoom.setTitle(name);
-                ////                                    RealmGroupRoom realmGroupRoom = realm.createObject(RealmGroupRoom.class);
-                ////                                    realmGroupRoom.setRole(GroupChatRole.OWNER);
-                ////                                    realmGroupRoom.setDescription(description);
-                ////                                    realmGroupRoom.setParticipantsCountLabel("2");
-                ////                                    realmRoom.setGroupRoom(realmGroupRoom);
-                ////                                    realmRoom.setChatRoom(null);
-                ////                                }
-                ////                            });
-                ////                            realm.close();
-                ////                        }
-                ////                    });
-                //                } else {
-                //                    G.handler.post(new Runnable() {
-                //                        @Override
-                //                        public void run() {
-                //                            G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                //                        }
-                //                    });
-                //                    getRoom(roomId, ProtoGlobal.Room.Type.GROUP);
-                //                }
-
                 getRoom(roomId, ProtoGlobal.Room.Type.GROUP);
             }
 

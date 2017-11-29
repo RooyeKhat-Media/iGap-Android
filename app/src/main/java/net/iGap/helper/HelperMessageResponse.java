@@ -14,6 +14,7 @@ import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
@@ -39,7 +40,7 @@ public class HelperMessageResponse {
                 /**
                  * put message to realm
                  */
-                RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(roomMessage, roomId);
+                RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, true, realm);
                 final RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                 /**
                  * because user may have more than one device, his another device should not
@@ -55,7 +56,7 @@ public class HelperMessageResponse {
                      * don't have user id for message sender for get info
                      */
                     if (roomMessage.getAuthor().hasUser()) {
-                        HelperInfo.needUpdateUser(roomMessage.getAuthor().getUser().getUserId(), roomMessage.getAuthor().getUser().getCacheId());
+                        RealmRegisteredInfo.needUpdateUser(roomMessage.getAuthor().getUser().getUserId(), roomMessage.getAuthor().getUser().getCacheId());
                     }
 
 

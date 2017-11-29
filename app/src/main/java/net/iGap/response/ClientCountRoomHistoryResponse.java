@@ -27,20 +27,23 @@ public class ClientCountRoomHistoryResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder builder = (ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder) message;
-        long _roomId = Long.parseLong(identity);
-
-        FragmentShearedMedia.updateStringSharedMediaCount(builder, _roomId);
+        if (identity != null) {
+            FragmentShearedMedia.updateStringSharedMediaCount(builder, Long.parseLong(identity));
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

@@ -45,7 +45,7 @@ public class ChannelAvatarAddResponse extends MessageHandler {
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        RealmAvatar.putAndGet(realm, builder.getRoomId(), builder.getAvatar());
+                        RealmAvatar.putOrUpdate(realm, builder.getRoomId(), builder.getAvatar());
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override

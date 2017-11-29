@@ -10,11 +10,8 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.Sort;
-import io.realm.annotations.PrimaryKey;
+import android.support.annotation.Nullable;
+
 import net.iGap.G;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnInfo;
@@ -23,8 +20,17 @@ import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestUserInfo;
 
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.Sort;
+import io.realm.annotations.PrimaryKey;
+
+import static net.iGap.G.userId;
+
 public class RealmRegisteredInfo extends RealmObject {
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
     private String username;
     private String phoneNumber;
     private String firstName;
@@ -36,6 +42,7 @@ public class RealmRegisteredInfo extends RealmObject {
     private String cacheId;
     private int lastSeen;
     private int avatarCount;
+    private String bio;
 
     private boolean mutual;
     private boolean blockUser = false;
@@ -160,6 +167,14 @@ public class RealmRegisteredInfo extends RealmObject {
         this.avatarCount = avatarCount;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     public boolean isMutual() {
         return mutual;
     }
@@ -185,9 +200,7 @@ public class RealmRegisteredInfo extends RealmObject {
     }
 
 
-    public static RealmRegisteredInfo putOrUpdate(ProtoGlobal.RegisteredUser input) {
-        Realm realm = Realm.getDefaultInstance();
-
+    public static RealmRegisteredInfo putOrUpdate(Realm realm, ProtoGlobal.RegisteredUser input) {
         RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, input.getId());
         if (registeredInfo == null) {
             registeredInfo = realm.createObject(RealmRegisteredInfo.class, input.getId());
@@ -207,8 +220,8 @@ public class RealmRegisteredInfo extends RealmObject {
         registeredInfo.setMutual(input.getMutual());
         registeredInfo.setPhoneNumber(Long.toString(input.getPhone()));
         registeredInfo.setUsername(input.getUsername());
+        registeredInfo.setBio(input.getBio());
 
-        realm.close();
         return registeredInfo;
     }
 
@@ -241,7 +254,7 @@ public class RealmRegisteredInfo extends RealmObject {
      * fill object from proto to realm
      *
      * @param registeredUser proto that get from server
-     * @param info object from RealmRegisteredInfo
+     * @param info           object from RealmRegisteredInfo
      */
 
     public void fillRegisteredUserInfo(ProtoGlobal.RegisteredUser registeredUser, RealmRegisteredInfo info) {
@@ -258,19 +271,44 @@ public class RealmRegisteredInfo extends RealmObject {
         info.setMutual(registeredUser.getMutual());
         info.setLastSeen(registeredUser.getLastSeen());
         info.setCacheId(registeredUser.getCacheId());
+        info.setBio(registeredUser.getBio());
     }
 
     /**
-     * check info existence in realm if exist will be returned that otherwise send
-     * 'RequestUserInfo' to server and after get response will be called 'OnInfo'
-     * for return 'RealmRegisteredInfo'
+     * compare user cacheId , if was equal don't do anything
+     * otherwise send request for get user info
+     *
+     * @param userId  userId for get old cacheId from RealmRegisteredInfo
+     * @param cacheId new cacheId
+     * @return return true if need update otherwise return false
+     */
+
+    public static boolean needUpdateUser(long userId, String cacheId) {
+
+        Realm realm = Realm.getDefaultInstance();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+
+        if (realmRegisteredInfo != null && cacheId != null && realmRegisteredInfo.getCacheId().equals(cacheId)) {
+            realm.close();
+            return false;
+        }
+        new RequestUserInfo().userInfoAvoidDuplicate(userId);
+
+        realm.close();
+        return true;
+    }
+
+    /**
+     * check info existence in realm if exist and cacheId is equal, will be returned;
+     * otherwise send 'RequestUserInfo' to server and after get response will be called
+     * 'OnInfo' for return 'RealmRegisteredInfo'
      *
      * @param onRegistrationInfo RealmRegisteredInfo will be returned with this interface
      */
-    public static void getRegistrationInfo(long userId, final OnInfo onRegistrationInfo) {
+    public static void getRegistrationInfo(long userId, @Nullable String cacheId, final OnInfo onRegistrationInfo) {
         Realm realm = Realm.getDefaultInstance();
         final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-        if (realmRegisteredInfo != null) {
+        if (realmRegisteredInfo != null && (cacheId == null || realmRegisteredInfo.getCacheId().equals(cacheId))) {
             onRegistrationInfo.onInfo(realmRegisteredInfo);
         } else {
             RequestUserInfo.infoHashMap.put(userId, onRegistrationInfo);
@@ -294,7 +332,94 @@ public class RealmRegisteredInfo extends RealmObject {
         realm.close();
     }
 
+    public static void getRegistrationInfo(long userId, final OnInfo onRegistrationInfo) {
+        getRegistrationInfo(userId, null, onRegistrationInfo);
+    }
+
     public static RealmRegisteredInfo getRegistrationInfo(Realm realm, long userId) {
         return realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+    }
+
+    public static String getNameWithId(long userId) {
+        String displayName = "";
+        Realm realm = Realm.getDefaultInstance();
+        RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, userId).findFirst();
+        if (realmRegisteredInfo != null) {
+            displayName = realmRegisteredInfo.getDisplayName();
+        }
+        realm.close();
+
+        return displayName;
+    }
+
+    public static void updateBio(final String bio) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRegisteredInfo.getRegistrationInfo(realm, userId).setBio(bio);
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateName(final long userId, final String firstName, final String lastName, final String initials) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+                if (registeredInfo != null) {
+                    registeredInfo.setFirstName(firstName);
+                    registeredInfo.setLastName(lastName);
+                    registeredInfo.setDisplayName((firstName + " " + lastName).trim());
+                    registeredInfo.setInitials(initials);
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateBlock(final long userId, final boolean block) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRegisteredInfo registeredInfo = getRegistrationInfo(realm, userId);
+        if (registeredInfo != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    registeredInfo.setBlockUser(block);
+                }
+            });
+        }
+        realm.close();
+    }
+
+    public static void updateMutual(final String phone, final boolean mutual) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.PHONE_NUMBER, phone + "").findFirst();
+                if (realmRegisteredInfo != null) {
+                    realmRegisteredInfo.setMutual(mutual);
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateStatus(long userId, final int lastSeen, final String userStatus) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+        if (realmRegisteredInfo != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realmRegisteredInfo.setStatus(userStatus);
+                    realmRegisteredInfo.setLastSeen(lastSeen);
+                }
+            });
+        }
+        realm.close();
     }
 }

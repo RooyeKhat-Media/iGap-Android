@@ -51,12 +51,12 @@ import net.iGap.R;
 import net.iGap.interfaces.IPopUpListener;
 import net.iGap.interfaces.OnVoiceRecord;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.module.AppUtils;
 import net.iGap.module.ChatSendMessageUtil;
 import net.iGap.module.EmojiEditTextE;
 import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.SHP_SETTING;
-import net.iGap.module.TimeUtils;
 import net.iGap.module.UploadService;
 import net.iGap.module.VoiceRecord;
 import net.iGap.module.enums.StructPopUp;
@@ -280,27 +280,9 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendMessage(final String message, final long mRoomId, ProtoGlobal.Room.Type chatType) {
+        String identity = Long.toString(System.currentTimeMillis());
 
-        final Realm realm = Realm.getDefaultInstance();
-        final long senderId = G.userId;
-
-        final String identity = Long.toString(System.currentTimeMillis());
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmRoomMessage roomMessage = realm.createObject(RealmRoomMessage.class, Long.parseLong(identity));
-
-                roomMessage.setMessageType(ProtoGlobal.RoomMessageType.TEXT);
-                roomMessage.setRoomId(mRoomId);
-                roomMessage.setMessage(message);
-                roomMessage.setStatus(ProtoGlobal.RoomMessageStatus.SENDING.toString());
-                roomMessage.setUserId(senderId);
-                roomMessage.setCreateTime(TimeUtils.currentLocalTime());
-            }
-        });
-
-        realm.close();
+        RealmRoomMessage.makeTextMessage(mRoomId, Long.parseLong(identity), message);
 
         new ChatSendMessageUtil().newBuilder(chatType, ProtoGlobal.RoomMessageType.TEXT, mRoomId).message(message).sendMessage(identity);
     }
@@ -530,8 +512,15 @@ public class ActivityPopUpNotification extends AppCompatActivity {
                     voiceRecord.setItemTag("ivVoice");
                     viewAttachFile.setVisibility(View.GONE);
                     viewMicRecorder.setVisibility(View.VISIBLE);
-                    voiceRecord.startVoiceRecord();
 
+
+                    AppUtils.setVibrator(50);
+                    G.handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            voiceRecord.startVoiceRecord();
+                        }
+                    }, 60);
                     return true;
                 }
             });

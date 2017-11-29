@@ -25,12 +25,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -38,7 +36,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,17 +46,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.items.chat.ViewMaker;
@@ -77,6 +70,7 @@ import net.iGap.helper.GoToChatActivity;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperCalculateKeepMedia;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperImageBackColor;
@@ -101,8 +95,8 @@ import net.iGap.interfaces.OnGeoGetConfiguration;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnGroupAvatarResponse;
 import net.iGap.interfaces.OnMapRegisterState;
+import net.iGap.interfaces.OnMapRegisterStateMain;
 import net.iGap.interfaces.OnRefreshActivity;
-import net.iGap.interfaces.OnUpdateAvatar;
 import net.iGap.interfaces.OnUpdating;
 import net.iGap.interfaces.OnUserInfoMyClient;
 import net.iGap.interfaces.OnUserSessionLogout;
@@ -112,6 +106,7 @@ import net.iGap.interfaces.OpenFragment;
 import net.iGap.libs.floatingAddButton.ArcMenu;
 import net.iGap.libs.floatingAddButton.StateChangeListener;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.libs.tabBar.NavigationTabStrip;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.EmojiTextViewE;
@@ -136,13 +131,20 @@ import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+
 import static net.iGap.G.context;
 import static net.iGap.G.isSendContact;
 import static net.iGap.G.userId;
 import static net.iGap.R.string.updating;
 import static net.iGap.fragments.FragmentiGapMap.mapUrls;
 
-public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, OnUpdateAvatar, DrawerLayout.DrawerListener {
+public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, DrawerLayout.DrawerListener, OnMapRegisterStateMain {
 
     public static final String openChat = "openChat";
     public static final String openMediaPlyer = "openMediaPlyer";
@@ -225,7 +227,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -248,10 +249,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         isOpenChatBeforeSheare = true;
-        chechIntent(intent);
+        checkIntent(intent);
     }
 
-    private void chechIntent(Intent intent) {
+    private void checkIntent(Intent intent) {
 
         new HelperGetDataFromOtherApp(intent);
 
@@ -287,12 +288,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             openActivityPassCode();
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            isNeedToRegister = true;
-            isOnGetPermission = true;
-        }
+        //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        //isNeedToRegister = true; // continue app even don't have storage permission
+        //isOnGetPermission = true;
+        //}
         super.onCreate(savedInstanceState);
-
 
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -314,8 +314,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             finish();
             return;
         }
-
-
 
 
         G.fragmentManager = getSupportFragmentManager();
@@ -345,7 +343,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
 
 
-
         if (G.firstTimeEnterToApp) {
             /**
              * set true mFirstRun for get room history after logout and login again
@@ -364,7 +361,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 editor.apply();
             }
         }
-
 
 
         setContentView(R.layout.activity_main);
@@ -418,7 +414,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             lp.height = size;
 
 
-
             desighnLayout(chatLayoutMode.none);
 
             frameFragmentBack.setOnClickListener(new View.OnClickListener() {
@@ -462,7 +457,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
 
         isOpenChatBeforeSheare = false;
-        chechIntent(getIntent());
+        checkIntent(getIntent());
 
 
         initTabStrip();
@@ -552,7 +547,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         G.helperNotificationAndBadge.cancelNotification();
         G.onGroupAvatarResponse = this;
-        G.onUpdateAvatar = this;
 
         G.onConvertToGroup = new OpenFragment() {
             @Override
@@ -586,29 +580,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         verifyAccount();
 
-        boolean keepMedia = sharedPreferences.getBoolean(SHP_SETTING.KEY_KEEP_MEDIA, false);
-        if (keepMedia && G.isCalculatKeepMedia) {// if Was selected keep media at 1week
-            G.isCalculatKeepMedia = false;
-            G.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    long last;
-                    long currentTime = G.currentTime;
-                    long saveTime = sharedPreferences.getLong(SHP_SETTING.KEY_KEEP_MEDIA_TIME, -1);
-                    if (saveTime == -1) {
-                        last = 7;
-                    } else {
-                        long oneWeeks = (24L * 60L * 60L * 1000L);
+        checkKeepMedia();
 
-                        long b = currentTime - saveTime;
-                        last = b / oneWeeks;
-                    }
-                    if (last >= 7) {
-                        new HelperCalculateKeepMedia().calculateTime();
-                    }
-                }
-            }, 5000);
-        }
 
         G.onVerifyNewDevice = new OnVerifyNewDevice() {
             @Override
@@ -619,7 +592,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (HelperCalander.isLanguagePersian) {
+                        if (HelperCalander.isPersianUnicode) {
                             new MaterialDialog.Builder(ActivityMain.this).title(R.string.Input_device_specification).contentGravity(GravityEnum.END).content(content).positiveText(R.string.B_ok).show();
                         } else {
                             new MaterialDialog.Builder(ActivityMain.this).title(R.string.Input_device_specification).contentGravity(GravityEnum.START).content(content).positiveText(R.string.B_ok).show();
@@ -638,6 +611,34 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 });
             }
         };
+    }
+
+    private void checkKeepMedia() {
+
+        final int keepMedia = sharedPreferences.getInt(SHP_SETTING.KEY_KEEP_MEDIA_NEW, 0);
+        if (keepMedia != 0 && G.isCalculatKeepMedia) {// if Was selected keep media at 1week
+            G.isCalculatKeepMedia = false;
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    long last;
+                    long currentTime = G.currentTime;
+                    long saveTime = sharedPreferences.getLong(SHP_SETTING.KEY_KEEP_MEDIA_TIME, -1);
+                    if (saveTime == -1) {
+                        last = keepMedia;
+                    } else {
+                        long days = (long) keepMedia * 1000L * 60 * 60 * 24;
+
+                        long b = currentTime - saveTime;
+                        last = b / days;
+                    }
+
+                    if (last >= keepMedia) {
+                        new HelperCalculateKeepMedia().calculateTime();
+                    }
+                }
+            }, 5000);
+        }
     }
 
     @Override
@@ -820,7 +821,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
     }
 
-    private void setmViewPagerSelectedItem() {
+    private void setViewPagerSelectedItem() {
+        if (!G.multiTab) {
+            return;
+        }
 
         G.handler.postDelayed(new Runnable() {
             @Override
@@ -830,63 +834,55 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                     return;
                 }
 
-                int index = 0;
+                int index;
 
-                if (G.salectedTabInMainActivity.length() > 0) {
+                if (G.selectedTabInMainActivity.length() > 0) {
 
-                    if (HelperCalander.isLanguagePersian) {
+                    if (HelperCalander.isPersianUnicode) {
 
-                        if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
+                        if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
                             index = 4;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
                             index = 3;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
                             index = 2;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
                             index = 1;
                         } else {
                             index = 0;
                         }
+
                     } else {
 
-                        if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
+                        if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.all.toString())) {
                             index = 0;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.chat.toString())) {
                             index = 1;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.group.toString())) {
                             index = 2;
-                        } else if (G.salectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
+                        } else if (G.selectedTabInMainActivity.equals(FragmentMain.MainType.channel.toString())) {
                             index = 3;
                         } else {
                             index = 4;
                         }
-
                     }
 
-                    G.salectedTabInMainActivity = "";
+                    G.selectedTabInMainActivity = "";
 
 
                 } else {
 
-                    if (HelperCalander.isLanguagePersian) {
+                    if (HelperCalander.isPersianUnicode) {
                         index = 4;
                     } else {
                         index = 0;
                     }
                 }
 
-
                 navigationTabStrip.setViewPager(mViewPager, index);
-
-                //try {
-                //    if (mViewPager.getAdapter().getCount() > 0) {
-                //        if (navigationTabStrip.getTitles() != null && navigationTabStrip.getTitles().length == 5) {
-                //            navigationTabStrip.setTabIndex(mViewPager.getCurrentItem());
-                //        }
-                //    }
-                //} catch (Exception e) {
-                //    HelperLog.setErrorLog("Activity main     setmViewPagerSelectedItem    " + index + "     " + HelperCalander.isLanguagePersian + "    " + e.toString());
-                //}
+                if (!HelperCalander.isPersianUnicode) {
+                    navigationTabStrip.updatePointIndicator();
+                }
 
                 navigationTabStrip.setOnTabStripSelectedIndexListener(new NavigationTabStrip.OnTabStripSelectedIndexListener() {
                     @Override
@@ -896,13 +892,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                     @Override
                     public void onEndTabSelected(String title, int index) {
-
                         onSelectItem(index);
                     }
                 });
-
-
-
             }
         }, 100);
     }
@@ -912,7 +904,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         navigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts);
         navigationTabStrip.setBackgroundColor(Color.parseColor(G.appBarColor));
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             navigationTabStrip.setTitles(getString(R.string.md_phone), getString(R.string.md_channel_icon), getString(R.string.md_users_social_symbol), getString(R.string.md_user_account_box), getString(R.string.md_apps));
         } else {
             navigationTabStrip.setTitles(getString(R.string.md_apps), getString(R.string.md_user_account_box), getString(R.string.md_users_social_symbol), getString(R.string.md_channel_icon), getString(R.string.md_phone));
@@ -921,33 +913,36 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         navigationTabStrip.setTitleSize(getResources().getDimension(R.dimen.dp20));
         navigationTabStrip.setStripColor(Color.WHITE);
 
+        mViewPager = findViewById(R.id.viewpager);
 
-
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setOffscreenPageLimit(5);
-
+        if (G.multiTab) {
+            navigationTabStrip.setVisibility(View.VISIBLE);
+            mViewPager.setOffscreenPageLimit(5);
+        } else {
+            navigationTabStrip.setVisibility(View.GONE);
+            mViewPager.setOffscreenPageLimit(1);
+        }
 
         findViewById(R.id.loadingContent).setVisibility(View.VISIBLE);
 
-        if (HelperCalander.isLanguagePersian) {
-
+        if (HelperCalander.isPersianUnicode) {
             G.handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    fragmentCall = FragmentCall.newInstance(true);
-                    pages.add(fragmentCall);
 
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
+                    if (G.multiTab) {
+                        fragmentCall = FragmentCall.newInstance(true);
+                        pages.add(fragmentCall);
+
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
+                    }
+
                     pages.add(FragmentMain.newInstance(FragmentMain.MainType.all));
-
                     sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
                     mViewPager.setAdapter(sampleFragmentPagerAdapter);
-
-
-                    setmViewPagerSelectedItem();
-
+                    setViewPagerSelectedItem();
                     findViewById(R.id.loadingContent).setVisibility(View.GONE);
                 }
             }, 400);
@@ -966,23 +961,25 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 }
             }, 400);
 
-            G.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            if (G.multiTab) {
+                G.handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
-                    pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.chat));
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.group));
+                        pages.add(FragmentMain.newInstance(FragmentMain.MainType.channel));
 
-                    fragmentCall = FragmentCall.newInstance(true);
-                    pages.add(fragmentCall);
+                        fragmentCall = FragmentCall.newInstance(true);
+                        pages.add(fragmentCall);
 
-                    mViewPager.getAdapter().notifyDataSetChanged();
+                        mViewPager.getAdapter().notifyDataSetChanged();
 
-                    setmViewPagerSelectedItem();
+                        setViewPagerSelectedItem();
 
-                }
-            }, 800);
+                    }
+                }, 800);
+            }
         }
 
         MaterialDesignTextView txtMenu = (MaterialDesignTextView) findViewById(R.id.am_btn_menu);
@@ -998,7 +995,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             ViewMaker.setLayoutDirection(mViewPager, View.LAYOUT_DIRECTION_RTL);
         }
     }
@@ -1276,20 +1273,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         itemNavSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    HelperPermision.getStoragePermision(ActivityMain.this, new OnGetPermission() {
-                        @Override
-                        public void Allow() {
-                            new HelperFragment(new FragmentSetting()).load();
-                        }
-
-                        @Override
-                        public void deny() {
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                new HelperFragment(new FragmentSetting()).load();
                 closeDrawer();
                 lockNavigation();
             }
@@ -1345,19 +1329,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                                     @Override
                                     public void onError() {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        snack.dismiss();
-                                                    }
-                                                });
-                                                snack.show();
-                                            }
-                                        });
+
                                     }
 
                                     @Override
@@ -1365,14 +1337,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        snack.dismiss();
-                                                    }
-                                                });
-                                                snack.show();
+
+                                                HelperError.showSnackMessage(getResources().getString(R.string.error), false);
+
                                             }
                                         });
                                     }
@@ -1762,7 +1729,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
 
-        if (!HelperCalander.isLanguagePersian) {
+        if (!HelperCalander.isPersianUnicode) {
             titleTypeface = G.typeface_neuropolitical;
         } else {
             titleTypeface = G.typeface_IRANSansMobile;
@@ -1771,7 +1738,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     public void stopAnimationLocation() {
         if (iconLocation != null) {
-            // iconLocation.clearAnimation();
             iconLocation.setVisibility(View.GONE);
         }
     }
@@ -1779,12 +1745,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     public void startAnimationLocation() {
         if (iconLocation != null) {
             iconLocation.setVisibility(View.VISIBLE);
-            //Animation anim = new AlphaAnimation(0.0f, 1.0f);
-            //anim.setDuration(1000); //You can manage the time
-            //anim.setStartOffset(20);
-            //anim.setRepeatMode(Animation.REVERSE);
-            //anim.setRepeatCount(Animation.INFINITE);
-            //iconLocation.startAnimation(anim);
         }
     }
 
@@ -1912,18 +1872,21 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             txtNavName.setText(username);
             txtNavPhone.setText(phoneNumber);
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
                 txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
             }
             if (updateFromServer) {
                 getUserInfo(realmUserInfo);
             }
-            setImage(realmUserInfo.getUserId());
+            setImage();
         }
     }
 
     private void getUserInfo(final RealmUserInfo realmUserInfo) {
+        if (!realmUserInfo.isValid()) {
+            return;
+        }
         if (G.userLogin) {
             new RequestUserInfo().userInfo(realmUserInfo.getUserId());
         } else {
@@ -1962,7 +1925,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     @Override
     public void onBackPressed() {
-
 
 
         if (G.onBackPressedExplorer != null) {
@@ -2077,6 +2039,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         G.chatSendMessageUtil.setOnChatSendMessageResponseRoomList(this);
         G.onClientCondition = this;
         G.onClientGetRoomListResponse = this;
+        G.onUserInfoMyClient = this;
+        G.onMapRegisterStateMain = this;
 
         startService(new Intent(this, ServiceContact.class));
 
@@ -2129,19 +2093,19 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentMain) {
 
                     FragmentMain fm = (FragmentMain) adapter.getItem(mViewPager.getCurrentItem());
-                    G.salectedTabInMainActivity = fm.mainType.toString();
+                    G.selectedTabInMainActivity = fm.mainType.toString();
                 } else if (adapter.getItem(mViewPager.getCurrentItem()) instanceof FragmentCall) {
 
-                    G.salectedTabInMainActivity = adapter.getItem(mViewPager.getCurrentItem()).getClass().getName();
+                    G.selectedTabInMainActivity = adapter.getItem(mViewPager.getCurrentItem()).getClass().getName();
                 }
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
     }
 
     @Override
-    public void onChatClearMessage(final long roomId, long clearId, final ProtoResponse.Response response) {
+    public void onChatClearMessage(final long roomId, long clearId) {
         //empty
     }
 
@@ -2156,6 +2120,15 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         //empty
     }
 
+
+    @Override
+    public void onStateMain(boolean state) {
+        if (state) {
+            startAnimationLocation();
+        } else {
+            stopAnimationLocation();
+        }
+    }
     //@Override
     //public void onSetAction(final long roomId, final long userId, final ProtoGlobal.ClientAction clientAction) {
     //    //+Realm realm = Realm.getDefaultInstance();
@@ -2184,13 +2157,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     }
 
-    @Override
-    public void onUpdateAvatar(final long roomId) {
-
-    }
-
-    public void setImage(long userId) {
-        HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
+    public void setImage() {
+        HelperAvatar.getAvatar(G.userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
             @Override
             public void onAvatarGet(final String avatarPath, long ownerId) {
                 G.handler.post(new Runnable() {
@@ -2243,8 +2211,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     }
 
     @Override
-    public void onUserInfoMyClient(ProtoGlobal.RegisteredUser user, String identity) {
-        setImage(user.getId());
+    public void onUserInfoMyClient() {
+        setImage();
     }
 
     private void chatGetRoom(final long peerId) {
@@ -2259,16 +2227,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
             G.onChatGetRoom = new OnChatGetRoom() {
                 @Override
-                public void onChatGetRoom(final long roomId) {
+                public void onChatGetRoom(ProtoGlobal.Room room) {
 
-                    new GoToChatActivity(roomId).setPeerID(peerId).startActivity();
+                    new GoToChatActivity(room.getId()).setPeerID(peerId).startActivity();
 
                     G.onChatGetRoom = null;
-                }
-
-                @Override
-                public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-
                 }
 
                 @Override
@@ -2522,15 +2485,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                             }
                         }
                     }
-
-
                 }
-
-
             }
         });
-
-
     }
 
     public static void setMediaLayout() {
@@ -2579,7 +2536,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                     }
                 } catch (Exception e) {
-                    Log.e("dddddd", "activity main  setMediaLayout " + e.toString());
+                    e.printStackTrace();
                 }
             }
         });

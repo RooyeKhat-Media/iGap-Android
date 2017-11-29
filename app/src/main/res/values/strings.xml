@@ -63,6 +63,7 @@
   <string name="Toast_Location_Not_Found">Location not found.</string>
   <string name="Toast_First_0">Don\'t need 0 at the beginning</string>
   <string name="Toast_Enter_Phone_Number">Please enter your phone number without the first zero/0</string>
+  <string name="Toast_Minimum_Characters">The number of characters is less than the limit</string>
   <string name="Toast_Enter_Code">Please enter the verification code</string>
   <string name="Toast_Number_Block">This number is blocked</string>
   <string name="Toast_time_wait">please wait until:</string>
@@ -114,7 +115,7 @@
 
   <!-- Public String -->
   <string name="search">Search</string>
-  <string formatted="false" name="d_of_d">%d of %d</string>
+  <string name="d_of_d" formatted="false">%d of %d</string>
   <string name="add_to_contact">Add to Contact</string>
   <string name="app_name">iGap</string>
   <string name="call_name">iGap Voice Call</string>
@@ -153,7 +154,7 @@
   <string name="cannot_load_data_en">Unable to load data.</string>
   <string name="do_you_want_exit">Do you want to exit?</string>
   <string name="slide_to_cancel_en">Slide to Cancel</string>
-  <string formatted="false" name="video_duration">%s (%s)</string>
+  <string name="video_duration" formatted="false">%s (%s)</string>
 
   <!-- setting -->
   <string name="st_Info">Account Info</string>
@@ -377,7 +378,7 @@
   <string name="private_channel">Private Channel</string>
   <string name="desc_private_channel">Not anyone can join. They can only be added as members by the admin(s). </string>
   <string name="desc_public_channel">Anyone can join public channels via searching or receiving the invitation link.</string>
-  <string formatted="false" name="last_msg_format_chat">%s</string>
+  <string name="last_msg_format_chat" formatted="false">%s</string>
 
   <!-- Error -->
   <string name="USER_VERIFY_BLOCKED_USER">User is blocked, no possibility to verify</string>
@@ -431,6 +432,9 @@
   <string name="E_125">Internal Server Error</string>
   <string name="E_122">Bad payload: Invalid phone number</string>
   <string name="E_123">Internal Server Error</string>
+
+  <string name="E_163">USER_PROFILE_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
+
   <string name="E_218">Bad payload: Invalid room ID</string>
   <string name="E_219">Internal Server Error</string>
   <string name="E_220">This operation is not permitted.</string>
@@ -438,6 +442,23 @@
   <string name="E_300_1">Bad payload: Invalid description</string>
   <string name="E_300_2">Bad payload: Invalid description</string>
   <string name="E_301">Internal Server Error</string>
+
+  <string name="E_373">GROUP_REVOKE_LINK_BAD_PAYLOAD</string>
+  <string name="E_374">GROUP_REVOKE_LINK_INTERNAL_SERVER_ERROR</string>
+  <string name="E_375">GROUP_REVOKE_LINK_FORBIDDEN</string>
+
+  <string name="E_453">CHANNEL_CHECK_USERNAME_BAD_PAYLOAD</string>
+  <string name="E_454">CHANNEL_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
+
+  <string name="E_455">CHANNEL_UPDATE_USERNAME_BAD_PAYLOAD</string>
+  <string name="E_456">CHANNEL_UPDATE_USERNAME_INTERNAL_SERVER_ERROR</string>
+  <string name="E_457">CHANNEL_UPDATE_USERNAME_UPDATE_LOCK</string>
+  <string name="E_458">CHANNEL_UPDATE_USERNAME_FORBIDDEN</string>
+
+  <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
+  <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
+  <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
+
   <string name="E_610">Bad payload</string>
   <string name="E_611">Internal Server Error</string>
   <string name="E_612">Bad payload</string>
@@ -447,6 +468,7 @@
   <string name="E_615_2">Bad payload: Invalid ID of the first message</string>
   <string name="E_616">Internal Server Error</string>
   <string name="E_617">No Other Messages to be Viewed.</string>
+  <string name="E_623">Client Resolve Username Not Found</string>
   <string name="E_713_1">Bad payload: Invalid token</string>
   <string name="E_713_2">Bad payload: Invalid offset</string>
   <string name="E_713_3">Bad payload: Invalid max limit</string>
@@ -454,6 +476,28 @@
   <string name="E_713_5">Bad payload: Invalid offset</string>
   <string name="E_714">Internal Server Error</string>
   <string name="E_715">file not found.</string>
+
+  <string name="E_658">You have already sent report.</string>
+  <string name="E_659">You are forbidden to send a report.</string>
+
+  <string name="E_10108">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_BAD_PAYLOAD</string>
+  <string name="E_10109">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_INTERNAL_SERVER_ERROR</string>
+  <string name="E_10110">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_MAX_TRY_LOCK</string>
+  <string name="E_10111">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_EXPIRED_TOKEN</string>
+  <string name="E_10112">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_NO_PASSWORD</string>
+  <string name="E_10113">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_INVALID_TOKEN</string>
+  <string name="E_10114">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_BAD_PAYLOAD</string>
+  <string name="E_10115">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_INTERNAL_SERVER_ERROR</string>
+  <string name="E_10116">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_MAX_TRY_LOCK</string>
+  <string name="E_10117">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_NO_PASSWORD</string>
+  <string name="E_10118"> USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_INVALID_PASSWORD</string>
+  <string name="E_10119">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_CONFIRMED_BEFORE</string>
+
+  <string name="E_10165">Bad payload: User report</string>
+  <string name="E_10166">ServerError: User report internal</string>
+  <string name="E_10167">You have already reported this user.</string>
+  <string name="E_10168">You are forbidden to do this action.</string>
+
   <string name="E_209_1">Bad payload: Invalid room ID</string>
   <string name="E_209_2">Bad payload: Invalid message ID</string>
   <string name="E_209_3">Bad payload: Invalid message</string>
@@ -462,8 +506,8 @@
   <string name="E_212_1">Bad payload: Invalid room ID</string>
   <string name="E_213">Internal Server Error</string>
   <string name="E_214">This operation is not permitted.</string>
-  <string formatted="false" name="resend_all_messages">Resend %d messages</string>
-  <string formatted="false" name="resend_chat_message">Resend messages</string>
+  <string name="resend_all_messages" formatted="false">Resend %d messages</string>
+  <string name="resend_chat_message" formatted="false">Resend messages</string>
   <string name="if_you_are_away_for">Away for</string>
   <string name="st_Gander">Gender:</string>
   <string name="st_email">Email:</string>
@@ -696,6 +740,7 @@
   <string name="five_day">Five days ago</string>
   <string name="six_day">Six days ago</string>
   <string name="at">at</string>
+
   <string name="farvardin">Farvardin</string>
   <string name="ordibehst">Ordibehesht</string>
   <string name="khordad">Khordad</string>
@@ -708,6 +753,7 @@
   <string name="dey">Dey</string>
   <string name="bahman">Bahman</string>
   <string name="esfand">Esfand</string>
+
   <string name="group_link_copy">Copy</string>
   <string name="group_link_revoke">Change Link</string>
   <string name="join">Join</string>
@@ -842,7 +888,8 @@
   <string name="compressing"> Compressing... </string>
   <string name="selected_color_can_not_set_on_yout_device">Selected color cannot be set on your device</string>
   <string name="keep_media_forever">Forever</string>
-  <string name="keep_media_1week">1 Week</string>
+  <string name="keep_media_1month">1 Month</string>
+  <string name="keep_media_6month">6 Month</string>
   <string name="file_save_to_download_folder">"File save to download folder"</string>
   <string name="first_download_file">First download file</string>
   <string name="file_save_to_galary_folder">File save to galary folder</string>
@@ -1026,7 +1073,7 @@
   <string name="map_registration">Disable "Nearby" Visibility</string>
   <string name="comment_waiting">Receiving notes...</string>
   <string name="comment_no">No Status</string>
-  <string formatted="false" name="distance">about %d m</string>
+  <string name="distance" formatted="false">about %d m</string>
   <string name="hint_gps">Your Status</string>
   <string name="Clear_Status">Clear Status</string>
   <string name="Clear_Status_desc">You will be visible to others with no status. Are you sure to continue?</string>
@@ -1079,5 +1126,40 @@
 
   <string name="text_empty_user_map">Oops! No user nearby has turned on her/his map yet</string>
   <string name="send_message_to">Send Message To </string>
+
+  <string name="st_bio">Bio</string>
+  <string name="st_des_bio">You can add a few lines about yourself. anyone who opens your profile will see this text.</string>
+  <string name="st_Report">Report</string>
+  <string name="st_Spam">Spam</string>
+  <string name="st_Violence">Violence</string>
+  <string name="st_Pornography">Pornography</string>
+  <string name="st_Other">Other</string>
+  <string name="st_Abuse">Abuse</string>
+  <string name="st_FakeAccount">Fake Account</string>
+  <string name="st_limit_bio">You have exceeded the allowed number of characters. You can use only 70 characters for Bio.</string>
+  <string name="st_checkbox_delete">Delete for</string>
+  <string name="st_desc_delete">Are you sure you want to delete %1$s message(s)?</string>
+  <string name="st_send_report">Report was successfully sent.</string>
+  <string name="set_position">Can not set position</string>
+  <string name="date">Date</string>
+  <string name="miladi">Gregorian</string>
+  <string name="shamsi">Hijri Shamsi</string>
+  <string name="ghamari">Hijri Lunar</string>
+  <string name="Uploading">Uploading...</string>
+
+  <string name="moharam">Muharram</string>
+  <string name="safar">Safar</string>
+  <string name="rabio_aval">Rabi Awwal</string>
+  <string name="rabi_sani">Rabi Thani</string>
+  <string name="jamado_aval">Jumada Awwal</string>
+  <string name="jamado_sani">Jumada Thani</string>
+  <string name="rajab">Rajab</string>
+  <string name="shaban">Shaaban</string>
+  <string name="ramezan">Ramadhan</string>
+  <string name="shaval">Shawwal</string>
+  <string name="zighade">Thul Qidah</string>
+  <string name="zihaje">Thul Hijjah</string>
+
+  <string name="st_multi_tab">Multi Tab</string>
 
 </resources>

@@ -70,8 +70,8 @@
 
           <LinearLayout
               android:layout_width="0dp"
-              android:layout_weight="1"
               android:layout_height="match_parent"
+              android:layout_weight="1"
               android:gravity="left"
               >
 
@@ -151,21 +151,20 @@
 
         <net.iGap.module.EmojiTextViewE
             android:id="@+id/ac_txt_nickname_title"
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dp4"
+            android:lineSpacingMultiplier=".8"
             android:maxLength="24"
+            android:padding="@dimen/dp4"
             android:singleLine="true"
-            android:text="AM"
+            android:text="Your iGap Name"
             android:textColor="@android:color/white"
             android:textSize="@dimen/dp15"
             android:textStyle="bold"
-            fontPath="fonts/IRANSansMobile.ttf"
-            app:emojiSize="@dimen/dp14"
-            android:lineSpacingMultiplier=".8"
-            android:padding="@dimen/dp4"
-            />
+            app:emojiSize="@dimen/dp14" />
 
       </LinearLayout>
 
@@ -247,22 +246,21 @@
 
             <net.iGap.module.EmojiTextViewE
                 android:id="@+id/st_txt_nikName"
+                fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp28"
                 android:gravity="center_vertical"
+                android:lineSpacingMultiplier=".8"
                 android:maxLength="25"
+                android:padding="@dimen/dp4"
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
-                android:text="Alexander Smith"
+                android:text="Your Name"
                 android:textColor="@color/gray_5c"
                 android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText"
-                fontPath="fonts/IRANSansMobile.ttf"
-                app:emojiSize="@dimen/dp14"
-                android:lineSpacingMultiplier=".8"
-                android:padding="@dimen/dp4"
-                />
+                app:emojiSize="@dimen/dp14" />
 
           </LinearLayout>
 
@@ -341,6 +339,7 @@
 
             <TextView
                 android:id="@+id/st_txt_userName"
+                fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp28"
                 android:gravity="center_vertical"
@@ -348,12 +347,10 @@
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
-                android:text="Alexander Smith:"
+                android:text="Your Username"
                 android:textColor="@color/gray_5c"
                 android:textSize="@dimen/dp14"
-                android:theme="@style/Setting_editText"
-                fontPath="fonts/IRANSansMobile.ttf"
-                />
+                android:theme="@style/Setting_editText" />
           </LinearLayout>
 
           <LinearLayout
@@ -437,6 +434,41 @@
               fontPath="fonts/IRANSansMobile.ttf"
               />
         </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/st_layout_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dp12"
+              android:paddingEnd="@dimen/dp4"
+              android:paddingStart="@dimen/dp4"
+              android:text="@string/st_bio"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <TextView
+              android:id="@+id/st_txt_bio"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:paddingEnd="@dimen/dp4"
+              android:paddingStart="@dimen/dp4"
+              android:text="@string/st_bio"
+              android:textColor="@color/gray_5c"
+              android:textSize="@dimen/dp14"
+              android:theme="@style/Setting_editText" />
+        </LinearLayout>
 
       </LinearLayout>
 
@@ -541,8 +573,6 @@
             android:layout_height="1dp"
             android:background="@color/background_editText"
             />
-
-
         <LinearLayout
             android:id="@+id/st_layout_language"
             android:layout_width="match_parent"
@@ -580,23 +610,16 @@
               fontPath="fonts/IRANSansMobile.ttf"
               />
         </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background_editText"
             />
-
-
         <LinearLayout
-
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
+            android:layout_height="@dimen/dp52"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
+            android:id="@+id/vg_toggle_dataShams"
             >
 
           <TextView
@@ -605,24 +628,30 @@
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:gravity="center_vertical"
+              android:paddingEnd="@dimen/dp16"
+              android:paddingStart="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
-              android:text="@string/st_data_shams"
+              android:text="@string/date"
               android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              android:width="0dp"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <TextView
+              android:id="@+id/st_txt_data"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:text="Miladi"
+              android:textColor="@color/toolbar_background"
               android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
-
-
-          <ToggleButton
-              android:id="@+id/st_toggle_dataShams"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
         </LinearLayout>
 
         <View
@@ -667,8 +696,49 @@
               />
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingStart="@dimen/dp16"
+            android:visibility="visible"
+            >
+
+          <TextView
+              android:id="@+id/st_txt_st_toggle_multi_tab"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/st_multi_tab"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
 
 
+          <ToggleButton
+              android:id="@+id/st_toggle_multi_tab"
+              android:layout_width="@dimen/dp44"
+              android:layout_height="@dimen/dp40"
+              android:background="@drawable/st_switch_button"
+              android:textOff=""
+              android:textOn=""
+              />
+
+        </LinearLayout>
 
 
       </LinearLayout>

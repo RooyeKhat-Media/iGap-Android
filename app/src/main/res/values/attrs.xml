@@ -67,4 +67,25 @@
 
     </declare-styleable>
 
+  <!--NavigationTabStrip library-->
+  <declare-styleable name="NavigationTabStrip">
+    <attr format="color" name="nts_color" />
+    <attr format="dimension" name="nts_size" />
+    <attr format="dimension" name="nts_weight" />
+    <attr format="float" name="nts_factor" />
+    <attr format="reference" name="nts_titles" />
+    <attr format="enum" name="nts_type">
+      <enum name="line" value="0" />
+      <enum name="point" value="1" />
+    </attr>
+    <attr format="enum" name="nts_gravity">
+      <enum name="bottom" value="0" />
+      <enum name="top" value="1" />
+    </attr>
+    <attr format="string" name="nts_typeface" />
+    <attr format="dimension" name="nts_corners_radius" />
+    <attr format="integer" name="nts_animation_duration" />
+    <attr format="color" name="nts_inactive_color" />
+    <attr format="color" name="nts_active_color" />
+  </declare-styleable>
 </resources>

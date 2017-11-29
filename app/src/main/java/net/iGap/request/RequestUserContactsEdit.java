@@ -10,32 +10,21 @@
 
 package net.iGap.request;
 
-import io.realm.Realm;
 import net.iGap.proto.ProtoUserContactsEdit;
-import net.iGap.realm.RealmContacts;
-import net.iGap.realm.RealmContactsFields;
 
 public class RequestUserContactsEdit {
 
-    public void contactsEdit(long phone, String first_name, String last_name) {
-        Realm realm = Realm.getDefaultInstance();
+    public void contactsEdit(long userId, long phone, String first_name, String last_name) {
         ProtoUserContactsEdit.UserContactsEdit.Builder builder = ProtoUserContactsEdit.UserContactsEdit.newBuilder();
-        RealmContacts realmItem = realm.where(RealmContacts.class).equalTo(RealmContactsFields.PHONE, phone).findFirst();
+        builder.setPhone(phone);
+        builder.setFirstName(first_name);
+        builder.setLastName(last_name);
 
-        if (realmItem != null) {
-
-            builder.setPhone(phone);
-            builder.setFirstName(first_name);
-            builder.setLastName(last_name);
-        }
-
-        RequestWrapper requestWrapper = new RequestWrapper(109, builder);
+        RequestWrapper requestWrapper = new RequestWrapper(109, builder, userId + "");
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
-        realm.close();
     }
 }

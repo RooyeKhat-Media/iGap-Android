@@ -18,7 +18,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -38,18 +37,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -57,6 +52,7 @@ import net.iGap.activities.ActivityCrop;
 import net.iGap.activities.ActivityManageSpace;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperImageBackColor;
@@ -100,10 +96,10 @@ import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmPrivacy;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserAvatarAdd;
 import net.iGap.request.RequestUserProfileCheckUsername;
+import net.iGap.request.RequestUserProfileGetBio;
 import net.iGap.request.RequestUserProfileGetEmail;
 import net.iGap.request.RequestUserProfileGetGender;
 import net.iGap.request.RequestUserProfileSetEmail;
@@ -112,9 +108,18 @@ import net.iGap.request.RequestUserProfileSetNickname;
 import net.iGap.request.RequestUserProfileUpdateUsername;
 import net.iGap.request.RequestUserSessionLogout;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmModel;
+
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.context;
+import static net.iGap.G.onRefreshActivity;
 import static net.iGap.R.string.log_out;
 import static net.iGap.module.AttachFile.request_code_image_from_gallery_single_select;
 
@@ -166,6 +171,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
     private String userName;
     private String phoneName;
     private String userEmail;
+    private String bio;
     private long userId;
     public ProgressBar prgWait;
     private TextView txtGander;
@@ -174,6 +180,9 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
     static boolean isActiveRun = false;
     private Realm mRealm;
     private Fragment fragment;
+    private ViewGroup ltBio;
+    private TextView txtBio;
+    public static DateType dateType;
 
 
     RealmUserInfo realmUserInfo;
@@ -211,10 +220,27 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         txtGander = (TextView) view.findViewById(R.id.st_txt_gander);
         txtEmail = (TextView) view.findViewById(R.id.st_txt_email);
         prgWait = (ProgressBar) view.findViewById(R.id.st_prgWaiting_addContact);
+
+        txtBio = (TextView) view.findViewById(R.id.st_txt_bio);
+
+        ViewGroup layoutBio = (ViewGroup) view.findViewById(R.id.st_layout_bio);
+        layoutBio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentBio fragmentBio = new FragmentBio();
+                Bundle bundle = new Bundle();
+                bundle.putString("BIO", txtBio.getText().toString());
+                fragmentBio.setArguments(bundle);
+
+                new HelperFragment(fragmentBio).setReplace(false).load();
+            }
+        });
+
         AppUtils.setProgresColler(prgWait);
 
         new RequestUserProfileGetGender().userProfileGetGender();
         new RequestUserProfileGetEmail().userProfileGetEmail();
+        new RequestUserProfileGetBio().getBio();
 
         realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
 
@@ -388,22 +414,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                             public void onUserProfileNickNameResponse(final String nickName, String initials) {
                                 setAvatar();
 
-                                /**
-                                 * update RealmRoom for cloud chat if exist
-                                 */
-                                Realm realm = Realm.getDefaultInstance();
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        for (RealmRoom realmRoom : realm.where(RealmRoom.class).equalTo(RealmRoomFields.TYPE, ProtoGlobal.Room.Type.CHAT.toString()).findAll()) {
-                                            if (realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == userId) {
-                                                realmRoom.setTitle(nickName);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                });
-                                realm.close();
+                                RealmRoom.updateChatTitle(userId, nickName);
 
                                 G.handler.post(new Runnable() {
                                     @Override
@@ -559,12 +570,8 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
                 layoutEmail.addView(inputEmail, layoutParams);
 
-                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_email))
-                        .positiveText(G.fragmentActivity.getResources().getString(R.string.save))
-                        .customView(layoutEmail, true)
-                        .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-                        .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-                        .build();
+                final MaterialDialog dialog =
+                        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_email)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutEmail, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
                 final View positive = dialog.getActionButton(DialogAction.POSITIVE);
                 positive.setEnabled(false);
@@ -906,7 +913,6 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                 txtDeleteAccount.setText(G.fragmentActivity.getResources().getString(R.string.delete_account));
 
 
-
                 root1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View view) {
@@ -952,20 +958,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
                                     @Override
                                     public void onError() {
-                                        G.handler.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                hideProgressBar();
-                                                final Snackbar snack = Snackbar.make(view.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        snack.dismiss();
-                                                    }
-                                                });
-                                                snack.show();
-                                            }
-                                        });
+
                                     }
 
                                     @Override
@@ -974,14 +967,11 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                                             @Override
                                             public void run() {
                                                 hideProgressBar();
-                                                final Snackbar snack = Snackbar.make(view.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View view) {
-                                                        snack.dismiss();
-                                                    }
-                                                });
-                                                snack.show();
+                                                if (view != null) {
+
+                                                    HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.error), false);
+
+                                                }
                                             }
                                         });
                                     }
@@ -1351,45 +1341,35 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
          /*
           setting toggle DataShams
          */
-        final TextView txtDataShams = (TextView) view.findViewById(R.id.st_txt_st_toggle_dataShams);
-        final ToggleButton toggleEnableDataShams = (ToggleButton) view.findViewById(R.id.st_toggle_dataShams);
+        final TextView txtTitleData = (TextView) view.findViewById(R.id.st_txt_st_toggle_dataShams);
+        final ViewGroup vgTitleData = (ViewGroup) view.findViewById(R.id.vg_toggle_dataShams);
+        final TextView txtData = (TextView) view.findViewById(R.id.st_txt_data);
 
-        int checkedEnableDataShams = sharedPreferences.getInt(SHP_SETTING.KEY_ENABLE_DATA_SHAMS, 0);
-        if (checkedEnableDataShams == 1) {
-            toggleEnableDataShams.setChecked(true);
-        } else {
-            toggleEnableDataShams.setChecked(false);
-        }
-
-        toggleEnableDataShams.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        dateType = new DateType() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                if (isChecked) {
-                    editor.putInt(SHP_SETTING.KEY_ENABLE_DATA_SHAMS, 1);
-                    editor.apply();
-                } else {
-                    editor.putInt(SHP_SETTING.KEY_ENABLE_DATA_SHAMS, 0);
-                    editor.apply();
-                }
-
-                G.isUpdateNotificaionColorMain = true;
-                G.isUpdateNotificaionColorChannel = true;
-                G.isUpdateNotificaionColorGroup = true;
-                G.isUpdateNotificaionColorChat = true;
-                G.isUpdateNotificaionCall = true;
-
-                //if (G.onRefreshActivity != null) {
-                //    G.onRefreshActivity.refresh("");
-                //}
+            public void dataName(String type) {
+                txtData.setText(type);
             }
-        });
+        };
 
-        txtDataShams.setOnClickListener(new View.OnClickListener() {
+
+        int typeData = sharedPreferences.getInt(SHP_SETTING.KEY_DATA, 0);
+
+        switch (typeData) {
+            case 0:
+                txtData.setText(G.fragmentActivity.getResources().getString(R.string.miladi));
+                break;
+            case 1:
+                txtData.setText(G.fragmentActivity.getResources().getString(R.string.shamsi));
+                break;
+            case 2:
+                txtData.setText(G.fragmentActivity.getResources().getString(R.string.ghamari));
+                break;
+        }
+        vgTitleData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleEnableDataShams.setChecked(!toggleEnableDataShams.isChecked());
+                new HelperFragment(new FragmentData()).setReplace(false).load();
             }
         });
 
@@ -1431,6 +1411,47 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         });
 
 
+        final TextView txtMultiTab = view.findViewById(R.id.st_txt_st_toggle_multi_tab);
+        final ToggleButton toggleEnableMultiTab = view.findViewById(R.id.st_toggle_multi_tab);
+
+        boolean checkedEnableMultiTab = sharedPreferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
+        if (checkedEnableMultiTab) {
+            toggleEnableMultiTab.setChecked(true);
+        } else {
+            toggleEnableMultiTab.setChecked(false);
+        }
+
+        toggleEnableMultiTab.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                if (isChecked) {
+                    G.multiTab = true;
+                    editor.putBoolean(SHP_SETTING.KEY_MULTI_TAB, true);
+                    editor.apply();
+                } else {
+                    G.multiTab = false;
+                    editor.putBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
+                    editor.apply();
+                }
+                FragmentMain.roomAdapterHashMap = null;
+
+                if (onRefreshActivity != null) {
+                    G.isRestartActivity = true;
+                    onRefreshActivity.refresh("ar");
+                }
+                removeFromBaseFragment(FragmentSetting.this);
+            }
+        });
+
+        txtMultiTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleEnableMultiTab.setChecked(!toggleEnableMultiTab.isChecked());
+            }
+        });
+
          /*
           setting text size for chat room
          */
@@ -1438,7 +1459,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         txtMessageTextSize = (TextView) view.findViewById(R.id.st_txt_messageTextSize_number);
         txtMessageTextSize.setText("" + sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14));
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             txtMessageTextSize.setText(HelperCalander.convertToUnicodeFarsiNumber(txtMessageTextSize.getText().toString()));
         }
 
@@ -1447,8 +1468,9 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
             @Override
             public void onClick(View view) {
                 new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_title_message_textSize))
-                        .titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black))
-                        .items(HelperCalander.isLanguagePersian ? R.array.message_text_size_persian : R.array.message_text_size)
+                        .titleGravity(GravityEnum.START)
+                        .titleColor(G.context.getResources().getColor(android.R.color.black))
+                        .items(HelperCalander.isPersianUnicode ? R.array.message_text_size_persian : R.array.message_text_size)
                         .itemsCallbackSingleChoice(poRbDialogTextSize, new MaterialDialog.ListCallbackSingleChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
@@ -1456,7 +1478,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                                 if (text != null) {
                                     txtMessageTextSize.setText(text.toString().replace("(Hello)", "").trim());
 
-                                    if (HelperCalander.isLanguagePersian) {
+                                    if (HelperCalander.isPersianUnicode) {
                                         txtMessageTextSize.setText(HelperCalander.convertToUnicodeFarsiNumber(txtMessageTextSize.getText().toString()));
                                     }
                                 }
@@ -1470,7 +1492,8 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
                                 return false;
                             }
-                        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
+                        })
+                        .positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
                         .show();
             }
         });
@@ -1946,7 +1969,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
         TextView txtWebViewHome = (TextView) view.findViewById(R.id.st_txt_iGap_home);
         final String link;
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             link = "https://www.igap.net/fa";
         } else {
             link = "https://www.igap.net/";
@@ -1959,7 +1982,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         });
 
         final String blogLink;
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             blogLink = "https://blog.igap.net/fa";
         } else {
             blogLink = "https://blog.igap.net";
@@ -1975,7 +1998,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
 
         final String supportLink;
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             supportLink = "https://support.igap.net/fa";
         } else {
             supportLink = "https://support.igap.net";
@@ -1992,12 +2015,11 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
 
         txtVersionApp.setText(G.fragmentActivity.getResources().getString(R.string.iGap_version) + " " + getAppVersion());
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             txtVersionApp.setText(HelperCalander.convertToUnicodeFarsiNumber(txtVersionApp.getText().toString()));
         }
 
         setAvatar();
-
 
 
     }
@@ -2103,17 +2125,21 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
             phoneName = userInfo.getUserInfo().getPhoneNumber();
             ProtoGlobal.Gender userGender = userInfo.getGender();
             userEmail = userInfo.getEmail();
+            bio = userInfo.getUserInfo().getBio();
 
             if (nickName != null) {
                 txtNickName.setText(nickName);
                 txtNickNameTitle.setText(nickName);
+            }
+            if (bio != null) {
+                txtBio.setText(bio);
             }
 
             if (userName != null) txtUserName.setText(userName);
 
             if (phoneName != null) txtPhoneNumber.setText(phoneName);
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 txtPhoneNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtPhoneNumber.getText().toString()));
             }
 
@@ -2345,23 +2371,12 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
             @Override
             public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
                 if (text.toString().equals(G.fragmentActivity.getResources().getString(R.string.array_From_Camera))) { // camera
-
                     try {
-                        HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                        HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                             @Override
-                            public void Allow() throws IOException {
-                                HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                                    @Override
-                                    public void Allow() {
-                                        dialog.dismiss();
-                                        useCamera();
-                                    }
-
-                                    @Override
-                                    public void deny() {
-
-                                    }
-                                });
+                            public void Allow() {
+                                dialog.dismiss();
+                                useCamera();
                             }
 
                             @Override
@@ -2374,11 +2389,7 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                     }
                 } else {
                     try {
-                        //new AttachFile(G.fragmentActivity).requestOpenGalleryForImageSingleSelect();
-
-                        // this part should transform to attach file
-
-                        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+                        HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                             @Override
                             public void Allow() {
                                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -2431,17 +2442,6 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
             if (G.onChangeUserPhotoListener != null) {
                 G.onChangeUserPhotoListener.onChangePhoto(path);
             }
-        }
-    }
-
-    private void showInitials() {
-
-        RealmUserInfo realmUserInfo = getRealm().where(RealmUserInfo.class).findFirst();
-        circleImageView.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) circleImageView.getContext().getResources().getDimension(R.dimen.dp100), realmUserInfo.getUserInfo().getInitials(), realmUserInfo.getUserInfo().getColor()));
-
-
-        if (G.onChangeUserPhotoListener != null) {
-            G.onChangeUserPhotoListener.onChangePhoto(null);
         }
     }
 
@@ -2623,5 +2623,10 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                 }
             }
         });
+    }
+
+    public interface DateType {
+
+        void dataName(String type);
     }
 }

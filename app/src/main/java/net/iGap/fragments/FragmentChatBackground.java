@@ -23,11 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.AdapterChatBackground;
@@ -39,12 +35,19 @@ import net.iGap.module.AttachFile;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.proto.ProtoInfoWallpaper;
 import net.iGap.realm.RealmWallpaper;
 import net.iGap.request.RequestInfoWallpaper;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.content.Context.MODE_PRIVATE;
+import static net.iGap.G.DIR_CHAT_BACKGROUND;
 
 public class FragmentChatBackground extends BaseFragment {
 
@@ -73,6 +76,14 @@ public class FragmentChatBackground extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        try {
+            new File(DIR_CHAT_BACKGROUND).mkdirs();
+            new File(DIR_CHAT_BACKGROUND + "/.nomedia").createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         fragment = this;
         view.findViewById(R.id.stcb_backgroundToolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
@@ -222,12 +233,7 @@ public class FragmentChatBackground extends BaseFragment {
             }
         };
 
-        ProtoInfoWallpaper.InfoWallpaper.Fit fit = ProtoInfoWallpaper.InfoWallpaper.Fit.PHONE;
-        if (G.context.getResources().getBoolean(R.bool.isTablet)) {
-            fit = ProtoInfoWallpaper.InfoWallpaper.Fit.TABLET;
-        }
-
-        new RequestInfoWallpaper().infoWallpaper(fit);
+        new RequestInfoWallpaper().infoWallpaper();
     }
 
     private void fillList(boolean getInfoFromServer) {

@@ -26,21 +26,28 @@ public class UserSessionLogoutResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onUserSessionLogout();
+        if (G.onUserSessionLogout != null) {
+            G.onUserSessionLogout.onUserSessionLogout();
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
-        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onTimeOut();
+        if (G.onUserSessionLogout != null) {
+            G.onUserSessionLogout.onTimeOut();
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-
-        if (G.onUserSessionLogout != null) G.onUserSessionLogout.onError();
-
+        if (G.onUserSessionLogout != null) {
+            G.onUserSessionLogout.onError();
+        }
     }
 }
 

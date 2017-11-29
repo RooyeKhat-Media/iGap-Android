@@ -19,11 +19,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @CoordinatorLayout.DefaultBehavior(MoveUpwardBehaviour.class) public class ArcMenu extends FrameLayout {
 
@@ -101,7 +103,7 @@ import net.iGap.helper.HelperCalander;
 
         if (mMenuSideEnum == MenuSideEnum.ARC_LEFT) {
 
-            if (!HelperCalander.isLanguagePersian) {
+            if (!HelperCalander.isPersianUnicode) {
                 mQuadrantAngle = 90;
             } else {
                 mQuadrantAngle = -90;
@@ -160,7 +162,7 @@ import net.iGap.helper.HelperCalander;
                 leftPoint = (int) (mCurrentRadius * Math.cos(Math.toRadians(totalAngleForChild)));
                 topPoint = (int) (mCurrentRadius * Math.sin(Math.toRadians(totalAngleForChild)));
 
-                if (mMenuSideEnum == MenuSideEnum.ARC_RIGHT || HelperCalander.isLanguagePersian) {
+                if (mMenuSideEnum == MenuSideEnum.ARC_RIGHT || HelperCalander.isPersianUnicode) {
                     left = cx + leftPoint;
                     top = cy + topPoint;
                 } else {
@@ -181,7 +183,7 @@ import net.iGap.helper.HelperCalander;
      * be show.
      */
     private void layoutMenu() {
-        if (mMenuSideEnum == MenuSideEnum.ARC_RIGHT || HelperCalander.isLanguagePersian) {
+        if (mMenuSideEnum == MenuSideEnum.ARC_RIGHT || HelperCalander.isPersianUnicode) {
             cx = 0 + menuMargin;
             cy = getMeasuredHeight() - fabMenu.getMeasuredHeight() - menuMargin;
         } else {

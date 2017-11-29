@@ -10,15 +10,8 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import net.iGap.G;
+import net.iGap.helper.HelperClearMessage;
 import net.iGap.proto.ProtoGroupClearMessage;
-import net.iGap.realm.RealmClientCondition;
-import net.iGap.realm.RealmClientConditionFields;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 
 public class GroupClearMessageResponse extends MessageHandler {
 
@@ -37,36 +30,8 @@ public class GroupClearMessageResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-        final ProtoGroupClearMessage.GroupClearMessageResponse.Builder builder = (ProtoGroupClearMessage.GroupClearMessageResponse.Builder) message;
-        builder.getRoomId();
-        builder.getClearId();
-
-        Realm realm = Realm.getDefaultInstance();
-        if (builder.getResponse().getId().isEmpty()) { // another account cleared message
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    final RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, builder.getRoomId()).findFirst();
-                    realmClientCondition.setClearId(builder.getClearId());
-                }
-            });
-            G.clearMessagesUtil.onChatClearMessage(builder.getRoomId(), builder.getClearId(), builder.getResponse());
-        }
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-                if (realmRoom != null && ((realmRoom.getLastMessage() == null) || (realmRoom.getLastMessage().getMessageId() <= builder.getRoomId()))) {
-                    realmRoom.setUnreadCount(0);
-                    realmRoom.setLastMessage(null);
-                }
-
-                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, builder.getRoomId()).lessThan(RealmRoomMessageFields.MESSAGE_ID, builder.getClearId()).findAll().deleteAllFromRealm();
-            }
-        });
-
-        realm.close();
+        ProtoGroupClearMessage.GroupClearMessageResponse.Builder builder = (ProtoGroupClearMessage.GroupClearMessageResponse.Builder) message;
+        HelperClearMessage.clearMessage(builder.getRoomId(), builder.getClearId());
     }
 
     @Override

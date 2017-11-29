@@ -12,7 +12,6 @@ package net.iGap.module;
 
 import net.iGap.interfaces.OnChatClearMessageResponse;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.proto.ProtoResponse;
 import net.iGap.request.RequestChatClearMessage;
 import net.iGap.request.RequestGroupClearMessage;
 
@@ -35,9 +34,10 @@ public class ClearMessagesUtil implements OnChatClearMessageResponse {
         }
     }
 
-    @Override public void onChatClearMessage(long roomId, long clearId, ProtoResponse.Response response) {
+    @Override
+    public void onChatClearMessage(long roomId, long clearId) {
         if (mOnChatClearMessageResponse != null) {
-            mOnChatClearMessageResponse.onChatClearMessage(roomId, clearId, response);
+            mOnChatClearMessageResponse.onChatClearMessage(roomId, clearId);
         }
     }
 }

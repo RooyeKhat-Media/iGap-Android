@@ -41,18 +41,6 @@ public class SignalingGetLogResponse extends MessageHandler {
         if (G.iSignalingGetCallLog != null) {
             G.iSignalingGetCallLog.onGetList(list.size(), list);
         }
-
-        //for (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item : list) {
-        //
-        //    item.getId();
-        //    item.getType();
-        //    item.getStatus();
-        //    item.getPeer();
-        //    item.getOfferTime();
-        //    item.getDuration();
-        //}
-
-
     }
 
     @Override
@@ -71,8 +59,6 @@ public class SignalingGetLogResponse extends MessageHandler {
         if (G.iSignalingGetCallLog != null) {
             G.iSignalingGetCallLog.onGetList(-1, null);
         }
-
-
     }
 }
 

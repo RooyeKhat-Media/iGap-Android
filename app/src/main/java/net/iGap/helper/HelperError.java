@@ -14,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.module.AppUtils;
 import net.iGap.module.LoginActions;
 
 public class HelperError {
@@ -113,6 +114,20 @@ public class HelperError {
                 error = G.fragmentActivity.getResources().getString(R.string.E_158);
                 break;
 
+            case 163:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 163;
+                break;
+
+            case 173:
+                error = G.fragmentActivity.getResources().getString(R.string.error);
+                break;
+            case 174:
+                error = G.fragmentActivity.getResources().getString(R.string.error);
+                break;
+            case 194:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_password);
+                break;
+
             case 200:
                 error = G.fragmentActivity.getResources().getString(R.string.E_200);
                 break;
@@ -147,13 +162,16 @@ public class HelperError {
                 break;
 
             case 213:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_213);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_213);
                 break;
             case 214:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_214);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_214);
                 break;
             case 218:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_218);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_218);
                 break;
             case 219:
                 error = G.fragmentActivity.getResources().getString(R.string.E_219);
@@ -198,6 +216,17 @@ public class HelperError {
             case 305:
                 error = G.fragmentActivity.getResources().getString(R.string.E_305);
                 break;
+
+            case 3356:
+                G.fragmentActivity.getResources().getString(R.string.just_owner_can_delete);
+                break;
+            case 357:
+                G.fragmentActivity.getResources().getString(R.string.just_owner_can_delete);
+                break;
+            case 358:
+                G.fragmentActivity.getResources().getString(R.string.just_owner_can_delete);
+                break;
+
             case 318:
                 if (minorCode == 1) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_318_1);
@@ -258,7 +287,8 @@ public class HelperError {
                 }
                 break;
             case 331:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_331);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_331);
                 break;
             case 332:
                 if (minorCode == 1) {
@@ -269,29 +299,78 @@ public class HelperError {
                 break;
 
             case 333:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_333);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_333);
                 break;
             case 334:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_334);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_334);
                 break;
             case 335:
                 error = G.fragmentActivity.getResources().getString(R.string.E_335);
                 break;
             case 336:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_336);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_336);
                 break;
             case 337:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_337);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_337);
+                break;
+
+
+            case 373:
+
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 373;
+
+                break;
+            case 374:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 374;
+                break;
+            case 375:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 375;
+                break;
+
+            case 453:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 453;
+                break;
+            case 455:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 455;
+                break;
+            case 456:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 456;
+                break;
+            case 454:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 454;
+                break;
+            case 457:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 457;
+                break;
+            case 458:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 458;
+                break;
+
+            case 467:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 467;
+                break;
+            case 468:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 468;
+                break;
+            case 469:
+                //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 469 + " minor : " + minorCode;
                 break;
 
             case 500:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
             case 502:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
             case 503:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
 
             case 610:
@@ -327,18 +406,30 @@ public class HelperError {
                 error = "";// G.fragmentActivity.getResources().getString(R.string.there_is_no_sheared_media);
                 break;
             case 623:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_623);
                 break;
             case 629:
                 if (minorCode == 1) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 } else if (minorCode == 2) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
-                } else if (minorCode == 3) error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                } else if (minorCode == 3)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 break;
             case 638:
-                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                if (minorCode == 1)
+                    error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 break;
+
+            case 658:
+                error = G.fragmentActivity.getResources().getString(R.string.E_658);
+                break;
+
+            case 659:
+                error = G.fragmentActivity.getResources().getString(R.string.E_659);
+                break;
+
             case 713:
                 if (minorCode == 1) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
@@ -357,6 +448,106 @@ public class HelperError {
                 break;
             case 715:
                 error = G.fragmentActivity.getResources().getString(R.string.E_715);
+                break;
+
+            case 10105:
+                if (minorCode == 101) {
+                    error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                }
+
+                break;
+
+            case 10108:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                break;
+
+            case 10109:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                break;
+
+            case 10110:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                break;
+
+            case 10111:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                break;
+
+            case 10113:
+
+                if (minorCode == 2) {
+                    error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                } else {
+                    error = G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code);
+                }
+                break;
+
+            case 10114:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+
+            case 10115:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+            case 10116:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+
+            case 10117:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+            case 10118:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+            case 10119:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+
+            case 10129: {
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_email_token);
+                break;
+            }
+
+            case 10134:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+
+            case 10136:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+            case 10137:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+            case 10138:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+            case 10139:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+            case 10140:
+                error = G.fragmentActivity.getResources().getString(R.string.invalid_question_token);
+                break;
+
+            case 10165:
+
+                error = G.fragmentActivity.getResources().getString(R.string.E_10165);
+
+                break;
+
+            case 10166:
+
+                error = G.fragmentActivity.getResources().getString(R.string.E_10166);
+
+                break;
+            case 10167:
+
+                error = G.fragmentActivity.getResources().getString(R.string.E_10167);
+
+                break;
+            case 10168:
+
+                error = G.fragmentActivity.getResources().getString(R.string.E_10168);
+
                 break;
             case 99999: // client errors
                 error = "Offset is negative";
@@ -381,15 +572,17 @@ public class HelperError {
         return error;
     }
 
-    public static void showSnackMessage(final String message) {
+    public static void showSnackMessage(final String message, boolean isVibrate) {
+
+        if (isVibrate) {
+            AppUtils.setVibrator(200);
+        }
 
         if (message.length() > 0 && G.currentActivity != null) {
-
             G.currentActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     final Snackbar snack = Snackbar.make(G.currentActivity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
-
                     snack.setAction(R.string.cancel, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

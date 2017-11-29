@@ -10,6 +10,8 @@
 
 package net.iGap.interfaces;
 
-public interface OnUpdateAvatar {
-    void onUpdateAvatar(long roomId);
+import net.iGap.module.enums.ConnectionState;
+
+public interface OnConnectionChangeStateChat {
+    void onChangeState(ConnectionState connectionState);
 }

@@ -536,12 +536,8 @@
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
+            android:layout_height="@dimen/dp52"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
             >
 
           <TextView
@@ -551,23 +547,25 @@
               android:layout_weight="1"
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
-              android:text="@string/st_data_shams"
+              android:text="@string/date"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp15"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
-
-
-          <ToggleButton
-              android:id="@+id/st_toggle_dataShams"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
+          <TextView
+              android:id="@+id/st_txt_data"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:text="Miladi"
+              android:textColor="@color/toolbar_background"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
               />
-
         </LinearLayout>
 
         <View

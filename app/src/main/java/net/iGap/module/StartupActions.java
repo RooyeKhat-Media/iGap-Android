@@ -4,18 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
-import io.realm.DynamicRealm;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import java.io.File;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -25,14 +23,24 @@ import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperFillLookUpClass;
 import net.iGap.helper.HelperNotificationAndBadge;
+import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperUploadFile;
 import net.iGap.helper.MyServiceTemporat;
 import net.iGap.realm.RealmMigration;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.webrtc.CallObserver;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
+import io.realm.DynamicRealm;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static android.content.Context.MODE_PRIVATE;
+import static net.iGap.Config.REALM_SCHEMA_VERSION;
 import static net.iGap.G.DIR_APP;
 import static net.iGap.G.DIR_AUDIOS;
 import static net.iGap.G.DIR_CHAT_BACKGROUND;
@@ -110,7 +118,6 @@ public final class StartupActions {
     }
 
 
-
     /**
      * start connecting to the sever
      */
@@ -131,6 +138,7 @@ public final class StartupActions {
         attachmentColor = preferences.getString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_attachmentColor);
         headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
         G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
+        G.multiTab = preferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
 
         /**
          * start background app service
@@ -193,18 +201,18 @@ public final class StartupActions {
         switch (language) {
             case "فارسی":
                 selectedLanguage = "fa";
-                HelperCalander.isLanguagePersian = true;
+                HelperCalander.isPersianUnicode = true;
                 G.isAppRtl = true;
                 break;
             case "English":
                 selectedLanguage = "en";
-                HelperCalander.isLanguagePersian = false;
+                HelperCalander.isPersianUnicode = false;
                 G.isAppRtl = false;
                 break;
             case "العربی":
                 selectedLanguage = "ar";
-                HelperCalander.isLanguagePersian = false;
-                G.isAppRtl = false;
+                HelperCalander.isPersianUnicode = true;
+                G.isAppRtl = true;
                 break;
         }
 
@@ -215,32 +223,85 @@ public final class StartupActions {
      * create app folders if not created or removed from phone storage
      */
     public static void makeFolder() {
-        //new Thread(new Runnable() {
-        //    @Override
-        //    public void run() {
-        new File(DIR_APP).mkdirs();
-        new File(DIR_IMAGES).mkdirs();
-        new File(DIR_VIDEOS).mkdirs();
-        new File(DIR_AUDIOS).mkdirs();
-        new File(DIR_DOCUMENT).mkdirs();
-        new File(DIR_CHAT_BACKGROUND).mkdirs();
-        new File(DIR_IMAGE_USER).mkdirs();
-        new File(DIR_TEMP).mkdirs();
+        try {
+            manageAppDirectories();
+            //before used from thread; isn't good idea
+            //new Thread(new Runnable() {
+            //    @Override
+            //    public void run() {
+            //    }
+            //}).start();
 
-        String file = ".nomedia";
-        new File(DIR_IMAGES + "/" + file).mkdirs();
-        new File(DIR_VIDEOS + "/" + file).mkdirs();
-        new File(DIR_AUDIOS + "/" + file).mkdirs();
-        new File(DIR_DOCUMENT + "/" + file).mkdirs();
-        new File(DIR_CHAT_BACKGROUND + "/" + file).mkdirs();
-        new File(DIR_IMAGE_USER + "/" + file).mkdirs();
-        new File(DIR_TEMP + "/" + file).mkdirs();
-        //    }
-        //}).start();
+            new File(DIR_APP).mkdirs();
+            new File(DIR_IMAGES).mkdirs();
+            new File(DIR_VIDEOS).mkdirs();
+            new File(DIR_AUDIOS).mkdirs();
+            new File(DIR_DOCUMENT).mkdirs();
 
-        IMAGE_NEW_GROUP = new File(G.DIR_IMAGE_USER, "image_new_group.jpg");
-        IMAGE_NEW_CHANEL = new File(G.DIR_IMAGE_USER, "image_new_chanel.jpg");
-        imageFile = new File(DIR_IMAGE_USER, "image_user");
+            String file = ".nomedia";
+            new File(DIR_IMAGES + "/" + file).createNewFile();
+            new File(DIR_VIDEOS + "/" + file).createNewFile();
+            new File(DIR_AUDIOS + "/" + file).createNewFile();
+            new File(DIR_DOCUMENT + "/" + file).createNewFile();
+
+
+            new File(DIR_CHAT_BACKGROUND).mkdirs();
+            new File(DIR_IMAGE_USER).mkdirs();
+            new File(DIR_TEMP).mkdirs();
+            new File(DIR_CHAT_BACKGROUND + "/" + file).createNewFile();
+            new File(DIR_IMAGE_USER + "/" + file).createNewFile();
+            new File(DIR_TEMP + "/" + file).createNewFile();
+
+            IMAGE_NEW_GROUP = new File(G.DIR_IMAGE_USER, "image_new_group.jpg");
+            IMAGE_NEW_CHANEL = new File(G.DIR_IMAGE_USER, "image_new_chanel.jpg");
+            imageFile = new File(DIR_IMAGE_USER, "image_user");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void manageAppDirectories() {
+        String rootPath = getCacheDir().getPath();
+
+        if (!HelperPermision.grantedUseStorage()) {
+            DIR_IMAGES = rootPath + G.IMAGES;
+            DIR_VIDEOS = rootPath + G.VIDEOS;
+            DIR_AUDIOS = rootPath + G.AUDIOS;
+            DIR_DOCUMENT = rootPath + G.DOCUMENT;
+        }
+
+        DIR_TEMP = rootPath + G.TEMP;
+        DIR_CHAT_BACKGROUND = rootPath + G.CHAT_BACKGROUND;
+        DIR_IMAGE_USER = rootPath + G.IMAGE_USER;
+    }
+
+    public static File getCacheDir() {
+        String state = null;
+        try {
+            state = Environment.getExternalStorageState();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (state == null || state.startsWith(Environment.MEDIA_MOUNTED)) {
+            try {
+                File file = G.context.getExternalCacheDir();
+                if (file != null) {
+                    return file;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            File file = G.context.getCacheDir();
+            if (file != null) {
+                return file;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new File(G.DIR_APP);
     }
 
     private void initializeGlobalVariables() {
@@ -295,15 +356,15 @@ public final class StartupActions {
          */
         Realm.init(context);
 
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).migration(new RealmMigration()).build();
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(REALM_SCHEMA_VERSION).migration(new RealmMigration()).build();
         DynamicRealm dynamicRealm = DynamicRealm.getInstance(configuration);
         /**
          * Returns version of Realm file on disk
          */
         if (dynamicRealm.getVersion() == -1) {
-            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).deleteRealmIfMigrationNeeded().build());
+            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(REALM_SCHEMA_VERSION).deleteRealmIfMigrationNeeded().build());
         } else {
-            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(14).migration(new RealmMigration()).build());
+            Realm.setDefaultConfiguration(new RealmConfiguration.Builder().name("iGapLocalDatabase.realm").schemaVersion(REALM_SCHEMA_VERSION).migration(new RealmMigration()).build());
         }
         dynamicRealm.close();
 

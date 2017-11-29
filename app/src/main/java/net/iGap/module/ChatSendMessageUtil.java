@@ -248,10 +248,7 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, fakeMessageId).findFirst();
-                        if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
-                            message.setStatus(ProtoGlobal.RoomMessageStatus.FAILED.toString());
-                        }
+                        RealmRoomMessage.setStatusFailedInChat(realm, fakeMessageId);
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override

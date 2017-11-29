@@ -65,7 +65,7 @@ public abstract class MessageHandler {
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
 
-        HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode));
+        HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode), false);
 
         if (BuildConfig.DEBUG) {
             Log.i("MSGE", "MessageHandler error : " + actionId + " || " + G.lookupMap.get(actionId) + " || " + message);

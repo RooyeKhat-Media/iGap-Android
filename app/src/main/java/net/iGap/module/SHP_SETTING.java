@@ -21,11 +21,13 @@ public class SHP_SETTING {
     public static final String FILE_NAME = "setting";
     public static final String KEY_MESSAGE_TEXT_SIZE = "message_text_size";
     public static final String KEY_LANGUAGE = "language";
+    public static final String KEY_DATA = "data";
     public static final String KEY_IN_APP_BROWSER = "app_browser";
     public static final String KEY_SEND_BT_ENTER = "send_by_enter";
     public static final String KEY_ENABLE_ANIMATION = "enable_animation";
     public static final String KEY_ENABLE_DATA_SHAMS = "enable_dataShams";
     public static final String KEY_AUTO_ROTATE = "KEY_AUTO_ROTATE";
+    public static final String KEY_MULTI_TAB = "KEY_MULTI_TAB";
     public static final String KEY_AUTOPLAY_GIFS = "autoplay_gif";
     public static final String KEY_SAVE_TO_GALLERY = "save_to_gallery";
     public static final String KEY_CROP = "KEY_CROP";
@@ -92,6 +94,7 @@ public class SHP_SETTING {
 
     // keep media
     public static final String KEY_KEEP_MEDIA = "KEY_KEEP_MEDIA";
+    public static final String KEY_KEEP_MEDIA_NEW = "KEY_KEEP_MEDIA_NEW";
 
     // default color
     public static final String KEY_APP_BAR_COLOR = "KEY_APP_BAR_COLOR";

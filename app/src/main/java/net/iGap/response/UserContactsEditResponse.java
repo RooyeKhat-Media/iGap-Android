@@ -13,6 +13,9 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserContactsEdit;
+import net.iGap.realm.RealmContacts;
+import net.iGap.realm.RealmRegisteredInfo;
+import net.iGap.realm.RealmRoom;
 
 public class UserContactsEditResponse extends MessageHandler {
 
@@ -32,14 +35,23 @@ public class UserContactsEditResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoUserContactsEdit.UserContactsEditResponse.Builder builder = (ProtoUserContactsEdit.UserContactsEditResponse.Builder) message;
-        //long phone = builder.getPhone();
-        G.onUserContactEdit.onContactEdit(builder.getFirstName(), builder.getLastName(), builder.getInitials());
+        if (identity != null) {
+            long userId = Long.parseLong(identity);
+            RealmRegisteredInfo.updateName(userId, builder.getFirstName(), builder.getLastName(), builder.getInitials());
+            RealmContacts.updateName(userId, builder.getFirstName(), builder.getLastName(), builder.getInitials());
+            RealmRoom.updateChatTitle(userId, builder.getFirstName() + " " + builder.getLastName());
+        }
+        if (G.onUserContactEdit != null) {
+            G.onUserContactEdit.onContactEdit(builder.getFirstName(), builder.getLastName(), builder.getInitials());
+        }
     }
 
     @Override
     public void timeOut() {
         super.timeOut();
-        G.onUserContactEdit.onContactEditTimeOut();
+        if (G.onUserContactEdit != null) {
+            G.onUserContactEdit.onContactEditTimeOut();
+        }
     }
 
     @Override
@@ -48,7 +60,9 @@ public class UserContactsEditResponse extends MessageHandler {
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int MajorCode = errorResponse.getMajorCode();
         int MinorCode = errorResponse.getMinorCode();
-        G.onUserContactEdit.onContactEditError(MajorCode, MinorCode);
+        if (G.onUserContactEdit != null) {
+            G.onUserContactEdit.onContactEditError(MajorCode, MinorCode);
+        }
     }
 }
 

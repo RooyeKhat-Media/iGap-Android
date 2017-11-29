@@ -27,17 +27,22 @@ public class InfoTimeResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoInfoTime.InfoTimeResponse.Builder infoTime = (ProtoInfoTime.InfoTimeResponse.Builder) message;
-        G.onInfoTime.onInfoTime(infoTime.getTimestamp(), infoTime.getResponse());
+        if (G.onInfoTime != null) {
+            G.onInfoTime.onInfoTime(infoTime.getTimestamp(), infoTime.getResponse());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

@@ -14,21 +14,22 @@ import android.content.Context;
 import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnVoiceRecord;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VoiceRecord {
 
@@ -58,6 +59,7 @@ public class VoiceRecord {
     private TextView txtMilisecend;
     private int milisecend = 0;
     private MaterialDesignTextView btnMicLayout;
+    private boolean continuePlay;
 
     private Context context;
 
@@ -94,12 +96,28 @@ public class VoiceRecord {
                 mediaRecorder.stop();
                 mediaRecorder.release();
                 mediaRecorder = null;
+
+                if (continuePlay) {
+                    continuePlay = false;
+                    MusicPlayer.playSound();
+                }
+
             } catch (IllegalStateException e) {
+                e.printStackTrace();
             }
         }
     }
 
     private void startRecording() {
+
+        if (MusicPlayer.mp != null) {
+            if (MusicPlayer.mp.isPlaying()) {
+                MusicPlayer.pauseSound();
+                MusicPlayer.pauseSoundFromIGapCall = true;
+                continuePlay = true;
+            }
+        }
+
 
         if (G.onHelperSetAction != null) {
             G.onHelperSetAction.onAction(ProtoGlobal.ClientAction.RECORDING_VOICE);
@@ -114,8 +132,10 @@ public class VoiceRecord {
         try {
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mediaRecorder.setAudioEncodingBitRate(128000);
+            mediaRecorder.setAudioSamplingRate(44100);
             mediaRecorder.setOutputFile(outputFile);
 
             mediaRecorder.prepare();
@@ -130,9 +150,6 @@ public class VoiceRecord {
     }
 
     public void startVoiceRecord() {
-
-        Vibrator v = (Vibrator) this.context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(35);
 
         canStop = false;
         startRecording();

@@ -27,21 +27,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.WindowManager;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperPermision;
-import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.AttachFile;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.StartupActions;
 import net.iGap.module.StatusBarUtil;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.request.RequestUserUpdateStatus;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityEnhanced extends AppCompatActivity {
@@ -189,31 +191,32 @@ public class ActivityEnhanced extends AppCompatActivity {
 
     private void makeDirectoriesIfNotExist() {
 
-        if (isOnGetPermission) {
-            return;
-        }
-
-        if (this instanceof ActivityRegisteration) {
-            return;
-        }
-
-        isOnGetPermission = true;
-
-        try {
-            HelperPermision.getStoragePermision(this, new OnGetPermission() {
-                @Override
-                public void Allow() throws IOException {
-                    checkIsDirectoryExist();
-                }
-
-                @Override
-                public void deny() {
-                    finish();
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        if (isOnGetPermission) {
+//            return;
+//        }
+//
+//        if (this instanceof ActivityRegisteration) {
+//            return;
+//        }
+//
+//        isOnGetPermission = true;
+//
+//        try {
+//            HelperPermision.getStoragePermision(this, new OnGetPermission() {
+//                @Override
+//                public void Allow() throws IOException {
+//                    checkIsDirectoryExist();
+//                }
+//
+//                @Override
+//                public void deny() {
+//                    //don't need to finish app because we can continue use from app with private data folder
+//                    //finish();
+//                }
+//            });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void checkIsDirectoryExist() {

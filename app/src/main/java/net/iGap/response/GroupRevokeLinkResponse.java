@@ -13,6 +13,7 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupRevokeLink;
+import net.iGap.realm.RealmGroupRoom;
 
 public class GroupRevokeLinkResponse extends MessageHandler {
 
@@ -28,20 +29,23 @@ public class GroupRevokeLinkResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoGroupRevokeLink.GroupRevokeLinkResponse.Builder builder = (ProtoGroupRevokeLink.GroupRevokeLinkResponse.Builder) message;
+        RealmGroupRoom.revokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
         if (G.onGroupRevokeLink != null) {
             G.onGroupRevokeLink.onGroupRevokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

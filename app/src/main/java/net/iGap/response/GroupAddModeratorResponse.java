@@ -10,17 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import net.iGap.G;
-import net.iGap.module.enums.GroupChatRole;
+import net.iGap.helper.HelperMember;
+import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.proto.ProtoError;
-import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupAddModerator;
-import net.iGap.realm.RealmGroupRoom;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class GroupAddModeratorResponse extends MessageHandler {
 
@@ -36,47 +30,33 @@ public class GroupAddModeratorResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoGroupAddModerator.GroupAddModeratorResponse.Builder builder = (ProtoGroupAddModerator.GroupAddModeratorResponse.Builder) message;
+        ProtoGroupAddModerator.GroupAddModeratorResponse.Builder builder = (ProtoGroupAddModerator.GroupAddModeratorResponse.Builder) message;
+        HelperMember.updateRole(builder.getRoomId(), builder.getMemberId(), ChannelChatRole.MODERATOR.toString());
 
-        Realm realm = Realm.getDefaultInstance();
-
-        RealmRoom.updateRole(ProtoGlobal.Room.Type.GROUP, builder.getRoomId(), builder.getMemberId(), GroupChatRole.MODERATOR.toString());
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-
-        if (realmRoom != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-                    RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
-                    RealmList<RealmMember> realmMemberRealmList = realmGroupRoom.getMembers();
-
-                    for (RealmMember member : realmMemberRealmList) {
-                        if (member.getPeerId() == builder.getMemberId()) {
-                            member.setRole(ProtoGlobal.GroupRoom.Role.MODERATOR.toString());
-                            if (G.onGroupAddModerator != null) {
-                                G.onGroupAddModerator.onGroupAddModerator(builder.getRoomId(), builder.getMemberId());
-                            }
-                            break;
-                        }
-                    }
-                }
-            });
+        if (G.onGroupAddModerator != null) {
+            G.onGroupAddModerator.onGroupAddModerator(builder.getRoomId(), builder.getMemberId());
         }
-        realm.close();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
-        G.onGroupAddModerator.onTimeOut();
+        if (G.onGroupAddModerator != null) {
+            G.onGroupAddModerator.onTimeOut();
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onGroupAddModerator.onError(majorCode, minorCode);
+        if (G.onGroupAddModerator != null) {
+            G.onGroupAddModerator.onError(majorCode, minorCode);
+        }
     }
 }

@@ -17,12 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+
+import net.iGap.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import net.iGap.R;
 
 
 /**
@@ -262,7 +264,13 @@ public class SwipeBackLayout extends FrameLayout {
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean isDrawView = child == mContentView;
-        boolean drawChild = super.drawChild(canvas, child, drawingTime);
+        boolean drawChild;
+        try {
+            drawChild = super.drawChild(canvas, child, drawingTime);
+        } catch (StackOverflowError e) {
+            e.printStackTrace();
+            return false;
+        }
         if (isDrawView && mScrimOpacity > 0 && mHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
             drawShadow(canvas, child);
             drawScrim(canvas, child);

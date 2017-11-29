@@ -41,7 +41,7 @@ public class StructMessageAttachment implements Parcelable {
     public StructMessageThumbnail smallThumbnail;
     @Nullable public String localThumbnailPath;
     @Nullable public String localFilePath;
-    public String compressing; // use for show compressing text when video is in compressing state
+    public String compressing = ""; // use for show compressing text when video is in compressing state
 
     public StructMessageAttachment(String token, String name, long size, int width, int height, double duration, @Nullable String localThumbnailPath, @Nullable String localFilePath,
         StructMessageThumbnail largeThumbnail, StructMessageThumbnail smallThumbnail) {

@@ -240,6 +240,17 @@ public class FragmentChooseCountry extends BaseFragment {
             holder.txtNameCountry.setText(item.getName());
             holder.txtCodeCountry.setText(item.getCountryCode());
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onCountryCallBack != null) {
+                        removeFromBaseFragment(FragmentChooseCountry.this);
+                        closeKeyboard(v);
+                        FragmentAddContact.onCountryCallBack.countryName(item.getName(), item.getCountryCode(), item.getPhonePattern());
+                    }
+                }
+            });
+
         }
 
         //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
@@ -257,16 +268,6 @@ public class FragmentChooseCountry extends BaseFragment {
                 txtCodeCountry = (TextView) view.findViewById(R.id.txtCodeCountry);
                 vgListCountry = (ViewGroup) view.findViewById(R.id.vgListCountry);
 
-                vgListCountry.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (onCountryCallBack != null) {
-                            removeFromBaseFragment(FragmentChooseCountry.this);
-                            closeKeyboard(v);
-                            FragmentAddContact.onCountryCallBack.countryName(txtNameCountry.getText().toString(), txtCodeCountry.getText().toString(), item.getPhonePattern());
-                        }
-                    }
-                });
             }
         }
 

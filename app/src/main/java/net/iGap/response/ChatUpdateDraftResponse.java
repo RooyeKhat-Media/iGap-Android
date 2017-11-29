@@ -26,15 +26,17 @@ public class ChatUpdateDraftResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoChatUpdateDraft.ChatUpdateDraftResponse.Builder updateDraft = (ProtoChatUpdateDraft.ChatUpdateDraftResponse.Builder) message;
 
-       /*
-        * if another account get UpdateDraftResponse set draft to RealmRoom
-        */
+        /**
+         * if another account get UpdateDraftResponse set draft to RealmRoom
+         */
         new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (updateDraft.getResponse().getId().isEmpty()) {
                     RealmRoom.convertAndSetDraft(updateDraft.getRoomId(), updateDraft.getDraft().getMessage(), updateDraft.getDraft().getReplyTo());
                 }
@@ -42,11 +44,13 @@ public class ChatUpdateDraftResponse extends MessageHandler {
         }).start();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

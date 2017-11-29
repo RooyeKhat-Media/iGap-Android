@@ -10,12 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelGetMessagesStats;
 import net.iGap.proto.ProtoError;
 import net.iGap.realm.RealmChannelExtra;
-import net.iGap.realm.RealmChannelExtraFields;
 
 public class ChannelGetMessagesStatsResponse extends MessageHandler {
 
@@ -31,62 +29,24 @@ public class ChannelGetMessagesStatsResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder builder = (ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                for (final ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Stats stats : builder.getStatsList()) {
-                    //RealmRoomMessage realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, stats.getMessageId()).findFirst();
-                    // if (realmRoomMessage != null) {
-
-                    RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, stats.getMessageId()).findFirst();
-                    if (realmChannelExtra != null) {
-                        realmChannelExtra.setThumbsUp(stats.getThumbsUpLabel());
-                        realmChannelExtra.setThumbsDown(stats.getThumbsDownLabel());
-                        realmChannelExtra.setViewsLabel(stats.getViewsLabel());
-                        //realmRoomMessage.setChannelExtra(realmChannelExtra);
-                    }
-
-                       /* RealmChannelExtra realmChannelExtra = realmRoomMessage.getChannelExtra();
-                        if (realmRoomMessage.getChannelExtra() == null) {
-                            realmChannelExtra = realm.createObject(RealmChannelExtra.class);
-                        }
-                        realmChannelExtra.setThumbsUp(stats.getThumbsUpLabel());
-                        realmChannelExtra.setThumbsDown(stats.getThumbsDownLabel());
-                        realmChannelExtra.setViewsLabel(stats.getViewsLabel());
-                        realmRoomMessage.setChannelExtra(realmChannelExtra);*/
-
-                    /**
-                     * if identity is exist message forwarded
-                     */
-                        /*
-                        if (identity != null) {
-                            if (realmRoomMessage.getChannelExtra() != null) {
-                                realmRoomMessage.getForwardMessage().setChannelExtra(realmChannelExtra);
-                            }
-                        } else {
-                            realmRoomMessage.setChannelExtra(realmChannelExtra);
-                        }*/
-                }
-                //}
-            }
-        });
-        realm.close();
+        ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder builder = (ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Builder) message;
+        RealmChannelExtra.updateMessageStats(builder.getStatsList());
 
         if (G.onChannelGetMessagesStats != null) {
             G.onChannelGetMessagesStats.onChannelGetMessagesStats(builder.getStatsList());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

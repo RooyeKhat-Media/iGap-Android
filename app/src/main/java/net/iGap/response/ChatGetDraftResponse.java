@@ -26,19 +26,20 @@ public class ChatGetDraftResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChatGetDraft.ChatGetDraftResponse.Builder chatGetDraft = (ProtoChatGetDraft.ChatGetDraftResponse.Builder) message;
-
         RealmRoom.convertAndSetDraft(Long.parseLong(identity), chatGetDraft.getDraft().getMessage(), chatGetDraft.getDraft().getReplyTo());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

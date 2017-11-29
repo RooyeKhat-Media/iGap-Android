@@ -10,12 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelEdit;
 import net.iGap.proto.ProtoError;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class ChannelEditResponse extends MessageHandler {
 
@@ -31,45 +29,34 @@ public class ChannelEditResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoChannelEdit.ChannelEditResponse.Builder builder = (ProtoChannelEdit.ChannelEditResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-                if (realmRoom != null) {
-                    realmRoom.setTitle(builder.getName());
-                    realmRoom.getChannelRoom().setDescription(builder.getDescription());
-                }
-            }
-        });
-
-        realm.close();
+        ProtoChannelEdit.ChannelEditResponse.Builder builder = (ProtoChannelEdit.ChannelEditResponse.Builder) message;
+        RealmRoom.editRoom(builder.getRoomId(), builder.getName(), builder.getDescription());
 
         if (G.onChannelEdit != null) {
             G.onChannelEdit.onChannelEdit(builder.getRoomId(), builder.getName(), builder.getDescription());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onChannelEdit != null) {
-
             G.onChannelEdit.onTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onChannelEdit.onError(majorCode, minorCode);
+        if (G.onChannelEdit != null) {
+            G.onChannelEdit.onError(majorCode, minorCode);
+        }
     }
 }
 

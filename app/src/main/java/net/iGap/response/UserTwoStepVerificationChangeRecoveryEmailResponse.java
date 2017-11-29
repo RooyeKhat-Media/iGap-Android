@@ -27,11 +27,11 @@ public class UserTwoStepVerificationChangeRecoveryEmailResponse extends MessageH
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
-        ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmailResponse.Builder builder =
-            (ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmailResponse.Builder) message;
+        ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmailResponse.Builder builder = (ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmailResponse.Builder) message;
         builder.getUnconfirmedEmailPattern();
 
         if (G.onTwoStepPassword != null) {
@@ -39,11 +39,13 @@ public class UserTwoStepVerificationChangeRecoveryEmailResponse extends MessageH
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

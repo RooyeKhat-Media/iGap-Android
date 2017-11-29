@@ -37,17 +37,9 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityPaint;
@@ -61,6 +53,17 @@ import net.iGap.interfaces.IPickFile;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class AttachFile {
 
@@ -245,9 +248,11 @@ public class AttachFile {
         });
 
     }
+
     public void requestTakePicture() throws IOException {
         requestTakePicture(null);
     }
+
     //*************************************************************************************************************
     public void requestOpenGalleryForImageMultipleSelect(final Fragment fragment) throws IOException {
 
@@ -287,6 +292,7 @@ public class AttachFile {
     public void requestOpenGalleryForImageMultipleSelect() throws IOException {
         requestOpenGalleryForImageMultipleSelect(null);
     }
+
     //*************************************************************************************************************
     public void requestOpenGalleryForVideoMultipleSelect(final Fragment fragment) throws IOException {
 
@@ -321,6 +327,7 @@ public class AttachFile {
     public void requestOpenGalleryForVideoMultipleSelect() throws IOException {
         requestOpenGalleryForVideoMultipleSelect(null);
     }
+
     //*************************************************************************************************************
     public void requestOpenGalleryForImageSingleSelect(final Fragment fragment) throws IOException {
 
@@ -346,9 +353,11 @@ public class AttachFile {
             }
         });
     }
+
     public void requestOpenGalleryForImageSingleSelect() throws IOException {
         requestOpenGalleryForImageSingleSelect(null);
     }
+
     //*************************************************************************************************************
     public void requestVideoCapture(final Fragment fragment) throws IOException {
 
@@ -396,6 +405,7 @@ public class AttachFile {
     public void requestVideoCapture() throws IOException {
         requestVideoCapture(null);
     }
+
     //*************************************************************************************************************
     public void requestPickAudio(final Fragment fragment) throws IOException {
         //Intent intent = new Intent();
@@ -440,19 +450,12 @@ public class AttachFile {
         HelperPermision.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
-                //Intent intent = new Intent(context, ActivityExplorer.class);
-                //((Activity) context).startActivityForResult(intent, request_code_pic_file);
-
                 FragmentExplorer fragment = new FragmentExplorer();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Listener", (Serializable) listener);
                 fragment.setArguments(bundle);
 
                 new HelperFragment(fragment).setReplace(false).load();
-
-                if (G.onHelperSetAction != null) {
-                    G.onHelperSetAction.onAction(ProtoGlobal.ClientAction.SENDING_FILE);
-                }
             }
 
             @Override
@@ -626,6 +629,7 @@ public class AttachFile {
 
         return null;
     }
+
     public String saveGalleryPicToLocal(String galleryPath) {
 
         String result = "";
@@ -731,8 +735,6 @@ public class AttachFile {
     }
 
 
-
-
     private Uri getOutputMediaFileUri(int type, int camera) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && camera == 0) {
             return FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", getOutputMediaFile(type));
@@ -813,8 +815,8 @@ public class AttachFile {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
         File image = File.createTempFile(imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-            storageDir      /* directory */);
+                ".jpg",         /* suffix */
+                storageDir      /* directory */);
 
         // Save a file: path for use with ACTION_VIEW intents
         //mCurrentPhotoPath = "file:" + image.getAbsolutePath();

@@ -10,9 +10,9 @@
 
 package net.iGap.interfaces;
 
-import net.iGap.proto.ProtoGlobal;
+import java.util.ArrayList;
+import net.iGap.module.structs.StructListOfContact;
 
-public interface OnUserInfoForAvatar {
-
-    void onUserInfoForAvatar(ProtoGlobal.RegisteredUser user);
+public interface OnPhoneContact {
+    void onPhoneContact(ArrayList<StructListOfContact> contacts, boolean isEnd);
 }

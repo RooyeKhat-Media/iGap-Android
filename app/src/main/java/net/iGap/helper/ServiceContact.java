@@ -40,23 +40,16 @@ public class ServiceContact extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-
+    public int onStartCommand(Intent intent, int flags, int startId) {
         contentObserver = new MyContentObserver();
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
 
-            @Override public void run() {
+            @Override
+            public void run() {
                 getApplicationContext().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contentObserver);
             }
         }, 10000);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
         return Service.START_NOT_STICKY;
     }
 

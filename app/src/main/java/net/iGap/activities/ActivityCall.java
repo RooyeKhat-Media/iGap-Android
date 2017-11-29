@@ -38,10 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -62,6 +59,12 @@ import net.iGap.request.RequestSignalingGetLog;
 import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.webrtc.WebRTC;
+
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import io.realm.Realm;
 
 public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
@@ -152,8 +155,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(
-            LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON | LayoutParams.FLAG_DISMISS_KEYGUARD | LayoutParams.FLAG_SHOW_WHEN_LOCKED | LayoutParams.FLAG_TURN_SCREEN_ON);
+        getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON | LayoutParams.FLAG_DISMISS_KEYGUARD | LayoutParams.FLAG_SHOW_WHEN_LOCKED | LayoutParams.FLAG_TURN_SCREEN_ON);
 
         super.onCreate(savedInstanceState);
 
@@ -533,13 +535,14 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
         btnSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (btnSpeaker.getText().toString().equals(G.fragmentActivity.getResources().getString(R.string.md_Mute))) {
-                    btnSpeaker.setText(R.string.md_unMuted);
-                    setSpeakerphoneOn(true);
-                } else {
-                    btnSpeaker.setText(R.string.md_Mute);
-                    setSpeakerphoneOn(false);
+                if (btnSpeaker != null && btnSpeaker.getText() != null && G.fragmentActivity != null) {
+                    if (btnSpeaker.getText().toString().equals(G.fragmentActivity.getResources().getString(R.string.md_Mute))) {
+                        btnSpeaker.setText(R.string.md_unMuted);
+                        setSpeakerphoneOn(true);
+                    } else {
+                        btnSpeaker.setText(R.string.md_Mute);
+                        setSpeakerphoneOn(false);
+                    }
                 }
             }
         });
@@ -584,7 +587,9 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
      * *************** common methods ***************
      */
 
-    /** Sets the speaker phone mode. */
+    /**
+     * Sets the speaker phone mode.
+     */
     private void setSpeakerphoneOn(boolean on) {
 
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -602,7 +607,6 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
         new WebRTC().leaveCall();
         isSendLeave = true;
-
 
 
         isConnected = false;
@@ -705,7 +709,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
                             s += secend;
                         }
 
-                        if (HelperCalander.isLanguagePersian) {
+                        if (HelperCalander.isPersianUnicode) {
                             s = HelperCalander.convertToUnicodeFarsiNumber(s);
                         }
 
@@ -839,7 +843,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
                 canPlay = false;
 
                 vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                long[] pattern = { 0, 100, 1000 };
+                long[] pattern = {0, 100, 1000};
                 vibrator.vibrate(pattern, 0);
 
                 break;
@@ -1066,8 +1070,6 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
         }
 
 
-
-
     }
 
     //*****************************  distance sensor  **********************************************************
@@ -1126,8 +1128,8 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
      * Enables/Disables all child views in a view group.
      *
      * @param viewGroup the view group
-     * @param enabled <code>true</code> to enable, <code>false</code> to disable
-     * the views.
+     * @param enabled   <code>true</code> to enable, <code>false</code> to disable
+     *                  the views.
      */
     public static void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
         if (viewGroup != null) {

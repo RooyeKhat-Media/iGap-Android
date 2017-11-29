@@ -489,7 +489,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         if (G.userLogin) {
             new UploadTaskAvatar(listener).execute(filePath, avatarId);
         } else {
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
             if (listener != null) {
                 listener.OnError();
             }

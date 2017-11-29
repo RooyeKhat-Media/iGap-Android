@@ -14,11 +14,12 @@ import net.iGap.proto.ProtoChatDeleteMessage;
 
 public class RequestChatDeleteMessage {
 
-    public void chatDeleteMessage(long roomId, long messageId) {
+    public void chatDeleteMessage(long roomId, long messageId, boolean both) {
 
         ProtoChatDeleteMessage.ChatDeleteMessage.Builder chatDeleteMessage = ProtoChatDeleteMessage.ChatDeleteMessage.newBuilder();
         chatDeleteMessage.setRoomId(roomId);
         chatDeleteMessage.setMessageId(messageId);
+        chatDeleteMessage.setBoth(both);
 
         RequestWrapper requestWrapper = new RequestWrapper(204, chatDeleteMessage);
         try {

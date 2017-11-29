@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.vicmikhailau.maskededittext.MaskedEditText;
 import java.io.IOException;
 import java.util.ArrayList;
 import net.iGap.G;
@@ -49,7 +50,7 @@ public class FragmentAddContact extends BaseFragment {
 
     private EditText edtFirstName;
     private EditText edtLastName;
-    private EditText edtPhoneNumber;
+    private MaskedEditText edtPhoneNumber;
     private ViewGroup parent;
     private RippleView rippleSet;
     private MaterialDesignTextView txtSet;
@@ -117,7 +118,7 @@ public class FragmentAddContact extends BaseFragment {
         final View viewFirstName = view.findViewById(R.id.ac_view_firstName);
         edtLastName = (EditText) view.findViewById(R.id.ac_edt_lastName);
         final View viewLastName = view.findViewById(R.id.ac_view_lastName);
-        edtPhoneNumber = (EditText) view.findViewById(R.id.ac_edt_phoneNumber);
+        edtPhoneNumber = (MaskedEditText) view.findViewById(R.id.ac_edt_phoneNumber);
         final View viewPhoneNumber = view.findViewById(R.id.ac_view_phoneNumber);
 
         edtFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -228,6 +229,7 @@ public class FragmentAddContact extends BaseFragment {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
                         dialog.dismiss();
+                        G.fragmentActivity.onBackPressed();
                     }
                 }).show();
             }
@@ -235,12 +237,14 @@ public class FragmentAddContact extends BaseFragment {
 
         onCountryCallBack = new OnCountryCallBack() {
             @Override
-            public void countryName(final String nameCountry, final String code, String mask) {
+            public void countryName(final String nameCountry, final String code, final String mask) {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
                         txtChooseCountry.setText(nameCountry);
                         txtCodeCountry.setText("+" + code);
+                        edtPhoneNumber.setText("");
+                        edtPhoneNumber.setMask(mask.replace("X", "#").replace(" ", "-"));
                     }
                 });
             }

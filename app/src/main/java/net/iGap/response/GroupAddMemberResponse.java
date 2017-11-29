@@ -10,16 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import net.iGap.G;
-import net.iGap.module.SUID;
+import net.iGap.helper.HelperMember;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupAddMember;
-import net.iGap.realm.RealmGroupRoom;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class GroupAddMemberResponse extends MessageHandler {
 
@@ -35,49 +29,27 @@ public class GroupAddMemberResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoGroupAddMember.GroupAddMemberResponse.Builder response = (ProtoGroupAddMember.GroupAddMemberResponse.Builder) message;
-
-        Long roomId = response.getRoomId();
-        Long userId = response.getUserId();
-
-        Realm realm = Realm.getDefaultInstance();
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null) {
-            RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
-            if (realmGroupRoom != null) {
-                final RealmList<RealmMember> members = realmGroupRoom.getMembers();
-
-                final RealmMember realmMember = new RealmMember();
-                realmMember.setId(SUID.id().get());
-                realmMember.setPeerId(userId);
-                realmMember.setRole(response.getRole().toString());
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
-                        members.add(0, realmMember);
-                    }
-                });
-                if (G.onGroupAddMember != null) {
-                    G.onGroupAddMember.onGroupAddMember(roomId, userId);
-                }
-            }
+        ProtoGroupAddMember.GroupAddMemberResponse.Builder builder = (ProtoGroupAddMember.GroupAddMemberResponse.Builder) message;
+        HelperMember.addMember(builder.getRoomId(), builder.getUserId(), builder.getRole().toString());
+        if (G.onGroupAddMember != null) {
+            G.onGroupAddMember.onGroupAddMember(builder.getRoomId(), builder.getUserId());
         }
-
-        realm.close();
     }
 
-    @Override public void error() {
+    @Override
+    public void timeOut() {
+        super.timeOut();
+    }
+
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
         G.onGroupAddMember.onError(majorCode, minorCode);
-    }
-
-    @Override public void timeOut() {
-        super.timeOut();
-        G.onGroupAddMember.onError(0, 0);
     }
 }

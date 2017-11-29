@@ -24,35 +24,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.IItemAdapter;
-import com.mikepenz.fastadapter.adapters.HeaderAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.StickyHeaderAdapter;
 import net.iGap.adapter.items.ContactItemGroup;
 import net.iGap.helper.GoToChatActivity;
 import net.iGap.interfaces.OnChannelAddMember;
+import net.iGap.interfaces.OnContactsGetList;
 import net.iGap.interfaces.OnGroupAddMember;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.ContactChip;
 import net.iGap.module.Contacts;
+import net.iGap.module.LoginActions;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestChannelAddMember;
 import net.iGap.request.RequestGroupAddMember;
 
-public class ContactGroupFragment extends BaseFragment {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ContactGroupFragment extends BaseFragment implements OnContactsGetList {
     private FastAdapter fastAdapter;
     private TextView txtStatus;
     private TextView txtNumberOfMember;
@@ -70,6 +76,7 @@ public class ContactGroupFragment extends BaseFragment {
     private int sizeTextEditText = 0;
     private List<StructContactInfo> contacts;
     private boolean isRemove = true;
+    ItemAdapter itemAdapter;
 
     public static ContactGroupFragment newInstance() {
         return new ContactGroupFragment();
@@ -84,6 +91,8 @@ public class ContactGroupFragment extends BaseFragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        G.onContactsGetList = this;
 
         hideProgressBar(); // some times touch screen remind lock so this method do unlock
 
@@ -148,7 +157,7 @@ public class ContactGroupFragment extends BaseFragment {
                     ArrayList<Long> list = getSelectedList();
                     if (list.size() > 0) {
                         for (long peerId : list) {
-                            new RequestChannelAddMember().channelAddMember(roomId, peerId, 0);
+                            new RequestChannelAddMember().channelAddMember(roomId, peerId);
                         }
                     } else {
                         if (isAdded()) {
@@ -156,9 +165,7 @@ public class ContactGroupFragment extends BaseFragment {
                             new GoToChatActivity(ContactGroupFragment.this.roomId).startActivity();
                         }
                     }
-                }
-
-                if (typeCreate.equals("GROUP")) { //  addMemberGroup
+                } else if (typeCreate.equals("GROUP")) { // addMemberGroup
                     G.onGroupAddMember = new OnGroupAddMember() {
                         @Override
                         public void onGroupAddMember(Long roomId, Long UserId) {
@@ -197,21 +204,26 @@ public class ContactGroupFragment extends BaseFragment {
             }
         });
 
-        //create our FastAdapter
-        fastAdapter = new FastAdapter();
-        fastAdapter.withSelectable(true);
-
-        //create our adapters
         final StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter();
-        final HeaderAdapter headerAdapter = new HeaderAdapter();
-        final ItemAdapter itemAdapter = new ItemAdapter();
+        final ItemAdapter headerAdapter = new ItemAdapter();
+        itemAdapter = new ItemAdapter();
+        fastAdapter = FastAdapter.with(Arrays.asList(headerAdapter, itemAdapter));
+        fastAdapter.withSelectable(true);
+        fastAdapter.setHasStableIds(true);
+
+        //get our recyclerView and do basic setup
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.fcg_recycler_view_add_item_to_group);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(stickyHeaderAdapter.wrap(fastAdapter));
+
         itemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<ContactItemGroup>() {
             @Override
             public boolean filter(ContactItemGroup item, CharSequence constraint) {
                 return !item.mContact.displayName.toLowerCase().startsWith(String.valueOf(constraint).toLowerCase());
             }
         });
-        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ContactItemGroup>() {
+        fastAdapter.withOnClickListener(new OnClickListener<ContactItemGroup>() {
             @Override
             public boolean onClick(View v, IAdapter adapter, ContactItemGroup item, int position) {
 
@@ -242,45 +254,13 @@ public class ContactGroupFragment extends BaseFragment {
             }
         });
 
-
-        //configure our fastAdapter
-        //as we provide id's for the items we want the hasStableIds enabled to speed up things
-        fastAdapter.setHasStableIds(true);
-        //get our recyclerView and do basic setup
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.fcg_recycler_view_add_item_to_group);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(stickyHeaderAdapter.wrap(itemAdapter.wrap(headerAdapter.wrap(fastAdapter))));
-
         //this adds the Sticky Headers within our list
         final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(stickyHeaderAdapter);
 
         rv.addItemDecoration(decoration);
 
-        List<IItem> items = new ArrayList<>();
-        contacts = Contacts.retrieve(null);
+        addItems();
 
-        for (StructContactInfo contact : contacts) {
-            if (contact != null) {
-                items.add(new ContactItemGroup().setContact(contact).withIdentifier(contact.peerId));
-
-                Uri uri = null;
-                if (contact.avatar != null && contact.avatar.getFile() != null && contact.avatar.getFile().getLocalThumbnailPath() != null) {
-                    uri = Uri.fromFile(new File(contact.avatar.getFile().getLocalThumbnailPath()));
-                }
-                ContactChip contactChip;
-                if (uri == null) {
-                    Drawable d = new BitmapDrawable(getResources(), net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) G.context.getResources().getDimension(R.dimen.dp60), contact.initials, contact.color));
-                    contactChip = new ContactChip(contact.peerId, d, contact.displayName);
-                } else {
-                    contactChip = new ContactChip(contact.peerId, uri, contact.displayName);
-                }
-
-                mContactList.add(contactChip);
-            }
-        }
-        chipsInput.setFilterableList(mContactList);
-        itemAdapter.add(items);
         chipsInput.addChipsListener(new ChipsInput.ChipsListener() {
             @Override
             public void onChipAdded(ChipInterface chip, int newSize) {
@@ -315,9 +295,45 @@ public class ContactGroupFragment extends BaseFragment {
         fastAdapter.withSavedInstanceState(savedInstanceState);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        G.onContactsGetList = null;
+    }
+
+    private void addItems() {
+        List<IItem> items = new ArrayList<>();
+        contacts = Contacts.retrieve(null);
+        if (contacts.size() == 0) {
+            LoginActions.importContact();
+        } else {
+            for (StructContactInfo contact : contacts) {
+                if (contact != null) {
+                    items.add(new ContactItemGroup().setContact(contact).withIdentifier(contact.peerId));
+
+                    Uri uri = null;
+                    if (contact.avatar != null && contact.avatar.getFile() != null && contact.avatar.getFile().getLocalThumbnailPath() != null) {
+                        uri = Uri.fromFile(new File(contact.avatar.getFile().getLocalThumbnailPath()));
+                    }
+                    ContactChip contactChip;
+                    if (uri == null) {
+                        Drawable d = new BitmapDrawable(getResources(), net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) G.context.getResources().getDimension(R.dimen.dp60), contact.initials, contact.color));
+                        contactChip = new ContactChip(contact.peerId, d, contact.displayName);
+                    } else {
+                        contactChip = new ContactChip(contact.peerId, uri, contact.displayName);
+                    }
+
+                    mContactList.add(contactChip);
+                }
+            }
+            chipsInput.setFilterableList(mContactList);
+            itemAdapter.add(items);
+        }
+    }
+
     private void addMember(long roomId, ProtoGlobal.Room.Type roomType) {
-        RealmRoom.addOwnerToDatabase(roomId, roomType);
-        RealmRoom.updateMemberCount(roomId, roomType, countAddMemberRequest);
+        RealmRoom.addOwnerToDatabase(roomId);
+        RealmRoom.updateMemberCount(roomId, roomType, countAddMemberRequest + 1); // plus with 1 , for own account
         if (isAdded()) {
             removeFromBaseFragment(ContactGroupFragment.this);
             new GoToChatActivity(roomId).startActivity();
@@ -335,7 +351,6 @@ public class ContactGroupFragment extends BaseFragment {
             }
         }, 50);
     }
-
 
     private void refreshView() {
         int selectedNumber = 0;
@@ -399,4 +414,8 @@ public class ContactGroupFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onContactsGetList() {
+        addItems();
+    }
 }

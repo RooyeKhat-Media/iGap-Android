@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserProfileGender;
@@ -30,38 +29,36 @@ public class UserProfileSetGenderResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserProfileGender.UserProfileSetGenderResponse.Builder userProfileGenderResponse = (ProtoUserProfileGender.UserProfileSetGenderResponse.Builder) message;
+        ProtoUserProfileGender.UserProfileSetGenderResponse.Builder userProfileGenderResponse = (ProtoUserProfileGender.UserProfileSetGenderResponse.Builder) message;
+        RealmUserInfo.updateGender(userProfileGenderResponse.getGender());
 
-        final Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (userInfo != null) {
-                    userInfo.setGender(userProfileGenderResponse.getGender());
-                }
-            }
-        });
-
-        realm.close();
-
-        if (G.onUserProfileSetGenderResponse != null) G.onUserProfileSetGenderResponse.onUserProfileGenderResponse(userProfileGenderResponse.getGender(), userProfileGenderResponse.getResponse());
+        if (G.onUserProfileSetGenderResponse != null) {
+            G.onUserProfileSetGenderResponse.onUserProfileGenderResponse(userProfileGenderResponse.getGender(), userProfileGenderResponse.getResponse());
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
 
-        if (G.onUserProfileSetGenderResponse != null) G.onUserProfileSetGenderResponse.Error(majorCode, minorCode);
+        if (G.onUserProfileSetGenderResponse != null) {
+            G.onUserProfileSetGenderResponse.Error(majorCode, minorCode);
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
-        if (G.onUserProfileSetGenderResponse != null) G.onUserProfileSetGenderResponse.onTimeOut();
+        if (G.onUserProfileSetGenderResponse != null) {
+            G.onUserProfileSetGenderResponse.onTimeOut();
+        }
     }
 }
 

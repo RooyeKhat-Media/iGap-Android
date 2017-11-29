@@ -9,7 +9,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+
 import com.lalongooo.videocompressor.Config;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class FileUtils {
         f.mkdirs();
     }
 
-    public static File saveTempFile(String fileName, Context context, Uri uri) {
+    public static File saveTempFile(String rootPath, String fileName, Context context, Uri uri) {
 
         File mFile = null;
         ContentResolver resolver = context.getContentResolver();
@@ -38,7 +40,8 @@ public class FileUtils {
         try {
             in = resolver.openInputStream(uri);
 
-            mFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_TEMP_DIR, fileName);
+//            mFile = new File(rootPath + File.separator + Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + Config.VIDEO_COMPRESSOR_TEMP_DIR, fileName);
+            mFile = new File(rootPath, fileName);
             out = new FileOutputStream(mFile, false);
             byte[] buffer = new byte[1024];
             int read;

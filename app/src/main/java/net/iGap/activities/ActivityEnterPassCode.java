@@ -15,11 +15,9 @@ import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -44,6 +42,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperLogout;
 import net.iGap.interfaces.FingerPrint;
 import net.iGap.interfaces.OnUserSessionLogout;
@@ -281,21 +280,7 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
 
             @Override
             public void onError() {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (v != null) {
-                            final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                            snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    snack.dismiss();
-                                }
-                            });
-                            snack.show();
-                        }
-                    }
-                });
+
             }
 
             @Override
@@ -304,14 +289,7 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
                     @Override
                     public void run() {
                         if (v != null) {
-                            final Snackbar snack = Snackbar.make(v.findViewById(android.R.id.content), R.string.error, Snackbar.LENGTH_LONG);
-                            snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    snack.dismiss();
-                                }
-                            });
-                            snack.show();
+                            HelperError.showSnackMessage(getResources().getString(R.string.error), false);
                         }
                     }
                 });
@@ -406,16 +384,9 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
     private void error(String error) {
 
         try {
-            Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
-            vShort.vibrate(200);
-            final Snackbar snack = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-            snack.setAction(getString(R.string.cancel), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    snack.dismiss();
-                }
-            });
-            snack.show();
+
+            HelperError.showSnackMessage(error, true);
+
         } catch (IllegalStateException e) {
             e.getStackTrace();
         }

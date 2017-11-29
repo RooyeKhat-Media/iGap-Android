@@ -11,7 +11,6 @@
 package net.iGap.response;
 
 import com.crashlytics.android.Crashlytics;
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.proto.ProtoGeoGetConfiguration;
@@ -44,22 +43,7 @@ public class GeoGetConfigurationResponse extends MessageHandler {
             Crashlytics.logException(new Exception("GeoGetConfigurationResponse -> TileServerList==0; time:" + System.currentTimeMillis()));
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmGeoGetConfiguration realmGeoGetConfiguration = realm.where(RealmGeoGetConfiguration.class).findFirst();
-                if (realmGeoGetConfiguration == null) {
-                    realmGeoGetConfiguration = realm.createObject(RealmGeoGetConfiguration.class);
-                } else {
-                    if (realmGeoGetConfiguration.getMapCache() != null && !realmGeoGetConfiguration.getMapCache().equals(builder.getCacheId())) {
-                        FragmentiGapMap.deleteMapFileCash();
-                    }
-                }
-                realmGeoGetConfiguration.setMapCache(builder.getCacheId());
-            }
-        });
-        realm.close();
+        RealmGeoGetConfiguration.putOrUpdate(builder.getCacheId());
 
         if (G.onGeoGetConfiguration != null) {
             G.onGeoGetConfiguration.onGetConfiguration();

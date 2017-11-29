@@ -11,6 +11,7 @@ import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.util.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import java.nio.ByteBuffer;
     private final static int PROCESSOR_TYPE_TI = 5;
     private static volatile MediaController Instance = null;
     private boolean videoConvertFirstWrite = true;
+    public static OnPercentCompress onPercentCompress;
 
     public static MediaController getInstance() {
         MediaController localInstance = Instance;
@@ -164,7 +166,6 @@ import java.nio.ByteBuffer;
 
 
             while (!inputDone) {
-
                 boolean eof = false;
                 int index = extractor.getSampleTrackIndex();
                 if (index == trackIndex) {
@@ -255,7 +256,7 @@ import java.nio.ByteBuffer;
     }
 
     @TargetApi(16)
-    public boolean convertVideo(final String path, String savePath) {
+    public boolean convertVideo(final String path, String savePath, long mEndTime) {
 
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(path);
@@ -640,6 +641,10 @@ import java.nio.ByteBuffer;
                                                         outputSurface.drawImage(false);
                                                         inputSurface.setPresentationTime(info.presentationTimeUs * 1000);
                                                         inputSurface.swapBuffers();
+                                                        long p = info.presentationTimeUs / 1000;
+                                                        long percent = ((p * 100) / mEndTime);
+
+                                                        if (onPercentCompress != null) onPercentCompress.compress(percent, savePath);
                                                     } else {
                                                         int inputBufIndex = encoder.dequeueInputBuffer(TIMEOUT_USEC);
                                                         if (inputBufIndex >= 0) {
@@ -659,6 +664,7 @@ import java.nio.ByteBuffer;
                                                 decoderOutputAvailable = false;
                                                 if (Build.VERSION.SDK_INT >= 18) {
                                                     encoder.signalEndOfInputStream();
+
                                                 } else {
                                                     int inputBufIndex = encoder.dequeueInputBuffer(TIMEOUT_USEC);
                                                     if (inputBufIndex >= 0) {
@@ -736,9 +742,14 @@ import java.nio.ByteBuffer;
         int len;
         while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);
+            Log.i("HHHHHHHHHHHHHHHHHH", "copyFile: ");
         }
         in.close();
         out.close();
+    }
+
+    public interface OnPercentCompress {
+        void compress(long percent, String path);
     }
 
 }

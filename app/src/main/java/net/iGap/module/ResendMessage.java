@@ -39,15 +39,14 @@ public class ResendMessage implements IResendMessage {
         return mMessages;
     }
 
-    @Override public void deleteMessage() {
+    @Override
+    public void deleteMessage() {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 for (StructMessageInfo message : mMessages) {
-                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(message.messageID)).findFirst();
-                    if (roomMessage != null) {
-                        roomMessage.deleteFromRealm();
-                    }
+                    RealmRoomMessage.deleteMessage(realm, Long.parseLong(message.messageID));
                 }
             }
         });
@@ -59,19 +58,14 @@ public class ResendMessage implements IResendMessage {
     private void resend(final boolean all) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 for (StructMessageInfo message : mMessages) {
                     if (all) {
-                        RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(message.messageID)).findFirst();
-                        if (roomMessage != null) {
-                            roomMessage.setStatus(ProtoGlobal.RoomMessageStatus.SENDING.toString());
-                        }
+                        RealmRoomMessage.setStatus(realm, Long.parseLong(message.messageID), ProtoGlobal.RoomMessageStatus.SENDING);
                     } else {
                         if (message.messageID.equalsIgnoreCase(Long.toString(mSelectedMessageID))) {
-                            RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(message.messageID)).findFirst();
-                            if (roomMessage != null) {
-                                roomMessage.setStatus(ProtoGlobal.RoomMessageStatus.SENDING.toString());
-                            }
+                            RealmRoomMessage.setStatus(realm, Long.parseLong(message.messageID), ProtoGlobal.RoomMessageStatus.SENDING);
                             break;
                         }
                     }
@@ -89,7 +83,8 @@ public class ResendMessage implements IResendMessage {
             final int j = i;
             if (all) {
                 G.handler.postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         Realm realm = Realm.getDefaultInstance();
                         RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(mMessages.get(j).messageID)).findFirst();
                         if (roomMessage != null) {
@@ -99,8 +94,7 @@ public class ResendMessage implements IResendMessage {
                                     ProtoGlobal.Room.Type roomType = realmRoom.getType();
                                     G.chatSendMessageUtil.build(roomType, roomMessage.getRoomId(), roomMessage);
                                 } else {
-                                    HelperUploadFile.startUploadTaskChat(roomMessage.getRoomId(), realmRoom.getType(), roomMessage.getAttachment().getLocalFilePath(), roomMessage.getMessageId(),
-                                        roomMessage.getMessageType(), roomMessage.getMessage(), RealmRoomMessage.getReplyMessageId(roomMessage), null);
+                                    HelperUploadFile.startUploadTaskChat(roomMessage.getRoomId(), realmRoom.getType(), roomMessage.getAttachment().getLocalFilePath(), roomMessage.getMessageId(), roomMessage.getMessageType(), roomMessage.getMessage(), RealmRoomMessage.getReplyMessageId(roomMessage), null);
                                 }
                             }
                         }
@@ -118,8 +112,7 @@ public class ResendMessage implements IResendMessage {
                             if (roomMessage.getAttachment() == null) {
                                 G.chatSendMessageUtil.build(roomType, roomMessage.getRoomId(), roomMessage);
                             } else {
-                                HelperUploadFile.startUploadTaskChat(roomMessage.getRoomId(), roomType, roomMessage.getAttachment().getLocalFilePath(), roomMessage.getMessageId(),
-                                    roomMessage.getMessageType(), roomMessage.getMessage(), RealmRoomMessage.getReplyMessageId(roomMessage), null);
+                                HelperUploadFile.startUploadTaskChat(roomMessage.getRoomId(), roomType, roomMessage.getAttachment().getLocalFilePath(), roomMessage.getMessageId(), roomMessage.getMessageType(), roomMessage.getMessage(), RealmRoomMessage.getReplyMessageId(roomMessage), null);
                             }
                         }
                     }
@@ -131,11 +124,13 @@ public class ResendMessage implements IResendMessage {
         realm.close();
     }
 
-    @Override public void resendMessage() {
+    @Override
+    public void resendMessage() {
         resend(false);
     }
 
-    @Override public void resendAllMessages() {
+    @Override
+    public void resendAllMessages() {
         resend(true);
     }
 }

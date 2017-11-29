@@ -29,9 +29,7 @@ public class UserTwoStepVerificationResendVerifyEmailResponse extends MessageHan
     @Override
     public void handler() {
         super.handler();
-
         ProtoUserTwoStepVerificationResendVerifyEmail.UserTwoStepVerificationResendVerifyEmailResponse.Builder builder = (ProtoUserTwoStepVerificationResendVerifyEmail.UserTwoStepVerificationResendVerifyEmailResponse.Builder) message;
-
     }
 
     @Override

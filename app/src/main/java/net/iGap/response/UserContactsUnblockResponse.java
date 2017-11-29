@@ -10,11 +10,9 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserContactsUnblock;
 import net.iGap.realm.RealmContacts;
-import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
 
 public class UserContactsUnblockResponse extends MessageHandler {
@@ -34,43 +32,19 @@ public class UserContactsUnblockResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-
         ProtoUserContactsUnblock.UserContactsUnblockResponse.Builder builder = (ProtoUserContactsUnblock.UserContactsUnblockResponse.Builder) message;
         long userId = builder.getUserId();
 
-        Realm realm = Realm.getDefaultInstance();
-
-        // set Unblock to realm realmRegisteredInfo
-        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-        if (realmRegisteredInfo != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realmRegisteredInfo.setBlockUser(false);
-                }
-            });
-        }
-
-        // set Unblock to realm contact
-        final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-        if (realmContacts != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realmContacts.setBlockUser(false);
-                }
-            });
-        }
-
-        realm.close();
+        RealmRegisteredInfo.updateBlock(userId, false);
+        RealmContacts.updateBlock(userId, false);
 
         if (G.onUserContactsUnBlock != null) {
-            G.onUserContactsUnBlock.onUserContactsUnBlock(builder.getUserId());
+            G.onUserContactsUnBlock.onUserContactsUnBlock(userId);
         }
 
         //+manually update (avoid use from realm-adapter)
         if (G.onBlockStateChanged != null) {
-            G.onBlockStateChanged.onBlockStateChanged(false, builder.getUserId());
+            G.onBlockStateChanged.onBlockStateChanged(false, userId);
         }
     }
 

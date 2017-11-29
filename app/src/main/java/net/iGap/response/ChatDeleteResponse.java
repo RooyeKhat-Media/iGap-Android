@@ -34,7 +34,7 @@ public class ChatDeleteResponse extends MessageHandler {
         super.handler();
         ProtoChatDelete.ChatDeleteResponse.Builder builder = (ProtoChatDelete.ChatDeleteResponse.Builder) message;
 
-        final Long roomId = builder.getRoomId();
+        Long roomId = builder.getRoomId();
 
         RealmRoom.deleteRoom(roomId);
         if (G.onChatDelete != null) {

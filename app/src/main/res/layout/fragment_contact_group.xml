@@ -133,7 +133,6 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:hint="Enter a name"
-
           app:chip_deletable="true"
           app:showChipDetailed="false"
           app:chip_deleteIconColor="@color/green"

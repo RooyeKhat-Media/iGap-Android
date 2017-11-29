@@ -15,8 +15,7 @@ import net.iGap.proto.ProtoUserTwoStepVerificationGetPasswordDetail;
 public class RequestUserTwoStepVerificationGetPasswordDetail {
 
     public void getPasswordDetail() {
-        ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetail.Builder builder =
-            ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetail.newBuilder();
+        ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetail.Builder builder = ProtoUserTwoStepVerificationGetPasswordDetail.UserTwoStepVerificationGetPasswordDetail.newBuilder();
 
         RequestWrapper requestWrapper = new RequestWrapper(131, builder);
         try {

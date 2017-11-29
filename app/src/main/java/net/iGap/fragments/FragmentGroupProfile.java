@@ -1,13 +1,10 @@
 package net.iGap.fragments;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -18,10 +15,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
@@ -43,22 +38,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCrop;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermision;
@@ -97,6 +86,7 @@ import net.iGap.module.FileUploadStructure;
 import net.iGap.module.IntentRequests;
 import net.iGap.module.MEditText;
 import net.iGap.module.SUID;
+import net.iGap.module.enums.EnumCustomMessageId;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
@@ -110,7 +100,6 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestGroupAddAdmin;
 import net.iGap.request.RequestGroupAddMember;
 import net.iGap.request.RequestGroupAddModerator;
@@ -126,6 +115,15 @@ import net.iGap.request.RequestGroupRemoveUsername;
 import net.iGap.request.RequestGroupRevokeLink;
 import net.iGap.request.RequestGroupUpdateUsername;
 import net.iGap.request.RequestUserInfo;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
@@ -290,7 +288,7 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                                     if (txtNumberOfSharedMedia == null) {
                                         txtNumberOfSharedMedia = (TextView) G.fragmentActivity.findViewById(R.id.agp_txt_number_of_shared_media);
                                     }
-                                    if (HelperCalander.isLanguagePersian) {
+                                    if (HelperCalander.isPersianUnicode) {
                                         txtNumberOfSharedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
                                     } else {
                                         txtNumberOfSharedMedia.setText(countText);
@@ -311,12 +309,10 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
             txtNumberOfSharedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
         }
 
-        LocalBroadcastManager.getInstance(G.context).registerReceiver(reciverOnGroupChangeName, new IntentFilter("Intent_filter_on_change_group_name"));
     }
 
     @Override
     public void onPause() {
-        LocalBroadcastManager.getInstance(G.context).unregisterReceiver(reciverOnGroupChangeName);
         super.onPause();
     }
 
@@ -440,50 +436,23 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
     private int memberCount;
 
     private void setMemberCount(final long roomId, final boolean plus) {
-        //+Realm realm = Realm.getDefaultInstance();
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (realmRoom != null && realmRoom.getGroupRoom() != null) {
-                    if (HelperString.isNumeric(realmRoom.getGroupRoom().getParticipantsCountLabel())) {
-
-                        memberCount = Integer.parseInt(realmRoom.getGroupRoom().getParticipantsCountLabel());
-                        if (plus) {
-                            memberCount++;
-                        } else {
-                            memberCount--;
+                memberCount = RealmRoom.updateMemberCount(realm, roomId, plus);
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtMemberNumber.setText(memberCount + "");
+                        if (HelperCalander.isPersianUnicode) {
+                            txtMemberNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtMemberNumber.getText().toString()));
                         }
-                        realmRoom.getGroupRoom().setParticipantsCountLabel(memberCount + "");
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                txtMemberNumber.setText(memberCount + "");
-                                if (HelperCalander.isLanguagePersian) {
-                                    txtMemberNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtMemberNumber.getText().toString()));
-                                }
-                            }
-                        });
                     }
-                }
+                });
             }
         });
-        //realm.close();
+
     }
-
-    private BroadcastReceiver reciverOnGroupChangeName = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String name = intent.getExtras().getString("Name");
-            String description = intent.getExtras().getString("Description");
-
-            txtGroupName.setText(name);
-            txtGroupDescription.setText(description);
-            txtGroupNameTitle.setText(name);
-        }
-    };
 
     private void initComponent(final View view) {
 
@@ -813,7 +782,7 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         });
 
         txtMemberNumber.setText(participantsCountLabel);
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             txtMemberNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtMemberNumber.getText().toString()));
         }
         txtLinkTitle = (TextView) view.findViewById(R.id.agp_txt_link_title);
@@ -1005,16 +974,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                     public void run() {
                         isPrivate = true;
                         setTextGroupLik();
-                        //Realm realm = Realm.getDefaultInstance();
-
-                        getRealm().executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                                realmRoom.getGroupRoom().setPrivate(true);
-                            }
-                        });
-                        //realm.close();
                     }
                 });
             }
@@ -1074,7 +1033,7 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         if (isPopup) {
             edtUserName.setText("iGap.net/");
         } else {
-            edtUserName.setText("" + linkUsername);
+            edtUserName.setText("iGap.net/" + linkUsername);
         }
 
         edtUserName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
@@ -1149,8 +1108,8 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (!editable.toString().contains("iGap.net/")) {
-                    edtUserName.setText("iGap.net/");
+                if (editable.toString().contains("iGap.net/")) {
+                    //edtUserName.setText("iGap.net/");
                     Selection.setSelection(edtUserName.getText(), edtUserName.getText().length());
                 }
 
@@ -1177,18 +1136,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
 
                         linkUsername = username;
                         setTextGroupLik();
-
-                        //+Realm realm = Realm.getDefaultInstance();
-                        getRealm().executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-
-                                realmRoom.getGroupRoom().setUsername(edtUserName.getText().toString());
-                                realmRoom.getGroupRoom().setPrivate(false);
-                            }
-                        });
-                        //realm.close();
                     }
                 });
             }
@@ -1303,21 +1250,11 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                     if (G.fragmentActivity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) { // camera
 
                         try {
-                            HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                            HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                                 @Override
-                                public void Allow() throws IOException {
-                                    HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                                        @Override
-                                        public void Allow() {
-                                            dialog.dismiss();
-                                            useCamera();
-                                        }
-
-                                        @Override
-                                        public void deny() {
-
-                                        }
-                                    });
+                                public void Allow() {
+                                    dialog.dismiss();
+                                    useCamera();
                                 }
 
                                 @Override
@@ -1353,13 +1290,8 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
     }
 
     private void addMemberToGroup() {
-
-        //+Realm realm = Realm.getDefaultInstance();
-
         List<StructContactInfo> userList = Contacts.retrieve(null);
-
-        RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        RealmList<RealmMember> memberList = realmRoom.getGroupRoom().getMembers();
+        RealmList<RealmMember> memberList = RealmMember.getMembers(getRealm(), roomId);
 
         for (int i = 0; i < memberList.size(); i++) {
             for (int j = 0; j < userList.size(); j++) {
@@ -1372,12 +1304,12 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
 
         Fragment fragment = ShowCustomList.newInstance(userList, new OnSelectedList() {
             @Override
-            public void getSelectedList(boolean result, final String message, final int countForShowLastMessage, final ArrayList<StructContactInfo> list) {
+            public void getSelectedList(boolean result, final String type, final int countForShowLastMessage, final ArrayList<StructContactInfo> list) {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
                         for (int i = 0; i < list.size(); i++) {
-                            new RequestGroupAddMember().groupAddMember(roomId, list.get(i).peerId, getMessageId(message, countForShowLastMessage));
+                            new RequestGroupAddMember().groupAddMember(roomId, list.get(i).peerId, RealmRoomMessage.findCustomMessageId(roomId, EnumCustomMessageId.convertType(type), countForShowLastMessage));
                         }
                     }
                 });
@@ -1389,46 +1321,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         bundle.putLong("COUNT_MESSAGE", noLastMessage);
         fragment.setArguments(bundle);
         new HelperFragment(fragment).setReplace(false).load();
-    }
-
-    private Long getMessageId(String type, int count) {
-
-        long messageID;
-
-        if (type.equals("fromBegin")) {
-            messageID = 0;
-        } else if (type.equals("fromNow")) {
-
-            //+Realm realm = Realm.getDefaultInstance();
-            RealmResults<RealmRoomMessage> realmRoomMessages = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).equalTo(RealmRoomMessageFields.DELETED, false).
-                    findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
-
-            RealmRoomMessage realmRoomMessage = null;
-            if (realmRoomMessages.size() > 0) {
-                realmRoomMessage = realmRoomMessages.first();
-            }
-            if (realmRoomMessage != null) {
-                messageID = realmRoomMessage.getMessageId();
-            } else {
-                messageID = 0;
-            }
-            //realm.close();
-        } else {
-
-            //+Realm realm = Realm.getDefaultInstance();
-            RealmResults<RealmRoomMessage> realmRoomMessages = getRealm().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).equalTo(RealmRoomMessageFields.DELETED, false).
-                    findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
-
-            if (realmRoomMessages.size() <= count) {
-                messageID = 0;
-            } else {
-                messageID = realmRoomMessages.get(count).getMessageId();
-            }
-
-            //realm.close();
-        }
-
-        return messageID;
     }
 
     private void ChangeGroupName(final View view) {
@@ -1496,6 +1388,8 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
             @Override
             public void onGroupEdit(long roomId, String name, String description) {
                 hideProgressBar();
+                txtGroupName.setText(name);
+                txtGroupDescription.setText(description);
                 txtGroupNameTitle.setText(name);
             }
 
@@ -1509,15 +1403,9 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        final Snackbar snack = Snackbar.make(view.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
 
-                        snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                snack.dismiss();
-                            }
-                        });
-                        snack.show();
+                        HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+
                     }
                 });
             }
@@ -1561,13 +1449,13 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                 G.onGroupEdit = new OnGroupEdit() {
                     @Override
                     public void onGroupEdit(final long roomId, final String name, final String descriptions) {
-
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
-
                                 description = descriptions;
+                                txtGroupName.setText(name);
                                 txtGroupDescription.setText(descriptions);
+                                txtGroupNameTitle.setText(name);
                             }
                         });
                     }
@@ -1692,20 +1580,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                             public void run() {
                                 G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 prgWait.setVisibility(View.GONE);
-                            }
-                        });
-
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), "Just owner can delete", Snackbar.LENGTH_LONG);
-                                snack.setAction("CANCEL", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        snack.dismiss();
-                                    }
-                                });
-                                snack.show();
                             }
                         });
                     }
@@ -1913,20 +1787,7 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                //+Realm realm = Realm.getDefaultInstance();
-                RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                final RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
-
-                getRealm().executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        txtGroupLink.setText("" + inviteLink);
-                        realmGroupRoom.setInvite_link(inviteLink);
-                        realmGroupRoom.setInvite_token(inviteToken);
-                    }
-                });
-
-                //realm.close();
+                txtGroupLink.setText("" + inviteLink);
             }
         });
     }
@@ -1934,20 +1795,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
     @Override
     public void onError(int majorCode, int minorCode) {
         hideProgressBar();
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
-
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
-            }
-        });
     }
 
     @Override
@@ -1957,15 +1804,9 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
 
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+
             }
         });
     }

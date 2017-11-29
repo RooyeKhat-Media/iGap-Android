@@ -11,11 +11,9 @@
 package net.iGap.response;
 
 import io.realm.Realm;
-import net.iGap.module.enums.AttachmentFor;
 import net.iGap.proto.ProtoChannelAvatarGetList;
-import net.iGap.realm.RealmAttachment;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmAvatarFields;
 
 public class ChannelAvatarGetListResponse extends MessageHandler {
 
@@ -34,24 +32,19 @@ public class ChannelAvatarGetListResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+        final ProtoChannelAvatarGetList.ChannelAvatarGetListResponse.Builder builder = (ProtoChannelAvatarGetList.ChannelAvatarGetListResponse.Builder) message;
+        final long ownerId = Long.parseLong(identity);
 
         Realm realm = Realm.getDefaultInstance();
-        final long roomId = Long.parseLong(identity);
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, roomId).findAll().deleteAllFromRealm();
-                ProtoChannelAvatarGetList.ChannelAvatarGetListResponse.Builder builder = (ProtoChannelAvatarGetList.ChannelAvatarGetListResponse.Builder) message;
-
-                for (int i = 0; i < builder.getAvatarList().size(); i++) {
-                    RealmAvatar realmAvatar = realm.createObject(RealmAvatar.class, builder.getAvatarList().get(i).getId());
-                    realmAvatar.setOwnerId(roomId);
-                    realmAvatar.setFile(RealmAttachment.build(builder.getAvatarList().get(i).getFile(), AttachmentFor.AVATAR, null));
+                RealmAvatar.deleteAllAvatars(ownerId, realm);
+                for (ProtoGlobal.Avatar avatar : builder.getAvatarList()) {
+                    RealmAvatar.putOrUpdate(realm, ownerId, avatar);
                 }
             }
         });
-
         realm.close();
     }
 

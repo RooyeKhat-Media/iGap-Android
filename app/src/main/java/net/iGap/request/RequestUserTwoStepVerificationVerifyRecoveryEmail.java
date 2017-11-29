@@ -16,8 +16,7 @@ public class RequestUserTwoStepVerificationVerifyRecoveryEmail {
 
     public void recoveryEmail(String token) {
 
-        ProtoUserTwoStepVerificationVerifyRecoveryEmail.UserTwoStepVerificationVerifyRecoveryEmail.Builder builder =
-            ProtoUserTwoStepVerificationVerifyRecoveryEmail.UserTwoStepVerificationVerifyRecoveryEmail.newBuilder();
+        ProtoUserTwoStepVerificationVerifyRecoveryEmail.UserTwoStepVerificationVerifyRecoveryEmail.Builder builder = ProtoUserTwoStepVerificationVerifyRecoveryEmail.UserTwoStepVerificationVerifyRecoveryEmail.newBuilder();
         builder.setToken(token);
 
         RequestWrapper requestWrapper = new RequestWrapper(136, builder);

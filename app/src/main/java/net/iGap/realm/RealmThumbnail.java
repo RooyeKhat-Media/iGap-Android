@@ -17,7 +17,7 @@ import io.realm.annotations.PrimaryKey;
 import net.iGap.proto.ProtoGlobal;
 import org.parceler.Parcel;
 
-@Parcel(implementations = { RealmThumbnailRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { RealmThumbnail.class }) public class RealmThumbnail extends RealmObject {
+@Parcel(implementations = {RealmThumbnailRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmThumbnail.class}) public class RealmThumbnail extends RealmObject {
     @PrimaryKey private long id;
     private long messageId;
     private long size;
@@ -25,7 +25,7 @@ import org.parceler.Parcel;
     private int height;
     private String cacheId;
 
-    public static RealmThumbnail create(long id, final long messageId, final ProtoGlobal.Thumbnail thumbnail) {
+    public static RealmThumbnail put(long id, final long messageId, final ProtoGlobal.Thumbnail thumbnail) {
         Realm realm = Realm.getDefaultInstance();
         RealmThumbnail realmThumbnail = realm.createObject(RealmThumbnail.class, id);
         realmThumbnail.setCacheId(thumbnail.getCacheId());

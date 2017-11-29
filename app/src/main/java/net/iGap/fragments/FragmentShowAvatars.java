@@ -23,12 +23,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.File;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -60,6 +57,13 @@ import net.iGap.request.RequestGroupAvatarDelete;
 import net.iGap.request.RequestGroupAvatarGetList;
 import net.iGap.request.RequestUserAvatarDelete;
 import net.iGap.request.RequestUserAvatarGetList;
+
+import java.io.File;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static net.iGap.R.string.array_Delete_photo;
 import static net.iGap.module.AndroidUtils.suitablePath;
@@ -184,6 +188,9 @@ public class FragmentShowAvatars extends BaseFragment {
     }
 
     private void initComponent(View view) {
+
+        //ViewGroup rooShowImage = (ViewGroup) view.findViewById(R.id.rooShowImage);
+        //rooShowImage.setBackgroundColor(G.fragmentActivity.getResources().getColor(R.color.black));
 
         MaterialDesignTextView btnBack = (MaterialDesignTextView) view.findViewById(R.id.asi_btn_back);
         RippleView rippleBack = (RippleView) view.findViewById(R.id.asi_ripple_back);
@@ -343,7 +350,7 @@ public class FragmentShowAvatars extends BaseFragment {
                         if (avatarListSize > 0) {
                             viewPager.getAdapter().notifyDataSetChanged();
                             txtImageNumber.setText(viewPager.getCurrentItem() + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + avatarListSize);
-                            if (HelperCalander.isLanguagePersian) {
+                            if (HelperCalander.isPersianUnicode) {
                                 txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
                             }
                         } else {
@@ -367,7 +374,7 @@ public class FragmentShowAvatars extends BaseFragment {
         viewPager.setAdapter(mAdapter);
 
         txtImageNumber.setText(1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + avatarList.size());
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
         }
 
@@ -387,7 +394,7 @@ public class FragmentShowAvatars extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 txtImageNumber.setText(position + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + avatarList.size());
-                if (HelperCalander.isLanguagePersian) {
+                if (HelperCalander.isPersianUnicode) {
                     txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
                 }
             }
@@ -477,7 +484,7 @@ public class FragmentShowAvatars extends BaseFragment {
             if (media != null) {
                 File file = new File(media);
                 if (file.exists()) {
-                    HelperSaveFile.savePicToGallary(media, true);
+                    HelperSaveFile.savePicToGallery(media, true);
                 }
             }
         }

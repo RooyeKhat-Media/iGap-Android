@@ -1,316 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:layoutDirection="ltr"
-    android:clickable="true"
-    android:orientation="horizontal"
+    android:gravity="bottom"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="@dimen/dp100"
+    sothree:umanoParallaxOffset="@dimen/dp10"
+    sothree:umanoScrollableView="@+id/rcvListMusicPlayer"
+    sothree:umanoShadowHeight="4dp"
     >
 
 
-  <FrameLayout
-      android:layout_width="0dp"
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="5"
-      android:background="#f0f0f0"
+      android:background="@color/white"
+      android:clickable="true"
+      android:layoutDirection="ltr"
+      android:orientation="horizontal"
       >
 
 
-    <ImageView
-        android:id="@+id/ml_img_music_icon_default"
-        android:layout_width="@dimen/dp100"
-        android:layout_height="@dimen/dp100"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/music_icon_gray"
-        />
-
-
-    <ImageView
-        android:id="@+id/ml_img_music_picture"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        />
-
-    <TextView
-        android:id="@+id/ml_txt_music_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/greenStatus"
-        android:ellipsize="marquee"
-        android:fadingEdge="horizontal"
-        android:lines="1"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:paddingBottom="@dimen/dp4"
-        android:paddingTop="@dimen/dp4"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:text=""
-        android:textColor="@color/white"
-
-        android:textSize="@dimen/dp16"
-        />
+        android:layout_weight="5"
+        android:background="#f0f0f0"
+        >
 
 
-  </FrameLayout>
+      <ImageView
+          android:id="@+id/ml_img_music_icon_default"
+          android:layout_width="@dimen/dp100"
+          android:layout_height="@dimen/dp100"
+          android:layout_gravity="center"
+          android:scaleType="centerCrop"
+          android:src="@mipmap/music_icon_gray"
+          />
 
+
+      <ImageView
+          android:id="@+id/ml_img_music_picture"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="centerCrop"
+          />
+
+      <TextView
+          android:id="@+id/ml_txt_music_info"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:background="@color/greenStatus"
+          android:ellipsize="marquee"
+          android:fadingEdge="horizontal"
+          android:lines="1"
+          android:marqueeRepeatLimit="marquee_forever"
+          android:paddingBottom="@dimen/dp4"
+          android:paddingTop="@dimen/dp4"
+          android:scrollHorizontally="true"
+          android:singleLine="true"
+          android:text=""
+          android:textColor="@color/white"
+
+          android:textSize="@dimen/dp16"
+          />
+
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        >
+
+      <android.support.design.widget.AppBarLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:background="@color/white"
+            android:gravity="left|center"
+            >
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/ml_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/ml_btn_back"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@android:color/darker_gray"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center|left"
+              android:orientation="vertical"
+              >
+
+            <TextView
+                android:id="@+id/ml_txt_music_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/music_name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dp16"
+                />
+
+            <TextView
+                android:id="@+id/ml_txt_music_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/place"
+                android:textColor="@color/gray_4c"
+                android:textSize="@dimen/dp14"
+                />
+          </LinearLayout>
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/amp_ripple_menu"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="150"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/ml_btn_music_menu"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/md_show_more_button"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@android:color/darker_gray"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+
+        </LinearLayout>
+
+      </android.support.design.widget.AppBarLayout>
+
+      <net.iGap.libs.ripplesoundplayer.RippleVisualizerView
+          android:id="@+id/line_renderer_demo"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_margin="@dimen/dp8"
+          android:layout_weight="1"
+
+          />
+
+    </LinearLayout>
+  </LinearLayout>
 
   <LinearLayout
-      android:layout_width="0dp"
-      android:layout_weight="4"
+      android:id="@+id/dragView"
+      android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
+      android:background="#ffffff"
+      android:clickable="true"
+      android:focusable="false"
+      android:orientation="horizontal"
       >
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:focusable="false"
+        android:orientation="vertical"
         >
+
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp60"
-          android:background="@color/white"
-          android:gravity="left|center"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
           >
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/ml_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/ml_btn_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:background="@null"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@android:color/darker_gray"
-              />
-        </net.iGap.libs.rippleeffect.RippleView>
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:gravity="center"
+            android:padding="5dp"
             >
 
           <TextView
-              android:id="@+id/ml_txt_music_name"
+              android:id="@+id/ml_txt_timer"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:gravity="center"
-              android:singleLine="true"
-              android:text="@string/music_name"
-              android:textColor="@android:color/black"
-              android:textSize="@dimen/dp16"
+              android:text="00:00"
+              android:textColor="@color/green"
+              />
+
+          <SeekBar
+              android:id="@+id/ml_seekBar1"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+              android:layout_weight="1"
               />
 
           <TextView
-              android:id="@+id/ml_txt_music_place"
+              android:id="@+id/ml_txt_music_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:gravity="center"
-              android:singleLine="true"
-              android:text="@string/place"
-              android:textColor="@color/gray_4c"
-              android:textSize="@dimen/dp14"
+              android:text="@string/music_time"
               />
         </LinearLayout>
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/amp_ripple_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="150"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
             >
 
+
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/ml_btn_shuffel_music"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/md_shuffle_mode"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dp20"
+                />
+
+
+          </LinearLayout>
+
+
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/ml_btn_music_menu"
-              android:layout_width="@dimen/dp52"
+              android:id="@+id/ml_btn_Previous_music"
+              android:layout_width="@dimen/dp40"
               android:layout_height="match_parent"
               android:background="@null"
               android:gravity="center"
-              android:text="@string/md_show_more_button"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@android:color/darker_gray"
+              android:text="@string/md_previous_track"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="#444"
+              android:textSize="@dimen/dp22"
               />
-        </net.iGap.libs.rippleeffect.RippleView>
+
+          <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/ml_btn_play_music"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/dp24"
+              android:layout_marginRight="@dimen/dp24"
+              android:background="@null"
+              android:gravity="center"
+              android:text="@string/md_play_rounded_button"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="@color/green"
+              android:textSize="@dimen/dp36"
+              />
+
+          <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/ml_btn_forward_music"
+              android:layout_width="@dimen/dp40"
+              android:layout_height="match_parent"
+              android:background="@null"
+              android:gravity="center"
+              android:text="@string/md_play_next_button"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="#444"
+              android:textSize="@dimen/dp22"
+              />
 
 
-      </LinearLayout>
+          <FrameLayout
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              >
 
-    </android.support.design.widget.AppBarLayout>
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/ml_btn_replay_music"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@null"
+                android:gravity="center"
+                android:text="@string/md_synchronization_arrows"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dp28"
+                />
 
-    <net.iGap.libs.ripplesoundplayer.RippleVisualizerView
-        android:id="@+id/line_renderer_demo"
-        android:layout_margin="@dimen/dp8"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-
-        />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
-        android:gravity="center"
-        android:padding="5dp"
-        >
-
-      <TextView
-          android:id="@+id/ml_txt_timer"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="00:00"
-          android:textColor="@color/green"
-          />
-
-      <SeekBar
-          android:id="@+id/ml_seekBar1"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="5dp"
-          android:layout_marginRight="5dp"
-          android:layout_weight="1"
-          />
-
-      <TextView
-          android:id="@+id/ml_txt_music_time"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/music_time"
-          />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/ml_img_repead_one"
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp16"
+                android:layout_gravity="right|center"
+                android:layout_marginBottom="@dimen/dp12"
+                android:layout_marginRight="@dimen/dp4"
+                android:padding="1dp"
+                android:src="@mipmap/red_one"
+                android:visibility="visible"
+                />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:gravity="center"
-        android:paddingLeft="@dimen/dp8"
-        android:paddingRight="@dimen/dp8"
-        >
-
-
-      <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          >
-
-        <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/ml_btn_shuffel_music"
-            android:layout_width="@dimen/dp36"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center"
-            android:text="@string/md_shuffle_mode"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp18"
-            />
-
+          </FrameLayout>
+        </LinearLayout>
 
       </LinearLayout>
 
-
-      <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/ml_btn_Previous_music"
-          android:layout_width="@dimen/dp36"
-          android:layout_height="match_parent"
-          android:background="@null"
-          android:gravity="center"
-          android:text="@string/md_previous_track"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="#444"
-          android:textSize="@dimen/dp20"
-          />
-
-      <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/ml_btn_play_music"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/dp8"
-          android:layout_marginRight="@dimen/dp8"
-          android:background="@null"
-          android:gravity="center"
-          android:text="@string/md_play_rounded_button"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/green"
-          android:textSize="@dimen/dp36"
-          />
-
-      <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/ml_btn_forward_music"
-          android:layout_width="@dimen/dp36"
-          android:layout_height="match_parent"
-          android:background="@null"
-          android:gravity="center"
-          android:text="@string/md_play_next_button"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="#444"
-          android:textSize="@dimen/dp20"
-          />
-
-
-      <FrameLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rcvListMusicPlayer"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
           android:layout_weight="1"
-          >
-
-        <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/ml_btn_replay_music"
-            android:layout_width="@dimen/dp36"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@null"
-            android:gravity="center"
-            android:text="@string/md_synchronization_arrows"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp26"
-            />
-
-        <ImageView
-            android:id="@+id/ml_img_repead_one"
-            android:layout_width="@dimen/dp16"
-            android:layout_height="@dimen/dp16"
-            android:layout_gravity="right|center"
-            android:layout_marginBottom="@dimen/dp12"
-            android:layout_marginRight="@dimen/dp4"
-            android:padding="1dp"
-            android:src="@mipmap/red_one"
-            android:visibility="visible"
-            />
-
-
-      </FrameLayout>
-
+          />
 
     </LinearLayout>
-
   </LinearLayout>
 
-
-</LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -15,6 +15,7 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.module.MusicPlayer;
 import net.iGap.module.SHP_SETTING;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -67,6 +68,7 @@ public class FragmentLanguage extends BaseFragment {
         TextView iconFa = (TextView) view.findViewById(R.id.st_icon_fatsi);
         TextView txtEn = (TextView) view.findViewById(R.id.txtLanguageEn);
         TextView iconEn = (TextView) view.findViewById(R.id.st_icon_english);
+        TextView iconAr = (TextView) view.findViewById(R.id.st_icon_ar);
 
 
         String textLanguage = sharedPreferences.getString(SHP_SETTING.KEY_LANGUAGE, Locale.getDefault().getDisplayLanguage());
@@ -76,13 +78,15 @@ public class FragmentLanguage extends BaseFragment {
         } else if (textLanguage.equals("فارسی")) {
             iconFa.setVisibility(View.VISIBLE);
         } else if (textLanguage.equals("العربی")) {
-
+            iconAr.setVisibility(View.VISIBLE);
         } else if (textLanguage.equals("Deutsch")) {
+
         }
 
 
         ViewGroup vgFa = (ViewGroup) view.findViewById(R.id.st_layout_fa);
         ViewGroup vgEn = (ViewGroup) view.findViewById(R.id.st_layout_english);
+        ViewGroup vgAr = (ViewGroup) view.findViewById(R.id.st_layout_arabi);
 
         vgEn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +98,9 @@ public class FragmentLanguage extends BaseFragment {
                     editor.putString(SHP_SETTING.KEY_LANGUAGE, "English");
                     editor.apply();
                     setLocale("en");
+                    HelperCalander.isPersianUnicode = false;
                     HelperCalander.isLanguagePersian = false;
+                    HelperCalander.isLanguageArabic = false;
                     G.isAppRtl = false;
 
                     if (onRefreshActivity != null) {
@@ -103,6 +109,10 @@ public class FragmentLanguage extends BaseFragment {
                     }
 
                     G.selectedLanguage = "en";
+                }
+
+                if (MusicPlayer.updateName != null) {
+                    MusicPlayer.updateName.rename();
                 }
 
                 removeFromBaseFragment(FragmentLanguage.this);
@@ -121,17 +131,54 @@ public class FragmentLanguage extends BaseFragment {
                     editor.apply();
                     G.selectedLanguage = "fa";
                     setLocale("fa");
+                    HelperCalander.isPersianUnicode = true;
                     HelperCalander.isLanguagePersian = true;
+                    HelperCalander.isLanguageArabic = false;
                     G.isAppRtl = true;
-
                     if (onRefreshActivity != null) {
                         G.isRestartActivity = true;
                         onRefreshActivity.refresh("fa");
                     }
                 }
+
+                if (MusicPlayer.updateName != null) {
+                    MusicPlayer.updateName.rename();
+                }
+
                 removeFromBaseFragment(FragmentLanguage.this);
             }
         });
+
+        vgAr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!G.selectedLanguage.equals("ar")) {
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(SHP_SETTING.KEY_LANGUAGE, "العربی");
+                    editor.apply();
+                    G.selectedLanguage = "ar";
+                    setLocale("ar");
+                    HelperCalander.isPersianUnicode = true;
+                    HelperCalander.isLanguagePersian = false;
+                    HelperCalander.isLanguageArabic = true;
+                    G.isAppRtl = true;
+
+                    if (onRefreshActivity != null) {
+                        G.isRestartActivity = true;
+                        onRefreshActivity.refresh("ar");
+                    }
+                }
+
+                if (MusicPlayer.updateName != null) {
+                    MusicPlayer.updateName.rename();
+                }
+
+                removeFromBaseFragment(FragmentLanguage.this);
+            }
+        });
+
     }
 
     public void setLocale(String lang) {

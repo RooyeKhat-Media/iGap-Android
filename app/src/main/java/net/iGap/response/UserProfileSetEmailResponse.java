@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserProfileEmail;
@@ -33,19 +32,8 @@ public class UserProfileSetEmailResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-        final ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder userProfileEmail = (ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                if (realmUserInfo != null) {
-                    realmUserInfo.setEmail(userProfileEmail.getEmail());
-                }
-            }
-        });
-        realm.close();
+        ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder userProfileEmail = (ProtoUserProfileEmail.UserProfileSetEmailResponse.Builder) message;
+        RealmUserInfo.updateEmail(userProfileEmail.getEmail());
 
         if (G.onUserProfileSetEmailResponse != null) {
             G.onUserProfileSetEmailResponse.onUserProfileEmailResponse(userProfileEmail.getEmail(), userProfileEmail.getResponse());

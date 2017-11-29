@@ -16,6 +16,7 @@ import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperConnectionState;
 import net.iGap.module.enums.ConnectionState;
 import net.iGap.proto.ProtoError;
+import net.iGap.proto.ProtoUserLogin;
 import net.iGap.realm.RealmCallConfig;
 import net.iGap.request.RequestSignalingGetConfiguration;
 
@@ -37,10 +38,12 @@ public class UserLoginResponse extends MessageHandler {
     public void handler() {
         super.handler();
         HelperConnectionState.connectionState(ConnectionState.IGAP);
-        /*ProtoUserLogin.UserLoginResponse.Builder builder = (ProtoUserLogin.UserLoginResponse.Builder) message;
-        builder.getDeprecatedClient();
+        ProtoUserLogin.UserLoginResponse.Builder builder = (ProtoUserLogin.UserLoginResponse.Builder) message;
+      /*builder.getDeprecatedClient();
         builder.getSecondaryNodeName();
         builder.getUpdateAvailable();*/
+        G.currentServerTime = builder.getResponse().getTimestamp();
+        G.bothChatDeleteTime = builder.getChatDeleteMessageForBothPeriod() * 1000;
         G.userLogin = true;
 
         /**

@@ -10,17 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import net.iGap.G;
+import net.iGap.helper.HelperMember;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.proto.ProtoChannelAddAdmin;
 import net.iGap.proto.ProtoError;
-import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmChannelRoom;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class ChannelAddAdminResponse extends MessageHandler {
 
@@ -36,36 +30,19 @@ public class ChannelAddAdminResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder builder = (ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder) message;
-
-        RealmRoom.updateRole(ProtoGlobal.Room.Type.CHANNEL, builder.getRoomId(), builder.getMemberId(), ChannelChatRole.ADMIN.toString());
-        Realm realm = Realm.getDefaultInstance();
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-        if (realmRoom != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-                    RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
-                    RealmList<RealmMember> realmMemberRealmList = realmChannelRoom.getMembers();
-                    for (RealmMember member : realmMemberRealmList) {
-                        if (member.getPeerId() == builder.getMemberId()) {
-                            member.setRole(ProtoGlobal.ChannelRoom.Role.ADMIN.toString());
-                            if (G.onChannelAddAdmin != null) {
-                                G.onChannelAddAdmin.onChannelAddAdmin(builder.getRoomId(), builder.getMemberId());
-                            }
-                            break;
-                        }
-                    }
-                }
-            });
-        }
-
-        realm.close();
+        ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder builder = (ProtoChannelAddAdmin.ChannelAddAdminResponse.Builder) message;
+        HelperMember.updateRole(builder.getRoomId(), builder.getMemberId(), ChannelChatRole.ADMIN.toString());
+        //fastAdapter
+        //if (G.onChannelAddAdmin != null) {
+        //    G.onChannelAddAdmin.onChannelAddAdmin(builder.getRoomId(), builder.getMemberId());
+        //}
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
         if (G.onChannelAddAdmin != null) {
@@ -73,7 +50,8 @@ public class ChannelAddAdminResponse extends MessageHandler {
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

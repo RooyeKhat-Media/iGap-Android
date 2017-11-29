@@ -10,6 +10,6 @@
 
 package net.iGap.interfaces;
 
-public interface OnUserAvatarGetList {
-    void onUserAvatarGetList();
+public interface OnDateChanged {
+    void onChange();
 }

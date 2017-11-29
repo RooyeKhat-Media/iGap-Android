@@ -10,7 +10,8 @@
 
 package net.iGap.response;
 
-import android.util.Log;
+import net.iGap.G;
+import net.iGap.proto.ProtoHeartbeat;
 import net.iGap.request.RequestHeartbeat;
 
 import static net.iGap.G.latestHearBeatTime;
@@ -28,18 +29,22 @@ public class HeartbeatResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
+        ProtoHeartbeat.HeartbeatResponse.Builder builder = (ProtoHeartbeat.HeartbeatResponse.Builder) message;
+        G.currentServerTime = builder.getResponse().getTimestamp();
         latestHearBeatTime = System.currentTimeMillis();
-        Log.i("HHH", "latestHearBeatTime : " + latestHearBeatTime);
         new RequestHeartbeat().heartBeat();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

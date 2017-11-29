@@ -28,20 +28,22 @@ public class ChannelRevokeLinkResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChannelRevokeLink.ChannelRevokeLinkResponse.Builder builder = (ProtoChannelRevokeLink.ChannelRevokeLinkResponse.Builder) message;
         if (G.onChannelRevokeLink != null) {
             G.onChannelRevokeLink.onChannelRevokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

@@ -61,13 +61,12 @@ public class GoToChatActivity {
         if (FragmentChat.mForwardMessages != null || HelperGetDataFromOtherApp.hasSharedData) {
             Realm realm = Realm.getDefaultInstance();
 
-            RealmRoom _realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomid).findFirst();
+            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomid).findFirst();
 
-            if (_realmRoom != null) {
+            if (realmRoom != null) {
+                roomName = realmRoom.getTitle();
 
-                roomName = _realmRoom.getTitle();
-
-                if (_realmRoom.getReadOnly()) {
+                if (realmRoom.getReadOnly()) {
                     if (G.currentActivity != null) {
                         new MaterialDialog.Builder(G.currentActivity).title(R.string.dialog_readonly_chat).positiveText(R.string.ok).show();
                     }

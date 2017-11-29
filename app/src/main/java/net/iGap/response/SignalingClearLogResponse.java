@@ -10,11 +10,9 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoSignalingClearLog;
 import net.iGap.realm.RealmCallLog;
-import net.iGap.realm.RealmCallLogFields;
 
 public class SignalingClearLogResponse extends MessageHandler {
 
@@ -34,17 +32,7 @@ public class SignalingClearLogResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoSignalingClearLog.SignalingClearLogResponse.Builder builder = (ProtoSignalingClearLog.SignalingClearLogResponse.Builder) message;
-
-        final long clearId = builder.getClearId();  // delete all call logs smaller then clearId
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.where(RealmCallLog.class).lessThanOrEqualTo(RealmCallLogFields.ID, clearId).findAll().deleteAllFromRealm();
-            }
-        });
-        realm.close();
+        RealmCallLog.clearCallLog(builder.getClearId());
 
         if (G.onCallLogClear != null) {
             G.onCallLogClear.onCallLogClear();

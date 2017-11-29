@@ -10,13 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelAddMessageReaction;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmChannelExtra;
-import net.iGap.realm.RealmChannelExtraFields;
 import net.iGap.request.RequestChannelAddMessageReaction;
 
 public class ChannelAddMessageReactionResponse extends MessageHandler {
@@ -39,57 +37,26 @@ public class ChannelAddMessageReactionResponse extends MessageHandler {
 
         final ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder builder = (ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse.Builder) message;
         if (G.onChannelAddMessageReaction != null && identity != null) {
-
             final RequestChannelAddMessageReaction.IdentityChannelAddMessageReaction IdentityChannelAddMessageReaction = ((RequestChannelAddMessageReaction.IdentityChannelAddMessageReaction) identity);
             long roomId = IdentityChannelAddMessageReaction.roomId;
             final long messageId = IdentityChannelAddMessageReaction.messageId;
             final ProtoGlobal.RoomMessageReaction messageReaction = IdentityChannelAddMessageReaction.roomMessageReaction;
 
-            ProtoGlobal.RoomMessageReaction reaction = null;
-            if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
-                reaction = ProtoGlobal.RoomMessageReaction.THUMBS_UP;
-            } else if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_DOWN) {
-                reaction = ProtoGlobal.RoomMessageReaction.THUMBS_DOWN;
+            /**
+             * vote in chat or group to forwarded message from channel
+             */
+            long voteMessageId;
+            if (IdentityChannelAddMessageReaction.forwardedMessageId != 0) {
+                voteMessageId = IdentityChannelAddMessageReaction.forwardedMessageId;
+            } else {
+                voteMessageId = messageId;
             }
-
-            Realm realm = Realm.getDefaultInstance();
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    ProtoGlobal.RoomMessageReaction reaction1 = null;
-                    if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
-                        reaction1 = ProtoGlobal.RoomMessageReaction.THUMBS_UP;
-                    } else if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_DOWN) {
-                        reaction1 = ProtoGlobal.RoomMessageReaction.THUMBS_DOWN;
-                    }
-
-                    /**
-                     * vote in chat or group to forwarded message from channel
-                     */
-                    if (IdentityChannelAddMessageReaction.forwardedMessageId != 0) {
-                        long forwardMessageId = IdentityChannelAddMessageReaction.forwardedMessageId;
-                        RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, forwardMessageId).findFirst();
-                        if (realmChannelExtra != null) {
-                            if (messageReaction == ProtoGlobal.RoomMessageReaction.THUMBS_UP) {
-                                realmChannelExtra.setThumbsUp(builder.getReactionCounterLabel());
-                            } else {
-                                realmChannelExtra.setThumbsDown(builder.getReactionCounterLabel());
-                            }
-                        }
-                    } else {
-                        RealmChannelExtra realmChannelExtra = realm.where(RealmChannelExtra.class).equalTo(RealmChannelExtraFields.MESSAGE_ID, messageId).findFirst();
-                        if (realmChannelExtra != null) {
-                            realmChannelExtra.setVote(reaction1, builder.getReactionCounterLabel());
-                        }
-                    }
-                }
-            });
-            realm.close();
+            RealmChannelExtra.setVote(voteMessageId, messageReaction, builder.getReactionCounterLabel());
 
             if (IdentityChannelAddMessageReaction.forwardedMessageId != 0) {
-                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), reaction, IdentityChannelAddMessageReaction.forwardedMessageId);
+                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), messageReaction, IdentityChannelAddMessageReaction.forwardedMessageId);
             } else {
-                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), reaction, 0);
+                G.onChannelAddMessageReaction.onChannelAddMessageReaction(roomId, messageId, builder.getReactionCounterLabel(), messageReaction, 0);
             }
         }
     }

@@ -29,15 +29,10 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -51,14 +46,23 @@ import net.iGap.module.CircleImageView;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.proto.ProtoClientResolveUsername;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientCheckInviteLink;
 import net.iGap.request.RequestClientJoinByInviteLink;
 import net.iGap.request.RequestClientResolveUsername;
+
 import org.chromium.customtabsclient.CustomTabsActivityHelper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import io.realm.Realm;
+import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
@@ -554,37 +558,32 @@ public class HelperUrl {
             new RequestClientCheckInviteLink().clientCheckInviteLink(token);
         } else {
             closeDialogWaiting();
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
         }
     }
 
     private static void openDialogJoin(final ProtoGlobal.Room room, final String token) {
+        if (room == null) {
+            return;
 
-        if (room == null) return;
-
+        }
         final Realm realm = Realm.getDefaultInstance();
-
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).equalTo(RealmRoomFields.IS_DELETED, false).findFirst();
-
         if (realmRoom != null) {
-
             new GoToChatActivity(room.getId()).startActivity();
 
             realm.close();
-
             return;
         }
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
                 RealmRoom realmRoom = RealmRoom.putOrUpdate(room, realm);
                 realmRoom.setDeleted(true);
                 G.deletedRoomList.add(realmRoom.getId());
             }
         });
-
         realm.close();
 
         String title = G.context.getString(R.string.do_you_want_to_join_to_this);
@@ -594,7 +593,7 @@ public class HelperUrl {
         switch (room.getType()) {
             case CHANNEL:
 
-                if (HelperCalander.isLanguagePersian) {
+                if (HelperCalander.isPersianUnicode) {
                     title += G.context.getString(R.string.channel) + " " + "عضو شوید؟";
                 } else {
                     title += G.context.getString(R.string.channel) + "?";
@@ -604,7 +603,7 @@ public class HelperUrl {
                 break;
             case GROUP:
 
-                if (HelperCalander.isLanguagePersian) {
+                if (HelperCalander.isPersianUnicode) {
                     title += G.context.getString(R.string.group) + " " + "عضو شوید؟";
                 } else {
                     title += G.context.getString(R.string.group) + "?";
@@ -624,27 +623,12 @@ public class HelperUrl {
                 final MaterialDialog dialog = new MaterialDialog.Builder(G.currentActivity).title(finalTitle).customView(R.layout.dialog_alert_join, true).positiveText(R.string.join).cancelable(true).negativeText(android.R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
                         joinToRoom(token, room);
                     }
                 }).onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                        final Realm realm = Realm.getDefaultInstance();
-
-                        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).findFirst();
-
-                        if (realmRoom != null) {
-                            realm.executeTransaction(new Realm.Transaction() {
-                                @Override
-                                public void execute(Realm realm) {
-                                    realmRoom.deleteFromRealm();
-                                }
-                            });
-                        }
-
-                        realm.close();
+                        RealmRoom.deleteRoom(room.getId());
                     }
                 }).build();
 
@@ -653,8 +637,8 @@ public class HelperUrl {
                 TextView txtRoomName = (TextView) dialog.findViewById(R.id.daj_txt_room_name);
                 txtRoomName.setText(room.getTitle());
 
-                TextView txtMemeberNumber = (TextView) dialog.findViewById(R.id.daj_txt_member_count);
-                txtMemeberNumber.setText(finalMemberNumber);
+                TextView txtMemberNumber = (TextView) dialog.findViewById(R.id.daj_txt_member_count);
+                txtMemberNumber.setText(finalMemberNumber);
 
                 HelperAvatar.getAvatar(room.getId(), HelperAvatar.AvatarType.ROOM, false, new OnAvatarGet() {
                     @Override
@@ -681,28 +665,7 @@ public class HelperUrl {
                 public void onClientJoinByInviteLinkResponse() {
 
                     closeDialogWaiting();
-
-                    Realm realm = Realm.getDefaultInstance();
-
-                    final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).findFirst();
-
-                    if (realmRoom != null) {
-
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-
-                                if (realmRoom.getType() == ProtoGlobal.Room.Type.GROUP) {
-                                    realmRoom.setReadOnly(false);
-                                }
-
-                                realmRoom.setDeleted(false);
-                            }
-                        });
-                    }
-
-                    realm.close();
-
+                    RealmRoom.joinByInviteLink(room.getId());
                     new GoToChatActivity(room.getId()).startActivity();
                 }
 
@@ -715,7 +678,7 @@ public class HelperUrl {
             new RequestClientJoinByInviteLink().clientJoinByInviteLink(token);
         } else {
             closeDialogWaiting();
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
         }
     }
 
@@ -741,10 +704,10 @@ public class HelperUrl {
 
             showIndeterminateProgressDialog();
 
-            new RequestClientResolveUsername().channelAddMessageReaction(userName);
+            new RequestClientResolveUsername().clientResolveUsername(userName);
         } else {
             closeDialogWaiting();
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
         }
     }
 
@@ -805,7 +768,7 @@ public class HelperUrl {
                 addChatToDatabaseAndGoToChat(user, 0, chatEntery);
             } else {
                 closeDialogWaiting();
-                HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+                HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
             }
         }
     }
@@ -842,24 +805,7 @@ public class HelperUrl {
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-
-                        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, user.getId());
-                        if (realmRegisteredInfo == null) {
-                            realmRegisteredInfo = realm.createObject(RealmRegisteredInfo.class);
-                            realmRegisteredInfo.setId(user.getId());
-                            realmRegisteredInfo.setDoNotshowSpamBar(false);
-                        }
-                        RealmAvatar.putAndGet(realm, user.getId(), user.getAvatar());
-                        realmRegisteredInfo.setUsername(user.getUsername());
-                        realmRegisteredInfo.setPhoneNumber(Long.toString(user.getPhone()));
-                        realmRegisteredInfo.setFirstName(user.getFirstName());
-                        realmRegisteredInfo.setLastName(user.getLastName());
-                        realmRegisteredInfo.setDisplayName(user.getDisplayName());
-                        realmRegisteredInfo.setInitials(user.getInitials());
-                        realmRegisteredInfo.setColor(user.getColor());
-                        realmRegisteredInfo.setStatus(user.getStatus().toString());
-                        realmRegisteredInfo.setAvatarCount(user.getAvatarCount());
-                        realmRegisteredInfo.setMutual(user.getMutual());
+                        RealmRegisteredInfo.putOrUpdate(realm, user);
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
@@ -971,7 +917,7 @@ public class HelperUrl {
                 }, 1000);
             } else {
                 closeDialogWaiting();
-                HelperError.showSnackMessage(G.context.getString(R.string.can_not_connent_to_server));
+                HelperError.showSnackMessage(G.context.getString(R.string.can_not_connent_to_server), false);
             }
         }
     }

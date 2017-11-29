@@ -10,6 +10,7 @@
 
 package net.iGap.realm;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 
@@ -36,5 +37,21 @@ public class RealmRoomDraft extends RealmObject {
 
     public void setReplyToMessageId(long replyToMessageId) {
         this.replyToMessageId = replyToMessageId;
+    }
+
+    public static RealmRoomDraft put(Realm realm, String message, long replyToMessageId) {
+        RealmRoomDraft draft = realm.createObject(RealmRoomDraft.class);
+        draft.setMessage(message);
+        draft.setReplyToMessageId(replyToMessageId);
+        return draft;
+    }
+
+    public static RealmRoomDraft putOrUpdate(Realm realm, RealmRoomDraft draft, String message, long replyToMessageId) {
+        if (draft == null) {
+            draft = realm.createObject(RealmRoomDraft.class);
+        }
+        draft.setMessage(message);
+        draft.setReplyToMessageId(replyToMessageId);
+        return draft;
     }
 }

@@ -33,7 +33,7 @@ public class GroupSendMessageResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-        final ProtoGroupSendMessage.GroupSendMessageResponse.Builder builder = (ProtoGroupSendMessage.GroupSendMessageResponse.Builder) message;
+        ProtoGroupSendMessage.GroupSendMessageResponse.Builder builder = (ProtoGroupSendMessage.GroupSendMessageResponse.Builder) message;
         HelperMessageResponse.handleMessage(builder.getRoomId(), builder.getRoomMessage(), ProtoGlobal.Room.Type.GROUP, builder.getResponse(), this.identity);
     }
 

@@ -10,16 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import net.iGap.G;
-import net.iGap.module.SUID;
+import net.iGap.helper.HelperMember;
 import net.iGap.proto.ProtoChannelAddMember;
 import net.iGap.proto.ProtoError;
-import net.iGap.realm.RealmChannelRoom;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class ChannelAddMemberResponse extends MessageHandler {
 
@@ -35,41 +29,18 @@ public class ChannelAddMemberResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChannelAddMember.ChannelAddMemberResponse.Builder builder = (ProtoChannelAddMember.ChannelAddMemberResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-
-        if (realmRoom != null) {
-            RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
-            if (realmChannelRoom != null) {
-                final RealmList<RealmMember> members = realmChannelRoom.getMembers();
-
-                final RealmMember realmMember = new RealmMember();
-                realmMember.setId(SUID.id().get());
-                realmMember.setPeerId(builder.getUserId());
-                realmMember.setRole(builder.getRole().toString());
-                // realmMember = realm.copyToRealm(realmMember);
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
-                        members.add(realmMember);
-                    }
-                });
-
-                if (G.onChannelAddMember != null) {
-                    G.onChannelAddMember.onChannelAddMember(builder.getRoomId(), builder.getUserId(), builder.getRole());
-                }
-            }
+        HelperMember.addMember(builder.getRoomId(), builder.getUserId(), builder.getRole().toString());
+        if (G.onChannelAddMember != null) {
+            G.onChannelAddMember.onChannelAddMember(builder.getRoomId(), builder.getUserId(), builder.getRole());
         }
-
-        realm.close();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
         if (G.onChannelAddMember != null) {
@@ -77,7 +48,8 @@ public class ChannelAddMemberResponse extends MessageHandler {
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         final int majorCode = errorResponse.getMajorCode();

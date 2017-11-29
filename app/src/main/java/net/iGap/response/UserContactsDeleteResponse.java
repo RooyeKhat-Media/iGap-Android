@@ -10,13 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
-import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserContactsDelete;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRegisteredInfoFields;
 
 public class UserContactsDeleteResponse extends MessageHandler {
 
@@ -36,27 +33,14 @@ public class UserContactsDeleteResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoUserContactsDelete.UserContactsDeleteResponse.Builder builder = (ProtoUserContactsDelete.UserContactsDeleteResponse.Builder) message;
-        final long phone = builder.getPhone();
+        String phone = builder.getPhone() + "";
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmContacts realmUserContactsGetListResponse = realm.where(RealmContacts.class).equalTo("phone", phone).findFirst();
-                if (realmUserContactsGetListResponse != null) {
-                    realmUserContactsGetListResponse.deleteFromRealm();
-                }
+        RealmRegisteredInfo.updateMutual(phone, false);
+        RealmContacts.deleteContact(phone);
 
-                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.PHONE_NUMBER, phone + "").findFirst();
-                if (realmRegisteredInfo != null) {
-                    realmRegisteredInfo.setMutual(false);
-                    if (G.onUserContactdelete != null) {
-                        G.onUserContactdelete.onContactDelete(realmRegisteredInfo.getId());
-                    }
-                }
-            }
-        });
-        realm.close();
+        if (G.onUserContactdelete != null) {
+            G.onUserContactdelete.onContactDelete();
+        }
     }
 
     @Override
@@ -67,11 +51,6 @@ public class UserContactsDeleteResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
-        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int MajorCode = errorResponse.getMajorCode();
-        int MinorCode = errorResponse.getMinorCode();
-
-        G.onUserContactdelete.onError(MajorCode, MinorCode);
     }
 }
 

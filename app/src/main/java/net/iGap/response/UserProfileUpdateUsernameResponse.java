@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserProfileUpdateUsername;
@@ -29,37 +28,36 @@ public class UserProfileUpdateUsernameResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserProfileUpdateUsername.UserProfileUpdateUsernameResponse.Builder builder = (ProtoUserProfileUpdateUsername.UserProfileUpdateUsernameResponse.Builder) message;
+        ProtoUserProfileUpdateUsername.UserProfileUpdateUsernameResponse.Builder builder = (ProtoUserProfileUpdateUsername.UserProfileUpdateUsernameResponse.Builder) message;
+        RealmUserInfo.updateUsername(builder.getUsername());
 
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                realm.where(RealmUserInfo.class).findFirst().getUserInfo().setUsername(builder.getUsername());
-            }
-        });
-        realm.close();
-
-        if (G.onUserProfileUpdateUsername != null) G.onUserProfileUpdateUsername.onUserProfileUpdateUsername(builder.getUsername());
+        if (G.onUserProfileUpdateUsername != null) {
+            G.onUserProfileUpdateUsername.onUserProfileUpdateUsername(builder.getUsername());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
-
-        if (G.onUserProfileUpdateUsername != null) G.onUserProfileUpdateUsername.timeOut();
-
+        if (G.onUserProfileUpdateUsername != null) {
+            G.onUserProfileUpdateUsername.timeOut();
+        }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
         int getWait = errorResponse.getWait();
 
-        if (G.onUserProfileUpdateUsername != null) G.onUserProfileUpdateUsername.Error(majorCode, minorCode, getWait);
+        if (G.onUserProfileUpdateUsername != null) {
+            G.onUserProfileUpdateUsername.Error(majorCode, minorCode, getWait);
+        }
     }
 }
 

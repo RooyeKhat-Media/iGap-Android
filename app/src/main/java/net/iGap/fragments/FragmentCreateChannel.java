@@ -15,7 +15,6 @@ import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
@@ -32,9 +31,9 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnChannelCheckUsername;
@@ -45,7 +44,6 @@ import net.iGap.proto.ProtoChannelCheckUsername;
 import net.iGap.proto.ProtoClientGetRoom;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChannelCheckUsername;
 import net.iGap.request.RequestChannelUpdateUsername;
 import net.iGap.request.RequestClientGetRoom;
@@ -135,16 +133,7 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                Realm realm = Realm.getDefaultInstance();
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                                        realmRoom.getChannelRoom().setUsername(username);
-                                        realmRoom.getChannelRoom().setPrivate(false);
-                                    }
-                                });
-                                realm.close();
+                                RealmRoom.updateUsername(roomId, username);
                                 getRoom(roomId, ProtoGlobal.Room.Type.CHANNEL);
                             }
                         });
@@ -153,20 +142,6 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
                     @Override
                     public void onError(int majorCode, int minorCode, int time) {
                         hideProgressBar();
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
-
-                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        snack.dismiss();
-                                    }
-                                });
-                                snack.show();
-                            }
-                        });
                     }
 
                     @Override
@@ -175,15 +150,7 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
-
-                                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        snack.dismiss();
-                                    }
-                                });
-                                snack.show();
+                                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
                             }
                         });
                     }
@@ -194,15 +161,7 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
                     showProgressBar();
 
                     if (raPrivate.isChecked()) {
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                                realmRoom.getChannelRoom().setPrivate(true);
-                            }
-                        });
-                        realm.close();
+                        RealmRoom.setPrivate(roomId);
                         getRoom(roomId, ProtoGlobal.Room.Type.CHANNEL);
                     } else {
 
@@ -411,22 +370,6 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
 
     @Override
     public void onError(int majorCode, int minorCode) {
-
-        if (G.fragmentActivity != null) {
-            G.handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.normal_error), Snackbar.LENGTH_LONG);
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
-                }
-            });
-        }
     }
 
     @Override
@@ -436,15 +379,9 @@ public class FragmentCreateChannel extends BaseFragment implements OnChannelChec
             G.handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.time_out), Snackbar.LENGTH_LONG);
 
-                    snack.setAction(R.string.cancel, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            snack.dismiss();
-                        }
-                    });
-                    snack.show();
+                    HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+
                 }
             });
         }

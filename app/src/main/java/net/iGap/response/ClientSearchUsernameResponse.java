@@ -27,31 +27,27 @@ public class ClientSearchUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoClientSearchUsername.ClientSearchUsernameResponse.Builder builder = (ProtoClientSearchUsername.ClientSearchUsernameResponse.Builder) message;
-
-        if (G.onClientSearchUserName != null) G.onClientSearchUserName.OnGetList(builder);
-
-        //for (ProtoClientSearchUsername.ClientSearchUsernameResponse.Result result : builder.getResultList()) {
-        //    result.getType();
-        //    result.getExactMatch();
-        //    result.getUser();
-        //    result.getRoom();
-        //}
+        ProtoClientSearchUsername.ClientSearchUsernameResponse.Builder builder = (ProtoClientSearchUsername.ClientSearchUsernameResponse.Builder) message;
+        if (G.onClientSearchUserName != null) {
+            G.onClientSearchUserName.OnGetList(builder);
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
-
-        if (G.onClientSearchUserName != null) G.onClientSearchUserName.OnErrore();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
-        if (G.onClientSearchUserName != null) G.onClientSearchUserName.OnErrore();
+        if (G.onClientSearchUserName != null) {
+            G.onClientSearchUserName.OnErrore();
+        }
     }
 }
 

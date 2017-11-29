@@ -10,11 +10,9 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserProfileNickname;
-import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmUserInfo;
 
 public class UserProfileSetNicknameResponse extends MessageHandler {
@@ -34,23 +32,10 @@ public class UserProfileSetNicknameResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+        ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder userProfileNickNameResponse = (ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder) message;
+        RealmUserInfo.updateNickname(userProfileNickNameResponse.getNickname(), userProfileNickNameResponse.getInitials());
 
-        final ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder userProfileNickNameResponse = (ProtoUserProfileNickname.UserProfileSetNicknameResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmRegisteredInfo realmRegisteredInfo = realm.where(RealmUserInfo.class).findFirst().getUserInfo();
-                if (realmRegisteredInfo != null) {
-                    realmRegisteredInfo.setDisplayName(userProfileNickNameResponse.getNickname());
-                    realmRegisteredInfo.setInitials(userProfileNickNameResponse.getInitials());
-                    G.displayName = userProfileNickNameResponse.getNickname();
-                }
-            }
-        });
-
-        realm.close();
+        G.displayName = userProfileNickNameResponse.getNickname();
 
         if (G.onUserProfileSetNickNameResponse != null) {
             G.onUserProfileSetNickNameResponse.onUserProfileNickNameResponse(userProfileNickNameResponse.getNickname(), userProfileNickNameResponse.getInitials());

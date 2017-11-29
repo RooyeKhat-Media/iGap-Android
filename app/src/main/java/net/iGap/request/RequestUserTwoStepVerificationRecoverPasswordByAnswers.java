@@ -16,8 +16,7 @@ public class RequestUserTwoStepVerificationRecoverPasswordByAnswers {
 
     public void RecoveryPasswordByAnswer(String answerOne, String answerTwo) {
 
-        ProtoUserTwoStepVerificationRecoverPasswordByAnswers.UserTwoStepVerificationRecoverPasswordByAnswers.Builder builder =
-            ProtoUserTwoStepVerificationRecoverPasswordByAnswers.UserTwoStepVerificationRecoverPasswordByAnswers.newBuilder();
+        ProtoUserTwoStepVerificationRecoverPasswordByAnswers.UserTwoStepVerificationRecoverPasswordByAnswers.Builder builder = ProtoUserTwoStepVerificationRecoverPasswordByAnswers.UserTwoStepVerificationRecoverPasswordByAnswers.newBuilder();
         builder.setAnswerOne(answerOne);
         builder.setAnswerTwo(answerTwo);
 

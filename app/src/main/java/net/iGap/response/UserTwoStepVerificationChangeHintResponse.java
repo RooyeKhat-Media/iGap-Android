@@ -27,11 +27,11 @@ public class UserTwoStepVerificationChangeHintResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
-        ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder builder =
-            (ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder) message;
+        ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder builder = (ProtoUserTwoStepVerificationChangeHint.UserTwoStepVerificationChangeHintResponse.Builder) message;
 
         if (G.onTwoStepPassword != null) {
             G.onTwoStepPassword.changeHint();
@@ -39,11 +39,13 @@ public class UserTwoStepVerificationChangeHintResponse extends MessageHandler {
 
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

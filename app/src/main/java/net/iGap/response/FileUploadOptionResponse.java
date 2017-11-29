@@ -35,18 +35,21 @@ public class FileUploadOptionResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoFileUploadOption.FileUploadOptionResponse.Builder fp = (ProtoFileUploadOption.FileUploadOptionResponse.Builder) message;
 
         HelperUploadFile.onFileUpload.OnFileUploadOption(fp.getFirstBytesLimit(), fp.getLastBytesLimit(), fp.getMaxConnection(), this.identity, fp.getResponse());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         HelperUploadFile.onFileUpload.onFileUploadTimeOut(this.identity);
         HelperSetAction.sendCancel(Long.parseLong(this.identity));
@@ -60,11 +63,13 @@ public class FileUploadOptionResponse extends MessageHandler {
         // message failed
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    @Override
+                    public void execute(Realm realm) {
 
                         final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
                         if (message != null) {
@@ -72,12 +77,14 @@ public class FileUploadOptionResponse extends MessageHandler {
                         }
                     }
                 }, new Realm.Transaction.OnSuccess() {
-                    @Override public void onSuccess() {
+                    @Override
+                    public void onSuccess() {
 
                         final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
                         if (message != null) {
                             G.handler.post(new Runnable() {
-                                @Override public void run() {
+                                @Override
+                                public void run() {
                                     G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
                                 }
                             });
@@ -86,7 +93,8 @@ public class FileUploadOptionResponse extends MessageHandler {
                         realm.close();
                     }
                 }, new Realm.Transaction.OnError() {
-                    @Override public void onError(Throwable error) {
+                    @Override
+                    public void onError(Throwable error) {
                         realm.close();
                     }
                 });

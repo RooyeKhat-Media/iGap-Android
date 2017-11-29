@@ -28,24 +28,28 @@ public class GroupEditMessageResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
-        final ProtoGroupEditMessage.GroupEditMessageResponse.Builder builder = (ProtoGroupEditMessage.GroupEditMessageResponse.Builder) message;
+        ProtoGroupEditMessage.GroupEditMessageResponse.Builder builder = (ProtoGroupEditMessage.GroupEditMessageResponse.Builder) message;
         HelperEditMessage.editMessage(builder.getRoomId(), builder.getMessageId(), builder.getMessageVersion(), builder.getMessageType(), builder.getMessage(), builder.getResponse());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
 
-        G.onChatEditMessageResponse.onError(majorCode, minorCode);
+        if (G.onChatEditMessageResponse != null) {
+            G.onChatEditMessageResponse.onError(majorCode, minorCode);
+        }
     }
 }
 

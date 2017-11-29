@@ -10,9 +10,7 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.proto.ProtoPushUserInfoExpired;
-import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestUserInfo;
 
 public class PushUserInfoExpiredResponse extends MessageHandler {
@@ -33,13 +31,7 @@ public class PushUserInfoExpiredResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoPushUserInfoExpired.PushUserInfoExpiredResponse.Builder builder = (ProtoPushUserInfoExpired.PushUserInfoExpiredResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUserId());
-        if (realmRegisteredInfo != null) {
-            new RequestUserInfo().userInfo(builder.getUserId());
-        }
-        realm.close();
+        new RequestUserInfo().userInfo(builder.getUserId(), RequestUserInfo.InfoType.UPDATE_ROOM.toString());
     }
 
     @Override

@@ -14,10 +14,10 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.View;
+
 import com.hanks.library.AnimateCheckBox;
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.HashMap;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperAvatar;
@@ -28,6 +28,9 @@ import net.iGap.module.CircleImageView;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Contact item used with FastAdapter for Navigation drawer contacts fragment.
@@ -81,7 +84,7 @@ public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItem
                 holder.subtitle.setText(mContact.status);
             }
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 holder.subtitle.setText(holder.subtitle.getText().toString());
             }
         }

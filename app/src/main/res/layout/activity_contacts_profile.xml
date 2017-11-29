@@ -375,6 +375,41 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/st_layout_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/dp12"
+              android:paddingEnd="@dimen/dp4"
+              android:paddingStart="@dimen/dp4"
+              android:text="@string/st_bio"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <TextView
+              android:id="@+id/st_txt_bio"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:paddingEnd="@dimen/dp4"
+              android:paddingStart="@dimen/dp4"
+              android:text="@string/st_bio"
+              android:textColor="@color/gray_5c"
+              android:textSize="@dimen/dp14"
+              android:theme="@style/Setting_editText"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/chi_layout_SharedMedia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

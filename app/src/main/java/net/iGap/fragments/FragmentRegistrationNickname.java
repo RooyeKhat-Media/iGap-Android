@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,16 +30,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCrop;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermision;
 import net.iGap.helper.HelperUploadFile;
@@ -58,11 +57,14 @@ import net.iGap.module.FileUploadStructure;
 import net.iGap.module.IntentRequests;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserAvatarAdd;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserProfileSetNickname;
+
+import java.io.IOException;
+
+import io.realm.Realm;
 
 import static android.app.Activity.RESULT_OK;
 import static net.iGap.G.context;
@@ -112,7 +114,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
 
         txtTitle = (TextView) view.findViewById(R.id.pu_titleToolbar);
 
-        if (!HelperCalander.isLanguagePersian) {
+        if (!HelperCalander.isPersianUnicode) {
             titleTypeface = G.typeface_neuropolitical;
         } else {
             titleTypeface = G.typeface_IRANSansMobile;
@@ -313,14 +315,9 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
-                                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                                realmUserInfo.getUserInfo().setDisplayName(user.getDisplayName());
                                 G.displayName = user.getDisplayName();
 
-                                realmUserInfo.getUserInfo().setInitials(user.getInitials());
-                                realmUserInfo.getUserInfo().setColor(user.getColor());
-
-                                final long userId = realmUserInfo.getUserId();
+                                RealmUserInfo.putOrUpdate(realm, user);
 
                                 G.handler.post(new Runnable() {
                                     @Override
@@ -328,7 +325,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                                         G.onUserInfoResponse = null;
                                         hideProgressBar();
                                         Intent intent = new Intent(context, ActivityMain.class);
-                                        intent.putExtra(ARG_USER_ID, userId);
+                                        intent.putExtra(ARG_USER_ID, user.getId());
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         G.context.startActivity(intent);
                                         G.fragmentActivity.finish();
@@ -383,11 +380,8 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
     }
 
     public void useGallery() {
-        //        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //        startActivityForResult(intent, IntentRequests.REQ_GALLERY);
-
         try {
-            HelperPermision.getStoragePermision(context, new OnGetPermission() {
+            HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                 @Override
                 public void Allow() {
                     try {
@@ -421,23 +415,12 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                     case 1: {
                         if (G.context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
                             try {
-
-                                HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                                HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                                     @Override
-                                    public void Allow() throws IOException {
-                                        HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                                            @Override
-                                            public void Allow() {
-                                                // this dialog show 2 way for choose image : gallery and camera
-                                                dialog.dismiss();
-                                                useCamera();
-                                            }
-
-                                            @Override
-                                            public void deny() {
-
-                                            }
-                                        });
+                                    public void Allow() {
+                                        // this dialog show 2 way for choose image : gallery and camera
+                                        dialog.dismiss();
+                                        useCamera();
                                     }
 
                                     @Override
@@ -449,14 +432,8 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                                 e.printStackTrace();
                             }
                         } else {
-                            final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), G.fragmentActivity.getResources().getString(R.string.please_check_your_camera), Snackbar.LENGTH_LONG);
-                            snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    snack.dismiss();
-                                }
-                            });
-                            snack.show();
+
+                            HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.please_check_your_camera), false);
                         }
                         break;
                     }
@@ -479,16 +456,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
         Realm realm = Realm.getDefaultInstance();
         RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
         if (realmUserInfo != null) {
-
-            final RealmResults<RealmAvatar> realmAvatars = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, G.userId).findAll();
-            if (!realmAvatars.isEmpty()) {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realmAvatars.deleteAllFromRealm();
-                    }
-                });
-            }
+            RealmAvatar.deleteAvatarWithOwnerId(G.userId);
         }
         realm.close();
     }

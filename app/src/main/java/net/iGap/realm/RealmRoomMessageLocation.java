@@ -18,35 +18,38 @@ import net.iGap.module.SUID;
 import net.iGap.proto.ProtoGlobal;
 import org.parceler.Parcel;
 
-@Parcel(implementations = { RealmRoomMessageLocationRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { RealmRoomMessageLocation.class }) public class RealmRoomMessageLocation
-    extends RealmObject {
+@Parcel(implementations = {RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class}) public class RealmRoomMessageLocation extends RealmObject {
     private double locationLat;
     private double locationLong;
     private String imagePath;
     @PrimaryKey private long id;
 
-    public static RealmRoomMessageLocation build(final ProtoGlobal.RoomMessageLocation input, Long id) {
+    public static RealmRoomMessageLocation put(final ProtoGlobal.RoomMessageLocation input, Long id) {
         Realm realm = Realm.getDefaultInstance();
-
         RealmRoomMessageLocation messageLocation = null;
-
         if (id != null) {
             messageLocation = realm.where(RealmRoomMessageLocation.class).equalTo(RealmRoomMessageLocationFields.ID, id).findFirst();
         }
-
         if (messageLocation == null) {
             messageLocation = realm.createObject(RealmRoomMessageLocation.class, SUID.id().get());
         }
-
         messageLocation.setLocationLat(input.getLat());
         messageLocation.setLocationLong(input.getLon());
-
         realm.close();
 
         return messageLocation;
     }
 
-    @Override public String toString() {
+    public static RealmRoomMessageLocation put(Realm realm, double latitude, double longitude, String imagePath) {
+        RealmRoomMessageLocation messageLocation = realm.createObject(RealmRoomMessageLocation.class, SUID.id().get());
+        messageLocation.setLocationLat(latitude);
+        messageLocation.setLocationLong(longitude);
+        messageLocation.setImagePath(imagePath);
+        return messageLocation;
+    }
+
+    @Override
+    public String toString() {
         return Double.toString(getLocationLat()) + "," + Double.toString(getLocationLong());
     }
 

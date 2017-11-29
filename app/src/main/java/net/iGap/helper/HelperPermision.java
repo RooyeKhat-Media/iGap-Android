@@ -18,12 +18,16 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.IOException;
-import java.util.ArrayList;
+
+import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.OnGetPermission;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class HelperPermision {
 
@@ -58,7 +62,7 @@ public class HelperPermision {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
 
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            getPermission(context, new String[] { Manifest.permission.CAMERA }, MY_PERMISSIONS_CAMERA, context.getResources().getString(R.string.permission_camera), ResultCamera);
+            getPermission(context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_CAMERA, context.getResources().getString(R.string.permission_camera), ResultCamera);
         } else {
             if (onGetPermission != null) onGetPermission.Allow();
         }
@@ -98,6 +102,10 @@ public class HelperPermision {
         } else {
             if (onGetPermission != null) onGetPermission.Allow();
         }
+    }
+
+    public static boolean grantedUseStorage() {
+        return ContextCompat.checkSelfPermission(G.context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     //************************************************************************************************************
@@ -143,6 +151,10 @@ public class HelperPermision {
         } else {
             if (onGetPermission != null) onGetPermission.Allow();
         }
+    }
+
+    public static boolean grantedContactPermission() {
+        return ContextCompat.checkSelfPermission(G.context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 
     //************************************************************************************************************
@@ -230,8 +242,8 @@ public class HelperPermision {
         int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO);
 
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            getPermission(context, new String[] { Manifest.permission.RECORD_AUDIO }, MY_PERMISSIONS_RECORD_AUDIO, context.getResources().getString(R.string.permission_record_audio),
-                ResultRecordAudio);
+            getPermission(context, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO, context.getResources().getString(R.string.permission_record_audio),
+                    ResultRecordAudio);
         } else {
             if (onGetPermission != null) onGetPermission.Allow();
         }

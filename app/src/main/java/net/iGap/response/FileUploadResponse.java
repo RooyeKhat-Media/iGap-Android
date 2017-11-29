@@ -12,7 +12,7 @@ package net.iGap.response;
 
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperUploadFile;
@@ -20,6 +20,8 @@ import net.iGap.proto.ProtoFileUpload;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
+
+import io.realm.Realm;
 
 public class FileUploadResponse extends MessageHandler {
 
@@ -35,14 +37,15 @@ public class FileUploadResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoFileUpload.FileUploadResponse.Builder fileUploadResponse = (ProtoFileUpload.FileUploadResponse.Builder) message;
-        HelperUploadFile.onFileUpload.onFileUpload(fileUploadResponse.getProgress(), fileUploadResponse.getNextOffset(), fileUploadResponse.getNextLimit(), this.identity,
-            fileUploadResponse.getResponse());
+        HelperUploadFile.onFileUpload.onFileUpload(fileUploadResponse.getProgress(), fileUploadResponse.getNextOffset(), fileUploadResponse.getNextLimit(), this.identity, fileUploadResponse.getResponse());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
@@ -53,32 +56,35 @@ public class FileUploadResponse extends MessageHandler {
         // message failed
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override public void execute(Realm realm) {
+                    @Override
+                    public void execute(Realm realm) {
                         final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
                         if (message != null) {
                             message.setStatus(ProtoGlobal.RoomMessageStatus.FAILED.toString());
                         }
                     }
                 }, new Realm.Transaction.OnSuccess() {
-                    @Override public void onSuccess() {
-
-                        final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
-                        if (message != null) {
-                            G.handler.post(new Runnable() {
-                                @Override public void run() {
+                    @Override
+                    public void onSuccess() {
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
+                                if (message != null && message.isValid()) {
                                     G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
                                 }
-                            });
-                        }
-
-                        realm.close();
+                                realm.close();
+                            }
+                        });
                     }
                 }, new Realm.Transaction.OnError() {
-                    @Override public void onError(Throwable error) {
+                    @Override
+                    public void onError(Throwable error) {
                         realm.close();
                     }
                 });
@@ -86,7 +92,8 @@ public class FileUploadResponse extends MessageHandler {
         });
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         HelperUploadFile.onFileUpload.onFileUploadTimeOut(this.identity);
         HelperSetAction.sendCancel(Long.parseLong(this.identity));

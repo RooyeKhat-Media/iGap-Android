@@ -164,13 +164,13 @@
 //                                    RealmRegisteredInfo realmRegisteredInfo = realm1.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.ID, realmRoomMessage.getUserId()).findFirst();
 //                                    if (realmRegisteredInfo != null && realmRegisteredInfo.getDisplayName() != null) {
 //                                        if (Character.getDirectionality(realmRegisteredInfo.getDisplayName().charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
-//                                            if (HelperCalander.isLanguagePersian) {
+//                                            if (HelperCalander.isPersianUnicode) {
 //                                                lastMessageSender = realmRegisteredInfo.getDisplayName() + ": ";
 //                                            } else {
 //                                                lastMessageSender = " :" + realmRegisteredInfo.getDisplayName();
 //                                            }
 //                                        } else {
-//                                            if (HelperCalander.isLanguagePersian) {
+//                                            if (HelperCalander.isPersianUnicode) {
 //                                                lastMessageSender = " :" + realmRegisteredInfo.getDisplayName();
 //                                            } else {
 //                                                lastMessageSender = realmRegisteredInfo.getDisplayName() + ": ";
@@ -382,7 +382,7 @@
 //        }
 //
 //        // for change english number to persian number
-//        if (HelperCalander.isLanguagePersian) {
+//        if (HelperCalander.isPersianUnicode) {
 //            holder.lastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastMessage.getText().toString()));
 //            holder.name.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.name.getText().toString()));
 //            holder.unreadMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.unreadMessage.getText().toString()));

@@ -27,7 +27,8 @@ public class PushLoginTokenResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoPushLoginToken.PushLoginTokenResponse.Builder builder = (ProtoPushLoginToken.PushLoginTokenResponse.Builder) message;
@@ -37,11 +38,13 @@ public class PushLoginTokenResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

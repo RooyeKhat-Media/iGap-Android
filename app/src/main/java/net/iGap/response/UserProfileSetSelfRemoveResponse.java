@@ -10,8 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserProfileSetSelfRemove;
 import net.iGap.realm.RealmUserInfo;
 
@@ -29,32 +27,21 @@ public class UserProfileSetSelfRemoveResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserProfileSetSelfRemove.UserProfileSetSelfRemoveResponse.Builder builder = (ProtoUserProfileSetSelfRemove.UserProfileSetSelfRemoveResponse.Builder) message;
-
-        builder.getSelfRemove();
-
-        Realm realm1 = Realm.getDefaultInstance();
-        realm1.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                realm.where(RealmUserInfo.class).findFirst().setSelfRemove(builder.getSelfRemove());
-            }
-        });
-
-        realm1.close();
+        ProtoUserProfileSetSelfRemove.UserProfileSetSelfRemoveResponse.Builder builder = (ProtoUserProfileSetSelfRemove.UserProfileSetSelfRemoveResponse.Builder) message;
+        RealmUserInfo.updateSelfRemove(builder.getSelfRemove());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-
-        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int majorCode = errorResponse.getMajorCode();
-        int minorCode = errorResponse.getMinorCode();
     }
 }
 

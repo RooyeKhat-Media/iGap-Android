@@ -13,6 +13,7 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGroupUpdateUsername;
+import net.iGap.realm.RealmRoom;
 
 public class GroupUpdateUsernameResponse extends MessageHandler {
 
@@ -28,20 +29,23 @@ public class GroupUpdateUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoGroupUpdateUsername.GroupUpdateUsernameResponse.Builder builder = (ProtoGroupUpdateUsername.GroupUpdateUsernameResponse.Builder) message;
+        RealmRoom.updateUsername(builder.getRoomId(), builder.getUsername());
         if (G.onGroupUpdateUsername != null) {
             G.onGroupUpdateUsername.onGroupUpdateUsername(builder.getRoomId(), builder.getUsername());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         if (G.onGroupUpdateUsername != null) {

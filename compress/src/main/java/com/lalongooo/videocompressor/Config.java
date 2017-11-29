@@ -12,7 +12,7 @@ public class Config {
     /**
      * Application root directory. All media files wi'll be stored here.
      */
-    public static final String VIDEO_COMPRESSOR_APPLICATION_DIR_NAME = "iGap";
+    public static final String VIDEO_COMPRESSOR_APPLICATION_DIR_NAME = "";//iGap"
 
     /**
      * Application folder for video files

@@ -13,10 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import java.util.HashMap;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -34,6 +31,12 @@ import net.iGap.realm.RealmGeoNearbyDistance;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestGeoGetComment;
 import net.iGap.request.RequestGeoGetNearbyDistance;
+
+import java.util.HashMap;
+
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
 import static net.iGap.G.context;
 import static net.iGap.G.inflater;
@@ -252,7 +255,7 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
     //        }
     //
     //        holder.distance.setText(String.format(G.context.getString(R.string.distance), item.getDistance()));
-    //        if (HelperCalander.isLanguagePersian) {
+    //        if (HelperCalander.isPersianUnicode) {
     //            holder.distance.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.distance.getText().toString()));
     //        }
     //
@@ -370,7 +373,7 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
                 }
             });
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 holder.username.setGravity(Gravity.RIGHT);
             } else {
                 holder.username.setGravity(Gravity.LEFT);
@@ -389,7 +392,7 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
             }
 
             holder.distance.setText(String.format(G.context.getString(R.string.distance), item.getDistance()));
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 holder.distance.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.distance.getText().toString()));
             }
 

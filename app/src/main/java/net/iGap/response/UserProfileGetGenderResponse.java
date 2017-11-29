@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.proto.ProtoUserProfileGetGender;
 import net.iGap.realm.RealmUserInfo;
 
@@ -28,25 +27,20 @@ public class UserProfileGetGenderResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserProfileGetGender.UserProfileGetGenderResponse.Builder builder = (ProtoUserProfileGetGender.UserProfileGetGenderResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-                realmUserInfo.setGender(builder.getGender());
-            }
-        });
-        realm.close();
+        ProtoUserProfileGetGender.UserProfileGetGenderResponse.Builder builder = (ProtoUserProfileGetGender.UserProfileGetGenderResponse.Builder) message;
+        RealmUserInfo.updateGender(builder.getGender());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

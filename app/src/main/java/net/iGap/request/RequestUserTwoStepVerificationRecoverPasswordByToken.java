@@ -15,9 +15,7 @@ import net.iGap.proto.ProtoUserTwoStepVerificationRecoverPasswordByToken;
 public class RequestUserTwoStepVerificationRecoverPasswordByToken {
 
     public void recoveryPasswordByToken(String token) {
-
-        ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByToken.Builder builder =
-            ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByToken.newBuilder();
+        ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByToken.Builder builder = ProtoUserTwoStepVerificationRecoverPasswordByToken.UserTwoStepVerificationRecoverPasswordByToken.newBuilder();
         builder.setToken(token);
 
         RequestWrapper requestWrapper = new RequestWrapper(139, builder);

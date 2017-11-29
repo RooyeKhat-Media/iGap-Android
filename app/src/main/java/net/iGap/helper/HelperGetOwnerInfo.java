@@ -30,7 +30,7 @@ public class HelperGetOwnerInfo {
     }
 
     enum RoomType {
-        Room, User;
+        Room, User
     }
 
     public static void checkInfo(long id, RoomType roomType, Listener listener) {

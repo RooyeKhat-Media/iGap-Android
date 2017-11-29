@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.realm.RealmRegisteredInfo;
@@ -30,40 +29,33 @@ public class UserUpdateStatusResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder builder = (ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder) message;
+        ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder builder = (ProtoUserUpdateStatus.UserUpdateStatusResponse.Builder) message;
 
-        Realm realm = Realm.getDefaultInstance();
-        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, builder.getUserId());
-        if (realmRegisteredInfo != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+        RealmRegisteredInfo.updateStatus(builder.getUserId(), builder.getResponse().getTimestamp(), builder.getStatus().toString());
 
-                    realmRegisteredInfo.setStatus(builder.getStatus().toString());
-                    realmRegisteredInfo.setLastSeen(builder.getResponse().getTimestamp());
-
-                    if (builder.getUserId() == userId) {
-                        if (builder.getStatus() == ProtoUserUpdateStatus.UserUpdateStatus.Status.ONLINE) {
-                            G.isUserStatusOnline = true;
-                        } else {
-                            G.isUserStatusOnline = false;
-                        }
-                    }
-                }
-            });
-            if (G.onUserUpdateStatus != null) {
-                G.onUserUpdateStatus.onUserUpdateStatus(builder.getUserId(), builder.getResponse().getTimestamp(), builder.getStatus().toString());
+        if (builder.getUserId() == userId) {
+            if (builder.getStatus() == ProtoUserUpdateStatus.UserUpdateStatus.Status.ONLINE) {
+                G.isUserStatusOnline = true;
+            } else {
+                G.isUserStatusOnline = false;
             }
         }
-        realm.close();
+
+        if (G.onUserUpdateStatus != null) {
+            G.onUserUpdateStatus.onUserUpdateStatus(builder.getUserId(), builder.getResponse().getTimestamp(), builder.getStatus().toString());
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

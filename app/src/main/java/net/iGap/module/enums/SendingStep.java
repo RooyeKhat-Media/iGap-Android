@@ -11,5 +11,5 @@
 package net.iGap.module.enums;
 
 public enum SendingStep {
-    UPLOADING, COMPRESSING
+    UPLOADING, COMPRESSING, CORRUPTED_FILE
 }

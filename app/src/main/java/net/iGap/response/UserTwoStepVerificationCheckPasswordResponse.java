@@ -28,11 +28,11 @@ public class UserTwoStepVerificationCheckPasswordResponse extends MessageHandler
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
-        ProtoUserTwoStepVerificationCheckPassword.UserTwoStepVerificationCheckPasswordResponse.Builder builder =
-            (ProtoUserTwoStepVerificationCheckPassword.UserTwoStepVerificationCheckPasswordResponse.Builder) message;
+        ProtoUserTwoStepVerificationCheckPassword.UserTwoStepVerificationCheckPasswordResponse.Builder builder = (ProtoUserTwoStepVerificationCheckPassword.UserTwoStepVerificationCheckPasswordResponse.Builder) message;
 
         if (G.onTwoStepPassword != null) {
             G.onTwoStepPassword.checkPassword();
@@ -40,11 +40,13 @@ public class UserTwoStepVerificationCheckPasswordResponse extends MessageHandler
 
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

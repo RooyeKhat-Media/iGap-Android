@@ -31,7 +31,6 @@ import android.view.Display;
 import android.widget.RemoteViews;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
 import java.util.ArrayList;
 import java.util.List;
 import me.leolin.shortcutbadger.ShortcutBadger;
@@ -49,9 +48,7 @@ import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 
-import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
 
 public class HelperNotificationAndBadge {
@@ -406,13 +403,8 @@ public class HelperNotificationAndBadge {
 
         isEnablepopUpSettin = checkPopUpSetting(type);
 
-        RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class)
-                .equalTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.SENT.toString())
-                .or()
-                .equalTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.DELIVERED.toString())
-                .equalTo(RealmRoomMessageFields.DELETED, false).notEqualTo(RealmRoomMessageFields.AUTHOR_HASH, authorHash).notEqualTo(RealmRoomMessageFields.USER_ID, G.userId)
-                .notEqualTo(RealmRoomMessageFields.MESSAGE_TYPE, ProtoGlobal.RoomMessageType.LOG.toString())
-                .findAllSorted(RealmRoomMessageFields.UPDATE_TIME, Sort.DESCENDING);
+
+        RealmResults<RealmRoomMessage> realmRoomMessages = RealmRoomMessage.findNotificationMessage(realm);
 
         if (!realmRoomMessages.isEmpty()) {
             for (RealmRoomMessage roomMessage : realmRoomMessages) {
@@ -443,7 +435,7 @@ public class HelperNotificationAndBadge {
                             if (roomMessage.getLogMessage() != null) {
                                 text = roomMessage.getLogMessage();
                             } else {
-                                text = roomMessage.getForwardMessage() != null ? roomMessage.getForwardMessage().getMessage() : roomMessage.getMessage();
+                                text = RealmRoomMessage.getFinalMessage(roomMessage).getMessage();
                             }
 
                             if (text.length() < 1) if (roomMessage.getReplyTo() != null) text = roomMessage.getReplyTo().getMessage();
@@ -494,10 +486,6 @@ public class HelperNotificationAndBadge {
             } else {
                 isFromOnRoom = false;
             }
-
-
-
-
         }
 
         if (unreadMessageCount == 0) {
@@ -690,10 +678,10 @@ public class HelperNotificationAndBadge {
 
         try {
 
-            text = roomMessage.getForwardMessage() != null ? roomMessage.getForwardMessage().getMessage() : roomMessage.getMessage();
+            text = RealmRoomMessage.getFinalMessage(roomMessage).getMessage();
             if (text.length() < 1) if (roomMessage.getReplyTo() != null) text = roomMessage.getReplyTo().getMessage();
             if (text.length() < 1) {
-                ProtoGlobal.RoomMessageType rmt = roomMessage.getForwardMessage() != null ? roomMessage.getForwardMessage().getMessageType() : roomMessage.getMessageType();
+                ProtoGlobal.RoomMessageType rmt = RealmRoomMessage.getFinalMessage(roomMessage).getMessageType();
                 text = ActivityPopUpNotification.getTextOfMessageType(rmt);
             }
 

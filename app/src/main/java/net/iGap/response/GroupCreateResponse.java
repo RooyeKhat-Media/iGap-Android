@@ -31,7 +31,6 @@ public class GroupCreateResponse extends MessageHandler {
 
     @Override
     public void handler() {
-
         super.handler();
         ProtoGroupCreate.GroupCreateResponse.Builder builder = (ProtoGroupCreate.GroupCreateResponse.Builder) message;
         if (builder.getResponse().getId().isEmpty()) {

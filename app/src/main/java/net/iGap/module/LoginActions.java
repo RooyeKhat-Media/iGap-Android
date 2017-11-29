@@ -3,16 +3,22 @@ package net.iGap.module;
 import android.Manifest;
 import android.app.Application;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import io.realm.Realm;
+import java.util.ArrayList;
+import net.iGap.Config;
 import net.iGap.G;
-import net.iGap.helper.HelperClientCondition;
+import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.helper.HelperLogout;
+import net.iGap.interfaces.OnContactFetchForServer;
 import net.iGap.interfaces.OnSecuring;
 import net.iGap.interfaces.OnUserInfoResponse;
 import net.iGap.interfaces.OnUserLogin;
+import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoUserUpdateStatus;
+import net.iGap.realm.RealmClientCondition;
 import net.iGap.realm.RealmPhoneContacts;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmUserInfo;
@@ -26,11 +32,9 @@ import net.iGap.request.RequestUserLogin;
 import net.iGap.request.RequestUserUpdateStatus;
 import net.iGap.request.RequestWrapper;
 
-import static net.iGap.G.context;
 import static net.iGap.G.firstEnter;
 import static net.iGap.G.firstTimeEnterToApp;
 import static net.iGap.G.isAppInFg;
-import static net.iGap.G.isSendContact;
 
 /**
  * all actions that need doing after login
@@ -66,7 +70,7 @@ public class LoginActions extends Application {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        G.clientConditionGlobal = HelperClientCondition.computeClientCondition(null);
+                        G.clientConditionGlobal = RealmClientCondition.computeClientCondition(null);
                         /**
                          * in first enter to app client send clientCondition after get room list
                          * but, in another login when user not closed app after login client send
@@ -78,7 +82,7 @@ public class LoginActions extends Application {
                          * app is background send clientCondition (: .
                          */
                         if (!firstTimeEnterToApp || !isAppInFg) {
-                            new RequestClientGetRoomList().clientGetRoomList(0, 50, "0");
+                            new RequestClientGetRoomList().clientGetRoomList(0, Config.LIMIT_LOAD_ROOM, "0");
                         }
 
                         if (firstEnter) {
@@ -97,6 +101,8 @@ public class LoginActions extends Application {
 
                         new RequestGeoGetRegisterStatus().getRegisterStatus();
                         //sendWaitingRequestWrappers();
+
+                        HelperCheckInternetConnection.detectConnectionTypeForDownload();
                     }
                 });
 
@@ -148,7 +154,7 @@ public class LoginActions extends Application {
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            RealmRegisteredInfo.putOrUpdate(user);
+                            RealmRegisteredInfo.putOrUpdate(realm, user);
                         }
                     });
 
@@ -174,20 +180,27 @@ public class LoginActions extends Application {
          * just import contact in each enter to app
          * when user login was done
          */
-        if (isSendContact) {
-            return;
-        }
+        //if (isSendContact) {
+        //    return;
+        //}
+        Contacts.onlinePhoneContactId = 0;
+        G.onContactFetchForServer = new OnContactFetchForServer() {
+            @Override
+            public void onFetch(ArrayList<StructListOfContact> contacts) {
+                RealmPhoneContacts.sendContactList(contacts, false);
+            }
+        };
 
         if (G.userLogin) {
             /**
              * this can be go in the activity for check permission in api 6+
              */
-            isSendContact = true;
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            G.isSendContact = true;
+            if (ContextCompat.checkSelfPermission(G.context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        RealmPhoneContacts.sendContactList(Contacts.getListOfContact(), false);
+                        new Contacts.FetchContactForServer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
             } else {

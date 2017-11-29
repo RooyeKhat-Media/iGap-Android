@@ -25,20 +25,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.IItemAdapter;
-import com.mikepenz.fastadapter.adapters.HeaderAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.pchmn.materialchips.ChipsInput;
 import com.pchmn.materialchips.model.ChipInterface;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.StickyHeaderAdapter;
@@ -47,6 +46,11 @@ import net.iGap.interfaces.OnSelectedList;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.ContactChip;
 import net.iGap.module.structs.StructContactInfo;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ShowCustomList extends BaseFragment {
     private static List<StructContactInfo> contacts;
@@ -129,21 +133,26 @@ public class ShowCustomList extends BaseFragment {
             }
         });
 
-        //create our FastAdapter
-        fastAdapter = new FastAdapter();
-        fastAdapter.withSelectable(true);
-
-        //create our adapters
         final StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter();
-        final HeaderAdapter headerAdapter = new HeaderAdapter();
+        final ItemAdapter headerAdapter = new ItemAdapter();
         final ItemAdapter itemAdapter = new ItemAdapter();
+        fastAdapter = FastAdapter.with(Arrays.asList(headerAdapter, itemAdapter));
+        fastAdapter.withSelectable(true);
+        fastAdapter.setHasStableIds(true);
+
+        //get our recyclerView and do basic setup
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.fcg_recycler_view_add_item_to_group);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(stickyHeaderAdapter.wrap(fastAdapter));
+
         itemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<ContactItemGroup>() {
             @Override
             public boolean filter(ContactItemGroup item, CharSequence constraint) {
                 return !item.mContact.displayName.toLowerCase().startsWith(String.valueOf(constraint).toLowerCase());
             }
         });
-        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<ContactItemGroup>() {
+        fastAdapter.withOnClickListener(new OnClickListener<ContactItemGroup>() {
             @Override
             public boolean onClick(View v, IAdapter adapter, ContactItemGroup item, int position) {
 
@@ -170,15 +179,6 @@ public class ShowCustomList extends BaseFragment {
                 return false;
             }
         });
-
-        //as we provide id's for the items we want the hasStableIds enabled to speed up things
-        fastAdapter.setHasStableIds(true);
-
-        //get our recyclerView and do basic setup
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.fcg_recycler_view_add_item_to_group);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(stickyHeaderAdapter.wrap(itemAdapter.wrap(headerAdapter.wrap(fastAdapter))));
 
         //this adds the Sticky Headers within our list
         final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(stickyHeaderAdapter);

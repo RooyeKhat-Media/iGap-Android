@@ -14,17 +14,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.mikepenz.fastadapter.AbstractAdapter;
+
+import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.adapter.items.ContactItem;
 import net.iGap.adapter.items.ContactItemGroup;
 import net.iGap.adapter.items.ContactItemNotRegister;
 import net.iGap.module.CustomTextViewMedium;
 
-public class StickyHeaderAdapter extends AbstractAdapter implements StickyRecyclerHeadersAdapter {
+import java.util.List;
+
+public class StickyHeaderAdapter<Item extends IItem> extends RecyclerView.Adapter implements StickyRecyclerHeadersAdapter {
     @Override public long getHeaderId(int position) {
         IItem item = getItem(position);
 
@@ -62,37 +65,200 @@ public class StickyHeaderAdapter extends AbstractAdapter implements StickyRecycl
         }
     }
 
+    //private AbstractAdapter mParentAdapter;
+    //keep a reference to the FastAdapter which contains the base logic
+    private FastAdapter<Item> mFastAdapter;
+
     /**
-     * REQUIRED FOR THE FastAdapter. Set order to < 0 to tell the FastAdapter he can ignore this
-     * one.
+     * Wrap the FastAdapter with this AbstractAdapter and keep its reference to forward all events correctly
      *
-     * @return int
+     * @param fastAdapter the FastAdapter which contains the base logic
+     * @return this
      */
-    @Override public int getOrder() {
-        return -100;
+    public StickyHeaderAdapter<Item> wrap(FastAdapter fastAdapter) {
+        //this.mParentAdapter = abstractAdapter;
+        this.mFastAdapter = fastAdapter;
+        return this;
     }
 
-    @Override public int getAdapterItemCount() {
-        return 0;
+    /**
+     * overwrite the registerAdapterDataObserver to correctly forward all events to the FastAdapter
+     *
+     * @param observer
+     */
+    @Override
+    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+        super.registerAdapterDataObserver(observer);
+        if (mFastAdapter != null) {
+            mFastAdapter.registerAdapterDataObserver(observer);
+        }
     }
 
-    @Override public List<IItem> getAdapterItems() {
-        return null;
+    /**
+     * overwrite the unregisterAdapterDataObserver to correctly forward all events to the FastAdapter
+     *
+     * @param observer
+     */
+    @Override
+    public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+        super.unregisterAdapterDataObserver(observer);
+        if (mFastAdapter != null) {
+            mFastAdapter.unregisterAdapterDataObserver(observer);
+        }
     }
 
-    @Override public IItem getAdapterItem(int position) {
-        return null;
+    /**
+     * overwrite the getItemViewType to correctly return the value from the FastAdapter
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return mFastAdapter.getItemViewType(position);
     }
 
-    @Override public int getAdapterPosition(IItem item) {
-        return -1;
+    /**
+     * overwrite the getItemId to correctly return the value from the FastAdapter
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public long getItemId(int position) {
+        return mFastAdapter.getItemId(position);
     }
 
-    @Override public int getAdapterPosition(long identifier) {
-        return 0;
+    /**
+     * @return the reference to the FastAdapter
+     */
+    public FastAdapter<Item> getFastAdapter() {
+        return mFastAdapter;
     }
 
-    @Override public int getGlobalPosition(int position) {
-        return -1;
+    /**
+     * make sure we return the Item from the FastAdapter so we retrieve the item from all adapters
+     *
+     * @param position
+     * @return
+     */
+    public Item getItem(int position) {
+        return mFastAdapter.getItem(position);
+    }
+
+    /**
+     * make sure we return the count from the FastAdapter so we retrieve the count from all adapters
+     *
+     * @return
+     */
+    @Override
+    public int getItemCount() {
+        return mFastAdapter.getItemCount();
+    }
+
+    /**
+     * the onCreateViewHolder is managed by the FastAdapter so forward this correctly
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return mFastAdapter.onCreateViewHolder(parent, viewType);
+    }
+
+    /**
+     * the onBindViewHolder is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     * @param position
+     */
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        mFastAdapter.onBindViewHolder(holder, position);
+    }
+
+    /**
+     * the onBindViewHolder is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     * @param position
+     * @param payloads
+     */
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+        mFastAdapter.onBindViewHolder(holder, position, payloads);
+    }
+
+    /**
+     * the setHasStableIds is managed by the FastAdapter so forward this correctly
+     *
+     * @param hasStableIds
+     */
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        mFastAdapter.setHasStableIds(hasStableIds);
+    }
+
+    /**
+     * the onViewRecycled is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     */
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        mFastAdapter.onViewRecycled(holder);
+    }
+
+    /**
+     * the onFailedToRecycleView is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     * @return
+     */
+    @Override
+    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+        return mFastAdapter.onFailedToRecycleView(holder);
+    }
+
+    /**
+     * the onViewDetachedFromWindow is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     */
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        mFastAdapter.onViewDetachedFromWindow(holder);
+    }
+
+    /**
+     * the onViewAttachedToWindow is managed by the FastAdapter so forward this correctly
+     *
+     * @param holder
+     */
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        mFastAdapter.onViewAttachedToWindow(holder);
+    }
+
+    /**
+     * the onAttachedToRecyclerView is managed by the FastAdapter so forward this correctly
+     *
+     * @param recyclerView
+     */
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        mFastAdapter.onAttachedToRecyclerView(recyclerView);
+    }
+
+    /**
+     * the onDetachedFromRecyclerView is managed by the FastAdapter so forward this correctly
+     *
+     * @param recyclerView
+     */
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        mFastAdapter.onDetachedFromRecyclerView(recyclerView);
     }
 }

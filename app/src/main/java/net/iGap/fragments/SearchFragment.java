@@ -26,16 +26,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
-import io.realm.Case;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.items.SearchItem;
@@ -54,6 +51,14 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChatGetRoom;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Case;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class SearchFragment extends BaseFragment {
 
@@ -164,11 +169,10 @@ public class SearchFragment extends BaseFragment {
 
     private void initRecycleView() {
 
-        fastAdapter = new FastAdapter();
         itemAdapter = new ItemAdapter();
+        fastAdapter = FastAdapter.with(itemAdapter);
 
-
-        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener<IItem>() {
+        fastAdapter.withOnClickListener(new OnClickListener<IItem>() {
             @Override
             public boolean onClick(View v, IAdapter adapter, IItem currentItem, int position) {
 
@@ -188,7 +192,7 @@ public class SearchFragment extends BaseFragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemAdapter.wrap(fastAdapter));
+        recyclerView.setAdapter(fastAdapter);
     }
 
     private void fillList(String text) {
@@ -244,11 +248,7 @@ public class SearchFragment extends BaseFragment {
 
         int size = list.size();
 
-        for (RealmRoom realmRoom : realm.where(RealmRoom.class)
-            .equalTo(RealmRoomFields.KEEP_ROOM, false)
-            .equalTo(RealmRoomFields.IS_DELETED, false)
-            .contains(RealmRoomFields.TITLE, text, Case.INSENSITIVE)
-            .findAll()) {
+        for (RealmRoom realmRoom : realm.where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).contains(RealmRoomFields.TITLE, text, Case.INSENSITIVE).findAll()) {
 
             StructSearch item = new StructSearch();
 
@@ -377,22 +377,17 @@ public class SearchFragment extends BaseFragment {
         } else {
             G.onChatGetRoom = new OnChatGetRoom() {
                 @Override
-                public void onChatGetRoom(final long roomId) {
+                public void onChatGetRoom(final ProtoGlobal.Room room) {
                     G.handler.post(new Runnable() {
                         @Override
                         public void run() {
                             if (G.fragmentActivity != null) {
                                 removeFromBaseFragment(SearchFragment.this);
                             }
-                            new GoToChatActivity(roomId).setPeerID(id).startActivity();
+                            new GoToChatActivity(room.getId()).setPeerID(id).startActivity();
                             G.onChatGetRoom = null;
                         }
                     });
-                }
-
-                @Override
-                public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-
                 }
 
                 @Override

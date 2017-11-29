@@ -19,18 +19,20 @@ public class ChannelGetDraftResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChannelGetDraft.ChannelGetDraftResponse.Builder builder = (ProtoChannelGetDraft.ChannelGetDraftResponse.Builder) message;
         RealmRoom.convertAndSetDraft(Long.parseLong(identity), builder.getDraft().getMessage(), builder.getDraft().getReplyTo());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

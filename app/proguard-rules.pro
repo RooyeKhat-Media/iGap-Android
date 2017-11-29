@@ -33,6 +33,9 @@
 #Warning:cat.ereza.customactivityoncrash.config.CaocConfig$Builder: can't find referenced class cat.ereza.customactivityoncrash.config.CaocConfig$BackgroundMode
 ###
 
+###Ghamari Date
+-keep class com.github.msarhan.ummalqura.** { *; }
+-dontwarn com.github.msarhan.ummalqura.**
 #
 
 ###Chips
@@ -98,6 +101,11 @@
 -keep class sun.nio.sctp.AbstractNotificationHandler { *; }
 
 ###fastadapter
+#after update to version 3.0.3 following dontwarn added to proguard
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn com.mikepenz.fastadapter_extensions.**
+
 -keep public class android.support.v7.widget.** { *; }
 -keep public class android.support.v7.internal.widget.** { *; }
 -keep public class android.support.v7.internal.view.menu.** { *; }

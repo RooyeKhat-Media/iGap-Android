@@ -11,9 +11,7 @@
 package net.iGap.response;
 
 import net.iGap.G;
-import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoInfoPage;
-import net.iGap.proto.ProtoResponse;
 
 public class InfoPageResponse extends MessageHandler {
 
@@ -29,25 +27,25 @@ public class InfoPageResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoInfoPage.InfoPageResponse.Builder infoPageResponse = (ProtoInfoPage.InfoPageResponse.Builder) message;
         String body = infoPageResponse.getBody();
 
-        ProtoResponse.Response.Builder response = ProtoResponse.Response.newBuilder().mergeFrom(infoPageResponse.getResponse());
-
-        G.onReceivePageInfoTOS.onReceivePageInfo(body);
+        if (G.onReceivePageInfoTOS != null) {
+            G.onReceivePageInfoTOS.onReceivePageInfo(body);
+        }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
-        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int majorCode = errorResponse.getMajorCode();
-        int minorCode = errorResponse.getMinorCode();
     }
 }
 

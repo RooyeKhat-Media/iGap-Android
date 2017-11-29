@@ -26,18 +26,20 @@ public class GroupGetDraftResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoGroupGetDraft.GroupGetDraftResponse.Builder groupGetDraft = (ProtoGroupGetDraft.GroupGetDraftResponse.Builder) message;
-
         RealmRoom.convertAndSetDraft(Long.parseLong(identity), groupGetDraft.getDraft().getMessage(), groupGetDraft.getDraft().getReplyTo());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

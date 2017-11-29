@@ -16,7 +16,6 @@ import java.util.List;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserContactsGetBlockedList;
 import net.iGap.realm.RealmContacts;
-import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
 
@@ -74,24 +73,11 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
         realm.close();
 
         for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
-            RealmRegisteredInfo.getRegistrationInfo(user.getUserId(), new OnInfo() {
+            RealmRegisteredInfo.getRegistrationInfo(user.getUserId(), user.getCacheId(), new OnInfo() {
                 @Override
                 public void onInfo(final RealmRegisteredInfo registeredInfo) {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, registeredInfo.getId());
-                            RealmContacts realmContact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, registeredInfo.getId()).findFirst();
-                            if (realmRegisteredInfo != null) {
-                                realmRegisteredInfo.setBlockUser(true);
-                            }
-                            if (realmContact != null) {
-                                realmContact.setBlockUser(true);
-                            }
-                        }
-                    });
-                    realm.close();
+                    RealmRegisteredInfo.updateBlock(registeredInfo.getId(), true);
+                    RealmContacts.updateBlock(registeredInfo.getId(), true);
                 }
             });
         }

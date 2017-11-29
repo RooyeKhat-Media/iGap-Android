@@ -10,8 +10,6 @@
 
 package net.iGap.interfaces;
 
-import net.iGap.proto.ProtoResponse;
-
 public interface OnChatClearMessageResponse {
-    void onChatClearMessage(long roomId, long clearId, ProtoResponse.Response response);
+    void onChatClearMessage(long roomId, long clearId);
 }

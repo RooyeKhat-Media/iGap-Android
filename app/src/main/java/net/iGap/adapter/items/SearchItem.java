@@ -14,8 +14,9 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.SearchFragment;
@@ -27,6 +28,8 @@ import net.iGap.module.CircleImageView;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
 
 import static net.iGap.fragments.SearchFragment.SearchType.contact;
 import static net.iGap.fragments.SearchFragment.hashMapAvatarSearchFragment;
@@ -62,7 +65,7 @@ public class SearchItem extends AbstractItem<SearchItem, SearchItem.ViewHolder> 
         //holder.txtTime.setText(TimeUtils.toLocal(item.time, G.CHAT_MESSAGE_TIME));
         holder.txtTime.setText(HelperCalander.getTimeForMainRoom(item.time));
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             //holder.name.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.name.getText().toString()));
             holder.lastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastSeen.getText().toString()));
             holder.txtTime.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtTime.getText().toString()));

@@ -14,12 +14,10 @@ import net.iGap.proto.ProtoUserTwoStepVerificationChangeRecoveryQuestion;
 
 public class RequestUserTwoStepVerificationChangeRecoveryQuestion {
 
-    public void changeRecoveryQuestion(String password, String questinoOne, String answerOne, String questionTwo, String answerTwo) {
-
-        ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestion.Builder builder =
-            ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestion.newBuilder();
+    public void changeRecoveryQuestion(String password, String questionOne, String answerOne, String questionTwo, String answerTwo) {
+        ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestion.Builder builder = ProtoUserTwoStepVerificationChangeRecoveryQuestion.UserTwoStepVerificationChangeRecoveryQuestion.newBuilder();
         builder.setPassword(password);
-        builder.setQuestionOne(questinoOne);
+        builder.setQuestionOne(questionOne);
         builder.setAnswerOne(answerOne);
         builder.setQuestionTwo(questionTwo);
         builder.setAnswerTwo(answerTwo);

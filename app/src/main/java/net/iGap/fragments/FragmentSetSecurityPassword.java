@@ -5,9 +5,7 @@ package net.iGap.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 import java.util.regex.Pattern;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.interfaces.TwoStepSecurityConfirmEmail;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.request.RequestUserTwoStepVerificationResendVerifyEmail;
@@ -283,12 +282,6 @@ public class FragmentSetSecurityPassword extends BaseFragment {
             @Override
             public void errorInvalidConfirmCode() {
 
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isAdded()) error(G.fragmentActivity.getResources().getString(R.string.invalid_verify_email_code));
-                    }
-                });
             }
         };
 
@@ -326,16 +319,9 @@ public class FragmentSetSecurityPassword extends BaseFragment {
 
         if (isAdded()) {
             try {
-                Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
-                vShort.vibrate(200);
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+
+                HelperError.showSnackMessage(error, true);
+
             } catch (IllegalStateException e) {
                 e.getStackTrace();
             }

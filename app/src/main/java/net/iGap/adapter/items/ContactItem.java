@@ -12,9 +12,9 @@ package net.iGap.adapter.items;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperAvatar;
@@ -27,6 +27,10 @@ import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * Contact item used with FastAdapter for Navigation drawer contacts fragment.
@@ -68,7 +72,7 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
                 }
             }
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 holder.subtitle.setText(holder.subtitle.getText().toString());
             }
         }

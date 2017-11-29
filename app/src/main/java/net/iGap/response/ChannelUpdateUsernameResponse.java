@@ -13,6 +13,7 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelUpdateUsername;
 import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmRoom;
 
 public class ChannelUpdateUsernameResponse extends MessageHandler {
 
@@ -28,16 +29,18 @@ public class ChannelUpdateUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-
         ProtoChannelUpdateUsername.ChannelUpdateUsernameResponse.Builder builder = (ProtoChannelUpdateUsername.ChannelUpdateUsernameResponse.Builder) message;
+        RealmRoom.updateUsername(builder.getRoomId(), builder.getUsername());
         if (G.onChannelUpdateUsername != null) {
             G.onChannelUpdateUsername.onChannelUpdateUsername(builder.getRoomId(), builder.getUsername());
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
         if (G.onChannelUpdateUsername != null) {
@@ -45,7 +48,8 @@ public class ChannelUpdateUsernameResponse extends MessageHandler {
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

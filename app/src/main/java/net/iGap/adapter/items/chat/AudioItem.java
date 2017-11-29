@@ -20,9 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.io.File;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -36,6 +34,11 @@ import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.File;
+import java.util.List;
+
+import io.realm.Realm;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
@@ -122,7 +125,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                                             holder.musicSeekbar.setProgress(0);
                                         }
 
-                                        if (HelperCalander.isLanguagePersian) {
+                                        if (HelperCalander.isPersianUnicode) {
                                             holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber((holder.txt_Timer.getText().toString())));
                                         }
                                     }
@@ -134,7 +137,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                                 public void run() {
                                     holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
                                     holder.musicSeekbar.setProgress(0);
-                                    if (HelperCalander.isLanguagePersian) {
+                                    if (HelperCalander.isPersianUnicode) {
                                         holder.txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber((holder.txt_Timer.getText().toString())));
                                     }
                                 }
@@ -289,7 +292,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
 
         holder.mMessageID = mMessage.messageID;
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             (holder.txt_Timer).setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
         }
     }
@@ -370,7 +373,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             //                    txt_Timer.setText(MessageTow + "/" + mTimeMusic);
             //                    musicSeekbar.setProgress(MusicPlayer.musicProgress);
             //
-            //                    if (HelperCalander.isLanguagePersian) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
+            //                    if (HelperCalander.isPersianUnicode) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
             //                }
             //            });
             //        }

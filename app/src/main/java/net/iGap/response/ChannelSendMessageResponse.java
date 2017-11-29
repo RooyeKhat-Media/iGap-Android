@@ -30,18 +30,21 @@ public class ChannelSendMessageResponse extends MessageHandler {
         this.message = protoClass;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoChannelSendMessage.ChannelSendMessageResponse.Builder channelSendMessageResponse = (ProtoChannelSendMessage.ChannelSendMessageResponse.Builder) message;
+        ProtoChannelSendMessage.ChannelSendMessageResponse.Builder channelSendMessageResponse = (ProtoChannelSendMessage.ChannelSendMessageResponse.Builder) message;
         HelperMessageResponse.handleMessage(channelSendMessageResponse.getRoomId(), channelSendMessageResponse.getRoomMessage(), ProtoGlobal.Room.Type.CHANNEL, channelSendMessageResponse.getResponse(), this.identity);
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         makeFailed(Long.parseLong(identity));
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 }

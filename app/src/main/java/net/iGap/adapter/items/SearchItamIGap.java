@@ -14,8 +14,9 @@ import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperAvatar;
@@ -27,6 +28,8 @@ import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.proto.ProtoClientSearchUsername;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
 
 public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.ViewHolder> {
     ProtoClientSearchUsername.ClientSearchUsernameResponse.Result item;
@@ -132,7 +135,7 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
 
         holder.txtTime.setText("");
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             holder.name.setText(holder.name.getText().toString());
             holder.lastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastSeen.getText().toString()));
             holder.txtTime.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtTime.getText().toString()));

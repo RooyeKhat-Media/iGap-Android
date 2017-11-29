@@ -38,14 +38,18 @@ public class ChannelCreateResponse extends MessageHandler {
             RealmChannelRoom.createChannelRoom(builder.getRoomId(), builder.getInviteLink(), identity);
             new RequestClientGetRoom().clientGetRoom(builder.getRoomId(), RequestClientGetRoom.CreateRoomMode.requestFromOwner);
         } else {
-            G.onChannelCreate.onChannelCreate(builder.getRoomId(), builder.getInviteLink(), identity);
+            if (G.onChannelCreate != null) {
+                G.onChannelCreate.onChannelCreate(builder.getRoomId(), builder.getInviteLink(), identity);
+            }
         }
     }
 
     @Override
     public void timeOut() {
         super.timeOut();
-        G.onChannelCreate.onTimeOut();
+        if (G.onChannelCreate != null) {
+            G.onChannelCreate.onTimeOut();
+        }
     }
 
     @Override
@@ -54,8 +58,9 @@ public class ChannelCreateResponse extends MessageHandler {
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onChannelCreate.onError(majorCode, minorCode);
+        if (G.onChannelCreate != null) {
+            G.onChannelCreate.onError(majorCode, minorCode);
+        }
     }
 }
 

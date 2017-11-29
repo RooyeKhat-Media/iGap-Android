@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp12"
         android:numStars="5"
-        android:rating="5"
+        android:rating="0"
         android:stepSize="1"
         />
     <net.iGap.module.MEditText

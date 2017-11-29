@@ -14,7 +14,6 @@ import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserAvatarDelete;
 import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmAvatarFields;
 
 public class UserAvatarDeleteResponse extends MessageHandler {
 
@@ -29,33 +28,42 @@ public class UserAvatarDeleteResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoUserAvatarDelete.UserAvatarDeleteResponse.Builder userAvatarDeleteResponse = (ProtoUserAvatarDelete.UserAvatarDeleteResponse.Builder) message;
+
         if (G.onUserAvatarDelete != null) {
             G.onUserAvatarDelete.onUserAvatarDelete(userAvatarDeleteResponse.getId(), identity);
         } else {
-
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
-                    RealmAvatar realmAvatar = realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.ID, userAvatarDeleteResponse.getId()).findFirst();
-                    if (realmAvatar != null) {
-                        realmAvatar.deleteFromRealm();
-                    }
+                @Override
+                public void execute(Realm realm) {
+                    RealmAvatar.deleteAvatar(realm, userAvatarDeleteResponse.getId());
                 }
             });
-
             realm.close();
         }
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (G.onUserInfoMyClient != null) {
+                    G.onUserInfoMyClient.onUserInfoMyClient();
+                }
+            }
+        }, 1000);
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         if (G.onUserAvatarDelete != null) {
             G.onUserAvatarDelete.onUserAvatarDeleteError();

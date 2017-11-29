@@ -27,7 +27,8 @@ public class PushTwoStepVerificationResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoPushTwoStepVerification.PushTwoStepVerificationResponse.Builder builder = (ProtoPushTwoStepVerification.PushTwoStepVerificationResponse.Builder) message;
@@ -36,11 +37,13 @@ public class PushTwoStepVerificationResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

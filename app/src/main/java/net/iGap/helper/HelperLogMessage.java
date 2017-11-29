@@ -17,7 +17,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -28,10 +28,11 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
+
+import io.realm.Realm;
 
 /**
  * return correct log message with author and target
@@ -59,26 +60,13 @@ public class HelperLogMessage {
             return;
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, item.messageID).findFirst();
-                    if (roomMessage != null) {
-                        String LogText = HelperLogMessage.logMessage(item.roomId, item.author, item.messageLog, item.messageID);
-                        roomMessage.setLogMessage(LogText);
-                        G.logMessageUpdatList.remove(item.updateID);
-                        if (FragmentChat.iUpdateLogItem != null) {
-                            FragmentChat.iUpdateLogItem.onUpdate(LogText, item.messageID);
-                        }
-                    }
-                }
-            });
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        String logMessage = HelperLogMessage.logMessage(item.roomId, item.author, item.messageLog, item.messageID);
+        RealmRoomMessage.setLogMessage(item.messageID, logMessage);
+
+        G.logMessageUpdatList.remove(item.updateID);
+        if (FragmentChat.iUpdateLogItem != null) {
+            FragmentChat.iUpdateLogItem.onUpdate(logMessage, item.messageID);
         }
-        realm.close();
     }
 
     public static String logMessage(long roomId, ProtoGlobal.RoomMessage.Author author, ProtoGlobal.RoomMessageLog messageLog, long messageID) {
@@ -135,7 +123,7 @@ public class HelperLogMessage {
 
                 G.logMessageUpdatList.put(updateID, item);
 
-                HelperInfo.needUpdateRoomInfo(author.getRoom().getRoomId());
+                RealmRoom.needUpdateRoomInfo(author.getRoom().getRoomId());
 
                 new RequestClientGetRoom().clientGetRoom(author.getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
             }
@@ -360,7 +348,7 @@ public class HelperLogMessage {
         String tmp;
 
         try {
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 tmp = str[1];
             } else {
                 tmp = str[0];
@@ -385,7 +373,7 @@ public class HelperLogMessage {
         String tmp = null;
 
         try {
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 tmp = str[1];
             } else {
                 tmp = str[0];
@@ -404,7 +392,7 @@ public class HelperLogMessage {
 
         try {
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 linkInfo = str[3];
             } else {
                 linkInfo = str[2];
@@ -497,25 +485,20 @@ public class HelperLogMessage {
         } else {
             G.onChatGetRoom = new OnChatGetRoom() {
                 @Override
-                public void onChatGetRoom(final long roomId) {
+                public void onChatGetRoom(final ProtoGlobal.Room room) {
                     G.handler.post(new Runnable() {
                         @Override
                         public void run() {
                             FragmentContactsProfile contactsProfile = new FragmentContactsProfile();
                             Bundle bundle = new Bundle();
                             bundle.putLong("peerId", id);
-                            bundle.putLong("RoomId", roomId);
+                            bundle.putLong("RoomId", room.getId());
                             bundle.putString("enterFrom", "GROUP");
                             contactsProfile.setArguments(bundle);
                             new HelperFragment(contactsProfile).setReplace(false).load();
                             G.onChatGetRoom = null;
                         }
                     });
-                }
-
-                @Override
-                public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-
                 }
 
                 @Override
@@ -535,16 +518,13 @@ public class HelperLogMessage {
         realm.close();
     }
 
-    private static void goToRoom(Long id) {
-
+    private static void goToRoom(Long roomId) {
         Realm realm = Realm.getDefaultInstance();
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, id).findFirst();
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom != null) {
-
             new GoToChatActivity(realmRoom.getId()).startActivity();
-
         } else {
-            HelperInfo.needUpdateRoomInfo(id);
+            RealmRoom.needUpdateRoomInfo(roomId);
         }
         realm.close();
     }

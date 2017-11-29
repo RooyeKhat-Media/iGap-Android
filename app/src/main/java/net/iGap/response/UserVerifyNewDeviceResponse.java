@@ -33,15 +33,6 @@ public class UserVerifyNewDeviceResponse extends MessageHandler {
         super.handler();
 
         ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse.Builder builder = (ProtoUserVerifyNewDevice.UserVerifyNewDeviceResponse.Builder) message;
-        builder.getAppName();
-        builder.getAppId();
-        builder.getAppBuildVersion();
-        builder.getAppVersion();
-        builder.getPlatform();
-        builder.getPlatformVersion();
-        builder.getDevice();
-        builder.getDeviceName();
-        builder.getTwoStepVerification();
 
         if (G.onVerifyNewDevice != null) {
             G.onVerifyNewDevice.verifyNewDevice(builder.getAppName(), builder.getAppId(), builder.getAppBuildVersion(), builder.getAppVersion(), builder.getPlatform(), builder.getPlatformVersion(), builder.getDevice(), builder.getDeviceName(), builder.getTwoStepVerification());

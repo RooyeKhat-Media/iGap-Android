@@ -182,7 +182,7 @@
 
               </RelativeLayout>
 
-              <com.gigamole.navigationtabstrip.NavigationTabStrip
+              <net.iGap.libs.tabBar.NavigationTabStrip
                   android:id="@+id/nts"
                   android:layout_width="wrap_content"
                   android:layout_height="@dimen/dp60"

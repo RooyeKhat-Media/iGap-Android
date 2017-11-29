@@ -28,17 +28,20 @@ public class ChatEditMessageResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
-        final ProtoChatEditMessage.ChatEditMessageResponse.Builder builder = (ProtoChatEditMessage.ChatEditMessageResponse.Builder) message;
+        ProtoChatEditMessage.ChatEditMessageResponse.Builder builder = (ProtoChatEditMessage.ChatEditMessageResponse.Builder) message;
         HelperEditMessage.editMessage(builder.getRoomId(), builder.getMessageId(), builder.getMessageVersion(), builder.getMessageType(), builder.getMessage(), builder.getResponse());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

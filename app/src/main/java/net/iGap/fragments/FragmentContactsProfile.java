@@ -25,8 +25,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,15 +39,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.GoToChatActivity;
@@ -56,6 +53,7 @@ import net.iGap.helper.HelperPermision;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnGetPermission;
+import net.iGap.interfaces.OnReport;
 import net.iGap.interfaces.OnUserContactDelete;
 import net.iGap.interfaces.OnUserContactEdit;
 import net.iGap.interfaces.OnUserInfoResponse;
@@ -73,6 +71,7 @@ import net.iGap.module.structs.StructListOfContact;
 import net.iGap.module.structs.StructMessageAttachment;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.proto.ProtoUserReport;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
 import net.iGap.realm.RealmCallConfig;
@@ -90,6 +89,16 @@ import net.iGap.request.RequestUserContactsDelete;
 import net.iGap.request.RequestUserContactsEdit;
 import net.iGap.request.RequestUserContactsUnblock;
 import net.iGap.request.RequestUserInfo;
+import net.iGap.request.RequestUserReport;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
@@ -138,6 +147,8 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
     private static final String ENTER_FROM = "enterFrom";
     public static final String FRAGMENT_TAG = "FragmentContactsProfile";
     private boolean disableDeleteContact = false;
+    private String bio = "";
+    private String report = "";
 
     public static FragmentContactsProfile newInstance(long roomId, long peerId, String enterFrom) {
         Bundle args = new Bundle();
@@ -222,6 +233,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             color = realmRegisteredInfo.getColor();
             initials = realmRegisteredInfo.getInitials();
             userStatus = realmRegisteredInfo.getStatus();
+            bio = realmRegisteredInfo.getBio();
         } else if (realmUser != null) {
             phone = Long.toString(realmUser.getPhone());
             displayName = realmUser.getDisplay_name();
@@ -292,20 +304,15 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     } else {
                         G.onChatGetRoom = new OnChatGetRoom() {
                             @Override
-                            public void onChatGetRoom(final long roomId) {
+                            public void onChatGetRoom(final ProtoGlobal.Room room) {
                                 G.handler.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         new HelperFragment().removeAll(true);
-                                        new GoToChatActivity(roomId).setPeerID(userId).startActivity();
+                                        new GoToChatActivity(room.getId()).setPeerID(userId).startActivity();
                                         G.onChatGetRoom = null;
                                     }
                                 });
-                            }
-
-                            @Override
-                            public void onChatGetRoomCompletely(ProtoGlobal.Room room) {
-
                             }
 
                             @Override
@@ -342,6 +349,18 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         txtPhoneNumber = (TextView) view.findViewById(R.id.chi_txt_phoneNumber);
         vgPhoneNumber = (ViewGroup) view.findViewById(R.id.chi_layout_phoneNumber);
         txtClearChat = (TextView) view.findViewById(R.id.chi_txt_clearChat);
+        TextView txtBio = (TextView) view.findViewById(R.id.st_txt_bio);
+        ViewGroup vgBio = (ViewGroup) view.findViewById(R.id.st_layout_bio);
+
+        if (bio == null || bio.length() == 0) {
+            vgBio.setVisibility(View.GONE);
+        } else {
+            if (txtBio != null) {
+                txtBio.setText(bio);
+            }
+        }
+
+
 
         if (phone.equals("0")) {
             vgPhoneNumber.setVisibility(View.GONE);
@@ -507,7 +526,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                             long po = Long.parseLong(mPhone);
                             String firstName = edtFirstName.getText().toString().trim();
                             String lastName = edtLastName.getText().toString().trim();
-                            new RequestUserContactsEdit().contactsEdit(po, firstName, lastName);
+                            new RequestUserContactsEdit().contactsEdit(userId, po, firstName, lastName);
                             dialog.dismiss();
                         }
                     });
@@ -516,41 +535,8 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     G.onUserContactEdit = new OnUserContactEdit() {
                         @Override
                         public void onContactEdit(final String firstName, final String lastName, final String initials) {
-                            Realm realm1 = Realm.getDefaultInstance();
-                            final RealmContacts realmUser = realm1.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-                            realm1.executeTransaction(new Realm.Transaction() {
-                                @Override
-                                public void execute(Realm realm) {
-                                    realmUser.setFirst_name(firstName);
-                                    realmUser.setLast_name(lastName);
 
-                                    String displayName = firstName + " " + lastName;
-
-                                    for (RealmRoom realmRoom : realm.where(RealmRoom.class).equalTo(RealmRoomFields.TYPE, ProtoGlobal.Room.Type.CHAT.toString()).findAll()) {
-                                        if (realmRoom.getChatRoom() != null && realmRoom.getChatRoom().getPeerId() == userId) {
-                                            realmRoom.setTitle(displayName.trim());
-                                        }
-                                    }
-
-                                    RealmContacts contact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-                                    if (contact != null) {
-                                        contact.setFirst_name(firstName);
-                                        contact.setLast_name(lastName);
-                                        contact.setDisplay_name(displayName.trim());
-                                    }
-
-                                    RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-                                    if (registeredInfo != null) {
-                                        registeredInfo.setFirstName(firstName);
-                                        registeredInfo.setLastName(lastName);
-                                        registeredInfo.setDisplayName(displayName.trim());
-                                        registeredInfo.setInitials(initials);
-                                    }
-
-                                    setAvatar();
-                                }
-                            });
-                            realm1.close();
+                            setAvatar();
                             G.handler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -581,7 +567,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
 
         txtPhoneNumber.setText(mPhone);
 
-        if (HelperCalander.isLanguagePersian) {
+        if (HelperCalander.isPersianUnicode) {
             txtPhoneNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtPhoneNumber.getText().toString()));
         }
 
@@ -734,7 +720,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                                 }
                                 String countText = ((RealmRoom) element).getSharedMediaCount();
 
-                                if (HelperCalander.isLanguagePersian) {
+                                if (HelperCalander.isPersianUnicode) {
                                     txtCountOfShearedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
                                 } else {
                                     txtCountOfShearedMedia.setText(countText);
@@ -819,7 +805,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                 txtLastSeen.setText(userStatus);
             }
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 txtLastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(txtLastSeen.getText().toString()));
             }
         }
@@ -957,10 +943,12 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
         ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
         ViewGroup root3 = (ViewGroup) v.findViewById(R.id.dialog_root_item3_notification);
+        ViewGroup root4 = (ViewGroup) v.findViewById(R.id.dialog_root_item4_notification);
 
         TextView txtBlockUser = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
         TextView txtClearHistory = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
         TextView txtDeleteContact = (TextView) v.findViewById(R.id.dialog_text_item3_notification);
+        TextView txtReport = (TextView) v.findViewById(R.id.dialog_text_item4_notification);
 
         TextView iconBlockUser = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
 
@@ -970,9 +958,13 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         TextView iconDeleteContact = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
         iconDeleteContact.setText(G.fragmentActivity.getResources().getString(R.string.md_rubbish_delete_file));
 
+        TextView iconReport = (TextView) v.findViewById(R.id.dialog_icon_item4_notification);
+        iconReport.setText(G.fragmentActivity.getResources().getString(R.string.md_igap_account_alert));
+
         root1.setVisibility(View.VISIBLE);
         root2.setVisibility(View.VISIBLE);
         root3.setVisibility(View.VISIBLE);
+        root4.setVisibility(View.VISIBLE);
         if (G.userId == userId) {
             root1.setVisibility(View.GONE);
             root3.setVisibility(View.GONE);
@@ -991,6 +983,12 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         }
         txtClearHistory.setText(G.fragmentActivity.getResources().getString(R.string.clear_history));
         txtDeleteContact.setText(G.fragmentActivity.getResources().getString(R.string.delete_contact));
+        txtReport.setText(G.fragmentActivity.getResources().getString(R.string.report));
+
+
+        if (RealmRoom.isNotificationServices(roomId)) {
+            root4.setVisibility(View.GONE);
+        }
 
         root1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1029,6 +1027,130 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
 
             }
         });
+        root4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                openDialogReport();
+            }
+
+        });
+    }
+
+    private void openDialogReport() {
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
+        View v = dialog.getCustomView();
+        if (v == null) {
+            return;
+        }
+        DialogAnimation.animationDown(dialog);
+        dialog.show();
+
+        ViewGroup rootSpam = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+        ViewGroup rootAbuse = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+        ViewGroup rootFaceAccount = (ViewGroup) v.findViewById(R.id.dialog_root_item3_notification);
+        ViewGroup rootOther = (ViewGroup) v.findViewById(R.id.dialog_root_item4_notification);
+
+        TextView txtSpam = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+        TextView txtAbuse = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+        TextView txtFakeAccount = (TextView) v.findViewById(R.id.dialog_text_item3_notification);
+        TextView txtOther = (TextView) v.findViewById(R.id.dialog_text_item4_notification);
+
+        TextView iconSpam = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+        iconSpam.setText(G.fragmentActivity.getResources().getString(R.string.md_back_arrow_reply));
+        iconSpam.setVisibility(View.GONE);
+
+        TextView iconAbuse = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+        iconAbuse.setText(G.fragmentActivity.getResources().getString(R.string.md_copy));
+        iconAbuse.setVisibility(View.GONE);
+
+        TextView iconFakeAccount = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
+        iconFakeAccount.setText(G.fragmentActivity.getResources().getString(R.string.md_share_button));
+        iconFakeAccount.setVisibility(View.GONE);
+
+        TextView iconOther = (TextView) v.findViewById(R.id.dialog_icon_item4_notification);
+        iconOther.setText(G.fragmentActivity.getResources().getString(R.string.md_forward));
+        iconOther.setVisibility(View.GONE);
+
+
+        rootSpam.setVisibility(View.VISIBLE);
+        rootAbuse.setVisibility(View.VISIBLE);
+        rootFaceAccount.setVisibility(View.VISIBLE);
+        rootOther.setVisibility(View.VISIBLE);
+
+        txtSpam.setText(R.string.st_Spam);
+        txtAbuse.setText(R.string.st_Abuse);
+        txtFakeAccount.setText(R.string.st_FakeAccount);
+        txtOther.setText(R.string.st_Other);
+
+        rootSpam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new RequestUserReport().userReport(userId, ProtoUserReport.UserReport.Reason.SPAM, "");
+            }
+        });
+        rootAbuse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new RequestUserReport().userReport(userId, ProtoUserReport.UserReport.Reason.ABUSE, "");
+            }
+        });
+        rootFaceAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                new RequestUserReport().userReport(userId, ProtoUserReport.UserReport.Reason.FAKE_ACCOUNT, "");
+
+            }
+        });
+        rootOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+                final MaterialDialog dialogReport = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.report).inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE).alwaysCallInputCallback().input(G.context.getString(R.string.description), "", new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        // Do something
+                        report = input.toString();
+                        if (input.length() > 0) {
+                            View positive = dialog.getActionButton(DialogAction.POSITIVE);
+                            positive.setEnabled(true);
+                        } else {
+                            View positive = dialog.getActionButton(DialogAction.POSITIVE);
+                            positive.setEnabled(false);
+                        }
+                    }
+                }).positiveText(R.string.ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        new RequestUserReport().userReport(roomId, ProtoUserReport.UserReport.Reason.OTHER, report);
+                    }
+                }).negativeText(R.string.cancel).build();
+
+                final View positive = dialogReport.getActionButton(DialogAction.POSITIVE);
+                positive.setEnabled(false);
+
+                DialogAnimation.animationDown(dialogReport);
+
+                dialogReport.show();
+
+            }
+        });
+
+        G.onReport = new OnReport() {
+            @Override
+            public void success() {
+
+                error(G.fragmentActivity.getResources().getString(R.string.st_send_report));
+
+            }
+        };
+
     }
 
     private void blockOrUnblockUser() {
@@ -1092,7 +1214,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
     private void deleteContact() {
         G.onUserContactdelete = new OnUserContactDelete() {
             @Override
-            public void onContactDelete(long userId) {
+            public void onContactDelete() {
                 /**
                  * get user info after delete it for show nickname
                  */
@@ -1112,14 +1234,16 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         G.onUserInfoResponse = new OnUserInfoResponse() {
             @Override
             public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
-
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtNickname.setText(user.getDisplayName());
-                        titleToolbar.setText(user.getDisplayName());
-                    }
-                });
+                if (userId == user.getId()) {
+                    G.handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtNickname.setText(user.getDisplayName());
+                            titleToolbar.setText(user.getDisplayName());
+                            setAvatar();
+                        }
+                    });
+                }
             }
 
             @Override
@@ -1147,6 +1271,23 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     setUserStatus(AppUtils.getStatsForUser(status), time);
                 }
             });
+        }
+    }
+
+    private void error(String error) {
+        if (isAdded()) {
+            try {
+                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        snack.dismiss();
+                    }
+                });
+                snack.show();
+            } catch (IllegalStateException e) {
+                e.getStackTrace();
+            }
         }
     }
 }

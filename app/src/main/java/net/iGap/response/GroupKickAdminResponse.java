@@ -10,15 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
 import net.iGap.G;
+import net.iGap.helper.HelperMember;
+import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.proto.ProtoError;
-import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoGroupKickAdmin;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 public class GroupKickAdminResponse extends MessageHandler {
 
@@ -38,32 +34,19 @@ public class GroupKickAdminResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoGroupKickAdmin.GroupKickAdminResponse.Builder builder = (ProtoGroupKickAdmin.GroupKickAdminResponse.Builder) message;
-        builder.getRoomId();
-        builder.getMemberId();
+        HelperMember.updateRole(builder.getRoomId(), builder.getMemberId(), ChannelChatRole.MEMBER.toString());
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-
-        RealmRoom.updateRole(ProtoGlobal.Room.Type.GROUP, builder.getRoomId(), builder.getMemberId(), ProtoGlobal.GroupRoom.Role.MEMBER.toString());
-        if (realmRoom != null) {
-            RealmList<RealmMember> realmMembers = realmRoom.getGroupRoom().getMembers();
-            for (final RealmMember member : realmMembers) {
-                if (member.getPeerId() == builder.getMemberId()) {
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            member.setRole(ProtoGlobal.GroupRoom.Role.MEMBER.toString());
-                        }
-                    });
-                    if (G.onGroupKickAdmin != null) {
-                        G.onGroupKickAdmin.onGroupKickAdmin(builder.getRoomId(), builder.getMemberId());
-                    }
-                    break;
-                }
-            }
+        if (G.onGroupKickAdmin != null) {
+            G.onGroupKickAdmin.onGroupKickAdmin(builder.getRoomId(), builder.getMemberId());
         }
+    }
 
-        realm.close();
+    @Override
+    public void timeOut() {
+        super.timeOut();
+        if (G.onGroupKickAdmin != null) {
+            G.onGroupKickAdmin.onTimeOut();
+        }
     }
 
     @Override
@@ -72,14 +55,8 @@ public class GroupKickAdminResponse extends MessageHandler {
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();
         int minorCode = errorResponse.getMinorCode();
-
-        G.onGroupKickAdmin.onError(majorCode, minorCode);
-    }
-
-    @Override
-    public void timeOut() {
-        super.timeOut();
-
-        G.onGroupKickAdmin.onTimeOut();
+        if (G.onGroupKickAdmin != null) {
+            G.onGroupKickAdmin.onError(majorCode, minorCode);
+        }
     }
 }

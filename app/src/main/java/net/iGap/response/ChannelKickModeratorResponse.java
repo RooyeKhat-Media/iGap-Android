@@ -10,14 +10,10 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmList;
+import net.iGap.helper.HelperMember;
+import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.proto.ProtoChannelKickModerator;
 import net.iGap.proto.ProtoError;
-import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmMember;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 
 import static net.iGap.G.onChannelKickModerator;
 
@@ -38,31 +34,12 @@ public class ChannelKickModeratorResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-
         ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder builder = (ProtoChannelKickModerator.ChannelKickModeratorResponse.Builder) message;
-
-        Realm realm = Realm.getDefaultInstance();
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, builder.getRoomId()).findFirst();
-        RealmRoom.updateRole(ProtoGlobal.Room.Type.CHANNEL, builder.getRoomId(), builder.getMemberId(), ProtoGlobal.GroupRoom.Role.MEMBER.toString());
-        if (realmRoom != null) {
-            RealmList<RealmMember> realmMembers = realmRoom.getChannelRoom().getMembers();
-
-            for (final RealmMember member : realmMembers) {
-                if (member.getPeerId() == builder.getMemberId()) {
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            member.setRole(ProtoGlobal.ChannelRoom.Role.MEMBER.toString());
-                        }
-                    });
-                    if (onChannelKickModerator != null) {
-                        onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
-                    }
-                    break;
-                }
-            }
-        }
-        realm.close();
+        HelperMember.updateRole(builder.getRoomId(), builder.getMemberId(), ChannelChatRole.MEMBER.toString());
+        //fastAdapter
+        //if (onChannelKickModerator != null) {
+        //    onChannelKickModerator.onChannelKickModerator(builder.getRoomId(), builder.getMemberId());
+        //}
     }
 
     @Override

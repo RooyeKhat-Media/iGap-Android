@@ -21,13 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import io.realm.OrderedRealmCollection;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.util.HashMap;
-import java.util.List;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -37,7 +31,6 @@ import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.helper.GoToChatActivity;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
-import net.iGap.helper.HelperClientCondition;
 import net.iGap.helper.HelperGetAction;
 import net.iGap.helper.HelperImageBackColor;
 import net.iGap.interfaces.OnAvatarGet;
@@ -49,6 +42,7 @@ import net.iGap.interfaces.OnClearRoomHistory;
 import net.iGap.interfaces.OnClearUnread;
 import net.iGap.interfaces.OnClientGetRoomResponseRoomList;
 import net.iGap.interfaces.OnComplete;
+import net.iGap.interfaces.OnDateChanged;
 import net.iGap.interfaces.OnDraftMessage;
 import net.iGap.interfaces.OnGroupDeleteInRoomList;
 import net.iGap.interfaces.OnMute;
@@ -67,6 +61,7 @@ import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.realm.RealmClientCondition;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
@@ -76,8 +71,20 @@ import net.iGap.request.RequestChannelLeft;
 import net.iGap.request.RequestChatDelete;
 import net.iGap.request.RequestClientCondition;
 import net.iGap.request.RequestClientGetRoomList;
+import net.iGap.request.RequestClientMuteRoom;
+import net.iGap.request.RequestClientPinRoom;
 import net.iGap.request.RequestGroupDelete;
 import net.iGap.request.RequestGroupLeft;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static net.iGap.G.clientConditionGlobal;
 import static net.iGap.G.context;
@@ -89,7 +96,7 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 import static net.iGap.realm.RealmRoom.putChatToDatabase;
 
 
-public class FragmentMain extends BaseFragment implements OnComplete, OnSetActionInRoom, OnSelectMenu, OnRemoveFragment, OnDraftMessage, OnChatUpdateStatusResponse, OnChatDeleteInRoomList, OnGroupDeleteInRoomList, OnChannelDeleteInRoomList, OnChatSendMessageResponse, OnClearUnread, OnClientGetRoomResponseRoomList, OnMute, OnClearRoomHistory {
+public class FragmentMain extends BaseFragment implements OnComplete, OnSetActionInRoom, OnSelectMenu, OnRemoveFragment, OnDraftMessage, OnChatUpdateStatusResponse, OnChatDeleteInRoomList, OnGroupDeleteInRoomList, OnChannelDeleteInRoomList, OnChatSendMessageResponse, OnClearUnread, OnClientGetRoomResponseRoomList, OnMute, OnClearRoomHistory, OnDateChanged {
 
     public static final String STR_MAIN_TYPE = "STR_MAIN_TYPE";
     public static boolean isMenuButtonAddShown = false;
@@ -98,7 +105,6 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     private OnComplete mComplete;
 
     private int mOffset = 0;
-    private int mLimit = 50;
     boolean isSendRequestForLoading = false;
     boolean isThereAnyMoreItemToLoad = true;
     private View viewById;
@@ -108,6 +114,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     private long tagId;
     private Realm realmFragmentMain;
     public static HashMap<MainType, RoomAdapter> adapterHashMap = new HashMap<>();
+    public static HashMap<MainType, RoomAdapter> roomAdapterHashMap = new HashMap<>();
 
     public enum MainType {
         all, chat, group, channel
@@ -167,8 +174,8 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
 
         RealmResults<RealmRoom> results = null;
-        String[] fieldNames = {RealmRoomFields.IS_PINNED, RealmRoomFields.UPDATED_TIME};
-        Sort[] sort = {Sort.DESCENDING, Sort.DESCENDING};
+        String[] fieldNames = {RealmRoomFields.IS_PINNED, RealmRoomFields.PIN_ID, RealmRoomFields.UPDATED_TIME};
+        Sort[] sort = {Sort.DESCENDING, Sort.DESCENDING, Sort.DESCENDING};
         switch (mainType) {
 
             case all:
@@ -180,8 +187,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
                 break;
             case chat:
-                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
-                        equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHAT.toString()).findAll().sort(fieldNames, sort);
+                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHAT.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
                 } else {
@@ -189,8 +195,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
                 break;
             case group:
-                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
-                        equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.GROUP.toString()).findAll().sort(fieldNames, sort);
+                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.GROUP.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
                 } else {
@@ -198,8 +203,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
                 break;
             case channel:
-                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
-                        equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHANNEL.toString()).findAll().sort(fieldNames, sort);
+                results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHANNEL.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
                 } else {
@@ -211,6 +215,11 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
         final RoomAdapter roomsAdapter = new RoomAdapter(results, this);
         mRecyclerView.setAdapter(roomsAdapter);
+
+        if (roomAdapterHashMap == null) {
+            roomAdapterHashMap = new HashMap<>();
+        }
+        roomAdapterHashMap.put(mainType, roomsAdapter);
 
         //fastAdapter
         //final RoomsAdapter roomsAdapter = new RoomsAdapter(getRealmFragmentMain());
@@ -412,7 +421,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
         boolean cleanAfter = false;
 
-        if (roomList.size() < mLimit) {
+        if (roomList.size() < Config.LIMIT_LOAD_ROOM) {
             isThereAnyMoreItemToLoad = false;
             cleanAfter = true;
         } else {
@@ -446,7 +455,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                     if (G.clientConditionGlobal != null) {
                         new RequestClientCondition().clientCondition(G.clientConditionGlobal);
                     } else {
-                        new RequestClientCondition().clientCondition(HelperClientCondition.computeClientCondition(null));
+                        new RequestClientCondition().clientCondition(RealmClientCondition.computeClientCondition(null));
                     }
 
 
@@ -468,7 +477,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
         if (isThereAnyMoreItemToLoad) {
             isSendRequestForLoading = true;
-            new RequestClientGetRoomList().clientGetRoomList(mOffset, mLimit, tagId + "");
+            new RequestClientGetRoomList().clientGetRoomList(mOffset, Config.LIMIT_LOAD_ROOM, tagId + "");
 
             G.handler.post(new Runnable() {
                 @Override
@@ -480,7 +489,6 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         //else {
         //    mOffset = 0;
         //}
-
 
 
     }
@@ -521,7 +529,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 if (G.isSecure && G.userLogin) {
 
                     mOffset = 0;
-                    new RequestClientGetRoomList().clientGetRoomList(mOffset, mLimit, tagId + "");
+                    new RequestClientGetRoomList().clientGetRoomList(mOffset, Config.LIMIT_LOAD_ROOM, tagId + "");
                     isSendRequestForLoading = true;
                     progressBar.setVisibility(View.VISIBLE);
                 } else {
@@ -542,36 +550,17 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     }
 
     private void cleanDeletedRooms() {
-
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                //+final Realm realm = Realm.getDefaultInstance();
                 getRealmFragmentMain().executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-
                         for (int i = 0; i < G.deletedRoomList.size(); i++) {
-
-                            RealmRoom _RealmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).
-                                    equalTo(RealmRoomFields.ID, G.deletedRoomList.get(i)).findFirst();
-
-                            if (_RealmRoom != null) {
-                                RealmRoom.deleteRoom(_RealmRoom.getId());
-                            }
+                            RealmRoom.deleteRoomWithCheck(realm, G.deletedRoomList.get(i));
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
-                    //}, new Realm.Transaction.OnSuccess() {
-                    //    @Override
-                    //    public void onSuccess() {
-                    //        realm.close();
-                    //    }
-                    //}, new Realm.Transaction.OnError() {
-                    //    @Override
-                    //    public void onError(Throwable error) {
-                    //        realm.close();
-                    //    }
                 });
             }
         });
@@ -616,12 +605,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
     private void muteNotification(final long roomId, final boolean mute) {
         //+Realm realm = Realm.getDefaultInstance();
-        getRealmFragmentMain().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst().setMute(!mute);
-            }
-        });
+        new RequestClientMuteRoom().muteRoom(roomId, !mute);
 
         //fastAdapter
         //G.handler.post(new Runnable() {
@@ -648,16 +632,12 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
     private void pinToTop(final long roomId, final boolean isPinned) {
         //+Realm realm = Realm.getDefaultInstance();
-        getRealmFragmentMain().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                realmRoom.setPinned(!isPinned);
-                if (!isPinned) {
-                    goToTop();
-                }
-            }
-        });
+
+        new RequestClientPinRoom().pinRoom(roomId, !isPinned);
+        if (!isPinned) {
+            goToTop();
+        }
+
         //fastAdapter
         //if (!isPinned) {
         //    G.handler.post(new Runnable() {
@@ -762,27 +742,19 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
      * ************************************ Callbacks ************************************
      */
     @Override
+    public void onChange() {
+        for (Map.Entry<MainType, RoomAdapter> entry : roomAdapterHashMap.entrySet()) {
+            RoomAdapter requestWrapper = entry.getValue();
+            requestWrapper.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void onSetAction(final long roomId, final long userId, final ProtoGlobal.ClientAction clientAction) {
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                getRealmFragmentMain().executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                        if (realmRoom != null && realmRoom.isValid() && !realmRoom.isDeleted() && realmRoom.getType() != null) {
-                            String action = HelperGetAction.getAction(roomId, realmRoom.getType(), clientAction);
-                            realmRoom.setActionState(action, userId);
-                        }
-                    }
-                    //fastAdapter
-                    //}, new Realm.Transaction.OnSuccess() {
-                    //    @Override
-                    //    public void onSuccess() {
-                    //        adapterHashMap.get(all).updateItem(roomId);
-                    //        getAdapterMain(roomId).updateItem(roomId);
-                    //    }
-                });
+                RealmRoom.setAction(roomId, userId, HelperGetAction.getAction(roomId, RealmRoom.detectType(roomId), clientAction));
             }
         });
     }
@@ -1063,7 +1035,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                     holder.txtPinIcon.setVisibility(View.GONE);
                     holder.txtUnread.setText(mInfo.getUnreadCount() + "");
 
-                    if (HelperCalander.isLanguagePersian) {
+                    if (HelperCalander.isPersianUnicode) {
                         holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red);
                     } else {
                         holder.txtUnread.setBackgroundResource(R.drawable.rect_oval_red_left);
@@ -1086,7 +1058,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             /**
              * for change english number to persian number
              */
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 holder.txtLastMessage.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtLastMessage.getText().toString()));
                 holder.txtUnread.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtUnread.getText().toString()));
             }
@@ -1250,7 +1222,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             } else {
 
                 if (mInfo.getLastMessage() != null) {
-                    String lastMessage = AppUtils.rightLastMessage(mInfo.getId(), holder.itemView.getResources(), mInfo.getType(), mInfo.getLastMessage(), mInfo.getLastMessage().getForwardMessage() != null ? mInfo.getLastMessage().getForwardMessage().getAttachment() : mInfo.getLastMessage().getAttachment());
+                    String lastMessage = AppUtils.rightLastMessage(RealmRoomMessage.getFinalMessage(mInfo.getLastMessage()));
 
                     if (lastMessage == null) {
                         lastMessage = mInfo.getLastMessage().getMessage();
@@ -1287,13 +1259,13 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                                     if (_name.length() > 0) {
 
                                         if (Character.getDirectionality(_name.charAt(0)) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) {
-                                            if (HelperCalander.isLanguagePersian) {
+                                            if (HelperCalander.isPersianUnicode) {
                                                 lastMessageSender = _name + ": ";
                                             } else {
                                                 lastMessageSender = " :" + _name;
                                             }
                                         } else {
-                                            if (HelperCalander.isLanguagePersian) {
+                                            if (HelperCalander.isPersianUnicode) {
                                                 lastMessageSender = " :" + _name;
                                             } else {
                                                 lastMessageSender = _name + ": ";
@@ -1348,7 +1320,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
                             String result = AppUtils.conversionMessageType(_type, holder.txtLastMessage, R.color.room_message_blue);
                             if (result.isEmpty()) {
-                                if (!HelperCalander.isLanguagePersian) {
+                                if (!HelperCalander.isPersianUnicode) {
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                         holder.txtLastMessage.setTextDirection(View.TEXT_DIRECTION_LTR);
                                     }
@@ -1473,6 +1445,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         super.onResume();
 
         G.onSetActionInRoom = this;
+        G.onDateChanged = this;
         //G.onSelectMenu = this;
         //G.onRemoveFragment = this;
         //G.onDraftMessage = this;

@@ -15,6 +15,8 @@ import io.realm.FieldAttribute;
 import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 
+import static net.iGap.Config.REALM_LATEST_MIGRATION_VERSION;
+
 public class RealmMigration implements io.realm.RealmMigration {
 
     @Override
@@ -146,17 +148,35 @@ public class RealmMigration implements io.realm.RealmMigration {
         }
 
         if (oldVersion == 12) {
-            RealmObjectSchema realmGeoNearbyDistance = schema.create(RealmGeoNearbyDistance.class.getSimpleName()).addField("userId", long.class).addField("hasComment", boolean.class).addField("distance", int.class).addField("comment", String.class);
-            realmGeoNearbyDistance.addPrimaryKey("userId");
+            RealmObjectSchema realmGeoNearbyDistance = schema.create(RealmGeoNearbyDistance.class.getSimpleName()).addField(RealmGeoNearbyDistanceFields.USER_ID, long.class).addField(RealmGeoNearbyDistanceFields.HAS_COMMENT, boolean.class).addField(RealmGeoNearbyDistanceFields.DISTANCE, int.class).addField(RealmGeoNearbyDistanceFields.COMMENT, String.class);
+            realmGeoNearbyDistance.addPrimaryKey(RealmGeoNearbyDistanceFields.USER_ID);
 
-            schema.create(RealmGeoGetConfiguration.class.getSimpleName()).addField("mapCache", String.class);
+            schema.create(RealmGeoGetConfiguration.class.getSimpleName()).addField(RealmGeoGetConfigurationFields.MAP_CACHE, String.class);
             oldVersion++;
         }
 
         if (oldVersion == 13) {
             RealmObjectSchema realmUserInfo = schema.get(RealmUserInfo.class.getSimpleName());
             if (realmUserInfo != null) {
-                realmUserInfo.addField(RealmUserInfoFields.IS_PASS_CODE, boolean.class).addField(RealmUserInfoFields.IS_FINGER_PRINT, boolean.class).addField(RealmUserInfoFields.KIND_PASS_CODE, int.class).addField(RealmUserInfoFields.PASS_CODE, String.class);
+                realmUserInfo.addField(RealmUserInfoFields.IS_PASS_CODE, boolean.class, FieldAttribute.REQUIRED).addField(RealmUserInfoFields.IS_FINGER_PRINT, boolean.class, FieldAttribute.REQUIRED).addField(RealmUserInfoFields.KIND_PASS_CODE, int.class, FieldAttribute.REQUIRED).addField(RealmUserInfoFields.PASS_CODE, String.class);
+            }
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) {
+            RealmObjectSchema realmOfflineDelete = schema.get(RealmOfflineDelete.class.getSimpleName());
+            if (realmOfflineDelete != null) {
+                realmOfflineDelete.addField(RealmOfflineDeleteFields.BOTH, boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
+            if (realmRoom != null) {
+                realmRoom.addField(RealmRoomFields.PIN_ID, long.class, FieldAttribute.REQUIRED);
+            }
+
+            RealmObjectSchema registeredInfo = schema.get(RealmRegisteredInfo.class.getSimpleName());
+            if (registeredInfo != null) {
+                registeredInfo.addField("bio", String.class);
             }
             oldVersion++;
         }

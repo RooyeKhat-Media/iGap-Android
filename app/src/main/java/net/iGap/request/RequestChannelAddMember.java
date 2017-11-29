@@ -14,7 +14,7 @@ import net.iGap.proto.ProtoChannelAddMember;
 
 public class RequestChannelAddMember {
 
-    public void channelAddMember(long roomId, long userId, long startMessageId) {
+    public void channelAddMember(long roomId, long userId) {
 
         ProtoChannelAddMember.ChannelAddMember.Member.Builder member = ProtoChannelAddMember.ChannelAddMember.Member.newBuilder();
         member.setUserId(userId);

@@ -19,16 +19,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.util.HashMap;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCall;
@@ -58,7 +55,16 @@ import net.iGap.request.RequestSignalingClearLog;
 import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestSignalingGetLog;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN) public class FragmentCall extends BaseFragment implements OnCallLogClear {
+import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import io.realm.Sort;
+
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
     public static final String OPEN_IN_FRAGMENT_MAIN = "OPEN_IN_FRAGMENT_MAIN";
     boolean openInMain = false;
@@ -68,7 +74,7 @@ import net.iGap.request.RequestSignalingGetLog;
     private RecyclerView.OnScrollListener onScrollListener;
     boolean isSendRequestForLoading = false;
     boolean isThereAnyMoreItemToLoad = true;
-    private AppCompatImageView imgCallEmpty;
+    private ImageView imgCallEmpty;
     private TextView empty_call;
     ProgressBar progressBar;
     private int attampOnError = 0;
@@ -143,7 +149,7 @@ import net.iGap.request.RequestSignalingGetLog;
 
         Realm realm = Realm.getDefaultInstance();
 
-        RealmResults<RealmCallLog> results = realm.where(RealmCallLog.class).findAllSorted(RealmCallLogFields.TIME, Sort.DESCENDING);
+        final RealmResults<RealmCallLog> results = realm.where(RealmCallLog.class).findAllSorted(RealmCallLogFields.TIME, Sort.DESCENDING);
 
         if (results.size() > 0) {
             imgCallEmpty.setVisibility(View.GONE);
@@ -156,6 +162,36 @@ import net.iGap.request.RequestSignalingGetLog;
 
         CallAdapter callAdapter = new CallAdapter(results);
         mRecyclerView.setAdapter(callAdapter);
+
+        callAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (results.size() > 0) {
+                    imgCallEmpty.setVisibility(View.GONE);
+                    empty_call.setVisibility(View.GONE);
+
+                } else {
+                    imgCallEmpty.setVisibility(View.VISIBLE);
+                    empty_call.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (results.size() > 0) {
+                    imgCallEmpty.setVisibility(View.GONE);
+                    empty_call.setVisibility(View.GONE);
+
+                } else {
+                    imgCallEmpty.setVisibility(View.VISIBLE);
+                    empty_call.setVisibility(View.VISIBLE);
+                }
+            }
+
+        });
 
         //fastAdapter
         //mAdapter = new CallAdapterA();
@@ -370,7 +406,7 @@ import net.iGap.request.RequestSignalingGetLog;
                         }
                     }).negativeText(R.string.B_cancel).show();
                 } else {
-                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
                 }
             }
         });
@@ -388,7 +424,7 @@ import net.iGap.request.RequestSignalingGetLog;
 
                 if (realmCallConfig == null) {
                     new RequestSignalingGetConfiguration().signalingGetConfiguration();
-                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
                 } else {
 
                     if (G.currentActivity != null) {
@@ -417,7 +453,7 @@ import net.iGap.request.RequestSignalingGetLog;
 
         } else {
 
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server));
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
         }
     }
 
@@ -504,7 +540,7 @@ import net.iGap.request.RequestSignalingGetLog;
     //                break;
     //        }
     //
-    //        if (HelperCalander.isLanguagePersian) {
+    //        if (HelperCalander.isPersianUnicode) {
     //            viewHolder.timeAndInfo.setText(TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME + " " + HelperCalander.checkHijriAndReturnTime(item.getOfferTime())));
     //        } else {
     //            viewHolder.timeAndInfo.setText(HelperCalander.checkHijriAndReturnTime(item.getOfferTime()) + " " + TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME));
@@ -514,7 +550,7 @@ import net.iGap.request.RequestSignalingGetLog;
     //            viewHolder.timeDuration.setText(DateUtils.formatElapsedTime(item.getDuration()));
     //        }
     //
-    //        if (HelperCalander.isLanguagePersian) {
+    //        if (HelperCalander.isPersianUnicode) {
     //            viewHolder.timeAndInfo.setText(HelperCalander.convertToUnicodeFarsiNumber(viewHolder.timeAndInfo.getText().toString()));
     //            viewHolder.timeDuration.setText(HelperCalander.convertToUnicodeFarsiNumber(viewHolder.timeDuration.getText().toString()));
     //        }
@@ -735,8 +771,8 @@ import net.iGap.request.RequestSignalingGetLog;
             //        break;
             //}
 
-            if (HelperCalander.isLanguagePersian) {
-                viewHolder.timeAndInfo.setText(TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME + " " + HelperCalander.checkHijriAndReturnTime(item.getOfferTime())));
+            if (HelperCalander.isPersianUnicode) {
+                viewHolder.timeAndInfo.setText(HelperCalander.checkHijriAndReturnTime(item.getOfferTime()) + " " + TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME)); //+ " " + HelperCalander.checkHijriAndReturnTime(item.getOfferTime())
             } else {
                 viewHolder.timeAndInfo.setText(HelperCalander.checkHijriAndReturnTime(item.getOfferTime()) + " " + TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME));
             }
@@ -745,7 +781,7 @@ import net.iGap.request.RequestSignalingGetLog;
                 viewHolder.timeDuration.setText(DateUtils.formatElapsedTime(item.getDuration()));
             }
 
-            if (HelperCalander.isLanguagePersian) {
+            if (HelperCalander.isPersianUnicode) {
                 viewHolder.timeAndInfo.setText(HelperCalander.convertToUnicodeFarsiNumber(viewHolder.timeAndInfo.getText().toString()));
                 viewHolder.timeDuration.setText(HelperCalander.convertToUnicodeFarsiNumber(viewHolder.timeDuration.getText().toString()));
             }

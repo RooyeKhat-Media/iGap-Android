@@ -28,7 +28,8 @@ public class ClientResolveUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoClientResolveUsername.ClientResolveUsernameResponse.Builder builder = (ProtoClientResolveUsername.ClientResolveUsernameResponse.Builder) message;
@@ -37,11 +38,13 @@ public class ClientResolveUsernameResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         int majorCode = errorResponse.getMajorCode();

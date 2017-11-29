@@ -5,9 +5,7 @@ package net.iGap.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperError;
 import net.iGap.interfaces.OnRecoveryEmailToken;
 import net.iGap.interfaces.OnRecoverySecurityPassword;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -64,7 +63,7 @@ public class FragmentSecurityRecovery extends BaseFragment {
 
         view.findViewById(R.id.stps_backgroundToolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
-        new RequestUserTwoStepVerificationRequestRecoveryToken().requestRecovertyToken();
+        new RequestUserTwoStepVerificationRequestRecoveryToken().requestRecoveryToken();
 
         Bundle bundle = this.getArguments();
 
@@ -122,16 +121,10 @@ public class FragmentSecurityRecovery extends BaseFragment {
         txtResendConfirmEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RequestUserTwoStepVerificationRequestRecoveryToken().requestRecovertyToken();
+                new RequestUserTwoStepVerificationRequestRecoveryToken().requestRecoveryToken();
                 closeKeyboard(v);
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), R.string.resend_verify_email_code, Snackbar.LENGTH_LONG);
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+
+                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.resend_verify_email_code), false);
             }
         });
 
@@ -209,7 +202,6 @@ public class FragmentSecurityRecovery extends BaseFragment {
                         @Override
                         public void run() {
                             closeKeyboard(view);
-                            error(G.fragmentActivity.getResources().getString(R.string.invalid_email_token));
                         }
                     });
                 }
@@ -229,7 +221,6 @@ public class FragmentSecurityRecovery extends BaseFragment {
                         @Override
                         public void run() {
                             closeKeyboard(view);
-                            error(G.fragmentActivity.getResources().getString(R.string.invalid_question_token));
 
                         }
                     });
@@ -298,16 +289,9 @@ public class FragmentSecurityRecovery extends BaseFragment {
     private void error(String error) {
         if (G.fragmentActivity != null) {
             try {
-                Vibrator vShort = (Vibrator) G.context.getSystemService(Context.VIBRATOR_SERVICE);
-                vShort.vibrate(200);
-                final Snackbar snack = Snackbar.make(G.fragmentActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
-                snack.setAction(G.fragmentActivity.getResources().getString(R.string.cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snack.dismiss();
-                    }
-                });
-                snack.show();
+
+                HelperError.showSnackMessage(error, true);
+
             } catch (IllegalStateException e) {
                 e.getStackTrace();
             }
