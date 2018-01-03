@@ -1,562 +1,603 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rg_rootActivityRegister"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/rg_agreement_background"
-    tools:ignore="MissingPrefix"
-    android:clickable="true"
     >
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
+  <data>
+
+    <import type="android.graphics.Color" />
+
+    <import type="net.iGap.G" />
+
+    <variable
+        name="fragmentRegisterViewModel"
+        type="net.iGap.viewmodel.FragmentRegisterViewModel"
+        />
+  </data>
+
+
+  <FrameLayout
+      android:id="@+id/rg_rootActivityRegister"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/rg_agreement_background"
-      android:orientation="vertical"
+      android:clickable="true"
       tools:ignore="MissingPrefix"
       >
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/rg_agreement_background"
+        android:orientation="vertical"
+        tools:ignore="MissingPrefix"
         >
 
-      <android.support.v7.widget.Toolbar
-          android:id="@+id/ar_toolbar"
+      <android.support.design.widget.AppBarLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp60"
-          android:background="@color/toolbar_background"
-          app:contentInsetLeft="0dp"
-          app:contentInsetStart="0dp"
-          android:layoutDirection="ltr"
+          android:layout_height="wrap_content"
           >
 
-        <RelativeLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ar_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+            android:layoutDirection="ltr"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             >
-          <TextView
-              android:id="@+id/rg_txt_titleToolbar"
+
+          <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_centerInParent="true"
-              android:gravity="center"
-              android:text="@string/igap"
-              android:textColor="@color/rg_whit_background"
-              android:textSize="@dimen/dp20"
-              android:visibility="visible"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              />
-          <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/setPassword_rippleOk"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="0"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
               >
+            <TextView
+                android:id="@+id/rg_txt_titleToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/igap"
+                android:textColor="@color/rg_whit_background"
+                android:textSize="@dimen/dp20"
+                android:visibility="visible"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                />
+            <net.iGap.libs.rippleeffect.RippleView
+                android:id="@+id/setPassword_rippleOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rv_alpha="200"
+                app:rv_centered="true"
+                app:rv_rippleDuration="0"
+                app:rv_ripplePadding="5dp"
+                rv_centered="true"
+                >
+
+              <net.iGap.module.MaterialDesignTextView
+                  android:id="@+id/rg_txtOk"
+                  android:layout_width="@dimen/dp52"
+                  android:layout_height="match_parent"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentTop="true"
+                  android:gravity="center"
+                  android:onClick="@{fragmentRegisterViewModel::onClickTxtOk}"
+                  android:text="@string/md_check_symbol"
+                  android:textAppearance="@style/TextIconAppearance_toolbar"
+                  android:textColor="@color/whit_background"
+                  android:visibility="@{fragmentRegisterViewModel.txtOkVisibility}"
+
+                  />
+            </net.iGap.libs.rippleeffect.RippleView>
+
 
             <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/rg_txtOk"
+                android:id="@+id/rg_qrCode"
                 android:layout_width="@dimen/dp52"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:gravity="center"
-                android:text="@string/md_check_symbol"
+                android:onClick="@{fragmentRegisterViewModel::onClickQrCode}"
+                android:text="@string/md_qrCode"
                 android:textAppearance="@style/TextIconAppearance_toolbar"
                 android:textColor="@color/whit_background"
-                android:visibility="gone"
+                android:visibility="@{fragmentRegisterViewModel.qrCodeVisibility ,default =visible}"
                 />
-          </net.iGap.libs.rippleeffect.RippleView>
+          </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+      </android.support.design.widget.AppBarLayout>
 
 
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/rg_qrCode"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_qrCode"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              android:visibility="visible"
-              />
-        </RelativeLayout>
-      </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
-      <LinearLayout
-          android:id="@+id/headerLayout"
+      <ScrollView
+          android:id="@+id/scrollView"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="vertical"
           >
 
         <LinearLayout
-            android:id="@+id/rg_rootMainLayout"
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
 
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/dp16"
-              android:textColor="@color/toolbar_title_register"
-              >
-
-            <TextView
-                android:id="@+id/rg_txt_title_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="@string/rg_title_register"
-                android:textColor="@color/rg_black_register"
-                android:textSize="@dimen/dp18"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/rg_txt_title_register"
-                android:layout_marginLeft="@dimen/dp32"
-                android:layout_marginRight="@dimen/dp32"
-                android:layout_marginTop="@dimen/dp8"
-                android:background="@color/rg_line2_background"
-                />
-
-            <TextView
-                android:id="@+id/rg_txt_text_descRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rg_txt_title_register"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp32"
-                android:layout_marginRight="@dimen/dp32"
-                android:layout_marginTop="@dimen/dp12"
-                android:gravity="center"
-                android:text="@string/rg_confirm_text_register"
-                android:textColor="@color/rg_confirm_country"
-                android:textSize="@dimen/dp14"
-
-                />
-          </RelativeLayout>
-
           <LinearLayout
+              android:id="@+id/rg_rootMainLayout"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
               android:orientation="vertical"
-              android:textColor="@color/toolbar_title_register"
+              android:visibility="@{fragmentRegisterViewModel.rootMainLayoutVisibility}"
               >
 
-            <Button
-                android:id="@+id/rg_btn_choseCountry"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp40"
-                android:layout_above="@+id/rg_layout_center"
-                android:layout_marginBottom="@dimen/dp12"
-                android:layout_marginLeft="@dimen/dp32"
-                android:layout_marginRight="@dimen/dp32"
-                android:background="@drawable/rg_background_agreement"
-                android:drawableLeft="@mipmap/flesh"
-                android:paddingBottom="@dimen/dp4"
-                android:paddingLeft="@dimen/dp12"
-                android:paddingRight="@dimen/dp28"
-                android:paddingTop="@dimen/dp4"
-                android:text="Iran"
-                android:textSize="@dimen/dp14"
-                />
-
-            <LinearLayout
-                android:id="@+id/rg_layout_center"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp32"
-                android:layout_marginRight="@dimen/dp32"
-                android:layoutDirection="ltr"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp16"
+                android:textColor="@color/toolbar_title_register"
                 >
 
-              <net.iGap.module.MEditText
-                  android:id="@+id/rg_edt_CodeNumber"
-                  android:layout_width="0dp"
-                  android:layout_height="@dimen/dp40"
-                  android:layout_marginRight="@dimen/dp8"
-                  android:layout_weight=".3"
-                  android:background="@drawable/rg_background_agreement"
-                  android:enabled="false"
+              <TextView
+                  android:id="@+id/rg_txt_title_register"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/dp16"
+                  android:background="@android:color/transparent"
                   android:gravity="center"
-                  android:inputType="phone"
-                  android:maxLength="5"
-                  android:singleLine="true"
-                  android:text="+98"
+                  android:text="@string/rg_title_register"
                   android:textColor="@color/rg_black_register"
-                  android:textIsSelectable="false"
-                  android:textSize="@dimen/dp14"
+                  android:textSize="@dimen/dp18"
                   />
 
-              <com.vicmikhailau.maskededittext.MaskedEditText
-                  android:id="@+id/rg_edt_PhoneNumber"
-                  android:layout_width="0dp"
-                  android:layout_height="@dimen/dp40"
-                  android:layout_weight=".7"
-                  android:background="@drawable/rg_background_agreement"
-                  android:gravity="left|center_vertical"
-                  android:inputType="phone"
-                  android:padding="@dimen/dp4"
-                  android:textColor="@color/rg_black_register"
+              <View
+                  android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:layout_below="@+id/rg_txt_title_register"
+                  android:layout_marginLeft="@dimen/dp32"
+                  android:layout_marginRight="@dimen/dp32"
+                  android:layout_marginTop="@dimen/dp8"
+                  android:background="@color/rg_line2_background"
+                  />
+
+              <TextView
+                  android:id="@+id/rg_txt_text_descRegister"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/rg_txt_title_register"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="@dimen/dp32"
+                  android:layout_marginRight="@dimen/dp32"
+                  android:layout_marginTop="@dimen/dp12"
+                  android:gravity="center"
+                  android:text="@string/rg_confirm_text_register"
+                  android:textColor="@color/rg_confirm_country"
                   android:textSize="@dimen/dp14"
-                  android:textAlignment="gravity"
-                  app:mask="###-###-####"
-                  android:imeOptions="flagNoExtractUi"
+
+                  />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:textColor="@color/toolbar_title_register"
+                >
+
+              <Button
+                  android:id="@+id/rg_btn_choseCountry"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/dp40"
+                  android:layout_above="@+id/rg_layout_center"
+                  android:layout_marginBottom="@dimen/dp12"
+                  android:layout_marginLeft="@dimen/dp32"
+                  android:layout_marginRight="@dimen/dp32"
+                  android:background="@drawable/rg_background_agreement"
+                  android:drawableLeft="@mipmap/flesh"
+                  android:enabled="@{fragmentRegisterViewModel.btnChoseCountryEnable , default = true}"
+                  android:onClick="@{fragmentRegisterViewModel::onClickChoseCountry}"
+                  android:paddingBottom="@dimen/dp4"
+                  android:paddingLeft="@dimen/dp12"
+                  android:paddingRight="@dimen/dp28"
+                  android:paddingTop="@dimen/dp4"
+                  android:text="@{fragmentRegisterViewModel.callbackBtnChoseCountry , default = Iran}"
+                  android:textColor="@{fragmentRegisterViewModel.btnChoseCountryColor , default = @color/rg_black_register}"
+                  android:textSize="@dimen/dp14"
+
+
+                  />
+
+              <LinearLayout
+                  android:id="@+id/rg_layout_center"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="@dimen/dp32"
+                  android:layout_marginRight="@dimen/dp32"
+                  android:layoutDirection="ltr"
+                  android:orientation="horizontal"
+                  >
+
+                <net.iGap.module.MEditText
+                    android:id="@+id/rg_edt_CodeNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:layout_weight=".3"
+                    android:background="@drawable/rg_background_agreement"
+                    android:enabled="@{fragmentRegisterViewModel.edtCodeNumberEnable , default = false}"
+                    android:gravity="center"
+                    android:inputType="phone"
+                    android:maxLength="5"
+                    android:singleLine="true"
+                    android:text="@{fragmentRegisterViewModel.callbackEdtCodeNumber , default=98}"
+                    android:textColor="@{fragmentRegisterViewModel.edtCodeNumberColor , default = @color/rg_black_register}"
+                    android:textIsSelectable="false"
+                    android:textSize="@dimen/dp14"
+                    />
+
+                <com.vicmikhailau.maskededittext.MaskedEditText
+                    android:id="@+id/rg_edt_PhoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_weight=".7"
+                    android:background="@drawable/rg_background_agreement"
+                    android:enabled="@{fragmentRegisterViewModel.edtPhoneNumberEnable}"
+                    android:gravity="left|center_vertical"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="phone"
+                    android:onTextChanged="@{fragmentRegisterViewModel.onTextChanged}"
+                    android:padding="@dimen/dp4"
+                    android:text="@={fragmentRegisterViewModel.callBackEdtPhoneNumber}"
+                    android:textAlignment="gravity"
+                    android:textColor="@{fragmentRegisterViewModel.edtPhoneNumberColor , default = @color/rg_black_register}"
+                    android:textSize="@dimen/dp14"
+                    app:mask="@{fragmentRegisterViewModel.edtPhoneNumberMask}"
+                    />
+
+              </LinearLayout>
+
+              <Button
+                  android:id="@+id/rg_btn_start"
+                  android:layout_width="@dimen/dp120"
+                  android:layout_height="@dimen/dp40"
+                  android:layout_below="@id/rg_layout_center"
+                  android:layout_centerHorizontal="true"
+                  android:layout_gravity="center_horizontal"
+                  android:layout_marginTop="@dimen/dp12"
+                  android:background="@{fragmentRegisterViewModel.btnStartBackgroundColor , default = @drawable/rg_background_button_start_register}"
+                  android:enabled="@{fragmentRegisterViewModel.btnStartEnable }"
+                  android:gravity="center"
+                  android:onClick="@{fragmentRegisterViewModel::onClicksStart}"
+                  android:paddingBottom="@dimen/dp4"
+                  android:paddingTop="@dimen/dp4"
+                  android:text="@string/rg_Start"
+                  android:textAllCaps="false"
+                  android:textColor="@{fragmentRegisterViewModel.btnStartColor , default = @color/rg_whit_background}"
+                  android:textSize="@dimen/dp14"
                   />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/rg_btn_start"
-                android:layout_width="@dimen/dp120"
-                android:layout_height="@dimen/dp40"
-                android:layout_below="@id/rg_layout_center"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp12"
-                android:background="@drawable/rg_background_button_start_register"
-                android:gravity="center"
-                android:paddingBottom="@dimen/dp4"
-                android:paddingTop="@dimen/dp4"
-                android:text="@string/rg_Start"
-                android:textAllCaps="false"
-                android:textColor="@color/rg_whit_background"
-                android:textSize="@dimen/dp14"
-                />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/dp8"
-              android:layout_marginLeft="@dimen/dp32"
-              android:layout_marginRight="@dimen/dp32"
-              android:layout_marginTop="@dimen/dp4"
-              android:background="@drawable/rg_background_agreement2"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
-              android:visibility="visible"
-              >
-
-            <!--1-->
-
             <LinearLayout
-                android:id="@+id/rg_layout_verify_and_agreement"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/dp4"
-                android:layout_marginEnd="@dimen/dp4"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_marginStart="@dimen/dp4"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_marginLeft="@dimen/dp32"
+                android:layout_marginRight="@dimen/dp32"
                 android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/rg_background_agreement2"
+                android:fitsSystemWindows="true"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
 
+              <!--1-->
+
               <LinearLayout
+                  android:id="@+id/rg_layout_verify_and_agreement"
                   android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp20"
+                  android:layout_height="match_parent"
+                  android:layout_marginBottom="@dimen/dp4"
+                  android:layout_marginEnd="@dimen/dp4"
+                  android:layout_marginLeft="@dimen/dp4"
+                  android:layout_marginRight="@dimen/dp4"
+                  android:layout_marginStart="@dimen/dp4"
                   android:layout_marginTop="@dimen/dp4"
-                  android:orientation="horizontal"
+                  android:background="@drawable/rg_background_agreement2"
+                  android:orientation="vertical"
+                  android:visibility="@{fragmentRegisterViewModel.layoutVerifyAgreement , default = gone}"
                   >
 
-                <ProgressBar
-                    android:id="@+id/rg_prg_verify_connect"
-                    android:layout_width="@dimen/dp28"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:visibility="invisible"
-                    style="?android:attr/progressBarStyleSmall"
-                    />
+                    android:layout_marginTop="@dimen/dp4"
+                    android:orientation="horizontal"
+                    >
 
-                <ImageView
-                    android:id="@+id/rg_img_verify_connect"
-                    android:layout_width="@dimen/dp28"
+                  <ProgressBar
+                      android:id="@+id/rg_prg_verify_connect"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:visibility="@{fragmentRegisterViewModel.prgVerifyConnectVisibility}"
+                      style="?android:attr/progressBarStyleSmall"
+                      />
+
+
+                  <net.iGap.module.MaterialDesignTextView
+                      android:id="@+id/rg_img_verify_connect"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:gravity="center"
+                      android:text="@{fragmentRegisterViewModel.callBackTxtIconVerifyConnect , default =@string/md_check_symbol}"
+                      android:textColor="@{fragmentRegisterViewModel.txtIconVerifyConnectColor, default=@color/grayNew}"
+                      android:textSize="@dimen/dp15"
+                      android:textAppearance="@style/TextIconAppearance_toolbar"
+                      android:visibility="@{fragmentRegisterViewModel.txtIconVerifyConnectVisibility , default = gone}"
+                      />
+
+
+                  <TextView
+                      android:id="@+id/rg_txt_verify_connect"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:gravity="center_vertical"
+                      android:text="@{fragmentRegisterViewModel.CallBackTxtVerifyConnect , default = @string/rg_verify_register1}"
+                      android:textAppearance="@{fragmentRegisterViewModel.txtVerifyConnectAppearance}"
+                      android:textColor="@{fragmentRegisterViewModel.txtVerifyConnectColor}"
+                      android:textSize="@dimen/dp13"
+                      />
+
+                </LinearLayout>
+                <!--2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:src="@mipmap/check"
-                    android:tint="@color/rg_text_verify"
-                    android:visibility="gone"
-                    />
+                    android:layout_marginTop="@dimen/dp4"
+                    android:orientation="horizontal"
+                    >
 
-                <TextView
-                    android:id="@+id/rg_txt_verify_connect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/rg_verify_register1"
-                    android:textColor="@color/rg_text_dark_verify"
-                    android:textSize="@dimen/dp13"
-                    />
+                  <ProgressBar
+                      android:id="@+id/rg_prg_verify_sms"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:visibility="@{fragmentRegisterViewModel.prgVerifySmsVisibility}"
+                      style="?android:attr/progressBarStyleSmall"
+                      />
 
+                  <ImageView
+                      android:id="@+id/rg_img_verify_sms"
+                      android:layout_width="28dp"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:src="@mipmap/check"
+                      android:tint="@{fragmentRegisterViewModel.imgVerifySmsColor}"
+                      android:visibility="@{fragmentRegisterViewModel.imgVerifySmsVisibility}"
+                      />
+
+                  <TextView
+                      android:id="@+id/rg_txt_verify_sms"
+                      android:layout_width="0dp"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1"
+                      android:gravity="center_vertical"
+                      android:singleLine="true"
+                      android:text="@{fragmentRegisterViewModel.callBackTxtVerifySms}"
+                      android:textAppearance="@{fragmentRegisterViewModel.txtVerifySmsAppearance}"
+                      android:textColor="@{fragmentRegisterViewModel.txtVerifySmsColor}"
+                      android:textSize="@dimen/dp13"
+                      />
+
+                  <TextView
+                      android:id="@+id/rg_txt_verify_timer"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginStart="@dimen/dp4"
+                      android:gravity="center"
+                      android:singleLine="true"
+                      android:text="@{fragmentRegisterViewModel.callBackTxtVerifyTimer}"
+                      android:textColor="@{fragmentRegisterViewModel.txtVerifyTimerColor}"
+                      android:textSize="@dimen/dp14"
+                      android:visibility="@{fragmentRegisterViewModel.txtVerifyTimerVisibility}"
+                      />
+
+                </LinearLayout>
+
+                <!--3-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:orientation="horizontal"
+                    >
+
+                  <ProgressBar
+                      android:id="@+id/rg_prg_verify_key"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:visibility="@{fragmentRegisterViewModel.prgVerifyKeyVisibility}"
+                      style="?android:attr/progressBarStyleSmall"
+                      />
+
+                  <ImageView
+                      android:id="@+id/rg_img_verify_key"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:src="@mipmap/check"
+                      android:tint="@color/rg_text_verify"
+                      android:visibility="@{fragmentRegisterViewModel.imgVerifyKeyVisibility}"
+                      />
+
+                  <TextView
+                      android:id="@+id/rg_txt_verify_key"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:gravity="center_vertical"
+                      android:text="@{fragmentRegisterViewModel.callBackTxtVerifyKey}"
+                      android:textAppearance="@{fragmentRegisterViewModel.txtVerifyKeyAppearance}"
+                      android:textColor="@{fragmentRegisterViewModel.txtVerifyKeColor}"
+                      android:textSize="@dimen/dp13"
+                      />
+
+                </LinearLayout>
+
+                <!--4-->
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:orientation="horizontal"
+                    >
+
+                  <ProgressBar
+                      android:id="@+id/rg_prg_verify_server"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:visibility="@{fragmentRegisterViewModel.prgVerifyServerVisibility}"
+                      style="?android:attr/progressBarStyleSmall"
+                      />
+
+                  <ImageView
+                      android:id="@+id/rg_img_verify_server"
+                      android:layout_width="@dimen/dp28"
+                      android:layout_height="@dimen/dp20"
+                      android:layout_marginLeft="@dimen/dp4"
+                      android:layout_marginRight="@dimen/dp4"
+                      android:src="@mipmap/check"
+                      android:tint="@color/rg_text_verify"
+                      android:visibility="@{fragmentRegisterViewModel.imgVerifyServerVisibility}"
+                      />
+
+                  <TextView
+                      android:id="@+id/rg_txt_verify_server"
+                      android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:gravity="center_vertical"
+                      android:text="@string/rg_verify_register4"
+                      android:textAppearance="@{fragmentRegisterViewModel.txtVerifyServerAppearance}"
+                      android:textColor="@{fragmentRegisterViewModel.txtVerifyServerColor}"
+                      android:textSize="@dimen/dp13"
+                      />
+
+                </LinearLayout>
               </LinearLayout>
-              <!--2-->
-              <LinearLayout
+
+              <TextView
+                  android:id="@+id/txtAgreement_register"
                   android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp20"
+                  android:layout_height="match_parent"
+                  android:layout_marginEnd="@dimen/dp8"
+                  android:layout_marginLeft="@dimen/dp8"
+                  android:layout_marginRight="@dimen/dp12"
+                  android:layout_marginStart="@dimen/dp12"
                   android:layout_marginTop="@dimen/dp4"
-                  android:orientation="horizontal"
-                  >
-
-                <ProgressBar
-                    android:id="@+id/rg_prg_verify_sms"
-                    android:layout_width="@dimen/dp28"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:visibility="invisible"
-                    style="?android:attr/progressBarStyleSmall"
-                    />
-
-                <ImageView
-                    android:id="@+id/rg_img_verify_sms"
-                    android:layout_width="28dp"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:src="@mipmap/check"
-                    android:tint="@color/rg_text_verify"
-                    android:visibility="gone"
-                    />
-
-                <TextView
-                    android:id="@+id/rg_txt_verify_sms"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="@string/rg_verify_register2"
-                    android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/dp13"
-                    />
-
-                <TextView
-                    android:id="@+id/rg_txt_verify_timer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginStart="@dimen/dp4"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="05:00"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/dp14"
-                    android:visibility="invisible"
-                    />
-
-              </LinearLayout>
-
-              <!--3-->
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp20"
-                  android:layout_marginTop="@dimen/dp4"
-                  android:orientation="horizontal"
-                  >
-
-                <ProgressBar
-                    android:id="@+id/rg_prg_verify_key"
-                    android:layout_width="@dimen/dp28"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:visibility="invisible"
-                    style="?android:attr/progressBarStyleSmall"
-                    />
-
-                <ImageView
-                    android:id="@+id/rg_img_verify_key"
-                    android:layout_width="@dimen/dp28"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:src="@mipmap/check"
-                    android:tint="@color/rg_text_verify"
-                    android:visibility="gone"
-                    />
-
-                <TextView
-                    android:id="@+id/rg_txt_verify_key"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/rg_verify_register3"
-                    android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/dp13"
-                    />
-
-              </LinearLayout>
-
-              <!--4-->
-              <LinearLayout
-
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp20"
-                  android:layout_marginTop="@dimen/dp4"
-                  android:orientation="horizontal"
-                  >
-
-                <ProgressBar
-                    android:id="@+id/rg_prg_verify_server"
-                    android:layout_width="@dimen/dp28"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:visibility="invisible"
-                    style="?android:attr/progressBarStyleSmall"
-                    />
-
-                <ImageView
-                    android:id="@+id/rg_img_verify_server"
-                    android:layout_width="@dimen/dp28"
-                    android:layout_height="@dimen/dp20"
-                    android:layout_marginLeft="@dimen/dp4"
-                    android:layout_marginRight="@dimen/dp4"
-                    android:src="@mipmap/check"
-                    android:tint="@color/rg_text_verify"
-                    android:visibility="gone"
-                    />
-
-                <TextView
-                    android:id="@+id/rg_txt_verify_server"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/rg_verify_register4"
-                    android:textColor="@color/rg_text_verify"
-                    android:textSize="@dimen/dp13"
-                    />
-
-              </LinearLayout>
+                  android:fadeScrollbars="false"
+                  android:lineSpacingExtra="@dimen/dp4"
+                  android:overScrollMode="always"
+                  android:paddingLeft="@dimen/dp8"
+                  android:paddingRight="@dimen/dp8"
+                  android:paddingStart="@dimen/dp8"
+                  android:scrollbarSize="@dimen/dp6"
+                  android:scrollbarStyle="outsideInset"
+                  android:scrollbarThumbVertical="@color/gray_5c"
+                  android:scrollbars="vertical"
+                  android:text="@{fragmentRegisterViewModel.callbackTxtAgreement , default = @string/rg_agreement_text_register}"
+                  android:textSize="@dimen/dp14"
+                  android:visibility="@{fragmentRegisterViewModel.txtAgreementVisibility}"
+                  />
             </LinearLayout>
+          </LinearLayout>
+          <!--CheckPassword-->
+          <LinearLayout
+              android:id="@+id/rg_rootCheckPassword"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:visibility="@{fragmentRegisterViewModel.rootCheckPasswordVisibility ,default = gone}"
+              >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp32"
+                android:gravity="center"
+                android:text="@string/please_enter_your_password"
+                android:textColor="@color/gray_4c"
+                android:textSize="@dimen/dp20"
+                />
+
+
+            <net.iGap.module.MEditText
+                android:id="@+id/rg_edtCheckPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp32"
+                android:gravity="center"
+                android:hint="@{fragmentRegisterViewModel.edtCheckPasswordHint}"
+                android:inputType="textPassword"
+                android:text="@={fragmentRegisterViewModel.callBackEdtCheckPassword}"
+                android:textSize="@dimen/dp13"
+                />
+
 
             <TextView
-                android:id="@+id/txtAgreement_register"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/dp8"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp12"
-                android:layout_marginStart="@dimen/dp12"
-                android:layout_marginTop="@dimen/dp4"
-                android:fadeScrollbars="false"
-                android:lineSpacingExtra="@dimen/dp4"
-                android:overScrollMode="always"
-                android:paddingLeft="@dimen/dp8"
-                android:paddingRight="@dimen/dp8"
-                android:paddingStart="@dimen/dp8"
-                android:scrollbarSize="@dimen/dp6"
-                android:scrollbarStyle="outsideInset"
-                android:scrollbarThumbVertical="@color/gray_5c"
-                android:scrollbars="vertical"
-                android:text="@string/rg_agreement_text_register"
-
+                android:id="@+id/rg_txtForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp32"
+                android:layout_marginLeft="@dimen/dp32"
+                android:layout_marginRight="@dimen/dp32"
+                android:layout_marginStart="@dimen/dp32"
+                android:layout_marginTop="@dimen/dp60"
+                android:gravity="left|start"
+                android:onClick="@{fragmentRegisterViewModel::onClickTxtForgotPassword}"
+                android:text="@string/forgot_password"
+                android:textColor="@color/green"
                 android:textSize="@dimen/dp14"
                 />
+
           </LinearLayout>
-        </LinearLayout>
-        <!--CheckPassword-->
-        <LinearLayout
-            android:id="@+id/rg_rootCheckPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            >
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp32"
-              android:gravity="center"
-              android:text="@string/please_enter_your_password"
-              android:textColor="@color/gray_4c"
-              android:textSize="@dimen/dp20"
-              />
 
-
-          <net.iGap.module.MEditText
-              android:id="@+id/rg_edtCheckPassword"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="@dimen/dp32"
-              android:gravity="center"
-              android:textSize="@dimen/dp13"
-              android:inputType="textPassword"
-              />
-
-
-          <TextView
-              android:id="@+id/rg_txtForgotPassword"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/dp32"
-              android:layout_marginLeft="@dimen/dp32"
-              android:layout_marginRight="@dimen/dp32"
-              android:layout_marginStart="@dimen/dp32"
-              android:layout_marginTop="@dimen/dp60"
-              android:gravity="left|start"
-              android:text="@string/forgot_password"
-              android:textColor="@color/green"
-              android:textSize="@dimen/dp14"
-              />
 
         </LinearLayout>
 
 
-      </LinearLayout>
+      </ScrollView>
 
 
-    </ScrollView>
+    </LinearLayout>
 
-
-
-
-  </LinearLayout>
-
-  <ProgressBar
-      android:id="@+id/prgWaiting"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:indeterminate="true"
-      android:visibility="gone"
-      />
-</FrameLayout>
-
+    <ProgressBar
+        android:id="@+id/prgWaiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="@{fragmentRegisterViewModel.prgWaitingVisibility}"
+        />
+  </FrameLayout>
+</layout>

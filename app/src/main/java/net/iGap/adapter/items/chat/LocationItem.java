@@ -22,7 +22,7 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMap;
 import net.iGap.helper.HelperFragment;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.AndroidUtils;
@@ -103,7 +103,7 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
             holder.imgMapPosition.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     try {
-                        HelperPermision.getLocationPermission(G.currentActivity, new OnGetPermission() {
+                        HelperPermission.getLocationPermission(G.currentActivity, new OnGetPermission() {
                             @Override public void Allow() {
                                 G.handler.post(new Runnable() {
                                     @Override

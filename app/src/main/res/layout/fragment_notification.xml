@@ -1,59 +1,63 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <variable
+      name="fragmentNotificationViewModel"
+      type="net.iGap.viewmodel.FragmentNotificationViewModel" />
+  </data>
+
+  <LinearLayout
     android:id="@+id/ntg_fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical"
     android:clickable="true"
+    android:orientation="vertical"
     tools:context="net.iGap.fragments.FragmentNotification"
-    tools:ignore="MissingPrefix"
-    >
+    tools:ignore="MissingPrefix">
 
-  <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+      android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
+      <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp60"
         android:layoutDirection="ltr"
         app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        >
+        app:contentInsetStart="0dp">
 
-      <RelativeLayout
+        <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="horizontal"
-          >
+          android:orientation="horizontal">
 
-        <net.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/rippleView2"
+            rv_centered="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:rv_alpha="200"
             app:rv_centered="true"
             app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+            app:rv_ripplePadding="5dp">
 
-          <net.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
               android:id="@+id/ntg_txt_back"
               android:layout_width="@dimen/dp52"
               android:layout_height="match_parent"
               android:gravity="center"
               android:text="@string/md_back_arrow"
               android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-        </net.iGap.libs.rippleeffect.RippleView>
+              android:textColor="@color/whit_background" />
+          </net.iGap.libs.rippleeffect.RippleView>
 
-        <TextView
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -63,194 +67,139 @@
             android:text="@string/ntg_title_toolbar"
             android:textColor="@color/whit_background"
             android:textSize="@dimen/dp18"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:visibility="visible" />
 
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
 
-  </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>
 
 
-  <LinearLayout
+    <LinearLayout
       android:id="@+id/ntg_layout_notifications"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:layout_marginTop="@dimen/dp8"
       android:background="@android:color/white"
       android:gravity="center_vertical"
+      android:onClick="@{fragmentNotificationViewModel::onNotificationStateClick}"
       android:orientation="vertical"
       android:paddingEnd="@dimen/dp16"
       android:paddingLeft="@dimen/dp16"
       android:paddingRight="@dimen/dp16"
-      android:paddingStart="@dimen/dp16"
-      >
+      android:paddingStart="@dimen/dp16">
 
-    <TextView
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/ntg_notifications"
         android:textColor="@color/black_register"
         android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-    <TextView
+      <TextView
         android:id="@+id/ntg_txt_desc_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
-        android:text="@string/array_Default"
+        android:text="@{fragmentNotificationViewModel.notificationState}"
         android:textColor="@color/cardview_dark_background"
         android:textSize="@dimen/dp14"
-        android:textStyle="normal"
-        />
-  </LinearLayout>
+        android:textStyle="normal" />
+    </LinearLayout>
 
-  <View
+    <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText"
-      />
+      android:background="@color/background_editText" />
 
-  <LinearLayout
+    <LinearLayout
       android:id="@+id/ntg_layout_vibrate"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:background="@color/white"
       android:gravity="center_vertical"
+      android:onClick="@{fragmentNotificationViewModel::onNotificationVibrateClick}"
       android:orientation="vertical"
       android:paddingEnd="@dimen/dp16"
       android:paddingLeft="@dimen/dp16"
       android:paddingRight="@dimen/dp16"
-      android:paddingStart="@dimen/dp16"
-      >
+      android:paddingStart="@dimen/dp16">
 
-    <TextView
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/st_vibrate"
         android:textColor="@color/black_register"
         android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-    <TextView
+      <TextView
         android:id="@+id/ntg_txt_desc_vibrate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
-        android:text="@string/array_Default"
+        android:text="@{fragmentNotificationViewModel.vibrate, default=@string/array_Default}"
         android:textColor="@color/cardview_dark_background"
         android:textSize="@dimen/dp14"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-  </LinearLayout>
+    </LinearLayout>
 
-  <View
+    <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText"
-      />
+      android:background="@color/background_editText" />
 
-  <LinearLayout
+    <LinearLayout
       android:id="@+id/ntg_layout_sound"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:gravity="center_vertical"
+      android:onClick="@{fragmentNotificationViewModel::onNotificationSoundClick}"
       android:orientation="vertical"
       android:paddingEnd="@dimen/dp16"
       android:paddingLeft="@dimen/dp16"
       android:paddingRight="@dimen/dp16"
-      android:paddingStart="@dimen/dp16"
-      >
+      android:paddingStart="@dimen/dp16">
 
-    <TextView
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/ntg_Sound"
         android:textColor="@color/black_register"
         android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-    <TextView
+      <TextView
         android:id="@+id/ntg_txt_desc_sound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
-        android:text="@string/st_sound"
+        android:text="@{fragmentNotificationViewModel.sound, default=@string/st_sound}"
         android:textColor="@color/cardview_dark_background"
         android:textSize="@dimen/dp14"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-  </LinearLayout>
+    </LinearLayout>
 
-  <View
+    <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText"
-      />
-  <!--this part is gone-->
-  <LinearLayout
-      android:id="@+id/ntg_layout_smartNotifications"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp48"
-      android:background="@color/white"
-      android:gravity="center_vertical"
-      android:orientation="vertical"
-      android:paddingEnd="@dimen/dp16"
-      android:paddingLeft="@dimen/dp16"
-      android:paddingRight="@dimen/dp16"
-      android:paddingStart="@dimen/dp16"
-      android:visibility="gone"
-      >
+      android:background="@color/background_editText" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/ntg_smart_notifications"
-        android:textColor="@color/black_register"
-        android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        />
-
-    <TextView
-        android:id="@+id/ntg_txt_desc_smartNotifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|top"
-        android:text="@string/st_sound"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="@dimen/dp14"
-        android:textStyle="normal"
-        />
-
-  </LinearLayout>
-
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/background_editText"
-      android:visibility="gone"
-      />
-
-  <LinearLayout
+    <LinearLayout
       android:id="@+id/ntg_layout_ledColorMessage"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
-      >
+      android:onClick="@{fragmentNotificationViewModel::onLedColorClick}"
+      android:orientation="horizontal">
 
-    <TextView
+      <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -262,10 +211,9 @@
         android:text="@string/st_led_color"
         android:textColor="@color/black_register"
         android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
-    <ImageView
+      <ImageView
         android:id="@+id/ntg_img_ledColorMessage"
         android:layout_width="@dimen/dp24"
         android:layout_height="@dimen/dp24"
@@ -275,9 +223,9 @@
         android:layout_marginRight="@dimen/dp16"
         android:layout_marginStart="@dimen/dp16"
         android:background="@drawable/circle_color_notificatin_setting"
-        android:gravity="center"
-        />
+        android:gravity="center" />
+
+    </LinearLayout>
 
   </LinearLayout>
-
-</LinearLayout>
+</layout>

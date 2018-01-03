@@ -18,7 +18,7 @@ public class RequestGroupCreate {
 
         ProtoGroupCreate.GroupCreate.Builder builder = ProtoGroupCreate.GroupCreate.newBuilder();
         builder.setName(name);
-        builder.setDescription(description);
+        builder.setDescription(description.trim());
 
         RequestWrapper requestWrapper = new RequestWrapper(300, builder);
         try {

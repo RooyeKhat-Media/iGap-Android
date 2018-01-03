@@ -17,18 +17,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
-
-import net.iGap.G;
-import net.iGap.R;
-import net.iGap.interfaces.OnGetPermission;
-import net.iGap.module.AndroidUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import net.iGap.G;
+import net.iGap.R;
+import net.iGap.interfaces.OnGetPermission;
+import net.iGap.module.AndroidUtils;
 
 public class HelperSaveFile {
 
@@ -38,9 +36,9 @@ public class HelperSaveFile {
 
     public static void saveFileToDownLoadFolder(final String filePath, final String fileName, final FolderType folderType, final int successMessage) {
 
-        if (!HelperPermision.grantedUseStorage()) {
+        if (!HelperPermission.grantedUseStorage()) {
             try {
-                HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                HelperPermission.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                     @Override
                     public void Allow() throws IOException {
                         saveFileToDownLoadFolder(filePath, fileName, folderType, successMessage);
@@ -219,9 +217,9 @@ public class HelperSaveFile {
 
     public static void saveToMusicFolder(final String path, final String name) {
 
-        if (!HelperPermision.grantedUseStorage()) {
+        if (!HelperPermission.grantedUseStorage()) {
             try {
-                HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                HelperPermission.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                     @Override
                     public void Allow() throws IOException {
                         saveToMusicFolder(path, name);

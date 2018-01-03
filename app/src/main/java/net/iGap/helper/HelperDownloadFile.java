@@ -11,7 +11,13 @@
 package net.iGap.helper;
 
 import android.support.v4.util.ArrayMap;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import net.iGap.G;
 import net.iGap.interfaces.OnFileDownloadResponse;
 import net.iGap.module.AndroidUtils;
@@ -20,15 +26,6 @@ import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmAttachmentFields;
 import net.iGap.request.RequestFileDownload;
 import net.iGap.request.RequestWrapper;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class HelperDownloadFile {
 
@@ -335,7 +332,7 @@ public class HelperDownloadFile {
 
             // save downloaded file to gallery
 
-            if (G.isSaveToGallery && HelperPermision.grantedUseStorage() && item.selector == ProtoFileDownload.FileDownload.Selector.FILE && item.moveToDirectoryPAth != null) {
+            if (G.isSaveToGallery && HelperPermission.grantedUseStorage() && item.selector == ProtoFileDownload.FileDownload.Selector.FILE && item.moveToDirectoryPAth != null) {
                 File file = new File(item.moveToDirectoryPAth);
                 if (file.exists()) {
 

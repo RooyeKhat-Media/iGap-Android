@@ -19,6 +19,10 @@ import android.view.View;
 import net.iGap.G;
 import net.iGap.R;
 
+/**
+ * circle button for indicate current page in fragment Introduce
+ */
+
 public class CustomCircleImage extends View {
 
     private static final int CIRCLE_RADIUS = (int) G.context.getResources().getDimension(R.dimen.dp12);

@@ -1,294 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical"
-    tools:context="net.iGap.activities.ActivityManageSpace"
-    tools:ignore="MissingPrefix"
     >
 
+  <data>
 
-  <android.support.design.widget.AppBarLayout
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="activityManageSpaceViewModel"
+        type="net.iGap.viewmodel.ActivityManageSpaceViewModel"
+        />
+  </data>
+
+
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:clickable="true"
+      android:orientation="vertical"
+      tools:context="net.iGap.activities.ActivityManageSpace"
+      tools:ignore="MissingPrefix"
       >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/asn_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
 
-      <RelativeLayout
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/asn_toolbar"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
+          android:layout_height="@dimen/dp60"
+          android:layoutDirection="ltr"
+          android:padding="0dp"
+          app:contentInsetLeft="0dp"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          app:contentInsetStart="0dp"
+
           >
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stns_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             >
 
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/stns_txt_back"
-              android:layout_width="@dimen/dp52"
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/stns_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/stns_txt_back"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+              android:layout_width="wrap_content"
               android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toEndOf="@+id/stns_ripple_back"
+              android:layout_toRightOf="@+id/stns_ripple_back"
               android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:text="@string/manage_spacing"
               android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp18"
+              android:textStyle="normal"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
-        </net.iGap.libs.rippleeffect.RippleView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:gravity="center"
-            android:text="@string/manage_spacing"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
 
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
-  </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>
 
 
-  <android.support.v4.widget.NestedScrollView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
-
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         >
 
       <LinearLayout
-          android:id="@+id/st_layout_keepMedia"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp52"
-          android:background="@color/white"
-          android:orientation="horizontal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
           >
 
+        <LinearLayout
+            android:id="@+id/st_layout_keepMedia"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp52"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:onClick="@{activityManageSpaceViewModel::onClickKeepMedia}"
+            >
 
-        <TextView
-            android:id="@+id/st_txt_keepMedia"
-            android:layout_width="0dp"
+
+          <TextView
+              android:id="@+id/st_txt_keepMedia"
+              android:layout_width="0dp"
+              android:layout_height="@dimen/dp48"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:singleLine="true"
+              android:text="@string/st_keepMedia"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <TextView
+              android:id="@+id/st_txt_sub_keepMedia"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:textColor="@color/toolbar_background"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              android:text="@{activityManageSpaceViewModel.callbackKeepMedia}"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/dp14"
+              android:text="@string/st_dialog_content_keepMedia"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp12"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            />
+
+        <LinearLayout
+            android:id="@+id/st_layout_clearCache"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp4"
-            android:singleLine="true"
-            android:text="@string/st_keepMedia"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:onClick="@{activityManageSpaceViewModel::onClickClearCache}"
+            >
 
-        <TextView
-            android:id="@+id/st_txt_sub_keepMedia"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:text="1Week"
-            android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-      </LinearLayout>
+          <TextView
+              android:id="@+id/textView10"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp8"
+              android:text="@string/st_title_Clear_Cache"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
 
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          />
+          <TextView
+              android:id="@+id/st_txt_clearCache"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:textColor="@color/toolbar_background"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:text="@{activityManageSpaceViewModel.callbackClearCache}"
+
+              />
 
 
-      <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          >
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp14"
-            android:text="@string/st_dialog_content_keepMedia"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp12"
-            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
             />
-      </RelativeLayout>
-
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          />
-
-      <LinearLayout
-          android:id="@+id/st_layout_clearCache"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp48"
-          android:background="@color/white"
-          android:orientation="horizontal"
-          >
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp8"
-            android:text="@string/st_title_Clear_Cache"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-
-        <TextView
-            android:id="@+id/st_txt_clearCache"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:text="0 KB"
-            android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-
-      </LinearLayout>
-
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          />
-      <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          >
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp14"
-            android:text="@string/clear_cache_desc"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp12"
-            fontPath="fonts/IRANSansMobile.ttf"
-          />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          />
-
-      <LinearLayout
-          android:id="@+id/st_layout_cleanUp"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp48"
-          android:background="@color/white"
-          android:orientation="horizontal"
-          >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp8"
-            android:text="@string/clean_up_chat_rooms"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-
-        <TextView
-            android:id="@+id/st_txt_cleanUp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:text="0 KB"
-            android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-
-      </LinearLayout>
-
-
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          />
-
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
+            >
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/dp14"
+              android:text="@string/clear_cache_desc"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp12"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </RelativeLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp14"
-            android:text="@string/clean_up_description"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp12"
-            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
             />
-      </RelativeLayout>
 
-    </LinearLayout>
-  </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/st_layout_cleanUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:onClick="@{activityManageSpaceViewModel::onClickCleanUp}"
+            >
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp8"
+              android:text="@string/clean_up_chat_rooms"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+
+          <TextView
+              android:id="@+id/st_txt_cleanUp"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:textColor="@color/toolbar_background"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:text="@{activityManageSpaceViewModel.callbackCleanUp}"
+              />
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/dp14"
+              android:text="@string/clean_up_description"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp12"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+        </RelativeLayout>
+
+      </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+  </LinearLayout>
+</layout>

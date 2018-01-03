@@ -12,6 +12,10 @@ package net.iGap.module;
 
 public class SHP_SETTING {
 
+    /**
+     * it's key for sharedPreferences
+     */
+
     public static final String CHECK_10 = "CHECK_10";
     public static final String CHECK_11 = "CHECK_11";
     public static final String KEY_REALM_DELETE_ALL = "KEY_REALM_DELETE_ALL";
@@ -139,6 +143,8 @@ public class SHP_SETTING {
     public static final String KEY_KEEP_MEDIA_TIME = "KEY_KEEP_MEDIA_TIME";
     public static final String KEY_TIME_LOCK = "KEY_TIME_LOCK";
     public static final String KEY_SCREEN_SHOT_LOCK = "KEY_SCREEN_SHOT_LOCK";
+    public static final String KEY_MAP_ATTENTION_DIALOG = "MAP_ATTENTION_DIALOG";
+
 }
 
 

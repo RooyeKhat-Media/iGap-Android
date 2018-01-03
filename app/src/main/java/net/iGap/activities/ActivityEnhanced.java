@@ -27,23 +27,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.WindowManager;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperLog;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.module.AttachFile;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.StartupActions;
 import net.iGap.module.StatusBarUtil;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.request.RequestUserUpdateStatus;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityEnhanced extends AppCompatActivity {
@@ -113,7 +110,7 @@ public class ActivityEnhanced extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         try {
-            HelperPermision.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            HelperPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,6 +187,7 @@ public class ActivityEnhanced extends AppCompatActivity {
     }
 
     private void makeDirectoriesIfNotExist() {
+        StartupActions.makeFolder();
 
 //        if (isOnGetPermission) {
 //            return;

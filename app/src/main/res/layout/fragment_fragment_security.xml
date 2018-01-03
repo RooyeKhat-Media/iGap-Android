@@ -1,609 +1,654 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootFragmentSecurity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_f2"
-    android:orientation="vertical"
-    tools:context="net.iGap.fragments.FragmentSecurity"
-    tools:ignore="MissingPrefix"
-    android:clickable="true"
-    android:layoutDirection="ltr"
-
     >
+  <data>
+    <import type="android.view.View" />
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="fragmentSecurityViewModel"
+        type="net.iGap.viewmodel.FragmentSecurityViewModel"
+        />
+  </data>
 
-
-  <android.support.design.widget.AppBarLayout
+  <LinearLayout
+      android:id="@+id/rootFragmentSecurity"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:background="@color/gray_f2"
+      android:clickable="true"
+      android:layoutDirection="ltr"
+      android:orientation="vertical"
+      tools:context="net.iGap.fragments.FragmentSecurity"
+      tools:ignore="MissingPrefix"
+
       >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/stps_backgroundToolbar"
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        tools:ignore="MissingPrefix"
+        android:layout_height="wrap_content"
         >
 
-      <RelativeLayout
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/stps_backgroundToolbar"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="@dimen/dp60"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          android:layoutDirection="ltr"
+          android:padding="0dp"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp"
+          tools:ignore="MissingPrefix"
           >
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/verifyPassword_rippleOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_check_symbol"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-
-        </net.iGap.libs.rippleeffect.RippleView>
-
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/tsv_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-
-        </net.iGap.libs.rippleeffect.RippleView>
-        <TextView
-            android:id="@+id/stps_titleToolbar"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/tsv_ripple_back"
-            android:gravity="center"
-            android:text="@string/two_step_verification_title"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            >
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/verifyPassword_rippleOk"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:onClick="@{fragmentSecurityViewModel::onClickRippleOk}"
+              android:visibility="@{fragmentSecurityViewModel.rippleOkVisibility}"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+
+
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="@string/md_check_symbol"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/tsv_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              android:onClick="@{fragmentSecurityViewModel::onClickRippleBack}"
+
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+
+          </net.iGap.libs.rippleeffect.RippleView>
+          <TextView
+              android:id="@+id/stps_titleToolbar"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toRightOf="@+id/tsv_ripple_back"
+              android:gravity="center"
+              android:text="@{fragmentSecurityViewModel.titleToolbar ,default=@string/two_step_verification_title}"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp18"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/rootSetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="@{fragmentSecurityViewModel.rootSetPassword ,default = gone}"
+        >
+
+      <LinearLayout
+          android:id="@+id/rootSetAdditionPassword"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="@{fragmentSecurityViewModel.rootSetAdditionPassword ,default = visible}"
+          >
+        <TextView
+            android:id="@+id/tsv_txtSetAdditionPassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickSetAdditionPassword}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/set_additional_password"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            fontPath="fonts/IRANSansMobile.ttf"
+
             />
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+      </LinearLayout>
 
-  </android.support.design.widget.AppBarLayout>
-
-
-  <LinearLayout
-      android:id="@+id/rootSetPassword"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-
-    <LinearLayout
-        android:id="@+id/rootSetAdditionPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible"
-        >
-      <TextView
-          android:id="@+id/tsv_txtSetAdditionPassword"
+      <LinearLayout
+          android:id="@+id/root_ChangePassword"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="@{fragmentSecurityViewModel.rootChangePassword ,default=gone}"
+
+          >
+        <TextView
+            android:id="@+id/tsv_changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickChangePassword}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/Change_password"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="visible"
+            fontPath="fonts/IRANSansMobile.ttf"
+
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+
+        <TextView
+            android:id="@+id/tsv_changeHint"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickChangeHint}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/Change_hint"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="visible"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+        <TextView
+            android:id="@+id/tsv_turnPasswordOff"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickTurnPasswordOff}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/turn_Password_off"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="visible"
+            fontPath="fonts/IRANSansMobile.ttf"
+
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+        <TextView
+            android:id="@+id/tsv_setRecoveryEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickSetRecoveryEmail}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/change_email_recovery"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="@{fragmentSecurityViewModel.setRecoveryEmail}"
+            fontPath="fonts/IRANSansMobile.ttf"
+
+            />
+        <View
+            android:id="@+id/tsv_viewRecoveryEmail"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="@{fragmentSecurityViewModel.viewRecoveryEmail}"
+            />
+        <TextView
+            android:id="@+id/tsv_setConfirmedEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClickSetConfirmedEmail}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/set_unconfirmed_email"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="@{fragmentSecurityViewModel.setConfirmedEmail}"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
+        <View
+            android:id="@+id/tsv_viewConfirmedEmail"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="@{fragmentSecurityViewModel.lineConfirmView}"
+            />
+        <TextView
+            android:id="@+id/tsv_setRecoveryQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@color/white"
+            android:gravity="center_vertical|start"
+            android:onClick="@{fragmentSecurityViewModel::onClicksetRecoveryQuestion}"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/Change_question_recovery"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp14"
+            android:textStyle="normal"
+            android:visibility="visible"
+            fontPath="fonts/IRANSansMobile.ttf"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_editText"
+            android:visibility="visible"
+            />
+
+
+      </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp4"
           android:gravity="center_vertical|start"
+          android:lineSpacingExtra=".8mm"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
-          android:text="@string/set_additional_password"
-          android:textColor="@color/black_register"
+          android:text="@string/two_step_verification_description"
+          android:textColor="@color/gray_6c"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           fontPath="fonts/IRANSansMobile.ttf"
-          />
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
+
           />
     </LinearLayout>
 
+    <!--CheckPassword-->
     <LinearLayout
-        android:id="@+id/root_ChangePassword"
+        android:id="@+id/rootCheckPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="@{fragmentSecurityViewModel.rootCheckPassword , default=gone}"
         >
       <TextView
-          android:id="@+id/tsv_changePassword"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/Change_password"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
-          />
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:text="@string/please_enter_your_password"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp16"
           />
 
-      <TextView
-          android:id="@+id/tsv_changeHint"
+
+      <EditText
+          android:id="@+id/setPassword_edtCheckPassword"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/Change_hint"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
-          />
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
-          />
-      <TextView
-          android:id="@+id/tsv_turnPasswordOff"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/turn_Password_off"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp32"
+          android:gravity="center"
+          android:inputType="textPassword"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:textSize="@dimen/dp13"
+          android:hint="@{fragmentSecurityViewModel.edtCheckPasswordHint}"
+          android:text="@={fragmentSecurityViewModel.edtCheckPassword}"
           />
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
-          />
-      <TextView
-          android:id="@+id/tsv_setRecoveryEmail"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/change_email_recovery"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
-          />
-      <View
-          android:id="@+id/tsv_viewRecoveryEmail"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
-          />
-      <TextView
-          android:id="@+id/tsv_setConfirmedEmail"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/set_unconfirmed_email"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
-          />
-      <View
-          android:id="@+id/tsv_viewConfirmedEmail"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
-          />
-      <TextView
-          android:id="@+id/tsv_setRecoveryQuestion"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:background="@color/white"
-          android:gravity="center_vertical|start"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingTop="@dimen/dp4"
-          android:text="@string/Change_question_recovery"
-          android:textColor="@color/black_register"
-          android:textSize="@dimen/dp14"
-          android:textStyle="normal"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile.ttf"
-          />
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/background_editText"
-          android:visibility="visible"
-          />
+      <TextView
+          android:id="@+id/txtForgotPassword"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp32"
+          android:layout_marginTop="@dimen/dp60"
+          android:gravity="left|start"
+          android:onClick="@{fragmentSecurityViewModel::onClickForgotPassword}"
+          android:text="@string/forgot_password"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp14"
 
+          />
 
     </LinearLayout>
-    <TextView
+
+    <!--ChangeHint-->
+    <LinearLayout
+        android:id="@+id/tsv_rootChangeHint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp4"
-        android:gravity="center_vertical|start"
-        android:lineSpacingExtra=".8mm"
-        android:paddingLeft="@dimen/dp8"
-        android:paddingRight="@dimen/dp8"
-        android:paddingTop="@dimen/dp4"
-        android:text="@string/two_step_verification_description"
-        android:textColor="@color/gray_6c"
-        android:textSize="@dimen/dp14"
-        android:textStyle="normal"
-        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="@{fragmentSecurityViewModel.rootChangeHint ,default=gone}"
+        >
 
-        />
-  </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:text="@string/please_create_hint_for_your_password"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp16"
+          />
 
-  <!--CheckPassword-->
-  <LinearLayout
-      android:id="@+id/rootCheckPassword"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-    <TextView
+      <EditText
+          android:id="@+id/tsv_edtChangeHint"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp32"
+          android:gravity="center"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:text="@={fragmentSecurityViewModel.edtChangeHintText}"
+          android:textSize="@dimen/dp13"
+          />
+
+    </LinearLayout>
+
+    <!--QuestionPassword-->
+    <LinearLayout
+        android:id="@+id/tsv_rootQuestionPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/please_enter_your_password"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp16"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="@{fragmentSecurityViewModel.rootQuestionPassword ,default=gone}"
+        >
 
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp24"
+          android:gravity="center"
+          android:text="@string/password_Question_title_one"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp18"
+          />
 
-    <EditText
-        android:id="@+id/setPassword_edtCheckPassword"
+      <EditText
+          android:id="@+id/tsv_edtSetQuestionPassOne"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:hint="@string/password_Question_one"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:text="@={fragmentSecurityViewModel.edtSetQuestionPassOne}"
+          android:textSize="@dimen/dp13"
+          />
+      <EditText
+          android:id="@+id/tsv_edtSetAnswerPassOne"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:hint="@string/password_answer"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:textSize="@dimen/dp13"
+          android:text="@={fragmentSecurityViewModel.edtSetAnswerPassOne}"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp24"
+          android:gravity="center"
+          android:text="@string/password_Question_title_two"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp18"
+
+          />
+
+      <EditText
+          android:id="@+id/tsv_edtSetQuestionPassTwo"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:hint="@string/password_Question_two"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:textSize="@dimen/dp13"
+          android:text="@={fragmentSecurityViewModel.edtSetQuestionPassTwo}"
+          />
+      <EditText
+          android:id="@+id/tsv_edtSetAnswerPassTwo"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:hint="@string/password_answer"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:textSize="@dimen/dp13"
+          android:text="@={fragmentSecurityViewModel.edtSetAnswerPassTwo}"
+
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp24"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp24"
+          android:layout_marginTop="@dimen/dp8"
+          android:gravity="center"
+          android:text="@string/confirm_email_text"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp14"
+
+          />
+
+    </LinearLayout>
+
+    <!--email-->
+    <LinearLayout
+        android:id="@+id/tsv_rootChangeEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp32"
-        android:textSize="@dimen/dp13"
-        android:gravity="center"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:inputType="textPassword"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="@{fragmentSecurityViewModel.rootChangeEmail ,default=gone}"
+        >
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:text="@string/your_email"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp16"
+          />
 
 
-    <TextView
-        android:id="@+id/txtForgotPassword"
+      <EditText
+          android:id="@+id/tsv_edtSetEmail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp32"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:text="@={fragmentSecurityViewModel.edtSetEmailText}"
+          android:textSize="@dimen/dp13"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp32"
+          android:layout_marginTop="@dimen/dp18"
+          android:gravity="left|start"
+          android:text="@string/your_email_desc"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp14"
+          />
+    </LinearLayout>
+
+    <!--confirmed email-->
+    <LinearLayout
+        android:id="@+id/tsv_rootConfirmedEmail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="@{fragmentSecurityViewModel.rootConfirmedEmail ,default=gone}"
+        >
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:text="@string/please_enter_confirm_code"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp16"
+          />
+
+
+      <EditText
+          android:id="@+id/tsv_edtConfirmedEmail"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp32"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:hint="@{fragmentSecurityViewModel.edtConfirmedEmailHint}"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:text="@={fragmentSecurityViewModel.edtConfirmedEmailText}"
+          android:textSize="@dimen/dp13"
+          />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp24"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp24"
+          android:layout_marginTop="@dimen/dp8"
+          android:gravity="center"
+          android:text="@string/confirm_email_text"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp14"
+
+          />
+
+      <TextView
+          android:id="@+id/tsv_txtResendConfirmEmail"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/dp32"
+          android:layout_marginLeft="@dimen/dp32"
+          android:layout_marginRight="@dimen/dp32"
+          android:layout_marginStart="@dimen/dp32"
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="start"
+          android:onClick="@{fragmentSecurityViewModel::onClickResendConfirmEmail}"
+          android:padding="@dimen/dp16"
+          android:text="@string/your_resend_email_skip"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp14"
+          android:visibility="@{fragmentSecurityViewModel.txtResendConfirmEmail}"
+          />
+
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/tsv_prgWaiting_addContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp60"
-        android:gravity="left|start"
-        android:text="@string/forgot_password"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp14"
-        />
-
-  </LinearLayout>
-
-  <!--ChangeHint-->
-  <LinearLayout
-      android:id="@+id/tsv_rootChangeHint"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/please_create_hint_for_your_password"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp16"
-        />
-
-    <EditText
-        android:id="@+id/tsv_edtChangeHint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp32"
-        android:textSize="@dimen/dp13"
-        android:gravity="center"
-        android:maxLines="1"
-        android:singleLine="true"
-        />
-
-  </LinearLayout>
-
-  <!--QuestionPassword-->
-  <LinearLayout
-      android:id="@+id/tsv_rootQuestionPassword"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp24"
-        android:gravity="center"
-        android:text="@string/password_Question_title_one"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp18"
-        />
-
-    <EditText
-        android:id="@+id/tsv_edtSetQuestionPassOne"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_Question_one"
-        android:textSize="@dimen/dp13"
-        android:maxLines="1"
-        android:singleLine="true"
-
-        />
-    <EditText
-        android:id="@+id/tsv_edtSetAnswerPassOne"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_answer"
-        android:textSize="@dimen/dp13"
-        android:maxLines="1"
-        android:singleLine="true"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp24"
-        android:gravity="center"
-        android:text="@string/password_Question_title_two"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp18"
-
-        />
-
-    <EditText
-        android:id="@+id/tsv_edtSetQuestionPassTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_Question_two"
-        android:textSize="@dimen/dp13"
-        android:maxLines="1"
-        android:singleLine="true"
-        />
-    <EditText
-        android:id="@+id/tsv_edtSetAnswerPassTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_answer"
-        android:textSize="@dimen/dp13"
-        android:maxLines="1"
-        android:singleLine="true"
-
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp8"
-        android:gravity="center"
-        android:text="@string/confirm_email_text"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp14"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp24"
-
-        />
-
-  </LinearLayout>
-
-  <!--email-->
-  <LinearLayout
-      android:id="@+id/tsv_rootChangeEmail"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/your_email"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp16"
-        />
-
-
-    <EditText
-        android:id="@+id/tsv_edtSetEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp32"
-        android:textSize="@dimen/dp13"
-        android:gravity="center"
-        android:maxLines="1"
-        android:singleLine="true"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp18"
-        android:gravity="left|start"
-        android:text="@string/your_email_desc"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp14"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp180"
+        android:indeterminate="true"
+        android:visibility="@{fragmentSecurityViewModel.prgWaiting}"
         />
   </LinearLayout>
-
-  <!--confirmed email-->
-  <LinearLayout
-      android:id="@+id/tsv_rootConfirmedEmail"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/please_enter_confirm_code"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp16"
-        />
-
-
-    <EditText
-        android:id="@+id/tsv_edtConfirmedEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp32"
-        android:textSize="@dimen/dp13"
-        android:gravity="center"
-        android:maxLines="1"
-        android:singleLine="true"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp8"
-        android:gravity="center"
-        android:text="@string/confirm_email_text"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp14"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp24"
-
-        />
-
-    <TextView
-        android:id="@+id/tsv_txtResendConfirmEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="start"
-        android:text="@string/your_resend_email_skip"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp14"
-        android:padding="@dimen/dp16"
-        android:visibility="visible"
-        />
-
-  </LinearLayout>
-  <ProgressBar
-      android:id="@+id/tsv_prgWaiting_addContact"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:indeterminate="true"
-      android:visibility="visible"
-      android:layout_marginTop="@dimen/dp180"
-      />
-</LinearLayout>
+</layout>

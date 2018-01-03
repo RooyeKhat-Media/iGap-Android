@@ -42,7 +42,7 @@ import net.iGap.R;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperImageBackColor;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnChannelAddAdmin;
 import net.iGap.interfaces.OnChannelAddModerator;
@@ -83,6 +83,8 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChannelGetMemberList;
 import net.iGap.request.RequestGroupGetMemberList;
 import net.iGap.request.RequestUserInfo;
+import net.iGap.viewmodel.FragmentChannelProfileViewModel;
+import net.iGap.viewmodel.FragmentGroupProfileViewModel;
 
 import static net.iGap.G.inflater;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
@@ -995,7 +997,7 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
                 @Override
                 public void onClick(View v) {
                     try {
-                        HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+                        HelperPermission.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                             @Override
                             public void Allow() {
                                 if (mContact.peerId == userID) {
@@ -1155,12 +1157,12 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
                 public void onClick(View v) {
 
                     if (roomType == ProtoGlobal.Room.Type.CHANNEL) {
-                        if (FragmentChannelProfile.onMenuClick != null) {
-                            FragmentChannelProfile.onMenuClick.clicked(v, mContact);
+                        if (FragmentChannelProfileViewModel.onMenuClick != null) {
+                            FragmentChannelProfileViewModel.onMenuClick.clicked(v, mContact);
                         }
                     } else if (roomType == GROUP) {
-                        if (FragmentGroupProfile.onMenuClick != null) {
-                            FragmentGroupProfile.onMenuClick.clicked(v, mContact);
+                        if (FragmentGroupProfileViewModel.onMenuClick != null) {
+                            FragmentGroupProfileViewModel.onMenuClick.clicked(v, mContact);
                         }
                     }
                 }

@@ -26,6 +26,11 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 
 public class MyDialog {
+
+
+    /**
+     * create custom dialog for main page
+     */
     public static void showDialogMenuItemRooms(final Context context, final String itemName, final ProtoGlobal.Room.Type mType, boolean isMute, final String role, final OnComplete complete, boolean isPinned) {
 
         final MaterialDialog dialog = new MaterialDialog.Builder(context).customView(R.layout.chat_popup_dialog, true).build();
@@ -95,23 +100,18 @@ public class MyDialog {
             @Override public void onClick(View view) {
                 dialog.dismiss();
 
-                new MaterialDialog.Builder(context).title(itemName)
-                    .titleColor(G.context.getResources().getColor(R.color.toolbar_background))
-                    .content(context.getString(R.string.do_you_want_clear_history_this)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            if (complete != null) complete.complete(true, "txtClearHistory", "");
-                            dialog.dismiss();
-                        }
-                    })
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
+                new MaterialDialog.Builder(context).title(itemName).titleColor(G.context.getResources().getColor(R.color.toolbar_background)).content(context.getString(R.string.do_you_want_clear_history_this)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (complete != null) complete.complete(true, "txtClearHistory", "");
+                        dialog.dismiss();
+                    }
+                }).onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                }).show();
 
             }
         });

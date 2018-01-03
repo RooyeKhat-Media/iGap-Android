@@ -15,7 +15,7 @@ import android.content.ClipboardManager;
 import android.content.ContentProviderOperation;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,8 +23,6 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -36,53 +34,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
+import io.realm.Realm;
+import java.io.IOException;
+import java.util.ArrayList;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.databinding.FragmentContactsProfileBinding;
 import net.iGap.helper.GoToChatActivity;
-import net.iGap.helper.HelperAvatar;
-import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperFragment;
-import net.iGap.helper.HelperPermision;
-import net.iGap.interfaces.OnAvatarGet;
+import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnReport;
 import net.iGap.interfaces.OnUserContactDelete;
-import net.iGap.interfaces.OnUserContactEdit;
-import net.iGap.interfaces.OnUserInfoResponse;
-import net.iGap.interfaces.OnUserUpdateStatus;
 import net.iGap.libs.rippleeffect.RippleView;
-import net.iGap.module.AndroidUtils;
-import net.iGap.module.AppUtils;
 import net.iGap.module.DialogAnimation;
 import net.iGap.module.EmojiEditTextE;
-import net.iGap.module.EmojiTextViewE;
-import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.MEditText;
-import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.structs.StructListOfContact;
-import net.iGap.module.structs.StructMessageAttachment;
-import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoUserReport;
-import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmAvatarFields;
-import net.iGap.realm.RealmCallConfig;
-import net.iGap.realm.RealmContacts;
-import net.iGap.realm.RealmContactsFields;
-import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestChatGetRoom;
-import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserContactImport;
 import net.iGap.request.RequestUserContactsBlock;
 import net.iGap.request.RequestUserContactsDelete;
@@ -90,65 +69,22 @@ import net.iGap.request.RequestUserContactsEdit;
 import net.iGap.request.RequestUserContactsUnblock;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserReport;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
+import net.iGap.viewmodel.FragmentContactsProfileViewModel;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
 
 
-public class FragmentContactsProfile extends BaseFragment implements OnUserUpdateStatus {
+public class FragmentContactsProfile extends BaseFragment {
 
     private long userId = 0;
     private long roomId = 0;
-    private String phone = "0";
-    private String displayName = "";
-    private String username = "";
-    private String firstName;
-    private String lastName;
-    private long lastSeen;
-    private String mPhone = "";
-    private String initials;
-    private String color;
     private String enterFrom;
-    private String userStatus;
-    private boolean isBlockUser = false;
-    RealmRegisteredInfo rrg;
-    private long shearedId = -2;
-
-    TextView txtCountOfShearedMedia;
-
-    private boolean showNumber = true;
-    private AppBarLayout appBarLayout;
-    private TextView txtUserName, titleToolbar, titleLastSeen, txtBlockContact, txtClearChat, txtPhoneNumber, txtNotifyAndSound;
-    private EmojiTextViewE txtNickname;
-    private EmojiTextViewE txtLastSeen;
-    private ViewGroup vgPhoneNumber, vgSharedMedia, layoutNickname;
-    private net.iGap.module.CircleImageView imgUser;
-    private MaterialDesignTextView imgMenu, txtBack;
-    private FloatingActionButton fab;
-    private PopupWindow popupWindow;
-    private PopupWindow popupWindowPhoneNumber;
-    private int screenWidth;
-    private String avatarPath;
-    private RealmList<RealmAvatar> avatarList;
-    private RealmChangeListener<RealmModel> changeListener;
-    private RealmRoom mRoom;
+    private String report;
 
     private static final String ROOM_ID = "RoomId";
     private static final String PEER_ID = "peerId";
     private static final String ENTER_FROM = "enterFrom";
-    public static final String FRAGMENT_TAG = "FragmentContactsProfile";
-    private boolean disableDeleteContact = false;
-    private String bio = "";
-    private String report = "";
 
     public static FragmentContactsProfile newInstance(long roomId, long peerId, String enterFrom) {
         Bundle args = new Bundle();
@@ -160,18 +96,24 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         return fragment;
     }
 
+    private FragmentContactsProfileBinding fragmentContactsProfileBinding;
+    private FragmentContactsProfileViewModel fragmentContactsProfileViewModel;
+
+    private void initDataBinding() {
+        fragmentContactsProfileViewModel = new FragmentContactsProfileViewModel(fragmentContactsProfileBinding, roomId, userId, enterFrom);
+        fragmentContactsProfileBinding.setViewModel(fragmentContactsProfileViewModel);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return attachToSwipeBack(inflater.inflate(R.layout.activity_contacts_profile, container, false));
+        fragmentContactsProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_contacts_profile, container, false);
+        return attachToSwipeBack(fragmentContactsProfileBinding.getRoot());
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Realm realm = Realm.getDefaultInstance();
-
-        G.onUserUpdateStatus = this;
 
         Bundle extras = getArguments();
         userId = extras.getLong(PEER_ID);
@@ -181,115 +123,16 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             enterFrom = "";
         }
 
-        if (enterFrom.equals(ProtoGlobal.Room.Type.GROUP.toString()) || roomId == 0) {
-            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, userId).findFirst();
-            if (realmRoom != null) {
-                shearedId = realmRoom.getId();
-            }
-        } else {
-            shearedId = roomId;
-        }
+        initDataBinding();
 
-        rrg = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-
-        if (rrg != null) {
-
-            isBlockUser = rrg.isBlockUser();
-
-            rrg.addChangeListener(new RealmChangeListener<RealmModel>() {
-                @Override
-                public void onChange(RealmModel element) {
-                    isBlockUser = rrg.isBlockUser();
-                }
-            });
-        }
-
-        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-
-        if (realmRegisteredInfo != null) {
-            if (realmRegisteredInfo.getLastAvatar() != null) {
-
-                String mainFilePath = realmRegisteredInfo.getLastAvatar().getFile().getLocalFilePath();
-
-                if (mainFilePath != null && new File(mainFilePath).exists()) { // if main image is exist showing that
-                    avatarPath = mainFilePath;
-                } else {
-                    avatarPath = realmRegisteredInfo.getLastAvatar().getFile().getLocalThumbnailPath();
-                }
-
-                avatarList = realmRegisteredInfo.getAvatars();
-            }
-        }
-
-        RealmContacts realmUser = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-
-        if (realmRegisteredInfo != null) {
-            phone = realmRegisteredInfo.getPhoneNumber();
-            displayName = realmRegisteredInfo.getDisplayName();
-            firstName = realmRegisteredInfo.getFirstName();
-            lastName = realmRegisteredInfo.getLastName();
-            username = realmRegisteredInfo.getUsername();
-            lastSeen = realmRegisteredInfo.getLastSeen();
-            color = realmRegisteredInfo.getColor();
-            initials = realmRegisteredInfo.getInitials();
-            userStatus = realmRegisteredInfo.getStatus();
-            bio = realmRegisteredInfo.getBio();
-        } else if (realmUser != null) {
-            phone = Long.toString(realmUser.getPhone());
-            displayName = realmUser.getDisplay_name();
-            firstName = realmUser.getFirst_name();
-            lastName = realmUser.getLast_name();
-            username = realmUser.getUsername();
-            lastSeen = realmUser.getLast_seen();
-            color = realmUser.getColor();
-            initials = realmUser.getInitials();
-        }
-
-        RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.PHONE, Long.parseLong(phone)).findFirst();
-
-        /**
-         * if this user isn't in my contacts don't show phone number
-         */
-        if (realmContacts == null && enterFrom.equals(ProtoGlobal.Room.Type.GROUP.toString())) {
-            showNumber = false;
-            disableDeleteContact = true;
-        }
-
-        imgUser = (net.iGap.module.CircleImageView) view.findViewById(R.id.chi_img_circleImage);
-
-        imgUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Realm realm = Realm.getDefaultInstance();
-
-                if (realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findFirst() != null) {
-
-                    FragmentShowAvatars fragment;
-                    if (userId == G.userId) {
-                        fragment = FragmentShowAvatars.newInstance(userId, FragmentShowAvatars.From.setting);
-                    } else {
-                        fragment = FragmentShowAvatars.newInstance(userId, FragmentShowAvatars.From.chat);
-                    }
-
-                    fragment.appBarLayout = fab;
-                    //new HelperFragment(fragment).setResourceContainer(R.id.container_contact_profile).load();
-                    new HelperFragment(fragment).setReplace(false).load();
-                }
-                realm.close();
-            }
-        });
-
-        txtBack = (MaterialDesignTextView) view.findViewById(R.id.chi_txt_back);
-        RippleView rippleBack = (RippleView) view.findViewById(R.id.chi_ripple_back);
-        rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        fragmentContactsProfileBinding.chiRippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
                 popBackStackFragment();
             }
         });
 
-        fab = (FloatingActionButton) view.findViewById(R.id.chi_fab_setPic);
-        fab.setOnClickListener(new View.OnClickListener() { //fab button
+        fragmentContactsProfileBinding.chiFabSetPic.setOnClickListener(new View.OnClickListener() { //fab button
             @Override
             public void onClick(View view) {
 
@@ -335,50 +178,15 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             }
         });
 
-        txtNickname = (EmojiTextViewE) view.findViewById(R.id.chi_txt_nikName);//set nickname
-        if (displayName != null && !displayName.equals("")) {
-            txtNickname.setText(displayName);
-        } else {
-            txtNickname.setText(R.string.nick_name_not_exist);
-        }
-
-        txtLastSeen = (EmojiTextViewE) view.findViewById(R.id.chi_txt_lastSeen_title);
-        titleToolbar = (TextView) view.findViewById(R.id.chi_txt_titleToolbar_DisplayName);
-        titleLastSeen = (TextView) view.findViewById(R.id.chi_txt_titleToolbar_LastSeen);
-        txtUserName = (TextView) view.findViewById(R.id.chi_txt_userName);
-        txtPhoneNumber = (TextView) view.findViewById(R.id.chi_txt_phoneNumber);
-        vgPhoneNumber = (ViewGroup) view.findViewById(R.id.chi_layout_phoneNumber);
-        txtClearChat = (TextView) view.findViewById(R.id.chi_txt_clearChat);
-        TextView txtBio = (TextView) view.findViewById(R.id.st_txt_bio);
-        ViewGroup vgBio = (ViewGroup) view.findViewById(R.id.st_layout_bio);
-
-        if (bio == null || bio.length() == 0) {
-            vgBio.setVisibility(View.GONE);
-        } else {
-            if (txtBio != null) {
-                txtBio.setText(bio);
-            }
-        }
-
-
-
-        if (phone.equals("0")) {
-            vgPhoneNumber.setVisibility(View.GONE);
-        }
-
-        if (!showNumber) {
-            vgPhoneNumber.setVisibility(View.GONE);
-            txtClearChat.setVisibility(View.GONE);
-        } else {
-            layoutNickname = (ViewGroup) view.findViewById(R.id.chi_layout_nickname);
-            layoutNickname.setOnClickListener(new View.OnClickListener() {
+        if (fragmentContactsProfileViewModel.showNumber.get()) {
+            fragmentContactsProfileBinding.chiLayoutNickname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     final LinearLayout layoutNickname = new LinearLayout(G.fragmentActivity);
                     layoutNickname.setOrientation(LinearLayout.VERTICAL);
 
-                    String splitNickname[] = txtNickname.getText().toString().split(" ");
+                    String splitNickname[] = fragmentContactsProfileViewModel.contactName.get().split(" ");
                     String firsName = "";
                     String lastName = "";
                     StringBuilder stringBuilder = null;
@@ -523,7 +331,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     positive.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            long po = Long.parseLong(mPhone);
+                            long po = Long.parseLong(fragmentContactsProfileViewModel.phone.get());
                             String firstName = edtFirstName.getText().toString().trim();
                             String lastName = edtLastName.getText().toString().trim();
                             new RequestUserContactsEdit().contactsEdit(userId, po, firstName, lastName);
@@ -532,123 +340,47 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     });
 
                     dialog.show();
-                    G.onUserContactEdit = new OnUserContactEdit() {
-                        @Override
-                        public void onContactEdit(final String firstName, final String lastName, final String initials) {
-
-                            setAvatar();
-                            G.handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    txtNickname.setText(firstName + " " + lastName);
-                                    titleToolbar.setText(firstName + " " + lastName);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onContactEditTimeOut() {
-
-                        }
-
-                        @Override
-                        public void onContactEditError(int majorCode, int minorCode) {
-
-                        }
-                    };
                 }
             });
         }
 
-        txtCountOfShearedMedia = (TextView) view.findViewById(R.id.chi_txt_count_of_sharedMedia);
-
-        txtUserName.setText(username);
-        mPhone = "" + phone;
-
-        txtPhoneNumber.setText(mPhone);
-
-        if (HelperCalander.isPersianUnicode) {
-            txtPhoneNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtPhoneNumber.getText().toString()));
-        }
-
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.acp_collapsing_toolbar_layout);
-        collapsingToolbarLayout.setBackgroundColor(Color.parseColor(G.appBarColor));
-        collapsingToolbarLayout.setContentScrimColor(Color.parseColor(G.appBarColor));
-
-        titleToolbar.setText(displayName);
-
-        appBarLayout = (AppBarLayout) view.findViewById(R.id.chi_appbar);
-        appBarLayout.setBackgroundColor(Color.parseColor(G.appBarColor));
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener()
-
-        {
+        fragmentContactsProfileBinding.chiAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-                ViewGroup viewGroup = (ViewGroup) view.findViewById(R.id.chi_root_circleImage);
+                ViewGroup viewGroup = fragmentContactsProfileBinding.chiRootCircleImage;
                 if (verticalOffset < -5) {
                     viewGroup.animate().alpha(0).setDuration(700);
                     viewGroup.setVisibility(View.GONE);
-                    titleToolbar.setVisibility(View.VISIBLE);
-                    titleToolbar.animate().alpha(1).setDuration(300);
-                    titleLastSeen.setVisibility(View.VISIBLE);
-                    titleLastSeen.animate().alpha(1).setDuration(300);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarDisplayName.setVisibility(View.VISIBLE);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarDisplayName.animate().alpha(1).setDuration(300);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarLastSeen.setVisibility(View.VISIBLE);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarLastSeen.animate().alpha(1).setDuration(300);
                 } else {
                     viewGroup.setVisibility(View.VISIBLE);
                     viewGroup.animate().alpha(1).setDuration(700);
-                    titleToolbar.setVisibility(View.GONE);
-                    titleToolbar.animate().alpha(0).setDuration(500);
-                    titleLastSeen.setVisibility(View.GONE);
-                    titleLastSeen.animate().alpha(0).setDuration(500);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarDisplayName.setVisibility(View.GONE);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarDisplayName.animate().alpha(0).setDuration(500);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarLastSeen.setVisibility(View.GONE);
+                    fragmentContactsProfileBinding.chiTxtTitleToolbarLastSeen.animate().alpha(0).setDuration(500);
                 }
             }
         });
 
-        screenWidth = (int) (G.context.getResources().getDisplayMetrics().widthPixels / 1.7);
-        imgMenu = (MaterialDesignTextView) view.findViewById(R.id.chi_img_menuPopup);
-
-        RippleView rippleMenu = (RippleView) view.findViewById(R.id.chi_ripple_menuPopup);
-        rippleMenu.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        fragmentContactsProfileBinding.chiRippleMenuPopup.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
                 showPopUp();
             }
         });
 
-        if (userId != 134 && G.userId != userId) {
-
-            RippleView rippleCall = (RippleView) view.findViewById(R.id.chi_ripple_call);
-
-            // gone or visible view call
-            RealmCallConfig callConfig = realm.where(RealmCallConfig.class).findFirst();
-            if (callConfig != null) {
-                if (callConfig.isVoice_calling()) {
-                    rippleCall.setVisibility(View.VISIBLE);
-                    rippleCall.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                        @Override
-                        public void onComplete(RippleView rippleView) {
-
-                            FragmentCall.call(userId, false);
-                        }
-                    });
-                } else {
-                    rippleCall.setVisibility(View.GONE);
-                }
-            } else {
-                new RequestSignalingGetConfiguration().signalingGetConfiguration();
-            }
-        }
-
-
-        vgPhoneNumber.setOnClickListener(new View.OnClickListener() {
+        fragmentContactsProfileBinding.chiLayoutPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    HelperPermision.getContactPermision(G.fragmentActivity, new OnGetPermission() {
+                    HelperPermission.getContactPermision(G.fragmentActivity, new OnGetPermission() {
                         @Override
                         public void Allow() throws IOException {
-                            showPopupPhoneNumber(vgPhoneNumber, mPhone);
+                            showPopupPhoneNumber(fragmentContactsProfileBinding.chiLayoutPhoneNumber, fragmentContactsProfileViewModel.phone.get());
                         }
 
                         @Override
@@ -662,23 +394,21 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             }
         });
 
-        vgSharedMedia = (ViewGroup) view.findViewById(R.id.chi_layout_SharedMedia);
-
-        vgSharedMedia.setOnClickListener(new View.OnClickListener() {// go to the ActivityMediaChanel
+        fragmentContactsProfileBinding.chiLayoutSharedMedia.setOnClickListener(new View.OnClickListener() {// go to the ActivityMediaChanel
             @Override
             public void onClick(View view) {
-                new HelperFragment(FragmentShearedMedia.newInstance(shearedId)).setReplace(false).load();
+                new HelperFragment(FragmentShearedMedia.newInstance(fragmentContactsProfileViewModel.shearedId)).setReplace(false).load();
             }
         });
 
-        txtClearChat.setOnClickListener(new View.OnClickListener() {
+        fragmentContactsProfileBinding.chiTxtClearChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAlertDialog(G.fragmentActivity.getResources().getString(R.string.clear_this_chat), G.fragmentActivity.getResources().getString(R.string.clear), G.fragmentActivity.getResources().getString(R.string.cancel));
             }
         });
-        txtNotifyAndSound = (TextView) view.findViewById(R.id.chi_txtNotifyAndSound);
-        txtNotifyAndSound.setOnClickListener(new View.OnClickListener() {
+
+        fragmentContactsProfileBinding.chiTxtNotifyAndSound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentNotification fragmentNotification = new FragmentNotification();
@@ -690,134 +420,41 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             }
         });
 
-        realm.close();
         getUserInfo(); // client should send request for get user info because need to update user online timing
-        setUserStatus(userStatus, lastSeen);
-
-        setAvatar();
-
-        FragmentShearedMedia.getCountOfSharedMedia(shearedId);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Realm realm = Realm.getDefaultInstance();
-
-        mRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, shearedId).findFirst();
-        if (mRoom != null) {
-
-            if (changeListener == null) {
-
-                changeListener = new RealmChangeListener<RealmModel>() {
-                    @Override
-                    public void onChange(final RealmModel element) {
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!((RealmRoom) element).isValid()) {
-                                    return;
-                                }
-                                String countText = ((RealmRoom) element).getSharedMediaCount();
-
-                                if (HelperCalander.isPersianUnicode) {
-                                    txtCountOfShearedMedia.setText(HelperCalander.convertToUnicodeFarsiNumber(countText));
-                                } else {
-                                    txtCountOfShearedMedia.setText(countText);
-                                }
-                            }
-                        });
-                    }
-                };
-            }
-
-            mRoom.addChangeListener(changeListener);
-            changeListener.onChange(mRoom);
-        } else {
-            txtCountOfShearedMedia.setText(context.getString(R.string.there_is_no_sheared_media));
-        }
-
-        realm.close();
+        fragmentContactsProfileViewModel.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        if (G.onUpdateUserStatusInChangePage != null) {
-            G.onUpdateUserStatusInChangePage.updateStatus(userId, userStatus, lastSeen);
-        }
+        fragmentContactsProfileViewModel.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (rrg != null) {
-            rrg.removeAllChangeListeners();
-        }
+        fragmentContactsProfileViewModel.onStop();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        fragmentContactsProfileViewModel.onDestroy();
     }
-
 
     /**
      * ************************************ methods ************************************
      */
-
-    private void setAvatar() {
-        HelperAvatar.getAvatar(userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
-            @Override
-            public void onAvatarGet(final String avatarPath, long ownerId) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), imgUser);
-                    }
-                });
-            }
-
-            @Override
-            public void onShowInitials(final String initials, final String color) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        imgUser.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) imgUser.getContext().getResources().getDimension(R.dimen.dp100), initials, color));
-                    }
-                });
-            }
-        });
-    }
-
-    private void setUserStatus(String userStatus, long time) {
-        this.userStatus = userStatus;
-        this.lastSeen = time;
-
-        if (userStatus != null) {
-            if (userStatus.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
-                String status = LastSeenTimeUtil.computeTime(userId, time, false);
-                titleLastSeen.setText(status);
-                txtLastSeen.setText(status);
-            } else {
-                titleLastSeen.setText(userStatus);
-                txtLastSeen.setText(userStatus);
-            }
-
-            if (HelperCalander.isPersianUnicode) {
-                txtLastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(txtLastSeen.getText().toString()));
-            }
-        }
-    }
-
     private void showPopupPhoneNumber(View v, String number) {
 
         boolean isExist = false;
         Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        String[] mPhoneNumberProjection = {
-                ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME
-        };
+        String[] mPhoneNumberProjection = {ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME};
         Cursor cur = context.getContentResolver().query(lookupUri, mPhoneNumberProjection, null, null, null);
         try {
             if (cur != null) {
@@ -833,7 +470,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                 public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                     switch (which) {
                         case 0:
-                            String call = "+" + Long.parseLong(mPhone);
+                            String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
                             try {
                                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
                                 callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
@@ -845,7 +482,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                             break;
                         case 1:
                             String copy;
-                            copy = mPhone;
+                            copy = fragmentContactsProfileViewModel.phone.get();
                             ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
                             ClipData clip = ClipData.newPlainText("PHONE_NUMBER", copy);
                             clipboard.setPrimaryClip(clip);
@@ -860,8 +497,8 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                     switch (which) {
                         case 0:
 
-                            String name = txtNickname.getText().toString();
-                            String phone = "+" + mPhone;
+                            String name = fragmentContactsProfileViewModel.contactName.get();
+                            String phone = "+" + fragmentContactsProfileViewModel.phone.get();
 
                             ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 
@@ -893,7 +530,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                             break;
                         case 1:
 
-                            String call = "+" + Long.parseLong(mPhone);
+                            String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
                             try {
                                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
                                 callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
@@ -907,7 +544,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
                         case 2:
 
                             ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                            ClipData clip = ClipData.newPlainText("PHONE_NUMBER", mPhone);
+                            ClipData clip = ClipData.newPlainText("PHONE_NUMBER", fragmentContactsProfileViewModel.phone.get());
                             clipboard.setPrimaryClip(clip);
 
                             break;
@@ -923,9 +560,9 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
     private void addContactToServer() {
         ArrayList<StructListOfContact> contacts = new ArrayList<>();
         StructListOfContact contact = new StructListOfContact();
-        contact.firstName = firstName;
-        contact.lastName = lastName;
-        contact.phone = phone + "";
+        contact.firstName = fragmentContactsProfileViewModel.firstName;
+        contact.lastName = fragmentContactsProfileViewModel.lastName;
+        contact.phone = fragmentContactsProfileViewModel.phone.get() + "";
 
         contacts.add(contact);
 
@@ -970,11 +607,11 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
             root3.setVisibility(View.GONE);
         }
 
-        if (disableDeleteContact) {
+        if (fragmentContactsProfileViewModel.disableDeleteContact) {
             root3.setVisibility(View.GONE);
         }
 
-        if (isBlockUser) {
+        if (fragmentContactsProfileViewModel.isBlockUser) {
             txtBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.un_block_user));
             iconBlockUser.setText(G.fragmentActivity.getResources().getString(R.string.md_unblock));
         } else {
@@ -1145,9 +782,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         G.onReport = new OnReport() {
             @Override
             public void success() {
-
                 error(G.fragmentActivity.getResources().getString(R.string.st_send_report));
-
             }
         };
 
@@ -1155,7 +790,7 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
 
     private void blockOrUnblockUser() {
 
-        if (isBlockUser) {
+        if (fragmentContactsProfileViewModel.isBlockUser) {
 
             new MaterialDialog.Builder(G.fragmentActivity).title(R.string.unblock_the_user).content(R.string.unblock_the_user_text).positiveText(R.string.ok).onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
@@ -1174,41 +809,18 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
         }
     }
 
-    private void showAlertDialog(String message, String positive, String negitive) { // alert dialog for block or clear user
+    private void showAlertDialog(String message, String positive, String negative) { // alert dialog for block or clear user
 
         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.clear_history).content(message).positiveText(positive).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
-                //clearHistory();
+                clearHistory();
                 if (FragmentChat.onComplete != null) {
                     FragmentChat.onComplete.complete(false, roomId + "", "");
                 }
             }
-        }).negativeText(negitive).show();
-    }
-
-    public ArrayList<StructMessageInfo> setItem() {
-        ArrayList<StructMessageInfo> items = new ArrayList<>();
-
-        ArrayList<String> currentTokenAdded = new ArrayList<>();
-
-        for (int i = 0; i < avatarList.size(); i++) {
-            if (avatarList.get(i).getFile() != null) {
-                StructMessageInfo item = new StructMessageInfo();
-                RealmAvatar avatar = avatarList.get(i);
-                if (!currentTokenAdded.contains(avatar.getFile().getToken())) {
-                    currentTokenAdded.add(avatar.getFile().getToken());
-                    item.attachment = new StructMessageAttachment(avatarList.get(i).getFile());
-                    items.add(item);
-                }
-            }
-        }
-        return items;
-    }
-
-    private void clearHistory() {
-        RealmRoomMessage.clearHistoryMessage(shearedId);
+        }).negativeText(negative).show();
     }
 
     private void deleteContact() {
@@ -1226,52 +838,15 @@ public class FragmentContactsProfile extends BaseFragment implements OnUserUpdat
 
             }
         };
-        new RequestUserContactsDelete().contactsDelete(phone);
+        new RequestUserContactsDelete().contactsDelete(fragmentContactsProfileViewModel.phone.get());
     }
 
     private void getUserInfo() {
-
-        G.onUserInfoResponse = new OnUserInfoResponse() {
-            @Override
-            public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
-                if (userId == user.getId()) {
-                    G.handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            txtNickname.setText(user.getDisplayName());
-                            titleToolbar.setText(user.getDisplayName());
-                            setAvatar();
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onUserInfoTimeOut() {
-
-            }
-
-            @Override
-            public void onUserInfoError(int majorCode, int minorCode) {
-
-            }
-        };
-
         new RequestUserInfo().userInfo(userId);
     }
 
-
-    @Override
-    public void onUserUpdateStatus(long userId, final long time, final String status) {
-
-        if (this.userId == userId) {
-            G.handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    setUserStatus(AppUtils.getStatsForUser(status), time);
-                }
-            });
-        }
+    private void clearHistory() {
+        RealmRoomMessage.clearHistoryMessage(fragmentContactsProfileViewModel.shearedId);
     }
 
     private void error(String error) {

@@ -23,6 +23,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import net.iGap.R;
 
+/**
+ * set color for status bar
+ */
+
 public class StatusBarUtil {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;

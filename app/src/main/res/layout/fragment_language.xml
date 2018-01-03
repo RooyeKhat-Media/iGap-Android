@@ -1,215 +1,242 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="net.iGap.fragments.FragmentLanguage"
-    tools:ignore="MissingPrefix"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:clickable="true"
-    android:id="@+id/rootFragmentLanguage"
 
     >
+  <data>
 
-  <android.support.design.widget.AppBarLayout
+    <import type="android.view.View" />
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="fragmentLanguageViewModel"
+        type="net.iGap.viewmodel.FragmentLanguageViewModel"
+        />
+  </data>
+
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/rootFragmentLanguage"
+      android:background="@color/white"
+      android:clickable="true"
+      android:orientation="vertical"
+      tools:context="net.iGap.fragments.FragmentLanguage"
+      tools:ignore="MissingPrefix"
+
       >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/asn_toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-
+        android:layout_height="wrap_content"
         >
 
-      <RelativeLayout
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/asn_toolbar"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
+          android:layout_height="@dimen/dp60"
+          android:layoutDirection="ltr"
+          android:padding="0dp"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
           >
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stns_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             >
 
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/stns_txt_back"
-              android:layout_width="@dimen/dp52"
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/stns_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/stns_txt_back"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+              android:layout_width="wrap_content"
               android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toEndOf="@+id/stns_ripple_back"
+              android:layout_toRightOf="@+id/stns_ripple_back"
               android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:text="@string/st_Language"
               android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp18"
+              android:textStyle="normal"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
               />
-        </net.iGap.libs.rippleeffect.RippleView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:gravity="center"
-            android:text="@string/st_Language"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
 
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
-  </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>
 
 
-  <LinearLayout
-      android:id="@+id/st_layout_fa"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp52"
-      android:orientation="horizontal"
-      >
+    <LinearLayout
+        android:id="@+id/st_layout_fa"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp52"
+        android:orientation="horizontal"
+        android:onClick="@{fragmentLanguageViewModel::onClickFarsi}"
+        >
 
 
-    <TextView
-        android:id="@+id/txtLanguageFarsi"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="start|center_vertical"
-        android:paddingEnd="@dimen/dp16"
-        android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp4"
-        android:text="فارسی"
-        android:textColor="@color/black_register"
-        android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        fontPath="fonts/IRANSansMobile.ttf"
-        />
+      <TextView
+          android:id="@+id/txtLanguageFarsi"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="start|center_vertical"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:paddingTop="@dimen/dp4"
+          android:text="فارسی"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp15"
+          android:textStyle="normal"
+          fontPath="fonts/IRANSansMobile.ttf"
+          />
 
-    <View
-        android:layout_width="@dimen/dp10"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        />
+      <View
+          android:layout_width="@dimen/dp10"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
 
-    <TextView
-        android:id="@+id/st_icon_fatsi"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16"
-        android:text="@string/md_check_symbol"
-        android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/dp15"
-        android:visibility="invisible"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        />
+      <TextView
+          android:id="@+id/st_icon_fatsi"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:text="@string/md_check_symbol"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/toolbar_background"
+          android:textSize="@dimen/dp15"
+          android:visibility="@{fragmentLanguageViewModel.isFarsi ? View.VISIBLE : View.GONE}"
+          />
+
+      <!--android:visibility="@{fragmentLanguageViewModel.farsiVisibility, default=invisible}"-->
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/st_layout_english"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp52"
+        android:orientation="horizontal"
+        android:onClick="@{fragmentLanguageViewModel::onClickEnglish}"
+        >
+
+
+      <TextView
+          android:id="@+id/txtLanguageEn"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:paddingTop="@dimen/dp4"
+          android:text="English"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp15"
+          android:textStyle="normal"
+          fontPath="fonts/IRANSansMobile.ttf"
+
+          />
+
+      <View
+          android:layout_width="@dimen/dp10"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
+
+      <TextView
+          android:id="@+id/st_icon_english"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:text="@string/md_check_symbol"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/toolbar_background"
+          android:textSize="@dimen/dp15"
+          android:visibility="@{fragmentLanguageViewModel.isEnglish ? View.VISIBLE : View.GONE}"
+          />
+
+      <!--android:visibility="@{fragmentLanguageViewModel.englishVisibility, default=invisible}"-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/st_layout_arabi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp52"
+        android:orientation="horizontal"
+        android:onClick="@{fragmentLanguageViewModel::onClickArabi}"
+        >
+
+
+      <TextView
+          android:id="@+id/txtLanguageAr"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:paddingTop="@dimen/dp4"
+          android:text="العربی"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp15"
+          android:textStyle="normal"
+          fontPath="fonts/IRANSansMobile.ttf"
+
+          />
+
+      <View
+          android:layout_width="@dimen/dp10"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          />
+
+      <TextView
+          android:id="@+id/st_icon_ar"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:text="@string/md_check_symbol"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/toolbar_background"
+          android:textSize="@dimen/dp15"
+
+          android:visibility="@{fragmentLanguageViewModel.isArabi ? View.VISIBLE : View.GONE}"
+
+          />
+      <!--android:visibility="@{fragmentLanguageViewModel.arabiVisibility, default=invisible}"-->
+
+    </LinearLayout>
   </LinearLayout>
-
-
-  <LinearLayout
-      android:id="@+id/st_layout_english"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp52"
-      android:orientation="horizontal"
-      >
-
-
-    <TextView
-        android:id="@+id/txtLanguageEn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingEnd="@dimen/dp16"
-        android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp4"
-        android:text="English"
-        android:textColor="@color/black_register"
-        android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        fontPath="fonts/IRANSansMobile.ttf"
-
-        />
-
-    <View
-        android:layout_width="@dimen/dp10"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        />
-
-    <TextView
-        android:id="@+id/st_icon_english"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16"
-        android:text="@string/md_check_symbol"
-        android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/dp15"
-        android:visibility="invisible"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        />
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/st_layout_arabi"
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp52"
-      android:orientation="horizontal"
-      >
-
-
-    <TextView
-        android:id="@+id/txtLanguageAr"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingEnd="@dimen/dp16"
-        android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp4"
-        android:text="العربی"
-        android:textColor="@color/black_register"
-        android:textSize="@dimen/dp15"
-        android:textStyle="normal"
-        fontPath="fonts/IRANSansMobile.ttf"
-
-        />
-
-    <View
-        android:layout_width="@dimen/dp10"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        />
-
-    <TextView
-        android:id="@+id/st_icon_ar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dp16"
-        android:paddingRight="@dimen/dp16"
-        android:text="@string/md_check_symbol"
-        android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/dp15"
-        android:visibility="invisible"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        />
-  </LinearLayout>
-</LinearLayout>
+</layout>

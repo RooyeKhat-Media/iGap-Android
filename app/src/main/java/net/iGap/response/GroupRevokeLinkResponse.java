@@ -35,7 +35,7 @@ public class GroupRevokeLinkResponse extends MessageHandler {
         ProtoGroupRevokeLink.GroupRevokeLinkResponse.Builder builder = (ProtoGroupRevokeLink.GroupRevokeLinkResponse.Builder) message;
         RealmGroupRoom.revokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
         if (G.onGroupRevokeLink != null) {
-            G.onGroupRevokeLink.onGroupRevokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
+            G.onGroupRevokeLink.onGroupRevokeLink(builder.getRoomId(), "https://" + builder.getInviteLink(), builder.getInviteToken());
         }
     }
 

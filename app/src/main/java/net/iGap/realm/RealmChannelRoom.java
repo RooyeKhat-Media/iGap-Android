@@ -10,15 +10,14 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 
-import static net.iGap.module.MusicPlayer.roomId;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 public class RealmChannelRoom extends RealmObject {
     private String role;
@@ -58,7 +57,7 @@ public class RealmChannelRoom extends RealmObject {
     /**
      * create room with empty info , just Id and inviteLink
      *
-     * @param roomId roomId
+     * @param roomId     roomId
      * @param inviteLink inviteLink
      */
 
@@ -85,7 +84,7 @@ public class RealmChannelRoom extends RealmObject {
         realm.close();
     }
 
-    public static void revokeLink(final String inviteLink, final String inviteToken) {
+    public static void revokeLink(long roomId, final String inviteLink, final String inviteToken) {
         Realm realm = Realm.getDefaultInstance();
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom != null) {
@@ -238,7 +237,7 @@ public class RealmChannelRoom extends RealmObject {
     }
 
     public void setInviteLink(String inviteLink) {
-        this.inviteLink = inviteLink;
+        this.inviteLink = "https://" + inviteLink;
     }
 
     public RealmList<RealmMember> getMembers() {

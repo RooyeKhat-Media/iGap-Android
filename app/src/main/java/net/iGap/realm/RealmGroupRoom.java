@@ -10,12 +10,13 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.proto.ProtoGlobal;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 public class RealmGroupRoom extends RealmObject {
     private String role;
@@ -107,7 +108,7 @@ public class RealmGroupRoom extends RealmObject {
     }
 
     public void setInvite_link(String invite_link) {
-        this.invite_link = invite_link;
+        this.invite_link = "https://" + invite_link;
     }
 
     public String getInvite_token() {

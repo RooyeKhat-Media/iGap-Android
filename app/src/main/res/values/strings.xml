@@ -442,11 +442,13 @@
   <string name="E_300_1">Bad payload: Invalid description</string>
   <string name="E_300_2">Bad payload: Invalid description</string>
   <string name="E_301">Internal Server Error</string>
+  <string name="E_379">You cannot invite this user to groups because of the protected privacy for the request</string>
 
   <string name="E_373">GROUP_REVOKE_LINK_BAD_PAYLOAD</string>
   <string name="E_374">GROUP_REVOKE_LINK_INTERNAL_SERVER_ERROR</string>
   <string name="E_375">GROUP_REVOKE_LINK_FORBIDDEN</string>
 
+  <string name="E_405">You are forbidden to do the action for request</string>
   <string name="E_453">CHANNEL_CHECK_USERNAME_BAD_PAYLOAD</string>
   <string name="E_454">CHANNEL_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
 
@@ -458,6 +460,7 @@
   <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
   <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
   <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
+  <string name="E_478">You cannot invite this user to groups because of the protected privacy for the request</string>
 
   <string name="E_610">Bad payload</string>
   <string name="E_611">Internal Server Error</string>
@@ -1161,5 +1164,9 @@
   <string name="zihaje">Thul Hijjah</string>
 
   <string name="st_multi_tab">Multi Tab</string>
+  <string name="dont_ask_again">Understood</string>
+  <string name="attention">Attention</string>
+  <string name="content_attention_dialog">Note: People on the map will be displayed with a 500-meter error. So no worries</string>
+
 
 </resources>

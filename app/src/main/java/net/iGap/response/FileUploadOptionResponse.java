@@ -12,7 +12,7 @@ package net.iGap.response;
 
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperUploadFile;
@@ -20,6 +20,8 @@ import net.iGap.proto.ProtoFileUploadOption;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
+
+import io.realm.Realm;
 
 public class FileUploadOptionResponse extends MessageHandler {
 
@@ -79,18 +81,16 @@ public class FileUploadOptionResponse extends MessageHandler {
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
                     public void onSuccess() {
-
-                        final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
-                        if (message != null) {
-                            G.handler.post(new Runnable() {
-                                @Override
-                                public void run() {
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(identity)).findFirst();
+                                if (message != null) {
                                     G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
                                 }
-                            });
-                        }
-
-                        realm.close();
+                                realm.close();
+                            }
+                        });
                     }
                 }, new Realm.Transaction.OnError() {
                     @Override

@@ -68,7 +68,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
@@ -82,7 +81,25 @@ import com.vanniktech.emoji.listeners.OnEmojiPopupDismissListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupShownListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
-
+import io.fabric.sdk.android.services.concurrency.AsyncTask;
+import io.fotoapparat.Fotoapparat;
+import io.fotoapparat.view.CameraRenderer;
+import io.fotoapparat.view.CameraView;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import me.leolin.shortcutbadger.ShortcutBadger;
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -121,7 +138,7 @@ import net.iGap.helper.HelperGetMessageState;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperMimeType;
 import net.iGap.helper.HelperNotificationAndBadge;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperSaveFile;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperString;
@@ -250,29 +267,8 @@ import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserContactsBlock;
 import net.iGap.request.RequestUserContactsUnblock;
 import net.iGap.request.RequestUserInfo;
-
+import net.iGap.viewmodel.ActivityCallViewModel;
 import org.parceler.Parcels;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import io.fabric.sdk.android.services.concurrency.AsyncTask;
-import io.fotoapparat.Fotoapparat;
-import io.fotoapparat.view.CameraRenderer;
-import io.fotoapparat.view.CameraView;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.content.Context.ACTIVITY_SERVICE;
@@ -757,7 +753,7 @@ public class FragmentChat extends BaseFragment
         if (G.isInCall) {
             rootView.findViewById(R.id.ac_ll_strip_call).setVisibility(View.VISIBLE);
 
-            ActivityCall.txtTimeChat = (TextView) rootView.findViewById(R.id.cslcs_txt_timer);
+            ActivityCallViewModel.txtTimeChat = (TextView) rootView.findViewById(R.id.cslcs_txt_timer);
 
             TextView txtCallActivityBack = (TextView) rootView.findViewById(R.id.cslcs_btn_call_strip);
             txtCallActivityBack.setOnClickListener(new View.OnClickListener() {
@@ -1259,8 +1255,6 @@ public class FragmentChat extends BaseFragment
              */
             if (HelperCalander.isPersianUnicode) {
                 txtName.setText(txtName.getText().toString());
-            }
-            if (HelperCalander.isPersianUnicode) {
                 txtLastSeen.setText(convertToUnicodeFarsiNumber(txtLastSeen.getText().toString()));
             }
         }
@@ -1314,6 +1308,11 @@ public class FragmentChat extends BaseFragment
 
             }
         }
+
+        if (HelperCalander.isPersianUnicode) {
+            txtLastSeen.setText(convertToUnicodeFarsiNumber(txtLastSeen.getText().toString()));
+        }
+
     }
 
     private void setConnectionText(final ConnectionState connectionState) {
@@ -2485,7 +2484,7 @@ public class FragmentChat extends BaseFragment
 
                 if (ContextCompat.checkSelfPermission(G.fragmentActivity, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     try {
-                        HelperPermision.getMicroPhonePermission(G.fragmentActivity, null);
+                        HelperPermission.getMicroPhonePermission(G.fragmentActivity, null);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -4690,7 +4689,7 @@ public class FragmentChat extends BaseFragment
 
         ArrayList<StructBottomSheet> listOfAllImages = new ArrayList<>();
 
-        if (!HelperPermision.grantedUseStorage()) {
+        if (!HelperPermission.grantedUseStorage()) {
             return listOfAllImages;
         }
 
@@ -5218,10 +5217,10 @@ public class FragmentChat extends BaseFragment
 
                 mAdapter.toggleSelection(searchHash.lastMessageId, false, null);
 
-                if (chatType == CHANNEL && channelRole == ChannelChatRole.MEMBER) {
+                if (chatType == CHANNEL && channelRole == ChannelChatRole.MEMBER && !isNotJoin) {
                     layoutMute.setVisibility(View.VISIBLE);
                 } else {
-                    viewAttachFile.setVisibility(View.VISIBLE);
+                    if (!isNotJoin) viewAttachFile.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -5619,7 +5618,7 @@ public class FragmentChat extends BaseFragment
             }
         });
 
-        if (HelperPermision.grantedUseStorage()) {
+        if (HelperPermission.grantedUseStorage()) {
             rcvBottomSheet.setVisibility(View.VISIBLE);
         } else {
             rcvBottomSheet.setVisibility(View.GONE);
@@ -5871,7 +5870,7 @@ public class FragmentChat extends BaseFragment
 
 
         layoutAttach.setVisibility(View.GONE);
-        layoutMute.setVisibility(View.VISIBLE);
+        if (!isNotJoin) layoutMute.setVisibility(View.VISIBLE);
 
 
         layoutMute.setOnClickListener(new View.OnClickListener() {
@@ -6177,7 +6176,7 @@ public class FragmentChat extends BaseFragment
         fastItemAdapter.clear();
         itemGalleryList = getAllShownImagesPath(G.fragmentActivity);
         try {
-            HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
+            HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                 @Override
                 public void Allow() throws IOException {
 
@@ -7480,13 +7479,10 @@ public class FragmentChat extends BaseFragment
                     realmRoomMessages = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).notEqualTo(RealmRoomMessageFields.DELETED, true).between(RealmRoomMessageFields.MESSAGE_ID, startMessageId, endMessageId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, sort);
                     MessageLoader.sendMessageStatus(roomId, realmRoomMessages, chatType, ProtoGlobal.RoomMessageStatus.SEEN, getRealmChat());
 
-                    if (realmRoomMessages.size() > 0) {
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                            }
-                        });
-                    }
+//                    if (realmRoomMessages.size() == 0) { // Hint : link browsable ; Commented Now!!!
+//                        getOnlineMessage(oldMessageId, direction);
+//                        return;
+//                    }
 
                     /**
                      * I do this for set addToView true
@@ -7574,9 +7570,9 @@ public class FragmentChat extends BaseFragment
                      */
                     if (majorCode == 5) {
                         if (direction == UP) {
-                            getOnlineMessage(messageIdGetHistory, UP);
+                            //getOnlineMessage(messageIdGetHistory, UP);
                         } else {
-                            getOnlineMessage(messageIdGetHistory, DOWN);
+                            //getOnlineMessage(messageIdGetHistory, DOWN);
                         }
                     }
                 }
@@ -7844,6 +7840,11 @@ public class FragmentChat extends BaseFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         G.fragmentActivity = (FragmentActivity) activity;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState); //No call for super(). Bug on API Level > 11.
     }
 
     public void finishChat() {

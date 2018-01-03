@@ -27,6 +27,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMap;
+import net.iGap.helper.HelperError;
 import net.iGap.interfaces.IResendMessage;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
@@ -623,5 +625,28 @@ public final class AppUtils {
             vShort.vibrate(time);
         }
     }
+
+    public static void closeKeyboard(View v) {
+        try {
+            InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        } catch (IllegalStateException e) {
+            e.getStackTrace();
+        }
+    }
+
+    public static void error(String error) {
+        try {
+
+            HelperError.showSnackMessage(error, true);
+
+        } catch (IllegalStateException e) {
+            e.getStackTrace();
+        }
+    }
+
+
 
 }

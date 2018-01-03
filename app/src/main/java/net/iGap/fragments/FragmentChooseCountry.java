@@ -99,7 +99,7 @@ public class FragmentChooseCountry extends BaseFragment {
         fastItemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<AdapterChooseCountry>() {
             @Override
             public boolean filter(AdapterChooseCountry item, CharSequence constraint) {
-                return !item.item.getName().toLowerCase().contains(constraint.toString().toLowerCase());
+                return item.item.getName().toLowerCase().contains(constraint.toString().toLowerCase());
 
             }
         });
@@ -115,7 +115,7 @@ public class FragmentChooseCountry extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fastItemAdapter.filter(s);
+                fastItemAdapter.filter(s.toString());
 
             }
 

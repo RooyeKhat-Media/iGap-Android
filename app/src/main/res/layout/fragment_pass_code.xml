@@ -1,479 +1,513 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootPassCode"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_f2"
-
-    android:orientation="vertical"
-    android:clickable="true"
-    tools:context="net.iGap.activities.ActivityManageSpace"
-    tools:ignore="MissingPrefix"
     >
+  <data>
 
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="fragmentPassCodeViewModel"
+        type="net.iGap.viewmodel.FragmentPassCodeViewModel"
+        />
+  </data>
 
-  <android.support.design.widget.AppBarLayout
+  <LinearLayout
+      android:id="@+id/rootPassCode"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:background="@color/gray_f2"
+      android:clickable="true"
+      android:orientation="vertical"
+      tools:context="net.iGap.activities.ActivityManageSpace"
+      tools:ignore="MissingPrefix"
       >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/asn_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
 
-      <RelativeLayout
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/asn_toolbar"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
+          android:layout_height="@dimen/dp60"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          android:layoutDirection="ltr"
+          android:padding="0dp"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp"
+
           >
 
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stns_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/stns_txt_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-        </net.iGap.libs.rippleeffect.RippleView>
-
-        <!--<Spinner-->
-        <!--android:id="@+id/static_spinner"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_toEndOf="@+id/stns_ripple_back"-->
-        <!--android:layout_toRightOf="@+id/stns_ripple_back"-->
-        <!--android:visibility="gone"-->
-        <!--android:gravity="center"-->
-        <!--/>-->
-
-        <LinearLayout
-            android:id="@+id/layout_mode_passCode"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:visibility="gone"
             >
-          <TextView
-              android:id="@+id/mode_passCode"
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/stns_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/stns_txt_back"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <!--<Spinner-->
+          <!--android:id="@+id/static_spinner"-->
+          <!--android:layout_width="wrap_content"-->
+          <!--android:layout_height="match_parent"-->
+          <!--android:layout_alignParentTop="true"-->
+          <!--android:layout_toEndOf="@+id/stns_ripple_back"-->
+          <!--android:layout_toRightOf="@+id/stns_ripple_back"-->
+          <!--android:visibility="gone"-->
+          <!--android:gravity="center"-->
+          <!--/>-->
+
+          <LinearLayout
+              android:id="@+id/layout_mode_passCode"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
-            android:gravity="center"
-              android:text="@string/PIN"
+              android:layout_toEndOf="@+id/stns_ripple_back"
+              android:layout_toRightOf="@+id/stns_ripple_back"
+              android:onClick="@{fragmentPassCodeViewModel::onClickModePassCode}"
+              android:orientation="horizontal"
+              android:visibility="@{fragmentPassCodeViewModel.layoutModePassCode , default=gone}"
+
+              >
+            <TextView
+                android:id="@+id/mode_passCode"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@{fragmentPassCodeViewModel.txtModePassCode , default=@string/PIN}"
+                android:textColor="@color/whit_background"
+                android:textSize="@dimen/dp18"
+                android:textStyle="normal"
+                android:visibility="visible"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                />
+
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp22"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="@string/md_downwards_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+
+          </LinearLayout>
+          <TextView
+              android:id="@+id/titlePassCode"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toEndOf="@+id/stns_ripple_back"
+              android:layout_toRightOf="@+id/stns_ripple_back"
+              android:gravity="center"
+              android:text="@{fragmentPassCodeViewModel.titlePassCode , default=@string/two_step_pass_code}"
               android:textColor="@color/whit_background"
               android:textSize="@dimen/dp18"
               android:textStyle="normal"
-              android:visibility="visible"
+              android:visibility="@{fragmentPassCodeViewModel.titlePassCodeVisibility , default=visible}"
               fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
-          <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp22"
-              android:layout_height="match_parent"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_downwards_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
               />
-
-        </LinearLayout>
-        <TextView
-            android:id="@+id/titlePassCode"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:gravity="center"
-            android:text="@string/two_step_pass_code"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/setPassword_rippleOk"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-          <net.iGap.module.MaterialDesignTextView
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/setPassword_rippleOk"
               android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentEnd="true"
+              android:layout_height="wrap_content"
               android:layout_alignParentRight="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_check_symbol"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-        </net.iGap.libs.rippleeffect.RippleView>
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+              android:onClick="@{fragmentPassCodeViewModel::onClickRippleOk}"
+              android:visibility="@{fragmentPassCodeViewModel.rippleOkVisibility , default = gone}"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="@string/md_check_symbol"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
 
-  </android.support.design.widget.AppBarLayout>
-
-  <LinearLayout
-      android:id="@+id/rootEnterPassword"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-
-    <TextView
-        android:id="@+id/setPassword_txtSetPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/enter_pass_code"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp16"
-        />
-
-
-    <net.iGap.module.MEditText
-        android:id="@+id/setPassword_edtSetPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp32"
-        android:focusable="true"
-        android:gravity="center"
-        android:inputType="textPassword"
-        android:maxLength="20"
-        android:maxLines="1"
-        android:padding="@dimen/dp10"
-        android:singleLine="true"
-        android:textSize="@dimen/dp15"
-        />
-
-  </LinearLayout>
-
-  <android.support.v4.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/scrollPassCode"
+        android:id="@+id/rootEnterPassword"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
-
+        android:visibility="@{fragmentPassCodeViewModel.rootEnterPassword , default = gone}"
         >
 
-
-
-      <LinearLayout
-          android:id="@+id/vgTogglePassCode"
+      <TextView
+          android:id="@+id/setPassword_txtSetPassword"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:visibility="visible"
-          >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
-
-          <TextView
-              android:id="@+id/st_txt_st_toggle_passCode"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/two_step_pass_code"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+          android:layout_marginTop="@dimen/dp32"
+          android:gravity="center"
+          android:text="@{fragmentPassCodeViewModel.txtSetPassword  ,default =@string/enter_pass_code}"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp16"
+          />
 
 
-          <ToggleButton
-              android:id="@+id/st_toggle_passCode"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-
-        <LinearLayout
-            android:id="@+id/st_layout_ChangePassCode"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:id="@+id/st_txt_ChangePassCode"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:enabled="false"
-              android:gravity="center_vertical"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/change_pass_code"
-              android:textColor="@color/gray_5c"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-          <com.uncopt.android.widget.text.justify.JustifiedTextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="@dimen/dp14"
-              android:text="@string/set_pass_code_description"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp12"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-      </LinearLayout>
-      <LinearLayout
-          android:id="@+id/rootSettingPassword"
-          android:layout_width="wrap_content"
+      <net.iGap.module.MEditText
+          android:id="@+id/setPassword_edtSetPassword"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:visibility="gone"
-          >
-
-        <LinearLayout
-
-            android:id="@+id/vgToggleFingerPrint"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
-
-          <TextView
-              android:id="@+id/st_txt_st_toggle_FingerPrint"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/unlock_with_fingerPrint"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-
-          <ToggleButton
-              android:id="@+id/st_toggle_FingerPrint"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-        <LinearLayout
-            android:id="@+id/st_layout_autoLock"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/auto_lock"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-
-          <TextView
-              android:id="@+id/st_txt_autoLock"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:text="in 1 hour"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-          <com.uncopt.android.widget.text.justify.JustifiedTextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="@dimen/dp14"
-              android:text="@string/Auto_lock_description"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp12"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </RelativeLayout>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
-
-          <TextView
-              android:id="@+id/st_txt_st_tAllowScreenCapture"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/allow_screen_capture"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-
-          <ToggleButton
-              android:id="@+id/st_toggle_AllowScreenCapture"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-          <com.uncopt.android.widget.text.justify.JustifiedTextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="@dimen/dp14"
-              android:text="@string/Allow_Screen_Capture_description"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp12"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </RelativeLayout>
-
-      </LinearLayout>
+          android:layout_margin="@dimen/dp32"
+          android:focusable="true"
+          android:gravity="center"
+          android:hint="@{fragmentPassCodeViewModel.edtSetPasswordHint}"
+          android:inputType="@{fragmentPassCodeViewModel.edtSetPasswordInput,default=textPassword}"
+          android:maxLength="@{fragmentPassCodeViewModel.edtSetPasswordMaxLength,default=20}"
+          android:maxLines="1"
+          android:padding="@dimen/dp10"
+          android:singleLine="true"
+          android:text="@={fragmentPassCodeViewModel.edtSetPasswordText}"
+          android:textSize="@dimen/dp15"
+          />
 
     </LinearLayout>
-  </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <LinearLayout
+          android:id="@+id/scrollPassCode"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+
+          >
+
+
+        <LinearLayout
+            android:id="@+id/vgTogglePassCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{fragmentPassCodeViewModel.vgTogglePassCodeVisibility ,default = visible }"
+            >
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:background="@color/white"
+              android:onClick="@{fragmentPassCodeViewModel::onClickTogglePassCode}"
+              android:orientation="horizontal"
+              android:paddingEnd="@dimen/dp16"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingStart="@dimen/dp16"
+              >
+
+            <TextView
+                android:id="@+id/st_txt_st_toggle_passCode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/two_step_pass_code"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+
+            <ToggleButton
+                android:id="@+id/st_toggle_passCode"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/st_switch_button"
+                android:checked="@{fragmentPassCodeViewModel.isTogglePassCode  , default =false}"
+                android:onClick="@{fragmentPassCodeViewModel::onClickTogglePassCode}"
+                android:textOff=""
+                android:textOn=""
+
+                />
+
+          </LinearLayout>
+
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+
+          <LinearLayout
+              android:id="@+id/st_layout_ChangePassCode"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:background="@color/white"
+              android:onClick="@{fragmentPassCodeViewModel::onClickChangePassCode}"
+              android:orientation="horizontal"
+
+              >
+
+            <TextView
+                android:id="@+id/st_txt_ChangePassCode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:enabled="@{fragmentPassCodeViewModel.txtChangePassCodeEnable , default=false}"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp8"
+                android:text="@string/change_pass_code"
+                android:textColor="@{fragmentPassCodeViewModel.txtChangePassCodeColor , default=@color/gray_5c}"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+
+          </LinearLayout>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+          <RelativeLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              >
+            <com.uncopt.android.widget.text.justify.JustifiedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp14"
+                android:text="@string/set_pass_code_description"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp12"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </RelativeLayout>
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rootSettingPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{fragmentPassCodeViewModel.rootSettingPassword ,default= gone}"
+            >
+
+          <LinearLayout
+
+              android:id="@+id/vgToggleFingerPrint"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:background="@color/white"
+              android:onClick="@{fragmentPassCodeViewModel::onClickChangeVgToggleFingerPrint}"
+              android:orientation="horizontal"
+              android:paddingEnd="@dimen/dp16"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingStart="@dimen/dp16"
+              android:visibility="@{fragmentPassCodeViewModel.vgToggleFingerPrintVisibility}"
+
+              >
+
+            <TextView
+                android:id="@+id/st_txt_st_toggle_FingerPrint"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/unlock_with_fingerPrint"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+
+            <ToggleButton
+                android:id="@+id/st_toggle_FingerPrint"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/st_switch_button"
+                android:checked="@{fragmentPassCodeViewModel.isFingerPrint}"
+                android:onClick="@{fragmentPassCodeViewModel::onClickChangeVgToggleFingerPrint}"
+                android:textOff=""
+                android:textOn=""
+                />
+
+          </LinearLayout>
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+          <LinearLayout
+              android:id="@+id/st_layout_autoLock"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:background="@color/white"
+              android:onClick="@{fragmentPassCodeViewModel::onClickChangeAutoLock}"
+              android:orientation="horizontal"
+
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp8"
+                android:text="@string/auto_lock"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+
+            <TextView
+                android:id="@+id/st_txt_autoLock"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:text="@{fragmentPassCodeViewModel.autoLockText }"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+
+          </LinearLayout>
+
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              >
+            <com.uncopt.android.widget.text.justify.JustifiedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp14"
+                android:text="@string/Auto_lock_description"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp12"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </RelativeLayout>
+
+          <LinearLayout
+
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:background="@color/white"
+              android:onClick="@{fragmentPassCodeViewModel::onClickAllowScreenCapture}"
+              android:orientation="horizontal"
+              android:paddingEnd="@dimen/dp16"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingStart="@dimen/dp16"
+
+              >
+
+            <TextView
+                android:id="@+id/st_txt_st_tAllowScreenCapture"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/allow_screen_capture"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+
+            <ToggleButton
+                android:id="@+id/st_toggle_AllowScreenCapture"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/st_switch_button"
+                android:checked="@{fragmentPassCodeViewModel.isAllowScreenCapture}"
+                android:onClick="@{fragmentPassCodeViewModel::onClickAllowScreenCapture}"
+                android:textOff=""
+                android:textOn=""
+                />
+
+          </LinearLayout>
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              >
+            <com.uncopt.android.widget.text.justify.JustifiedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp14"
+                android:text="@string/Allow_Screen_Capture_description"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp12"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </RelativeLayout>
+
+        </LinearLayout>
+
+      </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+  </LinearLayout>
+</layout>

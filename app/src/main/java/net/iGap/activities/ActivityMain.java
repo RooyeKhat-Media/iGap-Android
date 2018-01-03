@@ -20,6 +20,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -58,6 +59,7 @@ import net.iGap.R;
 import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentIgapSearch;
+import net.iGap.fragments.FragmentLanguage;
 import net.iGap.fragments.FragmentMain;
 import net.iGap.fragments.FragmentMediaPlayer;
 import net.iGap.fragments.FragmentNewGroup;
@@ -77,7 +79,7 @@ import net.iGap.helper.HelperImageBackColor;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperLogout;
 import net.iGap.helper.HelperNotificationAndBadge;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUrl;
 import net.iGap.helper.ServiceContact;
 import net.iGap.interfaces.FinishActivity;
@@ -130,6 +132,7 @@ import net.iGap.request.RequestGeoGetConfiguration;
 import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
+import net.iGap.viewmodel.ActivityCallViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -236,6 +239,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         if (G.imageLoader != null) {
             G.imageLoader.clearMemoryCache();
         }
+        RealmRoom.clearAllActions();
+        if (G.onAudioFocusChangeListener != null) {
+            G.onAudioFocusChangeListener.onAudioFocusChangeListener(AudioManager.AUDIOFOCUS_LOSS);
+        }
     }
 
     /**
@@ -248,6 +255,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         isOpenChatBeforeSheare = true;
         checkIntent(intent);
     }
@@ -259,21 +267,22 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         Bundle extras = intent.getExtras();
         if (extras != null) {
 
-            long _roomid = extras.getLong(ActivityMain.openChat);
-            if (_roomid > 0) {
-                GoToChatActivity goToChatActivity = new GoToChatActivity(_roomid);
-                long _peerID = extras.getLong("PeerID");
-                if (_peerID > 0) {
-                    goToChatActivity.setPeerID(_peerID);
+            long roomId = extras.getLong(ActivityMain.openChat);
+            if (!FragmentLanguage.languageChanged && roomId > 0) { // if language changed not need check enter to chat
+                GoToChatActivity goToChatActivity = new GoToChatActivity(roomId);
+                long peerId = extras.getLong("PeerID");
+                if (peerId > 0) {
+                    goToChatActivity.setPeerID(peerId);
                 }
                 goToChatActivity.startActivity();
             }
+            FragmentLanguage.languageChanged = false;
 
-            boolean openMediaPlyer = extras.getBoolean(ActivityMain.openMediaPlyer);
-            if (openMediaPlyer) {
+            boolean openMediaPlayer = extras.getBoolean(ActivityMain.openMediaPlyer);
+            if (openMediaPlayer) {
                 if (getSupportFragmentManager().findFragmentByTag(FragmentMediaPlayer.class.getName()) == null) {
-                    FragmentMediaPlayer fragmant = new FragmentMediaPlayer();
-                    new HelperFragment(fragmant).setReplace(false).load();
+                    FragmentMediaPlayer fragment = new FragmentMediaPlayer();
+                    new HelperFragment(fragment).setReplace(false).load();
                 }
             }
         }
@@ -321,7 +330,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         //checkAppAccount();
 
         try {
-            HelperPermision.getPhonePermision(this, null);
+            HelperPermission.getPhonePermision(this, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -511,7 +520,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
          */
         if (!isGetContactList) {
             try {
-                HelperPermision.getContactPermision(ActivityMain.this, new OnGetPermission() {
+                HelperPermission.getContactPermision(ActivityMain.this, new OnGetPermission() {
                     @Override
                     public void Allow() throws IOException {
                         /**
@@ -1283,7 +1292,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             @Override
             public void onClick(View v) {
                 try {
-                    HelperPermision.getCameraPermission(ActivityMain.this, new OnGetPermission() {
+                    HelperPermission.getCameraPermission(ActivityMain.this, new OnGetPermission() {
                         @Override
                         public void Allow() throws IOException, IllegalStateException {
                             new HelperFragment(FragmentQrCodeNewDevice.newInstance()).setStateLoss(true).load();
@@ -1584,7 +1593,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     private void openMapFragment() {
         try {
-            HelperPermision.getLocationPermission(ActivityMain.this, new OnGetPermission() {
+            HelperPermission.getLocationPermission(ActivityMain.this, new OnGetPermission() {
                 @Override
                 public void Allow() throws IOException {
                     try {
@@ -2001,7 +2010,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         if (G.isInCall) {
             findViewById(R.id.am_ll_strip_call).setVisibility(View.VISIBLE);
 
-            ActivityCall.txtTimerMain = (TextView) findViewById(R.id.cslcs_txt_timer);
+            ActivityCallViewModel.txtTimerMain = (TextView) findViewById(R.id.cslcs_txt_timer);
 
             TextView txtCallActivityBack = (TextView) findViewById(R.id.cslcs_btn_call_strip);
             txtCallActivityBack.setOnClickListener(new View.OnClickListener() {

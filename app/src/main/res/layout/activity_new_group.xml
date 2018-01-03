@@ -1,236 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ng_fragmentContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:fitsSystemWindows="false"
-    tools:ignore="MissingPrefix"
     >
+  <data>
 
-  <android.support.design.widget.AppBarLayout
-      android:id="@+id/ng_backgroundToolbar"
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="fragmentNewGroupVieModel"
+        type="net.iGap.viewmodel.FragmentNewGroupViewModel"
+        />
+  </data>
+
+  <RelativeLayout
+      android:id="@+id/ng_fragmentContainer"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:clickable="true"
+      android:fitsSystemWindows="false"
+      tools:ignore="MissingPrefix"
       >
-    <android.support.v7.widget.Toolbar
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/ng_backgroundToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layoutDirection="ltr"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_collapseMode="pin"
+        android:layout_height="wrap_content"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+        >
+      <android.support.v7.widget.Toolbar
+
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp60"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:layoutDirection="ltr"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp"
+          app:layout_collapseMode="pin"
+          >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+          <TextView
+              android:id="@+id/ng_txt_titleToolbar"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toEndOf="@+id/ng_ripple_back"
+              android:layout_toRightOf="@+id/ng_ripple_back"
+              android:gravity="center"
+              android:text="@{fragmentNewGroupVieModel.titleToolbar , default =@string/new_group}"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp18"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/ng_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/ng_txt_back"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ng_backgroundToolbar"
         >
 
       <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           >
 
-        <TextView
-            android:id="@+id/ng_txt_titleToolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/ng_ripple_back"
-            android:layout_toRightOf="@+id/ng_ripple_back"
-            android:gravity="center"
-            android:text="@string/new_group"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/ng_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
+            android:id="@+id/ng_ripple_circle_image"
+            android:layout_width="@dimen/dp105"
+            android:layout_height="@dimen/dp105"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp12"
+            app:rv_alpha="210"
             app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
+            app:rv_rippleDuration="150"
             rv_centered="true"
             >
 
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/ng_txt_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
+          <net.iGap.module.CircleImageView
+              android:id="@+id/ng_profile_circle_image"
+              android:layout_width="@dimen/dp105"
+              android:layout_height="@dimen/dp105"
+              android:layout_gravity="center"
+              android:background="@drawable/circle_color_notificatin_setting"
               android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
+              android:padding="@dimen/dp32"
+              android:src="@mipmap/plus"
+              app:civ_border_width="0dp"
+
+
               />
         </net.iGap.libs.rippleeffect.RippleView>
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
-  </android.support.design.widget.AppBarLayout>
 
 
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_below="@+id/ng_backgroundToolbar"
-      >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-      <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/ng_ripple_circle_image"
-          android:layout_width="@dimen/dp105"
-          android:layout_height="@dimen/dp105"
-          android:layout_alignParentTop="true"
-          android:layout_centerInParent="true"
-          android:layout_marginTop="@dimen/dp12"
-          app:rv_alpha="210"
-          app:rv_centered="true"
-          app:rv_rippleDuration="150"
-          rv_centered="true"
-          >
-
-        <net.iGap.module.CircleImageView
-            android:id="@+id/ng_profile_circle_image"
-            android:layout_width="@dimen/dp105"
-            android:layout_height="@dimen/dp105"
-            android:layout_gravity="center"
-            android:background="@drawable/circle_color_notificatin_setting"
-            android:gravity="center"
-            android:padding="@dimen/dp32"
-            android:src="@mipmap/plus"
-            app:civ_border_width="0dp"
-            />
-      </net.iGap.libs.rippleeffect.RippleView>
-
-
-      <RelativeLayout
-          android:id="@+id/ng_root_newGroup"
-          android:layout_width="@dimen/dp240"
-          android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentStart="true"
-          android:layout_below="@+id/ng_ripple_circle_image"
-          android:gravity="start"
-          >
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/ng_txtInput_newGroup"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/ng_root_newGroup"
+            android:layout_width="@dimen/dp240"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp20"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ng_ripple_circle_image"
+            android:gravity="start"
             >
 
-          <net.iGap.module.MEditText
-              android:id="@+id/ng_edt_newGroup"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="start"
-              android:background="@android:color/transparent"
-              android:paddingBottom="@dimen/dp4"
-              android:paddingTop="@dimen/dp8"
-              android:singleLine="true"
-              android:textSize="@dimen/dp15"
-              />
 
-          <View
-              android:id="@+id/ng_view_newGroup"
+          <android.support.design.widget.TextInputLayout
+              android:id="@+id/ng_txtInput_newGroup"
               android:layout_width="match_parent"
-              android:layout_height="0.5dp"
-              android:background="@color/line_edit_text"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/dp20"
+              android:hint="@{fragmentNewGroupVieModel.txtInputName}"
+              >
+
+            <net.iGap.module.MEditText
+                android:id="@+id/ng_edt_newGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@android:color/transparent"
+                android:paddingBottom="@dimen/dp4"
+                android:paddingTop="@dimen/dp8"
+                android:singleLine="true"
+                android:text="@={fragmentNewGroupVieModel.edtSetNewGroup}"
+                android:textSize="@dimen/dp15"
+                />
+
+            <View
+                android:id="@+id/ng_view_newGroup"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_edit_text"
+                />
+
+          </android.support.design.widget.TextInputLayout>
+        </RelativeLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ng_txtInput_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ng_root_newGroup"
+            android:layout_marginTop="@dimen/dp12"
+            android:hint="@string/desc_group_chanel"
+            >
+
+          <net.iGap.module.LinedEditText
+              android:id="@+id/ng_edt_description"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp140"
+              android:layout_below="@+id/ng_txtInput_newGroup"
+              android:layout_marginLeft="@dimen/dp20"
+              android:layout_marginRight="@dimen/dp20"
+              android:background="@android:color/transparent"
+              android:ems="4"
+              android:gravity="top"
+              android:imeOptions="@{fragmentNewGroupVieModel.edtDescriptionImeOptions}"
+              android:lineSpacingMultiplier="1.2"
+              android:lines="@{fragmentNewGroupVieModel.edtDescriptionLines , default = 4}"
+              android:maxLength="500"
+              android:maxLines="@{fragmentNewGroupVieModel.edtDescriptionMaxLines , default =4}"
+              android:singleLine="false"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingTop="@dimen/dp8"
+              android:text="@={fragmentNewGroupVieModel.edtDescription}"
+              android:textCursorDrawable="@drawable/editext_cursor"
+              android:textSize="@dimen/dp15"
+              android:inputType="@{fragmentNewGroupVieModel.edtDescriptionInputType }"
               />
 
         </android.support.design.widget.TextInputLayout>
-      </RelativeLayout>
 
-      <android.support.design.widget.TextInputLayout
-          android:id="@+id/ng_txtInput_description"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/ng_root_newGroup"
-          android:layout_marginTop="@dimen/dp12"
-          android:hint="@string/desc_group_chanel"
-          >
-
-        <net.iGap.module.LinedEditText
-            android:id="@+id/ng_edt_description"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp140"
-            android:layout_below="@+id/ng_txtInput_newGroup"
-            android:layout_marginLeft="@dimen/dp20"
+        <TextView
+            android:id="@+id/ng_txt_nextStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ng_txtInput_description"
             android:layout_marginRight="@dimen/dp20"
-            android:background="@android:color/transparent"
-            android:ems="4"
-            android:gravity="top"
-            android:lineSpacingMultiplier="1.2"
-            android:lines="4"
-            android:maxLength="500"
-            android:maxLines="4"
-            android:paddingBottom="@dimen/dp8"
-            android:paddingTop="@dimen/dp8"
-            android:textCursorDrawable="@drawable/editext_cursor"
+            android:layout_marginTop="@dimen/dp12"
+            android:onClick="@{fragmentNewGroupVieModel::onClickNextStep}"
+            android:padding="@dimen/dp12"
+            android:singleLine="false"
+            android:text="@string/chi_NEXT_STEP"
+            android:textColor="@color/toolbar_background"
             android:textSize="@dimen/dp15"
-            android:imeOptions="flagNoExtractUi|actionDone"
+            android:textStyle="normal"
+            android:enabled="@{fragmentNewGroupVieModel.nextStepEnable }"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+
             />
 
-      </android.support.design.widget.TextInputLayout>
-
-      <TextView
-          android:id="@+id/ng_txt_nextStep"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-          android:layout_below="@+id/ng_txtInput_description"
-          android:layout_marginRight="@dimen/dp20"
-          android:layout_marginTop="@dimen/dp12"
-          android:padding="@dimen/dp12"
-          android:singleLine="false"
-          android:text="@string/chi_NEXT_STEP"
-          android:textColor="@color/toolbar_background"
-          android:textSize="@dimen/dp15"
-          android:textStyle="normal"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-
-          />
-
-      <TextView
-          android:id="@+id/ng_txt_cancel"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/ng_txtInput_description"
-          android:layout_marginLeft="@dimen/dp20"
-          android:layout_marginRight="@dimen/dp20"
-          android:layout_marginTop="@dimen/dp12"
-          android:layout_toLeftOf="@+id/ng_txt_nextStep"
-          android:padding="@dimen/dp12"
-          android:text="@string/B_cancel"
-          android:textColor="@color/toolbar_background"
-          android:textSize="@dimen/dp15"
-          android:textStyle="normal"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-          />
-    </RelativeLayout>
-  </ScrollView>
+        <TextView
+            android:id="@+id/ng_txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ng_txtInput_description"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_toLeftOf="@+id/ng_txt_nextStep"
+            android:onClick="@{fragmentNewGroupVieModel::onClickCancel}"
+            android:padding="@dimen/dp12"
+            android:text="@string/B_cancel"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            />
+      </RelativeLayout>
+    </ScrollView>
 
 
-  <ProgressBar
-      android:id="@+id/ng_prgWaiting"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:indeterminate="true"
-      android:visibility="visible"
-      />
-</RelativeLayout>
+    <ProgressBar
+        android:id="@+id/ng_prgWaiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="@{fragmentNewGroupVieModel.prgWaiting}"
+        />
+  </RelativeLayout>
+</layout>

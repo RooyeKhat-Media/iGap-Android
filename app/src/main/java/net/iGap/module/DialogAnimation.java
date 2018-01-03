@@ -14,6 +14,10 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import net.iGap.R;
 
+/**
+ * set animation for open Dialog from top or bottom
+ */
+
 public class DialogAnimation {
 
     public static void animationUp(Dialog dialog) {

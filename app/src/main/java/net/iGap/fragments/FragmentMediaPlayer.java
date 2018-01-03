@@ -10,16 +10,13 @@
 
 package net.iGap.fragments;
 
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.databinding.DataBindingUtil;
 import android.media.MediaMetadataRetriever;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,51 +25,38 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.afollestad.materialdialogs.MaterialDialog;
+
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.helper.HelperCalander;
-import net.iGap.helper.HelperPermision;
-import net.iGap.helper.HelperSaveFile;
+import net.iGap.databinding.ActivityMediaPlayerBinding;
+import net.iGap.databinding.ActivityMediaPlayerLandBinding;
 import net.iGap.interfaces.OnComplete;
-import net.iGap.interfaces.OnGetPermission;
-import net.iGap.libs.rippleeffect.RippleView;
-import net.iGap.libs.ripplesoundplayer.RippleVisualizerView;
-import net.iGap.libs.ripplesoundplayer.renderer.LineRenderer;
-import net.iGap.libs.ripplesoundplayer.util.PaintUtil;
-import net.iGap.module.DialogAnimation;
-import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.realm.RealmRoomMessage;
+import net.iGap.viewmodel.FragmentMediaPlayerViewModel;
+
+import java.util.List;
 
 public class FragmentMediaPlayer extends BaseFragment {
 
-    TextView btnReplay;
-    TextView btnShuffle;
-    OnComplete onComplete;
-    private TextView txt_MusicName;
-    private TextView txt_MusicPlace;
-    private TextView txt_MusicTime;
-    private TextView txt_Timer;
-    private TextView txt_musicInfo;
+
+    public static OnComplete onComplete;
+    public static OnSetImage onSetImage;
     private SeekBar musicSeekbar;
-    private ImageView img_MusicImage;
-    private ImageView img_RepeatOne;
-    private ImageView img_MusicImage_default_icon;
-    private TextView btnPlay;
     private RecyclerView rcvListMusicPlayer;
-    public static AdapterListMusicPlayer adapterListMusicPlayer;
     public static FastItemAdapter fastItemAdapter;
 
-    private RippleVisualizerView rippleVisualizerView;
+    public static OnBackFragment onBackFragment;
+    private FragmentMediaPlayerViewModel fragmentMediaPlayerViewModel;
+    private ActivityMediaPlayerBinding fragmentMediaPlayerBinding;
+    private ActivityMediaPlayerLandBinding activityMediaPlayerLandBinding;
 
     @Nullable
     @Override
@@ -80,12 +64,15 @@ public class FragmentMediaPlayer extends BaseFragment {
         isNeedResume = true;
 
         if (G.twoPaneMode) {
-            return inflater.inflate(R.layout.activity_media_player, container, false);
+            fragmentMediaPlayerBinding = DataBindingUtil.inflate(inflater, R.layout.activity_media_player, container, false);
+            return fragmentMediaPlayerBinding.getRoot();
         } else {
             if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                return inflater.inflate(R.layout.activity_media_player_land, container, false);
+                activityMediaPlayerLandBinding = DataBindingUtil.inflate(inflater, R.layout.activity_media_player_land, container, false);
+                return activityMediaPlayerLandBinding.getRoot();
             } else {
-                return inflater.inflate(R.layout.activity_media_player, container, false);
+                fragmentMediaPlayerBinding = DataBindingUtil.inflate(inflater, R.layout.activity_media_player, container, false);
+                return fragmentMediaPlayerBinding.getRoot();
             }
         }
     }
@@ -94,6 +81,8 @@ public class FragmentMediaPlayer extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initDataBinding();
+
         MusicPlayer.isShowMediaPlayer = true;
 
         if (MusicPlayer.mp == null) {
@@ -101,80 +90,29 @@ public class FragmentMediaPlayer extends BaseFragment {
             return;
         }
 
-        onComplete = new OnComplete() {
-            @Override
-            public void complete(boolean result, String messageOne, final String MessageTow) {
 
-                if (messageOne.equals("play")) {
-                    btnPlay.setText(R.string.md_play_rounded_button);
-
-                    if (rippleVisualizerView != null) {
-                        rippleVisualizerView.setEnabled(false);
-                        rippleVisualizerView.pauseVisualizer();
-                    }
-                } else if (messageOne.equals("pause")) {
-                    btnPlay.setText(R.string.md_round_pause_button);
-
-                    if (rippleVisualizerView != null) {
-                        rippleVisualizerView.setEnabled(true);
-                        rippleVisualizerView.startVisualizer();
-                    }
-                } else if (messageOne.equals("update")) {
-                    G.handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateUi();
-                        }
-                    });
-                } else if (messageOne.equals("updateTime")) {
-                    txt_Timer.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            txt_Timer.setText(MessageTow);
-                            musicSeekbar.setProgress(MusicPlayer.musicProgress);
-
-                            if (HelperCalander.isPersianUnicode) txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
-                        }
-                    });
-                } else if (messageOne.equals("RepeatMode")) {
-                    setReplayButton();
-                } else if (messageOne.equals("Shuffel")) {
-                    setShuffleButton();
-                } else if (messageOne.equals("finish")) {
-                    removeFromBaseFragment();
-                }
-            }
-        };
 
         initComponent(view);
-        setMusicInfo();
-
         MusicPlayer.onComplete = onComplete;
     }
 
-    private void setShuffleButton() {
+    private void initDataBinding() {
+        if (G.twoPaneMode) {
 
-        if (MusicPlayer.isShuffelOn) {
-            btnShuffle.setTextColor(Color.BLACK);
+            fragmentMediaPlayerViewModel = new FragmentMediaPlayerViewModel(fragmentMediaPlayerBinding.getRoot());
+            fragmentMediaPlayerBinding.setFragmentMediaPlayerViewModel(fragmentMediaPlayerViewModel);
+
         } else {
-            btnShuffle.setTextColor(Color.GRAY);
-        }
-    }
+            if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                fragmentMediaPlayerViewModel = new FragmentMediaPlayerViewModel(activityMediaPlayerLandBinding.getRoot());
+                activityMediaPlayerLandBinding.setFragmentMediaPlayerViewModel(fragmentMediaPlayerViewModel);
 
-    private void setReplayButton() {
-        if (MusicPlayer.repeatMode.equals(MusicPlayer.RepeatMode.noRepeat.toString())) {
-            btnReplay.setText(R.string.md_synchronization_arrows);
-            btnReplay.setTextColor(Color.GRAY);
-            img_RepeatOne.setVisibility(View.GONE);
-        } else if (MusicPlayer.repeatMode.equals(MusicPlayer.RepeatMode.repeatAll.toString())) {
-            btnReplay.setText(R.string.md_synchronization_arrows);
-            btnReplay.setTextColor(Color.BLACK);
-            img_RepeatOne.setVisibility(View.GONE);
-        } else if (MusicPlayer.repeatMode.equals(MusicPlayer.RepeatMode.oneRpeat.toString())) {
-            btnReplay.setText(R.string.md_synchronization_arrows);
-            btnReplay.setTextColor(Color.BLACK);
-            img_RepeatOne.setVisibility(View.VISIBLE);
+            } else {
+                fragmentMediaPlayerViewModel = new FragmentMediaPlayerViewModel(fragmentMediaPlayerBinding.getRoot());
+                fragmentMediaPlayerBinding.setFragmentMediaPlayerViewModel(fragmentMediaPlayerViewModel);
+            }
         }
+
     }
 
     @Override
@@ -188,22 +126,14 @@ public class FragmentMediaPlayer extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (MusicPlayer.mp == null) {
-            removeFromBaseFragment();
-        } else {
-            MusicPlayer.isShowMediaPlayer = true;
-            updateUi();
-            MusicPlayer.onComplete = onComplete;
-        }
+        fragmentMediaPlayerViewModel.onResume();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        if (rippleVisualizerView != null) {
-            rippleVisualizerView.pauseVisualizer();
-        }
+        fragmentMediaPlayerViewModel.onStop();
     }
 
     @Override
@@ -224,31 +154,26 @@ public class FragmentMediaPlayer extends BaseFragment {
         super.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MusicPlayer.onComplete = null;
+    }
+
     //*****************************************************************************************
 
-    private void initComponent(View view) {
 
-        initVisualizer(view);
+    private void initComponent(final View view) {
 
-        txt_MusicName = (TextView) view.findViewById(R.id.ml_txt_music_name);
-        txt_MusicPlace = (TextView) view.findViewById(R.id.ml_txt_music_place);
-        txt_MusicTime = (TextView) view.findViewById(R.id.ml_txt_music_time);
-        txt_Timer = (TextView) view.findViewById(R.id.ml_txt_timer);
+        final ImageView img_MusicImage = (ImageView) view.findViewById(R.id.ml_img_music_picture);
+        onSetImage = new OnSetImage() {
+            @Override
+            public void setImage() {
+                img_MusicImage.setImageBitmap(MusicPlayer.mediaThumpnail);
+            }
+        };
 
-        txt_musicInfo = (TextView) view.findViewById(R.id.ml_txt_music_info);
-        img_MusicImage = (ImageView) view.findViewById(R.id.ml_img_music_picture);
-        img_MusicImage_default_icon = (ImageView) view.findViewById(R.id.ml_img_music_icon_default);
-        img_RepeatOne = (ImageView) view.findViewById(R.id.ml_img_repead_one);
-        if (MusicPlayer.mediaThumpnail != null) {
-            img_MusicImage.setImageBitmap(MusicPlayer.mediaThumpnail);
-            img_MusicImage.setVisibility(View.VISIBLE);
-            img_MusicImage_default_icon.setVisibility(View.GONE);
-        } else {
-            img_MusicImage.setVisibility(View.GONE);
-            img_MusicImage_default_icon.setVisibility(View.VISIBLE);
-        }
-
-        musicSeekbar = (SeekBar) view.findViewById(R.id.ml_seekBar1);
+        musicSeekbar = view.findViewById(R.id.ml_seekBar1);
         musicSeekbar.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -261,82 +186,40 @@ public class FragmentMediaPlayer extends BaseFragment {
             }
         });
 
-        MaterialDesignTextView btnBack = (MaterialDesignTextView) view.findViewById(R.id.ml_btn_back);
-        RippleView rippleBack = (RippleView) view.findViewById(R.id.ml_ripple_back);
-        rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+
+        onBackFragment = new OnBackFragment() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onBack() {
                 removeFromBaseFragment();
             }
-        });
-
-        MaterialDesignTextView btnMusicMenu = (MaterialDesignTextView) view.findViewById(R.id.ml_btn_music_menu);
-        RippleView rippleMusicMenu = (RippleView) view.findViewById(R.id.amp_ripple_menu);
-        rippleMusicMenu.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                popUpMusicMenu();
-            }
-        });
-
-        TextView btnPrevious = (TextView) view.findViewById(R.id.ml_btn_Previous_music);
-        btnPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicPlayer.previousMusic();
-            }
-        });
-
-        btnShuffle = (TextView) view.findViewById(R.id.ml_btn_shuffel_music);
-        btnShuffle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicPlayer.shuffleClick();
-            }
-        });
-
-        setShuffleButton();
-
-        btnReplay = (TextView) view.findViewById(R.id.ml_btn_replay_music);
-        btnReplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicPlayer.repeatClick();
-            }
-        });
-        setReplayButton();
-
-        btnPlay = (TextView) view.findViewById(R.id.ml_btn_play_music);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicPlayer.playAndPause();
-            }
-        });
-
-        TextView btnNextMusic = (TextView) view.findViewById(R.id.ml_btn_forward_music);
-        btnNextMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MusicPlayer.nextMusic();
-            }
-        });
-
-        if (HelperCalander.isPersianUnicode) {
-            txt_Timer.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_Timer.getText().toString()));
-            txt_MusicTime.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_MusicTime.getText().toString()));
-        }
-
+        };
 
         rcvListMusicPlayer = (RecyclerView) view.findViewById(R.id.rcvListMusicPlayer);
+        final SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         fastItemAdapter = new FastItemAdapter();
 
         for (RealmRoomMessage r : MusicPlayer.mediaList) {
             fastItemAdapter.add(new AdapterListMusicPlayer().setItem(r).withIdentifier(r.getMessageId()));
         }
         rcvListMusicPlayer.setAdapter(fastItemAdapter);
-        rcvListMusicPlayer.setLayoutManager(new LinearLayoutManager(_mActivity));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(_mActivity);
+        rcvListMusicPlayer.setLayoutManager(linearLayoutManager);
         rcvListMusicPlayer.setHasFixedSize(true);
+
+        /*linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        rcvListMusicPlayer.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (rcvListMusicPlayer.computeVerticalScrollOffset() > 0) {
+                    slidingUpPanelLayout.setEnabled(false);
+                } else {
+                    slidingUpPanelLayout.setEnabled(true);
+                }
+            }
+        });*/
 
         fastItemAdapter.withSelectable(true);
         fastItemAdapter.withOnClickListener(new OnClickListener() {
@@ -353,155 +236,7 @@ public class FragmentMediaPlayer extends BaseFragment {
             }
         });
 
-    }
-
-    private void initVisualizer(final View view) {
-
-        if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            try {
-                HelperPermision.getMicroPhonePermission(G.currentActivity, new OnGetPermission() {
-                    @Override
-                    public void Allow() throws IOException {
-
-                        rippleVisualizerView = (RippleVisualizerView) view.findViewById(R.id.line_renderer_demo);
-
-                        if (rippleVisualizerView != null) {
-
-                            rippleVisualizerView.setCurrentRenderer(new LineRenderer(PaintUtil.getLinePaint(Color.parseColor("#15E4EE"))));
-
-
-                            if (MusicPlayer.mp.isPlaying()) {
-                                rippleVisualizerView.setEnabled(true);
-                            } else {
-                                rippleVisualizerView.setEnabled(false);
-                            }
-
-                            rippleVisualizerView.setAmplitudePercentage(3);
-                        }
-                    }
-
-                    @Override
-                    public void deny() {
-
-                    }
-                });
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void popUpMusicMenu() {
-
-        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
-        View v = dialog.getCustomView();
-
-        DialogAnimation.animationUp(dialog);
-        dialog.show();
-
-        ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
-        ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
-
-        final TextView txtShare = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
-        TextView txtSaveToGallery = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
-
-        TextView iconSaveToGallery = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
-        iconSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.md_save));
-
-        txtShare.setText(G.fragmentActivity.getResources().getString(R.string.save_to_Music));
-        txtSaveToGallery.setText(G.fragmentActivity.getResources().getString(R.string.share_item_dialog));
-
-        root1.setVisibility(View.VISIBLE);
-        root2.setVisibility(View.VISIBLE);
-
-        TextView iconShare = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
-        iconShare.setText(G.fragmentActivity.getResources().getString(R.string.md_share_button));
-
-        root1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                saveToMusic();
-            }
-        });
-
-        root2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                shareMusic();
-            }
-        });
-    }
-
-    private void saveToMusic() {
-
-        HelperSaveFile.saveToMusicFolder(MusicPlayer.musicPath, MusicPlayer.musicName);
-    }
-
-    private void shareMusic() {
-
-        String sharePath = MusicPlayer.musicPath;
-
-        Uri uri = Uri.fromFile(new File(sharePath));
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("audio/*");
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        startActivity(Intent.createChooser(share, G.fragmentActivity.getResources().getString(R.string.shate_audio_file)));
-    }
-
-    private void updateUi() {
-        txt_MusicTime.setText(MusicPlayer.musicTime);
-        txt_MusicPlace.setText(MusicPlayer.musicInfoTitle);
-        txt_MusicName.setText(MusicPlayer.musicName);
-        txt_Timer.setText(MusicPlayer.strTimer);
-
-        if (MusicPlayer.mp != null) {
-            if (MusicPlayer.mp.isPlaying()) {
-                btnPlay.setText(G.fragmentActivity.getResources().getString(R.string.md_round_pause_button));
-            } else {
-                btnPlay.setText(G.fragmentActivity.getResources().getString(R.string.md_play_rounded_button));
-            }
-
-            if (MusicPlayer.mediaThumpnail != null) {
-                img_MusicImage.setImageBitmap(MusicPlayer.mediaThumpnail);
-                img_MusicImage.setVisibility(View.VISIBLE);
-                img_MusicImage_default_icon.setVisibility(View.GONE);
-            } else {
-                img_MusicImage.setVisibility(View.GONE);
-                img_MusicImage_default_icon.setVisibility(View.VISIBLE);
-            }
-
-            setMusicInfo();
-        }
-
-        if (HelperCalander.isPersianUnicode) {
-            txt_MusicTime.setText(HelperCalander.convertToUnicodeFarsiNumber(txt_MusicTime.getText().toString()));
-        }
-
-        if (rippleVisualizerView != null) {
-            rippleVisualizerView.setMediaPlayer(MusicPlayer.mp);
-        }
-    }
-
-    private void setMusicInfo() {
-
-        if (MusicPlayer.musicInfo.trim().length() > 0) {
-            txt_musicInfo.setVisibility(View.VISIBLE);
-            txt_musicInfo.setText(MusicPlayer.musicInfo);
-
-            txt_musicInfo.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            txt_musicInfo.setSelected(true);
-            txt_musicInfo.setSingleLine(true);
-        } else {
-            txt_musicInfo.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MusicPlayer.onComplete = null;
+        rcvListMusicPlayer.scrollToPosition(fastItemAdapter.getPosition(Long.parseLong(MusicPlayer.messageId)));
     }
 
     public class AdapterListMusicPlayer extends AbstractItem<AdapterListMusicPlayer, AdapterListMusicPlayer.ViewHolder> {
@@ -584,5 +319,15 @@ public class FragmentMediaPlayer extends BaseFragment {
 
     }
 
+
+
+
+    public interface OnBackFragment {
+        void onBack();
+    }
+
+    public interface OnSetImage {
+        void setImage();
+    }
 
 }

@@ -1,243 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ac_layout_call_root"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_call_fragment"
-    android:clickable="true"
-    android:layoutDirection="ltr"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix"
     >
+  <data>
 
+    <import type="android.view.View" />
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="activityCallViewModel"
+        type="net.iGap.viewmodel.ActivityCallViewModel"
+        />
+  </data>
 
-  <FrameLayout
-      android:id="@+id/ac_layout_main_call"
+  <LinearLayout
+      android:id="@+id/ac_layout_call_root"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@drawable/background_call_fragment"
+      android:clickable="true"
+      android:layoutDirection="ltr"
+      android:orientation="vertical"
+      tools:ignore="MissingPrefix"
       >
 
-    <ImageView
-        android:id="@+id/fcr_imv_background"
+
+    <FrameLayout
+        android:id="@+id/ac_layout_main_call"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha=".5"
-        android:background="#00B0BF"
-        android:scaleType="centerCrop"
-        />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp20"
-        android:orientation="vertical"
         >
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp16"
-          android:singleLine="true"
-          android:text="@string/call_name"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="#f8f4df"
-
-          android:textSize="@dimen/dp22"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-
+      <ImageView
+          android:id="@+id/fcr_imv_background"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:alpha=".5"
+          android:background="#00B0BF"
+          android:scaleType="centerCrop"
           />
 
-      <TextView
-          android:id="@+id/fcr_txt_name"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:singleLine="true"
-          android:text="Name"
-          android:textColor="#f8f4df"
-          android:textSize="@dimen/dp22"
-          android:textStyle="bold"
-          />
+
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:gravity="center_vertical"
-          android:orientation="horizontal"
+          android:layout_height="match_parent"
+          android:layout_margin="@dimen/dp20"
+          android:orientation="vertical"
           >
+
         <TextView
-            android:id="@+id/fcr_txt_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status"
+            android:layout_marginTop="@dimen/dp16"
+            android:singleLine="true"
+            android:text="@string/call_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#f8f4df"
+
+            android:textSize="@dimen/dp22"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+
             />
+
         <TextView
-            android:id="@+id/fcr_txt_avi"
+            android:id="@+id/fcr_txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp12"
-            android:text="..."
+            android:singleLine="true"
+            android:text="@{activityCallViewModel.callBackTxtName ,default = Name}"
             android:textColor="#f8f4df"
-            android:textSize="@dimen/dp18"
+            android:textSize="@dimen/dp22"
+            android:textStyle="bold"
             />
-
-
-      </LinearLayout>
-
-      <TextView
-          android:id="@+id/fcr_txt_timer"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="00:00"
-          android:textColor="#f8f4df"
-          android:visibility="gone"
-          />
-
-
-
-
-      <LinearLayout
-          android:id="@+id/fcr_layout_caller"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:layout_marginBottom="@dimen/dp20"
-          android:gravity="center|bottom"
-          android:orientation="horizontal"
-          >
-
-
-        <FrameLayout
-            android:id="@+id/fcr_layout_chat_call_end"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
-
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/fcr_btn_end"
-              android:layout_width="@dimen/dp60"
-              android:layout_height="@dimen/dp60"
-              android:layout_gravity="bottom"
-              android:background="@drawable/circle_red"
-              android:gravity="center"
-              android:text="@string/md_call_end"
-              android:textAppearance="@style/TextIconAppearance.all"
-              android:textColor="@color/white"
-              />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fcr_layout_answer_call"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
-
-          <net.iGap.module.AvlDirectCall
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:layout_marginTop="@dimen/dp68"
-              android:orientation="vertical"
-              ></net.iGap.module.AvlDirectCall>
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/fcr_btn_call"
-              android:layout_width="@dimen/dp60"
-              android:layout_height="@dimen/dp60"
-              android:layout_gravity="bottom"
-              android:background="@drawable/circle_green"
-              android:gravity="center"
-              android:layout_marginLeft="@dimen/dp40"
-              android:layout_marginRight="@dimen/dp40"
-              android:text="@string/md_phone"
-              android:textAppearance="@style/TextIconAppearance.all"
-              android:textColor="@color/white"
-              />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fcr_layout_chat_call"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/fcr_btn_circle_chat"
-              android:layout_width="@dimen/dp60"
-              android:layout_height="@dimen/dp60"
-              android:layout_gravity="bottom"
-
-              android:background="@drawable/circle_white"
-              android:gravity="center"
-              android:text="@string/md_chat"
-              android:textAppearance="@style/TextIconAppearance.all"
-              android:textColor="@color/gray"
-              />
-
-
-        </FrameLayout>
-
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/fcr_layout_option"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp40"
-          android:layout_marginTop="@dimen/dp20"
-          android:gravity="center"
-          android:orientation="horizontal"
-          android:visibility="visible"
-          >
-        <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/fcr_btn_mic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/md_mic"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp28"
-            />
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/fcr_btn_chat"
+          <TextView
+              android:id="@+id/fcr_txt_status"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@string/md_chat"
-              android:textAppearance="@style/TextIconAppearance.all"
-              android:textColor="@color/white"
-              android:textSize="@dimen/dp28"
+              android:text="@{activityCallViewModel.callBackTxtStatus ,default = Status}"
+              android:textColor="#f8f4df"
               />
+          <TextView
+              android:id="@+id/fcr_txt_avi"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp12"
+              android:text="..."
+              android:textColor="#f8f4df"
+              android:textSize="@dimen/dp18"
+              android:visibility="@{activityCallViewModel.txtAviVisibility , default = visible}"
+              />
+
 
         </LinearLayout>
 
-
-        <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/fcr_btn_speaker"
+        <TextView
+            android:id="@+id/fcr_txt_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/md_Mute"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp28"
+            android:text="@{activityCallViewModel.callBackTxtTimer}"
+            android:textColor="#f8f4df"
+            android:visibility="@{activityCallViewModel.txtTimerVisibility , default = gone}"
             />
+
+
+        <LinearLayout
+            android:id="@+id/fcr_layout_caller"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/dp20"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="horizontal"
+            >
+
+
+          <FrameLayout
+              android:id="@+id/fcr_layout_chat_call_end"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              >
+
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/fcr_btn_end"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:layout_gravity="bottom"
+                android:background="@drawable/circle_red"
+                android:gravity="center"
+                android:text="@string/md_call_end"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@color/white"
+                />
+
+          </FrameLayout>
+
+          <FrameLayout
+              android:id="@+id/fcr_layout_answer_call"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:visibility="@{activityCallViewModel.layoutAnswerCallVisibility, default = visible}"
+              >
+
+            <net.iGap.module.AvlDirectCall
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp68"
+                android:orientation="vertical"
+                />
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/fcr_btn_call"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp40"
+                android:background="@drawable/circle_green"
+                android:gravity="center"
+                android:text="@string/md_phone"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@color/white"
+                />
+          </FrameLayout>
+
+          <FrameLayout
+              android:id="@+id/fcr_layout_chat_call"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:visibility="@{activityCallViewModel.layoutChatCallVisibility , default = visible}"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/fcr_btn_circle_chat"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:layout_gravity="bottom"
+                android:background="@drawable/circle_white"
+                android:gravity="center"
+                android:text="@string/md_chat"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@color/gray"
+                />
+
+
+          </FrameLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fcr_layout_option"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginTop="@dimen/dp20"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="@{activityCallViewModel.layoutOptionVisibility, default = visible}"
+            >
+          <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/fcr_btn_mic"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:onClick="@{activityCallViewModel::onClickBtnMic}"
+              android:text="@{activityCallViewModel.cllBackBtnMic , default = @string/md_mic}"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="@color/white"
+              android:textSize="@dimen/dp28"
+
+              />
+
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:id="@+id/fcr_btn_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{activityCallViewModel::onClickBtnChat}"
+                android:text="@string/md_chat"
+                android:textAppearance="@style/TextIconAppearance.all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp28"
+                />
+
+          </LinearLayout>
+
+
+          <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/fcr_btn_speaker"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:onClick="@{activityCallViewModel::onClickBtnSpeaker}"
+              android:text="@{activityCallViewModel.cllBackBtnSpeaker , default = @string/md_Mute}"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textColor="@color/white"
+              android:textSize="@dimen/dp28"
+
+              />
+        </LinearLayout>
       </LinearLayout>
-
-
-    </LinearLayout>
-
-
-  </FrameLayout>
-
-
-</LinearLayout>
+    </FrameLayout>
+  </LinearLayout>
+</layout>

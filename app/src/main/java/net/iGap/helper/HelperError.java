@@ -19,6 +19,12 @@ import net.iGap.module.LoginActions;
 
 public class HelperError {
 
+    /**
+     * show all error in app
+     */
+
+    private static final int needTime = 5000;
+    private static long currentTime;
     public static String getErrorFromCode(int majorCode, int minorCode) {
 
         String error = "";
@@ -162,16 +168,13 @@ public class HelperError {
                 break;
 
             case 213:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_213);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_213);
                 break;
             case 214:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_214);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_214);
                 break;
             case 218:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_218);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_218);
                 break;
             case 219:
                 error = G.fragmentActivity.getResources().getString(R.string.E_219);
@@ -287,8 +290,7 @@ public class HelperError {
                 }
                 break;
             case 331:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_331);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_331);
                 break;
             case 332:
                 if (minorCode == 1) {
@@ -299,23 +301,19 @@ public class HelperError {
                 break;
 
             case 333:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_333);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_333);
                 break;
             case 334:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_334);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_334);
                 break;
             case 335:
                 error = G.fragmentActivity.getResources().getString(R.string.E_335);
                 break;
             case 336:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_336);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_336);
                 break;
             case 337:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_337);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_337);
                 break;
 
 
@@ -330,6 +328,16 @@ public class HelperError {
             case 375:
                 //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 375;
                 break;
+
+            case 379:
+                if (currentTime + needTime < System.currentTimeMillis()) { // show error each 5 secend
+                    error = G.fragmentActivity.getResources().getString(R.string.E_379);
+                }
+                currentTime = System.currentTimeMillis();
+
+
+                break;
+
 
             case 453:
                 //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 453;
@@ -359,18 +367,31 @@ public class HelperError {
             case 469:
                 //error = G.fragmentActivity.getResources().getString(R.string.normal_error) + 469 + " minor : " + minorCode;
                 break;
+            case 405:
+                if (currentTime + needTime < System.currentTimeMillis()) { // show error each 5 secend
+                    error = G.fragmentActivity.getResources().getString(R.string.E_478);
+                }
+                currentTime = System.currentTimeMillis();
+
+                break;
+
+            case 478:
+                if (currentTime + needTime < System.currentTimeMillis()) { // show error each 5 secend
+                    error = G.fragmentActivity.getResources().getString(R.string.E_478);
+                }
+                currentTime = System.currentTimeMillis();
+
+
+                break;
 
             case 500:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
             case 502:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
             case 503:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.Toast_Location_Not_Found);
                 break;
 
             case 610:
@@ -406,20 +427,17 @@ public class HelperError {
                 error = "";// G.fragmentActivity.getResources().getString(R.string.there_is_no_sheared_media);
                 break;
             case 623:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_623);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_623);
                 break;
             case 629:
                 if (minorCode == 1) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 } else if (minorCode == 2) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
-                } else if (minorCode == 3)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                } else if (minorCode == 3) error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 break;
             case 638:
-                if (minorCode == 1)
-                    error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
+                if (minorCode == 1) error = G.fragmentActivity.getResources().getString(R.string.E_713_1);
                 break;
 
             case 658:

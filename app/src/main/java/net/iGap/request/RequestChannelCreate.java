@@ -17,7 +17,7 @@ public class RequestChannelCreate {
     public void channelCreate(String name, String description) {
         ProtoChannelCreate.ChannelCreate.Builder builder = ProtoChannelCreate.ChannelCreate.newBuilder();
         builder.setName(name);
-        builder.setDescription(description);
+        builder.setDescription(description.trim());
 
         RequestWrapper requestWrapper = new RequestWrapper(400, builder, name); // set name as identity because client need channel name for show correct log message.
         try {

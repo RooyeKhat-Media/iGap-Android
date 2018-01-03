@@ -14,6 +14,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+/**
+ * this class user for load more item when scroll recyclerView and close to end
+ */
+
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
 
     // The minimum amount of items to have below your current scroll position

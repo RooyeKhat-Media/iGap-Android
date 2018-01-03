@@ -19,7 +19,7 @@ public class RequestGroupEdit {
         ProtoGroupEdit.GroupEdit.Builder builder = ProtoGroupEdit.GroupEdit.newBuilder();
         builder.setRoomId(roomId);
         builder.setName(name);
-        builder.setDescription(description);
+        builder.setDescription(description.trim());
 
         RequestWrapper requestWrapper = new RequestWrapper(305, builder);
         try {

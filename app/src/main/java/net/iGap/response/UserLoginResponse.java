@@ -10,7 +10,6 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperConnectionState;
@@ -18,7 +17,11 @@ import net.iGap.module.enums.ConnectionState;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserLogin;
 import net.iGap.realm.RealmCallConfig;
+import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestSignalingGetConfiguration;
+import net.iGap.request.RequestUserLogin;
+
+import io.realm.Realm;
 
 public class UserLoginResponse extends MessageHandler {
 
@@ -65,6 +68,17 @@ public class UserLoginResponse extends MessageHandler {
     @Override
     public void timeOut() {
         super.timeOut();
+
+        if (G.isSecure) {
+            Realm realm = Realm.getDefaultInstance();
+            RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
+            if (!G.userLogin && userInfo != null && userInfo.getUserRegistrationState()) {
+                new RequestUserLogin().userLogin(userInfo.getToken());
+            }
+            realm.close();
+        } else {
+            WebSocketClient.getInstance().disconnect();
+        }
     }
 
     @Override

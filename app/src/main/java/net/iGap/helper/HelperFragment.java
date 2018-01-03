@@ -14,6 +14,10 @@ import net.iGap.fragments.FragmentMain;
 
 import static net.iGap.fragments.FragmentCall.OPEN_IN_FRAGMENT_MAIN;
 
+/**
+ * this is helper class for open new fragment
+ */
+
 public class HelperFragment {
 
     private Fragment fragment;
@@ -119,26 +123,34 @@ public class HelperFragment {
             fragmentTransaction.add(resourceContainer, fragment, tag);
         }
 
-        if (stateLoss) {
-            fragmentTransaction.commitAllowingStateLoss();
-        } else {
-            fragmentTransaction.commit();
-        }
+        try {
+            if (stateLoss) {
+                fragmentTransaction.commitAllowingStateLoss();
+            } else {
+                fragmentTransaction.commit();
+            }
 
-        if (G.oneFragmentIsOpen != null && G.twoPaneMode) {
-            G.oneFragmentIsOpen.justOne();
+            if (G.oneFragmentIsOpen != null && G.twoPaneMode) {
+                G.oneFragmentIsOpen.justOne();
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 
     public void remove() {
-        if (fragment == null) {
-            return;
-        }
-        G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        G.fragmentActivity.getSupportFragmentManager().popBackStack();
+        try {
+            if (fragment == null) {
+                return;
+            }
+            G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            G.fragmentActivity.getSupportFragmentManager().popBackStack();
 
-        if (G.iTowPanModDesinLayout != null) {
-            G.iTowPanModDesinLayout.onLayout(ActivityMain.chatLayoutMode.none);
+            if (G.iTowPanModDesinLayout != null) {
+                G.iTowPanModDesinLayout.onLayout(ActivityMain.chatLayoutMode.none);
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 

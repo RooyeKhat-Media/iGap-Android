@@ -984,7 +984,7 @@ public class ViewMaker {
         LinearLayout csliwt_layout_container_message = new LinearLayout(G.context);
         csliwt_layout_container_message.setId(R.id.csliwt_layout_container_message);
         csliwt_layout_container_message.setOrientation(HORIZONTAL);
-        LinearLayout.LayoutParams layout_992 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layout_992 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp220), LinearLayout.LayoutParams.WRAP_CONTENT); // before width was -> LinearLayout.LayoutParams.MATCH_PARENT, for fix text scroll changed it
         csliwt_layout_container_message.setLayoutParams(layout_992);
         m_container.addView(csliwt_layout_container_message);
         contentContainer.addView(m_container);
@@ -1106,7 +1106,7 @@ public class ViewMaker {
         setLayoutDirection(linearLayout_784, View.LAYOUT_DIRECTION_LTR);
         linearLayout_784.setOrientation(HORIZONTAL);
         linearLayout_784.setPadding(0, 0, (int) G.context.getResources().getDimension(R.dimen.messageContainerPadding), 0);
-        LinearLayout.LayoutParams layout_419 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layout_419 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layout_419.gravity = CENTER;
         linearLayout_784.setLayoutParams(layout_419);
 

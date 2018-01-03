@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+      name="FragmentNotificationAndSoundViewModel"
+      type="net.iGap.viewmodel.FragmentNotificationAndSoundViewModel" />
+  </data>
+
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:clickable="true"
-    tools:ignore="MissingPrefix"
-    >
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
-
-  <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+      android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
+      <android.support.v7.widget.Toolbar
         android:id="@+id/asn_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
         android:layoutDirection="ltr"
         android:padding="0dp"
         app:contentInsetLeft="0dp"
@@ -27,77 +37,71 @@
 
         >
 
-      <RelativeLayout
+        <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="horizontal"
-          >
+          android:orientation="horizontal">
 
-        <net.iGap.libs.rippleeffect.RippleView
+          <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/stns_ripple_back"
+            rv_centered="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:rv_alpha="200"
             app:rv_centered="true"
             app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+            app:rv_ripplePadding="5dp">
 
-          <net.iGap.module.MaterialDesignTextView
+            <net.iGap.module.MaterialDesignTextView
               android:id="@+id/stns_txt_back"
               android:layout_width="@dimen/dp52"
               android:layout_height="match_parent"
               android:gravity="center"
               android:text="@string/md_back_arrow"
               android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-        </net.iGap.libs.rippleeffect.RippleView>
+              android:textColor="@color/whit_background" />
+          </net.iGap.libs.rippleeffect.RippleView>
 
-        <TextView
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/stns_ripple_back"
+            android:layout_toRightOf="@+id/stns_ripple_back"
             android:gravity="center"
             android:text="@string/st_titleToolbar_page_Notification_and_sounds"
             android:textColor="@color/whit_background"
             android:textSize="@dimen/dp18"
             android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            />
+            android:visibility="visible" />
 
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
 
-  </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>
 
 
-  <ScrollView
+    <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+      android:layout_height="match_parent">
 
       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@android:color/white"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+          android:visibility="visible">
 
-        <net.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -106,23 +110,22 @@
             android:text="@string/st_title_messageNotification"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickAlertMessage}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_alert"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -131,42 +134,44 @@
               android:text="@string/st_alert"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_alert"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isAlertMassage}"
               android:gravity="start"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.setAlertMassage(checked)}"
               android:textOff=""
-              android:textOn=""
-              />
+              android:textOn="" />
+            <!--android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedAlertMessage(checked)}"-->
+            <!--android:onCheckedChanged="@{() -> FragmentNotificationAndSoundViewModel.setAlertMassage(checked)}"-->
 
-        </LinearLayout>
+
+          </LinearLayout>
 
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickMessagePreView}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_messagePreview"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -175,53 +180,52 @@
               android:text="@string/st_messagePreview"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_messagePreview"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isMassagePreview}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedMassagePreview(checked)}"
               android:textOff=""
               android:textOn=""
+
               />
 
-        </LinearLayout>
+          </LinearLayout>
 
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_ledColorMessage"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:gravity="center_vertical"
+              android:onClick="@{FragmentNotificationAndSoundViewModel::onClickLedColorMessage}"
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_led_color"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
 
-          <ImageView
+            <ImageView
               android:id="@+id/stns_img_ledColorMessage"
               android:layout_width="@dimen/dp24"
               android:layout_height="@dimen/dp24"
@@ -229,27 +233,26 @@
               android:layout_marginLeft="@dimen/dp16"
               android:layout_marginRight="@dimen/dp16"
               android:background="@drawable/circle_color_notificatin_setting"
-              android:gravity="center"
-              />
+              android:gravity="center" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_vibrate_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickVibrationMessage}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -257,41 +260,38 @@
               android:text="@string/st_vibrate"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_vibrate_message_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+              android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateMessage , default=@string/array_Default}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_popupNotification_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickPopUpNotificationMessage}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -299,41 +299,38 @@
               android:text="@string/st_popupNotification"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_popupNotification_message_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+              android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationMessage , default=@string/st_sound}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_sound_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickSoundMessage}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -341,40 +338,37 @@
               android:text="@string/st_sound"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_sound_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+              android:text="@{FragmentNotificationAndSoundViewModel.callbackSoundMessage , default = @string/st_sound}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
+
+          </LinearLayout>
 
         </LinearLayout>
 
-      </LinearLayout>
 
-
-      <!--group-->
-      <LinearLayout
+        <!--group-->
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/st_background2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+          android:visibility="visible">
 
-        <net.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -383,67 +377,64 @@
             android:text="@string/st_title_groupNotification"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickAlertGroup}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_alert_group"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
               android:gravity="center_vertical"
-
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_alert"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_alert_group"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isAlertGroup}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedAlertGroup(checked)}"
               android:textOff=""
-              android:textOn=""
-              />
+              android:textOn="" />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickMessagePreViewGroup}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_messagePreview_group"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -452,36 +443,35 @@
               android:text="@string/st_messagePreview"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_messagePreview_group"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isMessagePreViewGroup}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedMessagePreViewGroup(checked)}"
               android:textOff=""
-              android:textOn=""
-              />
+              android:textOn="" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_ledColor_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickLedGroup}"
+            android:orientation="horizontal">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -492,11 +482,9 @@
               android:text="@string/st_led_color"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ImageView
+            <ImageView
               android:id="@+id/stns_img_ledColor_group"
               android:layout_width="@dimen/dp24"
               android:layout_height="@dimen/dp24"
@@ -504,27 +492,26 @@
               android:layout_marginLeft="@dimen/dp16"
               android:layout_marginRight="@dimen/dp16"
               android:background="@drawable/circle_color_notificatin_setting"
-              android:gravity="center"
-              />
+              android:gravity="center" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_vibrate_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickVibrationGroup}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -532,41 +519,38 @@
               android:text="@string/st_vibrate"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_vibrate_group_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+              android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateGroup , default=@string/array_Default}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_popupNotification_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickPopUpNotificationGroup}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -574,41 +558,38 @@
               android:text="@string/st_popupNotification"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_popupNotification_group_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+              android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationGroup,default = @string/st_sound}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/stns_layout_sound_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickSoundGroup}"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -616,39 +597,39 @@
               android:text="@string/st_sound"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_sound_group_text"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
+
+              android:text="@{FragmentNotificationAndSoundViewModel.callBackSoundGroup , default =@string/st_sound}"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
               android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
+
               />
 
+          </LinearLayout>
         </LinearLayout>
-      </LinearLayout>
 
 
-      <!--in app notification-->
-      <LinearLayout
+        <!--in app notification-->
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@android:color/white"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+          android:visibility="visible">
 
-        <net.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -657,24 +638,23 @@
             android:text="@string/st_title_in_app_notification"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickInAppSound}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_app_sound"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -683,41 +663,44 @@
               android:text="@string/st_in_app_sound"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_app_sound"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isAppSound}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedAppSound(checked)}"
               android:textOff=""
               android:textOn=""
+
               />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickInAppVibration}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
+
             >
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_app_vibrate"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -726,86 +709,88 @@
               android:text="@string/st_in_app_vibrate"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_app_vibrate"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isInAppVibration}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedInAppVibration(checked)}"
               android:textOff=""
               android:textOn=""
+
               />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickInAppPreView}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_app_preview"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:gravity="center_vertical"
 
+              android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_preview"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_app_preview"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isInAppPreView}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedInAppPreView(checked)}"
               android:textOff=""
               android:textOn=""
+
               />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickSoundInChat}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_chat_sound"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
@@ -814,35 +799,36 @@
               android:text="@string/st_in_chat_sound"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_chat_sound"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isSoundInChat}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedSoundInChat(checked)}"
               android:textOff=""
               android:textOn=""
+
               />
 
 
+          </LinearLayout>
         </LinearLayout>
-      </LinearLayout>
 
-      <!--this part is Gone-->
-      <LinearLayout
+        <!--this part is Gone-->
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/st_background2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
-          android:visibility="gone"
-          >
+          android:visibility="gone">
 
-        <TextView
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -851,84 +837,76 @@
             android:text="@string/st_title_Events"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_Contact_joined"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
               android:layout_weight="1"
-              android:gravity="center_vertical"
 
+              android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_Contact_joined_igap"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_Contact_joined"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
               android:textOff=""
-              android:textOn=""
-              />
+              android:textOn="" />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+            android:background="@color/background_editText" />
 
-        <RelativeLayout
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
-          <LinearLayout
+            <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
+              android:layout_centerInParent="true">
 
-            <ToggleButton
+              <ToggleButton
                 android:id="@+id/stns_toggle_pinned_message"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="@dimen/dp40"
                 android:background="@drawable/st_switch_button"
                 android:textOff=""
-                android:textOn=""
-                />
-          </LinearLayout>
+                android:textOn="" />
+            </LinearLayout>
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_pinned_message"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_centerInParent="true"
@@ -937,25 +915,24 @@
               android:text="@string/st_pinned_message"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
 
-        </RelativeLayout>
-      </LinearLayout>
+          </RelativeLayout>
+        </LinearLayout>
 
-      <LinearLayout
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/st_background2"
+          android:onClick="@{FragmentNotificationAndSoundViewModel::onClickKeepService}"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+          android:visibility="visible">
 
-        <net.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -964,13 +941,12 @@
             android:text="@string/st_title_other"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
 
-        <TextView
+          <TextView
             android:id="@+id/stns_txt_title_keep_alive_service"
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="@dimen/dp16"
@@ -980,12 +956,10 @@
             android:text="@string/st_keep_alive_service"
             android:textColor="@color/black_register"
             android:textSize="@dimen/dp16"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
+            android:textStyle="normal" />
 
 
-        <LinearLayout
+          <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -993,12 +967,12 @@
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+            android:paddingStart="@dimen/dp16">
 
 
-          <com.uncopt.android.widget.text.justify.JustifiedTextView
+            <com.uncopt.android.widget.text.justify.JustifiedTextView
               android:id="@+id/stns_txt_keep_alive_service"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
@@ -1006,32 +980,30 @@
               android:text="@string/st_text_keep_alive_service"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <ToggleButton
+            <ToggleButton
               android:id="@+id/stns_toggle_keep_alive_service"
               android:layout_width="@dimen/dp40"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
+              android:checked="@{FragmentNotificationAndSoundViewModel.isKeepService}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.onCheckedChangedKeepService(checked)}"
               android:textOff=""
-              android:textOn=""
-              />
+              android:textOn="" />
 
 
-        </LinearLayout>
+          </LinearLayout>
 
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
-        <!--this part is Gone-->
-        <RelativeLayout
+          <!--this part is Gone-->
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -1040,41 +1012,38 @@
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
-          <LinearLayout
+            <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
+              android:layout_centerInParent="true">
 
-            <ToggleButton
+              <ToggleButton
                 android:id="@+id/stns_toggle_background_connection"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="@dimen/dp40"
                 android:background="@drawable/st_switch_button"
                 android:textOff=""
-                android:textOn=""
-                />
+                android:textOn="" />
 
-          </LinearLayout>
+            </LinearLayout>
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_title_background_connection"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/st_background_connection"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_background_connection"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@+id/stns_txt_title_background_connection"
@@ -1084,22 +1053,19 @@
               android:text="@string/st_text_background_connection"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
 
-        </RelativeLayout>
+          </RelativeLayout>
 
-        <View
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
-        <!--this part is Gone-->
-        <RelativeLayout
+          <!--this part is Gone-->
+          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:orientation="horizontal"
@@ -1107,29 +1073,27 @@
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
-          <LinearLayout
+            <LinearLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
+              android:layout_centerInParent="true">
 
-            <ToggleButton
+              <ToggleButton
                 android:id="@+id/stns_badge_counter"
                 android:layout_width="@dimen/dp40"
                 android:layout_height="@dimen/dp40"
                 android:background="@drawable/st_switch_button"
                 android:textOff=""
-                android:textOn=""
-                />
-          </LinearLayout>
+                android:textOn="" />
+            </LinearLayout>
 
-          <TextView
+            <TextView
               android:id="@+id/stns_txt_badge_countent"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_centerInParent="true"
@@ -1138,33 +1102,30 @@
               android:text="@string/st_badge_counter"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-        </RelativeLayout>
+          </RelativeLayout>
 
-        <!--this part is Gone-->
-        <View
+          <!--this part is Gone-->
+          <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
 
-        <!--this part is Gone-->
-        <LinearLayout
+          <!--this part is Gone-->
+          <LinearLayout
             android:id="@+id/st_layout_Repeat_Notifications"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
@@ -1172,12 +1133,11 @@
               android:text="@string/st_Repeat_Notifications"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
               android:id="@+id/st_txt_Repeat_Notifications"
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
@@ -1185,24 +1145,22 @@
               android:text="@string/st_sound"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
+          </LinearLayout>
         </LinearLayout>
-      </LinearLayout>
 
-      <LinearLayout
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@color/white"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp16"
           android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+          android:visibility="visible">
 
-        <net.iGap.module.HeaderTextview
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -1211,43 +1169,39 @@
             android:text="@string/st_title_reset"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:textStyle="normal" />
 
-        <LinearLayout
+          <LinearLayout
             android:id="@+id/st_layout_reset_all_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:paddingRight="@dimen/dp16">
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:text="@string/st_reset_all_notification"
               android:textColor="@color/black_register"
               android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
-          <TextView
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical|top"
               android:text="@string/st_text_reset_all_notification"
               android:textColor="@color/cardview_dark_background"
               android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+              android:textStyle="normal" />
 
+          </LinearLayout>
         </LinearLayout>
       </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
-</LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+</layout>

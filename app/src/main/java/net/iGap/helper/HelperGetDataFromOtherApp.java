@@ -23,6 +23,10 @@ import java.util.Set;
 import net.iGap.G;
 import net.iGap.activities.ActivityMain;
 
+/**
+ * this class use when get share file in another app
+ */
+
 public class HelperGetDataFromOtherApp {
 
     public static boolean hasSharedData = false;

@@ -158,6 +158,11 @@ public class FragmentShowAvatars extends BaseFragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onAttach(Context context) {
         if (appBarLayout != null) appBarLayout.setVisibility(View.GONE);
 

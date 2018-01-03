@@ -12,23 +12,20 @@ package net.iGap.module;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
-import android.util.Log;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
+import java.util.ArrayList;
+import java.util.List;
 import net.iGap.G;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * work with saved contacts in database
@@ -95,7 +92,7 @@ public class Contacts {
     }
 
     public static void getPhoneContactForServer() { //get List Of Contact
-        if (!HelperPermision.grantedContactPermission()) {
+        if (!HelperPermission.grantedContactPermission()) {
             return;
         }
 
@@ -108,86 +105,91 @@ public class Contacts {
         String startContactId = ">=" + onlinePhoneContactId;
         String selection = ContactsContract.Contacts._ID + startContactId;
 
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);
+        try {
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);
 
-        if (cur != null) {
-            if (cur.getCount() > 0) {
-                while (cur.moveToNext()) {
-                    int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                    onlinePhoneContactId = contactId + 1;
-                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
+            if (cur != null) {
+                if (cur.getCount() > 0) {
+                    while (cur.moveToNext()) {
+                        int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                        onlinePhoneContactId = contactId + 1;
+                        if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
 
-                        if (pCur != null) {
-                            while (pCur.moveToNext()) {
-                                Log.i("III", "name : " + cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
-                                StructListOfContact itemContact = new StructListOfContact();
-                                itemContact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
-                                itemContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                contactList.add(itemContact);
+                            if (pCur != null) {
+                                while (pCur.moveToNext()) {
+                                    StructListOfContact itemContact = new StructListOfContact();
+                                    itemContact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+                                    itemContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                                    contactList.add(itemContact);
+                                }
+                                pCur.close();
                             }
-                            pCur.close();
                         }
+                        fetchCount++;
                     }
-                    fetchCount++;
+                }
+                cur.close();
+            }
+
+            if (fetchCount < PHONE_CONTACT_FETCH_LIMIT) {
+                isEnd = true;
+            }
+
+            ArrayList<StructListOfContact> resultContactList = new ArrayList<>();
+            for (int i = 0; i < contactList.size(); i++) {
+
+                if (contactList.get(i).getPhone() != null && contactList.get(i).getDisplayName() != null) {
+                    StructListOfContact itemContact = new StructListOfContact();
+                    String[] sp = contactList.get(i).getDisplayName().split(" ");
+                    if (sp.length == 1) {
+
+                        itemContact.setFirstName(sp[0]);
+                        itemContact.setLastName("");
+                        itemContact.setPhone(contactList.get(i).getPhone());
+                        itemContact.setDisplayName(contactList.get(i).displayName);
+                    } else if (sp.length == 2) {
+                        itemContact.setFirstName(sp[0]);
+                        itemContact.setLastName(sp[1]);
+                        itemContact.setPhone(contactList.get(i).getPhone());
+                        itemContact.setDisplayName(contactList.get(i).displayName);
+                    } else if (sp.length == 3) {
+                        itemContact.setFirstName(sp[0]);
+                        itemContact.setLastName(sp[1] + sp[2]);
+                        itemContact.setPhone(contactList.get(i).getPhone());
+                        itemContact.setDisplayName(contactList.get(i).displayName);
+                    } else if (sp.length >= 3) {
+                        itemContact.setFirstName(contactList.get(i).getDisplayName());
+                        itemContact.setLastName("");
+                        itemContact.setPhone(contactList.get(i).getPhone());
+                        itemContact.setDisplayName(contactList.get(i).displayName);
+                    }
+
+                    resultContactList.add(itemContact);
                 }
             }
-            cur.close();
-        }
 
-        if (fetchCount < PHONE_CONTACT_FETCH_LIMIT) {
-            isEnd = true;
-        }
-
-        ArrayList<StructListOfContact> resultContactList = new ArrayList<>();
-        for (int i = 0; i < contactList.size(); i++) {
-
-            if (contactList.get(i).getPhone() != null && contactList.get(i).getDisplayName() != null) {
-                StructListOfContact itemContact = new StructListOfContact();
-                String[] sp = contactList.get(i).getDisplayName().split(" ");
-                if (sp.length == 1) {
-
-                    itemContact.setFirstName(sp[0]);
-                    itemContact.setLastName("");
-                    itemContact.setPhone(contactList.get(i).getPhone());
-                    itemContact.setDisplayName(contactList.get(i).displayName);
-                } else if (sp.length == 2) {
-                    itemContact.setFirstName(sp[0]);
-                    itemContact.setLastName(sp[1]);
-                    itemContact.setPhone(contactList.get(i).getPhone());
-                    itemContact.setDisplayName(contactList.get(i).displayName);
-                } else if (sp.length == 3) {
-                    itemContact.setFirstName(sp[0]);
-                    itemContact.setLastName(sp[1] + sp[2]);
-                    itemContact.setPhone(contactList.get(i).getPhone());
-                    itemContact.setDisplayName(contactList.get(i).displayName);
-                } else if (sp.length >= 3) {
-                    itemContact.setFirstName(contactList.get(i).getDisplayName());
-                    itemContact.setLastName("");
-                    itemContact.setPhone(contactList.get(i).getPhone());
-                    itemContact.setDisplayName(contactList.get(i).displayName);
-                }
-
-                resultContactList.add(itemContact);
+            if (G.onContactFetchForServer != null) {
+                G.onContactFetchForServer.onFetch(resultContactList);
             }
-        }
 
-        if (G.onContactFetchForServer != null) {
-            G.onContactFetchForServer.onFetch(resultContactList);
-        }
-
-        if (!isEnd) {
-            G.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    new FetchContactForServer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            }, 100);
+            if (!isEnd) {
+                G.handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        new FetchContactForServer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }, 100);
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 
     public static void getPhoneContactForClient() { //get List Of Contact
-        if (!HelperPermision.grantedContactPermission()) {
+        if (!HelperPermission.grantedContactPermission()) {
             return;
         }
 

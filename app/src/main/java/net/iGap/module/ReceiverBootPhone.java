@@ -18,6 +18,10 @@ import net.iGap.WebSocketClient;
 
 public class ReceiverBootPhone extends BroadcastReceiver {
 
+    /**
+     * after the user has finished booting perform  this method
+     */
+
     @Override public void onReceive(Context context, Intent intent) {
         Log.i("OOO", "onReceive");
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {

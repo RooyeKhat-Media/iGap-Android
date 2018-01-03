@@ -1432,6 +1432,11 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState); //No call for super(). Bug on API Level > 11.
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 

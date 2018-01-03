@@ -35,7 +35,6 @@ public class QrCodeNewDeviceResponse extends MessageHandler {
         builder.getExpireTime();
 
         if (G.onQrCodeNewDevice != null) {
-
             G.onQrCodeNewDevice.getQrCode(builder.getQrCodeImage(), builder.getExpireTime() - builder.getResponse().getTimestamp());
         }
     }

@@ -32,7 +32,7 @@ import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperError;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnSmsReceive;
@@ -100,7 +100,7 @@ public class FragmentDeleteAccount extends BaseFragment {
         });
 
         try {
-            HelperPermision.getSmsPermision(G.fragmentActivity, new OnGetPermission() {
+            HelperPermission.getSmsPermision(G.fragmentActivity, new OnGetPermission() {
                 @Override
                 public void Allow() {
                     G.fragmentActivity.registerReceiver(smsReceiver, filter);

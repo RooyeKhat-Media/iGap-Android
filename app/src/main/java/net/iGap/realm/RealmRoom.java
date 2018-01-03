@@ -1028,7 +1028,7 @@ public class RealmRoom extends RealmObject {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                 if (realmRoom != null) {
                     realmRoom.setActionState(action, userId);
                 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+  <data>
+
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="activityEnterPassCodeViewModel"
+        type="net.iGap.viewmodel.ActivityEnterPassCodeViewModel"
+        />
+  </data>
+
+
+  <RelativeLayout
+      android:id="@+id/mainRootEnterPassword"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/green"
+      android:clickable="true"
+      android:elevation="1999dp"
+      android:orientation="vertical"
+      tools:ignore="MissingPrefix"
+      >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_centerVertical="true"
+          android:layout_gravity="center"
+          android:orientation="vertical"
+          android:visibility="visible"
+          >
+
+        <ImageView
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_passcode"
+            />
+
+
+        <TextView
+            android:id="@+id/setPassword_txtSetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:gravity="center"
+            android:text="@string/Unlock_with_your_passcode"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp18"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/enterPassword_rippleOk"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="right"
+              android:textDirection="rtl"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              android:onClick="@{activityEnterPassCodeViewModel::rippleOk}"
+              android:visibility="@{activityEnterPassCodeViewModel.rippleOkVisibility}"
+              >
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp52"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="@string/md_check_symbol"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <net.iGap.module.MEditText
+              android:id="@+id/enterPassword_edtSetPassword"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp24"
+              android:layout_marginRight="@dimen/dp24"
+              android:layout_marginTop="@dimen/dp24"
+              android:background="@android:color/transparent"
+              android:focusable="true"
+              android:gravity="center"
+              android:inputType="@{activityEnterPassCodeViewModel.edtSetPasswordInput}"
+              android:maxLength="@{activityEnterPassCodeViewModel.onTextChangedMaxLine}"
+              android:maxLines="1"
+              android:afterTextChanged="@{activityEnterPassCodeViewModel.afterTextChanged}"
+              android:padding="@dimen/dp10"
+              android:singleLine="true"
+              android:text="@={activityEnterPassCodeViewModel.edtSetPassword}"
+              android:textColor="@color/white"
+              android:textCursorDrawable="@drawable/white_cursor_color"
+              android:textSize="@dimen/dp15"
+              />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp24"
+            android:background="@color/white"
+            />
+
+        <TextView
+            android:id="@+id/setPassword_forgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp24"
+            android:gravity="start"
+            android:padding="@dimen/dp10"
+            android:text="@string/forgot_Unlock_with_your_passcode"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp18"
+            android:onClick="@{activityEnterPassCodeViewModel::forgotPassword}"
+
+            />
+
+      </LinearLayout>
+    </ScrollView>
+  </RelativeLayout>
+</layout>

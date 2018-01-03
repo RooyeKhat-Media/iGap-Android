@@ -43,6 +43,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperSaveFile;
 import net.iGap.helper.HelperString;
 import net.iGap.helper.ImageHelper;
 import net.iGap.interfaces.OnColorChangedListenerSelect;
@@ -302,7 +303,7 @@ public class ActivityPaint extends ActivityEnhanced {
             mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
-            f = null;
+            return;
         }
 
         if (send) {
@@ -311,7 +312,8 @@ public class ActivityPaint extends ActivityEnhanced {
             setResult(Activity.RESULT_OK, data);
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.picture_is_saved_en), Toast.LENGTH_SHORT).show();
+            HelperSaveFile.savePicToGallery(f.getAbsolutePath(), true);
+            //Toast.makeText(getApplicationContext(), getString(R.string.picture_is_saved_en), Toast.LENGTH_SHORT).show();
         }
     }
 

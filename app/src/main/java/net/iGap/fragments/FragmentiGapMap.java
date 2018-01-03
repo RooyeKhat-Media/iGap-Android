@@ -54,12 +54,19 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import io.realm.Sort;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -97,7 +104,6 @@ import net.iGap.request.RequestGeoGetNearbyDistance;
 import net.iGap.request.RequestGeoRegister;
 import net.iGap.request.RequestGeoUpdateComment;
 import net.iGap.request.RequestGeoUpdatePosition;
-
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.config.IConfigurationProvider;
@@ -120,17 +126,6 @@ import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.Config.URL_MAP;
@@ -228,15 +223,34 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         G.onMapRegisterState = this;
         G.onMapClose = this;
         G.onGeoGetComment = this;
+
+        attentionDialog();
         startMap(view);
         //clickDrawMarkActive();
 
-        //if (FragmentiGapMap.location != null) {
-        //    getDistanceLoop(0, false);
-        //}
-
         page = 1;
         new RequestGeoGetComment().getComment(userId);
+    }
+
+    private void attentionDialog() {
+
+        SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        if (!sharedPreferences.getBoolean(SHP_SETTING.KEY_MAP_ATTENTION_DIALOG, false)) {
+
+            new MaterialDialog.Builder(G.fragmentActivity).title(R.string.attention).content(R.string.content_attention_dialog).positiveText(R.string.ok).onAny(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(MaterialDialog dialog, DialogAction which) {
+
+                    editor.putBoolean(SHP_SETTING.KEY_MAP_ATTENTION_DIALOG, dialog.isPromptCheckBoxChecked());
+                    editor.apply();
+                }
+            }).checkBoxPromptRes(R.string.dont_ask_again, false, null).show();
+        }
+
+
     }
 
     private void startMap(View view) {
@@ -487,7 +501,11 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 if (newState == SlidingUpPanelLayout.PanelState.DRAGGING && mAdapter != null && mAdapter.getItemCount() == 0) {
-                    getDistanceLoop(0, false);
+                    if (location != null) {
+                        getDistanceLoop(0, false);
+                    } else {
+                        GPSTracker.getGpsTrackerInstance().detectLocation();
+                    }
                 }
             }
         });

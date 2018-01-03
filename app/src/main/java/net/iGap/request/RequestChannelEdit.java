@@ -19,7 +19,7 @@ public class RequestChannelEdit {
         ProtoChannelEdit.ChannelEdit.Builder builder = ProtoChannelEdit.ChannelEdit.newBuilder();
         builder.setRoomId(roomId);
         builder.setName(name);
-        builder.setDescription(description);
+        builder.setDescription(description.trim());
 
         RequestWrapper requestWrapper = new RequestWrapper(405, builder);
         try {

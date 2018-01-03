@@ -12,16 +12,19 @@ package net.iGap.helper;
 
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;
+
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.module.CalendarShamsi;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.TimeUtils;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class HelperCalander {
 
@@ -287,6 +290,13 @@ public class HelperCalander {
         }
 
         return out;
+    }
+
+    public static String unicodeManage(String text) {
+        if (HelperCalander.isPersianUnicode) {
+            return convertToUnicodeFarsiNumber(text);
+        }
+        return text;
     }
 
     public static String getTimeForMainRoom(long time) {

@@ -613,7 +613,7 @@ public class RealmRoomMessage extends RealmObject {
                     public void execute(Realm realm) {
 
                         RealmResults<RealmRoomMessage> realmRoomMessages =
-                                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.SEEN.toString()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.LISTENED.toString()).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+                                realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.SEEN.toString()).notEqualTo(RealmRoomMessageFields.STATUS, ProtoGlobal.RoomMessageStatus.LISTENED.toString()).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.ASCENDING);
                         RealmClientCondition realmClientCondition = realm.where(RealmClientCondition.class).equalTo(RealmClientConditionFields.ROOM_ID, roomId).findFirst();
 
                         int count = 0;
@@ -633,20 +633,23 @@ public class RealmRoomMessage extends RealmObject {
                                         }
                                     } else {
                                         if (G.userLogin) {
-                                            if (ProtoGlobal.RoomMessageStatus.valueOf(roomMessage.getStatus()) == ProtoGlobal.RoomMessageStatus.SENDING) {
-                                                if (compressingFiles != null && compressingFiles.containsKey(roomMessage.messageId)) {
-                                                    return;
-                                                }
-                                                /**
-                                                 * check timeout, because when forward message to room ,message state is sending
-                                                 * and add forward message to Realm from here and finally client have duplicated message
-                                                 */
-                                                if ((System.currentTimeMillis() - roomMessage.getCreateTime()) > Config.TIME_OUT_MS) {
-                                                    if (roomMessage.getAttachment() != null) {
+
+                                            /**
+                                             * check timeout, because when forward message to room ,message state is sending
+                                             * and add forward message to Realm from here and finally client have duplicated message
+                                             */
+                                            if ((System.currentTimeMillis() - roomMessage.getCreateTime()) > Config.TIME_OUT_MS) {
+                                                if (roomMessage.getAttachment() != null) {
+                                                    if (ProtoGlobal.RoomMessageStatus.valueOf(roomMessage.getStatus()) == ProtoGlobal.RoomMessageStatus.SENDING) {
+                                                        if (compressingFiles != null && compressingFiles.containsKey(roomMessage.messageId)) {
+                                                            return;
+                                                        }
                                                         if (!HelperUploadFile.isUploading(roomMessage.getMessageId() + "")) {
                                                             callback.resendMessageNeedsUpload(roomMessage, roomMessage.getMessageId());
                                                         }
-                                                    } else {
+                                                    }
+                                                } else {
+                                                    if (ProtoGlobal.RoomMessageStatus.valueOf(roomMessage.getStatus()) == ProtoGlobal.RoomMessageStatus.SENDING || ProtoGlobal.RoomMessageStatus.valueOf(roomMessage.getStatus()) == ProtoGlobal.RoomMessageStatus.FAILED) {
                                                         callback.resendMessage(roomMessage);
                                                     }
                                                 }

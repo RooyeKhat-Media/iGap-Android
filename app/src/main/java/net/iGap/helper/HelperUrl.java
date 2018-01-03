@@ -29,10 +29,15 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
+import io.realm.Realm;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -52,17 +57,7 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientCheckInviteLink;
 import net.iGap.request.RequestClientJoinByInviteLink;
 import net.iGap.request.RequestClientResolveUsername;
-
 import org.chromium.customtabsclient.CustomTabsActivityHelper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import io.realm.Realm;
-import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
@@ -77,7 +72,7 @@ public class HelperUrl {
         chat, profile
     }
 
-    public static int LinkColor = Color.GRAY;
+    public static int LinkColor = Color.BLUE;
     public static String igapSite2 = "igap.net/";
     public static MaterialDialog dialogWaiting;
     public static String igapResolve = "igap://resolve?";
@@ -187,6 +182,7 @@ public class HelperUrl {
             public void updateDrawState(TextPaint ds) {
                 ds.linkColor = LinkColor;
                 super.updateDrawState(ds);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -248,6 +244,7 @@ public class HelperUrl {
             public void updateDrawState(TextPaint ds) {
                 ds.linkColor = LinkColor;
                 super.updateDrawState(ds);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -278,6 +275,7 @@ public class HelperUrl {
             public void updateDrawState(TextPaint ds) {
                 ds.linkColor = LinkColor;
                 super.updateDrawState(ds);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -345,6 +343,7 @@ public class HelperUrl {
             public void updateDrawState(TextPaint ds) {
                 ds.linkColor = LinkColor;
                 super.updateDrawState(ds);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -416,6 +415,7 @@ public class HelperUrl {
             public void updateDrawState(TextPaint ds) {
                 ds.linkColor = LinkColor;
                 super.updateDrawState(ds);
+                ds.setUnderlineText(false);
             }
         };
 
@@ -712,7 +712,13 @@ public class HelperUrl {
     }
 
     public static void closeDialogWaiting() {
-        if (dialogWaiting != null) if (dialogWaiting.isShowing()) dialogWaiting.dismiss();
+        try {
+            if (dialogWaiting != null && dialogWaiting.isShowing()) {
+                dialogWaiting.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void openChat(String username, ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room, ChatEntry chatEntery) {

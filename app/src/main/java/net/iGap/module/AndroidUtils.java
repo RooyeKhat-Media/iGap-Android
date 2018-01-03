@@ -571,7 +571,9 @@ public final class AndroidUtils {
     public static void closeKeyboard(View v) {
         try {
             InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
         } catch (IllegalStateException e) {
             e.getStackTrace();
         }

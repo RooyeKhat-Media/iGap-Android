@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import net.iGap.R;
 import net.iGap.fragments.FragmentRegister;
 import net.iGap.module.structs.StructCountry;
+import net.iGap.viewmodel.FragmentRegisterViewModel;
 
 public class AdapterDialog extends BaseAdapter implements Filterable {
 
@@ -87,9 +88,9 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
                     FragmentRegister.edtPhoneNumber.setMask("###-###-####");
                 }
                 FragmentRegister.btnChoseCountry.setText((countrylist.get(position).getName()));
-                FragmentRegister.isoCode = countrylist.get(position).getAbbreviation();
-                FragmentRegister.btnOk.performClick();
-                FragmentRegister.dialogChooseCountry.dismiss();
+                FragmentRegisterViewModel.isoCode = countrylist.get(position).getAbbreviation();
+                FragmentRegisterViewModel.btnOk.performClick();
+                FragmentRegisterViewModel.dialogChooseCountry.dismiss();
             }
         });
 

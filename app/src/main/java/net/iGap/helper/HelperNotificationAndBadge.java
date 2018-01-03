@@ -51,6 +51,10 @@ import net.iGap.realm.RealmRoomMessage;
 
 import static net.iGap.G.context;
 
+/**
+ * manage all notification and badge in app
+ */
+
 public class HelperNotificationAndBadge {
 
     private static final String strClose = "close";

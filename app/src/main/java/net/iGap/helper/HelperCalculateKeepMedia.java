@@ -21,7 +21,11 @@ import net.iGap.realm.RealmRoomMessage;
 
 public class HelperCalculateKeepMedia {
 
-    public void calculateTime() { // calculate time for delete media in after 7 days
+    /**
+     * calculate time for delete media in after Specified time
+     */
+
+    public void calculateTime() {
         new Thread(new Runnable() {
             @Override
             public void run() {

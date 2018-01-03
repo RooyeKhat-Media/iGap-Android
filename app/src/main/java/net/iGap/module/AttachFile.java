@@ -37,23 +37,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import net.iGap.G;
-import net.iGap.R;
-import net.iGap.activities.ActivityPaint;
-import net.iGap.fragments.FragmentExplorer;
-import net.iGap.helper.HelperFragment;
-import net.iGap.helper.HelperGetDataFromOtherApp;
-import net.iGap.helper.HelperPermision;
-import net.iGap.helper.HelperString;
-import net.iGap.helper.ImageHelper;
-import net.iGap.interfaces.IPickFile;
-import net.iGap.interfaces.OnComplete;
-import net.iGap.interfaces.OnGetPermission;
-import net.iGap.proto.ProtoGlobal;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,6 +48,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import net.iGap.G;
+import net.iGap.R;
+import net.iGap.activities.ActivityPaint;
+import net.iGap.fragments.FragmentExplorer;
+import net.iGap.helper.HelperFragment;
+import net.iGap.helper.HelperGetDataFromOtherApp;
+import net.iGap.helper.HelperPermission;
+import net.iGap.helper.HelperString;
+import net.iGap.helper.ImageHelper;
+import net.iGap.interfaces.IPickFile;
+import net.iGap.interfaces.OnComplete;
+import net.iGap.interfaces.OnGetPermission;
+import net.iGap.proto.ProtoGlobal;
 
 public class AttachFile {
 
@@ -176,9 +173,15 @@ public class AttachFile {
 
     //=================================== End Android 7
 
+    /**
+     * open page paint
+     *
+     * @throws IOException
+     */
+
     public void requestPaint(final Fragment fragment) throws IOException {
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent(context, ActivityPaint.class);
@@ -207,6 +210,16 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+
+    /**
+     *
+     * open camera
+     *
+     * @param fragment
+     * @throws IOException
+     */
+
     public void requestTakePicture(final Fragment fragment) throws IOException {
 
         PackageManager packageManager = context.getPackageManager();
@@ -215,7 +228,7 @@ public class AttachFile {
             return;
         }
 
-        HelperPermision.getCameraPermission(context, new OnGetPermission() {
+        HelperPermission.getCameraPermission(context, new OnGetPermission() {
             @Override
             public void Allow() throws IOException {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -254,13 +267,22 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     * open gallery for multi choose image
+     *
+     * @param fragment
+     * @throws IOException
+     * @throws AttachFile
+     */
     public void requestOpenGalleryForImageMultipleSelect(final Fragment fragment) throws IOException {
 
         //this code use for open galary for image and video together
         //Intent intent = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/internal/images/media"));
         //((Activity) context).startActivityForResult(intent, request_code_media_from_gallery);
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent();
@@ -294,9 +316,17 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     *  open gallery for multi choose Video
+     *
+     * @param fragment
+     * @throws IOException
+     */
     public void requestOpenGalleryForVideoMultipleSelect(final Fragment fragment) throws IOException {
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent();
@@ -329,9 +359,18 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+
+    /**
+     *
+     * open gallery for single choose image
+     *
+     * @param fragment
+     * @throws IOException
+     */
     public void requestOpenGalleryForImageSingleSelect(final Fragment fragment) throws IOException {
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -359,6 +398,14 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     * open camera for record video
+     *
+     * @param fragment
+     * @throws IOException
+     */
     public void requestVideoCapture(final Fragment fragment) throws IOException {
 
         PackageManager packageManager = context.getPackageManager();
@@ -367,7 +414,7 @@ public class AttachFile {
             return;
         }
 
-        HelperPermision.getCameraPermission(context, new OnGetPermission() {
+        HelperPermission.getCameraPermission(context, new OnGetPermission() {
             @Override
             public void Allow() {
 
@@ -407,6 +454,14 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     * open gallery for pick Audio
+     *
+     * @param fragment
+     * @throws IOException
+     */
     public void requestPickAudio(final Fragment fragment) throws IOException {
         //Intent intent = new Intent();
         //intent.setActionTyping(Intent.ACTION_PICK);
@@ -414,7 +469,7 @@ public class AttachFile {
         //intent.setData(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
         //((Activity) context).startActivityForResult(intent, request_code_pic_audi);
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -446,8 +501,16 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     * open folder for pick file
+     *
+     * @param listener
+     * @throws IOException
+     */
     public void requestPickFile(final IPickFile listener) throws IOException {
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 FragmentExplorer fragment = new FragmentExplorer();
@@ -467,7 +530,7 @@ public class AttachFile {
 
     public void requestOpenDocumentFolder(final IPickFile listener) throws IOException {
 
-        HelperPermision.getStoragePermision(context, new OnGetPermission() {
+        HelperPermission.getStoragePermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 //Intent intent = new Intent(context, ActivityExplorer.class);
@@ -494,9 +557,18 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+
+    /**
+     *
+     * pick contact number
+     *
+     * @param fragment
+     * @throws IOException
+     */
     public void requestPickContact(final Fragment fragment) throws IOException {
 
-        HelperPermision.getContactPermision(context, new OnGetPermission() {
+        HelperPermission.getContactPermision(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -528,11 +600,21 @@ public class AttachFile {
     }
 
     //*************************************************************************************************************
+
+    /**
+     *
+     * get position
+     *
+     * @param complete
+     * @param fragment
+     * @throws IOException
+     */
+
     public void requestGetPosition(OnComplete complete, final Fragment fragment) throws IOException {
 
         this.complete = complete;
 
-        HelperPermision.getLocationPermission(context, new OnGetPermission() {
+        HelperPermission.getLocationPermission(context, new OnGetPermission() {
             @Override
             public void Allow() {
                 getPosition(fragment);

@@ -13,9 +13,11 @@ package net.iGap.helper;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import net.iGap.G;
 import net.iGap.activities.ActivityRegisteration;
 import net.iGap.module.LoginActions;
+import net.iGap.module.SHP_SETTING;
 
 /**
  * truncate realm and go to ActivityIntroduce for register again
@@ -39,6 +41,8 @@ public final class HelperLogout {
                 }
 
                 G.firstTimeEnterToApp = true;
+                SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, Context.MODE_PRIVATE);
+                sharedPreferences.edit().clear().apply();
 
                 try {
                     NotificationManager nMgr = (NotificationManager) G.context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

@@ -1,650 +1,679 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentPrivacySecurity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-
-    android:clickable="true"
-    tools:context="net.iGap.fragments.FragmentPrivacyAndSecurity"
-    tools:ignore="MissingPrefix"
     >
+  <data>
+    <import type="android.graphics.Color" />
+    <import type="net.iGap.G" />
+    <variable
+        name="fragmentPrivacyAndSecurityViewModel"
+        type="net.iGap.viewmodel.FragmentPrivacyAndSecurityViewModel"
+        />
+  </data>
 
-
-  <android.support.design.widget.AppBarLayout
-      android:id="@+id/stps_backgroundToolbar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
-    <android.support.v7.widget.Toolbar
-
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        tools:ignore="MissingPrefix"
-        >
-
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/stps_ripple_back"
-            android:layout_toRightOf="@+id/stps_ripple_back"
-            android:gravity="center"
-            android:text="@string/st_title_Privacy_Security"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stps_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-
-        </net.iGap.libs.rippleeffect.RippleView>
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
-
-  </android.support.design.widget.AppBarLayout>
-
-
-  <ScrollView
+  <RelativeLayout
+      android:id="@+id/parentPrivacySecurity"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_below="@+id/stps_backgroundToolbar"
-      android:layout_marginTop="1dp"
-
+      android:background="@color/white"
+      android:clickable="true"
+      tools:context="net.iGap.fragments.FragmentPrivacyAndSecurity"
+      tools:ignore="MissingPrefix"
       >
 
-    <LinearLayout
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/stps_backgroundToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical"
+        >
+      <android.support.v7.widget.Toolbar
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp60"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_alignParentTop="true"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          android:layoutDirection="ltr"
+          android:padding="0dp"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp"
+          tools:ignore="MissingPrefix"
+          >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_toEndOf="@+id/stps_ripple_back"
+              android:layout_toRightOf="@+id/stps_ripple_back"
+              android:gravity="center"
+              android:text="@string/st_title_Privacy_Security"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp18"
+              android:visibility="visible"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+
+          <net.iGap.libs.rippleeffect.RippleView
+              android:id="@+id/stps_ripple_back"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:rv_alpha="200"
+              app:rv_centered="true"
+              app:rv_rippleDuration="0"
+              app:rv_ripplePadding="5dp"
+              rv_centered="true"
+              >
+
+            <net.iGap.module.MaterialDesignTextView
+                android:layout_width="@dimen/dp52"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="@string/md_back_arrow"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/whit_background"
+                />
+
+          </net.iGap.libs.rippleeffect.RippleView>
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stps_backgroundToolbar"
+        android:layout_marginTop="1dp"
+
         >
 
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:visibility="gone"
-          >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/privacy"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-
-
-            />
-
-        <TextView
-            android:id="@+id/st_txt_notifyAndSound"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/Block_Users"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp15"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/Last_Seen"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:text="@string/Groups"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-      </LinearLayout>
-
-
-      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/white"
+          android:background="@android:color/white"
           android:orientation="vertical"
           >
 
-        <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="@dimen/dp16"
-
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/privacy"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
-
-        <TextView
-            android:id="@+id/stps_txt_blocked_user"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp8"
-            android:paddingRight="@dimen/dp8"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/Block_Users"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-        <LinearLayout
-            android:id="@+id/stps_ll_who_can_see_my_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/who_can_see_my_avatar"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stps_txt_who_can_see_my_avatar"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stps_ll_who_can_invite_me_to_Channel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:singleLine="true"
-              android:text="@string/who_can_invite_you_to_channel_s"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stps_txt_who_can_invite_me_to_Channel"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stps_ll_who_can_invite_me_to_group"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:singleLine="true"
-              android:text="@string/who_can_invite_you_to_group_s"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stps_txt_who_can_invite_me_to_group"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/stps_ll_who_can_voice_call_to_me"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/who_is_allowed_to_call"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stps_txt_who_can_voice_call_to_me"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/stps_ll_who_can_see_my_last_seen"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
-            >
-
-          <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/last_seen"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stps_who_can_see_my_last_seen"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp14"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-        </LinearLayout>
-
-
-      </LinearLayout>
-
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/st_background2"
-          android:orientation="vertical"
-          >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/Passcode_Lock"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp16"
-            android:textStyle="normal"
+            android:orientation="vertical"
             android:visibility="gone"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-        <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp8"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/Security"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="gone"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/Two_Step_Verification"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp16"
-            android:textStyle="normal"
-            android:visibility="gone"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-        <TextView
-            android:id="@+id/stps_passCode"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp8"
-            android:paddingRight="@dimen/dp8"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/two_step_pass_code"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="visible"
-            />
-        <TextView
-            android:id="@+id/stps_twoStepVerification"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp8"
-            android:paddingRight="@dimen/dp8"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/two_step_verification"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="visible"
-            />
-
-        <TextView
-            android:id="@+id/stps_activitySessions"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="@dimen/dp8"
-            android:paddingRight="@dimen/dp8"
-            android:paddingTop="@dimen/dp4"
-            android:text="@string/Active_Sessions"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
-
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/background_editText"-->
-        <!--/>-->
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          android:orientation="vertical"
-          >
-
-        <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp8"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/Account_Self_destruction"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
-        <LinearLayout
-            android:id="@+id/stps_layout_Self_destruction"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:orientation="horizontal"
             >
 
           <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight=".5"
-              android:gravity="center_vertical|start"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/if_you_are_away_for"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp14"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:paddingBottom="@dimen/dp16"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp12"
+              android:text="@string/privacy"
+              android:textColor="@color/green"
+              android:textSize="@dimen/dp18"
               android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+
+
               />
 
           <TextView
-              android:id="@+id/stps_txt_Self_destruction"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
+              android:id="@+id/st_txt_notifyAndSound"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
               android:gravity="center_vertical|start"
               android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/Block_Users"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/Last_Seen"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp16"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/everybody"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp16"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </LinearLayout>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:text="@string/Groups"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp16"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp16"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/everybody"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp16"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+          <net.iGap.module.HeaderTextview
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:paddingLeft="@dimen/dp16"
+
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp12"
+              android:text="@string/privacy"
+              android:textColor="@color/green"
+              android:textSize="@dimen/dp18"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+
+
+          <TextView
+              android:id="@+id/stps_txt_blocked_user"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:gravity="center_vertical|start"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickBlocked}"
+              android:paddingLeft="@dimen/dp8"
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
-              android:text="1 year"
-              android:textColor="@color/toolbar_background"
+              android:text="@string/Block_Users"
+              android:textColor="@color/black_register"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
               fontPath="fonts/IRANSansMobile.ttf"
               />
+
+          <LinearLayout
+              android:id="@+id/stps_ll_who_can_see_my_avatar"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickSeeMyAvatar}"
+              android:orientation="horizontal"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/who_can_see_my_avatar"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_txt_who_can_see_my_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSeeMyAvatar , default=@string/everybody}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/stps_ll_who_can_invite_me_to_Channel"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:orientation="horizontal"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickInviteChannel}"
+
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:singleLine="true"
+                android:text="@string/who_can_invite_you_to_channel_s"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_txt_who_can_invite_me_to_Channel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackInviteChannel , default=@string/everybody}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+          </LinearLayout>
+
+          <LinearLayout
+              android:id="@+id/stps_ll_who_can_invite_me_to_group"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:orientation="horizontal"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickInviteGroup}"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:singleLine="true"
+                android:text="@string/who_can_invite_you_to_group_s"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_txt_who_can_invite_me_to_group"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackInviteGroup , default=@string/everybody}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+          </LinearLayout>
+          <LinearLayout
+              android:id="@+id/stps_ll_who_can_voice_call_to_me"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:orientation="horizontal"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickVoiceCall}"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/who_is_allowed_to_call"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_txt_who_can_voice_call_to_me"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackVoiceCall , default=@string/everybody}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+          </LinearLayout>
+          <LinearLayout
+              android:id="@+id/stps_ll_who_can_see_my_last_seen"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:orientation="horizontal"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickSeeLastSeen}"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/last_seen"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_who_can_see_my_last_seen"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSeeLastSeen , default=@string/everybody}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+          </LinearLayout>
+
+
         </LinearLayout>
 
-        <com.uncopt.android.widget.text.justify.JustifiedTextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:padding="@dimen/dp8"
-            android:text="@string/desc_self_destroy"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="@dimen/dp12"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
+            android:background="@color/st_background2"
+            android:orientation="vertical"
+            >
 
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/Passcode_Lock"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp16"
+              android:textStyle="normal"
+              android:visibility="gone"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+          <net.iGap.module.HeaderTextview
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp12"
+              android:text="@string/Security"
+              android:textColor="@color/green"
+              android:textSize="@dimen/dp18"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              android:visibility="gone"
+              />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/Two_Step_Verification"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp16"
+              android:textStyle="normal"
+              android:visibility="gone"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+          <TextView
+              android:id="@+id/stps_passCode"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/two_step_pass_code"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickPassCode}"
+              />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              android:visibility="visible"
+              />
+          <TextView
+              android:id="@+id/stps_twoStepVerification"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/two_step_verification"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickTwoStepVerification}"
+              />
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              android:visibility="visible"
+              />
+
+          <TextView
+              android:id="@+id/stps_activitySessions"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/Active_Sessions"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickActivitySessions}"
+              />
+
+          <!--<View-->
+          <!--android:layout_width="match_parent"-->
+          <!--android:layout_height="1dp"-->
+          <!--android:background="@color/background_editText"-->
+          <!--/>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+          <net.iGap.module.HeaderTextview
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp12"
+              android:text="@string/Account_Self_destruction"
+              android:textColor="@color/green"
+              android:textSize="@dimen/dp18"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              />
+
+          <LinearLayout
+              android:id="@+id/stps_layout_Self_destruction"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp40"
+              android:orientation="horizontal"
+              android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickSelfDestruction}"
+              >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/if_you_are_away_for"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+                />
+
+            <TextView
+                android:id="@+id/stps_txt_Self_destruction"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="@dimen/dp16"
+                android:paddingRight="@dimen/dp8"
+                android:paddingTop="@dimen/dp4"
+                android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSelfDestruction , default=@string/year_1}"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp14"
+                android:textStyle="normal"
+                fontPath="fonts/IRANSansMobile.ttf"
+
+                />
+          </LinearLayout>
+
+          <com.uncopt.android.widget.text.justify.JustifiedTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="top"
+              android:padding="@dimen/dp8"
+              android:text="@string/desc_self_destroy"
+              android:textColor="@color/cardview_dark_background"
+              android:textSize="@dimen/dp12"
+              android:textStyle="normal"
+              fontPath="fonts/IRANSansMobile.ttf"
+              />
+
+        </LinearLayout>
       </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 
 
-</RelativeLayout>
+  </RelativeLayout>
+
+</layout>

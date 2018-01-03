@@ -13,6 +13,7 @@ package net.iGap.response;
 import net.iGap.G;
 import net.iGap.proto.ProtoChannelRevokeLink;
 import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmChannelRoom;
 
 public class ChannelRevokeLinkResponse extends MessageHandler {
 
@@ -32,8 +33,9 @@ public class ChannelRevokeLinkResponse extends MessageHandler {
     public void handler() {
         super.handler();
         ProtoChannelRevokeLink.ChannelRevokeLinkResponse.Builder builder = (ProtoChannelRevokeLink.ChannelRevokeLinkResponse.Builder) message;
+        RealmChannelRoom.revokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
         if (G.onChannelRevokeLink != null) {
-            G.onChannelRevokeLink.onChannelRevokeLink(builder.getRoomId(), builder.getInviteLink(), builder.getInviteToken());
+            G.onChannelRevokeLink.onChannelRevokeLink(builder.getRoomId(), "https://" + builder.getInviteLink(), builder.getInviteToken());
         }
     }
 

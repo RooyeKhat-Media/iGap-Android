@@ -12,6 +12,7 @@ package net.iGap.fragments;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -19,36 +20,29 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.MaterialDialog;
-
+import java.io.IOException;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCrop;
-import net.iGap.activities.ActivityMain;
+import net.iGap.databinding.FragmentRegistrationNicknameBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperGetDataFromOtherApp;
-import net.iGap.helper.HelperPermision;
+import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
 import net.iGap.helper.ImageHelper;
 import net.iGap.interfaces.OnAvatarAdd;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnUserAvatarResponse;
-import net.iGap.interfaces.OnUserInfoResponse;
-import net.iGap.interfaces.OnUserProfileSetNickNameResponse;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
@@ -56,18 +50,10 @@ import net.iGap.module.EditTextAdjustPan;
 import net.iGap.module.FileUploadStructure;
 import net.iGap.module.IntentRequests;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmAvatar;
-import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserAvatarAdd;
-import net.iGap.request.RequestUserInfo;
-import net.iGap.request.RequestUserProfileSetNickname;
-
-import java.io.IOException;
-
-import io.realm.Realm;
+import net.iGap.viewmodel.FragmentRegistrationNicknameViewModel;
 
 import static android.app.Activity.RESULT_OK;
-import static net.iGap.G.context;
 import static net.iGap.module.AttachFile.request_code_image_from_gallery_single_select;
 
 public class FragmentRegistrationNickname extends BaseFragment implements OnUserAvatarResponse {
@@ -75,45 +61,37 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
     public final static String ARG_USER_ID = "arg_user_id";
     public static boolean IsDeleteFile;
     public static Bitmap decodeBitmapProfile = null;
-    private TextView txtTitle, txtTitlInformation, txtDesc, txtAddPhoto;
-    private Button btnLetsGo;
+    private TextView txtTitle;
     private net.iGap.module.CircleImageView btnSetImage;
-    private EditTextAdjustPan edtNikName;
     private Uri uriIntent;
     private String pathImageUser;
     private int idAvatar;
-    private int lastUploadedAvatarId;
-    private ProgressBar prgWait;
     private boolean existAvatar = false;
-    private Typeface titleTypeface;
-    private long userId = 0;
+
+
+    private FragmentRegistrationNicknameViewModel fragmentRegistrationNicknameViewModel;
+    private FragmentRegistrationNicknameBinding fragmentRegistrationNicknameBinding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_registration_nickname, container, false);
+
+        fragmentRegistrationNicknameBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration_nickname, container, false);
+        return fragmentRegistrationNicknameBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getArguments() != null) {
-            userId = (int) getArguments().getLong(ARG_USER_ID, -1);
-        }
+        initDataBinding();
 
-        delete();
-        txtTitlInformation = (TextView) view.findViewById(R.id.pu_txt_title_information);
-
-        txtDesc = (TextView) view.findViewById(R.id.pu_txt_title_desc);
-
-        txtAddPhoto = (TextView) view.findViewById(R.id.pu_txt_addPhoto);
-        prgWait = (ProgressBar) view.findViewById(R.id.prg);
+        ProgressBar prgWait = fragmentRegistrationNicknameBinding.prg;
         AppUtils.setProgresColler(prgWait);
-        view.findViewById(R.id.ap_ll_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
-        txtTitle = (TextView) view.findViewById(R.id.pu_titleToolbar);
+        txtTitle = fragmentRegistrationNicknameBinding.puTitleToolbar;
 
+        Typeface titleTypeface;
         if (!HelperCalander.isPersianUnicode) {
             titleTypeface = G.typeface_neuropolitical;
         } else {
@@ -121,84 +99,44 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
         }
         txtTitle.setTypeface(titleTypeface);
 
-        final View lineEditText = view.findViewById(R.id.pu_line_below_editText);
-        btnSetImage = (net.iGap.module.CircleImageView) view.findViewById(R.id.pu_profile_circle_image);
+        btnSetImage = fragmentRegistrationNicknameBinding.puProfileCircleImage;
 
         AndroidUtils.setBackgroundShapeColor(btnSetImage, Color.parseColor(G.appBarColor));
-
         btnSetImage.setOnClickListener(new View.OnClickListener() { // button for set image
             @Override
             public void onClick(View view) {
                 if (!existAvatar) {
-
                     startDialog();
                 }
             }
         });
 
-        final TextInputLayout txtInputNickName = (TextInputLayout) view.findViewById(R.id.pu_txtInput_nikeName);
         //        txtInputNickName.setHint("Nickname");
 
-        edtNikName = (EditTextAdjustPan) view.findViewById(R.id.pu_edt_nikeName); // edit Text for NikName
-
-        btnLetsGo = (Button) view.findViewById(R.id.pu_btn_letsGo);
-        btnLetsGo.setBackgroundColor(Color.parseColor(G.appBarColor));
+        final EditTextAdjustPan edtNikName = fragmentRegistrationNicknameBinding.puEdtNikeName;
 
         edtNikName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                txtInputNickName.setErrorEnabled(true);
-                txtInputNickName.setError("");
-                txtInputNickName.setHintTextAppearance(R.style.remove_error_appearance);
-                edtNikName.setTextColor(G.context.getResources().getColor(R.color.border_editText));
-                lineEditText.setBackgroundColor(G.context.getResources().getColor(android.R.color.black));
-            }
 
+            }
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
-        btnLetsGo.setOnClickListener(new View.OnClickListener() { // button for save data and go to next page
-            @Override
-            public void onClick(View view) {
 
-                Realm realm = Realm.getDefaultInstance();
-                final String nickName = edtNikName.getText().toString();
+    }
 
-                if (!nickName.equals("")) {
+    private void initDataBinding() {
 
-                    showProgressBar();
-                    G.fragmentActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            setNickName();
-                        }
-                    });
-                } else {
-                    G.handler.post(new Runnable() {
-                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                        @Override
-                        public void run() {
+        fragmentRegistrationNicknameViewModel = new FragmentRegistrationNicknameViewModel(getArguments(), fragmentRegistrationNicknameBinding);
+        fragmentRegistrationNicknameBinding.setFragmentRegistrationNicknameViewModel(fragmentRegistrationNicknameViewModel);
 
-                            txtInputNickName.setErrorEnabled(true);
-                            txtInputNickName.setError(G.fragmentActivity.getResources().getString(R.string.Toast_Write_NickName));
-                            txtInputNickName.setHintTextAppearance(R.style.error_appearance);
-                            edtNikName.setTextColor(G.context.getResources().getColor(R.color.red));
-                            lineEditText.setBackgroundColor(G.context.getResources().getColor(R.color.red));
-                        }
-                    });
-                }
-
-                realm.close();
-            }
-        });
     }
 
     @Override
@@ -220,7 +158,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                 intent.putExtra("IMAGE_CAMERA", AttachFile.mCurrentPhotoPath);
                 intent.putExtra("TYPE", "camera");
                 intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", userId);
+                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
                 startActivityForResult(intent, IntentRequests.REQ_CROP);
             } else {
                 Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
@@ -228,7 +166,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                 intent.putExtra("IMAGE_CAMERA", AttachFile.imagePath);
                 intent.putExtra("TYPE", "camera");
                 intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", userId);
+                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
                 startActivityForResult(intent, IntentRequests.REQ_CROP);
             }
         } else if (requestCode == request_code_image_from_gallery_single_select && resultCode == RESULT_OK) {// result for gallery
@@ -240,7 +178,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                 intent.putExtra("IMAGE_CAMERA", AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image));
                 intent.putExtra("TYPE", "gallery");
                 intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", userId);
+                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
                 startActivityForResult(intent, IntentRequests.REQ_CROP);
             }
         } else if (requestCode == IntentRequests.REQ_CROP && resultCode == RESULT_OK) {
@@ -248,14 +186,14 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                 pathImageUser = data.getData().toString();
             }
 
-            lastUploadedAvatarId = idAvatar + 1;
+            int lastUploadedAvatarId = idAvatar + 1;
 
-            showProgressBar();
+            fragmentRegistrationNicknameViewModel.showProgressBar();
             HelperUploadFile.startUploadTaskAvatar(pathImageUser, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
                 @Override
                 public void OnProgress(int progress, FileUploadStructure struct) {
                     if (progress < 100) {
-                        prgWait.setProgress(progress);
+                        fragmentRegistrationNicknameBinding.prg.setProgress(progress);
                     } else {
                         new RequestUserAvatarAdd().userAddAvatar(struct.token);
                     }
@@ -263,105 +201,14 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
 
                 @Override
                 public void OnError() {
-                    hideProgressBar();
+                    fragmentRegistrationNicknameViewModel.hideProgressBar();
                 }
             });
         }
     }
 
-    private void setNickName() {
 
-        G.onUserProfileSetNickNameResponse = new OnUserProfileSetNickNameResponse() {
-            @Override
-            public void onUserProfileNickNameResponse(final String nickName, String initials) {
-                getUserInfo();
-            }
 
-            @Override
-            public void onUserProfileNickNameError(int majorCode, int minorCode) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideProgressBar();
-                    }
-                });
-            }
-
-            @Override
-            public void onUserProfileNickNameTimeOut() {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideProgressBar();
-                    }
-                });
-            }
-        };
-
-        new RequestUserProfileSetNickname().userProfileNickName(edtNikName.getText().toString());
-    }
-
-    private void getUserInfo() {
-
-        G.onUserInfoResponse = new OnUserInfoResponse() {
-            @Override
-            public void onUserInfo(final ProtoGlobal.RegisteredUser user, String identity) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                G.displayName = user.getDisplayName();
-
-                                RealmUserInfo.putOrUpdate(realm, user);
-
-                                G.handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        G.onUserInfoResponse = null;
-                                        hideProgressBar();
-                                        Intent intent = new Intent(context, ActivityMain.class);
-                                        intent.putExtra(ARG_USER_ID, user.getId());
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        G.context.startActivity(intent);
-                                        G.fragmentActivity.finish();
-                                    }
-                                });
-                            }
-                        });
-                        realm.close();
-                    }
-                });
-            }
-
-            @Override
-            public void onUserInfoTimeOut() {
-
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideProgressBar();
-                    }
-                });
-            }
-
-            @Override
-            public void onUserInfoError(int majorCode, int minorCode) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideProgressBar();
-                    }
-                });
-            }
-        };
-
-        new RequestUserInfo().userInfo(G.userId);
-    }
 
     public void useCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -381,7 +228,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
 
     public void useGallery() {
         try {
-            HelperPermision.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
+            HelperPermission.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                 @Override
                 public void Allow() {
                     try {
@@ -402,7 +249,10 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
     }
 
     private void startDialog() {
-        new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
+        MaterialDialog.Builder imageDialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture))
+            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+            .items(R.array.profile)
+            .itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
@@ -415,7 +265,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                     case 1: {
                         if (G.context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
                             try {
-                                HelperPermision.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
+                                HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
                                     @Override
                                     public void Allow() {
                                         // this dialog show 2 way for choose image : gallery and camera
@@ -439,7 +289,10 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                     }
                 }
             }
-        }).show();
+            });
+        if (!(G.fragmentActivity).isFinishing()) {
+            imageDialog.show();
+        }
     }
 
     private void setImage(String path) {
@@ -450,39 +303,6 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
             //Bitmap bitmap = BitmapFactory.decodeFile(path);
             //btnSetImage.setImageBitmap(bitmap);
         }
-    }
-
-    private void delete() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
-        if (realmUserInfo != null) {
-            RealmAvatar.deleteAvatarWithOwnerId(G.userId);
-        }
-        realm.close();
-    }
-
-    private void showProgressBar() {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (prgWait != null) {
-                    prgWait.setVisibility(View.VISIBLE);
-                    G.fragmentActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                }
-            }
-        });
-    }
-
-    private void hideProgressBar() {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (prgWait != null) {
-                    prgWait.setVisibility(View.GONE);
-                    G.fragmentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                }
-            }
-        });
     }
 
     /**
@@ -500,7 +320,7 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
                     @Override
                     public void run() {
                         existAvatar = true;
-                        hideProgressBar();
+                        fragmentRegistrationNicknameViewModel.hideProgressBar();
                         setImage(avatarPath);
                     }
                 });
@@ -510,11 +330,12 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
 
     @Override
     public void onAvatarAddTimeOut() {
-        hideProgressBar();
+        fragmentRegistrationNicknameViewModel.hideProgressBar();
     }
 
     @Override
     public void onAvatarError() {
-        hideProgressBar();
+        fragmentRegistrationNicknameViewModel.hideProgressBar();
     }
+
 }

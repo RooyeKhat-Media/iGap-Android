@@ -13,12 +13,7 @@ package net.iGap.webrtc;
 
 import android.os.Build;
 import android.util.Log;
-import io.realm.Realm;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+
 import net.iGap.G;
 import net.iGap.proto.ProtoSignalingGetConfiguration;
 import net.iGap.proto.ProtoSignalingOffer;
@@ -26,6 +21,7 @@ import net.iGap.realm.RealmCallConfig;
 import net.iGap.request.RequestSignalingAccept;
 import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestSignalingOffer;
+
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
 import org.webrtc.MediaConstraints;
@@ -36,6 +32,14 @@ import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
 import org.webrtc.voiceengine.WebRtcAudioManager;
 import org.webrtc.voiceengine.WebRtcAudioUtils;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+import io.realm.Realm;
 
 public class WebRTC {
     private static PeerConnection peerConnection;
@@ -246,12 +250,13 @@ public class WebRTC {
     }
 
     public void leaveCall() {
-        close();
-        dispose();
+        //don't need for close/dispose here, this action will be doing in onLeave callback
+        //close();
+        //dispose();
         /**
          * set peer connection null for try again
          */
-        clearConnection();
+        //clearConnection();
         new RequestSignalingLeave().signalingLeave();
     }
 

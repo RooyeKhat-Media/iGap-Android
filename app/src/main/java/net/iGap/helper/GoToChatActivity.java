@@ -67,7 +67,7 @@ public class GoToChatActivity {
                 roomName = realmRoom.getTitle();
 
                 if (realmRoom.getReadOnly()) {
-                    if (G.currentActivity != null) {
+                    if (G.currentActivity != null && !(G.fragmentActivity).isFinishing()) {
                         new MaterialDialog.Builder(G.currentActivity).title(R.string.dialog_readonly_chat).positiveText(R.string.ok).show();
                     }
                     realm.close();
@@ -88,14 +88,18 @@ public class GoToChatActivity {
 
             String message = G.context.getString(R.string.send_message_to) + " " + roomName;
 
-            new MaterialDialog.Builder(G.currentActivity).title(message).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
+            MaterialDialog.Builder mDialog =
+                new MaterialDialog.Builder(G.currentActivity).title(message).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                     FragmentChat fragmentChat = new FragmentChat();
                     fragmentChat.setArguments(getBundle());
                     new HelperFragment(fragmentChat).setReplace(false).load();
                 }
-            }).show();
+                });
+            if (!(G.fragmentActivity).isFinishing()) {
+                mDialog.show();
+            }
         } else {
             FragmentChat fragmentChat = new FragmentChat();
             fragmentChat.setArguments(getBundle());

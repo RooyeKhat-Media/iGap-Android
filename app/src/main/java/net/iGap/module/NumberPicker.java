@@ -33,6 +33,10 @@ import java.util.Locale;
 import net.iGap.G;
 import net.iGap.R;
 
+/**
+ * it's custom numberPicker and use in passCode page
+ */
+
 public class NumberPicker extends LinearLayout {
 
     private static final int SELECTOR_WHEEL_ITEM_COUNT = 3;
