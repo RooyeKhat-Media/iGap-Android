@@ -60,7 +60,6 @@ public class Config {
     public static String default_headerTextColor = "#00B0BF";
     public static String default_progressColor = "#00B0BF";
 
-    //public static final String URL_WEBSOCKET = "wss://core7.igap.net";
     public static final String URL_WEBSOCKET = "wss://secure.igap.net/hybrid/";
     public static final String URL_MAP = "https://c.tile.openstreetmap.org/";
     public static final String IGAP_LINK_PREFIX = "https://iGap.net/";

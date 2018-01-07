@@ -13,7 +13,13 @@ package net.iGap.realm;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateUtils;
-
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.Sort;
+import io.realm.annotations.PrimaryKey;
+import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
@@ -22,15 +28,6 @@ import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestClientGetRoom;
-
-import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import io.realm.annotations.PrimaryKey;
 
 import static net.iGap.G.context;
 import static net.iGap.G.userId;
@@ -658,12 +655,28 @@ public class RealmRoom extends RealmObject {
                         if (realmRoom.getChannelRoom() != null) {
                             realmRoom.getChannelRoom().setRole(mRole);
                         }
+
+                        updateReadOnlyChannel(mRole, realmRoom);
+
                     }
                 }
             });
         }
 
         realm.close();
+    }
+
+    private static void updateReadOnlyChannel(ChannelChatRole role, RealmRoom realmRoom) {
+        switch (role) {
+            case MODERATOR:
+            case ADMIN:
+            case OWNER:
+                realmRoom.setReadOnly(false);
+                break;
+            default:
+                realmRoom.setReadOnly(true);
+                break;
+        }
     }
 
     public static void updateMemberRole(final long roomId, final long userId, final String role) {

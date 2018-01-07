@@ -27,10 +27,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.lalongooo.videocompressor.video.MediaController;
 import com.mikepenz.fastadapter.items.AbstractItem;
-
+import io.realm.Realm;
+import java.util.List;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -72,10 +72,6 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChannelAddMessageReaction;
-
-import java.util.List;
-
-import io.realm.Realm;
 
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.fragments.FragmentChat.getRealmChat;
@@ -522,13 +518,14 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
         LinearLayout lytContainer = (LinearLayout) holder.itemView.findViewById(R.id.m_container);
         lytContainer.setMinimumWidth((int) G.context.getResources().getDimension(R.dimen.dp160));
-        lytContainer.setMinimumHeight((int) G.context.getResources().getDimension(R.dimen.dp100));
+        lytContainer.setMinimumHeight((int) G.context.getResources().getDimension(R.dimen.dp130));
 
         LinearLayout lytVote = (LinearLayout) holder.itemView.findViewById(R.id.lyt_vote);
         if (lytVote != null) {
 
             LinearLayout lytVoteUp = (LinearLayout) holder.itemView.findViewById(R.id.lyt_vote_up);
             LinearLayout lytVoteDown = (LinearLayout) holder.itemView.findViewById(R.id.lyt_vote_down);
+            TextView txtVoteForward = (TextView) holder.itemView.findViewById(R.id.img_vote_forward);
             TextView txtVoteUp = (TextView) holder.itemView.findViewById(R.id.txt_vote_up);
             TextView txtVoteDown = (TextView) holder.itemView.findViewById(R.id.txt_vote_down);
             TextView txtViewsLabel = (TextView) holder.itemView.findViewById(R.id.txt_views_label);
@@ -595,6 +592,13 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 @Override
                 public void onClick(View view) {
                     voteSend(ProtoGlobal.RoomMessageReaction.THUMBS_DOWN);
+                }
+            });
+
+            txtVoteForward.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    messageClickListener.onForwardClick(mMessage);
                 }
             });
         }
@@ -736,6 +740,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         }
 
         mContainer.setMinimumWidth(0);
+        mContainer.setMinimumHeight(0);
 
         /**
          * set replay container visible if message was replayed, otherwise, gone it
@@ -1303,10 +1308,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         //    }
         //}
 
-
-        if (attachment.getSize() == 0) {
-            messageClickListener.onUploadOrCompressCancel(progress, mMessage, holder.getAdapterPosition(), SendingStep.CORRUPTED_FILE);
-        } else if (HelperUploadFile.isUploading(mMessage.messageID)) {
+        if (HelperUploadFile.isUploading(mMessage.messageID)) {
 
             if (mMessage.status.equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
                 if (G.userLogin) {

@@ -163,6 +163,7 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isCompress = new ObservableField<>();
     public ObservableField<Boolean> isTrim = new ObservableField<>();
     public ObservableField<Boolean> isCrop = new ObservableField<>();
+    public ObservableField<Boolean> isCameraButtonSheet = new ObservableField<>(true);
 
 
     public FragmentSettingViewModel(FragmentSetting fragmentSetting, FragmentSettingBinding fragmentSettingBinding) {
@@ -1350,6 +1351,24 @@ public class FragmentSettingViewModel {
 
     }
 
+    public void onClickCameraButtonSheet(View v) {
+        isCameraButtonSheet.set(!isCameraButtonSheet.get());
+    }
+
+    public void onCheckedChangedCameraButtonSheet(boolean isChecked) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        isCameraButtonSheet.set(isChecked);
+        if (isChecked) {
+            editor.putBoolean(SHP_SETTING.KEY_CAMERA_BUTTON_SHEET, true);
+            editor.apply();
+        } else {
+            editor.putBoolean(SHP_SETTING.KEY_CAMERA_BUTTON_SHEET, false);
+            editor.apply();
+        }
+
+    }
+
+
     public void onClickiGapHome(View view) {
         final String link;
         if (HelperCalander.isPersianUnicode) {
@@ -1412,6 +1431,9 @@ public class FragmentSettingViewModel {
 
         int checkedEnableCrop = sharedPreferences.getInt(SHP_SETTING.KEY_CROP, 1);
         isCrop.set(getBoolean(checkedEnableCrop));
+
+        boolean checkCameraButtonSheet = sharedPreferences.getBoolean(SHP_SETTING.KEY_CAMERA_BUTTON_SHEET, true);
+        isCameraButtonSheet.set(checkCameraButtonSheet);
 
         int checkedEnableVote = sharedPreferences.getInt(SHP_SETTING.KEY_VOTE, 1);
         isShowVote.set(getBoolean(checkedEnableVote));

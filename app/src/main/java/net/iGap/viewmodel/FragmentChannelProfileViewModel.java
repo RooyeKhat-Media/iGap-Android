@@ -37,14 +37,10 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -107,6 +103,14 @@ import net.iGap.request.RequestChannelUpdateSignature;
 import net.iGap.request.RequestChannelUpdateUsername;
 import net.iGap.request.RequestUserInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
+
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
 
@@ -167,7 +171,8 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
 
 
     public void onClickRippleBack(View v) {
-        if (FragmentChannelProfile.onBackFragment != null) FragmentChannelProfile.onBackFragment.onBack();
+        if (FragmentChannelProfile.onBackFragment != null)
+            FragmentChannelProfile.onBackFragment.onBack();
     }
 
     public void onClickRippleMenuPopup(View v) {
@@ -269,7 +274,8 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
 
         RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom == null || realmRoom.getChannelRoom() == null) {
-            if (FragmentChannelProfile.onBackFragment != null) FragmentChannelProfile.onBackFragment.onBack();
+            if (FragmentChannelProfile.onBackFragment != null)
+                FragmentChannelProfile.onBackFragment.onBack();
             return;
         }
         RealmChannelRoom realmChannelRoom = realmRoom.getChannelRoom();
@@ -334,8 +340,9 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
 
         if (description != null && !description.isEmpty()) {
             SpannableStringBuilder spannableStringBuilder = HelperUrl.setUrlLink(description, true, false, null, true);
-            callbackChannelDescription.set(spannableStringBuilder.toString());
-
+            if (spannableStringBuilder != null) {
+                callbackChannelDescription.set(spannableStringBuilder.toString());
+            }
         }
         callbackChannelName.set(title);
 
@@ -479,22 +486,22 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
         layoutRevoke.addView(inputRevoke, layoutParams);
 
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link_title_revoke))
-            .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
-            .customView(layoutRevoke, true)
-            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-            .neutralText(R.string.array_Copy)
-            .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    String copy;
-                    copy = callbackChannelLink.get();
-                    ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
-                    clipboard.setPrimaryClip(clip);
-                }
-            })
-            .build();
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
+                .customView(layoutRevoke, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .neutralText(R.string.array_Copy)
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String copy;
+                        copy = callbackChannelLink.get();
+                        ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                })
+                .build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setOnClickListener(new View.OnClickListener() {
@@ -545,21 +552,21 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
         layoutChannelLink.addView(txtLink, layoutParams);
 
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link))
-            .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
-            .customView(layoutChannelLink, true)
-            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    String copy;
-                    copy = Config.IGAP_LINK_PREFIX + callbackChannelLink.get();
-                    ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
-                    clipboard.setPrimaryClip(clip);
-                }
-            })
-            .build();
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
+                .customView(layoutChannelLink, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String copy;
+                        copy = Config.IGAP_LINK_PREFIX + callbackChannelLink.get();
+                        ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                })
+                .build();
 
         dialog.show();
     }
@@ -806,7 +813,7 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
 
@@ -1175,7 +1182,7 @@ public class FragmentChannelProfileViewModel implements OnChannelAddMember, OnCh
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);

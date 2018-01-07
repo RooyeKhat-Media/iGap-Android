@@ -111,7 +111,11 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
         onRemoveFragmentNewGroup = new OnRemoveFragmentNewGroup() {
             @Override
             public void onRemove() {
-                popBackStackFragment();
+                try {
+                    popBackStackFragment();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
             }
         };
     }

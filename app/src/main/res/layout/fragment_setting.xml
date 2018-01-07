@@ -1778,6 +1778,48 @@
 
           </LinearLayout>
 
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp52"
+              android:onClick="@{fragmentSettingViewModel::onClickCameraButtonSheet}"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+
+              >
+
+            <TextView
+                android:id="@+id/stsp_txt_cameraBottomSheet"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/st_cameraBottomSheet"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal"
+                />
+
+            <ToggleButton
+                android:id="@+id/stsp_toggle_cameraBottomSheet"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/st_switch_button"
+                android:checked="@{fragmentSettingViewModel.isCameraButtonSheet}"
+                android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedCameraButtonSheet(checked)}"
+                android:textOff=""
+                android:textOn=""
+                />
+
+
+          </LinearLayout>
+
 
         </LinearLayout>
 

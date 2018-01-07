@@ -12,6 +12,7 @@ package net.iGap.module;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -20,16 +21,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnVoiceRecord;
 import net.iGap.proto.ProtoGlobal;
-
-import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class VoiceRecord {
 
@@ -40,46 +39,59 @@ public class VoiceRecord {
     private ImageView imgPicRecord;
     private TimerTask timertask;
     private Timer timer;
-    private Timer secendTimer;
-    private Timer miliSecendTimer;
-    private int secend = 0;
+    private Timer secondTimer;
+    private Timer millisecondTimer;
+    private int second = 0;
     private int minute = 0;
     private TextView txtTimeRecord;
-    private int leftPading;
-    private int Allmoving = 0;
-    private LinearLayout layout3;
-    private int lastX;
-    private boolean cansel = false;
-    private int DistanceToCancel = 130;
+    private LinearLayout layoutMicLock;
+    private int firstX;
+    private boolean cancel = false;
+    private int distanceToCancel = 130;
     private TextView txt_slide_to_cancel;
     private String itemTag = "";
     private View layoutAttach;
     private View layoutMic;
     private OnVoiceRecord onVoiceRecordListener;
-    private TextView txtMilisecend;
-    private int milisecend = 0;
+    private TextView txtMillisecond;
+    private int milliSecond = 0;
     private MaterialDesignTextView btnMicLayout;
+    private MaterialDesignTextView btnLock;
     private boolean continuePlay;
-
-    private Context context;
+    private boolean isHandFree = false;
+    private int firstY;
 
     public VoiceRecord(Context context, View layoutMic, View layoutAttach, OnVoiceRecord listener) {
-
-        this.context = context;
-
         imgPicRecord = (ImageView) layoutMic.findViewById(R.id.img_pic_record);
         txtTimeRecord = (TextView) layoutMic.findViewById(R.id.txt_time_record);
-        txtMilisecend = (TextView) layoutMic.findViewById(R.id.txt_time_mili_secend);
-        layout3 = (LinearLayout) layoutMic.findViewById(R.id.layout3);
+        txtMillisecond = (TextView) layoutMic.findViewById(R.id.txt_time_mili_secend);
+        layoutMicLock = (LinearLayout) layoutMic.findViewById(R.id.lmr_layout_mic);
         txt_slide_to_cancel = (TextView) layoutMic.findViewById(R.id.txt_slideto_cancel);
         btnMicLayout = (MaterialDesignTextView) layoutMic.findViewById(R.id.lmr_btn_mic_layout);
+        btnLock = (MaterialDesignTextView) layoutMic.findViewById(R.id.lmr_txt_Lock);
         AndroidUtils.setBackgroundShapeColor(btnMicLayout, Color.parseColor(G.appBarColor));
-
         this.layoutAttach = layoutAttach;
         this.layoutMic = layoutMic;
         this.onVoiceRecordListener = listener;
+        distanceToCancel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, context.getResources().getDisplayMetrics());
 
-        DistanceToCancel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, context.getResources().getDisplayMetrics());
+        txt_slide_to_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel = true;
+                reset();
+            }
+        });
+
+        btnMicLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isHandFree) {
+                    reset();
+                }
+            }
+        });
     }
 
     public void setItemTag(String itemTag) {
@@ -90,7 +102,7 @@ public class VoiceRecord {
         return itemTag;
     }
 
-    public void stopVoiceRecord() {
+    private void stopVoiceRecord() {
         if (null != mediaRecorder) {
             try {
                 mediaRecorder.stop();
@@ -101,7 +113,6 @@ public class VoiceRecord {
                     continuePlay = false;
                     MusicPlayer.playSound();
                 }
-
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
@@ -117,7 +128,6 @@ public class VoiceRecord {
                 continuePlay = true;
             }
         }
-
 
         if (G.onHelperSetAction != null) {
             G.onHelperSetAction.onAction(ProtoGlobal.ClientAction.RECORDING_VOICE);
@@ -185,23 +195,23 @@ public class VoiceRecord {
             timer.schedule(timertask, 100, 300);
         }
 
-        if (secendTimer == null) {
+        if (secondTimer == null) {
 
-            secendTimer = new Timer();
-            secendTimer.schedule(new TimerTask() {
+            secondTimer = new Timer();
+            secondTimer.schedule(new TimerTask() {
 
                 @Override
                 public void run() {
 
-                    secend++;
-                    if (secend >= 60) {
+                    second++;
+                    if (second >= 60) {
                         minute++;
-                        secend %= 60;
+                        second %= 60;
                     }
                     if (minute >= 60) {
                         minute %= 60;
                     }
-                    if (secend >= 1) {
+                    if (second >= 1) {
                         canStop = true;
                     }
 
@@ -216,10 +226,10 @@ public class VoiceRecord {
                                 s += minute;
                             }
                             s += ":";
-                            if (secend < 10) {
-                                s += "0" + secend;
+                            if (second < 10) {
+                                s += "0" + second;
                             } else {
-                                s += secend;
+                                s += second;
                             }
 
                             txtTimeRecord.setText(s);
@@ -229,20 +239,20 @@ public class VoiceRecord {
             }, 1000, 1000);
         }
 
-        if (miliSecendTimer == null) {
-            miliSecendTimer = new Timer();
-            miliSecendTimer.schedule(new TimerTask() {
+        if (millisecondTimer == null) {
+            millisecondTimer = new Timer();
+            millisecondTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    milisecend++;
-                    if (milisecend >= 99) milisecend = 1;
-                    txtMilisecend.post(new Runnable() {
+                    milliSecond++;
+                    if (milliSecond >= 99) milliSecond = 1;
+                    txtMillisecond.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (milisecend < 10) {
-                                txtMilisecend.setText(":0" + milisecend + "");
+                            if (milliSecond < 10) {
+                                txtMillisecond.setText(":0" + milliSecond + "");
                             } else {
-                                txtMilisecend.setText(":" + milisecend + "");
+                                txtMillisecond.setText(":" + milliSecond + "");
                             }
                         }
                     });
@@ -253,12 +263,16 @@ public class VoiceRecord {
 
     public void dispatchTouchEvent(MotionEvent event) {
 
+        if (isHandFree) {
+            return;
+        }
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startMoving((int) event.getX());
+                startMoving((int) event.getX(), (int) event.getY());
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (itemTag.equals("ivVoice")) moving((int) event.getX());
+                if (itemTag.equals("ivVoice")) moving((int) event.getX(), (int) event.getY());
                 break;
             case MotionEvent.ACTION_UP:
                 if (itemTag.equals("ivVoice")) {
@@ -273,37 +287,66 @@ public class VoiceRecord {
         }
     }
 
-    private void startMoving(int x) {
-
-        if (layout3 != null) leftPading = layout3.getPaddingRight();
-
-        lastX = x;
-        cansel = false;
+    private void startMoving(int x, int y) {
+        isHandFree = false;
+        firstY = y;
+        firstX = x;
+        cancel = false;
     }
 
-    private void moving(int x) {
-        int i = lastX - x;
+    private void moving(int x, int y) {
+        int MoveY = Math.abs(firstY - y);
+        int moveX = Math.abs(firstX - x);
 
-        if (i > 0 || Allmoving > 0) {
-            Allmoving += i;
-            txt_slide_to_cancel.setAlpha(((float) (DistanceToCancel - Allmoving) / DistanceToCancel));
-            layout3.setPadding(0, 0, layout3.getPaddingRight() + i, 0);
-            lastX = x;
+        if (MoveY > 100) {
+            lockVoice();
+            return;
+        }
 
-            if (Allmoving >= DistanceToCancel) {
-                cansel = true;
-                reset();
-            }
+        if (moveX > distanceToCancel) {
+            cancel = true;
+            reset();
+        } else {
+            txt_slide_to_cancel.setAlpha(((float) (distanceToCancel - moveX) / distanceToCancel));
+            layoutMicLock.setPadding(0, 0, 0, MoveY);
+            txt_slide_to_cancel.setPadding(0, 0, moveX, 0);
         }
     }
 
-    private void reset() {
-        layout3.setPadding(0, 0, leftPading, 0);
+    private void lockVoice() {
+        isHandFree = true;
+        layoutMicLock.setPadding(0, 0, 0, 0);
+        txt_slide_to_cancel.setPadding(0, 0, 50, 0);
         txt_slide_to_cancel.setAlpha(1);
-        Allmoving = 0;
+        txt_slide_to_cancel.setText(R.string.cancel);
+        txt_slide_to_cancel.setTextColor(G.context.getResources().getColor(R.color.red));
+        txt_slide_to_cancel.setTypeface(Typeface.DEFAULT_BOLD);
+        btnMicLayout.setText(R.string.md_send_button);
+        btnMicLayout.setTextColor(G.context.getResources().getColor(R.color.white));
+        btnMicLayout.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp16));
+        btnLock.setText(R.string.md_igap_lock);
+        btnLock.setTextColor(G.context.getResources().getColor(R.color.red));
+    }
+
+    private void reset() {
+
+        layoutMicLock.setPadding(0, 0, 0, 0);
+        txt_slide_to_cancel.setPadding(0, 0, 0, 0);
+        txt_slide_to_cancel.setText(R.string.slide_to_cancel_en);
+        txt_slide_to_cancel.setAlpha(1);
+        txt_slide_to_cancel.setTextColor(G.context.getResources().getColor(R.color.gray));
+        txt_slide_to_cancel.setTypeface(Typeface.DEFAULT);
+        btnMicLayout.setText(R.string.md_voice_message_microphone_button);
+        btnMicLayout.setTextColor(G.context.getResources().getColor(R.color.black_register));
+        btnMicLayout.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp26));
+        btnLock.setText(R.string.md_igap_lock_open_outline);
+        btnLock.setTextColor(G.context.getResources().getColor(R.color.gray_4c));
+
         itemTag = "";
         layoutAttach.setVisibility(View.VISIBLE);
         layoutMic.setVisibility(View.GONE);
+
+        isHandFree = false;
 
         if (timertask != null) {
             timertask.cancel();
@@ -314,25 +357,25 @@ public class VoiceRecord {
             timer.purge();
             timer = null;
         }
-        if (secendTimer != null) {
-            secendTimer.cancel();
-            secendTimer.purge();
-            secendTimer = null;
+        if (secondTimer != null) {
+            secondTimer.cancel();
+            secondTimer.purge();
+            secondTimer = null;
         }
-        if (miliSecendTimer != null) {
-            miliSecendTimer.cancel();
-            miliSecendTimer.purge();
-            miliSecendTimer = null;
+        if (millisecondTimer != null) {
+            millisecondTimer.cancel();
+            millisecondTimer.purge();
+            millisecondTimer = null;
         }
 
-        secend = 0;
+        second = 0;
         minute = 0;
         txtTimeRecord.setText("00:00");
 
         if (canStop) {
             stopVoiceRecord();
         }
-        if (cansel) {
+        if (cancel) {
             if (onVoiceRecordListener != null) {
                 onVoiceRecordListener.onVoiceRecordCancel();
             }

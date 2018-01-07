@@ -15,10 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.helper.HelperPermission;
 import net.iGap.module.structs.StructContactInfo;
@@ -26,6 +23,12 @@ import net.iGap.module.structs.StructListOfContact;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * work with saved contacts in database
@@ -127,6 +130,10 @@ public class Contacts {
                             }
                         }
                         fetchCount++;
+
+                        if (fetchCount > PHONE_CONTACT_FETCH_LIMIT) {
+                            break;
+                        }
                     }
                 }
                 cur.close();

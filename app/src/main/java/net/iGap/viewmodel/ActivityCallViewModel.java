@@ -26,7 +26,9 @@ import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
-
+import io.realm.Realm;
+import java.util.Timer;
+import java.util.TimerTask;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCall;
@@ -45,13 +47,6 @@ import net.iGap.request.RequestSignalingGetLog;
 import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.webrtc.WebRTC;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import io.realm.Realm;
-
-import static net.iGap.viewmodel.FragmentNewGroupViewModel.type;
 
 public class ActivityCallViewModel {
 
@@ -197,7 +192,7 @@ public class ActivityCallViewModel {
                                     cancelRingtone();
                                     startTimer();
                                 }
-                            }, 800);
+                            }, 350);
                         }
 
                         break;

@@ -169,7 +169,7 @@ public class ActivityEnterPassCodeViewModel {
             rippleOkVisibility.set(View.VISIBLE);
         }
 
-        if (dialogForgot != null) {
+        if (dialogForgot != null && dialogForgot.isShowing() && !(G.currentActivity).isFinishing()) {
             dialogForgot.dismiss();
         }
 
@@ -210,7 +210,7 @@ public class ActivityEnterPassCodeViewModel {
                         @Override
                         public void run() {
 
-                            if (dialog != null) {
+                            if (dialog != null && dialog.isShowing() && !(G.currentActivity).isFinishing()) {
                                 dialog.dismiss();
                             }
 

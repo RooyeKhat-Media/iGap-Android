@@ -10,6 +10,20 @@
     android:orientation="vertical"
     >
 
+  <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/img_vote_forward"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:background="@drawable/circle_red"
+      android:layout_marginTop="@dimen/dp10"
+      android:layout_weight="1"
+      android:gravity="top|center"
+      android:text="@string/md_forward"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/gray_6c"
+      android:textSize="@dimen/dp16"
+      />
+
   <LinearLayout
       android:id="@+id/lyt_vote_up"
       android:layout_width="match_parent"

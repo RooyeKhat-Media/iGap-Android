@@ -26,6 +26,9 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tapstream.sdk.Config;
+import com.tapstream.sdk.Event;
+import com.tapstream.sdk.Tapstream;
 
 import net.iGap.activities.ActivityCustomError;
 import net.iGap.activities.ActivityMain;
@@ -379,6 +382,12 @@ public class G extends MultiDexApplication {
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         new StartupActions();
+
+        Config config = new Config("igap", "rL3flccmQb-9qzwVcpIRZw");
+        Tapstream.create(this, config);
+
+        Event event = new Event("Run iGap", false);
+        Tapstream.getInstance().fireEvent(event);
     }
 
     @Override

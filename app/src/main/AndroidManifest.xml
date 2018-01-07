@@ -211,17 +211,18 @@
             </intent-filter>
         </receiver>
 
+      <receiver
+        android:name="com.tapstream.sdk.ReferrerReceiver"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="com.android.vending.INSTALL_REFERRER" />
+        </intent-filter>
+      </receiver>
 
         <service android:name=".helper.ServiceContact" />
         <service android:name=".module.UploadService" />
         <service android:name=".module.MusicPlayer" />
 
-        <service
-            android:name=".helper.MyService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <service android:name=".helper.MyServiceTemporat" />
 
         <service
             android:name="net.iGap.module.AuthenticatorService"

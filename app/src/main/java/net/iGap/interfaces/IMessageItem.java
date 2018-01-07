@@ -31,6 +31,8 @@ public interface IMessageItem {
 
     void onReplyClick(RealmRoomMessage replyMessage);
 
+    void onForwardClick(StructMessageInfo message);
+
     void onDownloadAllEqualCashId(String token, String messageId);
 
     void onItemShowingMessageId(StructMessageInfo messageInfo);

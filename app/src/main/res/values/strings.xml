@@ -1167,6 +1167,7 @@
   <string name="dont_ask_again">Understood</string>
   <string name="attention">Attention</string>
   <string name="content_attention_dialog">Note: People on the map will be displayed with a 500-meter error. So no worries</string>
+  <string name="st_cameraBottomSheet">Small camera in attachments</string>
 
 
 </resources>

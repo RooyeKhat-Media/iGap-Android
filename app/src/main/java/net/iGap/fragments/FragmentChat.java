@@ -437,7 +437,7 @@ public class FragmentChat extends BaseFragment
     private boolean isChatReadOnly = false;
     private boolean isMuteNotification;
     private boolean sendByEnter = false;
-
+    private boolean isShowLayoutUnreadMessage = false;
     private boolean isCloudRoom;
 
 
@@ -679,7 +679,7 @@ public class FragmentChat extends BaseFragment
 
                 if (!G.twoPaneMode) {
                     try {
-                        if (G.fragmentActivity != null) {
+                        if (G.fragmentActivity != null && G.fragmentActivity instanceof ActivityMain) {
                             ((ActivityMain) G.fragmentActivity).lockNavigation();
                         }
                     } catch (Exception e) {
@@ -838,7 +838,7 @@ public class FragmentChat extends BaseFragment
 
         mRoomId = -1;
 
-        if (G.fragmentActivity != null) {
+        if (G.fragmentActivity != null && G.fragmentActivity instanceof ActivityMain) {
             ((ActivityMain) G.fragmentActivity).resume();
         }
 
@@ -2206,7 +2206,7 @@ public class FragmentChat extends BaseFragment
                     int position = mAdapter.findPositionByMessageId(firstUnreadMessage.getMessageId());
                     if (position > 0) {
                         mAdapter.add(position, new UnreadMessage(getRealmChat(), FragmentChat.this).setMessage(StructMessageInfo.convert(getRealmChat(), makeUnreadMessage(countNewMessage))).withIdentifier(SUID.id().get()));
-
+                        isShowLayoutUnreadMessage = true;
                         LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
                         linearLayout.scrollToPositionWithOffset(position, 0);
                     } else {
@@ -2348,6 +2348,9 @@ public class FragmentChat extends BaseFragment
                     resetAndGetFromEnd();
                 }
 
+                if (isShowLayoutUnreadMessage) {
+                    removeLayoutUnreadMessage();
+                }
                 //final Realm realmMessage = Realm.getDefaultInstance();
 
                 HelperSetAction.setCancel(mRoomId);
@@ -2808,12 +2811,17 @@ public class FragmentChat extends BaseFragment
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                if (mAdapter != null) {
-                    mAdapter.clear();
+
+                for (int i = mAdapter.getAdapterItemCount() - 1; i >= 0; i--) {
+                    try {
+                        if (Long.parseLong(mAdapter.getAdapterItem(i).mMessage.messageID) <= clearId) {
+                            mAdapter.remove(i);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                if (recyclerView != null) {
-                    recyclerView.removeAllViews();
-                }
+
 
                 /**
                  * remove tag from edtChat if the message has deleted
@@ -3077,6 +3085,9 @@ public class FragmentChat extends BaseFragment
                                  */
                                 if (addToView) {
                                     switchAddItem(new ArrayList<>(Collections.singletonList(StructMessageInfo.convert(getRealmChat(), realmRoomMessage))), false);
+                                    if (isShowLayoutUnreadMessage) {
+                                        removeLayoutUnreadMessage();
+                                    }
                                 }
 
                                 setBtnDownVisible(realmRoomMessage);
@@ -3096,6 +3107,9 @@ public class FragmentChat extends BaseFragment
                                 // I'm sender . but another account sent this message and i received it.
                                 if (addToView) {
                                     switchAddItem(new ArrayList<>(Collections.singletonList(StructMessageInfo.convert(getRealmChat(), realmRoomMessage))), false);
+                                    if (isShowLayoutUnreadMessage) {
+                                        removeLayoutUnreadMessage();
+                                    }
                                 }
                                 setBtnDownVisible(realmRoomMessage);
                             }
@@ -3118,6 +3132,9 @@ public class FragmentChat extends BaseFragment
 
     @Override
     public void onVoiceRecordDone(final String savedPath) {
+        if (isShowLayoutUnreadMessage) {
+            removeLayoutUnreadMessage();
+        }
         sendCancelAction();
 
         //+Realm realm = Realm.getDefaultInstance();
@@ -3583,7 +3600,7 @@ public class FragmentChat extends BaseFragment
                 final ArrayList<Long> messageIds = new ArrayList<>();
                 messageIds.add(Long.parseLong(message.messageID));
 
-                if (chatType == ProtoGlobal.Room.Type.CHAT && bothDeleteMessageId.size() > 0 && message.senderID.equalsIgnoreCase(Long.toString(G.userId))) {
+                if (chatType == ProtoGlobal.Room.Type.CHAT && !isCloudRoom && bothDeleteMessageId.size() > 0 && message.senderID.equalsIgnoreCase(Long.toString(G.userId))) {
                     // show both Delete check box
 
                     String delete;
@@ -3820,6 +3837,12 @@ public class FragmentChat extends BaseFragment
         }
 
         recyclerView.scrollToPosition(position);
+    }
+
+    @Override
+    public void onForwardClick(StructMessageInfo message) {
+        finishChat();
+        mForwardMessages = new ArrayList<>(Arrays.asList(Parcels.wrap(message)));
     }
 
     @Override
@@ -4525,19 +4548,27 @@ public class FragmentChat extends BaseFragment
         //realm.close();
     }
 
+    private void removeLayoutUnreadMessage() {
+        /**
+         * remove unread layout message if already exist in chat list
+         */
+        if (isShowLayoutUnreadMessage) {
+            for (int i = (mAdapter.getItemCount() - 1); i >= 0; i--) {
+                if (mAdapter.getItem(i) instanceof UnreadMessage) {
+                    mAdapter.remove(i);
+                    break;
+                }
+            }
+        }
+        isShowLayoutUnreadMessage = false;
+    }
+
     private void setBtnDownVisible(RealmRoomMessage realmRoomMessage) {
         if (isEnd()) {
             scrollToEnd();
         } else {
             if (countNewMessage == 0) {
-                /**
-                 * remove unread layout message if already exist in chat list
-                 */
-                for (int i = (mAdapter.getItemCount() - 1); i >= 0; i--) {
-                    if (mAdapter.getItem(i) instanceof UnreadMessage) {
-                        mAdapter.remove(i);
-                    }
-                }
+                removeLayoutUnreadMessage();
                 firstUnreadMessageInChat = realmRoomMessage;
             }
             countNewMessage++;
@@ -5971,7 +6002,8 @@ public class FragmentChat extends BaseFragment
 
                         final String count = list.size() + "";
 
-                        if (chatType == ProtoGlobal.Room.Type.CHAT && bothDeleteMessageId.size() > 0 && mAdapter.getSelectedItems().iterator().next().mMessage.senderID.equalsIgnoreCase(Long.toString(G.userId))) {
+
+                        if (chatType == ProtoGlobal.Room.Type.CHAT && !isCloudRoom && bothDeleteMessageId.size() > 0 && mAdapter.getSelectedItems().iterator().next().mMessage.senderID.equalsIgnoreCase(Long.toString(G.userId))) {
                             // show both Delete check box
 
                             String delete;
@@ -6175,56 +6207,71 @@ public class FragmentChat extends BaseFragment
         listPathString.clear();
         fastItemAdapter.clear();
         itemGalleryList = getAllShownImagesPath(G.fragmentActivity);
-        try {
-            HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                @Override
-                public void Allow() throws IOException {
 
-                    for (int i = 0; i < itemGalleryList.size(); i++) {
-                        if (i == 0) {
-                            fastItemAdapter.add(new AdapterCamera("").withIdentifier(99 + i));
-                            fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
-                        } else {
-                            fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
-                        }
-                        isPermissionCamera = true;
-                    }
-                    G.handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isAdded()) {
-                                bottomSheetDialog.show();
-                            }
-                        }
-                    }, 100);
-                }
+        boolean isCameraButtonSheet = sharedPreferences.getBoolean(SHP_SETTING.KEY_CAMERA_BUTTON_SHEET, true);
 
-                @Override
-                public void deny() {
+        if (isCameraButtonSheet) {
+            try {
+                HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
+                    @Override
+                    public void Allow() throws IOException {
 
-                    G.handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            for (int i = 0; i < itemGalleryList.size(); i++) {
+                        for (int i = 0; i < itemGalleryList.size(); i++) {
+                            if (i == 0) {
+                                fastItemAdapter.add(new AdapterCamera("").withIdentifier(99 + i));
+                                fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
+                            } else {
                                 fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
                             }
+                            isPermissionCamera = true;
                         }
-                    });
-
-                    G.handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isAdded()) {
-                                bottomSheetDialog.show();
-                                fastItemAdapter.notifyDataSetChanged();
+                        G.handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (isAdded()) {
+                                    bottomSheetDialog.show();
+                                }
                             }
-                        }
-                    }, 100);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+                        }, 100);
+                    }
+
+                    @Override
+                    public void deny() {
+
+                        loadImageGallery();
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            loadImageGallery();
         }
+
+    }
+
+    private void loadImageGallery() {
+
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < itemGalleryList.size(); i++) {
+                    fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
+                }
+            }
+        });
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isAdded()) {
+                    bottomSheetDialog.show();
+                    fastItemAdapter.notifyDataSetChanged();
+                }
+            }
+        }, 100);
+
     }
 
     /**
@@ -6410,6 +6457,9 @@ public class FragmentChat extends BaseFragment
             return;
         }
 
+        if (isShowLayoutUnreadMessage) {
+            removeLayoutUnreadMessage();
+        }
         Realm realm = Realm.getDefaultInstance();
         long messageId = SUID.id().get();
         final long updateTime = TimeUtils.currentLocalTime();
@@ -6779,6 +6829,9 @@ public class FragmentChat extends BaseFragment
     public void sendPosition(final Double latitude, final Double longitude, final String imagePath) {
         sendCancelAction();
 
+        if (isShowLayoutUnreadMessage) {
+            removeLayoutUnreadMessage();
+        }
         final long messageId = SUID.id().get();
         RealmRoomMessage.makePositionMessage(mRoomId, messageId, replyMessageId(), latitude, longitude, imagePath);
 
@@ -7621,6 +7674,7 @@ public class FragmentChat extends BaseFragment
         if (unreadMessageCount > 0) {
             RealmRoomMessage unreadMessage = RealmRoomMessage.makeUnreadMessage(unreadMessageCount);
             mAdapter.add(0, new UnreadMessage(getRealmChat(), FragmentChat.this).setMessage(StructMessageInfo.convert(getRealmChat(), unreadMessage)).withIdentifier(SUID.id().get()));
+            isShowLayoutUnreadMessage = true;
         }
     }
 

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     android:clickable="true"
+    android:orientation="vertical"
     tools:ignore="MissingPrefix"
     >
 
@@ -182,6 +182,7 @@
       </RelativeLayout>
 
       <RelativeLayout
+          android:id="@+id/root_text"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           >
@@ -487,8 +488,8 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_below="@+id/int_layout_1"
-      android:layout_marginRight="@dimen/dp10"
       android:layout_marginLeft="@dimen/dp120"
+      android:layout_marginRight="@dimen/dp10"
       android:duration="0"
       android:fillAfter="true"
       android:fromDegrees="0"
@@ -510,24 +511,32 @@
       android:layout_height="wrap_content"
       />
 
-
-  <Button
-      android:id="@+id/int_btnStart"
-      android:layout_width="@dimen/dp220"
+  <RelativeLayout
+      android:layout_width="match_parent"
       android:layout_height="@dimen/dp32"
+      android:layout_marginLeft="@dimen/dp200"
+      android:layout_marginRight="@dimen/dp10"
+      android:fillAfter="true"
+      android:layoutDirection="ltr"
       android:layout_above="@+id/int_layoutParentCircleImage"
-      android:layout_alignParentRight="true"
-      android:layout_marginRight="@dimen/dp120"
-      android:background="@drawable/int_button_interduce"
-      android:gravity="center"
-      android:paddingTop="@dimen/dp4"
-      android:text="@string/btn_start_page6"
-      android:textAllCaps="false"
-      android:textColor="@color/txt_start_page5"
-      android:textSize="@dimen/dp16"
-      android:visibility="gone"
-      />
+      >
 
+    <Button
+        android:id="@+id/int_btnStart"
+        android:layout_width="@dimen/dp220"
+        android:layout_height="@dimen/dp32"
+        android:background="@drawable/int_button_interduce"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp4"
+        android:text="@string/btn_start_page6"
+        android:textAllCaps="false"
+        android:textColor="@color/txt_start_page5"
+        android:textSize="@dimen/dp16"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+
+        />
+  </RelativeLayout>
 
   <TextView
       android:id="@+id/int_txt_skip"

@@ -69,6 +69,7 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
 
     private long roomId;
     private int countAddMemberResponse = 0;
+    private int countMember = 0;
     private int countAddMemberRequest = 0;
     private static ProtoGlobal.Room.Type type;
     private String typeCreate;
@@ -135,6 +136,7 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
                         @Override
                         public void onChannelAddMember(Long RoomId, Long UserId, ProtoGlobal.ChannelRoom.Role role) {
                             countAddMemberResponse++;
+                            countMember++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 addMember(RoomId, ProtoGlobal.Room.Type.CHANNEL);
                             }
@@ -170,6 +172,7 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
                         @Override
                         public void onGroupAddMember(Long roomId, Long UserId) {
                             countAddMemberResponse++;
+                            countMember++;
                             if (countAddMemberResponse == countAddMemberRequest) {
                                 addMember(roomId, ProtoGlobal.Room.Type.GROUP);
                             }
@@ -333,7 +336,7 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
 
     private void addMember(long roomId, ProtoGlobal.Room.Type roomType) {
         RealmRoom.addOwnerToDatabase(roomId);
-        RealmRoom.updateMemberCount(roomId, roomType, countAddMemberRequest + 1); // plus with 1 , for own account
+        RealmRoom.updateMemberCount(roomId, roomType, countMember + 1); // plus with 1 , for own account
         if (isAdded()) {
             removeFromBaseFragment(ContactGroupFragment.this);
             new GoToChatActivity(roomId).startActivity();

@@ -17,7 +17,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
-
+import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -31,8 +31,6 @@ import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
-
-import io.realm.Realm;
 
 /**
  * return correct log message with author and target
@@ -279,74 +277,87 @@ public class HelperLogMessage {
     }
 
     private static String logMessageString(ProtoGlobal.RoomMessageLog.Type type, ProtoGlobal.RoomMessage.Author author) {
-
-        int message = 0;
-
-        switch (type) {
-
-            case USER_JOINED:
-                message = R.string.USER_JOINED;
-                break;
-            case USER_DELETED:
-                message = R.string.USER_DELETED;
-                break;
-            case ROOM_CREATED:
-                message = R.string.ROOM_CREATED;
-                break;
-            case MEMBER_ADDED:
-                //message = "member added";
-                message = R.string.MEMBER_ADDED;
-                break;
-            case MEMBER_KICKED:
-                //message = "member kicked";
-                message = R.string.MEMBER_KICKED;
-                break;
-            case MEMBER_LEFT:
-                //message = "member left";
-                message = R.string.MEMBER_LEFT;
-                break;
-            case ROOM_CONVERTED_TO_PUBLIC:
-                message = R.string.ROOM_CONVERTED_TO_PUBLIC;
-                break;
-            case ROOM_CONVERTED_TO_PRIVATE:
-                message = R.string.ROOM_CONVERTED_TO_PRIVATE;
-                break;
-            case MEMBER_JOINED_BY_INVITE_LINK:
-                message = R.string.MEMBER_JOINED_BY_INVITE_LINK;
-                break;
-            case ROOM_DELETED:
-                message = R.string.Room_Deleted_log;
-                break;
-
-            case MISSED_SCREEN_SHARE:
-                message = R.string.MISSED_SCREEN_SHARE;
-                break;
-            case MISSED_VOICE_CALL:
-
-                if (G.authorHash.equals(author.getHash())) {
-                    message = R.string.not_answerd_call;
-                } else {
-                    message = R.string.MISSED_VOICE_CALL;
-                }
-
-                break;
-            case MISSED_VIDEO_CALL:
-                message = R.string.MISSED_VIDEO_CALL;
-                break;
+        String message;
+        if (type == ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL) {
+            if (G.authorHash.equals(author.getHash())) {
+                message = ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL + "1";
+            } else {
+                message = ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL + "2";
+            }
+        } else {
+            message = type + "";
         }
-
         return "*" + message + "*";
     }
 
+    public static String getStringFromLog(String text) {
+        int messageID = 0;
+        switch (text) {
+            case "USER_JOINED":
+                messageID = R.string.USER_JOINED;
+                break;
+            case "USER_DELETED":
+                messageID = R.string.USER_DELETED;
+                break;
+            case "ROOM_CREATED":
+                messageID = R.string.ROOM_CREATED;
+                break;
+            case "MEMBER_ADDED":
+                //message = "member added";
+                messageID = R.string.MEMBER_ADDED;
+                break;
+            case "MEMBER_KICKED":
+                //message = "member kicked";
+                messageID = R.string.MEMBER_KICKED;
+                break;
+            case "MEMBER_LEFT":
+                //message = "member left";
+                messageID = R.string.MEMBER_LEFT;
+                break;
+            case "ROOM_CONVERTED_TO_PUBLIC":
+                messageID = R.string.ROOM_CONVERTED_TO_PUBLIC;
+                break;
+            case "ROOM_CONVERTED_TO_PRIVATE":
+                messageID = R.string.ROOM_CONVERTED_TO_PRIVATE;
+                break;
+            case "MEMBER_JOINED_BY_INVITE_LINK":
+                messageID = R.string.MEMBER_JOINED_BY_INVITE_LINK;
+                break;
+            case "ROOM_DELETED":
+                messageID = R.string.Room_Deleted_log;
+                break;
+            case "MISSED_SCREEN_SHARE":
+                messageID = R.string.MISSED_SCREEN_SHARE;
+                break;
+            case "MISSED_VOICE_CALL1":
+                messageID = R.string.not_answerd_call;
+                break;
+            case "MISSED_VOICE_CALL2":
+                messageID = R.string.MISSED_VOICE_CALL;
+                break;
+            case "MISSED_VIDEO_CALL":
+                messageID = R.string.MISSED_VIDEO_CALL;
+                break;
+        }
+
+        if (messageID > 0) {
+            return G.context.getString(messageID);
+        } else {
+
+            try {
+                return G.context.getString(Integer.parseInt(text));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
+
     public static String convertLogmessage(String message) {
-
         if (message == null || message.length() == 0) return null;
-
         String result = "";
-
         String str[] = message.split("\n");
         String tmp;
-
         try {
             if (HelperCalander.isPersianUnicode) {
                 tmp = str[1];
@@ -355,11 +366,10 @@ public class HelperLogMessage {
             }
             int indexFirst = tmp.indexOf("*");
             int indexLast = tmp.lastIndexOf("*");
-            result = tmp.substring(0, indexFirst) + G.context.getString(Integer.parseInt(tmp.substring(indexFirst + 1, indexLast))) + tmp.substring(indexLast + 1);
+            result = tmp.substring(0, indexFirst) + getStringFromLog(tmp.substring(indexFirst + 1, indexLast)) + tmp.substring(indexLast + 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
@@ -418,17 +428,16 @@ public class HelperLogMessage {
 
             int indexFirst = tmp.indexOf("*");
             int indexLast = tmp.lastIndexOf("*");
-            String stringValue = G.context.getString(Integer.parseInt(tmp.substring(indexFirst + 1, indexLast)));
 
-            strBuilder.replace(indexFirst, indexLast + 1, stringValue);
+            strBuilder.replace(indexFirst, indexLast + 1, getStringFromLog(tmp.substring(indexFirst + 1, indexLast)));
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         return strBuilder;
     }
 
-    public static void insertClickSpanLink(SpannableStringBuilder builder, int start, int end, final boolean isUser, final long id) {
+    private static void insertClickSpanLink(SpannableStringBuilder builder, int start, int end, final boolean isUser, final long id) {
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override

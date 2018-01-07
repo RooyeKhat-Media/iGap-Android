@@ -10,6 +10,9 @@
 
 package net.iGap.response;
 
+import com.tapstream.sdk.Event;
+import com.tapstream.sdk.Tapstream;
+
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoUserRegister;
@@ -36,6 +39,9 @@ public class UserRegisterResponse extends MessageHandler {
         G.userId = builder.getUserId();
         G.authorHash = builder.getAuthorHash();
         G.displayName = builder.getUsername();
+
+        Event event = new Event("User Register", false);
+        Tapstream.getInstance().fireEvent(event);
     }
 
     @Override

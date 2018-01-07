@@ -2098,8 +2098,9 @@
 
   <string name="st_multi_tab">تبويب متعدد</string>
 
-  <string name="dont_ask_again">فهمیدم</string>
-  <string name="attention">توجه</string>
-  <string name="content_attention_dialog">نکته : قابل ذکر است افراد بر روی نقشه با خطای 500 متر نمایش داده خواهند شد . پس جای نگرانی نیست
-فهمیدم</string>
+  <string name="dont_ask_again">حصلت عليه</string>
+  <string name="attention">اهتمام</string>
+  <string name="content_attention_dialog">ملاحظة: تجدر الإشارة إلى أن الأفراد على الخريطة سيتم عرض مع وجود خطأ من 500 متر. لذلك لا تقلق</string>
+  <string name="st_cameraBottomSheet">كاميرا صغيرة في المرفقات</string>
+
 </resources>

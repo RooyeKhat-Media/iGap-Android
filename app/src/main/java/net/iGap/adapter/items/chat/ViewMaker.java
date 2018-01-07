@@ -18,9 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.daimajia.swipe.SwipeLayout;
-
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -44,8 +42,8 @@ import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
 import static java.lang.Boolean.TRUE;
 import static net.iGap.G.context;
+import static net.iGap.R.dimen.dp16;
 import static net.iGap.R.dimen.dp1_minus;
-import static net.iGap.R.dimen.dp32;
 import static net.iGap.R.dimen.dp4;
 import static net.iGap.R.dimen.dp52;
 import static net.iGap.R.dimen.dp8;
@@ -814,8 +812,27 @@ public class ViewMaker {
         lyt_vote_down.addView(txt_vote_down);
         lyt_vote.addView(lyt_vote_down);
 
+        LinearLayout lyt_vote_forward = new LinearLayout(context);
+        lyt_vote_forward.setGravity(CENTER);
+        lyt_vote_forward.setOrientation(VERTICAL);
+        LinearLayout.LayoutParams layout_799_f = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layout_799_f.topMargin = i_Dp(R.dimen.dp10);
+        lyt_vote_forward.setLayoutParams(layout_799_f);
+
+        MaterialDesignTextView img_vote_forward = new MaterialDesignTextView(context);
+        img_vote_forward.setId(R.id.img_vote_forward);
+        img_vote_forward.setPadding(5, 5, 5, 5);
+        img_vote_forward.setGravity(CENTER);
+        LinearLayout.LayoutParams layout_216_f = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        img_vote_forward.setText(context.getResources().getString(R.string.md_forward));
+        img_vote_forward.setTextColor(context.getResources().getColor(R.color.gray_6c));
+        setTextSize(img_vote_forward, R.dimen.dp20);
+        img_vote_forward.setLayoutParams(layout_216_f);
+        lyt_vote_forward.addView(img_vote_forward);
+        lyt_vote.addView(lyt_vote_forward);
+
         View textView_564 = new View(context);
-        LinearLayout.LayoutParams layout_437 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp40), i_Dp(dp32));
+        LinearLayout.LayoutParams layout_437 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp40), i_Dp(dp16));
         textView_564.setLayoutParams(layout_437);
         lyt_vote.addView(textView_564);
 

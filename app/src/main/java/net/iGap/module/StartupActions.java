@@ -1,7 +1,6 @@
 package net.iGap.module;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Environment;
@@ -29,7 +28,6 @@ import net.iGap.helper.HelperFillLookUpClass;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
-import net.iGap.helper.MyServiceTemporat;
 import net.iGap.realm.RealmMigration;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.webrtc.CallObserver;
@@ -135,15 +133,6 @@ public final class StartupActions {
         headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
         G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
         G.multiTab = preferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
-
-        /**
-         * start background app service
-         */
-        int isStart = preferences.getInt(SHP_SETTING.KEY_STNS_KEEP_ALIVE_SERVICE, 1);
-        if (isStart == 1) {
-            Intent intent = new Intent(context, MyServiceTemporat.class);
-            context.startService(intent);
-        }
 
         // setting for show layout vote in channel
         G.showVoteChannelLayout = preferences.getInt(SHP_SETTING.KEY_VOTE, 1) == 1;

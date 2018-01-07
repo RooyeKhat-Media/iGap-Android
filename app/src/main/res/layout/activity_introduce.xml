@@ -70,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginBottom="@dimen/dp16"
         android:background="@drawable/background_sky"
         >
 
@@ -108,8 +109,8 @@
     <!--page 3-->
     <ImageView
         android:id="@+id/int_img_chat_introduce"
-        android:layout_width="@dimen/dp160"
-        android:layout_height="@dimen/dp160"
+        android:layout_width="@dimen/dp140"
+        android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
@@ -123,8 +124,8 @@
     <!--page 4-->
     <ImageView
         android:id="@+id/int_img_transfer_introduce"
-        android:layout_width="@dimen/dp160"
-        android:layout_height="@dimen/dp160"
+        android:layout_width="@dimen/dp140"
+        android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"

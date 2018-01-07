@@ -44,7 +44,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-
+import io.realm.Realm;
+import io.realm.RealmResults;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -61,15 +67,6 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 import static net.iGap.G.context;
 
@@ -183,8 +180,8 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
                             latestAudioFocusState = AudioManager.AUDIOFOCUS_GAIN;
                             registerAudioFocus(AudioManager.AUDIOFOCUS_GAIN);
                         }
-                        initSensor();
                     }
+                    initSensor();
                 } else if (action.equals(STOPFOREGROUND_ACTION)) {
 
                     removeSensor();
@@ -940,51 +937,49 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
     }
 
     private static void updateNotification() {
-        if (isVoice) { // don't show notification for voice
-            return;
-        }
+        if (!isVoice) {
+            getMusicInfo();
 
-        getMusicInfo();
+            Intent intentFragmentMusic = new Intent(context, ActivityMain.class);
+            intentFragmentMusic.putExtra(ActivityMain.openMediaPlyer, true);
 
-        Intent intentFragmentMusic = new Intent(context, ActivityMain.class);
-        intentFragmentMusic.putExtra(ActivityMain.openMediaPlyer, true);
+            PendingIntent pi = PendingIntent.getActivity(context, 555, intentFragmentMusic, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        PendingIntent pi = PendingIntent.getActivity(context, 555, intentFragmentMusic, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setTextViewText(R.id.mln_txt_music_name, MusicPlayer.musicName);
+            remoteViews.setTextViewText(R.id.mln_txt_music_outher, MusicPlayer.musicInfoTitle);
 
-        remoteViews.setTextViewText(R.id.mln_txt_music_name, MusicPlayer.musicName);
-        remoteViews.setTextViewText(R.id.mln_txt_music_outher, MusicPlayer.musicInfoTitle);
+            //if (mp != null) {
+            //    if (mp.isPlaying()) {
+            remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.pause_button);
+            //    } else {
+            //        remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
+            //    }
+            //}
 
-        //if (mp != null) {
-        //    if (mp.isPlaying()) {
-        remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.pause_button);
-        //    } else {
-        //        remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
-        //    }
-        //}
+            Intent intentPrevious = new Intent(context, customButtonListener.class);
+            intentPrevious.putExtra("mode", "previous");
+            PendingIntent pendingIntentPrevious = PendingIntent.getBroadcast(context, 1, intentPrevious, 0);
+            remoteViews.setOnClickPendingIntent(R.id.mln_btn_Previous_music, pendingIntentPrevious);
 
-        Intent intentPrevious = new Intent(context, customButtonListener.class);
-        intentPrevious.putExtra("mode", "previous");
-        PendingIntent pendingIntentPrevious = PendingIntent.getBroadcast(context, 1, intentPrevious, 0);
-        remoteViews.setOnClickPendingIntent(R.id.mln_btn_Previous_music, pendingIntentPrevious);
+            Intent intentPlayPause = new Intent(context, customButtonListener.class);
+            intentPlayPause.putExtra("mode", "play");
+            PendingIntent pendingIntentPlayPause = PendingIntent.getBroadcast(context, 2, intentPlayPause, 0);
+            remoteViews.setOnClickPendingIntent(R.id.mln_btn_play_music, pendingIntentPlayPause);
 
-        Intent intentPlayPause = new Intent(context, customButtonListener.class);
-        intentPlayPause.putExtra("mode", "play");
-        PendingIntent pendingIntentPlayPause = PendingIntent.getBroadcast(context, 2, intentPlayPause, 0);
-        remoteViews.setOnClickPendingIntent(R.id.mln_btn_play_music, pendingIntentPlayPause);
+            Intent intentforward = new Intent(context, customButtonListener.class);
+            intentforward.putExtra("mode", "forward");
+            PendingIntent pendingIntentforward = PendingIntent.getBroadcast(context, 3, intentforward, 0);
+            remoteViews.setOnClickPendingIntent(R.id.mln_btn_forward_music, pendingIntentforward);
 
-        Intent intentforward = new Intent(context, customButtonListener.class);
-        intentforward.putExtra("mode", "forward");
-        PendingIntent pendingIntentforward = PendingIntent.getBroadcast(context, 3, intentforward, 0);
-        remoteViews.setOnClickPendingIntent(R.id.mln_btn_forward_music, pendingIntentforward);
+            Intent intentClose = new Intent(context, customButtonListener.class);
+            intentClose.putExtra("mode", "close");
+            PendingIntent pendingIntentClose = PendingIntent.getBroadcast(context, 4, intentClose, 0);
+            remoteViews.setOnClickPendingIntent(R.id.mln_btn_close, pendingIntentClose);
 
-        Intent intentClose = new Intent(context, customButtonListener.class);
-        intentClose.putExtra("mode", "close");
-        PendingIntent pendingIntentClose = PendingIntent.getBroadcast(context, 4, intentClose, 0);
-        remoteViews.setOnClickPendingIntent(R.id.mln_btn_close, pendingIntentClose);
-
-        notification = new NotificationCompat.Builder(context.getApplicationContext()).setTicker("music").setSmallIcon(R.mipmap.j_mp3).setContentTitle(musicName)
+            notification = new NotificationCompat.Builder(context.getApplicationContext()).setTicker("music").setSmallIcon(R.mipmap.j_mp3).setContentTitle(musicName)
                 //  .setContentText(place)
                 .setContent(remoteViews).setContentIntent(pi).setDeleteIntent(pendingIntentClose).setAutoCancel(false).setOngoing(true).build();
+        }
 
         Intent intent = new Intent(context, MusicPlayer.class);
         intent.putExtra("ACTION", STARTFOREGROUND_ACTION);

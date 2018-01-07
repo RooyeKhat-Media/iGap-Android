@@ -35,6 +35,7 @@ public class SHP_SETTING {
     public static final String KEY_AUTOPLAY_GIFS = "autoplay_gif";
     public static final String KEY_SAVE_TO_GALLERY = "save_to_gallery";
     public static final String KEY_CROP = "KEY_CROP";
+    public static final String KEY_CAMERA_BUTTON_SHEET = "KEY_CAMERA_BUTTON_SHEET";
     public static final String KEY_TRIM = "KEY_TRIM";
     public static final String KEY_COMPRESS = "KEY_COMPRESS";
     public static final String KEY_VOTE = "KEY_VOTE";
