@@ -533,6 +533,6 @@ __pycache__/
 # tools/
 
 # Google Service
-google-services.json
+/app/google-services.json
 
 ### VisualStudio Patch ###
