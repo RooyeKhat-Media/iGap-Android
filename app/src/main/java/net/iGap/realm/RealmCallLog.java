@@ -10,52 +10,23 @@
 
 package net.iGap.realm;
 
+import net.iGap.module.SerializationUtils;
+import net.iGap.proto.ProtoSignalingGetLog;
+
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import java.util.List;
-import net.iGap.module.SerializationUtils;
-import net.iGap.proto.ProtoSignalingGetLog;
 
 
 public class RealmCallLog extends RealmObject {
 
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
     private String name;
     private long time;
     private byte[] logProto;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog getLogProto() {
-        return logProto == null ? null : (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) SerializationUtils.deserialize(logProto);
-    }
-
-    public void setLogProto(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog logProto) {
-        this.logProto = SerializationUtils.serialize(logProto);
-    }
 
     public static void addLog(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog callLog, Realm realm) {
         RealmCallLog realmCallLog = realm.where(RealmCallLog.class).equalTo(RealmCallLogFields.ID, callLog.getId()).findFirst();
@@ -90,5 +61,37 @@ public class RealmCallLog extends RealmObject {
             }
         });
         realm.close();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog getLogProto() {
+        return logProto == null ? null : (ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog) SerializationUtils.deserialize(logProto);
+    }
+
+    public void setLogProto(ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog logProto) {
+        this.logProto = SerializationUtils.serialize(logProto);
     }
 }

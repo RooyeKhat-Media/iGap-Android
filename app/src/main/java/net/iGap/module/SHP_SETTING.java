@@ -37,6 +37,8 @@ public class SHP_SETTING {
     public static final String KEY_CROP = "KEY_CROP";
     public static final String KEY_CAMERA_BUTTON_SHEET = "KEY_CAMERA_BUTTON_SHEET";
     public static final String KEY_TRIM = "KEY_TRIM";
+    public static final String KEY_DEFAULT_PLAYER = "KEY_DEFAULT_PLAYER";
+    public static final String KEY_SDK_ENABLE = "KEY_SDK_ENABLE";
     public static final String KEY_COMPRESS = "KEY_COMPRESS";
     public static final String KEY_VOTE = "KEY_VOTE";
     public static final String KEY_SHOW_SENDER_NEME_IN_GROUP = "KEY_SHOW_SENDER_NEME_IN_GROUP";
@@ -133,18 +135,16 @@ public class SHP_SETTING {
     // ========================================================================================== Notifications and sound contact profile
 
     public static final String REGISTER_STATUS = "REGISTER_STATUS";
-
-    public static class Defaults {
-        public static final int KEY_AUTOPLAY_GIFS = 1;
-    }
-
     public static final String KEY_GET_CONTACT = "KEY_GET_CONTACT";
     public static final String KEY_GET_CONTACT_IN_FRAGMENT = "KEY_GET_CONTACT_IN_FRAGMENT";
-
     public static final String KEY_KEEP_MEDIA_TIME = "KEY_KEEP_MEDIA_TIME";
     public static final String KEY_TIME_LOCK = "KEY_TIME_LOCK";
     public static final String KEY_SCREEN_SHOT_LOCK = "KEY_SCREEN_SHOT_LOCK";
     public static final String KEY_MAP_ATTENTION_DIALOG = "MAP_ATTENTION_DIALOG";
+
+    public static class Defaults {
+        public static final int KEY_AUTOPLAY_GIFS = 1;
+    }
 
 }
 

@@ -20641,6 +20641,16 @@ public final class ProtoGlobal {
      * <code>optional uint64 seen_id = 11;</code>
      */
     long getSeenId();
+
+      /**
+       * <code>optional bool verified = 12;</code>
+       */
+      boolean getVerified();
+
+      /**
+       * <code>optional bool reaction_status = 13;</code>
+       */
+      boolean getReactionStatus();
   }
   /**
    * Protobuf type {@code proto.ChannelRoom}
@@ -20661,7 +20671,9 @@ public final class ProtoGlobal {
       description_ = "";
       avatarCount_ = 0;
       signature_ = false;
-      seenId_ = 0L;
+        seenId_ = 0L;
+        verified_ = false;
+        reactionStatus_ = false;
     }
 
     @java.lang.Override
@@ -20772,6 +20784,16 @@ public final class ProtoGlobal {
               seenId_ = input.readUInt64();
               break;
             }
+              case 96: {
+
+                  verified_ = input.readBool();
+                  break;
+              }
+              case 104: {
+
+                  reactionStatus_ = input.readBool();
+                  break;
+              }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -22351,6 +22373,26 @@ public final class ProtoGlobal {
       return seenId_;
     }
 
+      public static final int VERIFIED_FIELD_NUMBER = 12;
+      private boolean verified_;
+
+      /**
+       * <code>optional bool verified = 12;</code>
+       */
+      public boolean getVerified() {
+          return verified_;
+      }
+
+      public static final int REACTION_STATUS_FIELD_NUMBER = 13;
+      private boolean reactionStatus_;
+
+      /**
+       * <code>optional bool reaction_status = 13;</code>
+       */
+      public boolean getReactionStatus() {
+          return reactionStatus_;
+      }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -22396,6 +22438,12 @@ public final class ProtoGlobal {
       if (seenId_ != 0L) {
         output.writeUInt64(11, seenId_);
       }
+        if (verified_ != false) {
+            output.writeBool(12, verified_);
+        }
+        if (reactionStatus_ != false) {
+            output.writeBool(13, reactionStatus_);
+        }
     }
 
     public int getSerializedSize() {
@@ -22445,6 +22493,14 @@ public final class ProtoGlobal {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(11, seenId_);
       }
+        if (verified_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeBoolSize(12, verified_);
+        }
+        if (reactionStatus_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeBoolSize(13, reactionStatus_);
+        }
       memoizedSize = size;
       return size;
     }
@@ -22489,7 +22545,11 @@ public final class ProtoGlobal {
       result = result && (getSignature()
           == other.getSignature());
       result = result && (getSeenId()
-          == other.getSeenId());
+              == other.getSeenId());
+        result = result && (getVerified()
+                == other.getVerified());
+        result = result && (getReactionStatus()
+                == other.getReactionStatus());
       return result;
     }
 
@@ -22529,7 +22589,13 @@ public final class ProtoGlobal {
           getSignature());
       hash = (37 * hash) + SEEN_ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getSeenId());
+              getSeenId());
+        hash = (37 * hash) + VERIFIED_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                getVerified());
+        hash = (37 * hash) + REACTION_STATUS_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                getReactionStatus());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -22680,7 +22746,11 @@ public final class ProtoGlobal {
         }
         signature_ = false;
 
-        seenId_ = 0L;
+          seenId_ = 0L;
+
+          verified_ = false;
+
+          reactionStatus_ = false;
 
         return this;
       }
@@ -22726,7 +22796,9 @@ public final class ProtoGlobal {
           result.publicExtra_ = publicExtraBuilder_.build();
         }
         result.signature_ = signature_;
-        result.seenId_ = seenId_;
+          result.seenId_ = seenId_;
+          result.verified_ = verified_;
+          result.reactionStatus_ = reactionStatus_;
         onBuilt();
         return result;
       }
@@ -22803,6 +22875,12 @@ public final class ProtoGlobal {
         if (other.getSeenId() != 0L) {
           setSeenId(other.getSeenId());
         }
+          if (other.getVerified() != false) {
+              setVerified(other.getVerified());
+          }
+          if (other.getReactionStatus() != false) {
+              setReactionStatus(other.getReactionStatus());
+          }
         onChanged();
         return this;
       }
@@ -23507,8 +23585,66 @@ public final class ProtoGlobal {
         
         seenId_ = 0L;
         onChanged();
-        return this;
+          return this;
       }
+
+        private boolean verified_;
+
+        /**
+         * <code>optional bool verified = 12;</code>
+         */
+        public boolean getVerified() {
+            return verified_;
+        }
+
+        /**
+         * <code>optional bool verified = 12;</code>
+         */
+        public Builder setVerified(boolean value) {
+
+            verified_ = value;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>optional bool verified = 12;</code>
+         */
+        public Builder clearVerified() {
+
+            verified_ = false;
+            onChanged();
+            return this;
+        }
+
+        private boolean reactionStatus_;
+
+        /**
+         * <code>optional bool reaction_status = 13;</code>
+         */
+        public boolean getReactionStatus() {
+            return reactionStatus_;
+        }
+
+        /**
+         * <code>optional bool reaction_status = 13;</code>
+         */
+        public Builder setReactionStatus(boolean value) {
+
+            reactionStatus_ = value;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>optional bool reaction_status = 13;</code>
+         */
+        public Builder clearReactionStatus() {
+
+            reactionStatus_ = false;
+            onChanged();
+            return this;
+        }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -27688,8 +27824,8 @@ public final class ProtoGlobal {
       "e_link\030\001 \001(\t\022\024\n\014invite_token\030\002 \001(\t\032\037\n\013Pu" +
       "blicExtra\022\020\n\010username\030\001 \001(\t\")\n\004Type\022\020\n\014P" +
       "RIVATE_ROOM\020\000\022\017\n\013PUBLIC_ROOM\020\001\"7\n\004Role\022\n" +
-      "\n\006MEMBER\020\000\022\r\n\tMODERATOR\020\001\022\t\n\005ADMIN\020\002\022\t\n\005" +
-      "OWNER\020\003\"\265\004\n\013ChannelRoom\022%\n\004type\030\001 \001(\0162\027.",
+              "\n\006MEMBER\020\000\022\r\n\tMODERATOR\020\001\022\t\n\005ADMIN\020\002\022\t\n\005" +
+      "OWNER\020\003\"\340\004\n\013ChannelRoom\022%\n\004type\030\001 \001(\0162\027.",
       "proto.ChannelRoom.Type\022%\n\004role\030\002 \001(\0162\027.p" +
       "roto.ChannelRoom.Role\022\032\n\022participants_co" +
       "unt\030\003 \001(\r\022 \n\030participants_count_label\030\004 " +
@@ -27697,55 +27833,56 @@ public final class ProtoGlobal {
       "\030\006 \001(\r\022\035\n\006avatar\030\007 \001(\0132\r.proto.Avatar\0226\n" +
       "\rprivate_extra\030\010 \001(\0132\037.proto.ChannelRoom" +
       ".PrivateExtra\0224\n\014public_extra\030\t \001(\0132\036.pr" +
-      "oto.ChannelRoom.PublicExtra\022\021\n\tsignature" +
-      "\030\n \001(\010\022\017\n\007seen_id\030\013 \001(\004\0329\n\014PrivateExtra\022" +
-      "\023\n\013invite_link\030\001 \001(\t\022\024\n\014invite_token\030\002 \001",
-      "(\t\032\037\n\013PublicExtra\022\020\n\010username\030\001 \001(\t\")\n\004T" +
-      "ype\022\020\n\014PRIVATE_ROOM\020\000\022\017\n\013PUBLIC_ROOM\020\001\"7" +
-      "\n\004Role\022\n\n\006MEMBER\020\000\022\r\n\tMODERATOR\020\001\022\t\n\005ADM" +
-      "IN\020\002\022\t\n\005OWNER\020\003\"f\n\tThumbnail\022\014\n\004size\030\001 \001" +
-      "(\003\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030\003 \001(\005\022\020\n\010cac" +
-      "he_id\030\004 \001(\t\022\014\n\004name\030\005 \001(\t\022\014\n\004mime\030\006 \001(\t\"" +
-      "\206\002\n\004File\022\r\n\005token\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\014\n" +
-      "\004size\030\003 \001(\003\022)\n\017large_thumbnail\030\004 \001(\0132\020.p" +
-      "roto.Thumbnail\022)\n\017small_thumbnail\030\005 \001(\0132" +
-      "\020.proto.Thumbnail\022,\n\022waveform_thumbnail\030",
-      "\006 \001(\0132\020.proto.Thumbnail\022\r\n\005width\030\007 \001(\005\022\016" +
-      "\n\006height\030\010 \001(\005\022\020\n\010duration\030\t \001(\001\022\020\n\010cach" +
-      "e_id\030\n \001(\t\022\014\n\004mime\030\013 \001(\t\"5\n\tWallpaper\022\031\n" +
-      "\004file\030\001 \001(\0132\013.proto.File\022\r\n\005color\030\002 \001(\t\"" +
-      "+\n\nPagination\022\016\n\006offset\030\001 \001(\r\022\r\n\005limit\030\002" +
-      " \001(\r*+\n\006Gender\022\013\n\007UNKNOWN\020\000\022\010\n\004MALE\020\001\022\n\n" +
-      "\006FEMALE\020\002*<\n\006Device\022\022\n\016UNKNOWN_DEVICE\020\000\022" +
-      "\006\n\002PC\020\001\022\n\n\006TABLET\020\002\022\n\n\006MOBILE\020\003*k\n\010Platf" +
-      "orm\022\024\n\020UNKNOWN_PLATFORM\020\000\022\013\n\007ANDROID\020\001\022\007" +
-      "\n\003IOS\020\002\022\n\n\006MAC_OS\020\003\022\013\n\007WINDOWS\020\004\022\t\n\005LINU",
-      "X\020\005\022\017\n\013BLACK_BERRY\020\006* \n\010Language\022\t\n\005EN_U" +
-      "S\020\000\022\t\n\005FA_IR\020\001*\313\001\n\017RoomMessageType\022\010\n\004TE" +
-      "XT\020\000\022\t\n\005IMAGE\020\001\022\016\n\nIMAGE_TEXT\020\002\022\t\n\005VIDEO" +
-      "\020\003\022\016\n\nVIDEO_TEXT\020\004\022\t\n\005AUDIO\020\005\022\016\n\nAUDIO_T" +
-      "EXT\020\006\022\t\n\005VOICE\020\007\022\007\n\003GIF\020\010\022\014\n\010GIF_TEXT\020\016\022" +
-      "\010\n\004FILE\020\t\022\r\n\tFILE_TEXT\020\n\022\014\n\010LOCATION\020\013\022\007" +
-      "\n\003LOG\020\014\022\013\n\007CONTACT\020\r*]\n\021RoomMessageStatu" +
-      "s\022\n\n\006FAILED\020\000\022\013\n\007SENDING\020\001\022\010\n\004SENT\020\002\022\r\n\t" +
-      "DELIVERED\020\003\022\010\n\004SEEN\020\004\022\014\n\010LISTENED\020\005*5\n\023R" +
-      "oomMessageReaction\022\r\n\tTHUMBS_UP\020\000\022\017\n\013THU",
-      "MBS_DOWN\020\001*\244\002\n\014ClientAction\022\n\n\006CANCEL\020\000\022" +
-      "\n\n\006TYPING\020\001\022\021\n\rSENDING_IMAGE\020\002\022\023\n\017CAPTUR" +
-      "ING_IMAGE\020\003\022\021\n\rSENDING_VIDEO\020\004\022\023\n\017CAPTUR" +
-      "ING_VIDEO\020\005\022\021\n\rSENDING_AUDIO\020\006\022\023\n\017RECORD" +
-      "ING_VOICE\020\007\022\021\n\rSENDING_VOICE\020\010\022\024\n\020SENDIN" +
-      "G_DOCUMENT\020\t\022\017\n\013SENDING_GIF\020\n\022\020\n\014SENDING" +
-      "_FILE\020\013\022\024\n\020SENDING_LOCATION\020\014\022\024\n\020CHOOSIN" +
-      "G_CONTACT\020\r\022\014\n\010PAINTING\020\016* \n\010RoomMute\022\n\n" +
-      "\006UNMUTE\020\000\022\010\n\004MUTE\020\001*\233\001\n\013PrivacyType\022\017\n\013U" +
-      "SER_STATUS\020\000\022\n\n\006AVATAR\020\001\022\020\n\014GROUP_INVITE",
-      "\020\002\022\022\n\016CHANNEL_INVITE\020\003\022\021\n\rVOICE_CALLING\020" +
-      "\004\022\021\n\rVIDEO_CALLING\020\005\022\022\n\016SCREEN_SHARING\020\006" +
-      "\022\017\n\013SECRET_CHAT\020\007*?\n\014PrivacyLevel\022\r\n\tALL" +
-      "OW_ALL\020\000\022\014\n\010DENY_ALL\020\001\022\022\n\016ALLOW_CONTACTS" +
-      "\020\002B\035\n\016net.iGap.protoB\013ProtoGlobalb\006proto" +
-      "3"
+              "oto.ChannelRoom.PublicExtra\022\021\n\tsignature" +
+              "\030\n \001(\010\022\017\n\007seen_id\030\013 \001(\004\022\020\n\010verified\030\014 \001(" +
+              "\010\022\027\n\017reaction_status\030\r \001(\010\0329\n\014PrivateExt",
+            "ra\022\023\n\013invite_link\030\001 \001(\t\022\024\n\014invite_token\030" +
+                    "\002 \001(\t\032\037\n\013PublicExtra\022\020\n\010username\030\001 \001(\t\")" +
+                    "\n\004Type\022\020\n\014PRIVATE_ROOM\020\000\022\017\n\013PUBLIC_ROOM\020" +
+                    "\001\"7\n\004Role\022\n\n\006MEMBER\020\000\022\r\n\tMODERATOR\020\001\022\t\n\005" +
+                    "ADMIN\020\002\022\t\n\005OWNER\020\003\"f\n\tThumbnail\022\014\n\004size\030" +
+                    "\001 \001(\003\022\r\n\005width\030\002 \001(\005\022\016\n\006height\030\003 \001(\005\022\020\n\010" +
+                    "cache_id\030\004 \001(\t\022\014\n\004name\030\005 \001(\t\022\014\n\004mime\030\006 \001" +
+                    "(\t\"\206\002\n\004File\022\r\n\005token\030\001 \001(\t\022\014\n\004name\030\002 \001(\t" +
+                    "\022\014\n\004size\030\003 \001(\003\022)\n\017large_thumbnail\030\004 \001(\0132" +
+                    "\020.proto.Thumbnail\022)\n\017small_thumbnail\030\005 \001",
+            "(\0132\020.proto.Thumbnail\022,\n\022waveform_thumbna" +
+                    "il\030\006 \001(\0132\020.proto.Thumbnail\022\r\n\005width\030\007 \001(" +
+                    "\005\022\016\n\006height\030\010 \001(\005\022\020\n\010duration\030\t \001(\001\022\020\n\010c" +
+                    "ache_id\030\n \001(\t\022\014\n\004mime\030\013 \001(\t\"5\n\tWallpaper" +
+                    "\022\031\n\004file\030\001 \001(\0132\013.proto.File\022\r\n\005color\030\002 \001" +
+                    "(\t\"+\n\nPagination\022\016\n\006offset\030\001 \001(\r\022\r\n\005limi" +
+                    "t\030\002 \001(\r*+\n\006Gender\022\013\n\007UNKNOWN\020\000\022\010\n\004MALE\020\001" +
+                    "\022\n\n\006FEMALE\020\002*<\n\006Device\022\022\n\016UNKNOWN_DEVICE" +
+                    "\020\000\022\006\n\002PC\020\001\022\n\n\006TABLET\020\002\022\n\n\006MOBILE\020\003*k\n\010Pl" +
+                    "atform\022\024\n\020UNKNOWN_PLATFORM\020\000\022\013\n\007ANDROID\020",
+            "\001\022\007\n\003IOS\020\002\022\n\n\006MAC_OS\020\003\022\013\n\007WINDOWS\020\004\022\t\n\005L" +
+                    "INUX\020\005\022\017\n\013BLACK_BERRY\020\006* \n\010Language\022\t\n\005E" +
+                    "N_US\020\000\022\t\n\005FA_IR\020\001*\313\001\n\017RoomMessageType\022\010\n" +
+                    "\004TEXT\020\000\022\t\n\005IMAGE\020\001\022\016\n\nIMAGE_TEXT\020\002\022\t\n\005VI" +
+                    "DEO\020\003\022\016\n\nVIDEO_TEXT\020\004\022\t\n\005AUDIO\020\005\022\016\n\nAUDI" +
+                    "O_TEXT\020\006\022\t\n\005VOICE\020\007\022\007\n\003GIF\020\010\022\014\n\010GIF_TEXT" +
+                    "\020\016\022\010\n\004FILE\020\t\022\r\n\tFILE_TEXT\020\n\022\014\n\010LOCATION\020" +
+                    "\013\022\007\n\003LOG\020\014\022\013\n\007CONTACT\020\r*]\n\021RoomMessageSt" +
+                    "atus\022\n\n\006FAILED\020\000\022\013\n\007SENDING\020\001\022\010\n\004SENT\020\002\022" +
+                    "\r\n\tDELIVERED\020\003\022\010\n\004SEEN\020\004\022\014\n\010LISTENED\020\005*5",
+            "\n\023RoomMessageReaction\022\r\n\tTHUMBS_UP\020\000\022\017\n\013" +
+                    "THUMBS_DOWN\020\001*\244\002\n\014ClientAction\022\n\n\006CANCEL" +
+                    "\020\000\022\n\n\006TYPING\020\001\022\021\n\rSENDING_IMAGE\020\002\022\023\n\017CAP" +
+                    "TURING_IMAGE\020\003\022\021\n\rSENDING_VIDEO\020\004\022\023\n\017CAP" +
+                    "TURING_VIDEO\020\005\022\021\n\rSENDING_AUDIO\020\006\022\023\n\017REC" +
+                    "ORDING_VOICE\020\007\022\021\n\rSENDING_VOICE\020\010\022\024\n\020SEN" +
+                    "DING_DOCUMENT\020\t\022\017\n\013SENDING_GIF\020\n\022\020\n\014SEND" +
+                    "ING_FILE\020\013\022\024\n\020SENDING_LOCATION\020\014\022\024\n\020CHOO" +
+                    "SING_CONTACT\020\r\022\014\n\010PAINTING\020\016* \n\010RoomMute" +
+                    "\022\n\n\006UNMUTE\020\000\022\010\n\004MUTE\020\001*\233\001\n\013PrivacyType\022\017",
+            "\n\013USER_STATUS\020\000\022\n\n\006AVATAR\020\001\022\020\n\014GROUP_INV" +
+                    "ITE\020\002\022\022\n\016CHANNEL_INVITE\020\003\022\021\n\rVOICE_CALLI" +
+                    "NG\020\004\022\021\n\rVIDEO_CALLING\020\005\022\022\n\016SCREEN_SHARIN" +
+                    "G\020\006\022\017\n\013SECRET_CHAT\020\007*?\n\014PrivacyLevel\022\r\n\t" +
+                    "ALLOW_ALL\020\000\022\014\n\010DENY_ALL\020\001\022\022\n\016ALLOW_CONTA" +
+      "CTS\020\002B\035\n\016net.iGap.protoB\013ProtoGlobalb\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -27871,8 +28008,8 @@ public final class ProtoGlobal {
       getDescriptor().getMessageTypes().get(11);
     internal_static_proto_ChannelRoom_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_proto_ChannelRoom_descriptor,
-        new java.lang.String[] { "Type", "Role", "ParticipantsCount", "ParticipantsCountLabel", "Description", "AvatarCount", "Avatar", "PrivateExtra", "PublicExtra", "Signature", "SeenId", });
+            internal_static_proto_ChannelRoom_descriptor,
+            new java.lang.String[]{"Type", "Role", "ParticipantsCount", "ParticipantsCountLabel", "Description", "AvatarCount", "Avatar", "PrivateExtra", "PublicExtra", "Signature", "SeenId", "Verified", "ReactionStatus", });
     internal_static_proto_ChannelRoom_PrivateExtra_descriptor =
       internal_static_proto_ChannelRoom_descriptor.getNestedTypes().get(0);
     internal_static_proto_ChannelRoom_PrivateExtra_fieldAccessorTable = new

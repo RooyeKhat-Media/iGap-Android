@@ -13,9 +13,9 @@ package net.iGap.realm;
 import android.support.annotation.Nullable;
 
 import net.iGap.G;
+import net.iGap.helper.HelperMimeType;
 import net.iGap.helper.HelperString;
 import net.iGap.module.AndroidUtils;
-import net.iGap.module.AppUtils;
 import net.iGap.module.SUID;
 import net.iGap.module.enums.AttachmentFor;
 import net.iGap.proto.ProtoGlobal;
@@ -145,6 +145,17 @@ public class RealmAttachment extends RealmObject {
 
             if (realmAttachment.width != file.getWidth()) {
                 realmAttachment.setWidth(file.getWidth());
+            }
+
+            if (realmAttachment.smallThumbnail != null) {
+                realmAttachment.smallThumbnail.setSize(file.getSmallThumbnail().getSize());
+            }
+            if (realmAttachment.largeThumbnail != null) {
+                realmAttachment.largeThumbnail.setSize(file.getLargeThumbnail().getSize());
+            }
+
+            if (realmAttachment.size != file.getSize()) {
+                realmAttachment.setSize(file.getSize());
             }
 
             String _filePath = realmAttachment.getLocalFilePath();
@@ -316,7 +327,7 @@ public class RealmAttachment extends RealmObject {
 
     public boolean isFileExistsOnLocalAndIsThumbnail() {
         assert localFilePath != null;
-        return isFileExistsOnLocal() && isFileImage();
+        return isFileExistsOnLocal() && HelperMimeType.isFileImage(localFilePath.toLowerCase());
     }
 
     /**
@@ -324,15 +335,5 @@ public class RealmAttachment extends RealmObject {
      */
     public boolean isThumbnailExistsOnLocal() {
         return localThumbnailPath != null && new File(localThumbnailPath).exists() && new File(localThumbnailPath).canRead();
-    }
-
-    private boolean isFileImage() {
-        for (String ext : AppUtils.exts) {
-            if (localFilePath.endsWith(ext)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

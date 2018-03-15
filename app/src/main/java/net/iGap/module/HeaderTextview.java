@@ -14,6 +14,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
 import net.iGap.G;
 
 public class HeaderTextview extends TextView {

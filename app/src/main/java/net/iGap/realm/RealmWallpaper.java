@@ -10,51 +10,22 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
-import java.util.ArrayList;
-import java.util.List;
 import net.iGap.helper.HelperLog;
 import net.iGap.module.SerializationUtils;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 public class RealmWallpaper extends RealmObject {
 
     private long lastTimeGetList;
     private byte[] wallPaperList;
     private byte[] localList;
-
-    public List<ProtoGlobal.Wallpaper> getWallPaperList() {
-
-        try {
-            return wallPaperList == null ? null : (List<net.iGap.proto.ProtoGlobal.Wallpaper>) SerializationUtils.deserialize(wallPaperList);
-        } catch (Exception e) {
-            HelperLog.setErrorLog(" RealmWallpaper     getWallPaperList()       " + e.toString());
-            return null;
-        }
-
-    }
-
-    public void setWallPaperList(List<ProtoGlobal.Wallpaper> wallpaperListProto) {
-        this.wallPaperList = SerializationUtils.serialize(wallpaperListProto);
-    }
-
-    public ArrayList<String> getLocalList() {
-        return localList == null ? null : ((ArrayList<String>) SerializationUtils.deserialize(localList));
-    }
-
-    public void setLocalList(ArrayList<String> list) {
-        this.localList = SerializationUtils.serialize(list);
-    }
-
-    public long getLastTimeGetList() {
-        return lastTimeGetList;
-    }
-
-    public void setLastTimeGetList(long lastTimeGetList) {
-        this.lastTimeGetList = lastTimeGetList;
-    }
 
     public static void updateField(final List<ProtoGlobal.Wallpaper> protoList, final String localPath) {
 
@@ -98,5 +69,36 @@ public class RealmWallpaper extends RealmObject {
         });
 
         realm.close();
+    }
+
+    public List<ProtoGlobal.Wallpaper> getWallPaperList() {
+
+        try {
+            return wallPaperList == null ? null : (List<net.iGap.proto.ProtoGlobal.Wallpaper>) SerializationUtils.deserialize(wallPaperList);
+        } catch (Exception e) {
+            HelperLog.setErrorLog(" RealmWallpaper     getWallPaperList()       " + e.toString());
+            return null;
+        }
+
+    }
+
+    public void setWallPaperList(List<ProtoGlobal.Wallpaper> wallpaperListProto) {
+        this.wallPaperList = SerializationUtils.serialize(wallpaperListProto);
+    }
+
+    public ArrayList<String> getLocalList() {
+        return localList == null ? null : ((ArrayList<String>) SerializationUtils.deserialize(localList));
+    }
+
+    public void setLocalList(ArrayList<String> list) {
+        this.localList = SerializationUtils.serialize(list);
+    }
+
+    public long getLastTimeGetList() {
+        return lastTimeGetList;
+    }
+
+    public void setLastTimeGetList(long lastTimeGetList) {
+        this.lastTimeGetList = lastTimeGetList;
     }
 }

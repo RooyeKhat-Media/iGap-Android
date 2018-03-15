@@ -35,15 +35,18 @@ public class ContactItemNotRegister extends AbstractItem<ContactItemNotRegister,
         return this;
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return 0;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.contact_item_not_register;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
 
         if (mContact.isHeader) {
@@ -63,6 +66,11 @@ public class ContactItemNotRegister extends AbstractItem<ContactItemNotRegister,
         holder.image.setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture(holder.image.getLayoutParams().width, name, HelperImageBackColor.getColor(name)));
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected CircleImageView image;
@@ -78,9 +86,5 @@ public class ContactItemNotRegister extends AbstractItem<ContactItemNotRegister,
             subtitle = (CustomTextViewMedium) view.findViewById(R.id.subtitle);
             topLine = (View) view.findViewById(R.id.topLine);
         }
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

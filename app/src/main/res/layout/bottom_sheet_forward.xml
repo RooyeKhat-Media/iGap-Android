@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/rcvBottomSheetForward"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:minHeight="@dimen/dp240"
+    android:padding="@dimen/dp10" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/gray_5c" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp52"
+    android:orientation="horizontal">
+
+    <net.iGap.module.MaterialDesignTextView
+      android:layout_width="@dimen/dp52"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text="@string/md_searching_magnifying_glass"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/gray_6c" />
+
+    <net.iGap.module.MEditText
+      android:id="@+id/edtSearch"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:background="@color/transparent"
+      android:hint="Send to ..." />
+
+    <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/txtSend"
+      android:layout_width="@dimen/dp52"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text="@string/md_send_button"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/green" />
+
+  </LinearLayout>
+
+</LinearLayout>

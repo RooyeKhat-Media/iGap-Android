@@ -10,11 +10,21 @@
 
 package net.iGap.request;
 
-import java.util.ArrayList;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoUserContactsImport;
 
+import java.util.ArrayList;
+
 public class RequestUserContactImport {
+
+    public void contactImport(ArrayList<StructListOfContact> itemContactList, boolean force, boolean getContactList) {
+        RequestWrapper requestWrapper = new RequestWrapper(106, contact(itemContactList, force), getContactList);
+        try {
+            RequestQueue.sendRequest(requestWrapper);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void contactImport(ArrayList<StructListOfContact> itemContactList, boolean force) {
         RequestWrapper requestWrapper = new RequestWrapper(106, contact(itemContactList, force));

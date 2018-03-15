@@ -30,14 +30,10 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmList;
-import io.realm.RealmModel;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -96,6 +92,14 @@ import net.iGap.request.RequestGroupRevokeLink;
 import net.iGap.request.RequestGroupUpdateUsername;
 import net.iGap.request.RequestUserInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmList;
+import io.realm.RealmModel;
+
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
 
@@ -105,54 +109,17 @@ import static net.iGap.G.context;
 
 public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
 
-    NestedScrollView nestedScrollView;
-    AttachFile attachFile;
-    private AppBarLayout appBarLayout;
-    private FloatingActionButton fab;
-    private String tmp = "";
-
-    public long roomId;
-    private String title;
-    private String description;
-    private String initials;
-    private String inviteLink;
-    private String linkUsername;
-    private String color;
-    public GroupChatRole role;
-    private long noLastMessage;
-    private String participantsCountLabel;
-    private String pathSaveImage;
-
-    public static OnMenuClick onMenuClick;
-
-    public boolean isPrivate;
-    private boolean isPopup = false;
-
-    private long startMessageId = 0;
-
-
-    private boolean isNeedgetContactlist = true;
-
-    private RealmChangeListener<RealmModel> changeListener;
-    private RealmRoom mRoom;
-    private Realm realmGroupProfile;
-    private static final String ROOM_ID = "RoomId";
-    private Fragment fragment;
     public static final String FRAGMENT_TAG = "FragmentGroupProfile";
+    private static final String ROOM_ID = "RoomId";
     private static final String IS_NOT_JOIN = "is_not_join";
-    private boolean isNotJoin = false;
-
-
-
-    public FragmentGroupProfileViewModel(FragmentGroupProfile fragmentGroupProfile, Bundle arguments) {
-        this.fragment = fragmentGroupProfile;
-        getInfo(arguments);
-    }
-
+    public static OnMenuClick onMenuClick;
+    public long roomId;
+    public GroupChatRole role;
+    public boolean isPrivate;
     public ObservableField<String> callbackGroupName = new ObservableField<>("");
     public ObservableField<String> callbackMemberNumber = new ObservableField<>("");
     public ObservableField<String> callbackGroupLink = new ObservableField<>("");
-    public ObservableField<String> callbackGroupDescription = new ObservableField<>("");
+    public ObservableField<SpannableStringBuilder> callbackGroupDescription = new ObservableField<>();
     public ObservableField<String> callbackGroupShearedMedia = new ObservableField<>("");
     public ObservableField<String> callBackDeleteLeaveGroup = new ObservableField<>(G.context.getResources().getString(R.string.Delete_and_leave_Group));
     public ObservableField<String> callbackGroupLinkTitle = new ObservableField<>(G.context.getResources().getString(R.string.group_link));
@@ -164,6 +131,29 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
     public ObservableField<Integer> lineAdminVisibility = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> setModereatorVisibility = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> layoutMemberCanAddMember = new ObservableField<>(View.GONE);
+    NestedScrollView nestedScrollView;
+    AttachFile attachFile;
+    private AppBarLayout appBarLayout;
+    private FloatingActionButton fab;
+    private String tmp = "";
+    private String title;
+    private String description;
+    private String initials;
+    private String inviteLink;
+    private String linkUsername;
+    private String color;
+    private long noLastMessage;
+    private String participantsCountLabel;
+    private String pathSaveImage;
+    private boolean isPopup = false;
+    private long startMessageId = 0;
+    private boolean isNeedgetContactlist = true;
+    private RealmChangeListener<RealmModel> changeListener;
+    private RealmRoom mRoom;
+    private Realm realmGroupProfile;
+    private Fragment fragment;
+    private boolean isNotJoin = false;
+    private int memberCount;
 
 
     //===============================================================================
@@ -171,10 +161,15 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
     //===============================================================================
 
 
-    public void onClickRippleBack(View v) {
-        if (FragmentGroupProfile.onBackFragment != null) FragmentGroupProfile.onBackFragment.onBack();
+    public FragmentGroupProfileViewModel(FragmentGroupProfile fragmentGroupProfile, Bundle arguments) {
+        this.fragment = fragmentGroupProfile;
+        getInfo(arguments);
     }
 
+    public void onClickRippleBack(View v) {
+        if (FragmentGroupProfile.onBackFragment != null)
+            FragmentGroupProfile.onBackFragment.onBack();
+    }
 
     public void onClickRippleMenu(View view) {
 
@@ -289,7 +284,9 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
     }
 
     public void onClickGroupDescription(View v) {
-        ChangeGroupDescription();
+        if (role == GroupChatRole.OWNER || role == GroupChatRole.ADMIN) {
+            ChangeGroupDescription();
+        }
     }
 
     public void onClickGroupShearedMedia(View v) {
@@ -324,15 +321,14 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         new HelperFragment(fragmentNotification).setReplace(false).load();
     }
 
-    public void onClickGroupLeftGroup(View v) {
-        groupLeft();
-    }
-
 
     //===============================================================================
     //================================Method========================================
     //===============================================================================
 
+    public void onClickGroupLeftGroup(View v) {
+        groupLeft();
+    }
 
     private void getInfo(Bundle arguments) {
 
@@ -346,7 +342,8 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         //group info
         RealmRoom realmRoom = getRealm().where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom == null || realmRoom.getGroupRoom() == null) {
-            if (FragmentGroupProfile.onBackFragment != null) FragmentGroupProfile.onBackFragment.onBack();
+            if (FragmentGroupProfile.onBackFragment != null)
+                FragmentGroupProfile.onBackFragment.onBack();
             return;
         }
         RealmGroupRoom realmGroupRoom = realmRoom.getGroupRoom();
@@ -362,7 +359,11 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
 
         callbackGroupName.set(title);
         SpannableStringBuilder ds = HelperUrl.setUrlLink(description, true, false, null, true);
-        if (ds != null) callbackGroupDescription.set(ds.toString());
+        if (ds != null) {
+            callbackGroupDescription.set(ds);
+        } else {
+            callbackGroupDescription.set(new SpannableStringBuilder(""));
+        }
 
         callbackAddMemberVisibility.set(View.VISIBLE);
         if (role == GroupChatRole.MODERATOR || role == GroupChatRole.MEMBER) {
@@ -390,14 +391,8 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
 
         if (role == GroupChatRole.OWNER) {
             groupDescriptionVisibility.set(View.VISIBLE);
-
         } else {
             if (description.length() == 0) {
-                groupDescriptionVisibility.set(View.GONE);
-            }
-        }
-        if (role != GroupChatRole.OWNER) {
-            if (description.equals("")) {
                 groupDescriptionVisibility.set(View.GONE);
             }
         }
@@ -520,7 +515,7 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -589,7 +584,6 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
                 } else {
                     Selection.setSelection(edtUserName.getText(), edtUserName.getText().length());
                 }
-
 
 
                 if (HelperString.regexCheckUsername(editable.toString().replace(Config.IGAP_LINK_PREFIX, ""))) {
@@ -895,22 +889,22 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         layoutRevoke.addView(inputRevoke, layoutParams);
 
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.group_link_hint_revoke))
-            .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
-            .customView(layoutRevoke, true)
-            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-            .neutralText(R.string.array_Copy)
-            .onNeutral(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    String copy;
-                    copy = callbackGroupLink.get();
-                    ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
-                    clipboard.setPrimaryClip(clip);
-                }
-            })
-            .build();
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
+                .customView(layoutRevoke, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .neutralText(R.string.array_Copy)
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String copy;
+                        copy = callbackGroupLink.get();
+                        ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                })
+                .build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setOnClickListener(new View.OnClickListener() {
@@ -961,21 +955,21 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         layoutGroupLink.addView(txtLink, layoutParams);
 
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.group_link))
-            .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
-            .customView(layoutGroupLink, true)
-            .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
-            .negativeText(G.fragmentActivity.getResources().getString(R.string.no))
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override
-                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    String copy;
-                    copy = callbackGroupLink.get();
-                    ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
-                    clipboard.setPrimaryClip(clip);
-                }
-            })
-            .build();
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
+                .customView(layoutGroupLink, true)
+                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.no))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String copy;
+                        copy = callbackGroupLink.get();
+                        ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("LINK_GROUP", copy);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                })
+                .build();
 
         dialog.show();
     }
@@ -1062,6 +1056,287 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         });
     }
 
+    private void onGroupAddMemberCallback() {
+        G.onGroupAddMember = new OnGroupAddMember() {
+            @Override
+            public void onGroupAddMember(final Long roomIdUser, final Long userId) {
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMemberCount(roomIdUser, true);
+                        //+Realm realm = Realm.getDefaultInstance();
+                        RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
+
+                        if (realmRegistered == null) {
+                            if (roomIdUser == roomId) {
+                                new RequestUserInfo().userInfo(userId, roomId + "");
+                            }
+                        }
+                        //realm.close();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int majorCode, int minorCode) {
+
+            }
+        };
+    }
+
+    private void onGroupKickMemberCallback() {
+        G.onGroupKickMember = new OnGroupKickMember() {
+            @Override
+            public void onGroupKickMember(final long roomId, final long memberId) {
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMemberCount(roomId, false);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int majorCode, int minorCode) {
+
+            }
+
+            @Override
+            public void onTimeOut() {
+
+            }
+        };
+    }
+
+    private void setMemberCount(final long roomId, final boolean plus) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                memberCount = RealmRoom.updateMemberCount(realm, roomId, plus);
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callbackMemberNumber.set(memberCount + "");
+                        if (HelperCalander.isPersianUnicode) {
+                            callbackMemberNumber.set(HelperCalander.convertToUnicodeFarsiNumber(callbackMemberNumber.get()));
+                        }
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void setUiIndependentRole() {
+
+        if (role == GroupChatRole.MEMBER) {
+
+            groupSetAdminVisibility.set(View.GONE);
+            lineAdminVisibility.set(View.GONE);
+            setModereatorVisibility.set(View.GONE);
+            layoutMemberCanAddMember.set(View.GONE);
+        } else if (role == GroupChatRole.MODERATOR) {
+            groupSetAdminVisibility.set(View.GONE);
+            lineAdminVisibility.set(View.GONE);
+            setModereatorVisibility.set(View.GONE);
+        } else if (role == GroupChatRole.ADMIN) {
+            groupSetAdminVisibility.set(View.GONE);
+            lineAdminVisibility.set(View.GONE);
+        } else if (role == GroupChatRole.OWNER) {
+
+        }
+    }
+
+    private void initRecycleView() {
+
+        onMenuClick = new OnMenuClick() {
+            @Override
+            public void clicked(View view, StructContactInfo info) {
+                new CreatePopUpMessage().show(view, info);
+            }
+        };
+    }
+
+    private void ChangeGroupName(final View view) {
+
+        final LinearLayout layoutUserName = new LinearLayout(G.fragmentActivity);
+        layoutUserName.setOrientation(LinearLayout.VERTICAL);
+
+        final View viewUserName = new View(G.fragmentActivity);
+        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+
+        final TextInputLayout inputUserName = new TextInputLayout(G.fragmentActivity);
+        final EmojiEditTextE edtUserName = new EmojiEditTextE(G.fragmentActivity);
+        edtUserName.setHint(G.fragmentActivity.getResources().getString(R.string.st_username));
+        edtUserName.setTypeface(G.typeface_IRANSansMobile);
+        edtUserName.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        edtUserName.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
+        edtUserName.setText(callbackGroupName.get());
+        edtUserName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
+        edtUserName.setHintTextColor(G.context.getResources().getColor(R.color.hint_edit_text));
+        edtUserName.setPadding(0, 8, 0, 8);
+        edtUserName.setSingleLine(true);
+        inputUserName.addView(edtUserName);
+        inputUserName.addView(viewUserName, viewParams);
+
+        viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            edtUserName.setBackground(G.context.getResources().getDrawable(android.R.color.transparent));
+        }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        layoutUserName.addView(inputUserName, layoutParams);
+
+        final MaterialDialog dialog =
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.group_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+
+        final View positive = dialog.getActionButton(DialogAction.POSITIVE);
+        positive.setEnabled(false);
+
+        final String finalUserName = callbackGroupName.get();
+        edtUserName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!edtUserName.getText().toString().equals(finalUserName)) {
+                    positive.setEnabled(true);
+                } else {
+                    positive.setEnabled(false);
+                }
+            }
+        });
+
+        G.onGroupEdit = new OnGroupEdit() {
+            @Override
+            public void onGroupEdit(long roomId, String name, String description) {
+                hideProgressBar();
+                SpannableStringBuilder ds = HelperUrl.setUrlLink(description, true, false, null, true);
+                if (ds != null) {
+                    callbackGroupDescription.set(ds);
+                } else {
+                    callbackGroupDescription.set(new SpannableStringBuilder(""));
+                }
+                callbackGroupName.set(name);
+            }
+
+            @Override
+            public void onError(int majorCode, int minorCode) {
+
+            }
+
+            @Override
+            public void onTimeOut() {
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+
+                    }
+                });
+            }
+        };
+
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new RequestGroupEdit().groupEdit(roomId, edtUserName.getText().toString(), callbackGroupDescription.get().toString());
+                dialog.dismiss();
+            }
+        });
+
+        edtUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.toolbar_background));
+                } else {
+                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+                }
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                AndroidUtils.closeKeyboard(view);
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void ChangeGroupDescription() {
+        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.group_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                G.onGroupEdit = new OnGroupEdit() {
+                    @Override
+                    public void onGroupEdit(final long roomId, final String name, final String description) {
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                SpannableStringBuilder ds = HelperUrl.setUrlLink(description, true, false, null, true);
+                                if (ds != null) {
+                                    callbackGroupDescription.set(ds);
+                                } else {
+                                    callbackGroupDescription.set(new SpannableStringBuilder(""));
+                                }
+
+                                callbackGroupName.set(name);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(int majorCode, int minorCode) {
+
+                    }
+
+                    @Override
+                    public void onTimeOut() {
+
+                    }
+                };
+
+                new RequestGroupEdit().groupEdit(roomId, callbackGroupName.get(), tmp);
+            }
+        }).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel)).inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT).input(G.fragmentActivity.getResources().getString(R.string.please_enter_group_description), callbackGroupDescription.get().toString(), new MaterialDialog.InputCallback() {
+            @Override
+            public void onInput(MaterialDialog dialog, CharSequence input) {
+                // Do something
+
+                View positive = dialog.getActionButton(DialogAction.POSITIVE);
+                tmp = input.toString();
+                if (!input.toString().equals(callbackGroupDescription.get().toString())) {
+
+                    positive.setClickable(true);
+                    positive.setAlpha(1.0f);
+                } else {
+                    positive.setClickable(false);
+                    positive.setAlpha(0.5f);
+                }
+            }
+        }).show();
+
+        final View v = dialog.getView();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                AndroidUtils.closeKeyboard(v);
+            }
+        });
+    }
 
     class CreatePopUpMessage {
 
@@ -1152,282 +1427,6 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         private void setToModerator(Long peerId) {
             new RequestGroupAddModerator().groupAddModerator(roomId, peerId);
         }
-    }
-
-
-    private void onGroupAddMemberCallback() {
-        G.onGroupAddMember = new OnGroupAddMember() {
-            @Override
-            public void onGroupAddMember(final Long roomIdUser, final Long userId) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setMemberCount(roomIdUser, true);
-                        //+Realm realm = Realm.getDefaultInstance();
-                        RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
-
-                        if (realmRegistered == null) {
-                            if (roomIdUser == roomId) {
-                                new RequestUserInfo().userInfo(userId, roomId + "");
-                            }
-                        }
-                        //realm.close();
-                    }
-                });
-            }
-
-            @Override
-            public void onError(int majorCode, int minorCode) {
-
-            }
-        };
-    }
-
-    private void onGroupKickMemberCallback() {
-        G.onGroupKickMember = new OnGroupKickMember() {
-            @Override
-            public void onGroupKickMember(final long roomId, final long memberId) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setMemberCount(roomId, false);
-                    }
-                });
-            }
-
-            @Override
-            public void onError(int majorCode, int minorCode) {
-
-            }
-
-            @Override
-            public void onTimeOut() {
-
-            }
-        };
-    }
-
-    private int memberCount;
-
-    private void setMemberCount(final long roomId, final boolean plus) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                memberCount = RealmRoom.updateMemberCount(realm, roomId, plus);
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callbackMemberNumber.set(memberCount + "");
-                        if (HelperCalander.isPersianUnicode) {
-                            callbackMemberNumber.set(HelperCalander.convertToUnicodeFarsiNumber(callbackMemberNumber.get()));
-                        }
-                    }
-                });
-            }
-        });
-
-    }
-
-    private void setUiIndependentRole() {
-
-        if (role == GroupChatRole.MEMBER) {
-
-            groupSetAdminVisibility.set(View.GONE);
-            lineAdminVisibility.set(View.GONE);
-            setModereatorVisibility.set(View.GONE);
-            layoutMemberCanAddMember.set(View.GONE);
-        } else if (role == GroupChatRole.MODERATOR) {
-            groupSetAdminVisibility.set(View.GONE);
-            lineAdminVisibility.set(View.GONE);
-            setModereatorVisibility.set(View.GONE);
-        } else if (role == GroupChatRole.ADMIN) {
-            groupSetAdminVisibility.set(View.GONE);
-            lineAdminVisibility.set(View.GONE);
-        } else if (role == GroupChatRole.OWNER) {
-
-        }
-    }
-
-    private void initRecycleView() {
-
-        onMenuClick = new OnMenuClick() {
-            @Override
-            public void clicked(View view, StructContactInfo info) {
-                new CreatePopUpMessage().show(view, info);
-            }
-        };
-    }
-
-    private void ChangeGroupName(final View view) {
-
-        final LinearLayout layoutUserName = new LinearLayout(G.fragmentActivity);
-        layoutUserName.setOrientation(LinearLayout.VERTICAL);
-
-        final View viewUserName = new View(G.fragmentActivity);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-
-        final TextInputLayout inputUserName = new TextInputLayout(G.fragmentActivity);
-        final EmojiEditTextE edtUserName = new EmojiEditTextE(G.fragmentActivity);
-        edtUserName.setHint(G.fragmentActivity.getResources().getString(R.string.st_username));
-        edtUserName.setTypeface(G.typeface_IRANSansMobile);
-        edtUserName.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-        edtUserName.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
-        edtUserName.setText(callbackGroupName.get());
-        edtUserName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
-        edtUserName.setHintTextColor(G.context.getResources().getColor(R.color.hint_edit_text));
-        edtUserName.setPadding(0, 8, 0, 8);
-        edtUserName.setSingleLine(true);
-        inputUserName.addView(edtUserName);
-        inputUserName.addView(viewUserName, viewParams);
-
-        viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            edtUserName.setBackground(G.context.getResources().getDrawable(android.R.color.transparent));
-        }
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        layoutUserName.addView(inputUserName, layoutParams);
-
-        final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.group_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
-
-        final View positive = dialog.getActionButton(DialogAction.POSITIVE);
-        positive.setEnabled(false);
-
-        final String finalUserName = callbackGroupName.get();
-        edtUserName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!edtUserName.getText().toString().equals(finalUserName)) {
-                    positive.setEnabled(true);
-                } else {
-                    positive.setEnabled(false);
-                }
-            }
-        });
-
-        G.onGroupEdit = new OnGroupEdit() {
-            @Override
-            public void onGroupEdit(long roomId, String name, String description) {
-                hideProgressBar();
-                callbackGroupDescription.set(description);
-                callbackGroupName.set(name);
-            }
-
-            @Override
-            public void onError(int majorCode, int minorCode) {
-
-            }
-
-            @Override
-            public void onTimeOut() {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
-
-                    }
-                });
-            }
-        };
-
-        positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                new RequestGroupEdit().groupEdit(roomId, edtUserName.getText().toString(), callbackGroupDescription.get());
-                dialog.dismiss();
-            }
-        });
-
-        edtUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.toolbar_background));
-                } else {
-                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
-                }
-            }
-        });
-
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                AndroidUtils.closeKeyboard(view);
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void ChangeGroupDescription() {
-        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.group_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
-            @Override
-            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                G.onGroupEdit = new OnGroupEdit() {
-                    @Override
-                    public void onGroupEdit(final long roomId, final String name, final String descriptions) {
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                description = descriptions;
-
-                                callbackGroupDescription.set(descriptions);
-                                callbackGroupName.set(name);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(int majorCode, int minorCode) {
-
-                    }
-
-                    @Override
-                    public void onTimeOut() {
-
-                    }
-                };
-
-                new RequestGroupEdit().groupEdit(roomId, callbackGroupName.get(), tmp);
-            }
-        }).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel)).inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT).input(G.fragmentActivity.getResources().getString(R.string.please_enter_group_description), callbackGroupDescription.get(), new MaterialDialog.InputCallback() {
-            @Override
-            public void onInput(MaterialDialog dialog, CharSequence input) {
-                // Do something
-
-                View positive = dialog.getActionButton(DialogAction.POSITIVE);
-                tmp = input.toString();
-                if (!input.toString().equals(callbackGroupDescription.get())) {
-
-                    positive.setClickable(true);
-                    positive.setAlpha(1.0f);
-                } else {
-                    positive.setClickable(false);
-                    positive.setAlpha(0.5f);
-                }
-            }
-        }).show();
-
-        final View v = dialog.getView();
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                AndroidUtils.closeKeyboard(v);
-            }
-        });
     }
 
 

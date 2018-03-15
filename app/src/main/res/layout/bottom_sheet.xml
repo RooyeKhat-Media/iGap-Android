@@ -1,413 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:layoutDirection="ltr"
-    android:orientation="vertical"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    tools:ignore="MissingPrefix"
-    android:clickable="true"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cardView"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical"
+  app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+  tools:ignore="MissingPrefix">
 
   <LinearLayout
-      android:id="@+id/layout_recyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      >
+    android:id="@+id/layout_recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcvContent"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp100"
-        android:layout_marginLeft="@dimen/dp6"
-        />
+      android:id="@+id/rcvContent"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/dp100"
+      android:layout_marginLeft="@dimen/dp6" />
 
   </LinearLayout>
 
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/layout_recyclerView"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/layout_recyclerView"
+    android:orientation="vertical">
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/dp8"
-        android:background="@color/gray_3c"
-        />
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginTop="@dimen/dp8"
+      android:background="@color/gray_3c" />
+
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:layout_gravity="bottom"
+      android:orientation="horizontal">
+
+
+      <LinearLayout
+        android:id="@+id/document"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        >
 
+        <TextView
+          android:id="@+id/txtDocument"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/icon_folder"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
 
-      <LinearLayout
-          android:id="@+id/document"
-          android:layout_width="0dp"
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-
-        <TextView
-            android:id="@+id/txtDocument"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/icon_folder"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/am_document"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:text="@string/am_document"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
       <LinearLayout
-          android:id="@+id/music"
-          android:layout_width="0dp"
+        android:id="@+id/music"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <TextView
+          android:id="@+id/txtMusic"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/icon_music"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-
-        <TextView
-            android:id="@+id/txtMusic"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/icon_music"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:text="@string/am_music"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:singleLine="true"
+          android:text="@string/am_music"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
+
       <LinearLayout
-          android:id="@+id/video"
-          android:layout_width="0dp"
+        android:id="@+id/video"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+
+          android:id="@+id/txtVideo"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_videocam"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-        <TextView
-
-            android:id="@+id/txtVideo"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_videocam"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/am_video"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:text="@string/am_video"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
+
       <LinearLayout
-          android:id="@+id/picture"
-          android:layout_width="0dp"
+        android:id="@+id/picture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/textPicture"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_igap_folder_image"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-        <TextView
-            android:id="@+id/textPicture"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_igap_folder_image"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:text="@string/am_picture"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:singleLine="true"
+          android:text="@string/am_picture"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
+
       <LinearLayout
-          android:id="@+id/camera"
-          android:layout_width="0dp"
+        android:id="@+id/camera"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <TextView
+          android:id="@+id/txtCamera"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_camera_alt"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:id="@+id/textView5"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-
-        <TextView
-            android:id="@+id/txtCamera"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_camera_alt"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:text="@string/am_camera"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:singleLine="true"
+          android:text="@string/am_camera"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:orientation="horizontal"
+
+      >
+
+      <LinearLayout
+        android:id="@+id/contact"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        >
+        <TextView
+          android:id="@+id/txtContact"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_user_account_box"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
 
-      <LinearLayout
-          android:id="@+id/contact"
-          android:layout_width="0dp"
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-        <TextView
-            android:id="@+id/txtContact"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_user_account_box"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/am_contact"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:text="@string/am_contact"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
       <LinearLayout
-          android:id="@+id/location"
-          android:layout_width="0dp"
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+        <TextView
+          android:id="@+id/txtLocation"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_room"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-
-        <TextView
-            android:id="@+id/txtLocation"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_room"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:text="@string/am_location"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:singleLine="true"
+          android:text="@string/am_location"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
       <LinearLayout
-          android:id="@+id/paint"
-          android:layout_width="0dp"
+        android:id="@+id/paint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/txtPaint"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_brush"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-        <TextView
-            android:id="@+id/txtPaint"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_brush"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:singleLine="true"
-            android:text="@string/am_paint"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:singleLine="true"
+          android:text="@string/am_paint"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
       <LinearLayout
-          android:id="@+id/file"
-          android:layout_width="0dp"
+        android:id="@+id/file"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/txtFile"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:text="@string/md_igap_file"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-        <TextView
-            android:id="@+id/txtFile"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/md_igap_file"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/am_file"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:text="@string/am_file"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
       <LinearLayout
-          android:id="@+id/close"
-          android:layout_width="0dp"
+        android:id="@+id/close"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/txtSend"
+          fontPath="fonts/iGap-Fontico.ttf"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="@dimen/dp52"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center"
+          android:paddingTop="2dp"
+          android:text="@string/igap_chevron_double_down"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp20" />
+
+        <TextView
+          android:id="@+id/txtNumberItem"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="4dp"
-          android:layout_marginLeft="4dp"
-          android:layout_marginRight="4dp"
-          android:layout_marginStart="4dp"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
-
-        <TextView
-            android:id="@+id/txtSend"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="@dimen/dp52"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:paddingTop="2dp"
-            android:text="@string/igap_chevron_double_down"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp20"
-            fontPath="fonts/iGap-Fontico.ttf"
-            />
-
-        <TextView
-            android:id="@+id/txtNumberItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/navigation_drawer_close"
-            android:textColor="@color/gray_4c"
-            android:textSize="@dimen/dp10"
-            />
+          android:layout_gravity="center_horizontal"
+          android:text="@string/navigation_drawer_close"
+          android:textColor="@color/gray_4c"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
 
 

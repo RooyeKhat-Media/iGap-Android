@@ -1,126 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp68"
+  android:clickable="true"
+  android:orientation="vertical">
+
+
+  <View
+    android:id="@+id/cigp_view_topLine"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp68"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:layout_height="1px"
+    android:layout_marginLeft="@dimen/dp8"
+    android:layout_marginStart="@dimen/dp8"
+    android:background="@color/gray" />
 
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
 
-    <View
-        android:id="@+id/cigp_view_topLine"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginStart="@dimen/dp8"
-        android:background="@color/gray" />
+    <net.iGap.module.CircleImageView
+      android:id="@+id/cigp_imv_contact_avatar"
+      android:layout_width="@dimen/dp48"
+      android:layout_height="@dimen/dp48"
+      android:layout_marginLeft="@dimen/dp4" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp8">
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
 
-      <net.iGap.module.CircleImageView
-            android:id="@+id/cigp_imv_contact_avatar"
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48"
-            android:layout_marginLeft="@dimen/dp4"
-            />
+      <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
 
         <LinearLayout
-            android:layout_width="wrap_content"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_weight="1"
-                android:orientation="vertical">
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/cigp_txt_member_role"
+              style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/dp4"
+              android:text="@string/md_rate_star"
+              android:textAppearance="@style/TextIconAppearance.all"
+              android:textSize="@dimen/dp14" />
 
+            <net.iGap.module.CustomTextViewMedium
+              android:id="@+id/cigp_txt_contact_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:gravity="start"
+              android:singleLine="true"
+              android:text="Dominika Faniz"
+              android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+              android:textColor="#000000"
+              android:textSize="@dimen/dp16" />
+          </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                  <LinearLayout
-                      android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      >
-
-                    <net.iGap.module.MaterialDesignTextView
-                        android:id="@+id/cigp_txt_member_role"
-                        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-                        android:textAppearance="@style/TextIconAppearance.all"
-                        android:layout_marginRight="@dimen/dp4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/dp14"
-                        android:text="@string/md_rate_star"
-                        />
-
-                    <net.iGap.module.CustomTextViewMedium
-                        android:id="@+id/cigp_txt_contact_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                      android:gravity="start"
-                        android:singleLine="true"
-                        android:text="Dominika Faniz"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:textColor="#000000"
-                      android:textSize="@dimen/dp16"
-                      />
-                  </LinearLayout>
-
-
-                </LinearLayout>
-
-
-              <net.iGap.module.CustomTextViewMedium
-                    android:id="@+id/cigp_txt_contact_lastseen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center_vertical|start"
-                    android:tag="menu"
-                    android:singleLine="true"
-                    android:text="@string/last_seen_recently"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                  android:textSize="@dimen/dp14"
-                    android:textColor="#bbbbbb" />
-            </RelativeLayout>
-
-          <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/cigp_moreButton"
-                android:textAppearance="@style/TextIconAppearance.all"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/md_show_more_button"
-                android:textColor="@color/border_editText"
-              android:textSize="@dimen/dp18"
-              />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="@dimen/dp60"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
 
-            <TextView
-                android:id="@+id/cigp_txt_nomber_of_shared_media"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="@dimen/dp16" />
-        </LinearLayout>
+        <net.iGap.module.CustomTextViewMedium
+          android:id="@+id/cigp_txt_contact_lastseen"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:gravity="center_vertical|start"
+          android:singleLine="true"
+          android:tag="menu"
+          android:text="@string/last_seen_recently"
+          android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+          android:textColor="#bbbbbb"
+          android:textSize="@dimen/dp14" />
+      </RelativeLayout>
 
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/cigp_moreButton"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/md_show_more_button"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/border_editText"
+        android:textSize="@dimen/dp18" />
 
     </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="@dimen/dp60"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+      <TextView
+        android:id="@+id/cigp_txt_nomber_of_shared_media"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="@dimen/dp16" />
+    </LinearLayout>
+
+
+  </LinearLayout>
 
 </LinearLayout>

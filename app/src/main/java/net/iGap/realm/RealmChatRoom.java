@@ -10,14 +10,16 @@
 
 package net.iGap.realm;
 
+import net.iGap.proto.ProtoGlobal;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import net.iGap.proto.ProtoGlobal;
 
 public class RealmChatRoom extends RealmObject {
 
-    @PrimaryKey private long peer_id;
+    @PrimaryKey
+    private long peer_id;
 
     private RealmNotificationSetting realmNotificationSetting;
 

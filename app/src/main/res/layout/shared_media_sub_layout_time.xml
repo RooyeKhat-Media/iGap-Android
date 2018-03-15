@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/smslt_txt_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp4"
-        android:layout_margin="@dimen/dp4"
-        android:paddingLeft="@dimen/dp20"
-        android:text="New Text"
-        android:textSize="@dimen/dp16"
-        />
+  <TextView
+    android:id="@+id/smslt_txt_time"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp4"
+    android:paddingLeft="@dimen/dp20"
+    android:paddingTop="@dimen/dp4"
+    android:text="New Text"
+    android:textSize="@dimen/dp16" />
 </LinearLayout>

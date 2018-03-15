@@ -11,6 +11,9 @@
 package net.iGap.helper;
 
 import android.util.Base64;
+
+import net.iGap.G;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -26,8 +29,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.crypto.spec.SecretKeySpec;
-import net.iGap.G;
 
 /**
  * HelperString
@@ -145,7 +148,7 @@ public class HelperString {
     /**
      * regex for detect number from text
      *
-     * @param text input text that contain number
+     * @param text  input text that contain number
      * @param regex regex pattern for detection
      */
 

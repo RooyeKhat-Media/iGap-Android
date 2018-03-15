@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import net.iGap.WebSocketClient;
 
 public class ReceiverBootPhone extends BroadcastReceiver {
@@ -22,7 +23,8 @@ public class ReceiverBootPhone extends BroadcastReceiver {
      * after the user has finished booting perform  this method
      */
 
-    @Override public void onReceive(Context context, Intent intent) {
+    @Override
+    public void onReceive(Context context, Intent intent) {
         Log.i("OOO", "onReceive");
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             Log.i("OOO", "ACTION_BOOT_COMPLETED");

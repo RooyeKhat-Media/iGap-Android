@@ -6,8 +6,9 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentCall;
@@ -20,12 +21,17 @@ import net.iGap.interfaces.OnGeoGetComment;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestGeoGetComment;
+
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
+import io.realm.Realm;
+
 public class MyInfoWindow extends InfoWindow {
 
+    private static Marker latestClickedMarker;
+    private static long latestClickedUserId;
     private long userId;
     private boolean hasComment;
     private MapView map;
@@ -33,8 +39,6 @@ public class MyInfoWindow extends InfoWindow {
     private FragmentiGapMap fragmentiGapMap;
     private String comment;
     private Marker marker;
-    private static Marker latestClickedMarker;
-    private static long latestClickedUserId;
 
     public MyInfoWindow(MapView mapView, Marker marker, long userId, boolean hasComment, FragmentiGapMap fragmentiGapMap, FragmentActivity mActivity) {
         super(R.layout.empty_info_map, mapView);

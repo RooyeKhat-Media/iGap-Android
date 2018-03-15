@@ -12,12 +12,15 @@ package net.iGap.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.io.File;
+
 import net.iGap.G;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.realm.RealmRoomMessage;
+
+import java.io.File;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class HelperCalculateKeepMedia {
 

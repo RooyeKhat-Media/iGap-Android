@@ -1,71 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/replayLayoutAboveEditText"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp48"
-    android:background="@color/messageBox_replyBoxBackgroundSend"
-    android:clickable="true"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/replayLayoutAboveEditText"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp48"
+  android:background="@color/messageBox_replyBoxBackgroundSend"
+  android:clickable="true"
+  android:gravity="center_vertical"
+  android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/lcr_imv_replay"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="@dimen/dp4"
-        android:contentDescription="@null"
-        app:srcCompat="@drawable/ic_reply"
-        />
+  <ImageView
+    android:id="@+id/lcr_imv_replay"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginRight="@dimen/dp4"
+    android:contentDescription="@null"
+    app:srcCompat="@drawable/ic_reply" />
 
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="@dimen/dp4"
-        android:contentDescription="@null"/>
+  <ImageView
+    android:id="@+id/thumbnail"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginRight="@dimen/dp4"
+    android:contentDescription="@null" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingRight="@dimen/dp6">
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/dp6">
 
-      <net.iGap.module.EmojiTextViewE
-            android:id="@+id/replyFrom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:singleLine="true"
-          android:textSize="@dimen/dp14"
-            android:text="SAMPLE TEXT"
-            android:textColor="@color/green"
-            android:textStyle="bold"/>
+    <net.iGap.module.EmojiTextViewE
+      android:id="@+id/replyFrom"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:text="SAMPLE TEXT"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp14"
+      android:textStyle="bold" />
 
-      <net.iGap.module.EmojiTextViewE
-            android:id="@+id/replayTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-          android:textSize="@dimen/dp12"
-          android:textColor="@color/black90"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text="SAMPLE TEXT"/>
-    </LinearLayout>
+    <net.iGap.module.EmojiTextViewE
+      android:id="@+id/replayTo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:text="SAMPLE TEXT"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp12" />
+  </LinearLayout>
 
   <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/cancelIcon"
-        android:layout_width="@dimen/dp40"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:text="@string/md_close_button"
-        android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/gray_3c"
-        />
+    android:id="@+id/cancelIcon"
+    android:layout_width="@dimen/dp40"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:gravity="center_vertical"
+    android:text="@string/md_close_button"
+    android:textAppearance="@style/TextIconAppearance.all"
+    android:textColor="@color/gray_3c" />
 
 </LinearLayout>

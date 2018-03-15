@@ -1,122 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:orientation="vertical"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
 
   <LinearLayout
-      android:id="@+id/chl_ll_attach"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:orientation="vertical"
-      >
+    android:id="@+id/chl_ll_attach"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:orientation="vertical">
 
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorEmojiPopupCategoryBottomBorder"
-        />
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/colorEmojiPopupCategoryBottomBorder" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:minHeight="@dimen/dp48"
-        android:orientation="horizontal"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/white"
+      android:gravity="center"
+      android:minHeight="@dimen/dp48"
+      android:orientation="horizontal">
 
       <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/chl_imv_smile_button"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_gravity="bottom"
-          android:gravity="bottom"
-          android:paddingBottom="@dimen/dp8"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:text="@string/md_emoticon_with_happy_face"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
-          android:textSize="@dimen/dp20"
-          style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-          />
+        android:id="@+id/chl_imv_smile_button"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:text="@string/md_emoticon_with_happy_face"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+        android:textSize="@dimen/dp20" />
 
 
       <net.iGap.module.EmojiEditTextE
-          android:id="@+id/chl_edt_chat"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
-          android:layout_weight="1"
-          android:background="@null"
-          android:gravity="bottom"
-          android:imeOptions="flagNoExtractUi"
-          android:hint="@string/type_message"
-          android:maxLines="4"
-          android:textColorHint="@color/light_gray"
-          android:textSize="@dimen/dp16"
-          app:emojiSize="@dimen/dp22"
-          />
+        android:id="@+id/chl_edt_chat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="@string/type_message"
+        android:imeOptions="flagNoExtractUi"
+        android:maxLines="4"
+        android:textColorHint="@color/light_gray"
+        android:textSize="@dimen/dp16"
+        app:emojiSize="@dimen/dp22" />
 
       <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/chl_imv_send_button"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_gravity="center"
-          android:gravity="bottom|end|right"
-          android:padding="@dimen/dp8"
-          android:text="@string/md_send_button"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textSize="@dimen/dp20"
-          android:visibility="gone"
-          style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
-          />
+        android:id="@+id/chl_imv_send_button"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="bottom|end|right"
+        android:padding="@dimen/dp8"
+        android:text="@string/md_send_button"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textSize="@dimen/dp20"
+        android:visibility="gone" />
 
       <LinearLayout
-          android:id="@+id/layoutAttachBottom"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:orientation="horizontal"
-          android:visibility="visible"
-          >
+        android:id="@+id/layoutAttachBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/chl_imv_attach_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/dp8"
-            android:rotation="135"
-            android:text="@string/md_attachment_clip"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
-            android:textSize="@dimen/dp20"
-            style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-            />
+          android:id="@+id/chl_imv_attach_button"
+          style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:padding="@dimen/dp8"
+          android:rotation="135"
+          android:text="@string/md_attachment_clip"
+          android:textAppearance="@style/TextIconAppearance.all"
+          android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+          android:textSize="@dimen/dp20" />
 
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/chl_imv_mic_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="@dimen/dp8"
-            android:text="@string/md_voice_message_microphone_button"
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
-            android:textSize="@dimen/dp20"
-            style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-            />
+          android:id="@+id/chl_imv_mic_button"
+          style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:padding="@dimen/dp8"
+          android:text="@string/md_voice_message_microphone_button"
+          android:textAppearance="@style/TextIconAppearance.all"
+          android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
+          android:textSize="@dimen/dp20" />
 
 
       </LinearLayout>

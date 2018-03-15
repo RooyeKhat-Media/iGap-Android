@@ -350,6 +350,7 @@
   <string name="save_ok">Saved</string>
   <string name="exception">Exception:</string>
   <string name="please_enter_phone_number">Please enter your phone number</string>
+  <string name="please_enter_correct_phone_number">Please enter correct phone number</string>
   <string name="please_enter_firstname_or_lastname">Please enter your first name or last name</string>
   <string name="new_chanel">New Channel</string>
   <string name="can_not_save_picture_pleas_try_again">Can\'t save picture, please try again</string>
@@ -605,6 +606,7 @@
   <string name="convert_chat_to_group_content">Do you want to convert this chat to a group?</string>
   <string name="convert_chat_to_group_title">Convert chat to group</string>
   <string name="minute_ago">minute ago</string>
+  <string name="minutes_ago">minutes ago</string>
   <string name="device">Device:</string>
   <string name="country">Country:</string>
   <string name="create_time">Create on:</string>
@@ -673,6 +675,7 @@
   <string name="share_image_from_igap">Share image from iGap</string>
   <string name="TERMINATE">"TERMINATE"</string>
   <string name="iGap_version">"iGap Android Client V"</string>
+  <string name="Bazzar">"Bazaar"</string>
 
   <string name="do_you_want_to_delete_this_group">Are you sure you want to delete this group?</string>
   <string name="do_you_want_to_leave_this_group">Are you sure you want to leave this group?</string>
@@ -1129,6 +1132,7 @@
 
   <string name="text_empty_user_map">Oops! No user nearby has turned on her/his map yet</string>
   <string name="send_message_to">Send Message To </string>
+  <string name="send_forward_to">Are you sure send forward for</string>
 
   <string name="st_bio">Bio</string>
   <string name="st_des_bio">You can add a few lines about yourself. anyone who opens your profile will see this text.</string>
@@ -1168,6 +1172,16 @@
   <string name="attention">Attention</string>
   <string name="content_attention_dialog">Note: People on the map will be displayed with a 500-meter error. So no worries</string>
   <string name="st_cameraBottomSheet">Small camera in attachments</string>
+  <string name="open_default_player">Open video with default player</string>
+  <string name="show_channel_vote">Channel Reaction</string>
+  <string name="verify_channel">Verified Channel</string>
+  <string name="another_room">Another Room</string>
+  <string name="send">Send</string>
+  <string name="do_not_send">Don\'t Send</string>
+  <string name="save_data_in_sd_card">Save data in sd card</string>
+  <string name="are_you_sure">Are you sure</string>
+  <string name="change_storage_place">Change storage place</string>
+  <string name="other_files">Other Files</string>
 
 
 </resources>

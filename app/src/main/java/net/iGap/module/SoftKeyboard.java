@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,7 +42,8 @@ public class SoftKeyboard implements View.OnFocusChangeListener {
     // This handler will clear focus of selected EditText
     private final Handler mHandler = new Handler() {
 
-        @Override public void handleMessage(Message m) {
+        @Override
+        public void handleMessage(Message m) {
             switch (m.what) {
                 case CLEAR_FOCUS:
                     if (tempView != null) {
@@ -126,7 +128,8 @@ public class SoftKeyboard implements View.OnFocusChangeListener {
      * OnFocusChange does update tempView correctly now when keyboard is still shown
      * Thanks to Israel Dominguez (dominguez.israel@gmail.com)
      */
-    @Override public void onFocusChange(View v, boolean hasFocus) {
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
             tempView = v;
             if (!isKeyboardShow) {
@@ -157,7 +160,8 @@ public class SoftKeyboard implements View.OnFocusChangeListener {
             this.mCallback = mCallback;
         }
 
-        @Override public void run() {
+        @Override
+        public void run() {
             while (started.get()) {
                 // Wait until keyboard is requested to open
                 synchronized (this) {

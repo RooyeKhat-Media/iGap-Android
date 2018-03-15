@@ -27,7 +27,8 @@ public class QrCodeNewDeviceResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder builder = (ProtoQrCodeNewDevice.QrCodeNewDeviceResponse.Builder) message;
@@ -39,11 +40,13 @@ public class QrCodeNewDeviceResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

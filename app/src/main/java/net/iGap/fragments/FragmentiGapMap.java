@@ -54,19 +54,12 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -104,6 +97,7 @@ import net.iGap.request.RequestGeoGetNearbyDistance;
 import net.iGap.request.RequestGeoRegister;
 import net.iGap.request.RequestGeoUpdateComment;
 import net.iGap.request.RequestGeoUpdatePosition;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.config.IConfigurationProvider;
@@ -127,6 +121,17 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+import io.realm.Sort;
+
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.Config.URL_MAP;
 import static net.iGap.G.context;
@@ -136,38 +141,45 @@ import static net.iGap.R.id.st_fab_gps;
 
 public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, OnGetNearbyCoordinate, OnMapRegisterState, OnMapClose, OnGeoGetComment, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
 
-    private MapView map;
-    private ItemizedOverlay<OverlayItem> latestLocation;
-    private ArrayList<Marker> markers = new ArrayList<>();
+    public static final int pageiGapMap = 1;
+    public static final int pageUserList = 2;
     public static ArrayList<String> mapUrls = new ArrayList<>();
-    private ScrollView rootTurnOnGps;
-    private ViewGroup vgMessageGps;
     public static Location location;
     public static RippleView btnBack;
     public static RippleView rippleMoreMap;
     public static boolean isBackPress = false;
+    public static FloatingActionButton fabGps;
+    public static Location mineStaticLocation;
+    public static boolean mapRegistrationStatus;
+    public static int page;
+    private final double LONGITUDE_LIMIT = 0.011;
+    private final double LATITUDE_LIMIT = 0.009;
+    private final int DEFAULT_LOOP_TIME = (int) (10 * DateUtils.SECOND_IN_MILLIS);
+    private final int ZOOM_LEVEL_MIN = 16;
+    private final int ZOOM_LEVEL_NORMAL = 16;
+    private final int ZOOM_LEVEL_MAX = 19;
+    private final int BOUND_LIMIT_METERS = 5000;
+    private final int GET_NEARBY_DELAY = (int) (DateUtils.SECOND_IN_MILLIS);
+    long firstTap = 0;
+    private MapView map;
+    private ItemizedOverlay<OverlayItem> latestLocation;
+    private ArrayList<Marker> markers = new ArrayList<>();
+    private ScrollView rootTurnOnGps;
+    private ViewGroup vgMessageGps;
     private ToggleButton toggleGps;
     private ToggleButton btnMapChangeRegistration;
     private TextView txtTextTurnOnOffGps;
     private TextView txtDescriptionMap;
     private TextView txtSendMessageGps;
     private EditText edtMessageGps;
-    public static FloatingActionButton fabGps;
     private ProgressBar prgWaitingSendMessage;
     private ItemizedIconOverlay<OverlayItem> itemizedIconOverlay = null;
     private GestureDetector mGestureDetector;
-    public static Location mineStaticLocation;
-
     private String specialRequests;
-
     private boolean firstEnter = true;
     private boolean canUpdate = true;
     private boolean isGpsOn = false;
     private boolean first = true;
-    public static boolean mapRegistrationStatus;
-
-    private final double LONGITUDE_LIMIT = 0.011;
-    private final double LATITUDE_LIMIT = 0.009;
     private double northLimitation;
     private double eastLimitation;
     private double southLimitation;
@@ -176,19 +188,8 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
     private double lastLongitude;
     private double lat1;
     private double lon1;
-
-    public static int page;
-    public static final int pageiGapMap = 1;
-    public static final int pageUserList = 2;
-    private final int DEFAULT_LOOP_TIME = (int) (10 * DateUtils.SECOND_IN_MILLIS);
-    private final int ZOOM_LEVEL_MIN = 16;
-    private final int ZOOM_LEVEL_NORMAL = 16;
-    private final int ZOOM_LEVEL_MAX = 19;
-    private final int BOUND_LIMIT_METERS = 5000;
     private int lastSpecialRequestsCursorPosition = 0;
-
     private long latestUpdateTime = 0;
-    long firstTap = 0;
     private boolean isEndLine = true;
     private String txtComment = "";
     private Realm realmMapUsers;
@@ -198,13 +199,214 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private View vgSlideUp;
     private TextView iconSlide;
+    private boolean isSendRequestGeoCoordinate = false;
 
     public static FragmentiGapMap getInstance() {
         return new FragmentiGapMap();
     }
 
-    public enum MarkerColor {
-        GRAY, GREEN
+    public static void deleteMapFileCash() {
+        try {
+            IConfigurationProvider configurationProvider = Configuration.getInstance();
+            FileUtils.deleteRecursive((configurationProvider.getOsmdroidBasePath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Drawable avatarMark(long userId, MarkerColor markerColor) {
+        String pathName = "";
+        Bitmap bitmap = null;
+        Realm realm = Realm.getDefaultInstance();
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING)) {
+            if (avatar.getFile() != null) {
+                pathName = avatar.getFile().getLocalFilePath();
+                if (pathName == null) {
+                    pathName = avatar.getFile().getLocalThumbnailPath();
+                }
+                break;
+            }
+        }
+        if (pathName == null || pathName.isEmpty()) {
+            bitmap = getInitials(realm, userId);
+        } else {
+            try {
+                File imgFile = new File(pathName);
+                bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            } catch (OutOfMemoryError e) {
+                try {
+                    File imgFile = new File(pathName);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 2;
+                    bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
+                } catch (OutOfMemoryError e1) {
+                    try {
+                        File imgFile = new File(pathName);
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 4;
+                        bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
+                    } catch (OutOfMemoryError e2) {
+                        e2.printStackTrace();
+                    }
+                }
+            }
+
+            if (bitmap == null) {
+                bitmap = getInitials(realm, userId);
+            }
+        }
+        realm.close();
+
+        boolean mineAvatar = false;
+        if (userId == G.userId) {
+            mineAvatar = true;
+        }
+
+        return new BitmapDrawable(context.getResources(), drawAvatar(bitmap, markerColor, mineAvatar));
+    }
+
+    private static Bitmap getInitials(Realm realm, long userId) {
+        String initials = "";
+        String color = "";
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+        if (realmRegisteredInfo != null) {
+            initials = realmRegisteredInfo.getInitials();
+            color = realmRegisteredInfo.getColor();
+        }
+        return HelperImageBackColor.drawAlphabetOnPicture((int) G.context.getResources().getDimension(R.dimen.dp60), initials, color);
+    }
+
+    private static Bitmap drawAvatar(Bitmap bm, MarkerColor markerColor, boolean mineAvatar) {
+        Bitmap bitmap = getCircleBitmap(bm, mineAvatar);
+        int firstBorderColor;
+        int firstBorderSize;
+        int secondBoarderColor;
+        int secondBoarderSize;
+        int thirdBoarderColor;
+        int thirdBoarderSize;
+        if (mineAvatar) {
+            firstBorderColor = Color.parseColor("#f23131");
+            secondBoarderColor = Color.parseColor("#55f23131");
+            thirdBoarderColor = Color.parseColor("#00f23131");
+
+            firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+            secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp32);
+            thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+        } else {
+            if (markerColor == MarkerColor.GREEN) {
+                firstBorderColor = Color.WHITE;
+                secondBoarderColor = Color.parseColor("#553dbcb3");
+                thirdBoarderColor = G.context.getResources().getColor(R.color.primary);
+
+                firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+                secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp18);
+                thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+            } else {
+                firstBorderColor = Color.WHITE;
+                secondBoarderColor = Color.parseColor("#554f4f4f");
+                //thirdBoarderColor = G.context.getResources().getColor(R.color.colorOldBlack);
+                thirdBoarderColor = Color.parseColor("#004f4f4f");
+
+                firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+                secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp10);
+                thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
+            }
+        }
+
+        bitmap = addBorderToCircularBitmap(bitmap, firstBorderSize, firstBorderColor);
+        if (mineAvatar) {
+            //bitmap = addBorderToCircularBitmap(bitmap, secondBoarderSize, secondBoarderColor);
+        } else {
+            bitmap = addBorderToCircularBitmapSharp(bitmap, secondBoarderSize, secondBoarderColor);
+        }
+        bitmap = addBorderToCircularBitmap(bitmap, thirdBoarderSize, thirdBoarderColor);
+        return bitmap;
+    }
+
+    protected static Bitmap getCircleBitmap(Bitmap bm, boolean mineAvatar) {
+        int sice;
+        if (mineAvatar) {
+            sice = Math.min((int) G.context.getResources().getDimension(R.dimen.dp10), (int) G.context.getResources().getDimension(R.dimen.dp10));
+        } else {
+            sice = Math.min((int) G.context.getResources().getDimension(R.dimen.dp32), (int) G.context.getResources().getDimension(R.dimen.dp32));
+        }
+        Bitmap bitmap = ThumbnailUtils.extractThumbnail(bm, sice, sice);
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        Paint paint = new Paint();
+        Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        paint.setDither(true);
+        paint.setFilterBitmap(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(Color.parseColor("#f23131"));
+        canvas.drawOval(rectF, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float) 4);
+        if (mineAvatar) {
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        } else {
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        }
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        return output;
+    }
+
+    protected static Bitmap addBorderToCircularBitmap(Bitmap srcBitmap, int borderWidth, int borderColor) {
+        int dstBitmapWidth = srcBitmap.getWidth() + borderWidth * 2;
+        Bitmap dstBitmap = Bitmap.createBitmap(dstBitmapWidth, dstBitmapWidth, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(dstBitmap);
+        canvas.drawBitmap(srcBitmap, borderWidth, borderWidth, null);
+        Paint paint = new Paint();
+        paint.setColor(borderColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(borderWidth);
+        paint.setAntiAlias(true);
+        canvas.drawCircle(canvas.getWidth() / 2, canvas.getWidth() / 2, canvas.getWidth() / 2 - (borderWidth / 2 + G.context.getResources().getDimension(R.dimen.dp1)), paint);
+        if (!srcBitmap.isRecycled()) {
+            srcBitmap.recycle();
+            srcBitmap = null;
+        }
+        return dstBitmap;
+    }
+
+    protected static Bitmap addBorderToCircularBitmapSharp(Bitmap srcBitmap, int borderWidth, int borderColor) {
+        int dstBitmapWidth = srcBitmap.getWidth() + borderWidth * 2;
+        Bitmap dstBitmap = Bitmap.createBitmap(dstBitmapWidth, dstBitmapWidth, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(dstBitmap);
+        canvas.drawBitmap(srcBitmap, borderWidth, borderWidth, null);
+        Paint paint = new Paint();
+        paint.setColor(borderColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(borderWidth);
+        paint.setAntiAlias(true);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));//DST_OUT
+
+        Paint paintSharp = new Paint();
+        paintSharp.setColor(Color.WHITE);
+        paintSharp.setStyle(Paint.Style.FILL);
+        paintSharp.setStrokeWidth(borderWidth);
+        paintSharp.setAntiAlias(true);
+
+        Path path1 = new Path();
+        path1.moveTo(borderWidth + G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);// first point
+        path1.lineTo(canvas.getWidth() - borderWidth - G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);
+        path1.lineTo((canvas.getWidth() / 2), srcBitmap.getWidth() + borderWidth + (srcBitmap.getWidth() / 8));
+        path1.lineTo(borderWidth + G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);// last point
+        path1.close();
+        paintSharp.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));//DST_OVER
+        canvas.drawPath(path1, paintSharp);
+
+        canvas.drawCircle(canvas.getWidth() / 2, canvas.getWidth() / 2, canvas.getWidth() / 2 - (borderWidth / 2 + G.context.getResources().getDimension(R.dimen.dp1)), paint);
+
+        if (!srcBitmap.isRecycled()) {
+            srcBitmap.recycle();
+            srcBitmap = null;
+        }
+        return dstBitmap;
     }
 
     @Nullable
@@ -657,8 +859,9 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                     public void onClick(View view) {
                         dialog.dismiss();
 
-                        if (location != null) {
+                        if (location != null && !isSendRequestGeoCoordinate) {
                             new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                            isSendRequestGeoCoordinate = true;
                         }
 
                     }
@@ -754,15 +957,6 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         return boundingBox;
     }
 
-    public static void deleteMapFileCash() {
-        try {
-            IConfigurationProvider configurationProvider = Configuration.getInstance();
-            FileUtils.deleteRecursive((configurationProvider.getOsmdroidBasePath()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * ****************************** draw in map ******************************
      */
@@ -815,218 +1009,36 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         });
     }
 
-    public static Drawable avatarMark(long userId, MarkerColor markerColor) {
-        String pathName = "";
-        Bitmap bitmap = null;
-        Realm realm = Realm.getDefaultInstance();
-        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING)) {
-            if (avatar.getFile() != null) {
-                pathName = avatar.getFile().getLocalFilePath();
-                if (pathName == null) {
-                    pathName = avatar.getFile().getLocalThumbnailPath();
-                }
-                break;
-            }
-        }
-        if (pathName == null || pathName.isEmpty()) {
-            bitmap = getInitials(realm, userId);
-        } else {
-            try {
-                File imgFile = new File(pathName);
-                bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            } catch (OutOfMemoryError e) {
-                try {
-                    File imgFile = new File(pathName);
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 2;
-                    bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
-                } catch (OutOfMemoryError e1) {
-                    try {
-                        File imgFile = new File(pathName);
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        options.inSampleSize = 4;
-                        bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(), options);
-                    } catch (OutOfMemoryError e2) {
-                        e2.printStackTrace();
-                    }
-                }
-            }
-
-            if (bitmap == null) {
-                bitmap = getInitials(realm, userId);
-            }
-        }
-        realm.close();
-
-        boolean mineAvatar = false;
-        if (userId == G.userId) {
-            mineAvatar = true;
-        }
-
-        return new BitmapDrawable(context.getResources(), drawAvatar(bitmap, markerColor, mineAvatar));
-    }
-
-    private static Bitmap getInitials(Realm realm, long userId) {
-        String initials = "";
-        String color = "";
-        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
-        if (realmRegisteredInfo != null) {
-            initials = realmRegisteredInfo.getInitials();
-            color = realmRegisteredInfo.getColor();
-        }
-        return HelperImageBackColor.drawAlphabetOnPicture((int) G.context.getResources().getDimension(R.dimen.dp60), initials, color);
-    }
-
-    private static Bitmap drawAvatar(Bitmap bm, MarkerColor markerColor, boolean mineAvatar) {
-        Bitmap bitmap = getCircleBitmap(bm, mineAvatar);
-        int firstBorderColor;
-        int firstBorderSize;
-        int secondBoarderColor;
-        int secondBoarderSize;
-        int thirdBoarderColor;
-        int thirdBoarderSize;
-        if (mineAvatar) {
-            firstBorderColor = Color.parseColor("#f23131");
-            secondBoarderColor = Color.parseColor("#55f23131");
-            thirdBoarderColor = Color.parseColor("#00f23131");
-
-            firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-            secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp32);
-            thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-        } else {
-            if (markerColor == MarkerColor.GREEN) {
-                firstBorderColor = Color.WHITE;
-                secondBoarderColor = Color.parseColor("#553dbcb3");
-                thirdBoarderColor = G.context.getResources().getColor(R.color.primary);
-
-                firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-                secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp18);
-                thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-            } else {
-                firstBorderColor = Color.WHITE;
-                secondBoarderColor = Color.parseColor("#554f4f4f");
-                //thirdBoarderColor = G.context.getResources().getColor(R.color.colorOldBlack);
-                thirdBoarderColor = Color.parseColor("#004f4f4f");
-
-                firstBorderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-                secondBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp10);
-                thirdBoarderSize = (int) G.context.getResources().getDimension(R.dimen.dp2);
-            }
-        }
-
-        bitmap = addBorderToCircularBitmap(bitmap, firstBorderSize, firstBorderColor);
-        if (mineAvatar) {
-            //bitmap = addBorderToCircularBitmap(bitmap, secondBoarderSize, secondBoarderColor);
-        } else {
-            bitmap = addBorderToCircularBitmapSharp(bitmap, secondBoarderSize, secondBoarderColor);
-        }
-        bitmap = addBorderToCircularBitmap(bitmap, thirdBoarderSize, thirdBoarderColor);
-        return bitmap;
-    }
-
-    protected static Bitmap getCircleBitmap(Bitmap bm, boolean mineAvatar) {
-        int sice;
-        if (mineAvatar) {
-            sice = Math.min((int) G.context.getResources().getDimension(R.dimen.dp10), (int) G.context.getResources().getDimension(R.dimen.dp10));
-        } else {
-            sice = Math.min((int) G.context.getResources().getDimension(R.dimen.dp32), (int) G.context.getResources().getDimension(R.dimen.dp32));
-        }
-        Bitmap bitmap = ThumbnailUtils.extractThumbnail(bm, sice, sice);
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-        Paint paint = new Paint();
-        Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        RectF rectF = new RectF(rect);
-
-        paint.setAntiAlias(true);
-        paint.setDither(true);
-        paint.setFilterBitmap(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(Color.parseColor("#f23131"));
-        canvas.drawOval(rectF, paint);
-
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth((float) 4);
-        if (mineAvatar) {
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        } else {
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        }
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
-    }
-
-    protected static Bitmap addBorderToCircularBitmap(Bitmap srcBitmap, int borderWidth, int borderColor) {
-        int dstBitmapWidth = srcBitmap.getWidth() + borderWidth * 2;
-        Bitmap dstBitmap = Bitmap.createBitmap(dstBitmapWidth, dstBitmapWidth, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(dstBitmap);
-        canvas.drawBitmap(srcBitmap, borderWidth, borderWidth, null);
-        Paint paint = new Paint();
-        paint.setColor(borderColor);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(borderWidth);
-        paint.setAntiAlias(true);
-        canvas.drawCircle(canvas.getWidth() / 2, canvas.getWidth() / 2, canvas.getWidth() / 2 - (borderWidth / 2 + G.context.getResources().getDimension(R.dimen.dp1)), paint);
-        if (!srcBitmap.isRecycled()) {
-            srcBitmap.recycle();
-            srcBitmap = null;
-        }
-        return dstBitmap;
-    }
-
-    protected static Bitmap addBorderToCircularBitmapSharp(Bitmap srcBitmap, int borderWidth, int borderColor) {
-        int dstBitmapWidth = srcBitmap.getWidth() + borderWidth * 2;
-        Bitmap dstBitmap = Bitmap.createBitmap(dstBitmapWidth, dstBitmapWidth, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(dstBitmap);
-        canvas.drawBitmap(srcBitmap, borderWidth, borderWidth, null);
-        Paint paint = new Paint();
-        paint.setColor(borderColor);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(borderWidth);
-        paint.setAntiAlias(true);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.XOR));//DST_OUT
-
-        Paint paintSharp = new Paint();
-        paintSharp.setColor(Color.WHITE);
-        paintSharp.setStyle(Paint.Style.FILL);
-        paintSharp.setStrokeWidth(borderWidth);
-        paintSharp.setAntiAlias(true);
-
-        Path path1 = new Path();
-        path1.moveTo(borderWidth + G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);// first point
-        path1.lineTo(canvas.getWidth() - borderWidth - G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);
-        path1.lineTo((canvas.getWidth() / 2), srcBitmap.getWidth() + borderWidth + (srcBitmap.getWidth() / 8));
-        path1.lineTo(borderWidth + G.context.getResources().getDimension(R.dimen.dp1), canvas.getWidth() / 2);// last point
-        path1.close();
-        paintSharp.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));//DST_OVER
-        canvas.drawPath(path1, paintSharp);
-
-        canvas.drawCircle(canvas.getWidth() / 2, canvas.getWidth() / 2, canvas.getWidth() / 2 - (borderWidth / 2 + G.context.getResources().getDimension(R.dimen.dp1)), paint);
-
-        if (!srcBitmap.isRecycled()) {
-            srcBitmap.recycle();
-            srcBitmap = null;
-        }
-        return dstBitmap;
-    }
-
     /**
      * hint : call this method after fill location
      */
-    private void getCoordinateLoop(final int delay, boolean loop) {
-        if (location != null) {
-            if (loop && page == pageiGapMap) {
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
-                        getCoordinateLoop(DEFAULT_LOOP_TIME, true);
+    private void getCoordinateLoop(final int delay, final boolean loop) {
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (location != null) {
+                    if (loop && page == pageiGapMap) {
+                        G.handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!isSendRequestGeoCoordinate) {
+                                    new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                                    isSendRequestGeoCoordinate = true;
+                                }
+
+                                getCoordinateLoop(DEFAULT_LOOP_TIME, true);
+                            }
+                        }, delay);
+                    } else {
+                        if (!isSendRequestGeoCoordinate) {
+                            new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                            isSendRequestGeoCoordinate = true;
+                        }
+
                     }
-                }, delay);
-            } else {
-                new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                }
             }
-        }
+        }, GET_NEARBY_DELAY);
     }
 
     private void initMapListener() {
@@ -1174,6 +1186,13 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                 });
             }
         }
+
+        isSendRequestGeoCoordinate = false;
+    }
+
+    @Override
+    public void onErrorGetNearbyCoordinate() {
+        isSendRequestGeoCoordinate = false;
     }
 
     public void statusCheck() {
@@ -1370,18 +1389,35 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         return realmMapUsers;
     }
 
-    private void getDistanceLoop(final int delay, boolean loop) {
-        if (loop && FragmentiGapMap.page == pageUserList) {
-            G.handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+    private void getDistanceLoop(final int delay, final boolean loop) {
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (loop && FragmentiGapMap.page == pageUserList) {
+                    G.handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new RequestGeoGetNearbyDistance().getNearbyDistance(FragmentiGapMap.location.getLatitude(), FragmentiGapMap.location.getLongitude());
+                            getDistanceLoop(DEFAULT_LOOP_TIME, true);
+                        }
+                    }, delay);
+                } else {
                     new RequestGeoGetNearbyDistance().getNearbyDistance(FragmentiGapMap.location.getLatitude(), FragmentiGapMap.location.getLongitude());
-                    getDistanceLoop(DEFAULT_LOOP_TIME, true);
                 }
-            }, delay);
-        } else {
-            new RequestGeoGetNearbyDistance().getNearbyDistance(FragmentiGapMap.location.getLatitude(), FragmentiGapMap.location.getLongitude());
+            }
+        }, GET_NEARBY_DELAY);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (realmMapUsers != null && !realmMapUsers.isClosed()) {
+            realmMapUsers.close();
         }
+    }
+
+    public enum MarkerColor {
+        GRAY, GREEN
     }
 
     private class MapUserAdapter extends RealmRecyclerViewAdapter<RealmGeoNearbyDistance, MapUserAdapter.ViewHolder> {
@@ -1492,14 +1528,6 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                 distance = (CustomTextViewMedium) itemView.findViewById(R.id.txt_user_distance_map);
 
             }
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (realmMapUsers != null && !realmMapUsers.isClosed()) {
-            realmMapUsers.close();
         }
     }
 }

@@ -37,6 +37,14 @@ public class ClientSearchRoomHistoryResponse extends MessageHandler {
     }
 
     @Override
+    public void timeOut() {
+        super.timeOut();
+        if (G.onClientSearchRoomHistory != null) {
+            G.onClientSearchRoomHistory.onTimeOut();
+        }
+    }
+
+    @Override
     public void error() {
         super.error();
         if (G.onClientSearchRoomHistory != null) {

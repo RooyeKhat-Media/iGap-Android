@@ -12,7 +12,7 @@ package net.iGap.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.res.Configuration;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,24 +21,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.ContentLoadingProgressBar;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
@@ -46,6 +44,7 @@ import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperSaveFile;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.messageprogress.MessageProgress;
+import net.iGap.messageprogress.OnProgress;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.DialogAnimation;
@@ -62,10 +61,25 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
+
 import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class FragmentShowImage extends BaseFragment {
 
+    public static ArrayList<String> downloadedList = new ArrayList<>();
+    public final String ROOM_ID = "roomId";
+    public final String SELECTED_IMAGE = "selectedImage";
+    public final String TYPE = "type";
+    public View appBarLayout;
+    public MediaController videoController;
+    public int po;
     private TextView txtImageNumber;
     private TextView txtImageName;
     private TextView txtImageDate;
@@ -80,27 +94,20 @@ public class FragmentShowImage extends BaseFragment {
     private int selectedFile = 0;
     private AdapterViewPager mAdapter;
     private RealmResults<RealmRoomMessage> mRealmList;
-
     private ArrayList<RealmRoomMessage> mFList = new ArrayList<>();
-
     private Long mRoomId;
     private Long selectedFileToken;
     private MediaPlayer mMediaPlayer;
-    public static ArrayList<String> downloadedList = new ArrayList<>();
-
-    public View appBarLayout;
-    public MediaController videoController;
-    public int po;
     private String path;
     private String type = null;
     private boolean isLockScreen = false;
     private Realm realmShowImage;
-    public final String ROOM_ID = "roomId";
-    public final String SELECTED_IMAGE = "selectedImage";
-    public final String TYPE = "type";
     private ViewGroup rooShowImage;
     private ViewGroup mainShowImage;
     private ExitFragmentTransition exitFragmentTransition;
+    private TouchImageView touchImageViewTmp = null;
+    private int lastOrientation = 0;
+    ArrayList<TextureView> mTextureViewTmp = new ArrayList<>();
 
     public static FragmentShowImage newInstance() {
         return new FragmentShowImage();
@@ -135,6 +142,25 @@ public class FragmentShowImage extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         if (getIntentData(this.getArguments())) {
             initComponent(view);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation != lastOrientation) {
+            lastOrientation = newConfig.orientation;
+            if (touchImageViewTmp != null && videoController != null && mMediaPlayer != null) {
+                touchImageViewTmp.setVisibility(View.GONE);
+                touchImageViewTmp.setVisibility(View.VISIBLE);
+                if (mMediaPlayer.isPlaying()) {
+                    videoController.show();
+                }
+
+                if (mTextureViewTmp.size() > 0) {
+                    getRealSize(mMediaPlayer, mTextureViewTmp.get(0));
+                }
+            }
         }
     }
 
@@ -186,7 +212,8 @@ public class FragmentShowImage extends BaseFragment {
 
             for (RealmRoomMessage roomMessage : mRealmList) {
                 if (RealmRoomMessage.isImageOrVideo(roomMessage, convertType(type))) {
-                    if ((roomMessage.getForwardMessage() != null ? roomMessage.getForwardMessage().getAttachment() : roomMessage.getAttachment()) != null) mFList.add(roomMessage);
+                    if ((roomMessage.getForwardMessage() != null ? roomMessage.getForwardMessage().getAttachment() : roomMessage.getAttachment()) != null)
+                        mFList.add(roomMessage);
                 }
             }
 
@@ -448,502 +475,12 @@ public class FragmentShowImage extends BaseFragment {
             }
             File file = new File(path);
             if (file.exists()) {
-                if (messageType == ProtoGlobal.RoomMessageType.VIDEO) {
+                if (messageType == ProtoGlobal.RoomMessageType.VIDEO || messageType == ProtoGlobal.RoomMessageType.VIDEO_TEXT) {
                     HelperSaveFile.saveFileToDownLoadFolder(path, "VIDEO_" + System.currentTimeMillis() + ".mp4", HelperSaveFile.FolderType.video, R.string.file_save_to_video_folder);
-                } else if (messageType == ProtoGlobal.RoomMessageType.IMAGE) {
+                } else if (messageType == ProtoGlobal.RoomMessageType.IMAGE || messageType == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
                     HelperSaveFile.savePicToGallery(path, true);
                 }
             }
-        }
-    }
-
-    /**
-     * adapter for view pager
-     */
-    private class AdapterViewPager extends PagerAdapter implements MediaController.MediaPlayerControl {
-
-        private String videoPath;
-        private int lastPosition;
-
-        @Override
-        public int getCount() {
-            return mFList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view.equals(object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-
-            LayoutInflater inflater = LayoutInflater.from(G.fragmentActivity);
-            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.show_image_sub_layout, (ViewGroup) container, false);
-            final TextureView mTextureView = (TextureView) layout.findViewById(R.id.textureView);
-            final ImageView imgPlay = (ImageView) layout.findViewById(R.id.imgPlay);
-            final TouchImageView touchImageView = (TouchImageView) layout.findViewById(R.id.sisl_touch_image_view);
-
-            final MessageProgress progress = (MessageProgress) layout.findViewById(R.id.progress);
-            AppUtils.setProgresColor(progress.progressBar);
-
-
-            final ContentLoadingProgressBar contentLoading = (ContentLoadingProgressBar) layout.findViewById(R.id.ch_progress_loadingContent);
-            contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
-            final RealmRoomMessage rm = RealmRoomMessage.getFinalMessage(mFList.get(position));
-
-            if (rm != null) {
-                if (HelperDownloadFile.isDownLoading(rm.getAttachment().getCacheId())) {
-                    progress.withDrawable(R.drawable.ic_cancel, true);
-                    startDownload(position, progress, touchImageView, contentLoading, imgPlay, mTextureView);
-                } else {
-                    progress.withDrawable(R.drawable.ic_download, true);
-                    contentLoading.setVisibility(View.GONE);
-                }
-
-                path = getFilePath(position);
-                File file = new File(path);
-                if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.pause();
-                    mMediaPlayer.seekTo(0);
-                    if (videoController != null) videoController.hide();
-                }
-                if (file.exists()) {
-                    progress.setVisibility(View.GONE);
-                    G.imageLoader.displayImage(suitablePath(path), touchImageView);
-                    if (rm.getMessageType() == ProtoGlobal.RoomMessageType.IMAGE || rm.getMessageType() == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
-                        touchImageView.setVisibility(View.VISIBLE);
-                        imgPlay.setVisibility(View.GONE);
-                        isFirstPlay = false;
-                    } else {
-                        if (isFirstPlay) {
-                            mTextureView.setVisibility(View.VISIBLE);
-
-                            G.handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    playVideo(position, mTextureView, imgPlay, touchImageView);
-                                }
-                            }, 100);
-                            isFirstPlay = false;
-                        }
-                        imgPlay.setVisibility(View.VISIBLE);
-                        mTextureView.setVisibility(View.INVISIBLE);
-                        videoPath = path;
-                    }
-                } else {
-                    imgPlay.setVisibility(View.GONE);
-                    path = getThumbnailPath(rm);
-                    touchImageView.setVisibility(View.VISIBLE);
-                    file = new File(path);
-                    if (file.exists()) {
-                        G.imageLoader.displayImage(suitablePath(path), touchImageView);
-                    } else if (rm.getAttachment() != null) {
-                        // if thumpnail not exist download it
-                        ProtoFileDownload.FileDownload.Selector selector = null;
-                        long fileSize = 0;
-
-                        if (rm.getAttachment().getSmallThumbnail() != null) {
-                            selector = ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL;
-                            fileSize = rm.getAttachment().getSmallThumbnail().getSize();
-                        } else if (rm.getAttachment().getLargeThumbnail() != null) {
-                            selector = ProtoFileDownload.FileDownload.Selector.LARGE_THUMBNAIL;
-                            fileSize = rm.getAttachment().getLargeThumbnail().getSize();
-                        }
-
-                        final String filePathTumpnail = AndroidUtils.getFilePathWithCashId(rm.getAttachment().getCacheId(), rm.getAttachment().getName(), G.DIR_TEMP, true);
-
-                        if (selector != null && fileSize > 0) {
-                            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", rm.getAttachment().getToken(), rm.getAttachment().getCacheId(), rm.getAttachment().getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
-                                @Override
-                                public void OnProgress(final String path, int progress) {
-
-                                    if (progress == 100) {
-
-                                        G.currentActivity.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (touchImageView != null) {
-                                                    G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
-                                                }
-
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void OnError(String token) {
-
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-
-            progress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    String _cashID = mFList.get(position).getForwardMessage() != null ? mFList.get(position).getForwardMessage().getAttachment().getCacheId() : mFList.get(position).getAttachment().getCacheId();
-
-                    if (HelperDownloadFile.isDownLoading(_cashID)) {
-                        HelperDownloadFile.stopDownLoad(_cashID);
-                    } else {
-                        progress.withDrawable(R.drawable.ic_cancel, true);
-                        startDownload(position, progress, touchImageView, contentLoading, imgPlay, mTextureView);
-                    }
-                }
-            });
-
-            touchImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (isShowToolbar) {
-                        toolbarShowImage.animate().setDuration(150).alpha(0F).start();
-                        ltImageName.setVisibility(View.GONE);
-                        ltImageName.animate().setDuration(150).alpha(0F).start();
-                        toolbarShowImage.setVisibility(View.GONE);
-                        isShowToolbar = false;
-                    } else {
-                        toolbarShowImage.animate().setDuration(150).alpha(1F).start();
-                        toolbarShowImage.setVisibility(View.VISIBLE);
-                        ltImageName.animate().setDuration(150).alpha(1F).start();
-                        ltImageName.setVisibility(View.VISIBLE);
-                        isShowToolbar = true;
-                    }
-                }
-            });
-
-            imgPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    mTextureView.setVisibility(View.VISIBLE);
-                    playVideo(position, mTextureView, imgPlay, touchImageView);
-                }
-            });
-
-            mTextureView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mMediaPlayer != null) {
-                        if (videoController.isShowing()) {
-                            videoController.setVisibility(View.GONE);
-                        } else if (videoController != null) {
-                            videoController.show();
-                            videoController.setVisibility(View.VISIBLE);
-                        }
-                    }
-                    touchImageView.performClick();
-                }
-            });
-            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(final int position, float positionOffset, int positionOffsetPixels) {
-
-                    if (isFirstPlay) {
-                        if (mFList.get(position).getMessageType() == ProtoGlobal.RoomMessageType.IMAGE || mFList.get(position).getMessageType() == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
-                            isFirstPlay = false;
-                        }
-                    }
-                }
-
-                @Override
-                public void onPageSelected(final int position) {
-
-                    txtImageNumber.setText(position + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + mFList.size());
-                    if (HelperCalander.isPersianUnicode) {
-                        txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
-                    }
-                    showImageInfo(mFList.get(position));
-                    ProtoGlobal.RoomMessageType type;
-                    if (mFList.get(position).getForwardMessage() != null) {
-                        type = mFList.get(position).getForwardMessage().getMessageType();
-                    } else {
-                        type = mFList.get(position).getMessageType();
-                    }
-
-                    if (mMediaPlayer != null && mMediaPlayer.isPlaying()) mMediaPlayer.stop();
-                    if (type == ProtoGlobal.RoomMessageType.VIDEO || type == ProtoGlobal.RoomMessageType.VIDEO_TEXT) {
-                        File f = new File(getFilePath(position));
-                        if (f.exists()) {
-                            imgPlay.setVisibility(View.VISIBLE);
-                            touchImageView.setVisibility(View.VISIBLE);
-                        } else {
-                            imgPlay.setVisibility(View.GONE);
-                        }
-                    } else if (type == ProtoGlobal.RoomMessageType.IMAGE || type == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
-                        imgPlay.setVisibility(View.GONE);
-                    }
-                    if (videoController != null) {
-                        videoController.hide();
-                    }
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                }
-            });
-
-            ((ViewGroup) container).addView(layout);
-            return layout;
-        }
-
-        /**
-         * start download
-         */
-        private void startDownload(final int position, final MessageProgress progress, final TouchImageView touchImageView, final ContentLoadingProgressBar contentLoading, final ImageView imgPlay, final TextureView mTextureView) {
-
-            contentLoading.setVisibility(View.VISIBLE);
-
-            final RealmRoomMessage rm = RealmRoomMessage.getFinalMessage(mFList.get(position));
-
-            String dirPath = AndroidUtils.getFilePathWithCashId(rm.getAttachment().getCacheId(), rm.getAttachment().getName(), rm.getMessageType());
-
-            if (downloadedList.indexOf(rm.getAttachment().getToken()) == -1) {
-                downloadedList.add(rm.getAttachment().getCacheId());
-            }
-
-            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", rm.getAttachment().getToken(), rm.getAttachment().getCacheId(), rm.getAttachment().getName(), rm.getAttachment().getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
-                @Override
-                public void OnProgress(final String path, final int progres) {
-
-                    if (progress != null) {
-
-                        G.currentActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (progres < 100) {
-                                    progress.withProgress(progres);
-                                } else {
-                                    progress.withProgress(0);
-                                    progress.setVisibility(View.GONE);
-                                    contentLoading.setVisibility(View.GONE);
-                                    if (rm.getMessageType() == ProtoGlobal.RoomMessageType.VIDEO) {
-                                        imgPlay.setVisibility(View.VISIBLE);
-                                        //if (position == viewPager.getCurrentItem()) playVideo(position, mTextureView, imgPlay, touchImageView);
-                                    }
-
-                                    G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
-                                }
-                            }
-                        });
-                    }
-                }
-
-                @Override
-                public void OnError(String token) {
-
-                    if (progress != null) {
-
-                        G.currentActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progress.withProgress(0);
-                                progress.withDrawable(R.drawable.ic_download, true);
-                                contentLoading.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        /**
-         * video player
-         */
-        private void playVideo(final int position, final TextureView mTextureView, final ImageView imgPlay, final TouchImageView touchImageView) {
-
-            if (mMediaPlayer == null) mMediaPlayer = new MediaPlayer();
-            if (videoController == null) videoController = new MediaController(G.fragmentActivity);
-            mTextureView.setVisibility(View.VISIBLE);
-            videoPath = getFilePath(position);
-            ViewCompat.setLayoutDirection(videoController, View.LAYOUT_DIRECTION_LTR);
-            videoController.setAnchorView(touchImageView);
-            videoController.setMediaPlayer(this);
-            imgPlay.setVisibility(View.GONE);
-            mMediaPlayer.reset();
-            try {
-                mMediaPlayer.setDataSource(G.fragmentActivity, Uri.parse(videoPath));
-                mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-                    @Override
-                    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                        setMediaPlayer(mMediaPlayer, mTextureView, imgPlay, touchImageView);
-                    }
-
-                    @Override
-                    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                    }
-
-                    @Override
-                    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-
-                        return false;
-                    }
-
-                    @Override
-                    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-                    }
-                });
-                if (mTextureView.getSurfaceTexture() != null) {
-                    setMediaPlayer(mMediaPlayer, mTextureView, imgPlay, touchImageView);
-                }
-            } catch (IOException | IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-
-            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    mp.seekTo(0);
-                    imgPlay.setVisibility(View.VISIBLE);
-                }
-            });
-
-            //mMediaPlayer.seekTo(100);
-        }
-
-        private void setMediaPlayer(MediaPlayer mMediaPlayer, final TextureView mTextureView, final ImageView imgPlay, final TouchImageView touchImageView) {
-
-            if (mTextureView == null) {
-                return;
-            }
-            Surface surfaceTexture = new Surface(mTextureView.getSurfaceTexture());
-
-            if (surfaceTexture == null) {
-                return;
-            }
-
-            try {
-                if (mMediaPlayer != null) {
-                    mMediaPlayer.setSurface(surfaceTexture);
-                    mMediaPlayer.setLooping(false);
-                    mMediaPlayer.prepareAsync();
-                }
-            } catch (IllegalStateException e) {
-                e.getMessage();
-            }
-
-
-            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-
-                    getRealSize(mp, mTextureView);
-                    imgPlay.setVisibility(View.GONE);
-                    mp.start();
-                    MusicPlayer.pauseSound();
-                    mTextureView.setVisibility(View.VISIBLE);
-                    touchImageView.animate().setDuration(700).alpha(0F).start();
-
-                    G.handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            touchImageView.setVisibility(View.GONE);
-                            touchImageView.clearAnimation();
-                        }
-                    }, 700);
-
-                    videoController.setEnabled(true);
-                    videoController.show();
-                }
-            });
-
-        }
-
-        /**
-         * get real width and height video
-         */
-        private void getRealSize(MediaPlayer mp, TextureView mTextureView) {
-            //Get the dimensions of the video
-            int videoWidth = mp.getVideoWidth();
-            int videoHeight = mp.getVideoHeight();
-
-            //Get the width of the screen
-            int screenWidth = G.fragmentActivity.getWindowManager().getDefaultDisplay().getWidth();
-
-            //Get the SurfaceView layout parameters
-            ViewGroup.LayoutParams lp = mTextureView.getLayoutParams();
-
-            //Set the width of the SurfaceView to the width of the screen
-            lp.width = screenWidth;
-
-            //Set the height of the SurfaceView to match the aspect ratio of the video
-            //be sure to cast these as floats otherwise the calculation will likely be 0
-            lp.height = (int) (((float) videoHeight / (float) videoWidth) * (float) screenWidth);
-
-            //Commit the layout parameters
-            mTextureView.setLayoutParams(lp);
-        }
-
-        @Override
-        public void start() {
-            if (mMediaPlayer != null) mMediaPlayer.start();
-            MusicPlayer.pauseSound();
-        }
-
-        @Override
-        public void pause() {
-            if (mMediaPlayer != null) mMediaPlayer.pause();
-        }
-
-        @Override
-        public int getDuration() {
-            if (mMediaPlayer != null) {
-                return mMediaPlayer.getDuration();
-            }
-            return 0;
-        }
-
-        @Override
-        public int getCurrentPosition() {
-            if (mMediaPlayer != null) {
-                return mMediaPlayer.getCurrentPosition();
-            }
-            return 0;
-        }
-
-        @Override
-        public void seekTo(int pos) {
-            if (mMediaPlayer != null) mMediaPlayer.seekTo(pos);
-        }
-
-        @Override
-        public boolean isPlaying() {
-            return mMediaPlayer != null && mMediaPlayer.isPlaying();
-        }
-
-        @Override
-        public int getBufferPercentage() {
-            return 0;
-        }
-
-        @Override
-        public boolean canPause() {
-            return true;
-        }
-
-        @Override
-        public boolean canSeekBackward() {
-            return true;
-        }
-
-        @Override
-        public boolean canSeekForward() {
-            return true;
-        }
-
-        @Override
-        public int getAudioSessionId() {
-            return 0;
         }
     }
 
@@ -1028,7 +565,6 @@ public class FragmentShowImage extends BaseFragment {
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -1040,4 +576,514 @@ public class FragmentShowImage extends BaseFragment {
             }
         }
     }
+
+    /**
+     * adapter for view pager
+     */
+    private class AdapterViewPager extends PagerAdapter implements MediaController.MediaPlayerControl {
+
+        private String videoPath;
+        private int lastPosition;
+
+        @Override
+        public int getCount() {
+            return mFList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view.equals(object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+
+            LayoutInflater inflater = LayoutInflater.from(G.fragmentActivity);
+            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.show_image_sub_layout, (ViewGroup) container, false);
+            final TextureView mTextureView = (TextureView) layout.findViewById(R.id.textureView);
+            final ImageView imgPlay = (ImageView) layout.findViewById(R.id.imgPlay);
+            final TouchImageView touchImageView = (TouchImageView) layout.findViewById(R.id.sisl_touch_image_view);
+
+            FrameLayout frameLayout = (FrameLayout) layout.findViewById(R.id.Layout_showImage);
+            frameLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    touchImageView.performClick();
+                }
+            });
+
+            final MessageProgress progress = (MessageProgress) layout.findViewById(R.id.progress);
+            AppUtils.setProgresColor(progress.progressBar);
+
+            final RealmRoomMessage rm = RealmRoomMessage.getFinalMessage(mFList.get(position));
+
+            if (rm != null && rm.isValid()) {
+                if (HelperDownloadFile.isDownLoading(rm.getAttachment().getCacheId())) {
+                    progress.withDrawable(R.drawable.ic_cancel, true);
+                    startDownload(position, progress, touchImageView, imgPlay, mTextureView);
+                } else {
+                    progress.withDrawable(R.drawable.ic_download, true);
+                }
+
+                path = getFilePath(position);
+                File file = new File(path);
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.pause();
+                    mMediaPlayer.seekTo(0);
+                    if (videoController != null) videoController.hide();
+                }
+                if (file.exists()) {
+                    progress.setVisibility(View.GONE);
+                    G.imageLoader.displayImage(suitablePath(path), touchImageView);
+                    if (rm.getMessageType() == ProtoGlobal.RoomMessageType.IMAGE || rm.getMessageType() == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
+                        touchImageView.setVisibility(View.VISIBLE);
+                        imgPlay.setVisibility(View.GONE);
+                        isFirstPlay = false;
+                    } else {
+                        if (isFirstPlay) {
+                            mTextureView.setVisibility(View.VISIBLE);
+
+                            G.handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    playVideo(position, mTextureView, imgPlay, touchImageView);
+                                }
+                            }, 100);
+                            isFirstPlay = false;
+                        }
+                        imgPlay.setVisibility(View.VISIBLE);
+                        mTextureView.setVisibility(View.INVISIBLE);
+                        videoPath = path;
+                    }
+                } else {
+                    imgPlay.setVisibility(View.GONE);
+                    path = getThumbnailPath(rm);
+                    touchImageView.setVisibility(View.VISIBLE);
+                    file = new File(path);
+                    if (file.exists()) {
+                        G.imageLoader.displayImage(suitablePath(path), touchImageView);
+                    } else if (rm.getAttachment() != null) {
+                        // if thumpnail not exist download it
+                        ProtoFileDownload.FileDownload.Selector selector = null;
+                        long fileSize = 0;
+
+                        if (rm.getAttachment().getSmallThumbnail() != null) {
+                            selector = ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL;
+                            fileSize = rm.getAttachment().getSmallThumbnail().getSize();
+                        } else if (rm.getAttachment().getLargeThumbnail() != null) {
+                            selector = ProtoFileDownload.FileDownload.Selector.LARGE_THUMBNAIL;
+                            fileSize = rm.getAttachment().getLargeThumbnail().getSize();
+                        }
+
+                        final String filePathTumpnail = AndroidUtils.getFilePathWithCashId(rm.getAttachment().getCacheId(), rm.getAttachment().getName(), G.DIR_TEMP, true);
+
+                        if (selector != null && fileSize > 0) {
+                            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", rm.getAttachment().getToken(), rm.getAttachment().getCacheId(), rm.getAttachment().getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
+                                @Override
+                                public void OnProgress(final String path, int progress) {
+
+                                    if (progress == 100) {
+
+                                        G.currentActivity.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void OnError(String token) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            progress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    String _cashID = mFList.get(position).getForwardMessage() != null ? mFList.get(position).getForwardMessage().getAttachment().getCacheId() : mFList.get(position).getAttachment().getCacheId();
+
+                    if (HelperDownloadFile.isDownLoading(_cashID)) {
+                        HelperDownloadFile.stopDownLoad(_cashID);
+                    } else {
+                        progress.withDrawable(R.drawable.ic_cancel, true);
+                        startDownload(position, progress, touchImageView, imgPlay, mTextureView);
+                    }
+                }
+            });
+
+            touchImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isShowToolbar) {
+                        toolbarShowImage.animate().setDuration(150).alpha(0F).start();
+                        ltImageName.setVisibility(View.GONE);
+                        ltImageName.animate().setDuration(150).alpha(0F).start();
+                        toolbarShowImage.setVisibility(View.GONE);
+                        isShowToolbar = false;
+                    } else {
+                        toolbarShowImage.animate().setDuration(150).alpha(1F).start();
+                        toolbarShowImage.setVisibility(View.VISIBLE);
+                        ltImageName.animate().setDuration(150).alpha(1F).start();
+                        ltImageName.setVisibility(View.VISIBLE);
+                        isShowToolbar = true;
+                    }
+
+                    if (touchImageViewTmp != null && imgPlay.getVisibility() != View.VISIBLE && mMediaPlayer != null && videoController != null) {
+                        if (videoController.isShowing()) {
+                            videoController.hide();
+                        } else {
+                            videoController.show();
+                        }
+                    }
+                }
+            });
+
+            imgPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mTextureView.setVisibility(View.VISIBLE);
+                    playVideo(position, mTextureView, imgPlay, touchImageView);
+                }
+            });
+
+            mTextureView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    touchImageView.performClick();
+                }
+            });
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(final int position, float positionOffset, int positionOffsetPixels) {
+
+                    if (isFirstPlay) {
+                        if (mFList.get(position).getMessageType() == ProtoGlobal.RoomMessageType.IMAGE || mFList.get(position).getMessageType() == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
+                            isFirstPlay = false;
+                        }
+                    }
+                }
+
+                @Override
+                public void onPageSelected(final int position) {
+
+                    touchImageViewTmp = null;
+
+                    txtImageNumber.setText(position + 1 + " " + G.fragmentActivity.getResources().getString(R.string.of) + " " + mFList.size());
+                    if (HelperCalander.isPersianUnicode) {
+                        txtImageNumber.setText(HelperCalander.convertToUnicodeFarsiNumber(txtImageNumber.getText().toString()));
+                    }
+                    showImageInfo(mFList.get(position));
+                    ProtoGlobal.RoomMessageType type;
+                    if (mFList.get(position).getForwardMessage() != null) {
+                        type = mFList.get(position).getForwardMessage().getMessageType();
+                    } else {
+                        type = mFList.get(position).getMessageType();
+                    }
+
+                    if (mMediaPlayer != null && mMediaPlayer.isPlaying()) mMediaPlayer.stop();
+                    if (type == ProtoGlobal.RoomMessageType.VIDEO || type == ProtoGlobal.RoomMessageType.VIDEO_TEXT) {
+                        File f = new File(getFilePath(position));
+                        if (f.exists()) {
+                            imgPlay.setVisibility(View.VISIBLE);
+                            touchImageView.setVisibility(View.VISIBLE);
+                        } else {
+                            imgPlay.setVisibility(View.GONE);
+                        }
+                    } else if (type == ProtoGlobal.RoomMessageType.IMAGE || type == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
+                        imgPlay.setVisibility(View.GONE);
+                    }
+                    if (videoController != null) {
+                        videoController.hide();
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                }
+            });
+
+            ((ViewGroup) container).addView(layout);
+            return layout;
+        }
+
+        /**
+         * start download
+         */
+        private void startDownload(final int position, final MessageProgress progress, final TouchImageView touchImageView, final ImageView imgPlay, final TextureView mTextureView) {
+
+            final RealmRoomMessage rm = RealmRoomMessage.getFinalMessage(mFList.get(position));
+
+            String dirPath = AndroidUtils.getFilePathWithCashId(rm.getAttachment().getCacheId(), rm.getAttachment().getName(), rm.getMessageType());
+
+            if (downloadedList.indexOf(rm.getAttachment().getToken()) == -1) {
+                downloadedList.add(rm.getAttachment().getCacheId());
+            }
+
+
+            progress.withOnProgress(new OnProgress() {
+                @Override
+                public void onProgressFinished() {
+                    G.currentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.withProgress(0);
+                            progress.setVisibility(View.GONE);
+                            if (rm.getMessageType() == ProtoGlobal.RoomMessageType.VIDEO) {
+                                imgPlay.setVisibility(View.VISIBLE);
+                                //if (position == viewPager.getCurrentItem()) playVideo(position, mTextureView, imgPlay, touchImageView);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", rm.getAttachment().getToken(), rm.getAttachment().getCacheId(), rm.getAttachment().getName(), rm.getAttachment().getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
+                @Override
+                public void OnProgress(final String path, final int progres) {
+                    G.currentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.withProgress(progres);
+                            if (progres == 100) {
+                                G.imageLoader.displayImage(AndroidUtils.suitablePath(path), touchImageView);
+                            }
+                        }
+                    });
+
+                }
+
+                @Override
+                public void OnError(String token) {
+                    G.currentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.withProgress(0);
+                            progress.withDrawable(R.drawable.ic_download, true);
+                        }
+                    });
+
+                }
+            });
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        /**
+         * video player
+         */
+        private void playVideo(final int position, final TextureView mTextureView, final ImageView imgPlay, final TouchImageView touchImageView) {
+
+            touchImageViewTmp = touchImageView;
+            if (mMediaPlayer == null) mMediaPlayer = new MediaPlayer();
+            if (videoController == null) videoController = new MediaController(G.fragmentActivity);
+            mTextureView.setVisibility(View.VISIBLE);
+
+            videoPath = getFilePath(position);
+            ViewCompat.setLayoutDirection(videoController, View.LAYOUT_DIRECTION_LTR);
+            videoController.setAnchorView(touchImageView);
+            videoController.setMediaPlayer(this);
+            imgPlay.setVisibility(View.GONE);
+            mMediaPlayer.reset();
+
+            mTextureViewTmp.clear();
+            mTextureViewTmp.add(mTextureView);
+
+            try {
+                mMediaPlayer.setDataSource(G.fragmentActivity, Uri.parse(videoPath));
+                mTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+                    @Override
+                    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                        setMediaPlayer(mMediaPlayer, mTextureView, imgPlay, touchImageView);
+                    }
+
+                    @Override
+                    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+                        Log.e("ddd", "width  :" + width + "    height  : " + height);
+                    }
+
+                    @Override
+                    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+
+                        return false;
+                    }
+
+                    @Override
+                    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+                    }
+                });
+                if (mTextureView.getSurfaceTexture() != null) {
+                    setMediaPlayer(mMediaPlayer, mTextureView, imgPlay, touchImageView);
+                }
+            } catch (IOException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.seekTo(0);
+                    imgPlay.setVisibility(View.VISIBLE);
+                }
+            });
+
+            //mMediaPlayer.seekTo(100);
+        }
+
+        private void setMediaPlayer(MediaPlayer mMediaPlayer, final TextureView mTextureView, final ImageView imgPlay, final TouchImageView touchImageView) {
+
+            if (mTextureView == null) {
+                return;
+            }
+            Surface surfaceTexture = new Surface(mTextureView.getSurfaceTexture());
+
+            if (surfaceTexture == null) {
+                return;
+            }
+
+            try {
+                if (mMediaPlayer != null) {
+                    mMediaPlayer.setSurface(surfaceTexture);
+                    mMediaPlayer.setLooping(false);
+                    mMediaPlayer.prepareAsync();
+                }
+            } catch (IllegalStateException e) {
+                e.getMessage();
+            }
+
+
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+
+                    getRealSize(mp, mTextureView);
+                    imgPlay.setVisibility(View.GONE);
+                    mp.start();
+                    MusicPlayer.pauseSound();
+                    mTextureView.setVisibility(View.VISIBLE);
+                    touchImageView.animate().setDuration(700).alpha(0F).start();
+
+                    G.handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            touchImageView.setVisibility(View.GONE);
+                            touchImageView.clearAnimation();
+                        }
+                    }, 700);
+
+                    videoController.setEnabled(true);
+                    videoController.show();
+                }
+            });
+
+        }
+
+
+        @Override
+        public void start() {
+            if (mMediaPlayer != null) mMediaPlayer.start();
+            MusicPlayer.pauseSound();
+        }
+
+        @Override
+        public void pause() {
+            if (mMediaPlayer != null) mMediaPlayer.pause();
+        }
+
+        @Override
+        public int getDuration() {
+            if (mMediaPlayer != null) {
+                return mMediaPlayer.getDuration();
+            }
+            return 0;
+        }
+
+        @Override
+        public int getCurrentPosition() {
+            if (mMediaPlayer != null) {
+                return mMediaPlayer.getCurrentPosition();
+            }
+            return 0;
+        }
+
+        @Override
+        public void seekTo(int pos) {
+            if (mMediaPlayer != null) mMediaPlayer.seekTo(pos);
+        }
+
+        @Override
+        public boolean isPlaying() {
+            return mMediaPlayer != null && mMediaPlayer.isPlaying();
+        }
+
+        @Override
+        public int getBufferPercentage() {
+            return 0;
+        }
+
+        @Override
+        public boolean canPause() {
+            return true;
+        }
+
+        @Override
+        public boolean canSeekBackward() {
+            return true;
+        }
+
+        @Override
+        public boolean canSeekForward() {
+            return true;
+        }
+
+        @Override
+        public int getAudioSessionId() {
+            return 0;
+        }
+    }
+
+
+    /**
+     * get real width and height video
+     */
+    private void getRealSize(MediaPlayer mp, TextureView mTextureView) {
+
+        if (mp == null || mTextureView == null) {
+            return;
+        }
+
+        //Get the dimensions of the video
+        int videoWidth = mp.getVideoWidth();
+        int videoHeight = mp.getVideoHeight();
+
+        Display display = G.fragmentActivity.getWindowManager().getDefaultDisplay();
+
+        int finalWith, finalHeight;
+
+        finalWith = display.getWidth();
+        finalHeight = (int) (((float) videoHeight / (float) videoWidth) * (float) display.getWidth());
+
+        if (finalHeight > display.getHeight()) {
+            finalWith = (int) (((float) finalWith / (float) finalHeight) * (float) display.getHeight());
+            finalHeight = display.getHeight();
+        }
+
+        ViewGroup.LayoutParams lp = mTextureView.getLayoutParams();
+        lp.width = finalWith;
+        lp.height = finalHeight;
+        mTextureView.setLayoutParams(lp);
+    }
+
 }

@@ -1,158 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatSubLayoutVoice"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:paddingBottom="@dimen/dp4"
-    android:textDirection="firstStrong"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/chatSubLayoutVoice"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:paddingBottom="@dimen/dp4"
+  android:textDirection="firstStrong">
 
   <LinearLayout
-      android:id="@+id/mainContainer"
+    android:id="@+id/mainContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:ignore="UselessParent">
+
+    <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      tools:ignore="UselessParent"
-      >
+      android:orientation="vertical">
+
 
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          >
-
+        android:id="@+id/contentContainer"
+        style="@style/ChatMessages.CardView">
 
         <LinearLayout
-            android:id="@+id/contentContainer"
-            style="@style/ChatMessages.CardView"
-            >
+          android:id="@+id/m_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
 
           <LinearLayout
-              android:id="@+id/m_container"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              >
+            android:layout_width="@dimen/dp200"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layoutDirection="ltr"
+            android:minHeight="@dimen/dp95"
+            android:orientation="horizontal">
 
 
             <LinearLayout
-                android:layout_width="@dimen/dp200"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layoutDirection="ltr"
-                android:minHeight="@dimen/dp95"
-                android:orientation="horizontal"
-                >
+              android:id="@+id/audioPlayerViewContainer"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
 
               <LinearLayout
-                  android:id="@+id/audioPlayerViewContainer"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:padding="@dimen/dp4">
+
+                  <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/microphone_icon" />
+
+                  <include
+                    android:id="@+id/progress"
+                    layout="@layout/msg_progress_item"
+                    android:layout_width="@dimen/dp36"
+                    android:layout_height="@dimen/dp36"
+                    android:layout_gravity="center" />
+                </FrameLayout>
+
+                <TextView
+                  android:id="@+id/cslv_txt_author"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/dp12"
+                  android:singleLine="true"
+                  android:text="recored audio"
+                  android:textSize="@dimen/dp14" />
+
+              </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                  <FrameLayout
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center"
-                      android:padding="@dimen/dp4"
-                      >
-
-                    <ImageView
-                        android:id="@+id/thumbnail"
-                        android:layout_width="@dimen/dp20"
-                        android:layout_height="@dimen/dp20"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/microphone_icon"
-                        />
-
-                    <include
-                        layout="@layout/msg_progress_item"
-                        android:id="@+id/progress"
-                        android:layout_width="@dimen/dp36"
-                        android:layout_height="@dimen/dp36"
-                        android:layout_gravity="center"
-                        />
-                  </FrameLayout>
-
-                  <TextView
-                      android:id="@+id/cslv_txt_author"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="@dimen/dp12"
-                      android:singleLine="true"
-                      android:text="recored audio"
-                      android:textSize="@dimen/dp14"
-                      />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="left|center"
-                    >
-
-
-                  <TextView
-                      android:id="@+id/csla_btn_play_music"
-                      android:layout_width="@dimen/dp40"
-                      android:layout_height="match_parent"
-                      android:background="@null"
-                      android:gravity="center"
-                      android:text="@string/md_play_arrow"
-                      android:textAppearance="@style/TextIconAppearance.all"
-                      android:textColor="@color/toolbar_background"
-                      android:textSize="@dimen/dp20"
-                      />
-
-
-                  <SeekBar
-                      android:id="@+id/csla_seekBar1"
-                      android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      />
-
-                </LinearLayout>
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="left|center">
 
 
                 <TextView
-                    android:id="@+id/csla_txt_timer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="@dimen/dp52"
-                    android:paddingRight="@dimen/dp8"
-                    android:text="00:00"
-                    android:textColor="@color/toolbar_background"
-                    android:textSize="@dimen/dp10"
-                    />
+                  android:id="@+id/csla_btn_play_music"
+                  android:layout_width="@dimen/dp40"
+                  android:layout_height="match_parent"
+                  android:background="@null"
+                  android:gravity="center"
+                  android:text="@string/md_play_arrow"
+                  android:textAppearance="@style/TextIconAppearance.all"
+                  android:textColor="@color/toolbar_background"
+                  android:textSize="@dimen/dp20" />
 
+
+                <SeekBar
+                  android:id="@+id/csla_seekBar1"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1" />
 
               </LinearLayout>
+
+
+              <TextView
+                android:id="@+id/csla_txt_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="@dimen/dp52"
+                android:paddingRight="@dimen/dp8"
+                android:text="00:00"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp10" />
 
 
             </LinearLayout>
 
 
           </LinearLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
       </LinearLayout>
+
+    </LinearLayout>
 
 
   </LinearLayout>

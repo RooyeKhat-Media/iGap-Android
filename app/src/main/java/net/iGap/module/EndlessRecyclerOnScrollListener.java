@@ -14,10 +14,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
+
+import net.iGap.realm.RealmRoomMessage;
+
 import java.util.ArrayList;
 import java.util.List;
-import net.iGap.realm.RealmRoomMessage;
 
 public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
     private int mPreviousTotal = 0;

@@ -12,12 +12,10 @@ package net.iGap.viewmodel;
 import android.content.SharedPreferences;
 import android.databinding.ObservableField;
 import android.view.View;
+
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentActiveSessions;
@@ -32,10 +30,28 @@ import net.iGap.realm.RealmPrivacy;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserProfileSetSelfRemove;
 
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmModel;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentPrivacyAndSecurityViewModel {
 
+    private final int SEE_MY_AVATAR = 0;
+    private final int INVITE_CHANNEL = 1;
+    private final int INVITE_GROUP = 2;
+    private final int LAST_SEEN = 3;
+    private final int VOICE_CALL = 4;
+    public ObservableField<String> callbackSeeMyAvatar = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackInviteChannel = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackInviteGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackVoiceCall = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackSeeLastSeen = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackSelfDestruction = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    int poSelfRemove;
     private Realm realm;
     private RealmUserInfo realmUserInfo;
     private RealmPrivacy realmPrivacy;
@@ -47,25 +63,10 @@ public class FragmentPrivacyAndSecurityViewModel {
     private int poInviteGroup;
     private int poSeeLastSeen;
     private int poVoiceCall;
-
-    private final int SEE_MY_AVATAR = 0;
-    private final int INVITE_CHANNEL = 1;
-    private final int INVITE_GROUP = 2;
-    private final int LAST_SEEN = 3;
-    private final int VOICE_CALL = 4;
-
-    int poSelfRemove;
     private SharedPreferences sharedPreferences;
     private int poRbDialogSelfDestruction = 0;
     private int selfRemove;
     private ArrayList<StructSessions> itemSessionsgetActivelist = new ArrayList<StructSessions>();
-
-    public ObservableField<String> callbackSeeMyAvatar = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
-    public ObservableField<String> callbackInviteChannel = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
-    public ObservableField<String> callbackInviteGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
-    public ObservableField<String> callbackVoiceCall = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
-    public ObservableField<String> callbackSeeLastSeen = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
-    public ObservableField<String> callbackSelfDestruction = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
 
     public FragmentPrivacyAndSecurityViewModel() {
 

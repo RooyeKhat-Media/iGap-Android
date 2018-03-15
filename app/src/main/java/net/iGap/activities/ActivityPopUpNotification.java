@@ -36,16 +36,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.vanniktech.emoji.EmojiPopup;
 import com.vanniktech.emoji.listeners.OnEmojiBackspaceClickListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupDismissListener;
 import com.vanniktech.emoji.listeners.OnEmojiPopupShownListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
-import io.realm.Realm;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.IPopUpListener;
@@ -66,6 +64,12 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
 
 public class ActivityPopUpNotification extends AppCompatActivity {
 
@@ -105,6 +109,51 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     private long chatPeerId;
 
     /////////////////////////////////////////////////////////////////////////////////////////
+    private EmojiPopup emojiPopup;
+
+    public static String getTextOfMessageType(ProtoGlobal.RoomMessageType messageType) {
+
+        switch (messageType) {
+            case VOICE:
+                return G.context.getString(R.string.voice_message);
+            case VIDEO:
+                return G.context.getString(R.string.video_message);
+            case FILE:
+                return G.context.getString(R.string.file_message);
+            case AUDIO:
+                return G.context.getString(R.string.audio_message);
+            case IMAGE:
+                return G.context.getString(R.string.image_message);
+            case CONTACT:
+                return G.context.getString(R.string.contact_message);
+            case GIF:
+                return G.context.getString(R.string.gif_message);
+            case LOCATION:
+                return G.context.getString(R.string.location_message);
+        }
+
+        return "";
+    }
+
+    /**
+     * Checks if the application is being sent in the background (i.e behind
+     * another application's Activity).
+     *
+     * @param context the context
+     * @return <code>true</code> if another application will be above this one.
+     */
+    public static boolean isApplicationSentToBackground(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (!tasks.isEmpty()) {
+            ComponentName topActivity = tasks.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     @Override
     protected void onResume() {
@@ -153,11 +202,11 @@ public class ActivityPopUpNotification extends AppCompatActivity {
         initComponnet = new InitComponnet();
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////
+
     private void changeEmojiButtonImageResource(@StringRes int drawableResourceId) {
         btnSmileButton.setText(drawableResourceId);
     }
-
-    private EmojiPopup emojiPopup;
 
     private void setUpEmojiPopup() {
         emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.ac_ll_parent_notification)).setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
@@ -189,8 +238,6 @@ public class ActivityPopUpNotification extends AppCompatActivity {
         }).build(edtChat);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-
     private void setImageAndTextAppBar(int position) {
         if (mList.isEmpty() || position > mList.size() - 1 || position < 0) {
             return;
@@ -216,20 +263,26 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     }
 
     private void setLastSeen(RealmRoom realmRoom, Realm realm) {
-        RealmChatRoom realmChatRoom = realmRoom.getChatRoom();
-        if (realmRoom.getChatRoom() != null) {
-            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmChatRoom.getPeerId());
-            if (realmRegisteredInfo != null) {
-                if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
-                    txtLastSeen.setText(LastSeenTimeUtil.computeTime(realmRegisteredInfo.getId(), realmRegisteredInfo.getLastSeen(), false));
-                } else {
-                    txtLastSeen.setText(realmRegisteredInfo.getStatus());
+        try {
+            RealmChatRoom realmChatRoom = realmRoom.getChatRoom();
+            if (realmRoom.getChatRoom() != null) {
+                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmChatRoom.getPeerId());
+                if (realmRegisteredInfo != null) {
+                    if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
+                        txtLastSeen.setText(LastSeenTimeUtil.computeTime(realmRegisteredInfo.getId(), realmRegisteredInfo.getLastSeen(), false));
+                    } else {
+                        txtLastSeen.setText(realmRegisteredInfo.getStatus());
+                    }
                 }
+            } else {
+                txtLastSeen.setText("");
             }
-        } else {
-            txtLastSeen.setText("");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     private void setAvatar(Realm realm) {
 
@@ -276,8 +329,6 @@ public class ActivityPopUpNotification extends AppCompatActivity {
 
         return super.dispatchTouchEvent(event);
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendMessage(final String message, final long mRoomId, ProtoGlobal.Room.Type chatType) {
         String identity = Long.toString(System.currentTimeMillis());
@@ -581,49 +632,5 @@ public class ActivityPopUpNotification extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
-    }
-
-    public static String getTextOfMessageType(ProtoGlobal.RoomMessageType messageType) {
-
-        switch (messageType) {
-            case VOICE:
-                return G.context.getString(R.string.voice_message);
-            case VIDEO:
-                return G.context.getString(R.string.video_message);
-            case FILE:
-                return G.context.getString(R.string.file_message);
-            case AUDIO:
-                return G.context.getString(R.string.audio_message);
-            case IMAGE:
-                return G.context.getString(R.string.image_message);
-            case CONTACT:
-                return G.context.getString(R.string.contact_message);
-            case GIF:
-                return G.context.getString(R.string.gif_message);
-            case LOCATION:
-                return G.context.getString(R.string.location_message);
-        }
-
-        return "";
-    }
-
-    /**
-     * Checks if the application is being sent in the background (i.e behind
-     * another application's Activity).
-     *
-     * @param context the context
-     * @return <code>true</code> if another application will be above this one.
-     */
-    public static boolean isApplicationSentToBackground(Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty()) {
-            ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(context.getPackageName())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

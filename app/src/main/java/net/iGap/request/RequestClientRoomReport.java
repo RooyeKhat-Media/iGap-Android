@@ -11,6 +11,7 @@
 package net.iGap.request;
 
 import android.support.annotation.Nullable;
+
 import net.iGap.proto.ProtoClientRoomReport;
 
 public class RequestClientRoomReport {

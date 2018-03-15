@@ -27,9 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.WindowManager;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
@@ -41,11 +39,34 @@ import net.iGap.module.StartupActions;
 import net.iGap.module.StatusBarUtil;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.request.RequestUserUpdateStatus;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityEnhanced extends AppCompatActivity {
 
     public boolean isOnGetPermission = false;
+    BroadcastReceiver mybroadcast = new BroadcastReceiver() {
+        //When Event is published, onReceive method is called
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            Log.i("[BroadcastReceiver]", "MyReceiver");
+
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (G.isPassCode && !ActivityMain.isActivityEnterPassCode) {
+                    G.isFirstPassCode = true;
+                    Intent i = new Intent(ActivityEnhanced.this, ActivityEnterPassCode.class);
+                    startActivity(i);
+                }
+            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+            }
+
+        }
+    };
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -162,7 +183,6 @@ public class ActivityEnhanced extends AppCompatActivity {
         }, Config.UPDATE_STATUS_TIME);
     }
 
-
     /**
      * check the selected language user and set the language if change it
      */
@@ -227,26 +247,6 @@ public class ActivityEnhanced extends AppCompatActivity {
             StartupActions.makeFolder();
         }
     }
-
-
-    BroadcastReceiver mybroadcast = new BroadcastReceiver() {
-        //When Event is published, onReceive method is called
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-            Log.i("[BroadcastReceiver]", "MyReceiver");
-
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                if (G.isPassCode && !ActivityMain.isActivityEnterPassCode) {
-                    G.isFirstPassCode = true;
-                    Intent i = new Intent(ActivityEnhanced.this, ActivityEnterPassCode.class);
-                    startActivity(i);
-                }
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-            }
-
-        }
-    };
 
     @Override
     protected void onDestroy() {

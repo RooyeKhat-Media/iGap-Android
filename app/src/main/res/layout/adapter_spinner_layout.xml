@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/black90"
-    android:clickable="true"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/black90"
+  android:clickable="true"
+  android:orientation="vertical">
+
   <TextView
-      android:id="@+id/rowText"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/dp15"
-      android:layout_marginBottom="@dimen/dp6"
-      android:layout_marginEnd="@dimen/dp52"
-      android:layout_marginLeft="@dimen/dp12"
-      android:layout_marginRight="@dimen/dp52"
-      android:layout_marginStart="@dimen/dp12"
-      android:layout_marginTop="@dimen/dp6"
-      android:text="test"
-      android:textColor="@color/white"
-      android:textSize="@dimen/dp14"
-      />
+    android:id="@+id/rowText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp15"
+    android:layout_marginBottom="@dimen/dp6"
+    android:layout_marginEnd="@dimen/dp52"
+    android:layout_marginLeft="@dimen/dp12"
+    android:layout_marginRight="@dimen/dp52"
+    android:layout_marginStart="@dimen/dp12"
+    android:layout_marginTop="@dimen/dp6"
+    android:text="test"
+    android:textColor="@color/white"
+    android:textSize="@dimen/dp14" />
 </LinearLayout>

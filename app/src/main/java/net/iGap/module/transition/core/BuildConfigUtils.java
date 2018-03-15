@@ -18,6 +18,7 @@
 package net.iGap.module.transition.core;
 
 import android.content.Context;
+
 import java.lang.reflect.Field;
 
 public class BuildConfigUtils {

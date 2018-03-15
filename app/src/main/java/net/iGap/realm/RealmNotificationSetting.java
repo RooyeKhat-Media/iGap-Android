@@ -10,11 +10,12 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.proto.ProtoGlobal;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 public class RealmNotificationSetting extends RealmObject {
 
@@ -26,71 +27,6 @@ public class RealmNotificationSetting extends RealmObject {
     private int minutes;
     private int times;
     private int ledColor;
-
-    public int getNotification() {
-        return notification;
-    }
-
-    public void setNotification(int notification) {
-        this.notification = notification;
-    }
-
-    public int getVibrate() {
-        return vibrate;
-    }
-
-    public void setVibrate(int vibrate) {
-        this.vibrate = vibrate;
-    }
-
-    public String getSound() {
-        return sound;
-    }
-
-    public void sound(String sound) {
-        this.sound = sound;
-    }
-
-    public int getIdRadioButtonSound() {
-        return idRadioButtonSound;
-    }
-
-    public void setIdRadioButtonSound(int idRadioButtonSound) {
-        this.idRadioButtonSound = idRadioButtonSound;
-    }
-
-    public String getSmartNotification() {
-        return smartNotification;
-    }
-
-    public void setSmartNotification(String smartNotification) {
-        this.smartNotification = smartNotification;
-    }
-
-    public int getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
-    public int getTimes() {
-        return times;
-    }
-
-    public void setTimes(int times) {
-        this.times = times;
-    }
-
-    public int getLedColor() {
-        return ledColor;
-    }
-
-    public void setLedColor(int ledColor) {
-        this.ledColor = ledColor;
-    }
-
 
     public static RealmNotificationSetting put(Realm realm, final RealmChatRoom realmChatRoom, final RealmGroupRoom realmGroupRoom, final RealmChannelRoom realmChannelRoom) {
         RealmNotificationSetting realmNotificationSetting = realm.createObject(RealmNotificationSetting.class);
@@ -256,5 +192,69 @@ public class RealmNotificationSetting extends RealmObject {
             }
         });
         realm.close();
+    }
+
+    public int getNotification() {
+        return notification;
+    }
+
+    public void setNotification(int notification) {
+        this.notification = notification;
+    }
+
+    public int getVibrate() {
+        return vibrate;
+    }
+
+    public void setVibrate(int vibrate) {
+        this.vibrate = vibrate;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public void sound(String sound) {
+        this.sound = sound;
+    }
+
+    public int getIdRadioButtonSound() {
+        return idRadioButtonSound;
+    }
+
+    public void setIdRadioButtonSound(int idRadioButtonSound) {
+        this.idRadioButtonSound = idRadioButtonSound;
+    }
+
+    public String getSmartNotification() {
+        return smartNotification;
+    }
+
+    public void setSmartNotification(String smartNotification) {
+        this.smartNotification = smartNotification;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
+
+    public int getLedColor() {
+        return ledColor;
+    }
+
+    public void setLedColor(int ledColor) {
+        this.ledColor = ledColor;
     }
 }

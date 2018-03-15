@@ -26,14 +26,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.Display;
 import android.widget.RemoteViews;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.util.ArrayList;
-import java.util.List;
-import me.leolin.shortcutbadger.ShortcutBadger;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -49,6 +44,13 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 import static net.iGap.G.context;
 
 /**
@@ -62,6 +64,7 @@ public class HelperNotificationAndBadge {
     private static final int ENABLE = 1;
     private static final int DISABLE = 2;
     public static boolean isChatRoomNow = false;
+    public ArrayList<StructPopUp> popUpList = new ArrayList<>();
     private int unreadMessageCount = 0;
     private String messageOne = "";
     private boolean isFromOnRoom = true;
@@ -69,7 +72,6 @@ public class HelperNotificationAndBadge {
     private long senderId = 0;
     private ArrayList<Item> list = new ArrayList<>();
     private boolean isEnablepopUpSettin = false;
-
     private NotificationManager notificationManager;
     private Notification notification;
     private int notificationId = 20;
@@ -93,8 +95,6 @@ public class HelperNotificationAndBadge {
     private long idRoom;
     private int delayAlarm = 5000;
     private long currentAlarm;
-    public ArrayList<StructPopUp> popUpList = new ArrayList<>();
-
     private String mHeader = "";
     private String mContent = "";
     private Bitmap mBitmapIcon = null;
@@ -117,6 +117,40 @@ public class HelperNotificationAndBadge {
     //    ActivityPopUpNotification.isGoingToChatFromPopUp = true;
     //    remoteViewsLarge.setOnClickPendingIntent(resLayot, pendingIntent);
     //}
+
+    public static int[] updateBadgeOnly(Realm realm, long roomId) {
+        int unreadMessageCount = 0;
+        int chatCount = 0;
+        int[] result = new int[2];
+
+        RealmResults<RealmRoom> realmRooms = realm.where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).
+                equalTo(RealmRoomFields.MUTE, false).equalTo(RealmRoomFields.IS_DELETED, false).notEqualTo(RealmRoomFields.ID, roomId).findAll();
+
+        for (RealmRoom realmRoom1 : realmRooms) {
+            if (realmRoom1.getUnreadCount() > 0) {
+                unreadMessageCount += realmRoom1.getUnreadCount();
+                ++chatCount;
+            }
+        }
+
+        try {
+            ShortcutBadger.applyCount(G.context, unreadMessageCount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        result[0] = unreadMessageCount;
+        result[1] = chatCount;
+        return result;
+    }
+
+    static void cleanBadge() {
+        try {
+            ShortcutBadger.applyCount(G.context, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private NotificationCompat.InboxStyle getBigStyle() {
 
@@ -159,6 +193,8 @@ public class HelperNotificationAndBadge {
 
         return _style;
     }
+
+    //************************** notification ***********************
 
     private void getNotificationSmallInfo() {
 
@@ -212,8 +248,6 @@ public class HelperNotificationAndBadge {
             realm.close();
         }
     }
-
-    //************************** notification ***********************
 
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
@@ -442,8 +476,10 @@ public class HelperNotificationAndBadge {
                                 text = RealmRoomMessage.getFinalMessage(roomMessage).getMessage();
                             }
 
-                            if (text.length() < 1) if (roomMessage.getReplyTo() != null) text = roomMessage.getReplyTo().getMessage();
-                            if (text.length() < 1) text = ActivityPopUpNotification.getTextOfMessageType(roomMessage.getMessageType());
+                            if (text.length() < 1) if (roomMessage.getReplyTo() != null)
+                                text = roomMessage.getReplyTo().getMessage();
+                            if (text.length() < 1)
+                                text = ActivityPopUpNotification.getTextOfMessageType(roomMessage.getMessageType());
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
@@ -470,20 +506,11 @@ public class HelperNotificationAndBadge {
             }
 
             startActivityPopUpNotification(popUpList);
+            int[] result = HelperNotificationAndBadge.updateBadgeOnly(realm, -1);
 
+            unreadMessageCount = result[0];
+            countUnicChat = result[1];
             isFromOnRoom = false;
-
-            unreadMessageCount = 0;
-            countUnicChat = 0;
-
-            RealmResults<RealmRoom> realmRooms = realm.where(RealmRoom.class).findAll();
-            for (RealmRoom realmRoom1 : realmRooms) {
-                //  realmRoom1.getType() == ProtoGlobal.Room.Type.CHANNEL &&
-                if (realmRoom1.getUnreadCount() > 0) {
-                    unreadMessageCount += realmRoom1.getUnreadCount();
-                    ++countUnicChat;
-                }
-            }
 
             if (countUnicChat == 1) {
                 isFromOnRoom = true;
@@ -497,15 +524,11 @@ public class HelperNotificationAndBadge {
         }
 
         try {
-            ShortcutBadger.applyCount(context, unreadMessageCount);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
             if (updateNotification) {
                 setNotification();
             }
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -568,34 +591,41 @@ public class HelperNotificationAndBadge {
     }
 
     public long[] setVibrator(int vb) {
+
         long[] intVibrator = new long[]{};
+
+        AudioManager am2 = (AudioManager) G.context.getSystemService(Context.AUDIO_SERVICE);
+
+        if (am2 != null && am2.getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
+            return new long[]{0, 0, 0};
+        }
 
         switch (vb) {
             case 0:
-                intVibrator = new long[]{0, 0, 0};
-                break;
-            case 1:
                 intVibrator = new long[]{0, 300, 0};
                 break;
-            case 2:
+            case 1:
                 intVibrator = new long[]{0, 200, 0};
                 break;
-            case 3:
+            case 2:
                 intVibrator = new long[]{0, 700, 0};
                 break;
-            case 4:
-                AudioManager am2 = (AudioManager) G.context.getSystemService(Context.AUDIO_SERVICE);
+            case 3:
+
                 switch (am2.getRingerMode()) {
                     case AudioManager.RINGER_MODE_SILENT:
-                        intVibrator = new long[]{0, 300, 0};
+                        intVibrator = new long[]{0, 0, 0};
                         break;
                     case AudioManager.RINGER_MODE_VIBRATE:
-                        Log.i("MyApp", "Vibrate mode");
+                        intVibrator = new long[]{0, 300, 0};
                         break;
                     case AudioManager.RINGER_MODE_NORMAL:
-                        Log.i("MyApp", "Normal mode");
+                        intVibrator = new long[]{0, 0, 0};
                         break;
                 }
+                break;
+            case 4:
+                intVibrator = new long[]{0, 0, 0};
                 break;
         }
         return intVibrator;
@@ -662,7 +692,8 @@ public class HelperNotificationAndBadge {
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
 
         try {
-            if (taskInfo.get(0).topActivity.getClassName().toString().toLowerCase().contains("launcher")) return true;
+            if (taskInfo.get(0).topActivity.getClassName().toString().toLowerCase().contains("launcher"))
+                return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -683,7 +714,8 @@ public class HelperNotificationAndBadge {
         try {
 
             text = RealmRoomMessage.getFinalMessage(roomMessage).getMessage();
-            if (text.length() < 1) if (roomMessage.getReplyTo() != null) text = roomMessage.getReplyTo().getMessage();
+            if (text.length() < 1)
+                if (roomMessage.getReplyTo() != null) text = roomMessage.getReplyTo().getMessage();
             if (text.length() < 1) {
                 ProtoGlobal.RoomMessageType rmt = RealmRoomMessage.getFinalMessage(roomMessage).getMessageType();
                 text = ActivityPopUpNotification.getTextOfMessageType(rmt);
@@ -734,25 +766,6 @@ public class HelperNotificationAndBadge {
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             return pm.isScreenOn();
         }
-    }
-
-    public static class RemoteActionReceiver extends BroadcastReceiver {
-
-        public RemoteActionReceiver() {
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            G.helperNotificationAndBadge.cancelNotification();
-        }
-    }
-
-    private class Item {
-
-        String name = "";
-        String message = "";
-        String time = "";
-        long roomId;
     }
 
     private int checkSpecialNotification(boolean updateNotification, ProtoGlobal.Room.Type type, long roomId) {
@@ -810,32 +823,22 @@ public class HelperNotificationAndBadge {
         return 0;
     }
 
-    public static void updateBadgeOnly() {
+    public static class RemoteActionReceiver extends BroadcastReceiver {
 
-        G.handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        public RemoteActionReceiver() {
+        }
 
-                Realm realm = Realm.getDefaultInstance();
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            G.helperNotificationAndBadge.cancelNotification();
+        }
+    }
 
-                int unreadMessageCount = 0;
+    private class Item {
 
-                RealmResults<RealmRoom> realmRooms = realm.where(RealmRoom.class).findAll();
-                if (realmRooms != null) {
-                    for (RealmRoom realmRoom1 : realmRooms) {
-                        if (realmRoom1.getUnreadCount() > 0) {
-                            unreadMessageCount += realmRoom1.getUnreadCount();
-                        }
-                    }
-                }
-                realm.close();
-
-                try {
-                    ShortcutBadger.applyCount(G.context, unreadMessageCount);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 200);
+        String name = "";
+        String message = "";
+        String time = "";
+        long roomId;
     }
 }

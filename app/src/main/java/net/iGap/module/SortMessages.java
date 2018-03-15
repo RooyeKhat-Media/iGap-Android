@@ -11,12 +11,15 @@
 package net.iGap.module;
 
 import android.os.Build;
-import java.util.Comparator;
+
 import net.iGap.realm.RealmRoomMessage;
+
+import java.util.Comparator;
 
 public enum SortMessages implements Comparator<RealmRoomMessage> {
     ASC {
-        @Override public int compare(RealmRoomMessage o1, RealmRoomMessage o2) {
+        @Override
+        public int compare(RealmRoomMessage o1, RealmRoomMessage o2) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 return Long.compare(o1.getMessageId(), o2.getMessageId());
             } else {
@@ -24,7 +27,8 @@ public enum SortMessages implements Comparator<RealmRoomMessage> {
             }
         }
     }, DESC {
-        @Override public int compare(RealmRoomMessage o1, RealmRoomMessage o2) {
+        @Override
+        public int compare(RealmRoomMessage o1, RealmRoomMessage o2) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 return Long.compare(o2.getMessageId(), o1.getMessageId());
             } else {

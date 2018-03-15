@@ -32,7 +32,8 @@ public class ClientGetRoomListResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoClientGetRoomList.ClientGetRoomListResponse.Builder clientGetRoomListResponse = (ProtoClientGetRoomList.ClientGetRoomListResponse.Builder) message;
         if (G.onClientGetRoomListResponse != null) {
@@ -40,7 +41,8 @@ public class ClientGetRoomListResponse extends MessageHandler {
         } else {
 
             new Thread(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     new RequestClientCondition().clientCondition(RealmClientCondition.computeClientCondition(null));
                     putChatToDatabase(clientGetRoomListResponse.getRoomsList(), false, false);
                 }
@@ -48,13 +50,15 @@ public class ClientGetRoomListResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
 
         G.onClientGetRoomListResponse.onTimeout();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

@@ -32,46 +32,6 @@ public class RealmChannelExtra extends RealmObject {
     private String thumbsUp;
     private String thumbsDown;
 
-    public long getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(long messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public String getViewsLabel() {
-        return viewsLabel;
-    }
-
-    public void setViewsLabel(String viewsLabel) {
-        this.viewsLabel = viewsLabel;
-    }
-
-    public String getThumbsUp() {
-        return thumbsUp;
-    }
-
-    public void setThumbsUp(String thumbsUp) {
-        this.thumbsUp = thumbsUp;
-    }
-
-    public String getThumbsDown() {
-        return thumbsDown;
-    }
-
-    public void setThumbsDown(String thumbsDown) {
-        this.thumbsDown = thumbsDown;
-    }
-
     public static RealmChannelExtra convert(Realm realm, StructChannelExtra structChannelExtra) {
         RealmChannelExtra realmChannelExtra = realm.createObject(RealmChannelExtra.class);
         realmChannelExtra.setMessageId(structChannelExtra.messageId);
@@ -161,5 +121,45 @@ public class RealmChannelExtra extends RealmObject {
         realm.close();
 
         return hasChannelExtra;
+    }
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getViewsLabel() {
+        return viewsLabel;
+    }
+
+    public void setViewsLabel(String viewsLabel) {
+        this.viewsLabel = viewsLabel;
+    }
+
+    public String getThumbsUp() {
+        return thumbsUp;
+    }
+
+    public void setThumbsUp(String thumbsUp) {
+        this.thumbsUp = thumbsUp;
+    }
+
+    public String getThumbsDown() {
+        return thumbsDown;
+    }
+
+    public void setThumbsDown(String thumbsDown) {
+        this.thumbsDown = thumbsDown;
     }
 }

@@ -14,14 +14,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.vanniktech.emoji.EmojiUtils;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
 
@@ -74,39 +78,38 @@ public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
             setTextIfNeeded((TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage), text);
         }
 
-        if (mMessage.hasLinkInMessage) {
+        messageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                holder.itemView.performLongClick();
+                return false;
+            }
+        });
 
-            holder.itemView.findViewById(R.id.csl_ll_time).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
+        messageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (G.isLinkClicked) {
+                    G.isLinkClicked = false;
+                    return;
                 }
-            });
-        } else {
-            messageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    holder.itemView.performLongClick();
-                    return false;
-                }
-            });
-
-            messageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSelected()) {
-                        if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
-                            return;
-                        }
-                        if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
-                            messageClickListener.onFailedMessageClick(v, mMessage, holder.getAdapterPosition());
-                        } else {
-                            messageClickListener.onContainerClick(v, mMessage, holder.getAdapterPosition());
-                        }
+                if (!isSelected()) {
+                    if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {
+                        return;
+                    }
+                    if (mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
+                        messageClickListener.onFailedMessageClick(v, mMessage, holder.getAdapterPosition());
+                    } else {
+                        messageClickListener.onContainerClick(v, mMessage, holder.getAdapterPosition());
                     }
                 }
-            });
-        }
+            }
+        });
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -116,10 +119,5 @@ public class TextItem extends AbstractMessage<TextItem, TextItem.ViewHolder> {
             super(view);
             // llTime = (LinearLayout) view.findViewById(R.id.csl_ll_time);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

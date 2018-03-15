@@ -19,11 +19,13 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RadioButton;
-import java.util.ArrayList;
+
 import net.iGap.R;
 import net.iGap.fragments.FragmentRegister;
 import net.iGap.module.structs.StructCountry;
 import net.iGap.viewmodel.FragmentRegisterViewModel;
+
+import java.util.ArrayList;
 
 public class AdapterDialog extends BaseAdapter implements Filterable {
 
@@ -41,19 +43,23 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
         mStringFilterList = countrylist;
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
         return countrylist.size();
     }
 
-    @Override public Object getItem(int position) {
+    @Override
+    public Object getItem(int position) {
         return countrylist.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
         return countrylist.indexOf(getItem(position));
     }
 
-    @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
@@ -68,7 +74,8 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
         name_tv.setChecked(countrylist.get(position).getId() == mSelectedVariation);
         name_tv.setTag(position);
         name_tv.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
                 mSelectedVariation = (Integer) v.getTag();
 
@@ -77,15 +84,11 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
                 notifyDataSetChanged();
 
                 FragmentRegister.edtCodeNumber.setText(("+ " + countrylist.get(position).getCountryCode()));
-                if (countrylist.get(position).getPhonePattern() != null) {
-                    if (countrylist.get(position).getPhonePattern().equals(" ")) {
-                        FragmentRegister.edtPhoneNumber.setMask("###-###-####");
-                    } else {
-
-                        FragmentRegister.edtPhoneNumber.setMask((countrylist.get(position).getPhonePattern().replace("X", "#").replace(" ", "-")));
-                    }
+                if (countrylist.get(position).getPhonePattern() != null || countrylist.get(position).getPhonePattern().equals(" ")) {
+                    FragmentRegister.edtPhoneNumber.setMask((countrylist.get(position).getPhonePattern().replace("X", "#").replace(" ", "-")));
                 } else {
-                    FragmentRegister.edtPhoneNumber.setMask("###-###-####");
+                    FragmentRegister.edtPhoneNumber.setMaxLines(18);
+                    FragmentRegister.edtPhoneNumber.setMask("##################");
                 }
                 FragmentRegister.btnChoseCountry.setText((countrylist.get(position).getName()));
                 FragmentRegisterViewModel.isoCode = countrylist.get(position).getAbbreviation();
@@ -97,7 +100,8 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
         return convertView;
     }
 
-    @Override public Filter getFilter() {
+    @Override
+    public Filter getFilter() {
         if (valueFilter == null) {
             valueFilter = new ValueFilter();
         }
@@ -105,7 +109,8 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
     }
 
     private class ValueFilter extends Filter {
-        @Override protected FilterResults performFiltering(CharSequence constraint) {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint != null && constraint.length() > 0) {
                 ArrayList<StructCountry> filterList = new ArrayList<StructCountry>();
@@ -130,7 +135,8 @@ public class AdapterDialog extends BaseAdapter implements Filterable {
             return results;
         }
 
-        @Override protected void publishResults(CharSequence constraint, FilterResults results) {
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
             countrylist = (ArrayList<StructCountry>) results.values;
             notifyDataSetChanged();
         }

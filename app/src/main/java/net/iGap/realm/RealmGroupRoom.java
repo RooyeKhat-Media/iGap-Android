@@ -32,114 +32,6 @@ public class RealmGroupRoom extends RealmObject {
     private boolean isPrivate;
     private String username;
 
-    public GroupChatRole getRole() {
-        return (role != null) ? GroupChatRole.valueOf(role) : null;
-    }
-
-    public ProtoGlobal.GroupRoom.Role getMainRole() {
-        return (role != null) ? ProtoGlobal.GroupRoom.Role.valueOf(role) : ProtoGlobal.GroupRoom.Role.UNRECOGNIZED;
-    }
-
-    public void setRole(GroupChatRole role) {
-        this.role = role.toString();
-    }
-
-    public int getParticipants_count() {
-        return participants_count;
-    }
-
-    public void setParticipants_count(int participants_count) {
-        this.participants_count = participants_count;
-    }
-
-    public String getParticipantsCountLabel() {
-        if (HelperString.isNumeric(participants_count_label)) {
-            return participants_count_label;
-        }
-        return Integer.toString(getParticipants_count());
-    }
-
-    public void setParticipantsCountLabel(String participants_count_label) {
-        this.participants_count_label = participants_count_label;
-    }
-
-    //public String getParticipants_count_limit_label() {
-    //    return participants_count_limit_label;
-    //}
-    //
-    //public void setParticipants_count_limit_label(String participants_count_limit_label) {
-    //    this.participants_count_limit_label = participants_count_limit_label;
-    //}
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getAvatarCount() {
-        return avatarCount;
-    }
-
-    public void setAvatarCount(int avatarCount) {
-        this.avatarCount = avatarCount;
-    }
-
-    public RealmNotificationSetting getRealmNotificationSetting() {
-        return realmNotificationSetting;
-    }
-
-    public void setRealmNotificationSetting(RealmNotificationSetting realmNotificationSetting) {
-        this.realmNotificationSetting = realmNotificationSetting;
-    }
-
-    public RealmList<RealmMember> getMembers() {
-        return members;
-    }
-
-    public void setMembers(RealmList<RealmMember> members) {
-        this.members = members;
-    }
-
-    public String getInvite_link() {
-        return invite_link;
-    }
-
-    public void setInvite_link(String invite_link) {
-        this.invite_link = "https://" + invite_link;
-    }
-
-    public String getInvite_token() {
-        return invite_token;
-    }
-
-    public void setInvite_token(String invite_token) {
-        this.invite_token = invite_token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        try {
-            this.username = username;
-        } catch (Exception e) {
-            this.username = HelperString.getUtf8String(username);
-        }
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
-    }
-
-    public void setPrivate(boolean aPrivate) {
-        isPrivate = aPrivate;
-    }
-
-
     public static RealmGroupRoom putIncomplete(Realm realm, ProtoGlobal.GroupRoom.Role role, String description, String participantsCountLabel) {
         RealmGroupRoom realmGroupRoom = realm.createObject(RealmGroupRoom.class);
         if (role == ProtoGlobal.GroupRoom.Role.OWNER) {
@@ -242,5 +134,112 @@ public class RealmGroupRoom extends RealmObject {
         }
         realm.close();
         return role;
+    }
+
+    public GroupChatRole getRole() {
+        return (role != null) ? GroupChatRole.valueOf(role) : null;
+    }
+
+    //public String getParticipants_count_limit_label() {
+    //    return participants_count_limit_label;
+    //}
+    //
+    //public void setParticipants_count_limit_label(String participants_count_limit_label) {
+    //    this.participants_count_limit_label = participants_count_limit_label;
+    //}
+
+    public void setRole(GroupChatRole role) {
+        this.role = role.toString();
+    }
+
+    public ProtoGlobal.GroupRoom.Role getMainRole() {
+        return (role != null) ? ProtoGlobal.GroupRoom.Role.valueOf(role) : ProtoGlobal.GroupRoom.Role.UNRECOGNIZED;
+    }
+
+    public int getParticipants_count() {
+        return participants_count;
+    }
+
+    public void setParticipants_count(int participants_count) {
+        this.participants_count = participants_count;
+    }
+
+    public String getParticipantsCountLabel() {
+        if (HelperString.isNumeric(participants_count_label)) {
+            return participants_count_label;
+        }
+        return Integer.toString(getParticipants_count());
+    }
+
+    public void setParticipantsCountLabel(String participants_count_label) {
+        this.participants_count_label = participants_count_label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getAvatarCount() {
+        return avatarCount;
+    }
+
+    public void setAvatarCount(int avatarCount) {
+        this.avatarCount = avatarCount;
+    }
+
+    public RealmNotificationSetting getRealmNotificationSetting() {
+        return realmNotificationSetting;
+    }
+
+    public void setRealmNotificationSetting(RealmNotificationSetting realmNotificationSetting) {
+        this.realmNotificationSetting = realmNotificationSetting;
+    }
+
+    public RealmList<RealmMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(RealmList<RealmMember> members) {
+        this.members = members;
+    }
+
+    public String getInvite_link() {
+        return invite_link;
+    }
+
+    public void setInvite_link(String invite_link) {
+        this.invite_link = "https://" + invite_link;
+    }
+
+    public String getInvite_token() {
+        return invite_token;
+    }
+
+    public void setInvite_token(String invite_token) {
+        this.invite_token = invite_token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        try {
+            this.username = username;
+        } catch (Exception e) {
+            this.username = HelperString.getUtf8String(username);
+        }
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 }

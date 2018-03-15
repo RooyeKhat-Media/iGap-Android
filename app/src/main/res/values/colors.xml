@@ -1,139 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#25000000</color>
-    <color name="colorAccent">#FF4081</color>
+  <color name="colorPrimary">#3F51B5</color>
+  <color name="colorPrimaryDark">#25000000</color>
+  <color name="colorAccent">#FF4081</color>
 
-    <color name="gray">#999797</color>
-    <color name="light_gray">#adadadad</color>
-    <color name="red">#f23131</color>
-    <color name="red_swipe">#ac3328</color>
-    <color name="green">#00B0BF</color>
-    <color name="sky_blue">#7f9fff</color>
-    <color name="greenStatus">#3c000000</color>
+  <color name="gray">#999797</color>
+  <color name="light_gray">#adadadad</color>
+  <color name="red">#f23131</color>
+  <color name="red_swipe">#ac3328</color>
+  <color name="green">#00B0BF</color>
+  <color name="verify_color">#1da1f2</color>
+  <color name="sky_blue">#7f9fff</color>
+  <color name="greenStatus">#3c000000</color>
 
-    <color name="gray_9d">#9d9d9d</color>
-    <color name="gray_f2">#f2f2f2</color>
-    <color name="gray_4c">#4c4c4c</color>
-    <color name="gray_3c">#52838383</color>
-    <color name="gray_5c">#7e7e7e</color>
-    <color name="gray_6c">#696969</color>
-    <color name="unread">#e51c23</color>
+  <color name="gray_9d">#9d9d9d</color>
+  <color name="gray_f2">#f2f2f2</color>
+  <color name="gray_4c">#4c4c4c</color>
+  <color name="gray_3c">#52838383</color>
+  <color name="gray_5c">#7e7e7e</color>
+  <color name="gray_6c">#696969</color>
+  <color name="unread">#e51c23</color>
 
-    <color name="background_log_time">#e9e9e9</color>
-    <color name="text_log_time">#333333</color>
-    <color name="am_iconFab_black">#000</color>
-    <color name="white_s1">#f7f5d8</color>
-    <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
-    <color name="default_shadow_color">#88757575</color>
-    <color name="transparent">#00000000</color>
+  <color name="background_log_time">#e9e9e9</color>
+  <color name="text_log_time">#333333</color>
+  <color name="am_iconFab_black">#000</color>
+  <color name="white_s1">#f7f5d8</color>
+  <color name="black">#000000</color>
+  <color name="white">#ffffff</color>
+  <color name="default_shadow_color">#88757575</color>
+  <color name="transparent">#00000000</color>
 
-    <color name="notification_text">@color/gray_4c</color>
-    <color name="notification_background">@color/white</color>
+  <color name="notification_text">@color/gray_4c</color>
+  <color name="notification_background">@color/white</color>
 
-    <color name="notification_music_background">@color/white</color>
-    <color name="notification_music_icons">@color/gray_4c</color>
-    //mo
-    <!--toolbar-->
+  <color name="notification_music_background">@color/white</color>
+  <color name="notification_music_icons">@color/gray_4c</color>
+  //mo
+  <!--toolbar-->
 
-    <color name="toolbar_background">#00B0BF</color>
-    <color name="toolbar_transparent">#bf000000</color>
+  <color name="toolbar_background">#00B0BF</color>
+  <color name="toolbar_transparent">#bf000000</color>
 
-    <!--REGISTER PAGE-->
+  <!--REGISTER PAGE-->
 
-    <color name="country">#000</color>
+  <color name="country">#000</color>
 
-    <!--connectivity Page-->
+  <!--connectivity Page-->
 
-    <color name="layout_background_top_connectivity">#f2b33d</color>
+  <color name="layout_background_top_connectivity">#f2b33d</color>
 
-    <!--guide app-->
+  <!--guide app-->
 
-    <color name="text_line1_igap_dark">#2a2a2a</color>
-    <color name="text_line2_lc__dark">#4c4c4c</color>
-    <color name="btn_start_page5">#30BCB6</color>
-    <color name="txt_start_page5">#fff</color>
+  <color name="text_line1_igap_dark">#2a2a2a</color>
+  <color name="text_line2_lc__dark">#4c4c4c</color>
+  <color name="btn_start_page5">#30BCB6</color>
+  <color name="txt_start_page5">#fff</color>
 
-    <!--REGISTER PAGE-->
+  <!--REGISTER PAGE-->
 
-    <color name="background_editText">#e7e7e7</color>
-    <color name="border_editText">#757575</color>
-    <color name="black_register">#1a1a1a</color>
-    <color name="whit_background">#ffffff</color>
-    <color name="start_background">#31bdb6</color>
-    <color name="line1_background">#34a49f</color>
-    <color name="line2_background">#e4e4e4</color>
-    <color name="confirm_country">#151515</color>
-    <color name="text_verify">#636363</color>
-    <color name="text_dark_verify">#232323</color>
-    <color name="rg_error_red">#ff0000</color>
+  <color name="background_editText">#e7e7e7</color>
+  <color name="border_editText">#757575</color>
+  <color name="black_register">#1a1a1a</color>
+  <color name="whit_background">#ffffff</color>
+  <color name="start_background">#31bdb6</color>
+  <color name="line1_background">#34a49f</color>
+  <color name="line2_background">#e4e4e4</color>
+  <color name="confirm_country">#151515</color>
+  <color name="text_verify">#636363</color>
+  <color name="text_dark_verify">#232323</color>
+  <color name="rg_error_red">#ff0000</color>
 
-    <color name="pu_edtHintText">#cacaca</color>
-
-
-    <!--REGISTER PAGE-->
-
-    <color name="rg_background_verify">#e7e7e7</color>
-    <color name="rg_background_editText">#e7e7e7</color>
-    <color name="rg_border_editText">#757575</color>
-    <color name="rg_black_register">#1a1a1a</color>
-    <color name="rg_agreement_background">#f1f1f1</color>
-    <color name="rg_whit_background">#ffffff</color>
-    <color name="rg_start_background">#31bdb6</color>
-    <color name="rg_line1_background">#34a49f</color>
-    <color name="rg_line2_background">#e4e4e4</color>
-    <color name="rg_confirm_country">#151515</color>
-    <color name="rg_text_verify">#636363</color>
-    <color name="rg_text_dark_verify">#232323</color>
-
-    <color name="toolbar_title_register">#fff</color>
-    <color name="structCountry">#fff</color>
-
-    <color name="st_title_s">#c4c4c4</color>
-    <color name="st_line_editText">#e1e1e1</color>
-    <color name="st_background2">#f7f7f7</color>
-    <color name="line_edit_text">#d2d2d2</color>
-    <color name="hint_edit_text">#9b9b9b</color>
-    <color name="text_edit_text">#000000</color>
+  <color name="pu_edtHintText">#cacaca</color>
 
 
-    <!-- FlowingDrawer -->
+  <!--REGISTER PAGE-->
 
-    <color name="ou_background_crop">#50000000</color>
+  <color name="rg_background_verify">#e7e7e7</color>
+  <color name="rg_background_editText">#e7e7e7</color>
+  <color name="rg_border_editText">#757575</color>
+  <color name="rg_black_register">#1a1a1a</color>
+  <color name="rg_agreement_background">#f1f1f1</color>
+  <color name="rg_whit_background">#ffffff</color>
+  <color name="rg_start_background">#31bdb6</color>
+  <color name="rg_line1_background">#34a49f</color>
+  <color name="rg_line2_background">#e4e4e4</color>
+  <color name="rg_confirm_country">#151515</color>
+  <color name="rg_text_verify">#636363</color>
+  <color name="rg_text_dark_verify">#232323</color>
 
-    <!--Fragment menu contacts-->
-    <color name="primary">#009688</color>
+  <color name="toolbar_title_register">#fff</color>
+  <color name="structCountry">#fff</color>
 
-    <!-- emoji popup window-->
-    <color name="colorEmojiPopupCategoryBottomBorder">#b3b3b3</color>
+  <color name="st_title_s">#c4c4c4</color>
+  <color name="st_line_editText">#e1e1e1</color>
+  <color name="st_background2">#f7f7f7</color>
+  <color name="line_edit_text">#d2d2d2</color>
+  <color name="hint_edit_text">#9b9b9b</color>
+  <color name="text_edit_text">#000000</color>
 
-    <color name="colorChatMessageSelectableItemBg">#99AADFF7</color>
 
-    <color name="colorChatMessageTime">#2a2a2a</color>
+  <!-- FlowingDrawer -->
 
-    <!--ripple-->
-    <color name="rippelColor">#FFFFFF</color>
-    <color name="statusSendingColor">#eee</color>
-    <color name="iGapColor">#3dbcb3</color>
-    <color name="iGapColorDarker">#37a9a1</color>
-    <color name="black90">#c8000000</color>
-    <color name="grayNew">#8c8b8b</color>
-    <color name="grayNewDarker">#4f4f4f</color>
+  <color name="ou_background_crop">#50000000</color>
 
-    <color name="newBlack">#171717</color>
-    <color name="gray10">#e5e5e5</color>
-    <color name="messageBox_sendColor">#f7f7f7</color>
-    <color name="messageBox_receiveColor">#ffffff</color>
-    <color name="messageBox_replyBoxBackgroundSend">#f9f4e1</color>
-    <color name="messageBox_replyBoxBackgroundReceive">#f9f4e1</color>
-    <color name="colorOldBlack">#2A2A2A</color>
-    <color name="room_message_blue">#007eff</color>
-    <color name="room_message_gray">#FF616161</color>
-    <color name="background_progress">#c7101010</color>
-    <color name="replay_message_text">#333</color>
-    <color name="pin_color">#f9f9f9</color>
-    <color name="background_qrcode">#a80e0e0e</color>
-    <color name="background_checkbox_bottomSheet">#758b8b8b</color>
-    <color name="background_check_gps">#85565656</color>
+  <!--Fragment menu contacts-->
+  <color name="primary">#009688</color>
+
+  <!-- emoji popup window-->
+  <color name="colorEmojiPopupCategoryBottomBorder">#b3b3b3</color>
+
+  <color name="colorChatMessageSelectableItemBg">#99AADFF7</color>
+
+  <color name="colorChatMessageTime">#2a2a2a</color>
+
+  <!--ripple-->
+  <color name="rippelColor">#FFFFFF</color>
+  <color name="statusSendingColor">#eee</color>
+  <color name="iGapColor">#3dbcb3</color>
+  <color name="iGapColorDarker">#37a9a1</color>
+  <color name="black90">#c8000000</color>
+  <color name="grayNew">#8c8b8b</color>
+  <color name="grayNewDarker">#4f4f4f</color>
+
+  <color name="newBlack">#171717</color>
+  <color name="gray10">#e5e5e5</color>
+  <color name="messageBox_sendColor">#f7f7f7</color>
+  <color name="messageBox_receiveColor">#ffffff</color>
+  <color name="messageBox_replyBoxBackgroundSend">#f9f4e1</color>
+  <color name="messageBox_replyBoxBackgroundReceive">#f9f4e1</color>
+  <color name="colorOldBlack">#2A2A2A</color>
+  <color name="room_message_blue">#007eff</color>
+  <color name="room_message_gray">#FF616161</color>
+  <color name="background_progress">#c7101010</color>
+  <color name="replay_message_text">#333</color>
+  <color name="pin_color">#f9f9f9</color>
+  <color name="background_qrcode">#a80e0e0e</color>
+  <color name="background_checkbox_bottomSheet">#758b8b8b</color>
+  <color name="background_check_gps">#85565656</color>
 </resources>

@@ -11,6 +11,7 @@
 package net.iGap.interfaces;
 
 import android.view.View;
+
 import net.iGap.module.structs.StructContactInfo;
 
 public interface OnMenuClick {

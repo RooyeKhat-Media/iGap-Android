@@ -1,86 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
-    android:layoutDirection="ltr"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:clickable="true"
 
-    android:clickable="true"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix"
-    >
+  android:layoutDirection="ltr"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
 
   <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/fbu_ll_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/green"
-        android:orientation="horizontal"
-        >
+      android:id="@+id/fbu_ll_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="@color/green"
+      android:orientation="horizontal">
 
 
       <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/fbu_ripple_back_Button"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_margin="0dp"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="0"
-          app:rv_ripplePadding="5dp"
-          rv_centered="true"
-          >
+        android:id="@+id/fbu_ripple_back_Button"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="0"
+        app:rv_ripplePadding="5dp">
 
         <net.iGap.module.MaterialDesignTextView
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/md_back_arrow"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@color/whit_background"
-            />
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="@string/md_back_arrow"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/whit_background" />
 
       </net.iGap.libs.rippleeffect.RippleView>
 
       <TextView
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:text="@string/Block_Users"
-          android:gravity="center|left"
-          android:textColor="@color/white"
-          android:textSize="@dimen/dp16"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-          />
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center|left"
+        android:text="@string/Block_Users"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp16" />
 
 
       <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/fbu_ripple_add"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="0dp"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="100"
-          app:rv_ripplePadding="5dp"
-          rv_centered="true"
-          >
+        android:id="@+id/fbu_ripple_add"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="100"
+        app:rv_ripplePadding="5dp">
 
         <net.iGap.module.MaterialDesignTextView
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/md_add_plus_button"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@color/whit_background"
-            />
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="@string/md_add_plus_button"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/whit_background" />
 
       </net.iGap.libs.rippleeffect.RippleView>
 
@@ -91,10 +83,9 @@
 
 
   <android.support.v7.widget.RecyclerView
-      android:id="@+id/fbu_realm_recycler_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
+    android:id="@+id/fbu_realm_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
 
 </LinearLayout>

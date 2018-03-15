@@ -11,6 +11,7 @@
 package net.iGap.webrtc;
 
 import android.util.Log;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentCall;
@@ -26,6 +27,7 @@ import net.iGap.module.enums.CallState;
 import net.iGap.proto.ProtoSignalingLeave;
 import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.request.RequestSignalingRinging;
+
 import org.webrtc.IceCandidate;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
@@ -53,6 +55,11 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
 
     @Override
     public void onOffer(final long called_userId, ProtoSignalingOffer.SignalingOffer.Type type, final String callerSdp) {
+
+        if (type != ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING) {
+            return;
+        }
+
         new RequestSignalingRinging().signalingRinging();
 
         G.handler.post(new Runnable() {

@@ -10,17 +10,21 @@
 
 package net.iGap.realm;
 
+import net.iGap.module.SUID;
+import net.iGap.proto.ProtoGlobal;
+
+import org.parceler.Parcel;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmRoomMessageLogRealmProxy;
 import io.realm.annotations.PrimaryKey;
-import net.iGap.module.SUID;
-import net.iGap.proto.ProtoGlobal;
-import org.parceler.Parcel;
 
-@Parcel(implementations = {RealmRoomMessageLogRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLog.class}) public class RealmRoomMessageLog extends RealmObject {
+@Parcel(implementations = {RealmRoomMessageLogRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLog.class})
+public class RealmRoomMessageLog extends RealmObject {
     private String type;
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
 
     public static RealmRoomMessageLog put(final ProtoGlobal.RoomMessageLog input) {
         Realm realm = Realm.getDefaultInstance();

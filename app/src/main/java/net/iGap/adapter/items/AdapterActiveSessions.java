@@ -14,12 +14,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.module.structs.StructSessions;
+
+import java.util.List;
 
 import static net.iGap.R.id.adp_currentSession;
 import static net.iGap.R.id.adp_rootLayout;
@@ -28,12 +31,12 @@ public class AdapterActiveSessions extends AbstractItem<AdapterActiveSessions, A
 
     public StructSessions item;
 
-    public StructSessions getItem() {
-        return item;
-    }
-
     public AdapterActiveSessions(StructSessions item) {
         this.item = item;
+    }
+
+    public StructSessions getItem() {
+        return item;
     }
 
     public void setItem(StructSessions item) {
@@ -41,18 +44,21 @@ public class AdapterActiveSessions extends AbstractItem<AdapterActiveSessions, A
     }
 
     //The unique ID for this type of item
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return adp_rootLayout;
     }
 
     //The layout to be used for this type of item
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.adapter_active_sessions;
     }
 
     //The logic to bind your data to the view
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
 
         if (item.isCurrent()) {
@@ -75,6 +81,11 @@ public class AdapterActiveSessions extends AbstractItem<AdapterActiveSessions, A
         String changeTime = HelperCalander.checkHijriAndReturnTime(item.getActiveTime());
 
         holder.txtCreateTime.setText("" + changeTime);
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
@@ -102,9 +113,5 @@ public class AdapterActiveSessions extends AbstractItem<AdapterActiveSessions, A
             txtTerminate = (TextView) view.findViewById(R.id.adp_terminate);
             line = view.findViewById(R.id.adp_line);
         }
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

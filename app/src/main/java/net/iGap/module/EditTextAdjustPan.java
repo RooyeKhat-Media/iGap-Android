@@ -30,7 +30,8 @@ public class EditTextAdjustPan extends EditText {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             clearFocus();
         }

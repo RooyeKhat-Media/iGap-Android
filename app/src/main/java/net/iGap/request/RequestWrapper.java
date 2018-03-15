@@ -14,8 +14,8 @@ public class RequestWrapper {
 
     public long time = 0;
     public Object identity;
-    private Object protoObject;
     protected int actionId;
+    private Object protoObject;
     private String randomId;
 
     public RequestWrapper(int actionId, Object protoObject, Object identity) {
@@ -29,43 +29,43 @@ public class RequestWrapper {
         this.protoObject = protoObject;
     }
 
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public void setProtoObject(Object protoObject) {
-        this.protoObject = protoObject;
+    public int getActionId() {
+        return actionId;
     }
 
     public void setActionId(int actionId) {
         this.actionId = actionId;
     }
 
-    public void setRandomId(String randomId) {
-        this.randomId = randomId;
-    }
-
-    public int getActionId() {
-        return actionId;
-    }
-
     public long getTime() {
         return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public Object getProtoObject() {
         return protoObject;
     }
 
+    public void setProtoObject(Object protoObject) {
+        this.protoObject = protoObject;
+    }
+
     public Object getIdentity() {
         return identity;
     }
 
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
     public String getRandomId() {
         return randomId;
+    }
+
+    public void setRandomId(String randomId) {
+        this.randomId = randomId;
     }
 }

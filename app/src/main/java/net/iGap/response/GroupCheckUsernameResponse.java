@@ -28,7 +28,8 @@ public class GroupCheckUsernameResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         final ProtoGroupCheckUsername.GroupCheckUsernameResponse.Builder builder = (ProtoGroupCheckUsername.GroupCheckUsernameResponse.Builder) message;
@@ -37,11 +38,13 @@ public class GroupCheckUsernameResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         if (G.onGroupCheckUsername != null) {

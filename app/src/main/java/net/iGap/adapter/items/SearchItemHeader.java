@@ -13,9 +13,12 @@ package net.iGap.adapter.items;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.R;
+
+import java.util.List;
 
 public class SearchItemHeader extends AbstractItem<SearchItemHeader, SearchItemHeader.ViewHolder> {
     public String text;
@@ -25,20 +28,24 @@ public class SearchItemHeader extends AbstractItem<SearchItemHeader, SearchItemH
         return this;
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.sfslh_txt_header_text;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.search_fragment_sub_layout_header;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
         holder.txtHeader.setText(text);
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 

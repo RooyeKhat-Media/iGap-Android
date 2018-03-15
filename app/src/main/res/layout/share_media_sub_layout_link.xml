@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-    android:clickable="true"
-              android:layout_height="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical">
 
 
-    <FrameLayout
-        android:id="@+id/smsl_fl_contain_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+  <FrameLayout
+    android:id="@+id/smsl_fl_contain_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <TextView
-            android:text="h"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dp16"
-            android:padding="@dimen/dp8"
-            android:id="@+id/smsll_txt_shared_link"/>
+    <TextView
+      android:id="@+id/smsll_txt_shared_link"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/dp8"
+      android:text="h"
+      android:textSize="@dimen/dp16" />
 
-        <include
-            android:id="@+id/progress"
-            layout="@layout/msg_progress_item"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="center"/>
+    <include
+      android:id="@+id/progress"
+      layout="@layout/msg_progress_item"
+      android:layout_width="56dp"
+      android:layout_height="56dp"
+      android:layout_gravity="center" />
 
 
-    </FrameLayout>
+  </FrameLayout>
 </LinearLayout>

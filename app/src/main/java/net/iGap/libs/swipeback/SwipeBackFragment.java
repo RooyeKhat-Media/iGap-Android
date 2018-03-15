@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import net.iGap.R;
 
 
@@ -20,11 +21,10 @@ import net.iGap.R;
  */
 public class SwipeBackFragment extends Fragment {
     private static final String SWIPEBACKFRAGMENT_STATE_SAVE_IS_HIDDEN = "SWIPEBACKFRAGMENT_STATE_SAVE_IS_HIDDEN";
+    protected Activity _mActivity;
+    boolean mLocking = false;
     private SwipeBackLayout mSwipeBackLayout;
     private Animation mNoAnim;
-    boolean mLocking = false;
-
-    protected Activity _mActivity;
 
     @Override
     public void onAttach(Activity activity) {

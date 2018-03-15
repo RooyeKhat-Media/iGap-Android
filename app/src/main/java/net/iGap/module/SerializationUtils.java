@@ -75,7 +75,8 @@ public class SerializationUtils {
      * @param obj - object to be cloned
      * @return a clone of obj
      */
-    @SuppressWarnings("unchecked") public static <T> T cloneObject(T obj) {
+    @SuppressWarnings("unchecked")
+    public static <T> T cloneObject(T obj) {
         return (T) deserialize(serialize(obj));
     }
 }

@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.List;
 import net.iGap.proto.ProtoChannelGetMessagesStats;
+
+import java.util.List;
 
 public interface OnChannelGetMessagesStats {
     void onChannelGetMessagesStats(List<ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse.Stats> statsList);

@@ -19,36 +19,39 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.swipe.SwipeLayout;
+import com.hanks.library.AnimateCheckBox;
+import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import io.realm.Case;
-import io.realm.Realm;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.items.chat.ViewMaker;
@@ -57,6 +60,7 @@ import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperPublicMethod;
+import net.iGap.helper.RecyclerItemClickListener;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnPhoneContact;
@@ -78,24 +82,33 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestUserContactsDelete;
 import net.iGap.request.RequestUserContactsGetList;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Case;
+import io.realm.Realm;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.context;
 import static net.iGap.R.string.contacts;
 
 public class RegisteredContactsFragment extends BaseFragment implements OnUserContactDelete, OnPhoneContact {
 
+    private static boolean getPermission = true;
+    StickyRecyclerHeadersDecoration decoration;
+    RealmResults<RealmContacts> results;
     private TextView menu_txt_titleToolbar;
     private ViewGroup vgAddContact, vgRoot;
-
     private RecyclerView realmRecyclerView;
     private SharedPreferences sharedPreferences;
     private boolean isImportContactList = false;
-    private static boolean getPermission = true;
     private Realm realm;
-    StickyRecyclerHeadersDecoration decoration;
     private ProgressBar prgWaiting;
     private ProgressBar prgWaitingLoadContact;
-    RealmResults<RealmContacts> results;
     private EditText edtSearch;
     private boolean isCallAction = false;
     private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
@@ -103,6 +116,16 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
     private ProgressBar prgWaitingLiadList;
     //private ContactListAdapterA mAdapter;
     private NestedScrollView nestedScrollView;
+    private ActionMode mActionMode;
+    protected ArrayMap<Long, Boolean> selectedList = new ArrayMap<>();
+    boolean isMultiSelect = false;
+    private ContactListAdapter contactListAdapter;
+    private AppBarLayout toolbar;
+    private long index = 2500;
+
+    public static RegisteredContactsFragment newInstance() {
+        return new RegisteredContactsFragment();
+    }
 
     private Realm getRealm() {
         if (realm == null || realm.isClosed()) {
@@ -110,11 +133,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         }
 
         return realm;
-    }
-
-
-    public static RegisteredContactsFragment newInstance() {
-        return new RegisteredContactsFragment();
     }
 
     @Nullable
@@ -194,8 +212,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
             }
         }
 
-        view.findViewById(R.id.fc_layot_title).setBackgroundColor(Color.parseColor(G.appBarColor));
-
+        toolbar = view.findViewById(R.id.fc_layot_title);
+        toolbar.setBackgroundColor(Color.parseColor(G.appBarColor));
         menu_txt_titleToolbar = (TextView) view.findViewById(R.id.menu_txt_titleToolbar);
         menu_txt_titleToolbar.setText(title);
 
@@ -237,6 +255,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                fastItemAdapter.filter(s.toString().toLowerCase());
 
                 if (s.length() > 0) {
                     results = getRealm().where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAllSorted(RealmContactsFields.DISPLAY_NAME);
@@ -295,7 +315,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         G.handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                realmRecyclerView.setAdapter(new ContactListAdapter(results));
+                contactListAdapter = new ContactListAdapter(results);
+                realmRecyclerView.setAdapter(contactListAdapter);
                 prgWaitingLoadContact.setVisibility(View.GONE);
                 realmRecyclerView.setVisibility(View.VISIBLE);
             }
@@ -339,6 +360,29 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         StickyHeader stickyHeader = new StickyHeader(results);
         decoration = new StickyRecyclerHeadersDecoration(stickyHeader);
         realmRecyclerView.addItemDecoration(decoration);
+
+        realmRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(G.fragmentActivity, realmRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (isMultiSelect) {
+                    multi_select(position);
+                }
+            }
+
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                if (!isMultiSelect) {
+                    isMultiSelect = true;
+                    refreshAdapter(0, true);
+                    if (mActionMode == null) {
+                        mActionMode = G.fragmentActivity.startActionMode(mActionModeCallback);
+                    }
+                }
+                multi_select(position);
+            }
+        }));
+
 
         RecyclerView rcvListContact = (RecyclerView) view.findViewById(R.id.rcv_friends_to_invite);
         fastItemAdapter = new FastItemAdapter();
@@ -398,6 +442,13 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         rcvListContact.setItemAnimator(new DefaultItemAnimator());
         rcvListContact.setAdapter(fastItemAdapter);
         rcvListContact.setNestedScrollingEnabled(false);
+
+        fastItemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<AdapterListContact>() {
+            @Override
+            public boolean filter(AdapterListContact item, CharSequence constraint) {
+                return item.item.toLowerCase().startsWith(String.valueOf(constraint));
+            }
+        });
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -679,66 +730,12 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         String lastHeader = "";
         int count;
         private boolean isSwipe = false;
+        RealmResults<RealmContacts> usersList;
 
         ContactListAdapter(RealmResults<RealmContacts> realmResults) {
             super(realmResults, true);
             count = realmResults.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            private RealmContacts realmContacts;
-            protected CircleImageView image;
-            protected TextView title;
-            protected TextView subtitle;
-            protected View topLine;
-            private SwipeLayout swipeLayout;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                image = (CircleImageView) view.findViewById(R.id.imageView);
-                title = (TextView) view.findViewById(R.id.title);
-                subtitle = (TextView) view.findViewById(R.id.subtitle);
-                topLine = (View) view.findViewById(R.id.topLine);
-                swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeRevealLayout);
-                swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (isCallAction) {
-                            //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
-
-                            popBackStackFragment();
-
-                            long userId = realmContacts.getId();
-                            if (userId != 134 && G.userId != userId) {
-                                FragmentCall.call(userId, false);
-                            }
-
-
-                        } else {
-                            showProgress();
-
-                            HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
-                                @Override
-                                public void complete() {
-                                    hideProgress();
-                                    //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
-
-                                    popBackStackFragment();
-
-                                }
-                            }, new HelperPublicMethod.OnError() {
-                                @Override
-                                public void error() {
-                                    hideProgress();
-                                }
-                            });
-                        }
-                    }
-                });
-            }
+            usersList = realmResults;
         }
 
         @Override
@@ -802,6 +799,12 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 }
             }
 
+            if (isMultiSelect) {
+                viewHolder.swipeLayout.setSwipeEnabled(false);
+
+            } else {
+                viewHolder.swipeLayout.setSwipeEnabled(true);
+            }
 
             viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
             viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
@@ -856,6 +859,19 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 }
             });
 
+            if (selectedList.containsKey(usersList.get(i).getPhone())) {
+                viewHolder.animateCheckBox.setVisibility(View.VISIBLE);
+                viewHolder.animateCheckBox.setCircleColor(G.context.getResources().getColor(R.color.green));
+                viewHolder.animateCheckBox.setLineColor(G.context.getResources().getColor(R.color.white));
+                viewHolder.animateCheckBox.setChecked(true);
+
+//                viewHolder.root.setBackgroundColor(ContextCompat.getColor(G.context, R.color.gray_9d));
+            } else {
+                viewHolder.animateCheckBox.setCircleColor(G.context.getResources().getColor(R.color.green));
+                viewHolder.animateCheckBox.setChecked(false);
+                viewHolder.animateCheckBox.setVisibility(View.INVISIBLE);
+//                viewHolder.root.setBackgroundColor(ContextCompat.getColor(G.context, R.color.white));
+            }
 
             //viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             //    @Override
@@ -890,6 +906,68 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                     hashMapAvatar.get(userId).setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                 }
             });
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            protected CircleImageView image;
+            protected TextView title;
+            protected TextView subtitle;
+            protected View topLine;
+            private RealmContacts realmContacts;
+            private SwipeLayout swipeLayout;
+            private LinearLayout root;
+            private AnimateCheckBox animateCheckBox;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                root = (LinearLayout) view.findViewById(R.id.mainContainer);
+                animateCheckBox = (AnimateCheckBox) view.findViewById(R.id.animateCheckBoxContact);
+                image = (CircleImageView) view.findViewById(R.id.imageView);
+                title = (TextView) view.findViewById(R.id.title);
+                subtitle = (TextView) view.findViewById(R.id.subtitle);
+                topLine = (View) view.findViewById(R.id.topLine);
+                swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeRevealLayout);
+                swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!isMultiSelect) {
+                            if (isCallAction) {
+                                //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
+
+                                popBackStackFragment();
+
+                                long userId = realmContacts.getId();
+                                if (userId != 134 && G.userId != userId) {
+                                    FragmentCall.call(userId, false);
+                                }
+
+
+                            } else {
+                                showProgress();
+
+                                HelperPublicMethod.goToChatRoom(realmContacts.getId(), new HelperPublicMethod.OnComplete() {
+                                    @Override
+                                    public void complete() {
+                                        hideProgress();
+                                        //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
+
+                                        popBackStackFragment();
+
+                                    }
+                                }, new HelperPublicMethod.OnError() {
+                                    @Override
+                                    public void error() {
+                                        hideProgress();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -993,6 +1071,11 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
 
         }
 
+        @Override
+        public ViewHolder getViewHolder(View v) {
+            return new ViewHolder(v);
+        }
+
         //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
         protected class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -1009,11 +1092,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 root = (ViewGroup) view.findViewById(R.id.root_List_contact);
 
             }
-        }
-
-        @Override
-        public ViewHolder getViewHolder(View v) {
-            return new ViewHolder(v);
         }
     }
 
@@ -1035,7 +1113,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         @Override
         protected void onPostExecute(Void aVoid) {
             for (int i = 0; i < contacts.size(); i++) {
-                fastItemAdapter.add(new AdapterListContact(contacts.get(i).getDisplayName(), contacts.get(i).getPhone()).withIdentifier(100 + i));
+                fastItemAdapter.add(new AdapterListContact(contacts.get(i).getDisplayName(), contacts.get(i).getPhone()).withIdentifier(index++));
             }
             if (isEnd) {
                 prgWaitingLiadList.setVisibility(View.GONE);
@@ -1043,5 +1121,90 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
             super.onPostExecute(aVoid);
         }
     }
+
+    // Add/Remove the item from/to the list
+
+    public void multi_select(int position) {
+        if (mActionMode != null) {
+
+            if (results.get(position) == null) {
+                return;
+            }
+
+            if (selectedList.containsKey(results.get(position).getPhone())) {
+                selectedList.remove(results.get(position).getPhone());
+            } else {
+                selectedList.put(results.get(position).getPhone(), true);
+            }
+
+            if (selectedList.size() > 0) {
+                mActionMode.setTitle("" + selectedList.size());
+            } else {
+                mActionMode.setTitle("");
+            }
+            refreshAdapter(position, false);
+        }
+    }
+
+    public void refreshAdapter(int position, boolean isAllRefresh) {
+        contactListAdapter.usersList = results;
+        if (isAllRefresh) {
+            contactListAdapter.notifyDataSetChanged();
+        } else {
+            contactListAdapter.notifyItemChanged(position);
+        }
+    }
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_multi_select, menu);
+            toolbar.setVisibility(View.GONE);
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_delete:
+                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            for (ArrayMap.Entry<Long, Boolean> entry : selectedList.entrySet()) {
+                                new RequestUserContactsDelete().contactsDelete("" + entry.getKey());
+                            }
+
+                            mActionMode.finish();
+                            refreshAdapter(0, true);
+
+                        }
+                    }).negativeText(R.string.B_cancel).show();
+
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            isMultiSelect = false;
+            selectedList.clear();
+            refreshAdapter(0, true);
+            toolbar.setVisibility(View.VISIBLE);
+        }
+    };
 }
 

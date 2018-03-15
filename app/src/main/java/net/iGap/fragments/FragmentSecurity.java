@@ -20,9 +20,9 @@ public class FragmentSecurity extends BaseFragment {
 
     public static boolean isFirstSetPassword = true;
     public static boolean isSetRecoveryEmail = false;
+    public static OnPopBackStackFragment onPopBackStackFragment;
     public FragmentSecurityViewModel fragmentSecurityViewModel;
     public FragmentFragmentSecurityBinding fragmentSecurityBinding;
-    public static OnPopBackStackFragment onPopBackStackFragment;
 
 
     public FragmentSecurity() {

@@ -19,16 +19,16 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityCrop;
 import net.iGap.databinding.ActivityProfileChannelBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperError;
+import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
@@ -45,7 +45,6 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
-import net.iGap.module.IntentRequests;
 import net.iGap.module.SUID;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestChannelAvatarAdd;
@@ -54,20 +53,22 @@ import net.iGap.request.RequestChannelKickMember;
 import net.iGap.request.RequestChannelKickModerator;
 import net.iGap.viewmodel.FragmentChannelProfileViewModel;
 
+import java.io.File;
+import java.io.IOException;
+
 public class FragmentChannelProfile extends BaseFragment implements OnChannelAvatarAdd, OnChannelAvatarDelete {
 
 
+    public static final String FRAGMENT_TAG = "FragmentChannelProfile";
+    private static final String ROOM_ID = "RoomId";
+    private static final String IS_NOT_JOIN = "is_not_join";
+    public static OnBackFragment onBackFragment;
+    private static ProgressBar prgWait;
     private CircleImageView imgCircleImageView;
     private TextView titleToolbar;
     private String pathSaveImage;
-    private static ProgressBar prgWait;
     private AttachFile attachFile;
     private Fragment fragment;
-    private static final String ROOM_ID = "RoomId";
-    private static final String IS_NOT_JOIN = "is_not_join";
-    public static final String FRAGMENT_TAG = "FragmentChannelProfile";
-    public static OnBackFragment onBackFragment;
-
     private FragmentChannelProfileViewModel fragmentChannelProfileViewModel;
     private ActivityProfileChannelBinding fragmentProfileChannelBinding;
 
@@ -177,6 +178,34 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAva
                                 });
                             }
                         });
+                    }
+                });
+            }
+        };
+
+
+        FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
+            @Override
+            public void result(String path, String message) {
+                pathSaveImage = null;
+                pathSaveImage = path;
+                long avatarId = SUID.id().get();
+                long lastUploadedAvatarId = avatarId + 1L;
+
+                showProgressBar();
+                HelperUploadFile.startUploadTaskAvatar(pathSaveImage, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
+                    @Override
+                    public void OnProgress(int progress, FileUploadStructure struct) {
+                        if (progress < 100) {
+                            prgWait.setProgress(progress);
+                        } else {
+                            new RequestChannelAvatarAdd().channelAvatarAdd(fragmentChannelProfileViewModel.roomId, struct.token);
+                        }
+                    }
+
+                    @Override
+                    public void OnError() {
+                        hideProgressBar();
                     }
                 });
             }
@@ -389,7 +418,6 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAva
     }
 
 
-
     //*** set avatar image
 
     private void setImage(final String imagePath) {
@@ -420,75 +448,20 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAva
                 case AttachFile.request_code_TAKE_PICTURE:
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                        ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true);
-                        intent.putExtra("IMAGE_CAMERA", AttachFile.mCurrentPhotoPath);
-                        intent.putExtra("TYPE", "camera");
-                        intent.putExtra("PAGE", "setting");
-                        intent.putExtra("ID", (int) (avatarId + 1L));
-                        startActivityForResult(intent, IntentRequests.REQ_CROP);
+                        ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true); //rotate image
+                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, false)).setReplace(false).load();
                     } else {
-                        Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                        ImageHelper.correctRotateImage(AttachFile.imagePath, true);
-                        intent.putExtra("IMAGE_CAMERA", AttachFile.imagePath);
-                        intent.putExtra("TYPE", "camera");
-                        intent.putExtra("PAGE", "setting");
-                        intent.putExtra("ID", (int) (avatarId + 1L));
-                        startActivityForResult(intent, IntentRequests.REQ_CROP);
+                        ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
+                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false)).setReplace(false).load();
                     }
-
-                    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    //    ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true);
-                    //    filePath = AttachFile.mCurrentPhotoPath;
-                    //    filePathAvatar = filePath;
-                    //} else {
-                    //    ImageHelper.correctRotateImage(AttachFile.imagePath, true);
-                    //    filePath = AttachFile.imagePath;
-                    //    filePathAvatar = filePath;
-                    //}
                     break;
                 case AttachFile.request_code_image_from_gallery_single_select:
                     if (data.getData() == null) {
                         return;
                     }
-                    Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                    intent.putExtra("IMAGE_CAMERA", AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image));
-                    intent.putExtra("TYPE", "gallery");
-                    intent.putExtra("PAGE", "setting");
-                    intent.putExtra("ID", (int) (avatarId + 1L));
-                    startActivityForResult(intent, IntentRequests.REQ_CROP);
-
-                    //filePath = AttachFile.getFilePathFromUri(data.getData());
-                    //filePathAvatar = filePath;
-
+//
+                    new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, false)).setReplace(false).load();
                     break;
-
-                case IntentRequests.REQ_CROP: { // save path image on data base ( realm )
-
-                    pathSaveImage = null;
-                    if (data != null) {
-                        pathSaveImage = data.getData().toString();
-                    }
-
-                    long lastUploadedAvatarId = avatarId + 1L;
-
-                    showProgressBar();
-                    HelperUploadFile.startUploadTaskAvatar(pathSaveImage, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
-                        @Override
-                        public void OnProgress(int progress, FileUploadStructure struct) {
-                            if (progress < 100) {
-                                prgWait.setProgress(progress);
-                            } else {
-                                new RequestChannelAvatarAdd().channelAvatarAdd(fragmentChannelProfileViewModel.roomId, struct.token);
-                            }
-                        }
-
-                        @Override
-                        public void OnError() {
-                            hideProgressBar();
-                        }
-                    });
-                }
             }
         }
     }

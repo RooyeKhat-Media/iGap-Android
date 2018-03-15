@@ -16,11 +16,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import java.util.Locale;
+
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoUserLogin;
+
+import java.util.Locale;
 
 import static net.iGap.G.context;
 

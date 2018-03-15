@@ -29,6 +29,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
 import java.lang.ref.WeakReference;
 
 public class TransitionAnimation {

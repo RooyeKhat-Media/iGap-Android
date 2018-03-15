@@ -10,28 +10,30 @@
 
 package net.iGap.adapter;
 
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChatBackground;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.messageprogress.MessageProgress;
+import net.iGap.messageprogress.OnProgress;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -118,7 +120,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 holder2.mPath = "";
                 holder2.messageProgress.setVisibility(View.VISIBLE);
-                startDownload(position, holder2.messageProgress, holder2.contentLoading);
+                startDownload(position, holder2.messageProgress);
             }
         }
     }
@@ -136,6 +138,55 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    private void startDownload(final int position, final MessageProgress messageProgress) {
+        messageProgress.withDrawable(R.drawable.ic_cancel, true);
+
+        ProtoGlobal.File pf = mList.get(position).getProtoWallpaper().getFile();
+
+        String path = G.DIR_CHAT_BACKGROUND + "/" + pf.getCacheId() + "_" + pf.getName();
+
+
+        messageProgress.withOnProgress(new OnProgress() {
+            @Override
+            public void onProgressFinished() {
+
+                messageProgress.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageProgress.withProgress(0);
+                        messageProgress.setVisibility(View.GONE);
+                        notifyItemChanged(position);
+                    }
+                });
+
+
+            }
+        });
+
+        HelperDownloadFile.startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
+            @Override
+            public void OnProgress(String mPath, final int progress) {
+                messageProgress.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageProgress.withProgress(progress);
+                    }
+                });
+            }
+
+            @Override
+            public void OnError(String token) {
+                messageProgress.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageProgress.withProgress(0);
+                        messageProgress.withDrawable(R.drawable.ic_download, true);
+                    }
+                });
+            }
+        });
     }
 
     private class ViewHolderImage extends RecyclerView.ViewHolder {
@@ -180,10 +231,9 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
 
     private class ViewHolderItem extends RecyclerView.ViewHolder {
 
-        private ImageView img;
         public MessageProgress messageProgress;
-        public ContentLoadingProgressBar contentLoading;
         public String mPath = "";
+        private ImageView img;
 
         ViewHolderItem(View itemView) {
             super(itemView);
@@ -194,10 +244,6 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             AppUtils.setProgresColor(messageProgress.progressBar);
 
             messageProgress.withDrawable(R.drawable.ic_download, true);
-
-            contentLoading = (ContentLoadingProgressBar) itemView.findViewById(R.id.ch_progress_loadingContent);
-            contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
-
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -209,51 +255,5 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
         }
-    }
-
-    private void startDownload(final int position, final MessageProgress messageProgress, final ContentLoadingProgressBar contentLoading) {
-
-        contentLoading.setVisibility(View.VISIBLE);
-        messageProgress.withDrawable(R.drawable.ic_cancel, true);
-
-        ProtoGlobal.File pf = mList.get(position).getProtoWallpaper().getFile();
-
-        String path = G.DIR_CHAT_BACKGROUND + "/" + pf.getCacheId() + "_" + pf.getName();
-
-        HelperDownloadFile.startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
-            @Override
-            public void OnProgress(String mPath, final int progress) {
-
-                if (messageProgress != null) {
-                    messageProgress.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (progress < 100) {
-                                messageProgress.withProgress(progress);
-                            } else {
-                                messageProgress.withProgress(0);
-                                messageProgress.setVisibility(View.GONE);
-                                contentLoading.setVisibility(View.GONE);
-                                notifyItemChanged(position);
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void OnError(String token) {
-                if (messageProgress != null) {
-                    messageProgress.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            messageProgress.withProgress(0);
-                            messageProgress.withDrawable(R.drawable.ic_download, true);
-                            contentLoading.setVisibility(View.GONE);
-                        }
-                    });
-                }
-            }
-        });
     }
 }

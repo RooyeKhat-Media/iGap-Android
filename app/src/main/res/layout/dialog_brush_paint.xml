@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:layoutDirection="ltr"
-    android:clickable="true"
-    android:orientation="horizontal"
-    android:weightSum="10">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/gray"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="horizontal"
+  android:weightSum="10">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".4"
-        android:orientation="vertical"></LinearLayout>
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight=".4"
+    android:orientation="vertical"></LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="9.6"
-        android:orientation="horizontal">
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="9.6"
+    android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView_brush_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:text="  "
-            android:textSize="@dimen/dp14"
-            />
+    <TextView
+      android:id="@+id/textView_brush_size"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="10dp"
+      android:layout_marginTop="10dp"
+      android:text="  "
+      android:textSize="@dimen/dp14" />
 
-        <SeekBar
-            android:id="@+id/seekBar_brush_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:max="36" />
-    </LinearLayout>
+    <SeekBar
+      android:id="@+id/seekBar_brush_size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:layout_marginTop="10dp"
+      android:max="36" />
+  </LinearLayout>
 
 </LinearLayout>

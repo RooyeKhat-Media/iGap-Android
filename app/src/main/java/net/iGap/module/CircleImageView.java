@@ -30,6 +30,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
 import net.iGap.R;
 
 public class CircleImageView extends ImageView {
@@ -106,23 +107,27 @@ public class CircleImageView extends ImageView {
         }
     }
 
-    @Override public ScaleType getScaleType() {
+    @Override
+    public ScaleType getScaleType() {
         return SCALE_TYPE;
     }
 
-    @Override public void setScaleType(ScaleType scaleType) {
+    @Override
+    public void setScaleType(ScaleType scaleType) {
         if (scaleType != SCALE_TYPE) {
             throw new IllegalArgumentException(String.format("ScaleType %s not supported.", scaleType));
         }
     }
 
-    @Override public void setAdjustViewBounds(boolean adjustViewBounds) {
+    @Override
+    public void setAdjustViewBounds(boolean adjustViewBounds) {
         if (adjustViewBounds) {
             throw new IllegalArgumentException("adjustViewBounds not supported.");
         }
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         if (mDisableCircularTransformation) {
             super.onDraw(canvas);
             return;
@@ -141,17 +146,20 @@ public class CircleImageView extends ImageView {
         }
     }
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         setup();
     }
 
-    @Override public void setPadding(int left, int top, int right, int bottom) {
+    @Override
+    public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
         setup();
     }
 
-    @Override public void setPaddingRelative(int start, int top, int end, int bottom) {
+    @Override
+    public void setPaddingRelative(int start, int top, int end, int bottom) {
         super.setPaddingRelative(start, top, end, bottom);
         setup();
     }
@@ -173,7 +181,8 @@ public class CircleImageView extends ImageView {
     /**
      * @deprecated Use {@link #setBorderColor(int)} instead
      */
-    @Deprecated public void setBorderColorResource(@ColorRes int borderColorRes) {
+    @Deprecated
+    public void setBorderColorResource(@ColorRes int borderColorRes) {
         setBorderColor(getContext().getResources().getColor(borderColorRes));
     }
 
@@ -183,7 +192,8 @@ public class CircleImageView extends ImageView {
      * @return The color drawn behind the drawable
      * @deprecated Fill color support is going to be removed in the future
      */
-    @Deprecated public int getFillColor() {
+    @Deprecated
+    public int getFillColor() {
         return mFillColor;
     }
 
@@ -194,7 +204,8 @@ public class CircleImageView extends ImageView {
      * @param fillColor The color to be drawn behind the drawable
      * @deprecated Fill color support is going to be removed in the future
      */
-    @Deprecated public void setFillColor(@ColorInt int fillColor) {
+    @Deprecated
+    public void setFillColor(@ColorInt int fillColor) {
         if (fillColor == mFillColor) {
             return;
         }
@@ -209,10 +220,11 @@ public class CircleImageView extends ImageView {
      * this has no effect if the drawable is opaque or no drawable is set.
      *
      * @param fillColorRes The color resource to be resolved to a color and
-     * drawn behind the drawable
+     *                     drawn behind the drawable
      * @deprecated Fill color support is going to be removed in the future
      */
-    @Deprecated public void setFillColorResource(@ColorRes int fillColorRes) {
+    @Deprecated
+    public void setFillColorResource(@ColorRes int fillColorRes) {
         setFillColor(getContext().getResources().getColor(fillColorRes));
     }
 
@@ -255,31 +267,37 @@ public class CircleImageView extends ImageView {
         initializeBitmap();
     }
 
-    @Override public void setImageBitmap(Bitmap bm) {
+    @Override
+    public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
         initializeBitmap();
     }
 
-    @Override public void setImageDrawable(Drawable drawable) {
+    @Override
+    public void setImageDrawable(Drawable drawable) {
         super.setImageDrawable(drawable);
         initializeBitmap();
     }
 
-    @Override public void setImageResource(@DrawableRes int resId) {
+    @Override
+    public void setImageResource(@DrawableRes int resId) {
         super.setImageResource(resId);
         initializeBitmap();
     }
 
-    @Override public void setImageURI(Uri uri) {
+    @Override
+    public void setImageURI(Uri uri) {
         super.setImageURI(uri);
         initializeBitmap();
     }
 
-    @Override public ColorFilter getColorFilter() {
+    @Override
+    public ColorFilter getColorFilter() {
         return mColorFilter;
     }
 
-    @Override public void setColorFilter(ColorFilter cf) {
+    @Override
+    public void setColorFilter(ColorFilter cf) {
         if (cf == mColorFilter) {
             return;
         }

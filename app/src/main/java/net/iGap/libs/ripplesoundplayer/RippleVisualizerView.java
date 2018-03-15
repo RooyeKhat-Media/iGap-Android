@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
 import net.iGap.libs.ripplesoundplayer.renderer.Renderer;
 import net.iGap.module.MusicPlayer;
 

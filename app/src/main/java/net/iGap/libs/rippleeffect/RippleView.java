@@ -43,8 +43,10 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
-import java.io.IOException;
+
 import net.iGap.R;
+
+import java.io.IOException;
 
 /**
  * RippleView custom layout
@@ -57,7 +59,8 @@ import net.iGap.R;
 public class RippleView extends RelativeLayout {
 
     private final Runnable runnable = new Runnable() {
-        @Override public void run() {
+        @Override
+        public void run() {
             invalidate();
         }
     };
@@ -105,7 +108,7 @@ public class RippleView extends RelativeLayout {
      * Method that initializes all fields and sets listeners
      *
      * @param context Context used to create this view
-     * @param attrs Attribute used to initialize fields
+     * @param attrs   Attribute used to initialize fields
      */
     private void init(final Context context, final AttributeSet attrs) {
         if (isInEditMode()) return;
@@ -131,17 +134,20 @@ public class RippleView extends RelativeLayout {
         this.setWillNotDraw(false);
 
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override public void onLongPress(MotionEvent event) {
+            @Override
+            public void onLongPress(MotionEvent event) {
                 super.onLongPress(event);
                 animateRipple(event);
                 sendClickEvent(true);
             }
 
-            @Override public boolean onSingleTapConfirmed(MotionEvent e) {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
                 return true;
             }
 
-            @Override public boolean onSingleTapUp(MotionEvent e) {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
         });
@@ -150,7 +156,8 @@ public class RippleView extends RelativeLayout {
         this.setClickable(true);
     }
 
-    @Override public void draw(Canvas canvas) {
+    @Override
+    public void draw(Canvas canvas) {
         super.draw(canvas);
         if (animationRunning) {
             canvas.save();
@@ -208,7 +215,8 @@ public class RippleView extends RelativeLayout {
         }
     }
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         WIDTH = w;
         HEIGHT = h;
@@ -270,7 +278,8 @@ public class RippleView extends RelativeLayout {
         }
     }
 
-    @Override public boolean onTouchEvent(MotionEvent event) {
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
         if (gestureDetector.onTouchEvent(event)) {
             animateRipple(event);
             sendClickEvent(false);
@@ -278,7 +287,8 @@ public class RippleView extends RelativeLayout {
         return super.onTouchEvent(event);
     }
 
-    @Override public boolean onInterceptTouchEvent(MotionEvent event) {
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
         this.onTouchEvent(event);
         return super.onInterceptTouchEvent(event);
     }
@@ -330,7 +340,8 @@ public class RippleView extends RelativeLayout {
      *
      * @param rippleColor New color resource
      */
-    @ColorRes public void setRippleColor(int rippleColor) {
+    @ColorRes
+    public void setRippleColor(int rippleColor) {
         this.rippleColor = getResources().getColor(rippleColor);
     }
 

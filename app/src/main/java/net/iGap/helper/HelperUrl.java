@@ -29,15 +29,10 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -57,20 +52,21 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientCheckInviteLink;
 import net.iGap.request.RequestClientJoinByInviteLink;
 import net.iGap.request.RequestClientResolveUsername;
+
 import org.chromium.customtabsclient.CustomTabsActivityHelper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import io.realm.Realm;
+import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
 public class HelperUrl {
-
-    enum linkType {
-        hash, atSighn, igapLink, igapResolve, webLink
-
-    }
-
-    public enum ChatEntry {
-        chat, profile
-    }
 
     public static int LinkColor = Color.BLUE;
     public static MaterialDialog dialogWaiting;
@@ -160,6 +156,7 @@ public class HelperUrl {
             public void onClick(View view) {
                 if (withclickable) {
 
+                    G.isLinkClicked = true;
                     boolean openLocalWebPage;
                     SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, G.context.MODE_PRIVATE);
 
@@ -229,6 +226,7 @@ public class HelperUrl {
         ClickableSpan clickable = new ClickableSpan() {
             public void onClick(View view) {
 
+                G.isLinkClicked = true;
                 String url = strBuilder.toString().substring(start, end);
 
                 int index = url.lastIndexOf("/");
@@ -259,6 +257,7 @@ public class HelperUrl {
         ClickableSpan clickable = new ClickableSpan() {
             public void onClick(View view) {
 
+                G.isLinkClicked = true;
                 try {
                     String url = strBuilder.toString().substring(start, end);
 
@@ -284,8 +283,6 @@ public class HelperUrl {
 
         strBuilder.setSpan(clickable, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
-
-    //*********************************************************************************************************
 
     private static SpannableStringBuilder analaysHash(SpannableStringBuilder builder, String messageID) {
 
@@ -336,7 +333,9 @@ public class HelperUrl {
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(View view) {
+                G.isLinkClicked = true;
+                ;
                 if (FragmentChat.hashListener != null) {
                     FragmentChat.hashListener.complete(true, "#" + text, messageID);
                 }
@@ -409,8 +408,8 @@ public class HelperUrl {
 
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
-
+            public void onClick(View view) {
+                G.isLinkClicked = true;
                 checkUsernameAndGoToRoom(text, ChatEntry.profile);
             }
 
@@ -425,6 +424,7 @@ public class HelperUrl {
         builder.setSpan(clickableSpan, start, start + text.length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
+    //*********************************************************************************************************
 
     public static SpannableStringBuilder getLinkText(String text, String linkInfo, String messageID) {
 
@@ -507,7 +507,6 @@ public class HelperUrl {
         return linkInfo;
     }
 
-
     private static String analysisAtSignLinkInfo(String text) {
         String result = "";
         if (text == null || text.length() < 1) {
@@ -537,10 +536,9 @@ public class HelperUrl {
         return result;
     }
 
-
     private static void checkAndJoinToRoom(final String token) {
 
-        if (token == null || token.length() < 0) return;
+        if (token == null || token.length() < 0 || isInCurrentChat(token)) return;
 
         if (G.userLogin) {
             showIndeterminateProgressDialog();
@@ -573,8 +571,9 @@ public class HelperUrl {
         final Realm realm = Realm.getDefaultInstance();
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).equalTo(RealmRoomFields.IS_DELETED, false).findFirst();
         if (realmRoom != null) {
-            new GoToChatActivity(room.getId()).startActivity();
-
+            if (room.getId() != FragmentChat.lastChatRoomId) {
+                new GoToChatActivity(room.getId()).startActivity();
+            }
             realm.close();
             return;
         }
@@ -584,7 +583,6 @@ public class HelperUrl {
             public void execute(Realm realm) {
                 RealmRoom realmRoom = RealmRoom.putOrUpdate(room, realm);
                 realmRoom.setDeleted(true);
-                G.deletedRoomList.add(realmRoom.getId());
             }
         });
         realm.close();
@@ -669,7 +667,11 @@ public class HelperUrl {
 
                     closeDialogWaiting();
                     RealmRoom.joinByInviteLink(room.getId());
-                    new GoToChatActivity(room.getId()).startActivity();
+
+                    if (room.getId() != FragmentChat.lastChatRoomId) {
+                        new GoToChatActivity(room.getId()).startActivity();
+                    }
+
                 }
 
                 @Override
@@ -685,11 +687,48 @@ public class HelperUrl {
         }
     }
 
-    //************************************  go to room by userName   *********************************************************************
+    private static boolean isInCurrentChat(String userName) {
+        if (FragmentChat.lastChatRoomId > 0) {
+            Realm realm = Realm.getDefaultInstance();
+            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, FragmentChat.lastChatRoomId).findFirst();
+            String currentChatUserName = "";
+            String currentChatInviteLink = "";
+            if (realmRoom != null) {
+                if (realmRoom.getChannelRoom() != null) {
+                    currentChatUserName = realmRoom.getChannelRoom().getUsername();
+                    currentChatInviteLink = realmRoom.getChannelRoom().getInviteLink();
+                } else if (realmRoom.getGroupRoom() != null) {
+                    currentChatUserName = realmRoom.getGroupRoom().getUsername();
+                    currentChatInviteLink = realmRoom.getGroupRoom().getInvite_link();
+                } else if (realmRoom.getChatRoom() != null) {
+                    RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmRoom.getChatRoom().getPeerId());
+                    if (registeredInfo != null) {
+                        currentChatUserName = registeredInfo.getUsername();
+                    }
+                }
+            }
+            realm.close();
+            if (currentChatUserName != null && currentChatUserName.toLowerCase().equals(userName.toLowerCase())) {
+                return true;
+            }
+
+            if (currentChatInviteLink != null && currentChatInviteLink.length() > 0) {
+                int index = currentChatInviteLink.lastIndexOf("/");
+                if (index != -1) {
+                    String st = currentChatInviteLink.toLowerCase().substring(index + 1);
+                    if (st.equals(userName.toLowerCase())) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
 
     public static void checkUsernameAndGoToRoom(final String userName, final ChatEntry chatEntery) {
 
-        if (userName == null || userName.length() < 1) return;
+        if (userName == null || userName.length() < 1 || isInCurrentChat(userName)) return;
 
         if (G.userLogin) {
             // this methode check user name and if it is ok go to room
@@ -726,6 +765,8 @@ public class HelperUrl {
         }
     }
 
+    //************************************  go to room by userName   *********************************************************************
+
     private static void openChat(String username, ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room, ChatEntry chatEntery) {
 
         switch (type) {
@@ -742,7 +783,11 @@ public class HelperUrl {
 
         switch (chatEntry) {
             case chat:
-                new GoToChatActivity(roomId).setPeerID(peerId).startActivity();
+
+                if (roomId != FragmentChat.lastChatRoomId) {
+                    new GoToChatActivity(roomId).setPeerID(peerId).startActivity();
+                }
+
                 break;
             case profile:
                 G.handler.post(new Runnable() {
@@ -851,7 +896,9 @@ public class HelperUrl {
             } else {
                 closeDialogWaiting();
 
-                new GoToChatActivity(room.getId()).startActivity();
+                if (room.getId() != FragmentChat.lastChatRoomId) {
+                    new GoToChatActivity(room.getId()).startActivity();
+                }
 
             }
 
@@ -877,14 +924,13 @@ public class HelperUrl {
 
                         RealmRoom realmRoom1 = RealmRoom.putOrUpdate(room, realm);
                         realmRoom1.setDeleted(true);                            // if in chat activity join to room set deleted goes to false
-                        G.deletedRoomList.add(realmRoom1.getId());
                     }
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
                     public void onSuccess() {
-
-                        new GoToChatActivity(room.getId()).setfromUserLink(true).setisNotJoin(true).setuserName(username).startActivity();
-
+                        if (room.getId() != FragmentChat.lastChatRoomId) {
+                            new GoToChatActivity(room.getId()).setfromUserLink(true).setisNotJoin(true).setuserName(username).startActivity();
+                        }
                         realm.close();
                     }
                 }, new Realm.Transaction.OnError() {
@@ -896,8 +942,6 @@ public class HelperUrl {
             }
         });
     }
-
-    //************************************  go to room by urlLink   *********************************************************************
 
     public static void getLinkinfo(final Intent intent, final Activity activity) {
 
@@ -935,6 +979,8 @@ public class HelperUrl {
         }
     }
 
+    //************************************  go to room by urlLink   *********************************************************************
+
     private static void getToRoom(Uri path) {
 
         if (path != null) {
@@ -966,5 +1012,14 @@ public class HelperUrl {
         } else {
             closeDialogWaiting();
         }
+    }
+
+    enum linkType {
+        hash, atSighn, igapLink, igapResolve, webLink
+
+    }
+
+    public enum ChatEntry {
+        chat, profile
     }
 }

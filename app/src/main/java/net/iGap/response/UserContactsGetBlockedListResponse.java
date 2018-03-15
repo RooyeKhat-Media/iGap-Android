@@ -10,14 +10,16 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-import java.util.List;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserContactsGetBlockedList;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRegisteredInfoFields;
+
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class UserContactsGetBlockedListResponse extends MessageHandler {
 

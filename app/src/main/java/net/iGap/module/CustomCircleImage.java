@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
 import net.iGap.G;
 import net.iGap.R;
 
@@ -87,7 +88,8 @@ public class CustomCircleImage extends View {
         postInvalidate();
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         for (int i = 0; i < count; i++) {

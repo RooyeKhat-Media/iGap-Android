@@ -10,8 +10,9 @@
 
 package net.iGap.request;
 
-import java.util.ArrayList;
 import net.iGap.proto.ProtoChannelGetMessagesStats;
+
+import java.util.ArrayList;
 
 public class RequestChannelGetMessagesStats {
 

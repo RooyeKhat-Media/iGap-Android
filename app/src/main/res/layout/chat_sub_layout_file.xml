@@ -1,105 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatSubLayoutFile"
-    android:layout_width="match_parent"
-    android:clickable="true"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/dp4"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/chatSubLayoutFile"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:paddingBottom="@dimen/dp4">
+
   <LinearLayout
-      android:id="@+id/mainContainer"
+    android:id="@+id/mainContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:ignore="UselessParent">
+
+    <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      tools:ignore="UselessParent"
-      >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+      android:orientation="vertical">
+
       <LinearLayout
-          android:id="@+id/contentContainer"
-          style="@style/ChatMessages.CardView"
-          >
+        android:id="@+id/contentContainer"
+        style="@style/ChatMessages.CardView">
+
         <LinearLayout
-            android:id="@+id/m_container"
+          android:id="@+id/m_container"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-          <LinearLayout
+            android:gravity="center_vertical"
+            android:layoutDirection="ltr"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/messageContainerPadding">
+
+            <FrameLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:layoutDirection="ltr"
-              android:orientation="horizontal"
-              android:paddingRight="@dimen/messageContainerPadding"
-              >
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                >
+              android:layout_gravity="center"
+              android:padding="10dp">
+
               <ImageView
-                  android:id="@+id/thumbnail"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:background="@android:color/transparent"
-                  android:scaleType="fitXY"
-                  app:srcCompat="@drawable/file_icon"
-                  />
-              <include
-                  layout="@layout/msg_progress_item"
-                  android:id="@+id/progress"
-                  android:layout_width="56dp"
-                  android:layout_height="56dp"
-                  android:layout_gravity="center"
-                  />
-            </FrameLayout>
-            <LinearLayout
+                android:id="@+id/thumbnail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/file_icon" />
+
+              <include
+                android:id="@+id/progress"
+                layout="@layout/msg_progress_item"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center" />
+            </FrameLayout>
+
+            <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
               <TextView
-                  android:id="@+id/songArtist"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:ellipsize="middle"
-                  android:maxLines="1"
-                  android:maxWidth="@dimen/dp180"
-                  android:singleLine="true"
-                  android:text="file_name.ext"
-                  android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                  android:textColor="@color/black90"
-                  android:textSize="@dimen/dp14"
-                  android:textStyle="bold"
-                  />
+                android:id="@+id/songArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxLines="1"
+                android:maxWidth="@dimen/dp180"
+                android:singleLine="true"
+                android:text="file_name.ext"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textColor="@color/black90"
+                android:textSize="@dimen/dp14"
+                android:textStyle="bold" />
+
               <TextView
-                  android:id="@+id/fileSize"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="3dp"
-                  android:maxLines="1"
-                  android:singleLine="true"
-                  android:text="3.2 mb"
-                  android:textAllCaps="true"
-                  android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                  android:textColor="@color/black90"
-                  android:textSize="11sp"
-                  />
+                android:id="@+id/fileSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="3.2 mb"
+                android:textAllCaps="true"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:textColor="@color/black90"
+                android:textSize="11sp" />
             </LinearLayout>
           </LinearLayout>
+
           <LinearLayout
-              android:id="@+id/csliwt_layout_container_message"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              ></LinearLayout>
+            android:id="@+id/csliwt_layout_container_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>

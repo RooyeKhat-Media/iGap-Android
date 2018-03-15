@@ -13,8 +13,7 @@ package net.iGap.adapter.items.chat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperRadius;
@@ -22,6 +21,10 @@ import net.iGap.interfaces.IMessageItem;
 import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 import static net.iGap.module.AndroidUtils.suitablePath;
 
@@ -88,6 +91,11 @@ public class ImageItem extends AbstractMessage<ImageItem, ImageItem.ViewHolder> 
         });
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
@@ -99,10 +107,5 @@ public class ImageItem extends AbstractMessage<ImageItem, ImageItem.ViewHolder> 
             super(view);
             //image = (ReserveSpaceRoundedImageView) view.findViewById(R.id.thumbnail);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

@@ -62,7 +62,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
     public void onLoadThumbnailFromLocal(final ViewHolder holder, final String tag, final String localPath, LocalFileType fileType) {
         super.onLoadThumbnailFromLocal(holder, tag, localPath, fileType);
 
-        if (holder.musicSeekbar.getTag().equals(mMessage.messageID)) {
+        if (holder.musicSeekbar.getTag().equals(holder.mMessageID)) {
             if (!TextUtils.isEmpty(localPath) && new File(localPath).exists()) {
 
                 holder.mFilePath = localPath;
@@ -90,6 +90,12 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             ((ViewGroup) holder.itemView).addView(ViewMaker.getAudioItem());
         }
 
+        if (mMessage.forwardedFrom != null) {
+            holder.mMessageID = mMessage.forwardedFrom.getMessageId() + "";
+        } else {
+            holder.mMessageID = mMessage.messageID;
+        }
+
         holder.btnPlayMusic = (MaterialDesignTextView) holder.itemView.findViewById(R.id.txt_play_music);
         holder.txt_Timer = (TextView) holder.itemView.findViewById(R.id.csla_txt_timer);
         holder.musicSeekbar = (SeekBar) holder.itemView.findViewById(R.id.csla_seekBar1);
@@ -97,13 +103,13 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
         holder.thumbnail = (ImageView) holder.itemView.findViewById(R.id.thumbnail);
         holder.fileSize = (TextView) holder.itemView.findViewById(R.id.fileSize);
         holder.songArtist = (TextView) holder.itemView.findViewById(R.id.songArtist);
-        holder.musicSeekbar.setTag(mMessage.messageID);
+        holder.musicSeekbar.setTag(holder.mMessageID);
 
         holder.complete = new OnComplete() {
             @Override
             public void complete(final boolean result, String messageOne, final String MessageTow) {
 
-                if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
+                if (holder.musicSeekbar.getTag().equals(holder.mMessageID) && holder.mMessageID.equals(MusicPlayer.messageId)) {
                     if (messageOne.equals("play")) {
                         holder.btnPlayMusic.setText(R.string.md_play_arrow);
                     } else if (messageOne.equals("pause")) {
@@ -115,7 +121,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                             G.handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (mMessage.messageID.equals(MusicPlayer.messageId)) {
+                                    if (holder.mMessageID.equals(MusicPlayer.messageId)) {
 
                                         holder.txt_Timer.setText(MessageTow + "/" + holder.mTimeMusic);
 
@@ -148,12 +154,12 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             }
         };
 
-        holder.itemView.findViewById(R.id.mainContainer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        holder.itemView.findViewById(R.id.mainContainer).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         holder.btnPlayMusic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,7 +276,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
 
         holder.txt_Timer.setText("00/" + MusicPlayer.milliSecondsToTimer(_st));
 
-        if (holder.musicSeekbar.getTag().equals(mMessage.messageID) && mMessage.messageID.equals(MusicPlayer.messageId)) {
+        if (holder.musicSeekbar.getTag().equals(holder.mMessageID) && holder.mMessageID.equals(MusicPlayer.messageId)) {
             MusicPlayer.onCompleteChat = holder.complete;
 
             holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
@@ -289,8 +295,6 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             holder.musicSeekbar.setProgress(0);
             holder.btnPlayMusic.setText(R.string.md_play_arrow);
         }
-
-        holder.mMessageID = mMessage.messageID;
 
         if (HelperCalander.isPersianUnicode) {
             (holder.txt_Timer).setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txt_Timer.getText().toString()));
@@ -326,6 +330,11 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.grayNewDarker));
             holder.fileName.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
         }
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -419,10 +428,5 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             //    }
             //});
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

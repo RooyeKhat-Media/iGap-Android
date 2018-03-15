@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
 import net.iGap.R;
 import net.iGap.databinding.FragmentCreateChannelBinding;
 import net.iGap.module.AppUtils;

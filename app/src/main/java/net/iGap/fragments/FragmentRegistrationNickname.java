@@ -27,15 +27,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityCrop;
 import net.iGap.databinding.FragmentRegistrationNicknameBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperError;
+import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
@@ -48,13 +49,13 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.EditTextAdjustPan;
 import net.iGap.module.FileUploadStructure;
-import net.iGap.module.IntentRequests;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestUserAvatarAdd;
 import net.iGap.viewmodel.FragmentRegistrationNicknameViewModel;
 
+import java.io.IOException;
+
 import static android.app.Activity.RESULT_OK;
-import static net.iGap.module.AttachFile.request_code_image_from_gallery_single_select;
 
 public class FragmentRegistrationNickname extends BaseFragment implements OnUserAvatarResponse {
 
@@ -120,15 +121,44 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
+
+        FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
+            @Override
+            public void result(String path, String message) {
+
+                pathImageUser = path;
+
+                int lastUploadedAvatarId = idAvatar + 1;
+
+                fragmentRegistrationNicknameViewModel.showProgressBar();
+                HelperUploadFile.startUploadTaskAvatar(pathImageUser, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
+                    @Override
+                    public void OnProgress(int progress, FileUploadStructure struct) {
+                        if (progress < 100) {
+                            fragmentRegistrationNicknameBinding.prg.setProgress(progress);
+                        } else {
+                            new RequestUserAvatarAdd().userAddAvatar(struct.token);
+                        }
+                    }
+
+                    @Override
+                    public void OnError() {
+                        fragmentRegistrationNicknameViewModel.hideProgressBar();
+                    }
+                });
+            }
+        };
 
     }
 
@@ -152,62 +182,21 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
         if (requestCode == AttachFile.request_code_TAKE_PICTURE && resultCode == RESULT_OK) {// result for camera
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, true)).setReplace(false).setStateLoss(true).load();
 
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true);
-                intent.putExtra("IMAGE_CAMERA", AttachFile.mCurrentPhotoPath);
-                intent.putExtra("TYPE", "camera");
-                intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
-                startActivityForResult(intent, IntentRequests.REQ_CROP);
             } else {
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                ImageHelper.correctRotateImage(AttachFile.imagePath, true);
-                intent.putExtra("IMAGE_CAMERA", AttachFile.imagePath);
-                intent.putExtra("TYPE", "camera");
-                intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
-                startActivityForResult(intent, IntentRequests.REQ_CROP);
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, true)).setReplace(false).setStateLoss(true).load();
+                ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
             }
-        } else if (requestCode == request_code_image_from_gallery_single_select && resultCode == RESULT_OK) {// result for gallery
+        } else if (requestCode == AttachFile.request_code_image_from_gallery_single_select && resultCode == RESULT_OK) {// result for gallery
             if (data != null) {
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
                 if (data.getData() == null) {
                     return;
                 }
-                intent.putExtra("IMAGE_CAMERA", AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image));
-                intent.putExtra("TYPE", "gallery");
-                intent.putExtra("PAGE", "profile");
-                intent.putExtra("ID", fragmentRegistrationNicknameViewModel.userId);
-                startActivityForResult(intent, IntentRequests.REQ_CROP);
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, true)).setReplace(false).setStateLoss(true).load();
             }
-        } else if (requestCode == IntentRequests.REQ_CROP && resultCode == RESULT_OK) {
-            if (data != null) {
-                pathImageUser = data.getData().toString();
-            }
-
-            int lastUploadedAvatarId = idAvatar + 1;
-
-            fragmentRegistrationNicknameViewModel.showProgressBar();
-            HelperUploadFile.startUploadTaskAvatar(pathImageUser, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
-                @Override
-                public void OnProgress(int progress, FileUploadStructure struct) {
-                    if (progress < 100) {
-                        fragmentRegistrationNicknameBinding.prg.setProgress(progress);
-                    } else {
-                        new RequestUserAvatarAdd().userAddAvatar(struct.token);
-                    }
-                }
-
-                @Override
-                public void OnError() {
-                    fragmentRegistrationNicknameViewModel.hideProgressBar();
-                }
-            });
         }
     }
-
-
 
 
     public void useCamera() {
@@ -250,46 +239,46 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
 
     private void startDialog() {
         MaterialDialog.Builder imageDialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture))
-            .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-            .items(R.array.profile)
-            .itemsCallback(new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .items(R.array.profile)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(final MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                switch (which) {
-                    case 0: {
-                        useGallery();
-                        dialog.dismiss();
-                        break;
-                    }
-                    case 1: {
-                        if (G.context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-                            try {
-                                HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
-                                    @Override
-                                    public void Allow() {
-                                        // this dialog show 2 way for choose image : gallery and camera
-                                        dialog.dismiss();
-                                        useCamera();
-                                    }
-
-                                    @Override
-                                    public void deny() {
-
-                                    }
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                        switch (which) {
+                            case 0: {
+                                useGallery();
+                                dialog.dismiss();
+                                break;
                             }
-                        } else {
+                            case 1: {
+                                if (G.context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                                    try {
+                                        HelperPermission.getCameraPermission(G.fragmentActivity, new OnGetPermission() {
+                                            @Override
+                                            public void Allow() {
+                                                // this dialog show 2 way for choose image : gallery and camera
+                                                dialog.dismiss();
+                                                useCamera();
+                                            }
 
-                            HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.please_check_your_camera), false);
+                                            @Override
+                                            public void deny() {
+
+                                            }
+                                        });
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+
+                                    HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.please_check_your_camera), false);
+                                }
+                                break;
+                            }
                         }
-                        break;
                     }
-                }
-            }
-            });
+                });
         if (!(G.fragmentActivity).isFinishing()) {
             imageDialog.show();
         }

@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    tools:ignore="MissingPrefix"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="horizontal"
+  tools:ignore="MissingPrefix"
 
-    >
-
-  <TextView
-      android:id="@+id/txtIconTurnOnOrOff"
-      android:layout_width="@dimen/dp48"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:text="@string/md_gap_eye_off"
-      android:textAppearance="@style/TextIconAppearance_toolbar"
-      android:textColor="@color/gray_4c"
-      />
+  >
 
   <TextView
-      android:id="@+id/txtMapRegister"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="match_parent"
-      android:gravity="start|center_vertical"
-      android:text="@string/turn_off_map"
-      android:textColor="@color/gray_4c"
-      android:textSize="@dimen/dp16"
-      fontPath="fonts/IRANSansMobile_Bold.ttf"
-      android:layout_gravity="center"
-      />
+    android:id="@+id/txtIconTurnOnOrOff"
+    android:layout_width="@dimen/dp48"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:text="@string/md_gap_eye_off"
+    android:textAppearance="@style/TextIconAppearance_toolbar"
+    android:textColor="@color/gray_4c" />
+
+  <TextView
+    android:id="@+id/txtMapRegister"
+    fontPath="fonts/IRANSansMobile_Bold.ttf"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_weight="1"
+    android:gravity="start|center_vertical"
+    android:text="@string/turn_off_map"
+    android:textColor="@color/gray_4c"
+    android:textSize="@dimen/dp16" />
 
   <ToggleButton
-      android:id="@+id/btnMapChangeRegistration"
-      android:layout_width="@dimen/dp52"
-      android:layout_height="@dimen/dp52"
-      android:background="@drawable/st_switch_button"
-      android:textOff=""
-      android:textOn=""
-      android:checked="true"
-      />
+    android:id="@+id/btnMapChangeRegistration"
+    android:layout_width="@dimen/dp52"
+    android:layout_height="@dimen/dp52"
+    android:background="@drawable/st_switch_button"
+    android:checked="true"
+    android:textOff=""
+    android:textOn="" />
 
 
 </LinearLayout>

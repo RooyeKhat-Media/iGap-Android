@@ -1,104 +1,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/rg_whit_background"
+  android:clickable="true"
+  android:orientation="vertical">
+
+  <!-- Pretty hint text, and maxLines -->
+
+  <RelativeLayout
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="@color/rg_whit_background"
-    android:orientation="vertical">
+    android:layout_height="@dimen/dp52"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal">
 
-    <!-- Pretty hint text, and maxLines -->
+    <android.support.v7.widget.SearchView
+      android:id="@+id/rg_edtSearch_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentRight="true"
+      android:iconifiedByDefault="false"
+      android:imeOptions="flagNoExtractUi"
+      android:padding="2dp"
+      android:paddingRight="24dp"
+      android:queryHint="Search...."
+      android:theme="@style/MySearch"
+      app:queryHint=""
+      app:searchHintIcon="@null" />
 
-    <RelativeLayout
+    <TextView
 
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal">
+      android:id="@+id/rg_txt_titleToolbar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="left|center_vertical"
+      android:paddingLeft="@dimen/dp24"
+      android:text="@string/rg_Select_Country"
+      android:textColor="@color/black_register"
+      android:textSize="@dimen/dp20"
+      android:textStyle="bold" />
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/rg_edtSearch_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:iconifiedByDefault="false"
-            android:imeOptions="flagNoExtractUi"
-            android:padding="2dp"
-            android:paddingRight="24dp"
-            android:queryHint="Search...."
-            android:theme="@style/MySearch"
-            app:queryHint=""
-            app:searchHintIcon="@null" />
+  </RelativeLayout>
 
-        <TextView
+  <View
+    android:id="@+id/rg_borderButton"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/background_editText"
+    android:visibility="gone" />
 
-            android:id="@+id/rg_txt_titleToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/dp24"
-            android:text="@string/rg_Select_Country"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp20"
-            android:textStyle="bold" />
+  <ListView
+    android:id="@+id/lstContent"
+    android:layout_width="fill_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1"
+    android:background="@color/structCountry"
+    android:choiceMode="singleChoice"
+    android:divider="@color/rg_background_editText"
+    android:dividerHeight="1dp"
+    android:fadeScrollbars="false"
+    android:scrollbarSize="@dimen/dp4"
+    android:scrollbarThumbVertical="@color/rg_start_background" />
 
-    </RelativeLayout>
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/rg_whit_background" />
 
-    <View
-        android:id="@+id/rg_borderButton"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_editText"
-        android:visibility="gone" />
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp52"
+    android:gravity="right"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
 
-    <ListView
-        android:id="@+id/lstContent"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:background="@color/structCountry"
-        android:choiceMode="singleChoice"
-        android:divider="@color/rg_background_editText"
-        android:dividerHeight="1dp"
-        android:fadeScrollbars="false"
-        android:scrollbarSize="@dimen/dp4"
-        android:scrollbarThumbVertical="@color/rg_start_background" />
+    <!--<TextView-->
+    <!--android:id="@+id/rg_txt_cancelDialog"-->
+    <!--android:layout_width="@dimen/dp60"-->
+    <!--android:layout_height="@dimen/dp36"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:text="@string/B_cancel"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/toolbar_background"-->
+    <!--android:textSize="@dimen/sp14"-->
+    <!--android:textStyle="bold" />-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/rg_whit_background" />
+    <TextView
+      android:id="@+id/rg_txt_okDialog"
+      android:layout_width="@dimen/dp60"
+      android:layout_height="@dimen/dp36"
+      android:layout_marginLeft="@dimen/dp8"
+      android:background="@android:color/transparent"
+      android:gravity="center"
+      android:text="@string/B_cancel"
+      android:textColor="@color/toolbar_background"
+      android:textSize="@dimen/dp14"
+      android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:gravity="right"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp8">
-
-        <!--<TextView-->
-        <!--android:id="@+id/rg_txt_cancelDialog"-->
-        <!--android:layout_width="@dimen/dp60"-->
-        <!--android:layout_height="@dimen/dp36"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:text="@string/B_cancel"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@color/toolbar_background"-->
-        <!--android:textSize="@dimen/sp14"-->
-        <!--android:textStyle="bold" />-->
-
-        <TextView
-            android:id="@+id/rg_txt_okDialog"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="@dimen/dp36"
-            android:layout_marginLeft="@dimen/dp8"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="@string/B_cancel"
-            android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/dp14"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

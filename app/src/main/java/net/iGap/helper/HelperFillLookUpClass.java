@@ -168,6 +168,7 @@ public class HelperFillLookUpClass {
         lookupMap.put(30423, "ProtoChannelGetMessagesStats.ChannelGetMessagesStatsResponse");
         lookupMap.put(30424, "ProtoChannelAddMessageReaction.ChannelAddMessageReactionResponse");
         lookupMap.put(30425, "ProtoChannelEditMessage.ChannelEditMessageResponse");
+        lookupMap.put(30426, "ProtoChannelUpdateReactionStatus.ChannelUpdateReactionStatusResponse");
 
         // Info 5xx , 305xx
         lookupMap.put(30500, "ProtoInfoLocation.InfoLocationResponse");

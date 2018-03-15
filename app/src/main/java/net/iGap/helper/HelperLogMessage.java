@@ -17,7 +17,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -32,20 +32,12 @@ import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
 
+import io.realm.Realm;
+
 /**
  * return correct log message with author and target
  */
 public class HelperLogMessage {
-
-    public static class StructLog {
-
-        long roomId;
-        ProtoGlobal.RoomMessage.Author author;
-        ProtoGlobal.RoomMessageLog messageLog;
-        long messageID;
-
-        long updateID;
-    }
 
     public static void updateLogMessageAfterGetUserInfo(final long id) {
 
@@ -536,5 +528,15 @@ public class HelperLogMessage {
             RealmRoom.needUpdateRoomInfo(roomId);
         }
         realm.close();
+    }
+
+    public static class StructLog {
+
+        long roomId;
+        ProtoGlobal.RoomMessage.Author author;
+        ProtoGlobal.RoomMessageLog messageLog;
+        long messageID;
+
+        long updateID;
     }
 }

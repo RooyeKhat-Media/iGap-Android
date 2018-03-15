@@ -10,9 +10,10 @@
 
 package net.iGap.interfaces;
 
-import java.util.ArrayList;
 import net.iGap.module.structs.StructListOfContact;
 
+import java.util.ArrayList;
+
 public interface OnContactFetchForServer {
-    void onFetch(ArrayList<StructListOfContact> contacts);
+    void onFetch(ArrayList<StructListOfContact> contacts, boolean getContactList);
 }

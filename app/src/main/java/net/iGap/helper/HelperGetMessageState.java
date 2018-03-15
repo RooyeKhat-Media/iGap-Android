@@ -10,13 +10,14 @@
 
 package net.iGap.helper;
 
+import net.iGap.Config;
+import net.iGap.G;
+import net.iGap.request.RequestChannelGetMessagesStats;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import net.iGap.Config;
-import net.iGap.G;
-import net.iGap.request.RequestChannelGetMessagesStats;
 
 /**
  * helper for manage count of message and latest time
@@ -32,7 +33,7 @@ public class HelperGetMessageState {
     /**
      * check limit and timeout for sending getMessageState
      *
-     * @param roomId currentRoomId
+     * @param roomId    currentRoomId
      * @param messageId messageId that show in view
      */
 
@@ -92,7 +93,8 @@ public class HelperGetMessageState {
             sendMessageStateRequest();
         } else {
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     checkLoop();
                 }
             }, Config.GET_MESSAGE_STATE_TIME_OUT_CHECKING);

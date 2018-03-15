@@ -91,11 +91,6 @@ public class SwipeBackLayout extends FrameLayout {
 
     private Context context;
     private EdgeLevel edgeLevel;
-
-    public enum EdgeLevel {
-        MAX, MIN, MED
-    }
-
     /**
      * The set of listeners to be sent events through.
      */
@@ -156,12 +151,12 @@ public class SwipeBackLayout extends FrameLayout {
         validateEdgeLevel(0, edgeLevel);
     }
 
-    public void setEdgeLevel(int widthPixel) {
-        validateEdgeLevel(widthPixel, null);
-    }
-
     public EdgeLevel getEdgeLevel() {
         return edgeLevel;
+    }
+
+    public void setEdgeLevel(int widthPixel) {
+        validateEdgeLevel(widthPixel, null);
     }
 
     private void validateEdgeLevel(int widthPixel, EdgeLevel edgeLevel) {
@@ -187,9 +182,6 @@ public class SwipeBackLayout extends FrameLayout {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
-
-    @IntDef({EDGE_LEFT, EDGE_RIGHT, EDGE_ALL}) @Retention(RetentionPolicy.SOURCE) public @interface EdgeOrientation {
     }
 
     /**
@@ -231,34 +223,6 @@ public class SwipeBackLayout extends FrameLayout {
             return;
         }
         mListeners.remove(listener);
-    }
-
-    public interface OnSwipeListener {
-        /**
-         * Invoke when state change
-         *
-         * @param state flag to describe scroll state
-         * @see #STATE_IDLE
-         * @see #STATE_DRAGGING
-         * @see #STATE_SETTLING
-         */
-        void onDragStateChange(int state);
-
-        /**
-         * Invoke when edge touched
-         *
-         * @param oritentationEdgeFlag edge flag describing the edge being touched
-         * @see #EDGE_LEFT
-         * @see #EDGE_RIGHT
-         */
-        void onEdgeTouch(int oritentationEdgeFlag);
-
-        /**
-         * Invoke when scroll percent over the threshold for the first time
-         *
-         * @param scrollPercent scroll percent of this view
-         */
-        void onDragScrolled(float scrollPercent);
     }
 
     @Override
@@ -355,6 +319,56 @@ public class SwipeBackLayout extends FrameLayout {
 
     public void setEnableGesture(boolean enable) {
         mEnable = enable;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (!mEnable) return super.onInterceptTouchEvent(ev);
+        return mHelper.shouldInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!mEnable) return super.onTouchEvent(event);
+        mHelper.processTouchEvent(event);
+        return true;
+    }
+
+    public enum EdgeLevel {
+        MAX, MIN, MED
+    }
+
+    @IntDef({EDGE_LEFT, EDGE_RIGHT, EDGE_ALL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface EdgeOrientation {
+    }
+
+    public interface OnSwipeListener {
+        /**
+         * Invoke when state change
+         *
+         * @param state flag to describe scroll state
+         * @see #STATE_IDLE
+         * @see #STATE_DRAGGING
+         * @see #STATE_SETTLING
+         */
+        void onDragStateChange(int state);
+
+        /**
+         * Invoke when edge touched
+         *
+         * @param oritentationEdgeFlag edge flag describing the edge being touched
+         * @see #EDGE_LEFT
+         * @see #EDGE_RIGHT
+         */
+        void onEdgeTouch(int oritentationEdgeFlag);
+
+        /**
+         * Invoke when scroll percent over the threshold for the first time
+         *
+         * @param scrollPercent scroll percent of this view
+         */
+        void onDragScrolled(float scrollPercent);
     }
 
     class ViewDragCallback extends ViewDragHelper.Callback {
@@ -493,18 +507,5 @@ public class SwipeBackLayout extends FrameLayout {
             }
         }
 
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (!mEnable) return super.onInterceptTouchEvent(ev);
-        return mHelper.shouldInterceptTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!mEnable) return super.onTouchEvent(event);
-        mHelper.processTouchEvent(event);
-        return true;
     }
 }

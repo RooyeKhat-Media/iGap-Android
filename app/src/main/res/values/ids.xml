@@ -50,6 +50,7 @@
   <item name="cslr_txt_prefix_forward" type="id" />
   <item name="cslr_txt_forward_from" type="id" />
   <item name="lyt_vote" type="id" />
+  <item name="lyt_vote_sub" type="id" />
   <item name="lyt_vote_up" type="id" />
   <item name="txt_vote_up" type="id" />
   <item name="img_vote_up" type="id" />
@@ -63,6 +64,7 @@
   <item name="cs_img_contact_picture" type="id" />
   <item name="cs_txt_chat_icon" type="id" />
   <item name="cs_txt_contact_name" type="id" />
+  <item name="cs_img_verify_room" type="id" />
   <item name="lyt_last_message_room" type="id" />
   <item name="cs_txt_last_message_sender" type="id" />
   <item name="cs_txt_last_message" type="id" />
@@ -80,6 +82,8 @@
   <item name="title" type="id" />
   <item name="subtitle" type="id" />
   <item name="swipeRevealLayout" type="id" />
+  <item name="rootRegisterContact" type="id" />
+  <item name="animateCheckBoxContact" type="id" />
 
 
 </resources>

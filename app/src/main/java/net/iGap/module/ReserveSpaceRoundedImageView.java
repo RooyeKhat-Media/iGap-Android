@@ -13,7 +13,9 @@ package net.iGap.module;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+
 import com.makeramen.roundedimageview.RoundedImageView;
+
 import net.iGap.proto.ProtoGlobal;
 
 /**
@@ -23,6 +25,14 @@ import net.iGap.proto.ProtoGlobal;
 public class ReserveSpaceRoundedImageView extends RoundedImageView {
     private int reservedWidth = 0;
     private int reservedHeight = 0;
+
+    public ReserveSpaceRoundedImageView(Context context) {
+        super(context);
+    }
+
+    public ReserveSpaceRoundedImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     public int[] reserveSpace(float width, float height, ProtoGlobal.Room.Type roomType) {
         final int[] dimens = AndroidUtils.scaleDimenWithSavedRatio(getContext(), width, height, roomType);
@@ -39,18 +49,11 @@ public class ReserveSpaceRoundedImageView extends RoundedImageView {
 
             }
         }
-        return new int[] { 0, 0 };
+        return new int[]{0, 0};
     }
 
-    public ReserveSpaceRoundedImageView(Context context) {
-        super(context);
-    }
-
-    public ReserveSpaceRoundedImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         setMeasuredDimension(reservedWidth, reservedHeight);

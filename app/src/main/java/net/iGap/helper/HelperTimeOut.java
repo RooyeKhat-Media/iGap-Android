@@ -18,9 +18,9 @@ import static net.iGap.G.latestResponse;
 public class HelperTimeOut {
 
     /**
-     * @param firstTime if don't fill first time automatically use from currentTimeMillis
+     * @param firstTime  if don't fill first time automatically use from currentTimeMillis
      * @param secondTime latest time
-     * @param timeout if don't fill time use from Config.DEFAULT_TIME_OUT(10 second)
+     * @param timeout    if don't fill time use from Config.DEFAULT_TIME_OUT(10 second)
      */
 
     public static boolean timeoutChecking(long firstTime, long secondTime, long timeout) {

@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/chatSubLayoutLog"
-    android:clickable="true"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+  android:id="@+id/chatSubLayoutLog"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true">
 
-    <TextView
-        android:id="@+id/csll_txt_log_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/dp12"
-        android:background="@drawable/recangle_gray_tranceparent"
-        android:paddingBottom="@dimen/dp4"
-        android:paddingLeft="@dimen/dp24"
-        android:paddingRight="@dimen/dp24"
-        android:paddingTop="@dimen/dp4"
-        android:gravity="center"
-        android:singleLine="false"
-        android:text="Log"
-        android:textColor="#4a5d5c"
-        android:textSize="@dimen/dp12"
-        android:textAllCaps="false"
-        />
+  <TextView
+    android:id="@+id/csll_txt_log_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="@dimen/dp12"
+    android:background="@drawable/recangle_gray_tranceparent"
+    android:gravity="center"
+    android:paddingBottom="@dimen/dp4"
+    android:paddingLeft="@dimen/dp24"
+    android:paddingRight="@dimen/dp24"
+    android:paddingTop="@dimen/dp4"
+    android:singleLine="false"
+    android:text="Log"
+    android:textAllCaps="false"
+    android:textColor="#4a5d5c"
+    android:textSize="@dimen/dp12" />
 </FrameLayout>

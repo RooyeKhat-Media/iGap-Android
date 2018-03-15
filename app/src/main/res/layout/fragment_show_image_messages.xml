@@ -1,108 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
 
-    android:clickable="true"
-                android:background="@android:color/black">
+  android:background="@android:color/black"
+  android:clickable="true">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never">
+
+  </android.support.v7.widget.RecyclerView>
+
+  <LinearLayout
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp60"
+    android:background="#55000000"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal">
+
+    <net.iGap.libs.rippleeffect.RippleView
+      android:id="@+id/back"
+      rv_centered="true"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:rv_alpha="200"
+      app:rv_centered="true"
+      app:rv_rippleDuration="0"
+      app:rv_ripplePadding="5dp">
+
+      <net.iGap.module.MaterialDesignTextView
+        android:layout_width="@dimen/dp52"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="#55000000"
+        android:background="@null"
         android:gravity="center"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal">
+        android:text="@string/md_back_arrow"
+        android:textAppearance="@style/TextIconAppearance_toolbar"
+        android:textColor="@android:color/white" />
+    </net.iGap.libs.rippleeffect.RippleView>
 
-      <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/back"
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp">
+    <TextView
+      android:id="@+id/count"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center|left"
+      android:text="@string/d_of_d"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/dp18" />
 
-        <net.iGap.module.MaterialDesignTextView
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="center"
-                android:text="@string/md_back_arrow"
-                android:textColor="@android:color/white"
-                />
-      </net.iGap.libs.rippleeffect.RippleView>
+    <net.iGap.libs.rippleeffect.RippleView
+      android:id="@+id/menu"
+      rv_centered="true"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:rv_alpha="200"
+      app:rv_centered="true"
+      app:rv_rippleDuration="100"
+      app:rv_ripplePadding="5dp">
 
-        <TextView
-            android:id="@+id/count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="@string/d_of_d"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp18"
-            />
+      <net.iGap.module.MaterialDesignTextView
+        android:layout_width="@dimen/dp52"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/md_show_more_button"
+        android:textAppearance="@style/TextIconAppearance_toolbar"
+        android:textColor="@android:color/white" />
+    </net.iGap.libs.rippleeffect.RippleView>
+  </LinearLayout>
 
-      <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/menu"
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="100"
-            app:rv_ripplePadding="5dp">
-
-        <net.iGap.module.MaterialDesignTextView
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="center"
-                android:text="@string/md_show_more_button"
-                android:textColor="@android:color/white"
-                />
-      </net.iGap.libs.rippleeffect.RippleView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#55000000"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/dp4"
-        android:paddingLeft="@dimen/dp32">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="#55000000"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp4"
+    android:paddingLeft="@dimen/dp32">
 
 
-        <TextView
-            android:id="@+id/fileName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp14"
-            />
+    <TextView
+      android:id="@+id/fileName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/dp14" />
 
-        <TextView
-            android:id="@+id/messageTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp14"
-            />
-    </LinearLayout>
+    <TextView
+      android:id="@+id/messageTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/dp14" />
+  </LinearLayout>
 </RelativeLayout>

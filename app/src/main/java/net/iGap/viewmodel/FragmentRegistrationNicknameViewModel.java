@@ -18,7 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.view.WindowManager;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -31,21 +31,21 @@ import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserProfileSetNickname;
 
+import io.realm.Realm;
+
 import static net.iGap.G.context;
 
 public class FragmentRegistrationNicknameViewModel {
 
     public final static String ARG_USER_ID = "arg_user_id";
-    private FragmentRegistrationNicknameBinding fragmentRegistrationNicknameBinding;
-    private TextInputLayout txtInputNickName;
     public long userId = 0;
-
-
     public ObservableField<String> callBackEdtNikeName = new ObservableField<>("");
     public ObservableField<String> edtNikeNameHint = new ObservableField<>(G.context.getResources().getString(R.string.pu_nikname_profileUser));
     public ObservableInt prgVisibility = new ObservableInt(View.GONE);
     public ObservableInt edtNikeNameColor = new ObservableInt(G.context.getResources().getColor(R.color.black_register));
     public ObservableInt lineBelowEditTextColor = new ObservableInt(G.context.getResources().getColor(R.color.border_editText));
+    private FragmentRegistrationNicknameBinding fragmentRegistrationNicknameBinding;
+    private TextInputLayout txtInputNickName;
 
 
     public FragmentRegistrationNicknameViewModel(Bundle arguments, FragmentRegistrationNicknameBinding fragmentRegistrationNicknameBinding) {
@@ -97,7 +97,6 @@ public class FragmentRegistrationNicknameViewModel {
         realm.close();
 
     }
-
 
 
     private void getInfo(Bundle arguments) {

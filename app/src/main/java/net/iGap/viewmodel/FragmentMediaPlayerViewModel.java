@@ -19,9 +19,9 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMediaPlayer;
@@ -36,12 +36,10 @@ import net.iGap.libs.ripplesoundplayer.util.PaintUtil;
 import net.iGap.module.DialogAnimation;
 import net.iGap.module.MusicPlayer;
 
+import java.io.File;
+import java.io.IOException;
+
 public class FragmentMediaPlayerViewModel {
-
-
-
-    private RippleVisualizerView rippleVisualizerView;
-    private View v;
 
 
     public ObservableField<String> callBackMusicName = new ObservableField<>(G.context.getResources().getString(R.string.music_name));
@@ -59,6 +57,15 @@ public class FragmentMediaPlayerViewModel {
     public ObservableInt btnReplayMusicColor = new ObservableInt(G.context.getResources().getColor(R.color.black));
     public ObservableInt seekBar1 = new ObservableInt();
     public ObservableBoolean txtMusicInfoSingleLine = new ObservableBoolean(true);
+    private RippleVisualizerView rippleVisualizerView;
+    private View v;
+
+    public FragmentMediaPlayerViewModel(View v) {
+
+        this.v = v;
+
+        getInfo();
+    }
 
     public void onClickRippleBack(View v) {
 
@@ -90,15 +97,6 @@ public class FragmentMediaPlayerViewModel {
 
     public void onClickBtnPreviousMusic(View v) {
         MusicPlayer.previousMusic();
-    }
-
-
-
-    public FragmentMediaPlayerViewModel(View v) {
-
-        this.v = v;
-
-        getInfo();
     }
 
     private void getInfo() {
@@ -272,7 +270,8 @@ public class FragmentMediaPlayerViewModel {
 
             if (MusicPlayer.mediaThumpnail != null) {
 
-                if (FragmentMediaPlayer.onSetImage != null) FragmentMediaPlayer.onSetImage.setImage();
+                if (FragmentMediaPlayer.onSetImage != null)
+                    FragmentMediaPlayer.onSetImage.setImage();
 
                 imgMusicPicture.set(View.VISIBLE);
                 imgMusIciconDefault.set(View.GONE);
@@ -287,7 +286,6 @@ public class FragmentMediaPlayerViewModel {
         if (HelperCalander.isPersianUnicode) {
             callBackTxtMusicTime.set(HelperCalander.convertToUnicodeFarsiNumber(callBackTxtMusicTime.get().toString()));
         }
-
 
 
         if (rippleVisualizerView != null) {

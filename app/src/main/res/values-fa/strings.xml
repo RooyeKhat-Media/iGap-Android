@@ -125,7 +125,7 @@
   <string name="igap">"آی گپ"</string>
   <string name="igapChanel">"آی گپ"</string>
   <string name="search">"جستجو"</string>
-  <string formatted="false" name="d_of_d">"%d از %d"</string>
+  <string name="d_of_d" formatted="false">"%d از %d"</string>
   <string name="add_to_contact">"افزودن به مخاطبین"</string>
   <string name="cancel">"انصراف"</string>
   <string name="B_cancel">"انصراف"</string>
@@ -159,7 +159,7 @@
   <string name="cannot_load_data_en">"عدم توانایی در بارگیری داده‌ها"</string>
   <string name="do_you_want_exit">"آیا می‌خواهید خارج شوید؟"</string>
   <string name="slide_to_cancel_en">"برای لغو بکشید"</string>
-  <string formatted="false" name="video_duration">"%s (%s)"</string>
+  <string name="video_duration" formatted="false">"%s (%s)"</string>
 
 
   <!-- setting -->
@@ -354,6 +354,7 @@
   <string name="one_member_chat">عضو</string>
   <string name="exception">"خطا:"</string>
   <string name="please_enter_phone_number">"لطفاً شماره تماس را وارد کنید."</string>
+  <string name="please_enter_correct_phone_number">لطفا شماره تلفن صحیح وارد کنید</string>
   <string name="please_enter_firstname_or_lastname">"لطفاً نام یا نام خانوادگی را وارد کنید."</string>
   <string name="confirm_email_title">کد تأیید</string>
   <string name="confirm_email_text">به منظور تشخیص و تأیید پست الکترونیکی، کد تأییدی برای ایمیل شما ارسال شده است.</string>
@@ -384,7 +385,7 @@
   <string name="private_channel">"کانال خصوصی"</string>
   <string name="desc_private_channel">"کاربران تنها زمانی می توانند به این کانال بپیوندند که توسط مدیر(ان) به عنوان اعضای کانال اضافه شوند."</string>
   <string name="desc_public_channel">"کاربران می توانند با جستوجوی نام کاربری یا دریافت لینک دعوت به این کانال بپیوندند."</string>
-  <string formatted="false" name="last_msg_format_chat">"%s"</string>
+  <string name="last_msg_format_chat" formatted="false">"%s"</string>
 
 
   <!-- Error -->
@@ -658,6 +659,7 @@
   <string name="share_image_from_igap">به اشتراک گذاشتن تصویر از آی‌گپ</string>
   <string name="TERMINATE">لغو</string>
   <string name="iGap_version">آی گپ اندروید نسخه</string>
+  <string name="Bazzar">کافه بازار</string>
   <string name="do_you_want_left_this">آیااز ترک ایتم انتخاب شده اطمینان دارید؟</string>
 
   <string name="do_you_want_to_leave_this_group">آیا از ترک این گروه اطمینان دارید؟</string>
@@ -1053,7 +1055,7 @@
   <string name="map_registration">غیرفعال کردن قابلیت اطراف من</string>
   <string name="comment_waiting">در حال دریافت یادداشت</string>
   <string name="comment_no">بدون وضعیت</string>
-  <string formatted="false" name="distance">حدود %d متر</string>
+  <string name="distance" formatted="false">حدود %d متر</string>
   <string name="hint_gps">وضعیت شما</string>
 
   <string name="Visible_Status_title_dialog">فعال سازی</string>
@@ -1147,5 +1149,12 @@
   <string name="attention">توجه</string>
   <string name="content_attention_dialog">نکته : قابل ذکر است افراد بر روی نقشه با خطای 500 متر نمایش داده خواهند شد. پس جای نگرانی نیست</string>
   <string name="st_cameraBottomSheet">دوربین کوچک در پیوست ها</string>
+  <string name="open_default_player">ویدئو را با پخش کننده پیشفرض باز کن</string>
+  <string name="show_channel_vote">واکنش در کانال</string>
+  <string name="verify_channel">کانال تأیید شده</string>
+  <string name="save_data_in_sd_card">Save data in sd card</string>
+  <string name="are_you_sure">Are you sure</string>
+  <string name="change_storage_place">Change storage place</string>
+  <string name="other_files">Other Files</string>
 
 </resources>

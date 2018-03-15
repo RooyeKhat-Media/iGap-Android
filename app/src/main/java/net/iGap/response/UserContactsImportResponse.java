@@ -16,9 +16,9 @@ public class UserContactsImportResponse extends MessageHandler {
 
     public int actionId;
     public Object message;
-    public String identity;
+    public Object identity;
 
-    public UserContactsImportResponse(int actionId, Object protoClass, String identity) {
+    public UserContactsImportResponse(int actionId, Object protoClass, Object identity) {
         super(actionId, protoClass, identity);
 
         this.message = protoClass;
@@ -30,7 +30,14 @@ public class UserContactsImportResponse extends MessageHandler {
     public void handler() {
         super.handler();
 
-        new RequestUserContactsGetList().userContactGetList();
+        boolean getContactList = true;
+        if (identity != null) {
+            getContactList = (Boolean) identity;
+        }
+
+        if (getContactList) {
+            new RequestUserContactsGetList().userContactGetList();
+        }
     }
 
     @Override

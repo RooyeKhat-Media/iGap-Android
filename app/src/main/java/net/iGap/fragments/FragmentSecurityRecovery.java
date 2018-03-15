@@ -1,7 +1,6 @@
 package net.iGap.fragments;
 
 
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperError;

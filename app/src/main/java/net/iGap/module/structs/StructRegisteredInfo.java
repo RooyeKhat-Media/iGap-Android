@@ -12,16 +12,19 @@ package net.iGap.module.structs;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessageContact;
 
 public class StructRegisteredInfo implements Parcelable {
     public static final Parcelable.Creator<StructRegisteredInfo> CREATOR = new Parcelable.Creator<StructRegisteredInfo>() {
-        @Override public StructRegisteredInfo createFromParcel(Parcel source) {
+        @Override
+        public StructRegisteredInfo createFromParcel(Parcel source) {
             return new StructRegisteredInfo(source);
         }
 
-        @Override public StructRegisteredInfo[] newArray(int size) {
+        @Override
+        public StructRegisteredInfo[] newArray(int size) {
             return new StructRegisteredInfo[size];
         }
     };
@@ -98,11 +101,13 @@ public class StructRegisteredInfo implements Parcelable {
         return userInfo;
     }
 
-    @Override public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.username);
         dest.writeString(this.phone);

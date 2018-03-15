@@ -17,22 +17,20 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+
+import net.iGap.G;
+import net.iGap.R;
+import net.iGap.interfaces.OnGetPermission;
+import net.iGap.module.AndroidUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import net.iGap.G;
-import net.iGap.R;
-import net.iGap.interfaces.OnGetPermission;
-import net.iGap.module.AndroidUtils;
 
 public class HelperSaveFile {
-
-    public enum FolderType {
-        download, music, gif, video, image
-    }
 
     public static void saveFileToDownLoadFolder(final String filePath, final String fileName, final FolderType folderType, final int successMessage) {
 
@@ -162,6 +160,16 @@ public class HelperSaveFile {
         return storageDir;
     }
 
+    private static void saveVideoToGallery(String videoFilePath) {
+        ContentValues values = new ContentValues(3);
+        values.put(MediaStore.Video.Media.TITLE, "My video title");
+        values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
+        values.put(MediaStore.Video.Media.DATA, videoFilePath);
+        G.context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+
+        Toast.makeText(G.context, R.string.file_save_to_galary_folder, Toast.LENGTH_SHORT).show();
+    }
+
 //    public static void savePicToGallery(final String filePath, final boolean showToast) {
 //
 //        if (!HelperPermision.grantedUseStorage()) {
@@ -204,16 +212,6 @@ public class HelperSaveFile {
 //            }
 //        }
 //    }
-
-    private static void saveVideoToGallery(String videoFilePath) {
-        ContentValues values = new ContentValues(3);
-        values.put(MediaStore.Video.Media.TITLE, "My video title");
-        values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
-        values.put(MediaStore.Video.Media.DATA, videoFilePath);
-        G.context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
-
-        Toast.makeText(G.context, R.string.file_save_to_galary_folder, Toast.LENGTH_SHORT).show();
-    }
 
     public static void saveToMusicFolder(final String path, final String name) {
 
@@ -265,6 +263,10 @@ public class HelperSaveFile {
                 Log.w("ExternalStorage", "Error writing " + file, e);
             }
         }
+    }
+
+    public enum FolderType {
+        download, music, gif, video, image
     }
 
 //    public static Boolean savePicToDownLoadFolder(Bitmap bitmap) {

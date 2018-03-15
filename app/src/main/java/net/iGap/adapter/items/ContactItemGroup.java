@@ -36,9 +36,9 @@ import java.util.List;
  * Contact item used with FastAdapter for Navigation drawer contacts fragment.
  */
 public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItemGroup.ViewHolder> {
+    public static OnClickAdapter OnClickAdapter;
     public StructContactInfo mContact;
     private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
-    public static OnClickAdapter OnClickAdapter;
 
     public ContactItemGroup setContact(StructContactInfo contact) {
         this.mContact = contact;
@@ -114,6 +114,15 @@ public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItem
         });
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
+    public interface OnClickAdapter {
+        void onclick(long peerId, Uri uri, String displayName, boolean checked);
+    }
+
     protected class ViewHolder extends RecyclerView.ViewHolder {
 
         protected CircleImageView image;
@@ -133,14 +142,5 @@ public class ContactItemGroup extends AbstractItem<ContactItemGroup, ContactItem
 
         }
 
-    }
-
-    public interface OnClickAdapter {
-        void onclick(long peerId, Uri uri, String displayName, boolean checked);
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

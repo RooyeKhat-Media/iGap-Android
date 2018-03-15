@@ -1,131 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@android:color/white"
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
+
+  <LinearLayout
+    android:id="@+id/cm_layout_mute_pinToTop"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:clickable="true"
-    tools:ignore="MissingPrefix"
-    >
+    android:layout_height="wrap_content">
 
-  <LinearLayout
-      android:id="@+id/cm_layout_mute_pinToTop"
+    <TextView
+      android:id="@+id/cm_icon_mute_pinToTop"
+      fontPath="fonts/iGap-Fontico.ttf"
+      android:layout_width="@dimen/dp26"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/md_pin"
+      android:textColor="@color/grayNew"
+      android:textSize="@dimen/dp18" />
+
+    <TextView
+      android:id="@+id/cm_txt_mute_pinToTop"
+      style="@style/dialog_item_style"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      >
-
-    <TextView
-        android:id="@+id/cm_icon_mute_pinToTop"
-        android:layout_width="@dimen/dp26"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="@string/md_pin"
-        android:textColor="@color/grayNew"
-        android:textSize="@dimen/dp18"
-        fontPath="fonts/iGap-Fontico.ttf"
-        />
-
-    <TextView
-        android:id="@+id/cm_txt_mute_pinToTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pin_to_top"
-        android:textColor="@color/black90"
-        android:textSize="@dimen/dp14"
-        style="@style/dialog_item_style"
-        />
+      android:text="@string/pin_to_top"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp14" />
 
   </LinearLayout>
 
 
   <LinearLayout
-      android:id="@+id/cm_layout_mute_notification"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:id="@+id/cm_layout_mute_notification"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/cm_icon_mute_notification"
-        android:layout_width="@dimen/dp26"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="@string/md_muted"
-        android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/grayNew"
-        android:textSize="@dimen/dp18"
-        />
+      android:id="@+id/cm_icon_mute_notification"
+      android:layout_width="@dimen/dp26"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/md_muted"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/grayNew"
+      android:textSize="@dimen/dp18" />
 
     <TextView
-        android:id="@+id/cm_txt_mute_notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mute_notification"
-        android:textColor="@color/black90"
-        android:textSize="@dimen/dp14"
-        style="@style/dialog_item_style"
-        />
+      android:id="@+id/cm_txt_mute_notification"
+      style="@style/dialog_item_style"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/mute_notification"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp14" />
 
   </LinearLayout>
 
   <LinearLayout
-      android:id="@+id/cm_layout_clear_history"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:id="@+id/cm_layout_clear_history"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/cm_icon_clear_history"
-        android:layout_width="@dimen/dp26"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="@string/md_clearHistory"
-        android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/grayNew"
-        android:textSize="@dimen/dp18"
-        />
+      android:id="@+id/cm_icon_clear_history"
+      android:layout_width="@dimen/dp26"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/md_clearHistory"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/grayNew"
+      android:textSize="@dimen/dp18" />
 
     <TextView
-        android:id="@+id/cm_txt_clear_history"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/clear_history"
-        android:textColor="@color/black90"
-        android:textSize="@dimen/dp14"
-        style="@style/dialog_item_style"
-        />
+      android:id="@+id/cm_txt_clear_history"
+      style="@style/dialog_item_style"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/clear_history"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp14" />
   </LinearLayout>
 
   <LinearLayout
-      android:id="@+id/cm_layout_delete_chat"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:id="@+id/cm_layout_delete_chat"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/cm_icon_delete_chat"
-        android:layout_width="@dimen/dp26"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="@string/md_rubbish_delete_file"
-        android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/grayNew"
-        android:textSize="@dimen/dp18"
-        />
+      android:id="@+id/cm_icon_delete_chat"
+      android:layout_width="@dimen/dp26"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/md_rubbish_delete_file"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/grayNew"
+      android:textSize="@dimen/dp18" />
 
     <TextView
-        android:id="@+id/cm_txt_delete_chat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/to_delete_chat"
-        android:textColor="@color/black90"
-        android:textSize="@dimen/dp14"
-        style="@style/dialog_item_style"
-        />
+      android:id="@+id/cm_txt_delete_chat"
+      style="@style/dialog_item_style"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/to_delete_chat"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp14" />
 
   </LinearLayout>
 

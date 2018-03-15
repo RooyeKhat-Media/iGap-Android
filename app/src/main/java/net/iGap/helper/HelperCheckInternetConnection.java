@@ -13,6 +13,7 @@ package net.iGap.helper;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import net.iGap.G;
 import net.iGap.request.RequestFileDownload;
 
@@ -24,10 +25,6 @@ public class HelperCheckInternetConnection {
     public static ConnectivityType currentConnectivityType;
     public static int connectivityType = -1;
     public static int connectivitySubType;
-
-    public enum ConnectivityType {
-        MOBILE, WIFI
-    }
 
     public static boolean hasNetwork() {
 
@@ -55,7 +52,6 @@ public class HelperCheckInternetConnection {
         return false;
     }
 
-
     public static void detectConnectionTypeForDownload() {
         RequestFileDownload.maxLimitDownload = 0;
         try {
@@ -71,5 +67,10 @@ public class HelperCheckInternetConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public enum ConnectivityType {
+        MOBILE, WIFI
     }
 }

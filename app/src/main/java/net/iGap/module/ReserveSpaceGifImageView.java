@@ -13,7 +13,9 @@ package net.iGap.module;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+
 import net.iGap.proto.ProtoGlobal;
+
 import pl.droidsonroids.gif.GifImageView;
 
 /**
@@ -23,6 +25,14 @@ import pl.droidsonroids.gif.GifImageView;
 public class ReserveSpaceGifImageView extends GifImageView {
     private int reservedWidth = 0;
     private int reservedHeight = 0;
+
+    public ReserveSpaceGifImageView(Context context) {
+        super(context);
+    }
+
+    public ReserveSpaceGifImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
     public int[] reserveSpace(float width, float height, ProtoGlobal.Room.Type roomType) {
         final int[] dimens = AndroidUtils.scaleDimenWithSavedRatio(getContext(), width, height, roomType);
@@ -34,15 +44,8 @@ public class ReserveSpaceGifImageView extends GifImageView {
         return dimens;
     }
 
-    public ReserveSpaceGifImageView(Context context) {
-        super(context);
-    }
-
-    public ReserveSpaceGifImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         setMeasuredDimension(reservedWidth, reservedHeight);

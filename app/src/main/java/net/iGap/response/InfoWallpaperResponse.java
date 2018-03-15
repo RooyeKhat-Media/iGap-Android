@@ -10,10 +10,11 @@
 
 package net.iGap.response;
 
-import java.util.List;
 import net.iGap.G;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoInfoWallpaper;
+
+import java.util.List;
 
 public class InfoWallpaperResponse extends MessageHandler {
 

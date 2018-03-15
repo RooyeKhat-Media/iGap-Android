@@ -11,6 +11,7 @@
 package net.iGap.interfaces;
 
 import android.support.v7.widget.RecyclerView;
+
 import net.iGap.module.enums.LocalFileType;
 
 public interface IChatItemAttachment<VH extends RecyclerView.ViewHolder> {

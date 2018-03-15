@@ -2,118 +2,111 @@
 
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
   <data>
 
     <import type="android.graphics.Color" />
+
     <import type="net.iGap.G" />
+
     <variable
-        name="fragmentBioViewModel"
-        type="net.iGap.viewmodel.FragmentBioViewModel"
-        />
+      name="fragmentBioViewModel"
+      type="net.iGap.viewmodel.FragmentBioViewModel" />
   </data>
 
   <LinearLayout
-      android:id="@+id/rootFragmentLanguage"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white"
-      android:clickable="true"
-      android:orientation="vertical"
-      tools:context="net.iGap.fragments.FragmentLanguage"
-      tools:ignore="MissingPrefix"
-      >
+    android:id="@+id/rootFragmentLanguage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context="net.iGap.fragments.FragmentLanguage"
+    tools:ignore="MissingPrefix">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
 
       <android.support.v7.widget.Toolbar
-          android:id="@+id/asn_toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp60"
-          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
-          android:layoutDirection="ltr"
-          android:padding="0dp"
-          app:contentInsetLeft="0dp"
-          app:contentInsetStart="0dp"
+        android:id="@+id/asn_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+        android:layoutDirection="ltr"
+        android:padding="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
 
-          >
+        >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
 
           <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/stns_ripple_back"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="0"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
-              android:onClick="@{fragmentBioViewModel::onClickRippleBack}"
-              >
+            android:id="@+id/stns_ripple_back"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{fragmentBioViewModel::onClickRippleBack}"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
 
             <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/stns_txt_back"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/md_back_arrow"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/whit_background"
-                />
+              android:id="@+id/stns_txt_back"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
           </net.iGap.libs.rippleeffect.RippleView>
 
           <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_alignParentTop="true"
-              android:layout_toEndOf="@+id/stns_ripple_back"
-              android:layout_toRightOf="@+id/stns_ripple_back"
-              android:gravity="center"
-              android:text="@string/st_bio"
-              android:textColor="@color/whit_background"
-              android:textSize="@dimen/dp18"
-              android:textStyle="normal"
-              android:visibility="visible"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              />
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/stns_ripple_back"
+            android:layout_toRightOf="@+id/stns_ripple_back"
+            android:gravity="center"
+            android:text="@string/st_bio"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:textStyle="normal"
+            android:visibility="visible" />
 
 
           <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/verifyPassword_rippleOk"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:visibility="visible"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="0"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
-              android:onClick="@{fragmentBioViewModel::onClickRippleOk}"
-              >
+            android:id="@+id/verifyPassword_rippleOk"
+            rv_centered="true"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:onClick="@{fragmentBioViewModel::onClickRippleOk}"
+            android:visibility="visible"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
 
             <net.iGap.module.MaterialDesignTextView
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="@string/md_check_symbol"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/whit_background"
-                />
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentTop="true"
+              android:gravity="center"
+              android:text="@string/md_check_symbol"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
 
           </net.iGap.libs.rippleeffect.RippleView>
 
@@ -124,67 +117,61 @@
 
 
     <LinearLayout
-        android:id="@+id/st_layout_fa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+      android:id="@+id/st_layout_fa"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/dp16"
-          android:layout_marginRight="@dimen/dp16"
-          android:layout_marginTop="@dimen/dp16"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp16">
 
         <EditText
-            android:id="@+id/edtBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:hint="@string/st_bio"
-            android:minHeight="@dimen/dp44"
-            android:paddingEnd="@dimen/dp32"
-            android:paddingRight="@dimen/dp32"
-            android:text="@={fragmentBioViewModel.callBackEdtBio}"
-            android:afterTextChanged="@{fragmentBioViewModel.afterTextChanged}"
-            android:onTextChanged="@{fragmentBioViewModel.onTextChanged}"
-            />
+          android:id="@+id/edtBio"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:afterTextChanged="@{fragmentBioViewModel.afterTextChanged}"
+          android:background="@android:color/transparent"
+          android:hint="@string/st_bio"
+          android:minHeight="@dimen/dp44"
+          android:onTextChanged="@{fragmentBioViewModel.onTextChanged}"
+          android:paddingEnd="@dimen/dp32"
+          android:paddingRight="@dimen/dp32"
+          android:text="@={fragmentBioViewModel.callBackEdtBio}" />
 
         <TextView
-            android:id="@+id/txtCountBio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginStart="@dimen/dp10"
-            android:gravity="center"
-            android:maxLength="70"
-            android:text="@{fragmentBioViewModel.callBackTxtCountBio ,default = 70}"
-            />
+          android:id="@+id/txtCountBio"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/dp10"
+          android:layout_marginStart="@dimen/dp10"
+          android:gravity="center"
+          android:maxLength="70"
+          android:text="@{fragmentBioViewModel.callBackTxtCountBio ,default = 70}" />
 
 
       </RelativeLayout>
 
       <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginLeft="@dimen/dp16"
-          android:layout_marginRight="@dimen/dp16"
-          android:background="@color/green"
-          />
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@color/green" />
 
       <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp16"
-          android:paddingLeft="@dimen/dp16"
-          android:paddingRight="@dimen/dp16"
-          android:text="@string/st_des_bio"
-          />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16"
+        android:text="@string/st_des_bio" />
 
 
     </LinearLayout>

@@ -34,6 +34,8 @@ public class RealmChannelRoom extends RealmObject {
     private boolean isPrivate;
     private boolean isSignature = false;
     private long seenId;
+    private boolean reactionStatus;
+    private boolean verified;
 
     /**
      * convert ProtoGlobal.ChannelRoom to RealmChannelRoom
@@ -169,16 +171,30 @@ public class RealmChannelRoom extends RealmObject {
         return role;
     }
 
+    public static void updateReactionStatus(final long roomId, final boolean statusReaction) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                if (realmRoom != null && realmRoom.getChannelRoom() != null) {
+                    realmRoom.getChannelRoom().setReactionStatus(statusReaction);
+                }
+            }
+        });
+        realm.close();
+    }
+
     public ChannelChatRole getRole() {
         return (role != null) ? ChannelChatRole.valueOf(role) : null;
     }
 
-    public ProtoGlobal.ChannelRoom.Role getMainRole() {
-        return (role != null) ? ProtoGlobal.ChannelRoom.Role.valueOf(role) : ProtoGlobal.ChannelRoom.Role.UNRECOGNIZED;
-    }
-
     public void setRole(ChannelChatRole role) {
         this.role = role.toString();
+    }
+
+    public ProtoGlobal.ChannelRoom.Role getMainRole() {
+        return (role != null) ? ProtoGlobal.ChannelRoom.Role.valueOf(role) : ProtoGlobal.ChannelRoom.Role.UNRECOGNIZED;
     }
 
     public int getParticipants_count() {
@@ -291,5 +307,21 @@ public class RealmChannelRoom extends RealmObject {
 
     public void setSeenId(long seenId) {
         this.seenId = seenId;
+    }
+
+    public boolean isReactionStatus() {
+        return reactionStatus;
+    }
+
+    public void setReactionStatus(boolean reactionStatus) {
+        this.reactionStatus = reactionStatus;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

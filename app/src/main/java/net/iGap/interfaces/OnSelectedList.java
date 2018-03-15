@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.ArrayList;
 import net.iGap.module.structs.StructContactInfo;
+
+import java.util.ArrayList;
 
 public interface OnSelectedList {
 

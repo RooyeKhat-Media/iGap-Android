@@ -13,10 +13,13 @@ package net.iGap.adapter.items.chat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.mikepenz.fastadapter.items.AbstractItem;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.module.structs.StructSessions;
+
+import java.util.List;
 
 public class AdapterActiveSessionsHeader extends AbstractItem<AdapterActiveSessionsHeader, AdapterActiveSessionsHeader.ViewHolder> {
 
@@ -24,12 +27,12 @@ public class AdapterActiveSessionsHeader extends AbstractItem<AdapterActiveSessi
 
     private List<StructSessions> itemList;
 
-    public List<StructSessions> getItem() {
-        return itemList;
-    }
-
     public AdapterActiveSessionsHeader(List<StructSessions> item) {
         itemList = item;
+    }
+
+    public List<StructSessions> getItem() {
+        return itemList;
     }
 
     public void setItem(List<StructSessions> item) {
@@ -37,19 +40,27 @@ public class AdapterActiveSessionsHeader extends AbstractItem<AdapterActiveSessi
     }
 
     //The unique ID for this type of item
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.adph_rootLayout;
     }
 
     //The layout to be used for this type of item
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.adapter_active_sessions_header;
     }
 
     //The logic to bind your data to the view
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
@@ -62,9 +73,5 @@ public class AdapterActiveSessionsHeader extends AbstractItem<AdapterActiveSessi
 
             root = (ViewGroup) view.findViewById(R.id.adph_rootLayout);
         }
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

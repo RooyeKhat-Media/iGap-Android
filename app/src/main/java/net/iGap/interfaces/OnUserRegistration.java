@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.List;
 import net.iGap.proto.ProtoUserRegister;
+
+import java.util.List;
 
 public interface OnUserRegistration {
 

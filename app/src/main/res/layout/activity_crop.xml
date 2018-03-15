@@ -1,132 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black_register"
-    android:clickable="true"
-    android:layoutDirection="ltr"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/black_register"
+  android:clickable="true"
+  android:layoutDirection="ltr">
 
 
   <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_alignParentTop="true"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/pu_img_imageBefore"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/pu_layout_cancel_crop"
-        android:adjustViewBounds="true"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/pu_gallary"
-        />
+      android:id="@+id/pu_img_imageBefore"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/pu_layout_cancel_crop"
+      android:adjustViewBounds="true"
+      android:cropToPadding="false"
+      android:scaleType="fitCenter"
+      android:src="@mipmap/pu_gallary" />
 
     <ProgressBar
-        android:id="@+id/crop_prgWaiting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:visibility="visible"
-        />
+      android:id="@+id/crop_prgWaiting"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:indeterminate="true"
+      android:visibility="visible" />
 
     <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_alignParentTop="true"
-        android:background="@color/toolbar_transparent"
-        android:layoutDirection="ltr"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:layout_alignParentTop="true"
+      android:background="@color/toolbar_transparent"
+      android:layoutDirection="ltr"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp">
 
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.SearchView
-            android:id="@+id/stfaq_searchView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:theme="@style/MySearch"
-            android:visibility="gone"
-            />
+          android:id="@+id/stfaq_searchView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:theme="@style/MySearch"
+          android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/stfaq_allLayout_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+          android:id="@+id/stfaq_allLayout_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
 
           <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/pu_ripple_back"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="0"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
-              >
+            android:id="@+id/pu_ripple_back"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
 
             <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/pu_txt_agreeImage"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/md_back_arrow"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/whit_background"
-                />
+              android:id="@+id/pu_txt_agreeImage"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
           </net.iGap.libs.rippleeffect.RippleView>
 
           <TextView
-              android:id="@+id/stfaq_txt_titleToolbar"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="left|center_vertical"
-              android:text="@string/photo"
-              android:textColor="@color/whit_background"
-              android:textSize="@dimen/dp16"
-              android:textStyle="bold"
-              android:visibility="visible"
-              />
+            android:id="@+id/stfaq_txt_titleToolbar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="@string/photo"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16"
+            android:textStyle="bold"
+            android:visibility="visible" />
 
           <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/pu_ripple_crop"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="150"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
-              >
+            android:id="@+id/pu_ripple_crop"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="150"
+            app:rv_ripplePadding="5dp">
 
 
             <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/pu_txt_crop"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center"
-                android:text="@string/md_crop_button"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/whit_background"
-                android:textSize="@dimen/dp22"
-                />
+              android:id="@+id/pu_txt_crop"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:layout_gravity="right"
+              android:gravity="center"
+              android:text="@string/md_crop_button"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp22" />
           </net.iGap.libs.rippleeffect.RippleView>
         </LinearLayout>
 
@@ -134,44 +121,41 @@
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
-        android:id="@+id/pu_layout_cancel_crop"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_alignParentBottom="true"
-        android:background="@color/am_iconFab_black"
-        >
+      android:id="@+id/pu_layout_cancel_crop"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:layout_alignParentBottom="true"
+      android:background="@color/am_iconFab_black">
 
       <TextView
-          android:id="@+id/pu_txt_cancel_crop"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_gravity="start"
-          android:layout_weight=".5"
-          android:background="@android:color/transparent"
-          android:gravity="center_vertical|left"
-          android:paddingLeft="@dimen/dp24"
-          android:paddingRight="@dimen/dp24"
-          android:text="@string/B_cancel"
-          android:textColor="@android:color/white"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          />
+        android:id="@+id/pu_txt_cancel_crop"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="@dimen/dp24"
+        android:paddingRight="@dimen/dp24"
+        android:text="@string/B_cancel"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold" />
 
 
       <TextView
-          android:id="@+id/pu_txt_set_crop"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight=".5"
-          android:background="@android:color/transparent"
-          android:gravity="center_vertical|right"
-          android:paddingLeft="@dimen/dp24"
-          android:paddingRight="@dimen/dp24"
-          android:text="@string/set"
-          android:textColor="@android:color/white"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          />
+        android:id="@+id/pu_txt_set_crop"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical|right"
+        android:paddingLeft="@dimen/dp24"
+        android:paddingRight="@dimen/dp24"
+        android:text="@string/set"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold" />
 
     </LinearLayout>
 

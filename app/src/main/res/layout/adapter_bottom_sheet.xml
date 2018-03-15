@@ -1,46 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rcv_root_bottom_sheet"
-    android:layout_width="wrap_content"
-    android:clickable="true"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/rcv_root_bottom_sheet"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginTop="@dimen/dp6">
+
+    <android.support.v7.widget.CardView
+      android:id="@+id/card_view"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dp6"
-      android:layout_marginLeft="2dp"
-      android:layout_marginRight="2dp"
-      >
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        >
+      >
+
       <ImageView
-          android:id="@+id/img_gallery"
-          android:layout_width="@dimen/dp100"
-          android:layout_height="@dimen/dp100"
-          android:scaleType="centerCrop"
-          android:src="@mipmap/difaultimage"
-          />
+        android:id="@+id/img_gallery"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/difaultimage" />
+
       <com.hanks.library.AnimateCheckBox
-          android:id="@+id/cig_checkBox_select_user"
-          android:layout_width="@dimen/dp24"
-          android:layout_height="@dimen/dp24"
-          android:layout_gravity="top|end|right"
-          android:visibility="visible"
-          app:animDuration="100"
-          app:checkedColor="@color/green"
-          app:lineColor="#fff"
-          app:lineWidth="1.2dp"
-          android:background="@drawable/background_check"
-          app:unCheckColor="@color/background_checkbox_bottomSheet"
-          />
+        android:id="@+id/cig_checkBox_select_user"
+        android:layout_width="@dimen/dp24"
+        android:layout_height="@dimen/dp24"
+        android:layout_gravity="top|end|right"
+        android:background="@drawable/background_check"
+        android:visibility="visible"
+        app:animDuration="100"
+        app:checkedColor="@color/green"
+        app:lineColor="#fff"
+        app:lineWidth="1.2dp"
+        app:unCheckColor="@color/background_checkbox_bottomSheet" />
     </android.support.v7.widget.CardView>
   </RelativeLayout>
 </LinearLayout>

@@ -670,6 +670,8 @@
 
   <string name="please_enter_phone_number">"من فضلك أدخل رقم الاتصال"</string>
 
+  <string name="please_enter_correct_phone_number">"الرجاء إدخال رقم الهاتف الصحيح"</string>
+
   <string name="please_enter_firstname_or_lastname">"من فضلك أدخل الاسم و الاسم العائلي."</string>
 
   <string name="confirm_email_title">رمز التأكيد</string>
@@ -2102,5 +2104,15 @@
   <string name="attention">اهتمام</string>
   <string name="content_attention_dialog">ملاحظة: تجدر الإشارة إلى أن الأفراد على الخريطة سيتم عرض مع وجود خطأ من 500 متر. لذلك لا تقلق</string>
   <string name="st_cameraBottomSheet">كاميرا صغيرة في المرفقات</string>
+  <string name="open_default_player">فتح الفيديو باستخدام المشغل الافتراضي</string>
+  <string name="show_channel_vote">تفاعل القناة</string>
+  <string name="verify_channel">تم التحقق من القناة</string>
+  <string name="another_room">غرفة أخرى</string>
+  <string name="send">إرسال</string>
+  <string name="do_not_send">لا ترسل</string>
+  <string name="save_data_in_sd_card">Save data in sd card</string>
+  <string name="are_you_sure">Are you sure</string>
+  <string name="change_storage_place">Change storage place</string>
+  <string name="other_files">Other Files</string>
 
 </resources>

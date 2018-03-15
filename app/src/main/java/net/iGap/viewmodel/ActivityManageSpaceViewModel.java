@@ -16,34 +16,41 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.io.File;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.module.FileUtils;
+import net.iGap.module.MusicPlayer;
 import net.iGap.module.SHP_SETTING;
+import net.iGap.module.StartupActions;
 import net.iGap.realm.RealmRoomMessage;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.config.IConfigurationProvider;
+
+import java.io.File;
+
+import io.realm.Realm;
 
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.module.FileUtils.getFolderSize;
 
 public class ActivityManageSpaceViewModel {
 
-    private Context context;
-
-    private SharedPreferences sharedPreferences;
-    private int isForever;
-    private File fileMap;
-
     public ObservableField<String> callbackKeepMedia = new ObservableField<>("1Week");
     public ObservableField<String> callbackClearCache = new ObservableField<>("0 KB");
     public ObservableField<String> callbackCleanUp = new ObservableField<>("0 KB");
+    public ObservableField<Integer> showLayoutSdk = new ObservableField<>(View.GONE);
+    public ObservableField<Boolean> isSdkEnable = new ObservableField<>();
+    private Context context;
+    private SharedPreferences sharedPreferences;
+    private int isForever;
+    private File fileMap;
 
     public ActivityManageSpaceViewModel(Context context) {
 
@@ -114,8 +121,10 @@ public class ActivityManageSpaceViewModel {
         final long sizeFolderVideoDialog = getFolderSize(new File(G.DIR_VIDEOS));
         final long sizeFolderDocumentDialog = getFolderSize(new File(G.DIR_DOCUMENT));
         final long sizeFolderAudio = getFolderSize(new File(G.DIR_AUDIOS));
-
         final long sizeFolderMap = FileUtils.getFolderSize(fileMap);
+        final long sizeFolderOtherFiles = getFolderSize(new File(G.DIR_TEMP));
+        final long sizeFolderOtherFilesBackground = getFolderSize(new File(G.DIR_CHAT_BACKGROUND));
+        final long sizeFolderOtherFilesImageUser = getFolderSize(new File(G.DIR_IMAGE_USER));
 
         boolean wrapInScrollView = true;
         final MaterialDialog dialog = new MaterialDialog.Builder(context).title(G.context.getResources().getString(R.string.st_title_Clear_Cache)).customView(R.layout.st_dialog_clear_cach, wrapInScrollView).positiveText(G.context.getResources().getString(R.string.st_title_Clear_Cache)).show();
@@ -150,7 +159,12 @@ public class ActivityManageSpaceViewModel {
         txtMap.setText(FileUtils.formatFileSize(sizeFolderMap));
         final CheckBox checkBoxMap = (CheckBox) view.findViewById(R.id.st_checkBox_map_dialogClearCash);
 
-        long rTotalSize = sizeFolderPhotoDialog + sizeFolderVideoDialog + sizeFolderDocumentDialog + sizeFolderAudio;
+        final File fileOtherFiles = new File(G.DIR_TEMP);
+        TextView txtOtherFiles = (TextView) view.findViewById(R.id.st_txt_otherFiles);
+        txtOtherFiles.setText(FileUtils.formatFileSize(sizeFolderOtherFiles + sizeFolderOtherFilesImageUser + sizeFolderOtherFilesBackground));
+        final CheckBox checkBoxOtherFiles = (CheckBox) view.findViewById(R.id.st_checkBox_otherFiles);
+
+        long rTotalSize = sizeFolderPhotoDialog + sizeFolderVideoDialog + sizeFolderDocumentDialog + sizeFolderAudio + sizeFolderMap + sizeFolderOtherFiles;
         final TextView txtTotalSize = (TextView) view.findViewById(R.id.st_txt_totalSize_dialogClearCash);
         txtTotalSize.setText(FileUtils.formatFileSize(rTotalSize));
 
@@ -183,12 +197,34 @@ public class ActivityManageSpaceViewModel {
                     FragmentiGapMap.deleteMapFileCash();
                 }
 
+                if (checkBoxOtherFiles.isChecked()) {
+                    for (File file : fileOtherFiles.listFiles()) {
+                        if (!file.isDirectory()) file.delete();
+                    }
+                    final File fileOtherFilesBackground = new File(G.DIR_CHAT_BACKGROUND);
+
+                    if (fileOtherFilesBackground.listFiles() != null)
+                        for (File fileBackground : fileOtherFilesBackground.listFiles()) {
+                            if (!fileBackground.isDirectory()) fileBackground.delete();
+                        }
+
+                    final File fileOtherFilesImageUser = new File(G.DIR_IMAGE_USER);
+
+                    if (fileOtherFilesImageUser.listFiles() != null)
+                        for (File fileImageUser : fileOtherFilesImageUser.listFiles()) {
+                            if (!fileImageUser.isDirectory()) fileImageUser.delete();
+                        }
+                }
+
                 long afterClearSizeFolderPhoto = FileUtils.getFolderSize(new File(G.DIR_IMAGES));
                 long afterClearSizeFolderVideo = FileUtils.getFolderSize(new File(G.DIR_VIDEOS));
                 long afterClearSizeFolderDocument = FileUtils.getFolderSize(new File(G.DIR_DOCUMENT));
                 long afterClearSizeFolderAudio = FileUtils.getFolderSize(new File(G.DIR_AUDIOS));
                 long afterClearSizeFolderMap = FileUtils.getFolderSize(fileMap);
-                long afterClearTotal = afterClearSizeFolderPhoto + afterClearSizeFolderVideo + afterClearSizeFolderDocument + afterClearSizeFolderAudio + afterClearSizeFolderMap;
+                long afterClearSizeFolderOtherFiles = FileUtils.getFolderSize(new File(G.DIR_TEMP));
+                long afterClearSizeFolderOtherFilesBackground = FileUtils.getFolderSize(new File(G.DIR_CHAT_BACKGROUND));
+                long afterClearSizeFolderOtherFilesImageUser = FileUtils.getFolderSize(new File(G.DIR_IMAGE_USER));
+                long afterClearTotal = afterClearSizeFolderPhoto + afterClearSizeFolderVideo + afterClearSizeFolderDocument + afterClearSizeFolderAudio + afterClearSizeFolderMap + afterClearSizeFolderOtherFiles + afterClearSizeFolderOtherFilesImageUser + afterClearSizeFolderOtherFilesBackground;
                 callbackClearCache.set(FileUtils.formatFileSize(afterClearTotal));
                 txtTotalSize.setText(FileUtils.formatFileSize(afterClearTotal));
                 dialog.dismiss();
@@ -224,6 +260,9 @@ public class ActivityManageSpaceViewModel {
                 final long DbTotalSize = new File(realm.getConfiguration().getPath()).length();
                 realm.close();
                 callbackCleanUp.set(FileUtils.formatFileSize(DbTotalSize));
+
+                MusicPlayer.closeLayoutMediaPlayer();
+
                 inDialog.dismiss();
             }
         });
@@ -235,6 +274,44 @@ public class ActivityManageSpaceViewModel {
             }
         });
 
+    }
+
+    public void onClickSdkEnable(View view) {
+
+        new MaterialDialog.Builder(context)
+                .title(G.context.getResources().getString(R.string.are_you_sure))
+                .negativeText(G.context.getResources().getString(R.string.B_cancel))
+                .content(G.context.getResources().getString(R.string.change_storage_place))
+                .positiveText(G.context.getResources().getString(R.string.B_ok))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        isSdkEnable.set(!isSdkEnable.get());
+
+                    }
+                }).show();
+
+    }
+
+    public void onCheckedSdkEnable(boolean isChecked) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        isSdkEnable.set(isChecked);
+        if (isChecked) {
+            editor.putInt(SHP_SETTING.KEY_SDK_ENABLE, 1);
+            editor.apply();
+        } else {
+            editor.putInt(SHP_SETTING.KEY_SDK_ENABLE, 0);
+            editor.apply();
+        }
+
+        StartupActions.makeFolder();
+    }
+
+    private boolean getBoolean(int num) {
+        if (num == 0) {
+            return false;
+        }
+        return true;
     }
 
     //===============================================================================
@@ -259,11 +336,14 @@ public class ActivityManageSpaceViewModel {
         final long sizeFolderVideo = getFolderSize(new File(G.DIR_VIDEOS));
         final long sizeFolderDocument = getFolderSize(new File(G.DIR_DOCUMENT));
         final long sizeFolderAudio = getFolderSize(new File(G.DIR_AUDIOS));
+        final long sizeFolderOtherFiles = getFolderSize(new File(G.DIR_TEMP));
+        final long sizeFolderOtherFilesBackground = getFolderSize(new File(G.DIR_CHAT_BACKGROUND));
+        final long sizeFolderOtherFilesImageUser = getFolderSize(new File(G.DIR_IMAGE_USER));
 
         final IConfigurationProvider configurationProvider = Configuration.getInstance();
         fileMap = configurationProvider.getOsmdroidBasePath();
         final long sizeFolderMap = FileUtils.getFolderSize(fileMap);
-        final long total = sizeFolderPhoto + sizeFolderVideo + sizeFolderDocument + sizeFolderAudio + sizeFolderMap;
+        final long total = sizeFolderPhoto + sizeFolderVideo + sizeFolderDocument + sizeFolderAudio + sizeFolderMap + sizeFolderOtherFiles + sizeFolderOtherFilesBackground + sizeFolderOtherFilesImageUser;
 
         callbackClearCache.set(FileUtils.formatFileSize(total));
 
@@ -273,11 +353,15 @@ public class ActivityManageSpaceViewModel {
 
         callbackCleanUp.set(FileUtils.formatFileSize(DbTotalSize));
 
+        isSdkEnable.set(getBoolean(sharedPreferences.getInt(SHP_SETTING.KEY_SDK_ENABLE, 0)));
+
+        if (FileUtils.getSdCardPathList(true).size() > 0) {
+            showLayoutSdk.set(View.VISIBLE);
+        } else {
+            showLayoutSdk.set(View.GONE);
+        }
+
     }
-
-
-
-
 
 
 }

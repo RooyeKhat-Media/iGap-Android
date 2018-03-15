@@ -6,17 +6,13 @@ import android.content.res.Configuration;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.one.EmojiOneProvider;
-import io.realm.DynamicRealm;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -31,11 +27,19 @@ import net.iGap.helper.HelperUploadFile;
 import net.iGap.realm.RealmMigration;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.webrtc.CallObserver;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import io.realm.DynamicRealm;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.Config.REALM_SCHEMA_VERSION;
-import static net.iGap.G.DIR_APP;
 import static net.iGap.G.DIR_AUDIOS;
 import static net.iGap.G.DIR_CHAT_BACKGROUND;
 import static net.iGap.G.DIR_DOCUMENT;
@@ -43,6 +47,7 @@ import static net.iGap.G.DIR_IMAGES;
 import static net.iGap.G.DIR_IMAGE_USER;
 import static net.iGap.G.DIR_TEMP;
 import static net.iGap.G.DIR_VIDEOS;
+import static net.iGap.G.IGAP;
 import static net.iGap.G.IMAGE_NEW_CHANEL;
 import static net.iGap.G.IMAGE_NEW_GROUP;
 import static net.iGap.G.appBarColor;
@@ -88,6 +93,149 @@ public final class StartupActions {
     }
 
     /**
+     * detect and  initialize text size
+     */
+    public static void textSizeDetection(SharedPreferences sharedPreferences) {
+        userTextSize = sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14);
+
+        if (!G.context.getResources().getBoolean(R.bool.isTablet)) {
+
+            int screenLayout = context.getResources().getConfiguration().screenLayout;
+            screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
+
+            switch (screenLayout) {
+                case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                    userTextSize = (userTextSize * 3) / 4;
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                    userTextSize = (userTextSize * 3) / 2;
+                    break;
+                case Configuration.SCREENLAYOUT_SIZE_XLARGE:// or 4
+                    userTextSize *= 2;
+            }
+        }
+    }
+
+    /**
+     * create app folders if not created or removed from phone storage
+     */
+    public static void makeFolder() {
+        try {
+            manageAppDirectories();
+            //before used from thread; isn't good idea
+            //new Thread(new Runnable() {
+            //    @Override
+            //    public void run() {
+            //    }
+            //}).start();
+
+            new File(DIR_IMAGES).mkdirs();
+            new File(DIR_VIDEOS).mkdirs();
+            new File(DIR_AUDIOS).mkdirs();
+            new File(DIR_DOCUMENT).mkdirs();
+
+            String file = ".nomedia";
+            new File(DIR_IMAGES + "/" + file).createNewFile();
+            new File(DIR_VIDEOS + "/" + file).createNewFile();
+            new File(DIR_AUDIOS + "/" + file).createNewFile();
+            new File(DIR_DOCUMENT + "/" + file).createNewFile();
+
+
+            new File(DIR_CHAT_BACKGROUND).mkdirs();
+            new File(DIR_IMAGE_USER).mkdirs();
+            new File(DIR_TEMP).mkdirs();
+            new File(DIR_CHAT_BACKGROUND + "/" + file).createNewFile();
+            new File(DIR_IMAGE_USER + "/" + file).createNewFile();
+            new File(DIR_TEMP + "/" + file).createNewFile();
+
+            IMAGE_NEW_GROUP = new File(G.DIR_IMAGE_USER, "image_new_group.jpg");
+            IMAGE_NEW_CHANEL = new File(G.DIR_IMAGE_USER, "image_new_chanel.jpg");
+            imageFile = new File(DIR_IMAGE_USER, "image_user");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void manageAppDirectories() {
+        String rootPath = getCacheDir().getPath();
+
+        if (!HelperPermission.grantedUseStorage()) {
+            DIR_IMAGES = rootPath + G.IMAGES;
+            DIR_VIDEOS = rootPath + G.VIDEOS;
+            DIR_AUDIOS = rootPath + G.AUDIOS;
+            DIR_DOCUMENT = rootPath + G.DOCUMENT;
+        } else {
+            String selectedStorage = getSelectedStoragePath();
+            DIR_IMAGES = selectedStorage + G.IMAGES;
+            DIR_VIDEOS = selectedStorage + G.VIDEOS;
+            DIR_AUDIOS = selectedStorage + G.AUDIOS;
+            DIR_DOCUMENT = selectedStorage + G.DOCUMENT;
+        }
+
+        DIR_TEMP = rootPath + G.TEMP;
+        DIR_CHAT_BACKGROUND = rootPath + G.CHAT_BACKGROUND;
+        DIR_IMAGE_USER = rootPath + G.IMAGE_USER;
+    }
+
+    private static String getSelectedStoragePath() {
+        String selectedStorage = G.DIR_APP;
+        SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+
+        if (sharedPreferences.getInt(SHP_SETTING.KEY_SDK_ENABLE, 0) == 1) {
+            if (G.DIR_SDCARD_EXTERNAL.equals("")) {
+                List<String> storageList = FileUtils.getSdCardPathList(true);
+                if (storageList.size() > 0) {
+                    G.DIR_SDCARD_EXTERNAL = storageList.get(0);
+                    selectedStorage = G.DIR_SDCARD_EXTERNAL + IGAP;
+                } else {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(SHP_SETTING.KEY_SDK_ENABLE, 0);
+                    editor.apply();
+                }
+            } else {
+                if (new File(G.DIR_SDCARD_EXTERNAL).exists()) {
+                    selectedStorage = G.DIR_SDCARD_EXTERNAL + IGAP;
+                } else {
+                    G.DIR_SDCARD_EXTERNAL = "";
+                }
+            }
+        }
+        new File(selectedStorage).mkdirs();
+        return selectedStorage;
+    }
+
+    public static File getCacheDir() {
+        String state = null;
+        try {
+            state = Environment.getExternalStorageState();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (state == null || state.startsWith(Environment.MEDIA_MOUNTED)) {
+            try {
+                File file = G.context.getExternalCacheDir();
+                if (file != null) {
+                    return file;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            File file = G.context.getCacheDir();
+            if (file != null) {
+                return file;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new File(G.DIR_APP);
+    }
+
+    /**
      * if device is tablet twoPaneMode will be enabled
      */
     private void detectDeviceType() {
@@ -104,13 +252,13 @@ public final class StartupActions {
             G.twoPaneMode = false;
         }
 
-        if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT || G.twoPaneMode) {
-            G.maxChatBox = Math.min(metrics.widthPixels, metrics.heightPixels) - ViewMaker.i_Dp(R.dimen.dp80);
+        if (G.context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && G.twoPaneMode) {
+            G.maxChatBox = metrics.widthPixels - (metrics.widthPixels / 3) - ViewMaker.i_Dp(R.dimen.dp80);
         } else {
-            G.maxChatBox = Math.max(metrics.widthPixels, metrics.heightPixels) - ViewMaker.i_Dp(R.dimen.dp80);
+            G.maxChatBox = metrics.widthPixels - ViewMaker.i_Dp(R.dimen.dp80);
         }
-    }
 
+    }
 
     /**
      * start connecting to the sever
@@ -151,32 +299,6 @@ public final class StartupActions {
     }
 
     /**
-     * detect and  initialize text size
-     */
-    public static void textSizeDetection(SharedPreferences sharedPreferences) {
-        userTextSize = sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14);
-
-        if (!G.context.getResources().getBoolean(R.bool.isTablet)) {
-
-            int screenLayout = context.getResources().getConfiguration().screenLayout;
-            screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
-
-            switch (screenLayout) {
-                case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                    userTextSize = (userTextSize * 3) / 4;
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_NORMAL:
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                    userTextSize = (userTextSize * 3) / 2;
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_XLARGE:// or 4
-                    userTextSize *= 2;
-            }
-        }
-    }
-
-    /**
      * detect language and set font type face
      */
     private void languageDetection(SharedPreferences sharedPreferences) {
@@ -202,91 +324,6 @@ public final class StartupActions {
         }
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/IRANSansMobile.ttf").setFontAttrId(R.attr.fontPath).build());
-    }
-
-    /**
-     * create app folders if not created or removed from phone storage
-     */
-    public static void makeFolder() {
-        try {
-            manageAppDirectories();
-            //before used from thread; isn't good idea
-            //new Thread(new Runnable() {
-            //    @Override
-            //    public void run() {
-            //    }
-            //}).start();
-
-            new File(DIR_APP).mkdirs();
-            new File(DIR_IMAGES).mkdirs();
-            new File(DIR_VIDEOS).mkdirs();
-            new File(DIR_AUDIOS).mkdirs();
-            new File(DIR_DOCUMENT).mkdirs();
-
-            String file = ".nomedia";
-            new File(DIR_IMAGES + "/" + file).createNewFile();
-            new File(DIR_VIDEOS + "/" + file).createNewFile();
-            new File(DIR_AUDIOS + "/" + file).createNewFile();
-            new File(DIR_DOCUMENT + "/" + file).createNewFile();
-
-
-            new File(DIR_CHAT_BACKGROUND).mkdirs();
-            new File(DIR_IMAGE_USER).mkdirs();
-            new File(DIR_TEMP).mkdirs();
-            new File(DIR_CHAT_BACKGROUND + "/" + file).createNewFile();
-            new File(DIR_IMAGE_USER + "/" + file).createNewFile();
-            new File(DIR_TEMP + "/" + file).createNewFile();
-
-            IMAGE_NEW_GROUP = new File(G.DIR_IMAGE_USER, "image_new_group.jpg");
-            IMAGE_NEW_CHANEL = new File(G.DIR_IMAGE_USER, "image_new_chanel.jpg");
-            imageFile = new File(DIR_IMAGE_USER, "image_user");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void manageAppDirectories() {
-        String rootPath = getCacheDir().getPath();
-
-        if (!HelperPermission.grantedUseStorage()) {
-            DIR_IMAGES = rootPath + G.IMAGES;
-            DIR_VIDEOS = rootPath + G.VIDEOS;
-            DIR_AUDIOS = rootPath + G.AUDIOS;
-            DIR_DOCUMENT = rootPath + G.DOCUMENT;
-        }
-
-        DIR_TEMP = rootPath + G.TEMP;
-        DIR_CHAT_BACKGROUND = rootPath + G.CHAT_BACKGROUND;
-        DIR_IMAGE_USER = rootPath + G.IMAGE_USER;
-    }
-
-    public static File getCacheDir() {
-        String state = null;
-        try {
-            state = Environment.getExternalStorageState();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (state == null || state.startsWith(Environment.MEDIA_MOUNTED)) {
-            try {
-                File file = G.context.getExternalCacheDir();
-                if (file != null) {
-                    return file;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            File file = G.context.getCacheDir();
-            if (file != null) {
-                return file;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new File(G.DIR_APP);
     }
 
     private void initializeGlobalVariables() {

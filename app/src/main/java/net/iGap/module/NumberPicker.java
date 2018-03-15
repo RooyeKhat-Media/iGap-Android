@@ -29,9 +29,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
-import java.util.Locale;
+
 import net.iGap.G;
 import net.iGap.R;
+
+import java.util.Locale;
 
 /**
  * it's custom numberPicker and use in passCode page
@@ -50,7 +52,8 @@ public class NumberPicker extends LinearLayout {
     private static final int UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE = 48;
     private static final int DEFAULT_LAYOUT_RESOURCE_ID = 0;
     private static final int SIZE_UNSPECIFIED = -1;
-
+    private final SparseArray<String> mSelectorIndexToStringCache = new SparseArray<>();
+    private final int[] mSelectorIndices = new int[SELECTOR_WHEEL_ITEM_COUNT];
     private TextView mInputText;
     private int mSelectionDividersDistance;
     private int mMinHeight;
@@ -68,8 +71,6 @@ public class NumberPicker extends LinearLayout {
     private OnScrollListener mOnScrollListener;
     private Formatter mFormatter;
     private long mLongPressUpdateInterval = DEFAULT_LONG_PRESS_UPDATE_INTERVAL;
-    private final SparseArray<String> mSelectorIndexToStringCache = new SparseArray<>();
-    private final int[] mSelectorIndices = new int[SELECTOR_WHEEL_ITEM_COUNT];
     private Paint mSelectorWheelPaint;
     private int mSelectorElementHeight;
     private int mInitialScrollOffset = Integer.MIN_VALUE;
@@ -99,20 +100,45 @@ public class NumberPicker extends LinearLayout {
     private PressedStateHelper mPressedStateHelper;
     private int mLastHandledDownDpadKeyCode = -1;
 
-    public interface OnValueChangeListener {
-        void onValueChange(NumberPicker picker, int oldVal, int newVal);
+    public NumberPicker(Context context) {
+        super(context);
+        init();
     }
 
-    public interface OnScrollListener {
-        int SCROLL_STATE_IDLE = 0;
-        int SCROLL_STATE_TOUCH_SCROLL = 1;
-        int SCROLL_STATE_FLING = 2;
-
-        void onScrollStateChange(NumberPicker view, int scrollState);
+    public NumberPicker(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
     }
 
-    public interface Formatter {
-        String format(int value);
+    public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        switch (specMode) {
+            case MeasureSpec.UNSPECIFIED:
+                result = size;
+                break;
+            case MeasureSpec.AT_MOST:
+                if (specSize < size) {
+                    result = specSize | 16777216;
+                } else {
+                    result = size;
+                }
+                break;
+            case MeasureSpec.EXACTLY:
+                result = specSize;
+                break;
+        }
+        return result | (childMeasuredState & (-16777216));
+    }
+
+    static private String formatNumberWithLocale(int value) {
+        return String.format(Locale.getDefault(), "%d", value);
     }
 
     private void init() {
@@ -180,21 +206,6 @@ public class NumberPicker extends LinearLayout {
 
     public void setSelectorColor(int color) {
         mSelectionDivider.setColor(color);
-    }
-
-    public NumberPicker(Context context) {
-        super(context);
-        init();
-    }
-
-    public NumberPicker(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
     }
 
     @Override
@@ -507,10 +518,6 @@ public class NumberPicker extends LinearLayout {
         updateInputTextView();
     }
 
-    public void setValue(int value) {
-        setValueInternal(value, false);
-    }
-
     private void tryComputeMaxWidth() {
         if (!mComputeMaxWidth) {
             return;
@@ -567,6 +574,10 @@ public class NumberPicker extends LinearLayout {
 
     public int getValue() {
         return mValue;
+    }
+
+    public void setValue(int value) {
+        setValueInternal(value, false);
     }
 
     public int getMinValue() {
@@ -700,28 +711,6 @@ public class NumberPicker extends LinearLayout {
         } else {
             return measuredSize;
         }
-    }
-
-    public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
-        int result = size;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-        switch (specMode) {
-            case MeasureSpec.UNSPECIFIED:
-                result = size;
-                break;
-            case MeasureSpec.AT_MOST:
-                if (specSize < size) {
-                    result = specSize | 16777216;
-                } else {
-                    result = size;
-                }
-                break;
-            case MeasureSpec.EXACTLY:
-                result = specSize;
-                break;
-        }
-        return result | (childMeasuredState & (-16777216));
     }
 
     private void initializeSelectorWheelIndices() {
@@ -960,6 +949,22 @@ public class NumberPicker extends LinearLayout {
         return false;
     }
 
+    public interface OnValueChangeListener {
+        void onValueChange(NumberPicker picker, int oldVal, int newVal);
+    }
+
+    public interface OnScrollListener {
+        int SCROLL_STATE_IDLE = 0;
+        int SCROLL_STATE_TOUCH_SCROLL = 1;
+        int SCROLL_STATE_FLING = 2;
+
+        void onScrollStateChange(NumberPicker view, int scrollState);
+    }
+
+    public interface Formatter {
+        String format(int value);
+    }
+
     class PressedStateHelper implements Runnable {
         public static final int BUTTON_INCREMENT = 1;
         public static final int BUTTON_DECREMENT = 2;
@@ -1051,9 +1056,5 @@ public class NumberPicker extends LinearLayout {
             changeValueByOne(mIncrement);
             postDelayed(this, mLongPressUpdateInterval);
         }
-    }
-
-    static private String formatNumberWithLocale(int value) {
-        return String.format(Locale.getDefault(), "%d", value);
     }
 }

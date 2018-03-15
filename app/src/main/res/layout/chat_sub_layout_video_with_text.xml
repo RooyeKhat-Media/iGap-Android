@@ -1,104 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chatSubLayoutVideoWithText"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:paddingBottom="@dimen/dp4"
-    android:textDirection="firstStrong"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/chatSubLayoutVideoWithText"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:paddingBottom="@dimen/dp4"
+  android:textDirection="firstStrong">
 
   <LinearLayout
-      android:id="@+id/mainContainer"
+    android:id="@+id/mainContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:ignore="UselessParent">
+
+    <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      tools:ignore="UselessParent"
-      >
+      android:orientation="vertical">
+
 
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          >
-
+        android:id="@+id/contentContainer"
+        style="@style/ChatMessages.CardView">
 
         <LinearLayout
-            android:id="@+id/contentContainer"
-            style="@style/ChatMessages.CardView"
-            >
+          android:id="@+id/m_container"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
 
-          <LinearLayout
-              android:id="@+id/m_container"
+
+          <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <net.iGap.module.ReserveSpaceRoundedImageView
+              android:id="@+id/thumbnail"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:riv_border_color="#9e9e9e"
+              app:riv_border_width="1px"
+              app:riv_corner_radius="@dimen/messageBox_cornerRadius" />
+
+            <TextView
+              android:id="@+id/duration"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              >
+              android:layout_gravity="left|top"
+              android:layout_marginBottom="-2dp"
+              android:layout_marginLeft="5dp"
+              android:layout_marginTop="7dp"
+              android:background="@drawable/bg_message_image_time"
+              android:gravity="center_vertical"
+              android:maxLines="1"
+              android:paddingLeft="@dimen/dp4"
+              android:paddingRight="@dimen/dp4"
+              android:paddingTop="1dp"
+              android:singleLine="true"
+              android:text="3:48 (4.5 MB)"
+              android:textAllCaps="true"
+              android:textColor="@color/gray10"
+              android:textSize="@dimen/dp10" />
 
+            <include
+              android:id="@+id/progress"
+              layout="@layout/msg_progress_item"
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              android:layout_gravity="center" />
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
+          </FrameLayout>
 
-              <net.iGap.module.ReserveSpaceRoundedImageView
-                  android:id="@+id/thumbnail"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  app:riv_border_color="#9e9e9e"
-                  app:riv_border_width="1px"
-                  app:riv_corner_radius="@dimen/messageBox_cornerRadius"
-                  />
-
-              <TextView
-                  android:id="@+id/duration"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="left|top"
-                  android:layout_marginBottom="-2dp"
-                  android:layout_marginLeft="5dp"
-                  android:layout_marginTop="7dp"
-                  android:background="@drawable/bg_message_image_time"
-                  android:gravity="center_vertical"
-                  android:maxLines="1"
-                  android:paddingLeft="@dimen/dp4"
-                  android:paddingRight="@dimen/dp4"
-                  android:paddingTop="1dp"
-                  android:singleLine="true"
-                  android:text="3:48 (4.5 MB)"
-                  android:textAllCaps="true"
-                  android:textColor="@color/gray10"
-                  android:textSize="@dimen/dp10"
-                  />
-
-              <include
-                  layout="@layout/msg_progress_item"
-                  android:id="@+id/progress"
-                  android:layout_width="56dp"
-                  android:layout_height="56dp"
-                  android:layout_gravity="center"
-                  />
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/csliwt_layout_container_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-
-            </LinearLayout>
+          <LinearLayout
+            android:id="@+id/csliwt_layout_container_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
 
           </LinearLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
       </LinearLayout>
+
+    </LinearLayout>
 
 
   </LinearLayout>

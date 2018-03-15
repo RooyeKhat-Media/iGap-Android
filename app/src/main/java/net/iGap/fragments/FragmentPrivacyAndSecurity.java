@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import net.iGap.R;
 import net.iGap.databinding.FragmentPrivacyAndSecurityBinding;
 import net.iGap.libs.rippleeffect.RippleView;

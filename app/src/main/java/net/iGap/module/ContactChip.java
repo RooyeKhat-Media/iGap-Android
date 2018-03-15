@@ -11,6 +11,7 @@ package net.iGap.module;
 
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
 import com.pchmn.materialchips.model.ChipInterface;
 
 public class ContactChip implements ChipInterface {

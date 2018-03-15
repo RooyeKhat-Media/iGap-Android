@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+
 import net.iGap.G;
 import net.iGap.R;
 
@@ -51,7 +52,8 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
         setLines(4);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN) private void init() {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void init() {
 
         // instantiate the rect
         reuseableRect = new Rect();
@@ -64,7 +66,8 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
         setLines(initialCount);
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas) {
 
         int height = getHeight();
         int lineHeight = getLineHeight() - 1;
@@ -81,10 +84,10 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
 
             // draw the line
             canvas.drawLine(reuseableRect.left,             // left
-                baseline + verticalOffset,      // top
-                reuseableRect.right,            // right
-                baseline + verticalOffset,      // bottom
-                dashedLinePaint);               // paint instance
+                    baseline + verticalOffset,      // top
+                    reuseableRect.right,            // right
+                    baseline + verticalOffset,      // bottom
+                    dashedLinePaint);               // paint instance
 
             // get the baseline for the next line
             baseline += lineHeight;
@@ -93,7 +96,8 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
         super.onDraw(canvas);
     }
 
-    @Override protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+    @Override
+    protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
 
         if (focused) {

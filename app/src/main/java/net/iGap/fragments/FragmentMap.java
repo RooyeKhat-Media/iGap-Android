@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,11 +35,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperError;
@@ -46,6 +43,12 @@ import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import static net.iGap.R.id.mf_fragment_map_view;
 
@@ -55,17 +58,11 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback {
     public static String Longitude = "longitude";
     public static String PosoitionMode = "positionMode";
     public static String flagFragmentMap = "FragmentMap";
-
+    Marker marker;
     private GoogleMap mMap;
-
     private Double latitude;
     private Double longitude;
     private Mode mode;
-    Marker marker;
-
-    public enum Mode {
-        sendPosition, seePosition;
-    }
 
     public static FragmentMap getInctance(Double latitude, Double longitude, Mode mode) {
 
@@ -79,6 +76,34 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback {
         fragmentMap.setArguments(bundle);
 
         return fragmentMap;
+    }
+
+    public static String saveBitmapToFile(Bitmap bitmap) {
+
+        String result = "";
+
+        try {
+            if (bitmap == null) return result;
+
+            String fileName = "location_" + HelperString.getRandomFileName(3) + ".png";
+            File file = new File(G.DIR_TEMP, fileName);
+
+            OutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+
+            result = file.getPath();
+        } catch (FileNotFoundException e) {
+
+        }
+
+        return result;
+    }
+
+    public static void loadImageFromPosition(double latiude, double longitude, OnGetPicture listener) {
+
+        String urlstr = "https://maps.googleapis.com/maps/api/staticmap?center=" + latiude + "," + longitude + "&zoom=16&size=480x240" + "&markers=color:red%7Clabel:S%7C" + latiude + "," + longitude + "&maptype=roadmap&key=" + G.context.getString(R.string.google_maps_key);
+
+        new DownloadImageTask(listener).execute(urlstr);
     }
 
     @Nullable
@@ -192,6 +217,8 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback {
             btnSendPosition.setVisibility(View.GONE);
         }
     }
+
+    //****************************************************************************************************
 
     /**
      * Manipulates the map once available.
@@ -311,39 +338,13 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback {
         }
     }
 
-    //****************************************************************************************************
+    public enum Mode {
+        sendPosition, seePosition;
+    }
 
     public interface OnGetPicture {
 
         void getBitmap(Bitmap bitmap);
-    }
-
-    public static String saveBitmapToFile(Bitmap bitmap) {
-
-        String result = "";
-
-        try {
-            if (bitmap == null) return result;
-
-            String fileName = "location_" + HelperString.getRandomFileName(3) + ".png";
-            File file = new File(G.DIR_TEMP, fileName);
-
-            OutputStream fOut = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-
-            result = file.getPath();
-        } catch (FileNotFoundException e) {
-
-        }
-
-        return result;
-    }
-
-    public static void loadImageFromPosition(double latiude, double longitude, OnGetPicture listener) {
-
-        String urlstr = "https://maps.googleapis.com/maps/api/staticmap?center=" + latiude + "," + longitude + "&zoom=16&size=480x240" + "&markers=color:red%7Clabel:S%7C" + latiude + "," + longitude + "&maptype=roadmap&key=" + G.context.getString(R.string.google_maps_key);
-
-        new DownloadImageTask(listener).execute(urlstr);
     }
 
     private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

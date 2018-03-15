@@ -4,13 +4,15 @@ import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
 import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentMain;
+
+import java.util.ArrayList;
 
 import static net.iGap.fragments.FragmentCall.OPEN_IN_FRAGMENT_MAIN;
 
@@ -20,6 +22,7 @@ import static net.iGap.fragments.FragmentCall.OPEN_IN_FRAGMENT_MAIN;
 
 public class HelperFragment {
 
+    private static String chatName = FragmentChat.class.getName();
     private Fragment fragment;
     private boolean addToBackStack = true;
     private boolean animated = true;
@@ -33,13 +36,29 @@ public class HelperFragment {
     private int popEnter;
     private int popExit;
 
-    private static String chatName = FragmentChat.class.getName();
-
     public HelperFragment() {
     }
 
     public HelperFragment(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public static Fragment isFragmentVisible(String fragmentTag) {
+        Fragment fragment = G.fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        if (fragment != null && fragment.isVisible()) {
+            return fragment;
+        }
+        return null;
+    }
+
+    public static Fragment isFragmentVisible(ArrayList<String> fragmentTags) {
+        for (String fragmentTag : fragmentTags) {
+            FragmentChat fragment = (FragmentChat) G.fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
+            if (fragment != null && fragment.isVisible()) {
+                return fragment;
+            }
+        }
+        return null;
     }
 
     public HelperFragment setFragment(Fragment fragment) {
@@ -155,7 +174,7 @@ public class HelperFragment {
     }
 
     public void removeAll(boolean keepMain) {
-        if (G.fragmentActivity != null) {
+        if (G.fragmentActivity != null && !G.fragmentActivity.isFinishing()) {
             for (Fragment fragment : G.fragmentActivity.getSupportFragmentManager().getFragments()) {
                 if (fragment != null) {
 
@@ -208,24 +227,6 @@ public class HelperFragment {
             return true;
         }
 
-    }
-
-    public static Fragment isFragmentVisible(String fragmentTag) {
-        Fragment fragment = G.fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        if (fragment != null && fragment.isVisible()) {
-            return fragment;
-        }
-        return null;
-    }
-
-    public static Fragment isFragmentVisible(ArrayList<String> fragmentTags) {
-        for (String fragmentTag : fragmentTags) {
-            FragmentChat fragment = (FragmentChat) G.fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
-            if (fragment != null && fragment.isVisible()) {
-                return fragment;
-            }
-        }
-        return null;
     }
 
     private boolean isChatFragment(String fragmentClassName) {

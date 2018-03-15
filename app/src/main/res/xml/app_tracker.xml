@@ -12,9 +12,9 @@
   <bool name="ga_debug">true</bool>
 
   <item
-      name="ga_dispatchPeriod"
-      format="integer"
-      type="integer">120
+    name="ga_dispatchPeriod"
+    format="integer"
+    type="integer">120
   </item>
 
   <string name="ga_sampleFrequency">90</string>

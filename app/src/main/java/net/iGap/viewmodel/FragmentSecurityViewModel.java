@@ -44,25 +44,13 @@ import java.util.regex.Pattern;
 
 public class FragmentSecurityViewModel {
 
-    private static String password;
-    private String txtQuestionOne = "";
-    private String txtQuestionTwo = "";
-    private String txtPatternEmail = "";
-    private boolean isRecoveryByEmail = false;
-    private int page;
     private static final int CHANGE_HINT = 1;
     private static final int CHANGE_EMAIL = 2;
     private static final int CONFIRM_EMAIL = 3;
     private static final int CHANGE_QUESTION = 4;
-    public boolean isFirstArrive = true;
     public static boolean isFirstSetPassword = true;
-    private boolean isConfirmedRecoveryEmail;
-    private String mUnconfirmedEmailPattern = "";
-
-    public FragmentSecurityViewModel() {
-        getInfo();
-    }
-
+    private static String password;
+    public boolean isFirstArrive = true;
     public ObservableInt rootSetPassword = new ObservableInt(View.GONE);
     public ObservableInt rootSetAdditionPassword = new ObservableInt(View.VISIBLE);
     public ObservableInt rootChangeHint = new ObservableInt(View.GONE);
@@ -79,7 +67,6 @@ public class FragmentSecurityViewModel {
     public ObservableInt setConfirmedEmail = new ObservableInt(View.VISIBLE);
     public ObservableInt viewRecoveryEmail = new ObservableInt(View.VISIBLE);
     public ObservableField<String> titleToolbar = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.two_step_verification_title));
-    public ObservableField<String> edtConfirmedEmailHint = new ObservableField<>(mUnconfirmedEmailPattern);
     public ObservableField<String> edtConfirmedEmailText = new ObservableField<>("");
     public ObservableField<String> edtChangeHintText = new ObservableField<>("");
     public ObservableField<String> edtSetEmailText = new ObservableField<>("");
@@ -89,6 +76,18 @@ public class FragmentSecurityViewModel {
     public ObservableField<String> edtSetQuestionPassTwo = new ObservableField<>("");
     public ObservableField<String> edtCheckPassword = new ObservableField<>("");
     public ObservableField<String> edtCheckPasswordHint = new ObservableField<>("");
+    private String txtQuestionOne = "";
+    private String txtQuestionTwo = "";
+    private String txtPatternEmail = "";
+    private boolean isRecoveryByEmail = false;
+    private int page;
+    private boolean isConfirmedRecoveryEmail;
+    private String mUnconfirmedEmailPattern = "";
+    public ObservableField<String> edtConfirmedEmailHint = new ObservableField<>(mUnconfirmedEmailPattern);
+
+    public FragmentSecurityViewModel() {
+        getInfo();
+    }
 
     //===============================================================================
     //================================Event Listeners================================
@@ -318,7 +317,6 @@ public class FragmentSecurityViewModel {
         }
 
 
-
         G.onTwoStepPassword = new OnTwoStepPassword() {
             @Override
             public void getPasswordDetail(final String questionOne, final String questionTwo, final String hint, final boolean hasConfirmedRecoveryEmail, final String unconfirmedEmailPattern) {
@@ -370,7 +368,6 @@ public class FragmentSecurityViewModel {
                     }
                 });
             }
-
 
 
             @Override

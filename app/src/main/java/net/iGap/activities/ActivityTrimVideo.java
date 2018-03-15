@@ -19,22 +19,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.TextView;
+
+import net.iGap.R;
+
 import java.io.File;
+
 import life.knowledge4.videotrimmer.K4LVideoTrimmer;
 import life.knowledge4.videotrimmer.interfaces.OnK4LVideoListener;
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener;
-import net.iGap.R;
 
 public class ActivityTrimVideo extends ActivityEnhanced implements OnTrimVideoListener, OnK4LVideoListener {
 
+    int videoWidth = 641;
+    int videoHeight = 481;
     private String path;
     private long originalSize;
     private long duration;
     private TextView txtDetail;
     private TextView txtTime;
     private TextView txtSize;
-    int videoWidth = 641;
-    int videoHeight = 481;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,11 @@ public class ActivityTrimVideo extends ActivityEnhanced implements OnTrimVideoLi
         if (bundle != null) {
 
             path = bundle.getString("PATH");
+
+            if (path == null) {
+                finish();
+                return;
+            }
         }
 
         getResolutionVideo(path);

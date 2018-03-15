@@ -10,27 +10,31 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.RealmRoomMessageContactRealmProxy;
-import io.realm.annotations.PrimaryKey;
 import net.iGap.helper.HelperString;
 import net.iGap.module.SUID;
 import net.iGap.module.StringListParcelConverter;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
+
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
-@Parcel(implementations = {RealmRoomMessageContactRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageContact.class}) public class RealmRoomMessageContact extends RealmObject {
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmRoomMessageContactRealmProxy;
+import io.realm.annotations.PrimaryKey;
+
+@Parcel(implementations = {RealmRoomMessageContactRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageContact.class})
+public class RealmRoomMessageContact extends RealmObject {
 
     private String firstName;
     private String lastName;
     private String nickName;
     private RealmList<RealmString> phones = new RealmList<>();
     private RealmList<RealmString> emails = new RealmList<>();
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
 
     public static RealmRoomMessageContact put(final ProtoGlobal.RoomMessageContact input) {
         Realm realm = Realm.getDefaultInstance();

@@ -1,136 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_chat_sub_layout"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp68"
-    android:clickable="true"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/root_chat_sub_layout"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp68"
+  android:clickable="true">
 
 
   <net.iGap.module.MaterialDesignTextView
-      android:id="@+id/cs_txt_contact_initials"
-      android:layout_width="@dimen/dp52"
-      android:layout_height="@dimen/dp52"
-      android:layout_gravity="center"
-      android:layout_margin="@dimen/dp8"
-      android:gravity="center"
-      android:text="@string/md_cloud"
-      android:textColor="#ad333333"
-      android:textSize="@dimen/dp32"
-      android:visibility="gone"
-      />
+    android:id="@+id/cs_txt_contact_initials"
+    android:layout_width="@dimen/dp52"
+    android:layout_height="@dimen/dp52"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dp8"
+    android:gravity="center"
+    android:text="@string/md_cloud"
+    android:textColor="#ad333333"
+    android:textSize="@dimen/dp32"
+    android:visibility="gone" />
 
   <net.iGap.module.CircleImageView
-      android:id="@+id/cs_img_contact_picture"
-      android:layout_width="@dimen/dp52"
-      android:layout_height="@dimen/dp52"
-      android:layout_gravity="center"
-      android:layout_margin="@dimen/dp8"
-      />
+    android:id="@+id/cs_img_contact_picture"
+    android:layout_width="@dimen/dp52"
+    android:layout_height="@dimen/dp52"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dp8" />
 
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="horizontal">
+
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/dp12"
-          android:layout_weight="1"
-          android:gravity="top|left"
-          android:orientation="vertical"
-          android:paddingTop="@dimen/dp6"
-          >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp12"
+        android:layout_weight="1"
+        android:gravity="top|left"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp6">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/cs_txt_chat_icon"
+            android:id="@+id/cs_txt_chat_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="2dp"
+            android:textColor="#333"
+            android:textSize="@dimen/dp14" />
+
+          <net.iGap.module.EmojiTextViewE
+            android:id="@+id/cs_txt_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:lineSpacingExtra="0dp"
+            android:lineSpacingMultiplier=".8"
+            android:maxWidth="@dimen/dp160"
+            android:singleLine="true"
+            android:text="Name"
+            android:textColor="@color/black90"
+            android:textSize="@dimen/dp15"
+            app:emojiSize="@dimen/dp16" />
+
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right|end"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp4">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/cs_txt_mute"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/dp4"
+              android:layout_marginLeft="@dimen/dp4"
+              android:layout_marginRight="@dimen/dp4"
+              android:layout_marginStart="@dimen/dp4"
+              android:text="@string/md_muted"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/grayNew"
+              android:textSize="@dimen/dp13" />
+
+            <ImageView
+              android:id="@+id/cslr_txt_tic"
+              style="@style/ChatMessages.MaterialDesignTextView.Tick"
+              android:layout_width="16dp"
+              android:layout_height="16dp"
+              android:layout_marginEnd="@dimen/dp4"
+              android:layout_marginRight="@dimen/dp4" />
+
+            <TextView
+              android:id="@+id/cs_txt_contact_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:paddingBottom="2dp"
-              android:textColor="#333"
-              android:textSize="@dimen/dp14"
-              />
-
-          <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_contact_name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:lineSpacingExtra="0dp"
-              android:lineSpacingMultiplier=".8"
-              android:maxWidth="@dimen/dp160"
+              android:gravity="center"
+              android:maxLines="1"
               android:singleLine="true"
-              android:layout_gravity="top"
-              android:text="Name"
-              android:textColor="@color/black90"
-              android:textSize="@dimen/dp15"
-              app:emojiSize="@dimen/dp16"
-              />
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:layout_weight="1"
-              android:gravity="right|end"
-              android:paddingEnd="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:paddingRight="@dimen/dp8"
-              >
-
-            <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/cs_txt_mute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp4"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_marginStart="@dimen/dp4"
-                android:text="@string/md_muted"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/grayNew"
-                android:textSize="@dimen/dp13"
-                />
-
-            <ImageView
-                android:id="@+id/cslr_txt_tic"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginEnd="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                style="@style/ChatMessages.MaterialDesignTextView.Tick"
-                />
-
-            <TextView
-                android:id="@+id/cs_txt_contact_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="time"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/dp12"
-                />
+              android:text="time"
+              android:textColor="@color/gray"
+              android:textSize="@dimen/dp12" />
 
 
           </LinearLayout>
@@ -139,93 +127,87 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lyt_last_message_room"
-            android:layout_width="match_parent"
+          android:id="@+id/lyt_last_message_room"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="start|center_vertical"
+          android:orientation="horizontal">
+
+          <net.iGap.module.EmojiTextViewE
+            android:id="@+id/cs_txt_last_message_sender"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="start|center_vertical"
-            android:orientation="horizontal"
-            >
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="test"
+            android:textColor="@color/green"
+            android:textSize="@dimen/dp13"
+            app:emojiSize="@dimen/dp14" />
 
           <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_last_message_sender"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical"
-              android:layout_marginLeft="2dp"
-              android:layout_marginRight="2dp"
-              android:maxLines="1"
-              android:text="test"
-              android:singleLine="true"
-              android:textColor="@color/green"
-              android:textSize="@dimen/dp13"
-              app:emojiSize="@dimen/dp14"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/cs_txt_last_message"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="LAST MESSAGE"
+            android:textColor="#FF616161"
+            android:textSize="@dimen/dp12"
+            app:emojiSize="@dimen/dp13" />
 
           <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_last_message"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:ellipsize="end"
-              android:maxLines="1"
-              android:layout_marginBottom="2dp"
-              android:singleLine="true"
-              android:text="LAST MESSAGE"
-              android:textColor="#FF616161"
-              android:textSize="@dimen/dp12"
-              app:emojiSize="@dimen/dp13"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_last_message_file_text"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center_vertical"
-              android:ellipsize="end"
-              android:layout_marginRight="@dimen/dp4"
-              android:layout_marginLeft="@dimen/dp4"
-              android:maxLines="1"
-              android:layout_weight="1"
-              android:layout_marginBottom="2dp"
-              android:singleLine="true"
-              android:text="LAST MESSAGE"
-              android:textColor="#FF616161"
-              android:textSize="@dimen/dp12"
-              app:emojiSize="@dimen/dp13"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/cs_txt_last_message_file_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="LAST MESSAGE"
+            android:textColor="#FF616161"
+            android:textSize="@dimen/dp12"
+            app:emojiSize="@dimen/dp13" />
 
 
           <TextView
-              android:id="@+id/cs_txt_unread_message"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="@drawable/rect_oval_red"
-              android:gravity="center"
-              android:minHeight="@dimen/dp20"
-              android:layout_marginBottom="@dimen/dp4"
-              android:minWidth="@dimen/dp24"
-              android:singleLine="true"
-              android:text="1"
-              android:textColor="@android:color/white"
-              android:textSize="@dimen/dp10"
-              />
+            android:id="@+id/cs_txt_unread_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:background="@drawable/rect_oval_red"
+            android:gravity="center"
+            android:minHeight="@dimen/dp20"
+            android:minWidth="@dimen/dp24"
+            android:singleLine="true"
+            android:text="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dp10" />
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/cs_txt_pinned_message"
-              android:layout_width="wrap_content"
-              android:layout_marginBottom="@dimen/dp4"
-              android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/dp6"
-              android:layout_marginRight="@dimen/dp6"
+            android:id="@+id/cs_txt_pinned_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp6"
+            android:layout_marginRight="@dimen/dp6"
 
-              android:text="@string/md_circlePin"
-              android:textColor="@android:color/black"
-              android:textSize="@dimen/dp20"
-              />
+            android:text="@string/md_circlePin"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dp20" />
 
 
         </LinearLayout>
@@ -233,16 +215,15 @@
       </LinearLayout>
 
 
-
     </LinearLayout>
 
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#52afafaf"
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:background="#52afafaf"
 
-        />
+      />
 
   </LinearLayout>
 

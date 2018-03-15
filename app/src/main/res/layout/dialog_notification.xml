@@ -1,65 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@android:color/white"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
+
+
+  <TextView
+    android:id="@+id/md_txt_message"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp52"
+    android:gravity="center"
+    android:text="@string/do_you_want_to_delet_this_chat"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/dp14" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+
+    android:background="@color/gray" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:layoutDirection="ltr"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="horizontal">
 
-
-    <TextView
-        android:id="@+id/md_txt_message"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:gravity="center"
-        android:text="@string/do_you_want_to_delet_this_chat"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp14"
-        />
+    <Button
+      android:id="@+id/md_btn_no"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/dp44"
+      android:layout_weight="1"
+      android:background="@android:color/white"
+      android:text="@string/cancel"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp14" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+      android:layout_width="1dp"
+      android:layout_height="match_parent"
+      android:background="@color/gray"></View>
 
-        android:background="@color/gray"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/md_btn_no"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp44"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:text="@string/cancel"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp14"
-            />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/gray"></View>
-
-        <Button
-            android:id="@+id/md_btn_yes"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp44"
-            android:layout_weight="1"
-            android:background="@null"
-            android:text="@string/ok"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp14"
-            />
+    <Button
+      android:id="@+id/md_btn_yes"
+      android:layout_width="0dp"
+      android:layout_height="@dimen/dp44"
+      android:layout_weight="1"
+      android:background="@null"
+      android:text="@string/ok"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp14" />
 
 
-    </LinearLayout>
+  </LinearLayout>
 
 
 </LinearLayout>

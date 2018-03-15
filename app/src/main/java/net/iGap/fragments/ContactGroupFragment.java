@@ -59,6 +59,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ContactGroupFragment extends BaseFragment implements OnContactsGetList {
+    private static ProtoGlobal.Room.Type type;
+    ItemAdapter itemAdapter;
     private FastAdapter fastAdapter;
     private TextView txtStatus;
     private TextView txtNumberOfMember;
@@ -66,18 +68,15 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
     private ChipsInput chipsInput;
     private String textString = "";
     private String participantsLimit = "5000";
-
     private long roomId;
     private int countAddMemberResponse = 0;
     private int countMember = 0;
     private int countAddMemberRequest = 0;
-    private static ProtoGlobal.Room.Type type;
     private String typeCreate;
     private List<ContactChip> mContactList = new ArrayList<>();
     private int sizeTextEditText = 0;
     private List<StructContactInfo> contacts;
     private boolean isRemove = true;
-    ItemAdapter itemAdapter;
 
     public static ContactGroupFragment newInstance() {
         return new ContactGroupFragment();
@@ -245,7 +244,6 @@ public class ContactGroupFragment extends BaseFragment implements OnContactsGetL
                         chipsInput.addChip(item.mContact.peerId, uri, item.mContact.displayName, "");
                     }
                 }
-
 
 
                 if (isRemove) {

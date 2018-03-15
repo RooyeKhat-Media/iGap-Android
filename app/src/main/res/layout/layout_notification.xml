@@ -1,276 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-    android:clickable="true"
-              android:layoutDirection="ltr"
-              android:orientation="horizontal"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="@dimen/dp48"
-        android:layout_height="@dimen/dp48"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="@dimen/dp4"
-        android:layout_marginTop="@dimen/dp12"
-        android:padding="@dimen/dp4"
-        android:src="@mipmap/icon"/>
+  <ImageView
+    android:layout_width="@dimen/dp48"
+    android:layout_height="@dimen/dp48"
+    android:layout_gravity="left|top"
+    android:layout_marginLeft="@dimen/dp4"
+    android:layout_marginTop="@dimen/dp12"
+    android:padding="@dimen/dp4"
+    android:src="@mipmap/icon" />
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp12"
+    android:layout_marginStart="@dimen/dp12"
+    android:layout_marginTop="@dimen/dp24"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
 
     <LinearLayout
+      android:id="@+id/ln_ll_message_a"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8">
+
+      <TextView
+        android:id="@+id/ln_txt_a1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="hasan : "
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp16" />
+
+      <TextView
+        android:id="@+id/ln_txt_a2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp12"
-        android:layout_marginStart="@dimen/dp12"
-        android:layout_marginTop="@dimen/dp24"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="how are you"
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp14" />
 
-
-        <LinearLayout
-            android:id="@+id/ln_ll_message_a"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8">
-
-            <TextView
-                android:id="@+id/ln_txt_a1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:singleLine="true"
-                android:textAppearance="@style/NotificationText"
-                android:text="hasan : "
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp16"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_a2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="how are you"
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_a3"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:paddingLeft="@dimen/dp8"
-                android:singleLine="true"
-                android:text="10:52"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ln_ll_message_b"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8">
-
-            <TextView
-                android:id="@+id/ln_txt_b1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="hasan : "
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp16"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_b2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="how are you"
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_b3"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:paddingLeft="@dimen/dp8"
-                android:singleLine="true"
-                android:text="10:52"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ln_ll_message_c"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8">
-
-            <TextView
-                android:id="@+id/ln_txt_c1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="hasan : "
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp16"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_c2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="how are you"
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_c3"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:paddingLeft="@dimen/dp8"
-                android:singleLine="true"
-                android:text="10:52"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ln_ll_message_d"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8">
-
-            <TextView
-                android:id="@+id/ln_txt_d1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="hasan : "
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp16"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_d2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="how are you"
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_d3"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:paddingLeft="@dimen/dp8"
-                android:singleLine="true"
-                android:text="10:52"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/ln_txt_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:text="..."
-            android:textAppearance="@style/NotificationText"
-            android:textSize="@dimen/dp12"
-            android:visibility="visible"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginBottom="@dimen/dp8"
-            android:textAppearance="@style/NotificationText"
-            ></LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp8"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/mln_btn_replay"
-                android:layout_width="@dimen/dp32"
-                android:layout_height="@dimen/dp28"
-                android:gravity="top|center"
-                android:padding="@dimen/dp4"
-                android:src="@mipmap/reply_icon"/>
-
-            <TextView
-                android:id="@+id/ln_txt_replay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/replay"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/ln_txt_unread_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingLeft="@dimen/dp8"
-                android:singleLine="true"
-                android:text="you have 10 new message"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
+      <TextView
+        android:id="@+id/ln_txt_a3"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp8"
+        android:singleLine="true"
+        android:text="10:52"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
 
     </LinearLayout>
 
+    <LinearLayout
+      android:id="@+id/ln_ll_message_b"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8">
 
-    <ImageView
-        android:id="@+id/mln_btn_close"
-        android:layout_width="@dimen/dp40"
-        android:layout_height="@dimen/dp40"
-        android:padding="@dimen/dp8"
+      <TextView
+        android:id="@+id/ln_txt_b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="hasan : "
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp16" />
+
+      <TextView
+        android:id="@+id/ln_txt_b2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="how are you"
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/ln_txt_b3"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp8"
+        android:singleLine="true"
+        android:text="10:52"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/ln_ll_message_c"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8">
+
+      <TextView
+        android:id="@+id/ln_txt_c1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="hasan : "
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp16" />
+
+      <TextView
+        android:id="@+id/ln_txt_c2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="how are you"
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/ln_txt_c3"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp8"
+        android:singleLine="true"
+        android:text="10:52"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/ln_ll_message_d"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8">
+
+      <TextView
+        android:id="@+id/ln_txt_d1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="hasan : "
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp16" />
+
+      <TextView
+        android:id="@+id/ln_txt_d2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="how are you"
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/ln_txt_d3"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp8"
+        android:singleLine="true"
+        android:text="10:52"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/ln_txt_more"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8"
+      android:text="..."
+      android:textAppearance="@style/NotificationText"
+      android:textSize="@dimen/dp12"
+      android:visibility="visible" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:layout_marginBottom="@dimen/dp8"
+      android:textAppearance="@style/NotificationText"></LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp8"
+      android:gravity="center">
+
+      <ImageView
+        android:id="@+id/mln_btn_replay"
+        android:layout_width="@dimen/dp32"
+        android:layout_height="@dimen/dp28"
+        android:gravity="top|center"
+        android:padding="@dimen/dp4"
+        android:src="@mipmap/reply_icon" />
+
+      <TextView
+        android:id="@+id/ln_txt_replay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/replay"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/ln_txt_unread_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp8"
+        android:singleLine="true"
+        android:text="you have 10 new message"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
+
+    </LinearLayout>
+
+  </LinearLayout>
 
 
-        android:src="@mipmap/cross"/>
+  <ImageView
+    android:id="@+id/mln_btn_close"
+    android:layout_width="@dimen/dp40"
+    android:layout_height="@dimen/dp40"
+    android:padding="@dimen/dp8"
+
+
+    android:src="@mipmap/cross" />
 
 </LinearLayout>

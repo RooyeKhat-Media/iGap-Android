@@ -1,47 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:clickable="true"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/Confirm_fingerPrint_continue"
-      android:textSize="@dimen/dp13"
-      android:textColor="@color/black90"
-      />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/Confirm_fingerPrint_continue"
+    android:textColor="@color/black90"
+    android:textSize="@dimen/dp13" />
 
   <LinearLayout
-      android:id="@+id/dialog_root_item1_notification"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      >
+    android:id="@+id/dialog_root_item1_notification"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <net.iGap.module.MaterialDesignTextView
 
-        android:id="@+id/iconDialogTitle"
-        android:layout_width="@dimen/dp60"
-        android:layout_height="@dimen/dp60"
-        android:layout_gravity="center"
-        android:text="@string/md_igap_fingerprint"
-        android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/grayNew"
-        android:textSize="@dimen/dp26"
+      android:id="@+id/iconDialogTitle"
+      android:layout_width="@dimen/dp60"
+      android:layout_height="@dimen/dp60"
+      android:layout_gravity="center"
+      android:text="@string/md_igap_fingerprint"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textColor="@color/grayNew"
+      android:textSize="@dimen/dp26"
 
-        />
+      />
 
     <TextView
-        android:id="@+id/txtDialogTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp8"
-        android:text="@string/Touch_sensor"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp12"
-        />
+      android:id="@+id/txtDialogTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingTop="@dimen/dp8"
+      android:text="@string/Touch_sensor"
+      android:textColor="@color/gray_4c"
+      android:textSize="@dimen/dp12" />
   </LinearLayout>
 </LinearLayout>

@@ -17,15 +17,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-import java.io.File;
-import java.io.IOException;
+
+import com.yalantis.ucrop.UCrop;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.ImageHelper;
@@ -35,8 +35,12 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.HelperCopyFile;
 
+import java.io.File;
+import java.io.IOException;
+
 public class ActivityCrop extends ActivityEnhanced {
 
+    AttachFile attachFile;
     private ImageView imgPic;
     private Uri uri;
     private String page;
@@ -46,12 +50,12 @@ public class ActivityCrop extends ActivityEnhanced {
     private File mediaStorageDir;
     private File fileChat;
     private String result;
-    AttachFile attachFile;
     private String path;
     private TextView txtSet;
+    private String nzmeFile;
 
-
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop);
 
@@ -92,30 +96,30 @@ public class ActivityCrop extends ActivityEnhanced {
         if (uri != null && !uri.toString().equals("")) {
             rippleCrop.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
-                @Override public void onComplete(RippleView rippleView) {
-                    CropImage.activity(uri)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setMinCropResultSize(120, 120)
-                        .setAutoZoomEnabled(false)
-                        .setInitialCropWindowPaddingRatio(.08f) // padding window from all
-                        .setBorderCornerLength(50)
-                        .setBorderCornerOffset(0)
-                        .setAllowCounterRotation(true)
-                        .setBorderCornerThickness(8.0f)
-                        .setShowCropOverlay(true)
-                        .setAspectRatio(1, 1)
-                        .setFixAspectRatio(false)
-                        .setBorderCornerColor(getResources().getColor(R.color.whit_background))
-                        .setBackgroundColor(getResources().getColor(R.color.ou_background_crop))
-                        .setScaleType(CropImageView.ScaleType.FIT_CENTER)
-                        .start(ActivityCrop.this);
+                @Override
+                public void onComplete(RippleView rippleView) {
+
+                    nzmeFile = path.substring(path.lastIndexOf("/"));
+                    String newPath = "file://" + path;
+                    Uri uri = Uri.parse(newPath);
+                    UCrop.Options options = new UCrop.Options();
+                    options.setStatusBarColor(ContextCompat.getColor(G.context, R.color.black));
+                    options.setToolbarColor(ContextCompat.getColor(G.context, R.color.black));
+                    options.setCompressionQuality(80);
+
+                    UCrop.of(uri, Uri.fromFile(new File(G.DIR_IMAGES, nzmeFile)))
+                            .withAspectRatio(16, 9)
+                            .withOptions(options)
+                            .start(ActivityCrop.this);
+
                 }
             });
         }
 
         RippleView rippleBack = (RippleView) findViewById(R.id.pu_ripple_back);
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override public void onComplete(RippleView rippleView) throws IOException {
+            @Override
+            public void onComplete(RippleView rippleView) throws IOException {
 
                 if (type.equals("camera") || type.equals("crop_camera")) {
 
@@ -130,14 +134,16 @@ public class ActivityCrop extends ActivityEnhanced {
             }
         });
         txtCancel.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 
                 finish();
             }
         });
 
         txtSet.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 if (uri != null && type.equals("crop_camera")) {
                     pathImageUser = getRealPathFromURI(uri);
 
@@ -159,7 +165,8 @@ public class ActivityCrop extends ActivityEnhanced {
 
     // result from crop
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK && requestCode == AttachFile.request_code_TAKE_PICTURE) {
@@ -188,20 +195,21 @@ public class ActivityCrop extends ActivityEnhanced {
             } else {
                 txtSet.performClick();
             }
-        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { // result for crop
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
+        } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
 
-                if (type.equals("camera")) {
-                    type = "crop_camera";
-                } else {
-                    type = "gallery";
-                }
-                uri = result.getUri();
-                imgPic.setImageURI(uri);
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+            final Uri resultUri = UCrop.getOutput(data);
+//            path = AttachFile.getFilePathFromUri(resultUri);
+            if (resultUri != null) {
+                path = resultUri.toString();
             }
+            if (type.equals("camera")) {
+                type = "crop_camera";
+            } else {
+                type = "gallery";
+            }
+            uri = resultUri;
+            imgPic.setImageURI(resultUri);
+
         } else {
             Toast.makeText(ActivityCrop.this, R.string.can_not_save_image, Toast.LENGTH_SHORT).show();
         }

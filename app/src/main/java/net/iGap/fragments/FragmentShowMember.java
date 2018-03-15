@@ -29,14 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmRecyclerViewAdapter;
-import io.realm.RealmResults;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperAvatar;
@@ -86,6 +79,16 @@ import net.iGap.request.RequestUserInfo;
 import net.iGap.viewmodel.FragmentChannelProfileViewModel;
 import net.iGap.viewmodel.FragmentGroupProfileViewModel;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
+
 import static net.iGap.G.inflater;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
@@ -96,32 +99,30 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     public static final String USERID = "USER_ID";
     public static final String SELECTEDROLE = "SELECTED_ROLE";
     public static final String ISNEEDGETMEMBERLIST = "IS_NEED_GET_MEMBER_LIST";
-
+    public static List<StructMessageInfo> lists = new ArrayList<>();
+    public static OnComplete infoUpdateListenerCount;
+    private static Fragment fragment;
+    List<ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> listMembers = new ArrayList<ProtoGroupGetMemberList.GroupGetMemberListResponse.Member>();
+    List<ProtoChannelGetMemberList.ChannelGetMemberListResponse.Member> listMembersChannal = new ArrayList<ProtoChannelGetMemberList.ChannelGetMemberListResponse.Member>();
     private long mRoomID = 0;
-
     private RecyclerView mRecyclerView;
     //private MemberAdapterA mAdapter;
     private MemberAdapter mAdapter;
     private String mMainRole = "";
     private ProgressBar progressBar;
-
     private Long userID = 0l;
     private String role;
     private String selectedRole = ProtoGroupGetMemberList.GroupGetMemberList.FilterRole.ALL.toString();
     private boolean isNeedGetMemberList = false;
     private int mMemberCount = 0;
     private int mCurrentUpdateCount = 0;
-    public static List<StructMessageInfo> lists = new ArrayList<>();
-    List<ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> listMembers = new ArrayList<ProtoGroupGetMemberList.GroupGetMemberListResponse.Member>();
-    List<ProtoChannelGetMemberList.ChannelGetMemberListResponse.Member> listMembersChannal = new ArrayList<ProtoChannelGetMemberList.ChannelGetMemberListResponse.Member>();
     private boolean isFirstFill = true;
     private int offset = 0;
     private int limit = 30;
-    public static OnComplete infoUpdateListenerCount;
     private EndlessRecyclerViewScrollListener scrollListener;
     private boolean isDeleteMemberList = true;
-    private static Fragment fragment;
     private ProtoGlobal.Room.Type roomType;
+    private boolean isOne = true;
 
     public static FragmentShowMember newInstance(long roomId, String mainrool, long userid, String selectedRole, boolean isNeedGetMemberList) {
         Bundle bundle = new Bundle();
@@ -206,16 +207,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
             }
         }
     }
-
-    class AsyncMember extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            getMemberList();
-            return null;
-        }
-    }
-
 
     private void getMemberList() {
         mMemberCount = listMembers.size();
@@ -514,8 +505,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
         mRecyclerView.addOnScrollListener(scrollListener);
     }
 
-    private boolean isOne = true;
-
     private void loadMoreMember() {
         if (isOne) {
             isOne = false;
@@ -580,8 +569,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
         removeMember(roomId, memberId);
     }
 
-
-
     @Override
     public void onChannelAddAdmin(long roomId, long memberId) {
         resetMemberState(roomId, memberId);
@@ -601,7 +588,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     public void onChannelKickModerator(long roomId, long memberId) {
         resetMemberState(roomId, memberId);
     }
-
 
     @Override
     public void onChannelKickMember(long roomId, long memberId) {
@@ -645,6 +631,15 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
         //        mAdapter.remove(mAdapter.getPosition(memberId));
         //    }
         //});
+    }
+
+    class AsyncMember extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            getMemberList();
+            return null;
+        }
     }
 
     /**
@@ -934,7 +929,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
     //    }
     //}
 
-
     /**
      * **********************************************************************************
      * ********************************** RealmAdapter **********************************
@@ -959,29 +953,6 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
         public MemberAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View v = inflater.inflate(R.layout.contact_item_group_profile, viewGroup, false);
             return new ViewHolder(v);
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            protected CircleImageView image;
-            protected CustomTextViewMedium title;
-            protected CustomTextViewMedium subtitle;
-            protected View topLine;
-            protected TextView txtNumberOfSharedMedia;
-            protected MaterialDesignTextView roleStar;
-            protected MaterialDesignTextView btnMenu;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-
-                image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
-                title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
-                subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
-                topLine = itemView.findViewById(R.id.cigp_view_topLine);
-                txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
-                roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
-                btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
-            }
         }
 
         @Override
@@ -1204,6 +1175,29 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
 
             realm.close();
             return null;
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            protected CircleImageView image;
+            protected CustomTextViewMedium title;
+            protected CustomTextViewMedium subtitle;
+            protected View topLine;
+            protected TextView txtNumberOfSharedMedia;
+            protected MaterialDesignTextView roleStar;
+            protected MaterialDesignTextView btnMenu;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+
+                image = (CircleImageView) itemView.findViewById(R.id.cigp_imv_contact_avatar);
+                title = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_name);
+                subtitle = (CustomTextViewMedium) itemView.findViewById(R.id.cigp_txt_contact_lastseen);
+                topLine = itemView.findViewById(R.id.cigp_view_topLine);
+                txtNumberOfSharedMedia = (TextView) itemView.findViewById(R.id.cigp_txt_nomber_of_shared_media);
+                roleStar = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_txt_member_role);
+                btnMenu = (MaterialDesignTextView) itemView.findViewById(R.id.cigp_moreButton);
+            }
         }
     }
 }

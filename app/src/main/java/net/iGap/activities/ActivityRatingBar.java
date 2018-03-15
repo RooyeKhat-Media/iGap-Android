@@ -10,9 +10,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.request.RequestSignalingRate;
@@ -25,19 +27,21 @@ public class ActivityRatingBar extends ActivityEnhanced {
     EditText edtResone;
     long id = -1;
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         G.isShowRatingDialog = false;
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 
         G.isShowRatingDialog = true;
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-            | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-            | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-            | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating_bar);
@@ -52,7 +56,8 @@ public class ActivityRatingBar extends ActivityEnhanced {
 
         LinearLayout layotRoot = (LinearLayout) findViewById(R.id.arb_layout_root);
         layotRoot.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -87,7 +92,8 @@ public class ActivityRatingBar extends ActivityEnhanced {
         ratingBar = (RatingBar) view.findViewById(R.id.arb_ratingBar_call);
         edtResone = (EditText) view.findViewById(R.id.arb_edt_resone);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
                 if (rating < 3) {
 
@@ -107,11 +113,13 @@ public class ActivityRatingBar extends ActivityEnhanced {
         });
 
         edtResone.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (edtResone.getText().length() > 0) {
                     positive.setEnabled(true);
@@ -120,7 +128,8 @@ public class ActivityRatingBar extends ActivityEnhanced {
                 }
             }
 
-            @Override public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });

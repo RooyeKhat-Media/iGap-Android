@@ -45,16 +45,9 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class FragmentCreateChannelViewModel implements OnChannelCheckUsername {
 
-    private Long roomId;
-    private String inviteLink;
     public static final int PRIVATE = 0;
     public static final int PUBLIC = 1;
-    private String token;
-    private boolean existAvatar;
-    private String pathSaveImage;
-    private FragmentCreateChannelBinding fragmentCreateChannelBinding;
     public Spannable wordtoSpan;
-
     public ObservableField<String> edtSetLink = new ObservableField<>(Config.IGAP_LINK_PREFIX);
     public ObservableField<Integer> prgWaiting = new ObservableField<>(View.GONE);
     public ObservableField<Integer> txtFinishColor = new ObservableField<>(G.context.getResources().getColor(R.color.toolbar_background));
@@ -63,6 +56,12 @@ public class FragmentCreateChannelViewModel implements OnChannelCheckUsername {
     public ObservableField<Boolean> edtSetLinkEnable = new ObservableField<>(true);
     public ObservableField<Boolean> isRadioButtonPrivate = new ObservableField<>(true);
     public ObservableField<Boolean> isRadioButtonPublic = new ObservableField<>(false);
+    private Long roomId;
+    private String inviteLink;
+    private String token;
+    private boolean existAvatar;
+    private String pathSaveImage;
+    private FragmentCreateChannelBinding fragmentCreateChannelBinding;
 
 
     public FragmentCreateChannelViewModel(Bundle arguments, FragmentCreateChannelBinding fragmentCreateChannelBinding) {

@@ -15,6 +15,7 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
 import net.iGap.G;
 
 public class HelperImageBackColor {
@@ -69,8 +70,8 @@ public class HelperImageBackColor {
     /**
      * get letter and color and size finally draw bitmap with this info
      *
-     * @param with size of bitmap
-     * @param text letter for drawing
+     * @param with  size of bitmap
+     * @param text  letter for drawing
      * @param color color of bitmap
      * @return bitmap that painted alphabet
      */

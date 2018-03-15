@@ -20,19 +20,19 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityCrop;
 import net.iGap.databinding.ActivityGroupProfileBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperError;
+import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
-import net.iGap.helper.ImageHelper;
 import net.iGap.interfaces.OnAvatarAdd;
 import net.iGap.interfaces.OnAvatarDelete;
 import net.iGap.interfaces.OnAvatarGet;
@@ -45,7 +45,6 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
-import net.iGap.module.IntentRequests;
 import net.iGap.module.SUID;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.proto.ProtoGlobal;
@@ -54,6 +53,8 @@ import net.iGap.request.RequestGroupKickAdmin;
 import net.iGap.request.RequestGroupKickMember;
 import net.iGap.request.RequestGroupKickModerator;
 import net.iGap.viewmodel.FragmentGroupProfileViewModel;
+
+import java.io.IOException;
 
 /*
 * This is the source code of iGap for Android
@@ -66,16 +67,16 @@ import net.iGap.viewmodel.FragmentGroupProfileViewModel;
 */
 public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarResponse, OnGroupAvatarDelete {
 
+    private static final String ROOM_ID = "RoomId";
+    private static final String IS_NOT_JOIN = "is_not_join";
+    public static OnBackFragment onBackFragment;
     NestedScrollView nestedScrollView;
     AttachFile attachFile;
     private CircleImageView imvGroupAvatar;
     private AppBarLayout appBarLayout;
     private String pathSaveImage;
     private ProgressBar prgWait;
-    private static final String ROOM_ID = "RoomId";
     private Fragment fragment;
-    private static final String IS_NOT_JOIN = "is_not_join";
-    public static OnBackFragment onBackFragment;
     private FragmentGroupProfileViewModel fragmentGroupProfileViewModel;
     private ActivityGroupProfileBinding fragmentGroupProfileBinding;
 
@@ -117,6 +118,33 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         G.onGroupAvatarResponse = this;
         G.onGroupAvatarDelete = this;
 
+        FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
+            @Override
+            public void result(String path, String message) {
+                pathSaveImage = null;
+                pathSaveImage = path;
+                long avatarId = SUID.id().get();
+                long lastUploadedAvatarId = avatarId + 1L;
+
+                showProgressBar();
+                HelperUploadFile.startUploadTaskAvatar(pathSaveImage, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
+                    @Override
+                    public void OnProgress(int progress, FileUploadStructure struct) {
+                        if (progress < 100) {
+                            prgWait.setProgress(progress);
+                        } else {
+                            new RequestGroupAvatarAdd().groupAvatarAdd(fragmentGroupProfileViewModel.roomId, struct.token);
+                        }
+                    }
+
+                    @Override
+                    public void OnError() {
+                        hideProgressBar();
+                    }
+                });
+            }
+        };
+
     }
 
     private void initDataBinding() {
@@ -142,21 +170,10 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                 case AttachFile.request_code_TAKE_PICTURE:
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                        ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true);
-                        intent.putExtra("IMAGE_CAMERA", AttachFile.mCurrentPhotoPath);
-                        intent.putExtra("TYPE", "camera");
-                        intent.putExtra("PAGE", "setting");
-                        intent.putExtra("ID", (int) (avatarId + 1L));
-                        startActivityForResult(intent, IntentRequests.REQ_CROP);
+                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, false)).setReplace(false).load();
+
                     } else {
-                        Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                        ImageHelper.correctRotateImage(AttachFile.imagePath, true);
-                        intent.putExtra("IMAGE_CAMERA", AttachFile.imagePath);
-                        intent.putExtra("TYPE", "camera");
-                        intent.putExtra("PAGE", "setting");
-                        intent.putExtra("ID", (int) (avatarId + 1L));
-                        startActivityForResult(intent, IntentRequests.REQ_CROP);
+                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false)).setReplace(false).load();
                     }
 
                     break;
@@ -164,45 +181,9 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                     if (data.getData() == null) {
                         return;
                     }
-                    Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                    intent.putExtra("IMAGE_CAMERA", AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image));
-                    intent.putExtra("TYPE", "gallery");
-                    intent.putExtra("PAGE", "setting");
-                    intent.putExtra("ID", (int) (avatarId + 1L));
-                    startActivityForResult(intent, IntentRequests.REQ_CROP);
-
-                    //filePath = AttachFile.getFilePathFromUri(data.getData());
-                    //filePathAvatar = filePath;
+                    new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, false)).setReplace(false).load();
 
                     break;
-
-                case IntentRequests.REQ_CROP: { // save path image on data base ( realmGroupProfile )
-
-                    pathSaveImage = null;
-                    if (data != null) {
-                        pathSaveImage = data.getData().toString();
-                    }
-
-
-                    long lastUploadedAvatarId = avatarId + 1L;
-
-                    showProgressBar();
-                    HelperUploadFile.startUploadTaskAvatar(pathSaveImage, lastUploadedAvatarId, new HelperUploadFile.UpdateListener() {
-                        @Override
-                        public void OnProgress(int progress, FileUploadStructure struct) {
-                            if (progress < 100) {
-                                prgWait.setProgress(progress);
-                            } else {
-                                new RequestGroupAvatarAdd().groupAvatarAdd(fragmentGroupProfileViewModel.roomId, struct.token);
-                            }
-                        }
-
-                        @Override
-                        public void OnError() {
-                            hideProgressBar();
-                        }
-                    });
-                }
             }
         }
     }
@@ -513,7 +494,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
     }
 
 
-
     /**
      * if user was admin set  role to member
      */
@@ -550,7 +530,6 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
             }
         }).show();
     }
-
 
 
     public interface OnBackFragment {

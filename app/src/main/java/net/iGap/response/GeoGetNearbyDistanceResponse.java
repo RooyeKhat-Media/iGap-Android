@@ -10,12 +10,13 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoGeoGetNearbyDistance;
 import net.iGap.realm.RealmGeoNearbyDistance;
 import net.iGap.realm.RealmRegisteredInfo;
+
+import io.realm.Realm;
 
 public class GeoGetNearbyDistanceResponse extends MessageHandler {
 

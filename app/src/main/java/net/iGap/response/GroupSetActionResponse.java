@@ -10,10 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.helper.HelperGetAction;
 import net.iGap.proto.ProtoGroupSetAction;
+
+import io.realm.Realm;
 
 public class GroupSetActionResponse extends MessageHandler {
 
@@ -29,17 +30,20 @@ public class GroupSetActionResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         final ProtoGroupSetAction.GroupSetActionResponse.Builder builder = (ProtoGroupSetAction.GroupSetActionResponse.Builder) message;
 
         new Thread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 final Realm realm = Realm.getDefaultInstance();
 
                 if (G.userId != builder.getUserId()) {
                     realm.executeTransaction(new Realm.Transaction() {
-                        @Override public void execute(Realm realm) {
+                        @Override
+                        public void execute(Realm realm) {
 
                             if (G.userId != builder.getUserId()) {
                                 HelperGetAction.fillOrClearAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
@@ -50,7 +54,8 @@ public class GroupSetActionResponse extends MessageHandler {
                     realm.close();
 
                     G.handler.post(new Runnable() {
-                        @Override public void run() {
+                        @Override
+                        public void run() {
 
                             if (G.onSetAction != null) {
                                 G.onSetAction.onSetAction(builder.getRoomId(), builder.getUserId(), builder.getAction());
@@ -66,11 +71,13 @@ public class GroupSetActionResponse extends MessageHandler {
         }).start();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

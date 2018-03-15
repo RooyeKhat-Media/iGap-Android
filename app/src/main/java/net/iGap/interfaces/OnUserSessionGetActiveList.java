@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.List;
 import net.iGap.proto.ProtoUserSessionGetActiveList;
+
+import java.util.List;
 
 public interface OnUserSessionGetActiveList {
     void onUserSessionGetActiveList(List<ProtoUserSessionGetActiveList.UserSessionGetActiveListResponse.Session> session);

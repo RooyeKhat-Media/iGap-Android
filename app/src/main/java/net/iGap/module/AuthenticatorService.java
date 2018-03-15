@@ -16,6 +16,7 @@ import android.os.IBinder;
 
 public class AuthenticatorService extends Service {
 
+    private static Authenticator authenticator = null;
     // Instance field that stores the authenticator object
     private Authenticator mAuthenticator;
 
@@ -37,8 +38,6 @@ public class AuthenticatorService extends Service {
             return null;
         }
     }
-
-    private static Authenticator authenticator = null;
 
     protected Authenticator getAuthenticator() {
         if (authenticator == null) {

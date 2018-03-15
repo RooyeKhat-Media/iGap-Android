@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
-import cat.ereza.customactivityoncrash.config.CaocConfig;
+
 import net.iGap.G;
 import net.iGap.R;
+
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 
 public class ActivityCustomError extends ActivityEnhanced {
 
@@ -29,11 +31,11 @@ public class ActivityCustomError extends ActivityEnhanced {
 
         final CaocConfig config = CustomActivityOnCrash.getConfigFromIntent(getIntent());
 
-            restartButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CustomActivityOnCrash.restartApplicationWithIntent(ActivityCustomError.this, i, config);
-                }
-            });
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomActivityOnCrash.restartApplicationWithIntent(ActivityCustomError.this, i, config);
+            }
+        });
     }
 }

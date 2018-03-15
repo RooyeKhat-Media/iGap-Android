@@ -15,12 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 public class ContactItem extends AbstractMessage<ContactItem, ContactItem.ViewHolder> {
 
@@ -78,6 +81,11 @@ public class ContactItem extends AbstractMessage<ContactItem, ContactItem.ViewHo
         }
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
@@ -93,10 +101,5 @@ public class ContactItem extends AbstractMessage<ContactItem, ContactItem.ViewHo
             //number = (TextView) view.findViewById(R.id.number);
             //image = (ImageView) view.findViewById(R.id.image);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

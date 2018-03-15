@@ -19,12 +19,14 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.FragmentNotificationAndSoundBinding;
@@ -35,38 +37,33 @@ import static android.content.Context.MODE_PRIVATE;
 public class FragmentNotificationAndSoundViewModel {
 
     public FragmentNotificationAndSoundBinding fragmentNotificationAndSoundBinding;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     public int ledColorMessage;
-    private int vibrateMessage;
-    private int mode;
-    private int poRbDialogSoundMessage;
-    private String soundMessage;
     public int ledColorGroup;
-    private int vibrateGroup;
-    private int modeGroup;
-    private int poRbDialogSoundMessageGroup;
-    private String soundMessageGroup;
-
     public ObservableField<Boolean> isAlertMassage = new ObservableField<>();
     public ObservableField<Boolean> isMassagePreview = new ObservableField<>();
     public ObservableField<String> callbackVibrateMessage = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.array_Default));
     public ObservableField<String> callbackPopUpNotificationMessage = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.st_sound));
     public ObservableField<String> callbackSoundMessage = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.st_sound));
-
     public ObservableField<Boolean> isAlertGroup = new ObservableField<>();
     public ObservableField<Boolean> isMessagePreViewGroup = new ObservableField<>();
     public ObservableField<String> callbackVibrateGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.array_Default));
     public ObservableField<String> callbackPopUpNotificationGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.st_sound));
     public ObservableField<String> callBackSoundGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.st_sound));
-
-
     public ObservableField<Boolean> isAppSound = new ObservableField<>();
     public ObservableField<Boolean> isInAppVibration = new ObservableField<>();
     public ObservableField<Boolean> isInAppPreView = new ObservableField<>();
     public ObservableField<Boolean> isSoundInChat = new ObservableField<>();
-
     public ObservableField<Boolean> isKeepService = new ObservableField<>();
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private int vibrateMessage;
+    private int mode;
+    private int poRbDialogSoundMessage;
+    private String soundMessage;
+    private int vibrateGroup;
+    private int modeGroup;
+    private int poRbDialogSoundMessageGroup;
+    private String soundMessageGroup;
 
 
     public FragmentNotificationAndSoundViewModel(FragmentNotificationAndSoundBinding fragmentNotificationAndSoundBinding) {

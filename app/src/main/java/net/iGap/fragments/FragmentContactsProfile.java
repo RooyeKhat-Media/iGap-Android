@@ -36,11 +36,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.FragmentContactsProfileBinding;
@@ -71,20 +70,26 @@ import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserReport;
 import net.iGap.viewmodel.FragmentContactsProfileViewModel;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import io.realm.Realm;
+
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
 
 
 public class FragmentContactsProfile extends BaseFragment {
 
+    private static final String ROOM_ID = "RoomId";
+    private static final String PEER_ID = "peerId";
+    private static final String ENTER_FROM = "enterFrom";
     private long userId = 0;
     private long roomId = 0;
     private String enterFrom;
     private String report;
-
-    private static final String ROOM_ID = "RoomId";
-    private static final String PEER_ID = "peerId";
-    private static final String ENTER_FROM = "enterFrom";
+    private FragmentContactsProfileBinding fragmentContactsProfileBinding;
+    private FragmentContactsProfileViewModel fragmentContactsProfileViewModel;
 
     public static FragmentContactsProfile newInstance(long roomId, long peerId, String enterFrom) {
         Bundle args = new Bundle();
@@ -95,9 +100,6 @@ public class FragmentContactsProfile extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    private FragmentContactsProfileBinding fragmentContactsProfileBinding;
-    private FragmentContactsProfileViewModel fragmentContactsProfileViewModel;
 
     private void initDataBinding() {
         fragmentContactsProfileViewModel = new FragmentContactsProfileViewModel(fragmentContactsProfileBinding, roomId, userId, enterFrom);
@@ -182,6 +184,10 @@ public class FragmentContactsProfile extends BaseFragment {
             fragmentContactsProfileBinding.chiLayoutNickname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    if (fragmentContactsProfileViewModel.contactName.get() == null) {
+                        return;
+                    }
 
                     final LinearLayout layoutNickname = new LinearLayout(G.fragmentActivity);
                     layoutNickname.setOrientation(LinearLayout.VERTICAL);

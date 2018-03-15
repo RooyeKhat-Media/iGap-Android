@@ -1,137 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
+
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:background="#e1dfdf" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutDirection="ltr"
-    android:clickable="true"
-    android:orientation="vertical">
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#e1dfdf" />
+    android:background="#333333"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:id="@+id/csl_ll_comment"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:background="@android:color/white"
+      android:orientation="horizontal">
+
+      <View
+        android:layout_width="2px"
+        android:layout_height="match_parent"
+        android:background="#e1dfdf" />
+
+      <net.iGap.module.CircleImageView
+        android:id="@+id/csl_img_comment_sender_picture"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="@dimen/dp48"
+        android:layout_marginBottom="@dimen/dp12"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp12"
+
+        android:src="@mipmap/empty" />
+
+
+      <TextView
+        android:id="@+id/csl_txt_message"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#333333"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/csl_ll_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="2px"
-                android:layout_height="match_parent"
-                android:background="#e1dfdf" />
-
-          <net.iGap.module.CircleImageView
-                android:id="@+id/csl_img_comment_sender_picture"
-                android:layout_width="@dimen/dp48"
-                android:layout_height="@dimen/dp48"
-                android:layout_marginBottom="@dimen/dp12"
-                android:layout_marginLeft="@dimen/dp16"
-                android:layout_marginRight="@dimen/dp16"
-                android:layout_marginTop="@dimen/dp12"
-
-                android:src="@mipmap/empty"/>
+        android:layout_marginTop="@dimen/dp18"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingBottom="@dimen/dp8"
+        android:text="New Text"
+        android:textColor="@color/gray_4c"
+        android:textSize="@dimen/dp14" />
 
 
-            <TextView
-                android:id="@+id/csl_txt_message"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp18"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:paddingBottom="@dimen/dp8"
-                android:text="New Text"
-                android:textColor="@color/gray_4c"
-                android:textSize="@dimen/dp14"
-                />
+      <LinearLayout
+        android:layout_width="@dimen/dp68"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <TextView
+          android:id="@+id/csl_txt_date"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:singleLine="true"
+          android:text="Agu 23"
+          android:textColor="@color/gray_9d"
+          android:textSize="@dimen/dp10" />
 
-            <LinearLayout
-                android:layout_width="@dimen/dp68"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="center"
-                android:orientation="vertical">
+        <TextView
+          android:id="@+id/csl_txt_clock"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingBottom="@dimen/dp8"
+          android:singleLine="true"
+          android:text="23:14"
+          android:textColor="@color/gray_9d"
+          android:textSize="@dimen/dp10" />
+      </LinearLayout>
 
-                <TextView
-                    android:id="@+id/csl_txt_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Agu 23"
-                    android:textColor="@color/gray_9d"
-                    android:textSize="@dimen/dp10"
-                    />
-
-                <TextView
-                    android:id="@+id/csl_txt_clock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dp8"
-                    android:singleLine="true"
-                    android:text="23:14"
-                    android:textColor="@color/gray_9d"
-                    android:textSize="@dimen/dp10"
-                    />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/csl_ll_replay_comment"
-            android:layout_width="@dimen/dp88"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp4"
-                android:text="Replay"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dp18"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="@dimen/dp4"
-                android:src="@mipmap/ic_ab_reply" />
-        </LinearLayout>
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/csl_ll_add_replay"
-        android:layout_width="match_parent"
+      android:id="@+id/csl_ll_replay_comment"
+      android:layout_width="@dimen/dp88"
+      android:layout_height="match_parent"
+      android:background="@android:color/white"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:visibility="gone">
+
+      <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/dp40"></LinearLayout>
+        android:padding="@dimen/dp4"
+        android:text="Replay"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dp18" />
+
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/dp4"
+        android:src="@mipmap/ic_ab_reply" />
+    </LinearLayout>
+
+  </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="#e1dfdf" />
+  <LinearLayout
+    android:id="@+id/csl_ll_add_replay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp40"></LinearLayout>
+
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:background="#e1dfdf" />
 
 
 </LinearLayout>

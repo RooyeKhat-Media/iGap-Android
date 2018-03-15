@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -18,10 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.daimajia.swipe.SwipeLayout;
+import com.hanks.library.AnimateCheckBox;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
+import net.iGap.messageprogress.MessageProgress;
 import net.iGap.module.AppUtils;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.EmojiTextViewE;
@@ -42,7 +47,6 @@ import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
 import static java.lang.Boolean.TRUE;
 import static net.iGap.G.context;
-import static net.iGap.R.dimen.dp16;
 import static net.iGap.R.dimen.dp1_minus;
 import static net.iGap.R.dimen.dp4;
 import static net.iGap.R.dimen.dp52;
@@ -120,8 +124,9 @@ public class ViewMaker {
         linearLayout_197.setGravity(Gravity.CENTER_VERTICAL);
         setLayoutDirection(linearLayout_197, View.LAYOUT_DIRECTION_LTR);
         linearLayout_197.setMinimumHeight(i_Dp(R.dimen.dp95));
+        linearLayout_197.setMinimumWidth(i_Dp(R.dimen.dp220));
         linearLayout_197.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout.LayoutParams layout_80 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp220), ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layout_80 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         linearLayout_197.setLayoutParams(layout_80);
 
         LinearLayout audioPlayerViewContainer = new LinearLayout(G.context);
@@ -475,7 +480,7 @@ public class ViewMaker {
         csl_ll_time.setOrientation(HORIZONTAL);
         LinearLayout.LayoutParams layout_189 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_189.bottomMargin = dpToPixel(4);
-        layout_189.topMargin = dpToPixel(-1);
+        csl_ll_time.setPadding(dpToPixel(5), 0, dpToPixel(5), 0);
         csl_ll_time.setLayoutParams(layout_189);
 
         TextView txtEditedIndicator = new TextView(context);
@@ -744,22 +749,29 @@ public class ViewMaker {
         lyt_vote.setGravity(BOTTOM);
         setLayoutDirection(lyt_vote, View.LAYOUT_DIRECTION_LTR);
         lyt_vote.setOrientation(VERTICAL);
-        LinearLayout.LayoutParams layout_356 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp40), ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams layout_356 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp48), ViewGroup.LayoutParams.MATCH_PARENT);
         layout_356.gravity = BOTTOM;
-        layout_356.setMargins(0, 0, 0, i_Dp(R.dimen.dp40));
         lyt_vote.setLayoutParams(layout_356);
+
+        LinearLayout lyt_vote_sub = new LinearLayout(context);
+        lyt_vote_sub.setOrientation(VERTICAL);
+        lyt_vote_sub.setId(R.id.lyt_vote_sub);
+        lyt_vote_sub.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
+        LinearLayout.LayoutParams layout_35644 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layout_35644.leftMargin = i_Dp(R.dimen.dp2);
+        lyt_vote_sub.setLayoutParams(layout_35644);
 
         LinearLayout lyt_vote_up = new LinearLayout(context);
         lyt_vote_up.setId(R.id.lyt_vote_up);
         lyt_vote_up.setGravity(CENTER);
         lyt_vote_up.setOrientation(VERTICAL);
         LinearLayout.LayoutParams layout_799 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout_799.bottomMargin = i_Dp(R.dimen.dp12);
+        lyt_vote_up.setPadding(0, 0, 0, i_Dp(R.dimen.dp6));
+        layout_799.bottomMargin = i_Dp(dp4);
         lyt_vote_up.setLayoutParams(layout_799);
 
         TextView txt_vote_up = new TextView(context);
         txt_vote_up.setId(R.id.txt_vote_up);
-        txt_vote_up.setGravity(CENTER);
         txt_vote_up.setText("0");
         txt_vote_up.setTextAppearance(context, R.style.ChatMessages_Time);
         txt_vote_up.setSingleLine(true);
@@ -776,13 +788,14 @@ public class ViewMaker {
         img_vote_up.setTextColor(context.getResources().getColor(R.color.gray_6c));
         setTextSize(img_vote_up, R.dimen.dp16);
         LinearLayout.LayoutParams layout_216 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout_216.leftMargin = i_Dp(dp4);
         img_vote_up.setLayoutParams(layout_216);
         lyt_vote_up.addView(img_vote_up);
-        lyt_vote.addView(lyt_vote_up);
+        lyt_vote_sub.addView(lyt_vote_up);
 
         LinearLayout lyt_vote_down = new LinearLayout(context);
+        lyt_vote_down.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
         lyt_vote_down.setId(R.id.lyt_vote_down);
+        lyt_vote_down.setPadding(0, i_Dp(R.dimen.dp6), 0, 0);
         lyt_vote_down.setGravity(CENTER);
         lyt_vote_down.setOrientation(VERTICAL);
         LinearLayout.LayoutParams layout_221 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -794,13 +807,11 @@ public class ViewMaker {
         img_vote_down.setTextColor(context.getResources().getColor(R.color.gray_6c));
         setTextSize(img_vote_down, R.dimen.dp16);
         LinearLayout.LayoutParams layout_877 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout_877.leftMargin = i_Dp(dp4);
         img_vote_down.setLayoutParams(layout_877);
         lyt_vote_down.addView(img_vote_down);
 
         TextView txt_vote_down = new TextView(context);
         txt_vote_down.setId(R.id.txt_vote_down);
-        txt_vote_down.setGravity(CENTER);
         txt_vote_down.setText("0");
         txt_vote_down.setTextAppearance(context, R.style.ChatMessages_Time);
         setTypeFace(txt_vote_down);
@@ -810,18 +821,27 @@ public class ViewMaker {
         txt_vote_down.setLayoutParams(layout_856);
 
         lyt_vote_down.addView(txt_vote_down);
-        lyt_vote.addView(lyt_vote_down);
+        lyt_vote_sub.addView(lyt_vote_down);
+        lyt_vote.addView(lyt_vote_sub);
+        lyt_vote.addView(getForwardButton());
 
+        return lyt_vote;
+    }
+
+    private static View getForwardButton() {
         LinearLayout lyt_vote_forward = new LinearLayout(context);
         lyt_vote_forward.setGravity(CENTER);
         lyt_vote_forward.setOrientation(VERTICAL);
-        LinearLayout.LayoutParams layout_799_f = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout_799_f.topMargin = i_Dp(R.dimen.dp10);
+        lyt_vote_forward.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.circle_white));
+        LinearLayout.LayoutParams layout_799_f = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp32), i_Dp(R.dimen.dp32));
+        layout_799_f.topMargin = i_Dp(R.dimen.dp8);
+        layout_799_f.bottomMargin = i_Dp(R.dimen.dp16);
+        layout_799_f.leftMargin = i_Dp(R.dimen.dp2);
         lyt_vote_forward.setLayoutParams(layout_799_f);
 
         MaterialDesignTextView img_vote_forward = new MaterialDesignTextView(context);
         img_vote_forward.setId(R.id.img_vote_forward);
-        img_vote_forward.setPadding(5, 5, 5, 5);
+        img_vote_forward.setPadding(i_Dp(R.dimen.dp2), i_Dp(R.dimen.dp4), 0, 0);
         img_vote_forward.setGravity(CENTER);
         LinearLayout.LayoutParams layout_216_f = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         img_vote_forward.setText(context.getResources().getString(R.string.md_forward));
@@ -829,14 +849,8 @@ public class ViewMaker {
         setTextSize(img_vote_forward, R.dimen.dp20);
         img_vote_forward.setLayoutParams(layout_216_f);
         lyt_vote_forward.addView(img_vote_forward);
-        lyt_vote.addView(lyt_vote_forward);
 
-        View textView_564 = new View(context);
-        LinearLayout.LayoutParams layout_437 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp40), i_Dp(dp16));
-        textView_564.setLayoutParams(layout_437);
-        lyt_vote.addView(textView_564);
-
-        return lyt_vote;
+        return lyt_vote_forward;
     }
 
     static View getAudioItem() {
@@ -868,9 +882,10 @@ public class ViewMaker {
         audioBox.setId(R.id.audioBox);
         setLayoutDirection(audioBox, View.LAYOUT_DIRECTION_LTR);
         audioBox.setMinimumHeight((int) context.getResources().getDimension(R.dimen.dp130));
+        audioBox.setMinimumWidth(i_Dp(R.dimen.dp220));
         audioBox.setOrientation(HORIZONTAL);
         audioBox.setPadding(0, (int) G.context.getResources().getDimension(messageContainerPadding), 0, (int) G.context.getResources().getDimension(R.dimen.messageContainerPaddingBottom));
-        LinearLayout.LayoutParams layout_262 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp220), LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams layout_262 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         audioBox.setLayoutParams(layout_262);
 
         LinearLayout linearLayout_39 = new LinearLayout(G.context);
@@ -1241,7 +1256,7 @@ public class ViewMaker {
         return mainContainer;
     }
 
-    static View makeTextViewMessage(int maxsize, boolean hasEmoji) {
+    static View makeTextViewMessage(int maxsize, boolean hasEmoji, boolean hasLink) {
 
         if (hasEmoji) {
             EmojiTextViewE emojiTextViewE = new EmojiTextViewE(context);
@@ -1256,7 +1271,9 @@ public class ViewMaker {
                 emojiTextViewE.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG);
             }
             setLayoutDirection(emojiTextViewE, View.LAYOUT_DIRECTION_LOCALE);
-            emojiTextViewE.setMovementMethod(LinkMovementMethod.getInstance());
+            if (hasLink) {
+                emojiTextViewE.setMovementMethod(LinkMovementMethod.getInstance());
+            }
 
             if (maxsize > 0) {
                 emojiTextViewE.setMaxWidth(maxsize);
@@ -1275,7 +1292,9 @@ public class ViewMaker {
                 textView.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG);
             }
             setLayoutDirection(textView, View.LAYOUT_DIRECTION_LOCALE);
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            if (hasLink) {
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+            }
             if (maxsize > 0) {
                 textView.setMaxWidth(maxsize);
             }
@@ -1330,34 +1349,18 @@ public class ViewMaker {
     }
 
     private static View getProgressBar(int sizeSrc) {
-
-        //MessageProgress messageProgress=new MessageProgress(G.context);
-        //messageProgress.setId(R.id.progress);
-        //FrameLayout.LayoutParams layout_189 = new FrameLayout.LayoutParams(size, size);
-        //messageProgress.setLayoutParams(layout_189);
-        //
-        //
-        //ContentLoadingProgressBar contentLoadingProgressBar=new ContentLoadingProgressBar(G.context);
-        //contentLoadingProgressBar.setId(R.id.ch_progress_loadingContent);
-        //FrameLayout.LayoutParams layout_256 = new FrameLayout.LayoutParams(size, size);
-        //contentLoadingProgressBar.setLayoutParams(layout_256);
-        //contentLoadingProgressBar.setVisibility(View.VISIBLE);
-        //
-        //messageProgress.addView(contentLoadingProgressBar);
-        //
-        //
-        //
-        //
-        //return messageProgress;
-
-        View v = G.inflater.inflate(R.layout.msg_progress_item, null, false);
-
+        MessageProgress messageProgress = new MessageProgress(G.context);
+        messageProgress.setId(R.id.progress);
+        LinearLayout.LayoutParams params;
         if (sizeSrc > 0) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(i_Dp(sizeSrc), i_Dp(sizeSrc));
-            v.setLayoutParams(params);
+            params = new LinearLayout.LayoutParams(i_Dp(sizeSrc), i_Dp(sizeSrc));
+        } else {
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
 
-        return v;
+        messageProgress.setLayoutParams(params);
+
+        return messageProgress;
     }
 
     /**
@@ -1452,7 +1455,6 @@ public class ViewMaker {
 
         MaterialDesignTextView cs_txt_chat_icon = new MaterialDesignTextView(G.context);
         cs_txt_chat_icon.setId(R.id.cs_txt_chat_icon);
-        cs_txt_chat_icon.setPadding(0, 0, 0, dpToPixel(2));
         cs_txt_chat_icon.setTextColor(Color.parseColor("#333333"));
 
         setTextSize(cs_txt_chat_icon, R.dimen.dp14);
@@ -1463,7 +1465,6 @@ public class ViewMaker {
         } else {
             layout_525.rightMargin = i_Dp(R.dimen.dp8);
         }
-
 
 
         cs_txt_chat_icon.setLayoutParams(layout_525);
@@ -1482,19 +1483,33 @@ public class ViewMaker {
         cs_txt_contact_name.setEmojiSize(i_Dp(R.dimen.dp16));
         cs_txt_contact_name.setTextColor(G.context.getResources().getColor(R.color.black90));
         setTextSize(cs_txt_contact_name, R.dimen.dp15);
-        LinearLayout.LayoutParams layout_115 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-
-        if (HelperCalander.isPersianUnicode) {
-            layout_115.gravity = Gravity.RIGHT;
-            cs_txt_contact_name.setGravity(Gravity.RIGHT);
-        } else {
-            layout_115.gravity = Gravity.LEFT;
-            cs_txt_contact_name.setGravity(Gravity.LEFT);
-        }
-
-
+        LinearLayout.LayoutParams layout_115 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         cs_txt_contact_name.setLayoutParams(layout_115);
         linearLayout_922.addView(cs_txt_contact_name);
+
+        LinearLayout linearLayout_353dd = new LinearLayout(G.context);
+        linearLayout_353dd.setOrientation(HORIZONTAL);
+        LinearLayout.LayoutParams layout_860ss = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        if (HelperCalander.isPersianUnicode) {
+            layout_860ss.gravity = Gravity.RIGHT | Gravity.CENTER;
+            linearLayout_353dd.setGravity(Gravity.RIGHT);
+        } else {
+            layout_860ss.gravity = Gravity.LEFT | Gravity.CENTER;
+            linearLayout_353dd.setGravity(Gravity.LEFT);
+        }
+        linearLayout_353dd.setLayoutParams(layout_860ss);
+
+        AppCompatImageView cs_img_verify = new AppCompatImageView(G.context);
+        cs_img_verify.setId(R.id.cs_img_verify_room);
+        cs_img_verify.setImageResource(R.drawable.ic_verify);
+        LinearLayout.LayoutParams layout_152 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp18), i_Dp(R.dimen.dp18));
+        layout_152.gravity = CENTER_VERTICAL;
+        layout_152.leftMargin = i_Dp(R.dimen.dp4);
+        layout_152.rightMargin = i_Dp(R.dimen.dp4);
+        cs_img_verify.setLayoutParams(layout_152);
+
+        linearLayout_353dd.addView(cs_img_verify);
+        linearLayout_922.addView(linearLayout_353dd);
         linearLayout_353.addView(linearLayout_922);
 
         LinearLayout lyt_last_message_room = new LinearLayout(G.context);
@@ -1518,10 +1533,6 @@ public class ViewMaker {
         lyt_last_message.setOrientation(HORIZONTAL);
         LinearLayout.LayoutParams layout_3382 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         lyt_last_message.setLayoutParams(layout_3382);
-
-
-
-
 
 
         EmojiTextViewE cs_txt_last_message_sender = new EmojiTextViewE(G.context);
@@ -1622,11 +1633,11 @@ public class ViewMaker {
         cs_txt_mute.setText(G.fragmentActivity.getResources().getString(R.string.md_muted));
         cs_txt_mute.setTextColor(G.context.getResources().getColor(R.color.grayNew));
         setTextSize(cs_txt_mute, R.dimen.dp13);
-        LinearLayout.LayoutParams layout_152 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layout_152.leftMargin = i_Dp(R.dimen.dp4);
-        layout_152.rightMargin = i_Dp(R.dimen.dp4);
+        LinearLayout.LayoutParams layout_152s = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layout_152s.leftMargin = i_Dp(R.dimen.dp4);
+        layout_152s.rightMargin = i_Dp(R.dimen.dp4);
 
-        cs_txt_mute.setLayoutParams(layout_152);
+        cs_txt_mute.setLayoutParams(layout_152s);
         linearLayout_620.addView(cs_txt_mute);
 
         ImageView cslr_txt_tic = new ImageView(G.context);
@@ -1855,6 +1866,7 @@ public class ViewMaker {
         swipeRevealLayout.addView(LinearLayout);
 
         LinearLayout linearLayout_578 = new LinearLayout(G.context);
+//        linearLayout_578.setId(R.id.rootRegisterContact);
         linearLayout_578.setId(R.id.mainContainer);
         linearLayout_578.setOrientation(VERTICAL);
         linearLayout_578.setBackgroundColor(G.context.getResources().getColor(R.color.white));
@@ -1890,11 +1902,31 @@ public class ViewMaker {
         layout_692.topMargin = i_Dp(R.dimen.dp16);
         linearLayout_823.setLayoutParams(layout_692);
 
+        RelativeLayout layoutCheckBoxAndImage = new RelativeLayout(G.context);
+        RelativeLayout.LayoutParams layoutCheckBoxAndImageParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutCheckBoxAndImage.setLayoutParams(layoutCheckBoxAndImageParams);
+
+
         CircleImageView imageView = new CircleImageView(G.context);
         imageView.setId(R.id.imageView);
         LinearLayout.LayoutParams layout_54 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp48), i_Dp(R.dimen.dp48));
         imageView.setLayoutParams(layout_54);
-        linearLayout_823.addView(imageView);
+
+        AnimateCheckBox animateCheckBox = new AnimateCheckBox(G.context);
+        animateCheckBox.setId(R.id.animateCheckBoxContact);
+        animateCheckBox.setVisibility(View.GONE);
+        animateCheckBox.setLineColor(R.color.white);
+        LinearLayout.LayoutParams animateCheckBoxParams = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp24), i_Dp(R.dimen.dp24));
+        animateCheckBox.setLayoutParams(animateCheckBoxParams);
+        animateCheckBoxParams.gravity = Gravity.BOTTOM;
+        animateCheckBoxParams.gravity = Gravity.RIGHT;
+        animateCheckBoxParams.gravity = Gravity.END;
+
+
+        layoutCheckBoxAndImage.addView(imageView);
+        layoutCheckBoxAndImage.addView(animateCheckBox);
+
+        linearLayout_823.addView(layoutCheckBoxAndImage);
 
         LinearLayout linearLayout_673 = new LinearLayout(G.context);
         linearLayout_673.setOrientation(VERTICAL);

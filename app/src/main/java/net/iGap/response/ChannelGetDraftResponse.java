@@ -1,5 +1,3 @@
-
-
 package net.iGap.response;
 
 import net.iGap.proto.ProtoChannelGetDraft;

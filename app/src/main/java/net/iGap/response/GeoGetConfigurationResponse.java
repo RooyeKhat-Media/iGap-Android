@@ -11,6 +11,7 @@
 package net.iGap.response;
 
 import com.crashlytics.android.Crashlytics;
+
 import net.iGap.G;
 import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.proto.ProtoGeoGetConfiguration;

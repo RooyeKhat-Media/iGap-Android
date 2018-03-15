@@ -218,16 +218,6 @@ public class HelperSetAction {
         return false;
     }
 
-    private static class StructAction {
-
-        public long roomId;
-        public long currentTime;
-        public long messageId; // messageId is a unique number that we have it in start and end of upload
-        public int randomKey;
-        public ProtoGlobal.Room.Type chatType;
-        public ProtoGlobal.ClientAction action;
-    }
-
     /**
      * check that action with same roomId is exist or not.
      * return true if exist and update time otherwise just return false.
@@ -289,5 +279,15 @@ public class HelperSetAction {
         }
 
         return null;
+    }
+
+    private static class StructAction {
+
+        public long roomId;
+        public long currentTime;
+        public long messageId; // messageId is a unique number that we have it in start and end of upload
+        public int randomKey;
+        public ProtoGlobal.Room.Type chatType;
+        public ProtoGlobal.ClientAction action;
     }
 }

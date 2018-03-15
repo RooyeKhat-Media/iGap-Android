@@ -15,8 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
@@ -26,6 +25,10 @@ import net.iGap.module.enums.LocalFileType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 import static net.iGap.fragments.FragmentChat.getRealmChat;
 
@@ -60,7 +63,6 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
         holder.cslf_txt_file_name = (TextView) holder.itemView.findViewById(R.id.songArtist);
         holder.cslf_txt_file_size = (TextView) holder.itemView.findViewById(R.id.fileSize);
         holder.thumbnail = (ImageView) holder.itemView.findViewById(R.id.thumbnail);
-
 
 
         super.bindView(holder, payloads);
@@ -117,6 +119,11 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
         holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
@@ -132,10 +139,5 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
             //cslf_txt_file_size = (TextView) view.findViewById(R.id.fileSize);
             //thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

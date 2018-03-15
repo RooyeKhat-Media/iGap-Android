@@ -1,99 +1,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.iGap.fragments.FragmentSecurityRecovery"
-    android:background="@color/white"
-    android:id="@+id/rootRecoveryPassword"
-    android:layoutDirection="ltr"
-    android:clickable="true"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/rootRecoveryPassword"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical"
+  tools:context="net.iGap.fragments.FragmentSecurityRecovery"
 
-    >
+  >
 
 
   <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <android.support.v7.widget.Toolbar
-        android:id="@+id/stps_backgroundToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        tools:ignore="MissingPrefix"
-        >
+      android:id="@+id/stps_backgroundToolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:layoutDirection="ltr"
+      android:padding="0dp"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
+      tools:ignore="MissingPrefix">
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/verifyPassword_rippleOk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+          android:id="@+id/verifyPassword_rippleOk"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="visible"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_check_symbol"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-
-        </net.iGap.libs.rippleeffect.RippleView>
-
-
-        <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
-
-          <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
-
-        </net.iGap.libs.rippleeffect.RippleView>
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp52"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/ripple_back"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:text="@string/recovery_Password"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+            android:text="@string/md_check_symbol"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
+
+        </net.iGap.libs.rippleeffect.RippleView>
+
+
+        <net.iGap.libs.rippleeffect.RippleView
+          android:id="@+id/ripple_back"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
+
+          <net.iGap.module.MaterialDesignTextView
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/md_back_arrow"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
+
+        </net.iGap.libs.rippleeffect.RippleView>
+
+        <TextView
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_toRightOf="@+id/ripple_back"
+          android:gravity="center"
+          android:text="@string/recovery_Password"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp18"
+          android:visibility="visible" />
       </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
@@ -103,158 +97,149 @@
 
   <!-- recovery QuestionPassword-->
   <LinearLayout
-      android:id="@+id/rootRecoveryQuestionPassword"
+    android:id="@+id/rootRecoveryQuestionPassword"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <TextView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="visible"
-      >
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp24"
+      android:gravity="center"
+      android:text="@string/password_Question_title_one"
+      android:textColor="@color/gray_4c"
+      android:textSize="@dimen/dp18" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp24"
-        android:gravity="center"
-        android:text="@string/password_Question_title_one"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp18"
-        />
+      android:id="@+id/txtSetRecoveryQuestionPassOne"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp12"
+      android:singleLine="true"
+      android:text="@string/password_Question_one"
+      android:textSize="@dimen/dp13"
 
-    <TextView
-        android:id="@+id/txtSetRecoveryQuestionPassOne"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp12"
-        android:text="@string/password_Question_one"
-        android:singleLine="true"
-        android:textSize="@dimen/dp13"
+      />
 
-        />
     <net.iGap.module.MEditText
-        android:id="@+id/edtSetRecoveryAnswerPassOne"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_answer"
-        android:singleLine="true"
-        android:textSize="@dimen/dp13"
-        />
+      android:id="@+id/edtSetRecoveryAnswerPassOne"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:hint="@string/password_answer"
+      android:singleLine="true"
+      android:textSize="@dimen/dp13" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp24"
-        android:gravity="center"
-        android:text="@string/password_Question_title_two"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp18"
-        />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp24"
+      android:gravity="center"
+      android:text="@string/password_Question_title_two"
+      android:textColor="@color/gray_4c"
+      android:textSize="@dimen/dp18" />
 
     <TextView
-        android:id="@+id/txtSetRecoveryQuestionPassTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp12"
-        android:text="@string/password_Question_two"
-        android:singleLine="true"
-        android:textSize="@dimen/dp13"
-        />
+      android:id="@+id/txtSetRecoveryQuestionPassTwo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp12"
+      android:singleLine="true"
+      android:text="@string/password_Question_two"
+      android:textSize="@dimen/dp13" />
+
     <net.iGap.module.MEditText
-        android:id="@+id/edtSetRecoveryAnswerPassTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:hint="@string/password_answer"
-        android:singleLine="true"
-        android:textSize="@dimen/dp13"
-        />
+      android:id="@+id/edtSetRecoveryAnswerPassTwo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:hint="@string/password_answer"
+      android:singleLine="true"
+      android:textSize="@dimen/dp13" />
 
     <TextView
-        android:id="@+id/txtSetRecoveryByEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp48"
-        android:text="@string/recovery_by_email"
-        android:singleLine="true"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp13"
-        />
+      android:id="@+id/txtSetRecoveryByEmail"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp48"
+      android:singleLine="true"
+      android:text="@string/recovery_by_email"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp13" />
 
   </LinearLayout>
 
   <!--email-->
   <LinearLayout
-      android:id="@+id/rootRecoveryEmailPassword"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:visibility="visible"
-      >
+    android:id="@+id/rootRecoveryEmailPassword"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible">
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="center"
-        android:text="@string/enter_code"
-        android:textColor="@color/gray_4c"
-        android:textSize="@dimen/dp20"
-        />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp32"
+      android:gravity="center"
+      android:text="@string/enter_code"
+      android:textColor="@color/gray_4c"
+      android:textSize="@dimen/dp20" />
 
 
     <net.iGap.module.MEditText
-        android:id="@+id/edtSetRecoveryEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp32"
-        android:textSize="@dimen/dp13"
-        android:gravity="center"
-        />
+      android:id="@+id/edtSetRecoveryEmail"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/dp32"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginStart="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp32"
+      android:gravity="center"
+      android:textSize="@dimen/dp13" />
 
     <TextView
-        android:id="@+id/txtResendConfirmEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp32"
-        android:gravity="start"
-        android:text="@string/your_resend_email_skip"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp14"
-        android:padding="@dimen/dp16"
-        android:visibility="visible"
-        />
+      android:id="@+id/txtResendConfirmEmail"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/dp32"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginStart="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp32"
+      android:gravity="start"
+      android:padding="@dimen/dp16"
+      android:text="@string/your_resend_email_skip"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp14"
+      android:visibility="visible" />
 
     <TextView
-        android:id="@+id/txtSetRecoveryByQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp32"
-        android:layout_marginLeft="@dimen/dp32"
-        android:layout_marginRight="@dimen/dp32"
-        android:layout_marginStart="@dimen/dp32"
-        android:layout_marginTop="@dimen/dp4"
-        android:text="@string/recovery_by_question"
-        android:singleLine="true"
-        android:gravity="start"
-        android:textColor="@color/green"
-        android:padding="@dimen/dp16"
-        android:textSize="@dimen/dp13"
-        />
+      android:id="@+id/txtSetRecoveryByQuestion"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/dp32"
+      android:layout_marginLeft="@dimen/dp32"
+      android:layout_marginRight="@dimen/dp32"
+      android:layout_marginStart="@dimen/dp32"
+      android:layout_marginTop="@dimen/dp4"
+      android:gravity="start"
+      android:padding="@dimen/dp16"
+      android:singleLine="true"
+      android:text="@string/recovery_by_question"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp13" />
 
   </LinearLayout>
 

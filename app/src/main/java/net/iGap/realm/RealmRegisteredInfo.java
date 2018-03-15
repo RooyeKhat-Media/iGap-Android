@@ -48,158 +48,6 @@ public class RealmRegisteredInfo extends RealmObject {
     private boolean blockUser = false;
     private boolean DoNotshowSpamBar = false;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        try {
-            this.username = username;
-        } catch (Exception e) {
-            this.username = HelperString.getUtf8String(username);
-        }
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        try {
-            this.firstName = firstName;
-        } catch (Exception e) {
-            this.firstName = HelperString.getUtf8String(firstName);
-        }
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        try {
-            this.lastName = lastName;
-        } catch (Exception e) {
-            this.lastName = HelperString.getUtf8String(lastName);
-        }
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        try {
-            this.displayName = displayName;
-        } catch (Exception e) {
-            this.displayName = HelperString.getUtf8String(displayName);
-        }
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getStatus() {
-        return AppUtils.getStatsForUser(status);
-    }
-
-    /**
-     * this method will be returned exactly the value that got from server
-     */
-    public String getMainStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCacheId() {
-        return cacheId;
-    }
-
-    public void setCacheId(String cacheId) {
-        this.cacheId = cacheId;
-    }
-
-    public int getLastSeen() {
-        return lastSeen;
-    }
-
-    public void setLastSeen(int lastSeen) {
-        this.lastSeen = lastSeen;
-    }
-
-    public int getAvatarCount() {
-        return avatarCount;
-    }
-
-    public void setAvatarCount(int avatarCount) {
-        this.avatarCount = avatarCount;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public boolean isMutual() {
-        return mutual;
-    }
-
-    public void setMutual(boolean mutual) {
-        this.mutual = mutual;
-    }
-
-    public boolean isBlockUser() {
-        return blockUser;
-    }
-
-    public void setBlockUser(boolean blockUser) {
-        this.blockUser = blockUser;
-    }
-
-    public boolean getDoNotshowSpamBar() {
-        return DoNotshowSpamBar;
-    }
-
-    public void setDoNotshowSpamBar(boolean doNotshowSpamBar) {
-        DoNotshowSpamBar = doNotshowSpamBar;
-    }
-
-
     public static RealmRegisteredInfo putOrUpdate(Realm realm, ProtoGlobal.RegisteredUser input) {
         RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, input.getId());
         if (registeredInfo == null) {
@@ -223,55 +71,6 @@ public class RealmRegisteredInfo extends RealmObject {
         registeredInfo.setBio(input.getBio());
 
         return registeredInfo;
-    }
-
-    public RealmList<RealmAvatar> getAvatars() {
-        RealmList<RealmAvatar> avatars = new RealmList<>();
-        Realm realm = Realm.getDefaultInstance();
-        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, id).findAllSorted(RealmAvatarFields.ID, Sort.ASCENDING)) {
-            avatars.add(avatar);
-        }
-        realm.close();
-        return avatars;
-    }
-
-    public RealmAvatar getLastAvatar() {
-        RealmList<RealmAvatar> avatars = getAvatars();
-        if (avatars.isEmpty()) {
-            return null;
-        }
-        // make sure return last avatar which has attachment
-        for (int i = avatars.size() - 1; i >= 0; i--) {
-            RealmAvatar avatar = getAvatars().get(i);
-            if (avatar.getFile() != null) {
-                return avatar;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * fill object from proto to realm
-     *
-     * @param registeredUser proto that get from server
-     * @param info           object from RealmRegisteredInfo
-     */
-
-    public void fillRegisteredUserInfo(ProtoGlobal.RegisteredUser registeredUser, RealmRegisteredInfo info) {
-        info.setUsername(registeredUser.getUsername());
-        info.setPhoneNumber(Long.toString(registeredUser.getPhone()));
-        info.setFirstName(registeredUser.getFirstName());
-        info.setLastName(registeredUser.getLastName());
-        info.setDisplayName(registeredUser.getDisplayName());
-        info.setInitials(registeredUser.getInitials());
-        info.setColor(registeredUser.getColor());
-        info.setStatus(registeredUser.getStatus().toString());
-        info.setLastName(registeredUser.getLastName());
-        info.setAvatarCount(registeredUser.getAvatarCount());
-        info.setMutual(registeredUser.getMutual());
-        info.setLastSeen(registeredUser.getLastSeen());
-        info.setCacheId(registeredUser.getCacheId());
-        info.setBio(registeredUser.getBio());
     }
 
     /**
@@ -421,5 +220,205 @@ public class RealmRegisteredInfo extends RealmObject {
             });
         }
         realm.close();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        try {
+            this.username = username;
+        } catch (Exception e) {
+            this.username = HelperString.getUtf8String(username);
+        }
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        try {
+            this.firstName = firstName;
+        } catch (Exception e) {
+            this.firstName = HelperString.getUtf8String(firstName);
+        }
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        try {
+            this.lastName = lastName;
+        } catch (Exception e) {
+            this.lastName = HelperString.getUtf8String(lastName);
+        }
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        try {
+            this.displayName = displayName;
+        } catch (Exception e) {
+            this.displayName = HelperString.getUtf8String(displayName);
+        }
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getStatus() {
+        return AppUtils.getStatsForUser(status);
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * this method will be returned exactly the value that got from server
+     */
+    public String getMainStatus() {
+        return status;
+    }
+
+    public String getCacheId() {
+        return cacheId;
+    }
+
+    public void setCacheId(String cacheId) {
+        this.cacheId = cacheId;
+    }
+
+    public int getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(int lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
+    public int getAvatarCount() {
+        return avatarCount;
+    }
+
+    public void setAvatarCount(int avatarCount) {
+        this.avatarCount = avatarCount;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public boolean isMutual() {
+        return mutual;
+    }
+
+    public void setMutual(boolean mutual) {
+        this.mutual = mutual;
+    }
+
+    public boolean isBlockUser() {
+        return blockUser;
+    }
+
+    public void setBlockUser(boolean blockUser) {
+        this.blockUser = blockUser;
+    }
+
+    public boolean getDoNotshowSpamBar() {
+        return DoNotshowSpamBar;
+    }
+
+    public void setDoNotshowSpamBar(boolean doNotshowSpamBar) {
+        DoNotshowSpamBar = doNotshowSpamBar;
+    }
+
+    public RealmList<RealmAvatar> getAvatars() {
+        RealmList<RealmAvatar> avatars = new RealmList<>();
+        Realm realm = Realm.getDefaultInstance();
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, id).findAllSorted(RealmAvatarFields.ID, Sort.ASCENDING)) {
+            avatars.add(avatar);
+        }
+        realm.close();
+        return avatars;
+    }
+
+    public RealmAvatar getLastAvatar() {
+        RealmList<RealmAvatar> avatars = getAvatars();
+        if (avatars.isEmpty()) {
+            return null;
+        }
+        // make sure return last avatar which has attachment
+        for (int i = avatars.size() - 1; i >= 0; i--) {
+            RealmAvatar avatar = getAvatars().get(i);
+            if (avatar.getFile() != null) {
+                return avatar;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * fill object from proto to realm
+     *
+     * @param registeredUser proto that get from server
+     * @param info           object from RealmRegisteredInfo
+     */
+
+    public void fillRegisteredUserInfo(ProtoGlobal.RegisteredUser registeredUser, RealmRegisteredInfo info) {
+        info.setUsername(registeredUser.getUsername());
+        info.setPhoneNumber(Long.toString(registeredUser.getPhone()));
+        info.setFirstName(registeredUser.getFirstName());
+        info.setLastName(registeredUser.getLastName());
+        info.setDisplayName(registeredUser.getDisplayName());
+        info.setInitials(registeredUser.getInitials());
+        info.setColor(registeredUser.getColor());
+        info.setStatus(registeredUser.getStatus().toString());
+        info.setLastName(registeredUser.getLastName());
+        info.setAvatarCount(registeredUser.getAvatarCount());
+        info.setMutual(registeredUser.getMutual());
+        info.setLastSeen(registeredUser.getLastSeen());
+        info.setCacheId(registeredUser.getCacheId());
+        info.setBio(registeredUser.getBio());
     }
 }

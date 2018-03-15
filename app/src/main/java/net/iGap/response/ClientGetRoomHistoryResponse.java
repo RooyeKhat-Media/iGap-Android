@@ -12,7 +12,7 @@ package net.iGap.response;
 
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.proto.ProtoClientGetRoomHistory;
 import net.iGap.proto.ProtoError;
@@ -20,6 +20,8 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestClientGetRoomHistory;
+
+import io.realm.Realm;
 
 public class ClientGetRoomHistoryResponse extends MessageHandler {
 

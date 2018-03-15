@@ -10,7 +10,6 @@
 
 package net.iGap.helper;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
@@ -19,6 +18,8 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestClientGetRoom;
+
+import io.realm.Realm;
 
 import static net.iGap.G.authorHash;
 
@@ -60,7 +61,6 @@ public class HelperMessageResponse {
                     }
 
 
-
                     //} else if (!response.getId().isEmpty()) {
                     //    /**
                     //     * i'm the sender
@@ -88,20 +88,31 @@ public class HelperMessageResponse {
                     if (!roomMessage.getAuthor().getHash().equals(authorHash) && (room.getLastMessage() == null || (room.getLastMessage() != null && room.getLastMessage().getMessageId() < roomMessage.getMessageId()))) {
                         room.setUnreadCount(room.getUnreadCount() + 1);
 
-                        if (G.isAppInFg) {
-                            HelperNotificationAndBadge.updateBadgeOnly();
-                        } else {
+                        if (!room.getMute()) {
+                            if (G.isAppInFg) {
+                                //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
+                            } else {
 
-                            if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
-                                G.handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
-                                    }
-                                }, 200);
+                                if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
+                                    G.handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
+                                        }
+                                    }, 200);
+                                } else {
+                                    G.handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            new HelperNotificationChannel().initSetting(roomId);
+                                        }
+                                    }, 200);
+                                }
+
                             }
-
                         }
+
+
                     }
 
                     /**

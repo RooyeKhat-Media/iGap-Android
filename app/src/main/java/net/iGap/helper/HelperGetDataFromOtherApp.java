@@ -16,12 +16,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+
+import net.iGap.G;
+import net.iGap.activities.ActivityMain;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
-import net.iGap.G;
-import net.iGap.activities.ActivityMain;
 
 /**
  * this class use when get share file in another app

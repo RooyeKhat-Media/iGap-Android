@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_height="@dimen/dp80"
-    android:clickable="true"
-    android:orientation="horizontal"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp80"
+  android:clickable="true"
+  android:gravity="center"
+  android:orientation="horizontal">
 
 
   <net.iGap.module.CircleImageView
-      android:id="@+id/daj_img_room_picture"
-      android:layout_width="@dimen/dp60"
-      android:layout_margin="@dimen/dp12"
-      android:layout_height="@dimen/dp60"
-      android:src="@mipmap/difaultimage"
+    android:id="@+id/daj_img_room_picture"
+    android:layout_width="@dimen/dp60"
+    android:layout_height="@dimen/dp60"
+    android:layout_margin="@dimen/dp12"
+    android:src="@mipmap/difaultimage"
 
-      />
+    />
+
   <LinearLayout
-      android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/daj_txt_room_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      >
+      android:singleLine="true"
+      android:text="hame khoba"
+      android:textColor="@color/black90"
+      android:textSize="@dimen/dp18" />
+
     <TextView
-        android:text="hame khoba"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textColor="@color/black90"
-        android:textSize="@dimen/dp18"
-        android:id="@+id/daj_txt_room_name"
-        />
-    <TextView
-        android:text="12 member"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:id="@+id/daj_txt_member_count"
-        />
+      android:id="@+id/daj_txt_member_count"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:singleLine="true"
+      android:text="12 member" />
   </LinearLayout>
 
 

@@ -12,8 +12,10 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.github.rahatarmanahmed.cpv.CircularProgressViewListener;
+
+import net.iGap.messageprogress.CircleProgress.CircularProgressView;
+import net.iGap.messageprogress.CircleProgress.CircularProgressViewListener;
+
 
 /* * This is the source code of iGap for Android
  * It is licensed under GNU AGPL v3.0
@@ -29,6 +31,8 @@ public class MessageProgress extends FrameLayout implements IMessageProgress, Vi
     private OnProgress mOnProgress;
     private Drawable mProgressFinishedDrawable;
     private boolean mProgressFinishedHide;
+    private boolean autoRest = true;
+
 
     public CircularProgressView progressBar;
 
@@ -84,6 +88,7 @@ public class MessageProgress extends FrameLayout implements IMessageProgress, Vi
         progressBar.setIndeterminate(false);
         progressBar.startAnimation();
         addView(progressBar);
+
     }
 
     @Override public void draw(Canvas canvas) {

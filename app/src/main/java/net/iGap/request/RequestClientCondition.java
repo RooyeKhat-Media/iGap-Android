@@ -20,7 +20,8 @@ public class RequestClientCondition {
         if (G.onUpdating != null) {
             G.onUpdating.onUpdating();
             G.handler.postDelayed(new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     G.onUpdating.onCancelUpdating();
                 }
             }, Config.UPDATING_TIME_SHOWING);

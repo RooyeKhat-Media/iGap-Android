@@ -1,191 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <net.iGap.module.HeaderTextview
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:gravity="center"
-        android:text="@string/Re_Phone_Verification"
-        android:textColor="@color/toolbar_background"
-      android:textSize="@dimen/dp22"
-        android:textStyle="bold" />
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp52"
+    android:gravity="center"
+    android:text="@string/Re_Phone_Verification"
+    android:textColor="@color/toolbar_background"
+    android:textSize="@dimen/dp22"
+    android:textStyle="bold" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/rg_border_editText" />
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/rg_border_editText" />
 
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp160"
+    android:orientation="vertical"
+    android:padding="@dimen/dp8"
+    android:visibility="visible">
+
+    <!--1-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp160"
-        android:orientation="vertical"
-        android:padding="@dimen/dp8"
-        android:visibility="visible">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp12"
+      android:orientation="horizontal">
 
-        <!--1-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            android:orientation="horizontal">
+      <ProgressBar
+        android:id="@+id/rg_prg_verify_connect_DialogLand"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="visible" />
 
-            <ProgressBar
-                android:id="@+id/rg_prg_verify_connect_DialogLand"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="visible" />
+      <ImageView
+        android:id="@+id/rg_img_verify_connect_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/rg_img_verify_connect_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/rg_txt_verify_connect_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".80"
-                android:text="@string/rg_verify_register1"
-                android:textColor="@color/rg_text_dark_verify" />
-
-        </LinearLayout>
-
-        <!--2-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/rg_prg_verify_sms_DialogLand"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/rg_img_verify_sms_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/rg_txt_verify_sms_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".60"
-                android:singleLine="true"
-                android:text="@string/rg_verify_register2"
-                android:textColor="@color/rg_text_verify"
-                android:textSize="@dimen/dp14"
-                />
-
-            <TextView
-                android:id="@+id/rg_txt_verify_timer_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".2"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="05:00"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dp14"
-                />
-
-        </LinearLayout>
-
-        <!--3-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/rg_prg_verify_key_DialogLand"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/rg_img_verify_key_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/rg_txt_verify_key_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".80"
-                android:text="@string/rg_verify_register3"
-                android:textColor="@color/rg_text_verify" />
-
-        </LinearLayout>
-
-        <!--4-->
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp12"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/rg_prg_verify_server_DialogLand"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/rg_img_verify_server_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp20"
-                android:layout_marginLeft="@dimen/dp4"
-                android:layout_marginRight="@dimen/dp4"
-                android:layout_weight=".1"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/rg_txt_verify_server_DialogLand"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".80"
-                android:text="@string/rg_verify_register4"
-                android:textColor="@color/rg_text_verify" />
-
-        </LinearLayout>
+      <TextView
+        android:id="@+id/rg_txt_verify_connect_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".80"
+        android:text="@string/rg_verify_register1"
+        android:textColor="@color/rg_text_dark_verify" />
 
     </LinearLayout>
+
+    <!--2-->
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp12"
+      android:orientation="horizontal">
+
+      <ProgressBar
+        android:id="@+id/rg_prg_verify_sms_DialogLand"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rg_img_verify_sms_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="gone" />
+
+      <TextView
+        android:id="@+id/rg_txt_verify_sms_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".60"
+        android:singleLine="true"
+        android:text="@string/rg_verify_register2"
+        android:textColor="@color/rg_text_verify"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/rg_txt_verify_timer_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="05:00"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/dp14" />
+
+    </LinearLayout>
+
+    <!--3-->
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp12"
+      android:orientation="horizontal">
+
+      <ProgressBar
+        android:id="@+id/rg_prg_verify_key_DialogLand"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rg_img_verify_key_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="gone" />
+
+      <TextView
+        android:id="@+id/rg_txt_verify_key_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".80"
+        android:text="@string/rg_verify_register3"
+        android:textColor="@color/rg_text_verify" />
+
+    </LinearLayout>
+
+    <!--4-->
+    <LinearLayout
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/dp12"
+      android:orientation="horizontal">
+
+      <ProgressBar
+        android:id="@+id/rg_prg_verify_server_DialogLand"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="visible" />
+
+      <ImageView
+        android:id="@+id/rg_img_verify_server_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp4"
+        android:layout_weight=".1"
+        android:visibility="gone" />
+
+      <TextView
+        android:id="@+id/rg_txt_verify_server_DialogLand"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".80"
+        android:text="@string/rg_verify_register4"
+        android:textColor="@color/rg_text_verify" />
+
+    </LinearLayout>
+
+  </LinearLayout>
 
 </LinearLayout>

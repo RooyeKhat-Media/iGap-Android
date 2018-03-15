@@ -1,88 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/whit_background"
-              android:orientation="vertical"
-    android:clickable="true"
-              android:layoutDirection="ltr">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/whit_background"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp20">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp20">
 
-      <net.iGap.module.MaterialDesignTextView
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp16"
-            android:layout_marginStart="@dimen/dp16"
-            android:text="@string/md_right_arrow_button"
-          android:textSize="@dimen/dp22"
-          />
+    <net.iGap.module.MaterialDesignTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp16"
+      android:layout_marginStart="@dimen/dp16"
+      android:text="@string/md_right_arrow_button"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textSize="@dimen/dp22" />
 
-      <net.iGap.module.MaterialDesignTextView
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp40"
-            android:text="@string/md_round_info_button"
-          android:textSize="@dimen/dp22"
-          />
+    <net.iGap.module.MaterialDesignTextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp40"
+      android:text="@string/md_round_info_button"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textSize="@dimen/dp22" />
 
-      <net.iGap.module.MaterialDesignTextView
-            android:textAppearance="@style/TextIconAppearance.all"
-            android:id="@+id/popup_faq_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp40"
-            android:text="@string/md_refresh_button"
-          android:textSize="@dimen/dp22"
-          />
+    <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/popup_faq_reload"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp40"
+      android:text="@string/md_refresh_button"
+      android:textAppearance="@style/TextIconAppearance.all"
+      android:textSize="@dimen/dp22" />
 
-    </LinearLayout>
+  </LinearLayout>
 
-    <TextView
-        android:id="@+id/popup_faq_findPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp16"
-        android:paddingLeft="@dimen/dp20"
-        android:paddingRight="@dimen/dp20"
-        android:paddingTop="@dimen/dp8"
-        android:text="@string/fac_Find_in_Page"
-        android:textSize="@dimen/dp15"
-        />
+  <TextView
+    android:id="@+id/popup_faq_findPage"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp16"
+    android:paddingLeft="@dimen/dp20"
+    android:paddingRight="@dimen/dp20"
+    android:paddingTop="@dimen/dp8"
+    android:text="@string/fac_Find_in_Page"
+    android:textSize="@dimen/dp15" />
 
-    <TextView
-        android:id="@+id/popup_faq_openChrome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp16"
-        android:paddingLeft="@dimen/dp20"
-        android:paddingRight="@dimen/dp20"
-        android:paddingTop="@dimen/dp4"
-        android:text="@string/fac_Open_in_Chrome"
-        android:textSize="@dimen/dp15"
-        />
+  <TextView
+    android:id="@+id/popup_faq_openChrome"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp16"
+    android:paddingLeft="@dimen/dp20"
+    android:paddingRight="@dimen/dp20"
+    android:paddingTop="@dimen/dp4"
+    android:text="@string/fac_Open_in_Chrome"
+    android:textSize="@dimen/dp15" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/border_editText" />
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/border_editText" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_editText"
-        android:paddingBottom="@dimen/dp8"
-        android:paddingLeft="@dimen/dp20"
-        android:paddingRight="@dimen/dp20"
-        android:paddingTop="@dimen/dp8"
-        android:text="@string/fac_Powered_by_iGap"
-        android:textSize="@dimen/dp15"
-        />
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_editText"
+    android:paddingBottom="@dimen/dp8"
+    android:paddingLeft="@dimen/dp20"
+    android:paddingRight="@dimen/dp20"
+    android:paddingTop="@dimen/dp8"
+    android:text="@string/fac_Powered_by_iGap"
+    android:textSize="@dimen/dp15" />
 
 </LinearLayout>

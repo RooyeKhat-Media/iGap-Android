@@ -1,292 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
-    android:id="@+id/ai_layout_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/ai_layout_root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_gravity="center"
+  android:background="@color/white"
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
 
 
   <android.support.percent.PercentRelativeLayout
-      android:id="@+id/int_layout_0"
+    android:id="@+id/int_layout_0"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/transparent"
+    app:layout_heightPercent="42%">
+
+    <ImageView
+      android:id="@+id/int_background_one"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:background="@android:color/transparent"
-      app:layout_heightPercent="42%"
-      android:layout_alignParentBottom="true"
-      >
+      android:adjustViewBounds="true"
+      android:scaleType="centerCrop"
+      app:layout_heightPercent="100%"
+      app:srcCompat="@mipmap/city" />
 
     <ImageView
-        android:id="@+id/int_background_one"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:layout_heightPercent="100%"
-        app:srcCompat="@mipmap/city"
-        />
+      android:id="@+id/int_background_two"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:adjustViewBounds="true"
+      android:scaleType="centerCrop"
+      app:layout_heightPercent="100%"
+      app:srcCompat="@mipmap/city" />
 
     <ImageView
-        android:id="@+id/int_background_two"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        app:layout_heightPercent="100%"
-        app:srcCompat="@mipmap/city"
-        />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentLeft="true"
-        android:adjustViewBounds="true"
-        android:scaleType="fitEnd"
-        app:layout_heightPercent="100%"
-        app:srcCompat="@drawable/sabz"
-        />
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_alignParentLeft="true"
+      android:adjustViewBounds="true"
+      android:scaleType="fitEnd"
+      app:layout_heightPercent="100%"
+      app:srcCompat="@drawable/sabz" />
 
 
   </android.support.percent.PercentRelativeLayout>
 
   <RelativeLayout
 
-      android:id="@+id/int_layout_1"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      app:layout_heightPercent="63%"
-      app:layout_widthPercent="100%"
-      android:layout_alignParentTop="true"
-      >
+    android:id="@+id/int_layout_1"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_alignParentTop="true"
+    app:layout_heightPercent="63%"
+    app:layout_widthPercent="100%">
 
     <RelativeLayout
-        android:id="@+id/int_mainImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginBottom="@dimen/dp16"
-        android:background="@drawable/background_sky"
-        >
+      android:id="@+id/int_mainImage"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/dp16"
+      android:gravity="center">
 
       <!--page 1-->
       <ImageView
-          android:id="@+id/int_img_logo_introduce"
-          android:layout_width="@dimen/dp140"
-          android:layout_height="@dimen/dp140"
-          android:layout_alignParentTop="true"
-          android:layout_centerHorizontal="true"
-          android:layout_gravity="top"
-          android:adjustViewBounds="true"
-          android:scaleType="centerInside"
-          android:visibility="gone"
-          app:srcCompat="@drawable/icon_asli"
-          android:layout_marginTop="@dimen/dp12"
-          />
+        android:id="@+id/int_img_logo_introduce"
+        android:layout_width="@dimen/dp140"
+        android:layout_height="@dimen/dp140"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:srcCompat="@drawable/icon_asli" />
 
-    <!--page 1-->
-    <!--page 2-->
-    <ImageView
+      <!--page 1-->
+      <!--page 2-->
+      <ImageView
         android:id="@+id/int_img_security_introduce"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/secure"
-        android:layout_marginTop="@dimen/dp12"
-        />
-    <!--page 2-->
+        app:srcCompat="@drawable/secure" />
+      <!--page 2-->
 
-    <!--page 3-->
-    <ImageView
+      <!--page 3-->
+      <ImageView
         android:id="@+id/int_img_chat_introduce"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/chat"
-        android:layout_marginTop="@dimen/dp12"
-        />
+        app:srcCompat="@drawable/chat" />
 
-    <!--page 4-->
-    <ImageView
+      <!--page 4-->
+      <ImageView
         android:id="@+id/int_img_transfer_introduce"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
         android:adjustViewBounds="true"
         android:foregroundGravity="center"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/transfer"
-        android:layout_marginTop="@dimen/dp12"
-        />
+        app:srcCompat="@drawable/transfer" />
 
-    <!--page 5-->
-    <ImageView
+      <!--page 5-->
+      <ImageView
         android:id="@+id/int_img_call_introduce"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
         android:adjustViewBounds="true"
         android:foregroundGravity="center"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/call"
-        android:layout_marginTop="@dimen/dp12"
-        />
+        app:srcCompat="@drawable/call" />
 
-    <!--page 6-->
-    <ImageView
+      <!--page 6-->
+      <ImageView
         android:id="@+id/int_img_boy_introduce"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp140"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp12"
         android:adjustViewBounds="true"
         android:foregroundGravity="center"
         android:scaleType="centerInside"
         android:visibility="gone"
-        app:srcCompat="@drawable/boy"
-        android:layout_marginTop="@dimen/dp12"
-        />
+        app:srcCompat="@drawable/boy" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-12dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-12dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
 
       <LinearLayout
-          android:id="@+id/int_layout_iGap"
+        android:id="@+id/int_layout_iGap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <TextView
+          android:id="@+id/int_txt_i_p1_l1"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
-          android:layoutDirection="ltr"
-          android:orientation="horizontal"
-          android:visibility="gone"
-          >
-
-
-        <TextView
-            android:id="@+id/int_txt_i_p1_l1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/text_i_introduce_page1"
-            android:textColor="@color/text_line1_igap_dark"
-            android:textSize="@dimen/dp24"
-            android:visibility="visible"
-            />
+          android:text="@string/text_i_introduce_page1"
+          android:textColor="@color/text_line1_igap_dark"
+          android:textSize="@dimen/dp24"
+          android:visibility="visible" />
 
         <TextView
-            android:id="@+id/int_txt_p1_l1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:text="@string/text_line_1_introduce_page1"
-            android:textColor="@color/text_line1_igap_dark"
-            android:textSize="@dimen/dp24"
-            android:visibility="visible"
-            />
+          android:id="@+id/int_txt_p1_l1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:gravity="center_horizontal"
+          android:text="@string/text_line_1_introduce_page1"
+          android:textColor="@color/text_line1_igap_dark"
+          android:textSize="@dimen/dp24"
+          android:visibility="visible" />
       </LinearLayout>
 
       <TextView
-          android:id="@+id/int_txt_p1_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page1"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p1_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page1"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <TextView
-          android:id="@+id/int_txt_p1_l3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_3_introduce_page1"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p1_l3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_3_introduce_page1"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
     </LinearLayout>
     <!--page 1-->
 
     <!--page 2-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-13dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-13dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
       <TextView
-          android:id="@+id/int_txt_p2_l1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="@string/text_line_1_introduce_page2"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p2_l1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_line_1_introduce_page2"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:id="@+id/int_txt_p2_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page2"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p2_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page2"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
 
 
     </LinearLayout>
@@ -294,122 +271,113 @@
 
     <!--page 3-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-12dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-12dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
       <TextView
-          android:id="@+id/int_txt_p3_l1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="@string/text_line_1_introduce_page3"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p3_l1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_line_1_introduce_page3"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:id="@+id/int_txt_p3_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page3"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p3_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page3"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
 
 
     </LinearLayout>
     <!--page 3-->
     <!--page 4-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-12dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-12dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
       <TextView
-          android:id="@+id/int_txt_p4_l1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="@string/text_line_1_introduce_page4"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p4_l1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_line_1_introduce_page4"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:id="@+id/int_txt_p4_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page4"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p4_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page4"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
 
     </LinearLayout>
     <!--page 4-->
     <!--page 5-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-12dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-12dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
       <TextView
-          android:id="@+id/int_txt_p5_l1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="@string/text_line_1_introduce_page5"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p5_l1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_line_1_introduce_page5"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:id="@+id/int_txt_p5_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page5"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p5_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page5"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
 
     </LinearLayout>
     <!--page 5-->
@@ -417,104 +385,96 @@
 
     <!--page 6-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:gravity="top"
-        android:layout_below="@id/int_mainImage"
-        android:layout_marginTop="-12dp"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_below="@id/int_mainImage"
+      android:layout_marginTop="-12dp"
+      android:gravity="top"
+      android:orientation="vertical">
 
       <TextView
-          android:id="@+id/int_txt_p6_l1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="@string/text_line_1_introduce_page6"
-          android:textColor="@color/text_line1_igap_dark"
-          android:textSize="@dimen/dp16"
-          android:textStyle="bold"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p6_l1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_line_1_introduce_page6"
+        android:textColor="@color/text_line1_igap_dark"
+        android:textSize="@dimen/dp16"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
       <com.uncopt.android.widget.text.justify.JustifiedTextView
-          android:id="@+id/int_txt_p6_l2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:clickable="false"
-          android:gravity="center_horizontal"
-          android:lineSpacingExtra="0dp"
-          android:paddingLeft="@dimen/dp22"
-          android:paddingRight="@dimen/dp22"
-          android:text="@string/text_line_2_introduce_page6"
-          android:textColor="@color/text_line2_lc__dark"
-          android:textSize="@dimen/dp13"
-          android:visibility="gone"
-          />
+        android:id="@+id/int_txt_p6_l2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="0dp"
+        android:paddingLeft="@dimen/dp22"
+        android:paddingRight="@dimen/dp22"
+        android:text="@string/text_line_2_introduce_page6"
+        android:textColor="@color/text_line2_lc__dark"
+        android:textSize="@dimen/dp13"
+        android:visibility="gone" />
 
     </LinearLayout>
   </RelativeLayout>
 
   <RelativeLayout
-      android:id="@+id/int_layoutParentCircleImage"
-      android:layout_width="wrap_content"
-      android:layout_height="0dp"
-      android:layout_below="@+id/int_layout_1"
-      android:layoutDirection="ltr"
-      app:layout_heightPercent="8%"
-      >
+    android:id="@+id/int_layoutParentCircleImage"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_below="@+id/int_layout_1"
+    android:layoutDirection="ltr"
+    app:layout_heightPercent="8%">
 
     <net.iGap.module.CustomCircleImage
-        android:id="@+id/int_circleButton_introduce"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/dp28"
-        />
+      android:id="@+id/int_circleButton_introduce"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:layout_marginLeft="@dimen/dp28" />
   </RelativeLayout>
 
   <android.support.v4.view.ViewPager
-      android:id="@+id/int_viewPager_introduce"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
+    android:id="@+id/int_viewPager_introduce"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
 
   <Button
-      android:id="@+id/int_btnStart"
-      android:layout_width="@dimen/dp200"
-      android:layout_height="@dimen/dp32"
-      android:layout_above="@+id/int_layoutParentCircleImage"
-      android:layout_centerInParent="true"
-      android:layout_gravity="center_horizontal"
-      android:background="@drawable/int_button_interduce"
-      android:gravity="center"
-      android:text="@string/btn_start_page6"
-      android:textAllCaps="false"
-      android:textColor="@color/txt_start_page5"
-      android:textSize="@dimen/dp16"
-      android:visibility="gone"
-      android:paddingTop="@dimen/dp4"
-      />
+    android:id="@+id/int_btnStart"
+    android:layout_width="@dimen/dp200"
+    android:layout_height="@dimen/dp32"
+    android:layout_above="@+id/int_layoutParentCircleImage"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/int_button_interduce"
+    android:gravity="center"
+    android:paddingTop="@dimen/dp4"
+    android:text="@string/btn_start_page6"
+    android:textAllCaps="false"
+    android:textColor="@color/txt_start_page5"
+    android:textSize="@dimen/dp16"
+    android:visibility="gone" />
 
 
   <TextView
-      android:id="@+id/int_txt_skip"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentTop="true"
-      android:layout_alignTop="@+id/int_layoutParentCircleImage"
-      android:layout_marginTop="@dimen/dp4"
-      android:background="@drawable/background_skip"
-      android:gravity="center"
-      android:minWidth="@dimen/dp60"
-      android:padding="@dimen/dp4"
-      android:text="@string/B_skip"
-      android:textColor="@color/white"
-      android:textSize="@dimen/dp14"
-      />
+    android:id="@+id/int_txt_skip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignTop="@+id/int_layoutParentCircleImage"
+    android:layout_marginTop="@dimen/dp4"
+    android:background="@drawable/background_skip"
+    android:gravity="center"
+    android:minWidth="@dimen/dp60"
+    android:padding="@dimen/dp4"
+    android:text="@string/B_skip"
+    android:textColor="@color/white"
+    android:textSize="@dimen/dp14" />
 
 </android.support.percent.PercentRelativeLayout>

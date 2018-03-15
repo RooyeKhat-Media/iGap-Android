@@ -26,18 +26,21 @@ public class QrCodeResolveResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoQrCodeResolve.QrCodeResolveResponse.Builder builder = (ProtoQrCodeResolve.QrCodeResolveResponse.Builder) message;
         builder.getQrCodeImage();
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

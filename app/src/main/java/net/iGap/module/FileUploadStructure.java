@@ -10,12 +10,13 @@
 
 package net.iGap.module;
 
+import net.iGap.proto.ProtoGlobal;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
-import net.iGap.proto.ProtoGlobal;
 
 /**
  * use this class structure to put selected files for uploading

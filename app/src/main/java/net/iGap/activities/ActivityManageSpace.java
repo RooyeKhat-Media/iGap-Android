@@ -2,6 +2,7 @@ package net.iGap.activities;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+
 import net.iGap.R;
 import net.iGap.databinding.ActivityManageSpaceBinding;
 import net.iGap.libs.rippleeffect.RippleView;

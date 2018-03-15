@@ -1,113 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
   <View
-      android:id="@+id/topLine"
-      android:layout_width="match_parent"
-      android:layout_height="1px"
-      android:layout_marginEnd="@dimen/dp20"
-      android:layout_marginLeft="@dimen/dp8"
-      android:layout_marginRight="@dimen/dp20"
-      android:layout_marginStart="@dimen/dp8"
-      android:background="@color/gray"
-      />
+    android:id="@+id/topLine"
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:layout_marginEnd="@dimen/dp20"
+    android:layout_marginLeft="@dimen/dp8"
+    android:layout_marginRight="@dimen/dp20"
+    android:layout_marginStart="@dimen/dp8"
+    android:background="@color/gray" />
 
   <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:id="@+id/swipeRevealLayout"
-      >
+    android:id="@+id/swipeRevealLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <!-- Bottom View Start-->
     <LinearLayout
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/red_swipe"
-        android:orientation="vertical"
-        android:weightSum="1"
-        >
+      android:id="@+id/bottom_wrapper"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/red_swipe"
+      android:orientation="vertical"
+      android:weightSum="1">
 
       <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:text="@string/un_block_user"
-          android:textColor="@color/white"
-          android:textSize="@dimen/dp20"
-          />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/un_block_user"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp20" />
 
       <!--What you want to show-->
     </LinearLayout>
     <!-- Bottom View End-->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:orientation="vertical"
-        android:paddingEnd="@dimen/dp20"
-        android:paddingLeft="@dimen/dp52"
-        android:paddingRight="@dimen/dp20"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clickable="true"
+      android:orientation="vertical"
+      android:paddingEnd="@dimen/dp20"
+      android:paddingLeft="@dimen/dp52"
+      android:paddingRight="@dimen/dp20">
 
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp16"
-          android:orientation="horizontal"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
+        android:orientation="horizontal">
 
         <net.iGap.module.CircleImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48"
-            />
+          android:id="@+id/imageView"
+          android:layout_width="@dimen/dp48"
+          android:layout_height="@dimen/dp48" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
-            android:orientation="vertical"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="@dimen/dp8"
+          android:layout_marginStart="@dimen/dp8"
+          android:orientation="vertical">
 
           <net.iGap.module.CustomTextViewMedium
-              android:id="@+id/title"
-              android:layout_width="wrap_content"
-              android:layout_height="0dp"
-              android:layout_weight="1"
-              android:gravity="center_vertical|start"
-              android:singleLine="true"
-              android:text="Dominika Faniz"
-              android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-              android:textColor="#000000"
-              android:textSize="@dimen/dp16"
-              />
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:singleLine="true"
+            android:text="Dominika Faniz"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="#000000"
+            android:textSize="@dimen/dp16" />
 
           <net.iGap.module.CustomTextViewMedium
-              android:id="@+id/subtitle"
-              android:layout_width="wrap_content"
-              android:layout_height="0dp"
-              android:layout_weight="1"
-              android:gravity="center_vertical|start"
-              android:singleLine="true"
-              android:text="@string/last_seen_recently"
-              android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-              android:textColor="#bbbbbb"
-              android:textSize="@dimen/dp14"
-              />
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:singleLine="true"
+            android:text="@string/last_seen_recently"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+            android:textColor="#bbbbbb"
+            android:textSize="@dimen/dp14" />
 
           <View
-              android:id="@+id/bottomLine"
-              android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/gray"
-              android:visibility="gone"
-              />
+            android:id="@+id/bottomLine"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"
+            android:visibility="gone" />
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>

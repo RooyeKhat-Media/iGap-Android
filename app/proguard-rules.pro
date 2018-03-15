@@ -20,7 +20,7 @@
 -keep class com.google.android.gms.ads.identifier.** { *; }
 
 ########## My Tricks
--keep class io.github.meness.**, io.meness.github.** , net.iGap.proto.** , com.neovisionaries.ws.client.** { *; }
+-keep class net.iGap.proto.** , com.neovisionaries.ws.client.** { *; }
 -keep class net.iGap.helper.HelperFillLookUpClass { *; }
 -keep public class * extends net.iGap.response.MessageHandler
 -keepclasseswithmembers class * {
@@ -64,19 +64,7 @@
 -keep class com.googlecode.** { *; }
 ###
 
-###Netty
 -keepattributes Signature,InnerClasses
--keepclasseswithmembers class io.netty.** {
-    *;
-}
--keepnames class io.netty.** {
-    *;
-}
-
--keep class io.netty.** { *; }
--dontwarn io.netty.**
-###
-
 -keepnames class com.squareup.** {
     *;
 }
@@ -216,3 +204,7 @@
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
+
+-dontwarn com.yalantis.ucrop**
+-keep class com.yalantis.ucrop** { *; }
+-keep interface com.yalantis.ucrop** { *; }

@@ -7,7 +7,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.neovisionaries.ws.client.WebSocket;
+
 import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.WebSocketClient;

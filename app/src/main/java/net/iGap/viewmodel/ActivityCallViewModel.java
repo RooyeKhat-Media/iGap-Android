@@ -26,9 +26,7 @@ import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityCall;
@@ -48,26 +46,16 @@ import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.webrtc.WebRTC;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import io.realm.Realm;
+
 public class ActivityCallViewModel {
 
-    private boolean isIncomingCall = false;
-    private long userId;
-    private boolean isSendLeave = false;
     public static boolean isConnected = false;
-    public Vibrator vibrator;
-    private int musicVolum = 0;
-    private boolean isMuteAllMusic = false;
-    private Timer secendTimer;
-    private int secend = 0;
-    private int minute = 0;
-    private MediaPlayer player;
-    private MediaPlayer ringtonePlayer;
     public static TextView txtTimeChat, txtTimerMain;
-    private Context context;
-    private ActivityCallBinding activityCallBinding;
-    private boolean isFinish = false;
-
-
+    public Vibrator vibrator;
     public ObservableField<String> cllBackBtnSpeaker = new ObservableField<>(G.context.getResources().getString(R.string.md_Mute));
     public ObservableField<String> cllBackBtnMic = new ObservableField<>(G.context.getResources().getString(R.string.md_mic));
     public ObservableField<String> callBackTxtTimer = new ObservableField<>("00:00");
@@ -78,6 +66,19 @@ public class ActivityCallViewModel {
     public ObservableInt txtTimerVisibility = new ObservableInt(View.GONE);
     public ObservableInt layoutChatCallVisibility = new ObservableInt(View.VISIBLE);
     public ObservableInt layoutAnswerCallVisibility = new ObservableInt(View.VISIBLE);
+    private boolean isIncomingCall = false;
+    private long userId;
+    private boolean isSendLeave = false;
+    private int musicVolum = 0;
+    private boolean isMuteAllMusic = false;
+    private Timer secendTimer;
+    private int secend = 0;
+    private int minute = 0;
+    private MediaPlayer player;
+    private MediaPlayer ringtonePlayer;
+    private Context context;
+    private ActivityCallBinding activityCallBinding;
+    private boolean isFinish = false;
 
 
     public ActivityCallViewModel(Context context, long userId, boolean isIncomingCall, ActivityCallBinding activityCallBinding) {
@@ -311,11 +312,16 @@ public class ActivityCallViewModel {
 
         AudioManager audioManager = (AudioManager) G.context.getSystemService(Context.AUDIO_SERVICE);
 
-        boolean wasOn = audioManager.isSpeakerphoneOn();
+        boolean wasOn = false;
+        if (audioManager != null) {
+            wasOn = audioManager.isSpeakerphoneOn();
+        }
         if (wasOn == on) {
             return;
         }
-        audioManager.setSpeakerphoneOn(on);
+        if (audioManager != null) {
+            audioManager.setSpeakerphoneOn(on);
+        }
     }
 
     public void endCall() {
@@ -357,12 +363,7 @@ public class ActivityCallViewModel {
 
         if (MusicPlayer.pauseSoundFromIGapCall) {
             MusicPlayer.pauseSoundFromIGapCall = false;
-
             MusicPlayer.playSound();
-
-            if (MusicPlayer.isVoice && MusicPlayer.isSpeakerON) {
-                setSpeakerphoneOn(true);
-            }
         }
 
         txtTimeChat = txtTimerMain = null;
@@ -472,30 +473,23 @@ public class ActivityCallViewModel {
     private void loadOrDownloadPicture(RealmRegisteredInfo registeredInfo) {
 
         try {
-
             callBackTxtName.set(registeredInfo.getDisplayName());
-
             RealmAttachment av = registeredInfo.getLastAvatar().getFile();
-
             ProtoFileDownload.FileDownload.Selector se = ProtoFileDownload.FileDownload.Selector.FILE;
             String dirPath = AndroidUtils.getFilePathWithCashId(av.getCacheId(), av.getName(), G.DIR_IMAGE_USER, false);
 
             HelperDownloadFile.startDownload(System.currentTimeMillis() + "", av.getToken(), av.getCacheId(), av.getName(), av.getSize(), se, dirPath, 4, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, int progress) {
-
                     if (progress == 100) {
-
                         if (activityCallBinding.fcrImvBackground != null) {
-                            //G.handler(new Runnable() {
-                            //    @Override
-                            //    public void run() {
-                            G.imageLoader.displayImage(AndroidUtils.suitablePath(path), activityCallBinding.fcrImvBackground);
-                            //    }
-                            //});
+                            activityCallBinding.fcrImvBackground.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    G.imageLoader.displayImage(AndroidUtils.suitablePath(path), activityCallBinding.fcrImvBackground);
+                                }
+                            });
                         }
-
-
                     }
                 }
 
@@ -580,8 +574,7 @@ public class ActivityCallViewModel {
 
     private void playSound(final int resSound) {
 
-        final AudioManager audioManager = (AudioManager) G.context.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setSpeakerphoneOn(false);
+        setSpeakerphoneOn(false);
 
         if (player == null) {
             try {
@@ -742,6 +735,8 @@ public class ActivityCallViewModel {
         G.isInCall = false;
         G.iSignalingCallBack = null;
         G.onCallLeaveView = null;
+
+        setSpeakerphoneOn(false);
 
         cancelRingtone();
         unMuteMusic();

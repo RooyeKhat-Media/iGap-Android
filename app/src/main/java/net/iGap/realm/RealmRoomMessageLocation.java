@@ -10,19 +10,23 @@
 
 package net.iGap.realm;
 
+import net.iGap.module.SUID;
+import net.iGap.proto.ProtoGlobal;
+
+import org.parceler.Parcel;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmRoomMessageLocationRealmProxy;
 import io.realm.annotations.PrimaryKey;
-import net.iGap.module.SUID;
-import net.iGap.proto.ProtoGlobal;
-import org.parceler.Parcel;
 
-@Parcel(implementations = {RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class}) public class RealmRoomMessageLocation extends RealmObject {
+@Parcel(implementations = {RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class})
+public class RealmRoomMessageLocation extends RealmObject {
     private double locationLat;
     private double locationLong;
     private String imagePath;
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
 
     public static RealmRoomMessageLocation put(final ProtoGlobal.RoomMessageLocation input, Long id) {
         Realm realm = Realm.getDefaultInstance();

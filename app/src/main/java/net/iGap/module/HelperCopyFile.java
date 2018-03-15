@@ -10,18 +10,19 @@
 
 package net.iGap.module;
 
+import net.iGap.G;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import net.iGap.G;
 
 public class HelperCopyFile {
 
     /**
      * copy selected file to destination folder
      *
-     * @param sourceFile selected file path
+     * @param sourceFile      selected file path
      * @param destinationFile destination file path
      */
     public static void copyFile(String sourceFile, String destinationFile) {

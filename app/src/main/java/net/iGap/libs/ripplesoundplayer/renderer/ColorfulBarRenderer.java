@@ -15,9 +15,11 @@ public class ColorfulBarRenderer extends Renderer {
     private Paint paint;
     private float colorInterpolatePercentage;
 
-    @ColorInt private int startColor;
+    @ColorInt
+    private int startColor;
 
-    @ColorInt private int endColor;
+    @ColorInt
+    private int endColor;
     private ArgbEvaluator rgbEvaluator;
 
     /**

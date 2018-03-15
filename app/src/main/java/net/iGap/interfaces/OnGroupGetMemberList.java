@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.List;
 import net.iGap.proto.ProtoGroupGetMemberList;
+
+import java.util.List;
 
 public interface OnGroupGetMemberList {
     void onGroupGetMemberList(List<ProtoGroupGetMemberList.GroupGetMemberListResponse.Member> members);

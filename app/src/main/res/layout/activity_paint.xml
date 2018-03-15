@@ -1,189 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:layoutDirection="ltr"
-    android:orientation="vertical"
-    android:weightSum="1"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical"
+  android:weightSum="1">
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="0.8"
-      android:gravity="center"
-      android:layoutDirection="ltr"
-      android:orientation="vertical"
-      android:weightSum="1"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.8"
+    android:gravity="center"
+    android:layoutDirection="ltr"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.95"
-        android:gravity="center"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="0.95"
+      android:gravity="center"
+      android:layoutDirection="ltr"
+      android:orientation="horizontal"
+      android:weightSum="1">
 
       <FrameLayout
-          android:id="@+id/frame"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="0.95"
-          android:background="@drawable/frame_border"
-          android:layoutDirection="ltr"
-          />
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.95"
+        android:background="@drawable/frame_border"
+        android:layoutDirection="ltr" />
     </LinearLayout>
   </LinearLayout>
 
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="0.1"
-      android:gravity="right|center_vertical"
-      android:layoutDirection="ltr"
-      android:orientation="horizontal"
-      android:weightSum="1"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.1"
+    android:gravity="right|center_vertical"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <TextView
-        android:id="@+id/textView_erase"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/md_eraser"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/layout_background_top_connectivity"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_erase"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.2"
+      android:gravity="center"
+      android:text="@string/md_eraser"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/layout_background_top_connectivity"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_paintsize"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/md_brush"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_paintsize"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.2"
+      android:gravity="center"
+      android:text="@string/md_brush"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_color"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/md_colorize"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_color"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.2"
+      android:gravity="center"
+      android:text="@string/md_colorize"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_sience"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/md_pic_library"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@android:color/holo_purple"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_sience"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.2"
+      android:gravity="center"
+      android:text="@string/md_pic_library"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@android:color/holo_purple"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_camera"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/md_camera_alt"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_camera"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.2"
+      android:gravity="center"
+      android:text="@string/md_camera_alt"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp20" />
   </LinearLayout>
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="0.1"
-      android:gravity="right|center_vertical"
-      android:layoutDirection="ltr"
-      android:orientation="horizontal"
-      android:weightSum="1"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.1"
+    android:gravity="right|center_vertical"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_close"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="@string/md_downwards_arrow"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_close"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.25"
+      android:gravity="center"
+      android:text="@string/md_downwards_arrow"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_new"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="@string/md_refresh_button"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/red"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_new"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.25"
+      android:gravity="center"
+      android:text="@string/md_refresh_button"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/red"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_save"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="@string/md_save"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_save"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.25"
+      android:gravity="center"
+      android:text="@string/md_save"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/colorPrimary"
+      android:textSize="@dimen/dp20" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/textView_send"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:text="@string/md_send_button"
-        android:textAlignment="gravity"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/green"
-        android:textSize="@dimen/dp20"
-        />
+      android:id="@+id/textView_send"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.25"
+      android:gravity="center"
+      android:text="@string/md_send_button"
+      android:textAlignment="gravity"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp20" />
   </LinearLayout>
 
   <View
-      android:layout_width="match_parent"
-      android:layout_height="2dp"
-      android:background="@color/green"
-      />
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@color/green" />
 
 
 </LinearLayout>

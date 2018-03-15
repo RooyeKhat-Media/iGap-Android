@@ -28,15 +28,18 @@ public class HelperGetUserInfo implements OnUserInfoResponse {
         new RequestUserInfo().userInfo(userId);
     }
 
-    @Override public void onUserInfo(ProtoGlobal.RegisteredUser user, String identity) {
+    @Override
+    public void onUserInfo(ProtoGlobal.RegisteredUser user, String identity) {
         onGetUserInfo.onGetUserInfo(user);
     }
 
-    @Override public void onUserInfoTimeOut() {
+    @Override
+    public void onUserInfoTimeOut() {
 
     }
 
-    @Override public void onUserInfoError(int majorCode, int minorCode) {
+    @Override
+    public void onUserInfoError(int majorCode, int minorCode) {
 
     }
 }

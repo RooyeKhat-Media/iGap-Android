@@ -10,10 +10,11 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoGlobal;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 public class RealmContacts extends RealmObject {
 
@@ -31,6 +32,68 @@ public class RealmContacts extends RealmObject {
     private int avatarCount;
     private RealmAvatar avatar;
     private boolean blockUser = false;
+
+    public static void putOrUpdate(Realm realm, ProtoGlobal.RegisteredUser registerUser) {
+        RealmContacts listResponse = realm.createObject(RealmContacts.class);
+        listResponse.setId(registerUser.getId());
+        listResponse.setUsername(registerUser.getUsername());
+        listResponse.setPhone(registerUser.getPhone());
+        listResponse.setFirst_name(registerUser.getFirstName());
+        listResponse.setLast_name(registerUser.getLastName());
+        listResponse.setDisplay_name(registerUser.getDisplayName());
+        listResponse.setInitials(registerUser.getInitials());
+        listResponse.setColor(registerUser.getColor());
+        listResponse.setStatus(registerUser.getStatus().toString());
+        listResponse.setLast_seen(registerUser.getLastSeen());
+        listResponse.setAvatarCount(registerUser.getAvatarCount());
+        listResponse.setCacheId(registerUser.getCacheId());
+        listResponse.setAvatar(RealmAvatar.putOrUpdateAndManageDelete(realm, registerUser.getId(), registerUser.getAvatar()));
+    }
+
+    public static void deleteContact(final String phone) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmContacts contact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.PHONE, Long.parseLong(phone)).findFirst();
+                if (contact != null) {
+                    contact.deleteFromRealm();
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateName(final long userId, final String firstName, final String lastName, final String initials) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmContacts contact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
+                if (contact != null) {
+                    contact.setFirst_name(firstName);
+                    contact.setLast_name(lastName);
+                    contact.setDisplay_name((firstName + " " + lastName).trim());
+                    contact.setInitials(initials);
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static void updateBlock(final long userId, final boolean block) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
+        if (realmContacts != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realmContacts.setBlockUser(block);
+                }
+            });
+        }
+        realm.close();
+    }
 
     public long getId() {
         return id;
@@ -158,68 +221,5 @@ public class RealmContacts extends RealmObject {
 
     public void setBlockUser(boolean blockUser) {
         this.blockUser = blockUser;
-    }
-
-
-    public static void putOrUpdate(Realm realm, ProtoGlobal.RegisteredUser registerUser) {
-        RealmContacts listResponse = realm.createObject(RealmContacts.class);
-        listResponse.setId(registerUser.getId());
-        listResponse.setUsername(registerUser.getUsername());
-        listResponse.setPhone(registerUser.getPhone());
-        listResponse.setFirst_name(registerUser.getFirstName());
-        listResponse.setLast_name(registerUser.getLastName());
-        listResponse.setDisplay_name(registerUser.getDisplayName());
-        listResponse.setInitials(registerUser.getInitials());
-        listResponse.setColor(registerUser.getColor());
-        listResponse.setStatus(registerUser.getStatus().toString());
-        listResponse.setLast_seen(registerUser.getLastSeen());
-        listResponse.setAvatarCount(registerUser.getAvatarCount());
-        listResponse.setCacheId(registerUser.getCacheId());
-        listResponse.setAvatar(RealmAvatar.putOrUpdateAndManageDelete(realm, registerUser.getId(), registerUser.getAvatar()));
-    }
-
-    public static void deleteContact(final String phone) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmContacts contact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.PHONE, Long.parseLong(phone)).findFirst();
-                if (contact != null) {
-                    contact.deleteFromRealm();
-                }
-            }
-        });
-        realm.close();
-    }
-
-    public static void updateName(final long userId, final String firstName, final String lastName, final String initials) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                RealmContacts contact = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-                if (contact != null) {
-                    contact.setFirst_name(firstName);
-                    contact.setLast_name(lastName);
-                    contact.setDisplay_name((firstName + " " + lastName).trim());
-                    contact.setInitials(initials);
-                }
-            }
-        });
-        realm.close();
-    }
-
-    public static void updateBlock(final long userId, final boolean block) {
-        Realm realm = Realm.getDefaultInstance();
-        final RealmContacts realmContacts = realm.where(RealmContacts.class).equalTo(RealmContactsFields.ID, userId).findFirst();
-        if (realmContacts != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realmContacts.setBlockUser(block);
-                }
-            });
-        }
-        realm.close();
     }
 }

@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.ArrayList;
 import net.iGap.module.enums.StructPopUp;
+
+import java.util.ArrayList;
 
 public interface IPopUpListener {
 

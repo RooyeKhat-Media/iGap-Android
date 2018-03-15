@@ -12,17 +12,9 @@ package net.iGap.request;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
+
 import com.neovisionaries.ws.client.WebSocket;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
@@ -34,15 +26,25 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoResponse;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import static net.iGap.G.forcePriorityActionId;
 
 public class RequestQueue {
 
+    public static final CopyOnWriteArrayList<RequestWrapper> WAITING_REQUEST_WRAPPERS = new CopyOnWriteArrayList<>(); // if not logged-in
     private static final int QUEUE_LIMIT = 50;
     private static final int DEFAULT_PRIORITY = 100;
-    public static final CopyOnWriteArrayList<RequestWrapper> WAITING_REQUEST_WRAPPERS = new CopyOnWriteArrayList<>(); // if not logged-in
     public static CopyOnWriteArrayList<RequestWrapper> RUNNING_REQUEST_WRAPPERS = new CopyOnWriteArrayList<>(); // when logged-in and WAITING_REQUEST_WRAPPERS is full
-    private static ConcurrentHashMap<Integer, ArrayList<RequestWrapper[]>> priorityRequestWrapper = new ConcurrentHashMap<>();
     public static PriorityQueue<Integer> actionIdPriority = new PriorityQueue<>(1000, new Comparator<Integer>() {
         @Override
         public int compare(Integer a, Integer b) {
@@ -55,6 +57,7 @@ public class RequestQueue {
             return 0;
         }
     });
+    private static ConcurrentHashMap<Integer, ArrayList<RequestWrapper[]>> priorityRequestWrapper = new ConcurrentHashMap<>();
 
     public static synchronized void sendRequest(RequestWrapper... requestWrappers) throws IllegalAccessException {
         int length = requestWrappers.length;
@@ -263,7 +266,7 @@ public class RequestQueue {
      * timeOut request
      *
      * @param keyRandomId timeOut with this specific key
-     * @param allRequest timeOut all requests
+     * @param allRequest  timeOut all requests
      */
     public static void timeOutImmediately(@Nullable String keyRandomId, boolean allRequest) {
         for (Iterator<Map.Entry<String, RequestWrapper>> it = G.requestQueueMap.entrySet().iterator(); it.hasNext(); ) {

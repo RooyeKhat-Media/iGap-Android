@@ -15,18 +15,18 @@ import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
+
 import net.iGap.G;
 import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.proto.ProtoFileDownload;
 
 public class RequestFileDownload {
 
+    public static int maxLimitDownload = 0;
     private final int KB_10 = 10 * 1024;
     private final int KB_30 = 30 * 1024;
     private final int KB_50 = 50 * 1024;
     private final int KB_100 = 100 * 1024;
-
-    public static int maxLimitDownload = 0;
 
     public void download(String token, long offset, int maxLimit, ProtoFileDownload.FileDownload.Selector selector, Object identity) {
         ProtoFileDownload.FileDownload.Builder builder = ProtoFileDownload.FileDownload.newBuilder();
@@ -45,24 +45,6 @@ public class RequestFileDownload {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static class IdentityFileDownload {
-        public String cacheId;
-        public String filepath;
-        public ProtoFileDownload.FileDownload.Selector selector;
-        public long size;
-        public long offset;
-        public boolean isFromHelperDownload;
-
-        public IdentityFileDownload(String cacheId, String filepath, ProtoFileDownload.FileDownload.Selector selector, long size, long offset, boolean isFromHelperDownload) {
-            this.cacheId = cacheId;
-            this.filepath = filepath;
-            this.selector = selector;
-            this.size = size;
-            this.offset = offset;
-            this.isFromHelperDownload = isFromHelperDownload;
         }
     }
 
@@ -146,5 +128,23 @@ public class RequestFileDownload {
 
         maxLimitDownload = maxLimit;
         return maxLimit;
+    }
+
+    public static class IdentityFileDownload {
+        public String cacheId;
+        public String filepath;
+        public ProtoFileDownload.FileDownload.Selector selector;
+        public long size;
+        public long offset;
+        public boolean isFromHelperDownload;
+
+        public IdentityFileDownload(String cacheId, String filepath, ProtoFileDownload.FileDownload.Selector selector, long size, long offset, boolean isFromHelperDownload) {
+            this.cacheId = cacheId;
+            this.filepath = filepath;
+            this.selector = selector;
+            this.size = size;
+            this.offset = offset;
+            this.isFromHelperDownload = isFromHelperDownload;
+        }
     }
 }

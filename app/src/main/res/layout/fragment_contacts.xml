@@ -1,138 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/menu_parent_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:clickable="true"
-    tools:ignore="MissingPrefix"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/menu_parent_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@android:color/white"
+  android:clickable="true"
+  tools:ignore="MissingPrefix">
 
 
   <android.support.design.widget.AppBarLayout
-      android:id="@+id/fc_layot_title"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:id="@+id/fc_layot_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:layoutDirection="ltr"
+      android:orientation="horizontal">
 
       <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/menu_ripple_txtBack"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="0"
-          app:rv_ripplePadding="5dp"
-          rv_centered="true"
-          >
+        android:id="@+id/menu_ripple_txtBack"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="0"
+        app:rv_ripplePadding="5dp">
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/menu_txtBack"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/md_back_arrow"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@color/whit_background"
-            />
+          android:id="@+id/menu_txtBack"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="@string/md_back_arrow"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/whit_background" />
       </net.iGap.libs.rippleeffect.RippleView>
 
       <TextView
-          android:id="@+id/menu_txt_titleToolbar"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_gravity="center"
-          android:layout_weight="1"
-          android:gravity="center|left"
-          android:singleLine="true"
-          android:text="@string/igap"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          android:textColor="@android:color/white"
-          android:textSize="@dimen/dp18"
-          android:visibility="visible"
-          fontPath="fonts/IRANSansMobile_Bold.ttf"
-          />
+        android:id="@+id/menu_txt_titleToolbar"
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="@string/igap"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dp18"
+        android:visibility="visible" />
 
       <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/menu_edtSearch"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="100"
-          rv_centered="true"
-          >
+        android:id="@+id/menu_edtSearch"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="100">
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/menu_btn_search"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="@string/md_searching_magnifying_glass"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp28"
-            android:visibility="visible"
-            />
+          android:id="@+id/menu_btn_search"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:gravity="center"
+          android:text="@string/md_searching_magnifying_glass"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@android:color/white"
+          android:textSize="@dimen/dp28"
+          android:visibility="visible" />
 
       </net.iGap.libs.rippleeffect.RippleView>
 
       <EditText
-          android:id="@+id/menu_edt_search"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:autoText="false"
-          android:background="@null"
-          android:hint="@string/search"
-          android:paddingEnd="@dimen/dp8"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingStart="@dimen/dp8"
-          android:textColor="@color/white"
-          android:textColorHint="#dededd"
-          android:textCursorDrawable="@drawable/white_cursor_color"
-          android:textSize="@dimen/dp15"
-          android:visibility="gone"
-          />
+        android:id="@+id/menu_edt_search"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:autoText="false"
+        android:background="@null"
+        android:hint="@string/search"
+        android:paddingEnd="@dimen/dp8"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:paddingStart="@dimen/dp8"
+        android:textColor="@color/white"
+        android:textColorHint="#dededd"
+        android:textCursorDrawable="@drawable/white_cursor_color"
+        android:textSize="@dimen/dp15"
+        android:visibility="gone" />
 
       <net.iGap.libs.rippleeffect.RippleView
-          android:id="@+id/menu_ripple_close"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:visibility="gone"
-          app:rv_alpha="200"
-          app:rv_centered="true"
-          app:rv_rippleDuration="100"
-          app:rv_ripplePadding="5dp"
-          rv_centered="true"
-          >
+        android:id="@+id/menu_ripple_close"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="100"
+        app:rv_ripplePadding="5dp">
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/menu_btn_close"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center"
-            android:text="@string/md_close_button"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="#dededd"
-            android:textSize="@dimen/dp26"
-            />
+          android:id="@+id/menu_btn_close"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:background="@null"
+          android:gravity="center"
+          android:text="@string/md_close_button"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="#dededd"
+          android:textSize="@dimen/dp26" />
 
       </net.iGap.libs.rippleeffect.RippleView>
     </LinearLayout>
@@ -143,61 +133,55 @@
 
   <android.support.design.widget.CoordinatorLayout
 
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_below="@id/fc_layot_title"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/fc_layot_title">
 
     <net.iGap.module.MyAppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat"
-        >
+      android:id="@+id/appBarLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:elevation="0dp"
+      app:popupTheme="@style/ThemeOverlay.AppCompat">
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          app:layout_scrollFlags="scroll|enterAlways"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_scrollFlags="scroll|enterAlways">
 
 
         <LinearLayout
-            android:id="@+id/menu_layout_addContact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray_f2"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp6"
-            android:paddingEnd="@dimen/dp20"
-            android:paddingLeft="@dimen/dp52"
-            android:paddingRight="@dimen/dp20"
-            android:paddingTop="@dimen/dp12"
-            >
+          android:id="@+id/menu_layout_addContact"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/gray_f2"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:paddingBottom="@dimen/dp6"
+          android:paddingEnd="@dimen/dp20"
+          android:paddingLeft="@dimen/dp52"
+          android:paddingRight="@dimen/dp20"
+          android:paddingTop="@dimen/dp12">
 
           <ImageView
-              android:layout_width="@dimen/dp48"
-              android:layout_height="@dimen/dp48"
-              app:srcCompat="@drawable/add_chat_background"
-              />
+            android:layout_width="@dimen/dp48"
+            android:layout_height="@dimen/dp48"
+            app:srcCompat="@drawable/add_chat_background" />
 
 
           <net.iGap.module.CustomTextViewMedium
-              android:id="@+id/title"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/dp8"
-              android:layout_marginStart="@dimen/dp8"
-              android:gravity="start|center_vertical"
-              android:singleLine="true"
-              android:text="@string/menu_add_contact"
-              android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp16"
-              />
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp8"
+            android:layout_marginStart="@dimen/dp8"
+            android:gravity="start|center_vertical"
+            android:singleLine="true"
+            android:text="@string/menu_add_contact"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp16" />
 
         </LinearLayout>
 
@@ -208,76 +192,69 @@
     </net.iGap.module.MyAppBarLayout>
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/nestedScrollContact"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      android:id="@+id/nestedScrollContact"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      android:scrollbars="vertical"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
-        >
+      >
 
 
       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/recycler_view"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp6"
-            android:visibility="gone"
-            />
+          android:paddingBottom="@dimen/dp6"
+          android:visibility="gone" />
 
         <ProgressBar
-            android:id="@+id/prgWaitingLoadContact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="clip_horizontal"
-            android:indeterminate="true"
-            android:visibility="visible"
-            />
+          android:id="@+id/prgWaitingLoadContact"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="clip_horizontal"
+          android:indeterminate="true"
+          android:visibility="visible" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <TextView
-            android:id="@+id/txtNon_User"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:paddingBottom="@dimen/dp10"
-            android:paddingLeft="@dimen/dp20"
-            android:paddingStart="@dimen/dp20"
-            android:paddingTop="@dimen/dp10"
-            android:text="@string/list_contacts"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp16"
-            android:textStyle="bold"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          android:id="@+id/txtNon_User"
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="start"
+          android:paddingBottom="@dimen/dp10"
+          android:paddingLeft="@dimen/dp20"
+          android:paddingStart="@dimen/dp20"
+          android:paddingTop="@dimen/dp10"
+          android:text="@string/list_contacts"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp16"
+          android:textStyle="bold" />
 
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcv_friends_to_invite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+          android:id="@+id/rcv_friends_to_invite"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
 
         <ProgressBar
-            android:id="@+id/prgWaiting_loadList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:indeterminate="true"
-            android:visibility="visible"
-            />
+          android:id="@+id/prgWaiting_loadList"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:indeterminate="true"
+          android:visibility="visible" />
       </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -285,11 +262,10 @@
 
 
   <ProgressBar
-      android:id="@+id/prgWaiting_addContact"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:indeterminate="true"
-      android:visibility="visible"
-      />
+    android:id="@+id/prgWaiting_addContact"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:indeterminate="true"
+    android:visibility="visible" />
 </RelativeLayout>

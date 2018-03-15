@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentBio;
@@ -23,15 +24,12 @@ import net.iGap.request.RequestUserProfileSetBio;
 
 public class FragmentBioViewModel {
 
+    public ObservableField<String> callBackEdtBio = new ObservableField<>();
+    public ObservableField<String> callBackTxtCountBio = new ObservableField<>("70");
     private int mCount = 70;
     private boolean isEndLine = true;
     private String specialRequests;
     private String bio = "";
-
-
-
-    public ObservableField<String> callBackEdtBio = new ObservableField<>();
-    public ObservableField<String> callBackTxtCountBio = new ObservableField<>("70");
 
     public FragmentBioViewModel(Bundle arguments) {
 

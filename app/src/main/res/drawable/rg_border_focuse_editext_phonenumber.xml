@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_focused="true">
-        <shape>
-            <corners android:radius="@dimen/dp4" />
-            <solid android:color="@color/rg_background_editText" />
+  <item android:state_focused="true">
+    <shape>
+      <corners android:radius="@dimen/dp4" />
+      <solid android:color="@color/rg_background_editText" />
 
-            <stroke android:width="1dp" android:color="@color/rg_border_editText" />
-        </shape>
-    </item>
-    <item android:state_focused="false">
-        <shape>
-            <corners android:radius="@dimen/dp4" />
-            <solid android:color="@color/rg_background_editText" />
-        </shape>
-    </item>
+      <stroke android:width="1dp" android:color="@color/rg_border_editText" />
+    </shape>
+  </item>
+  <item android:state_focused="false">
+    <shape>
+      <corners android:radius="@dimen/dp4" />
+      <solid android:color="@color/rg_background_editText" />
+    </shape>
+  </item>
 
 </selector>

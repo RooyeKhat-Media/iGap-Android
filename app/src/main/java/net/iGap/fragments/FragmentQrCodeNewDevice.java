@@ -17,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -55,10 +57,10 @@ public class FragmentQrCodeNewDevice extends BaseFragment implements QRCodeReade
         myDecoderView.setAutofocusInterval(2000L);
 
         // Use this function to enable/disable Torch
-        myDecoderView.setTorchEnabled(true);
+        //myDecoderView.setTorchEnabled(true);
 
         // Use this function to set front camera preview
-        myDecoderView.setFrontCamera();
+        //myDecoderView.setFrontCamera();
 
         // Use this function to set back camera preview
         myDecoderView.setBackCamera();

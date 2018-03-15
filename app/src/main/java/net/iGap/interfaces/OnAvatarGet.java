@@ -26,7 +26,7 @@ public interface OnAvatarGet {
      * call this method if avatarPath not exist
      *
      * @param initials letters for show in imageView
-     * @param color color imageView background
+     * @param color    color imageView background
      */
     void onShowInitials(String initials, String color);
 }

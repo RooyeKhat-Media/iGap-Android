@@ -3,211 +3,211 @@
 
 <resources>
 
-    <string-array name="language">
-        <item>English</item>
-        <item>فارسی</item>
-        <!--<item>العربی</item>-->
-        <!--<item>Deutsch</item>-->
-    </string-array>
+  <string-array name="language">
+    <item>English</item>
+    <item>فارسی</item>
+    <!--<item>العربی</item>-->
+    <!--<item>Deutsch</item>-->
+  </string-array>
 
-    <string-array name="message_text_size">
-        <item><font size="11"> 11(Hello)</font></item>
-        <item><font size="12"> 12(Hello)</font></item>
-        <item><font size="13"> 13(Hello)</font></item>
-        <item><font size="14"> 14(Hello)</font></item>
-        <item><font size="15"> 15(Hello)</font></item>
-        <item><font size="16"> 16(Hello)</font></item>
-        <item><font size="17"> 17(Hello)</font></item>
-        <item><font size="18"> 18(Hello)</font></item>
-        <item><font size="19"> 19(Hello)</font></item>
-        <item><font size="20"> 20(Hello)</font></item>
-        <item><font size="21"> 21(Hello)</font></item>
-        <item><font size="22"> 22(Hello)</font></item>
-        <item><font size="23"> 23(Hello)</font></item>
-        <item><font size="24"> 24(Hello)</font></item>
-        <item><font size="25"> 25(Hello)</font></item>
-        <item><font size="26"> 26(Hello)</font></item>
-        <item><font size="27"> 27(Hello)</font></item>
-        <item><font size="28"> 28(Hello)</font></item>
-        <item><font size="29"> 29(Hello)</font></item>
-        <item><font size="30"> 30(Hello)</font></item>
-    </string-array>
-
-
-    <string-array name="message_text_size_persian">
-        <item><font size="11"> ۱۱(Hello)</font></item>
-        <item><font size="12"> ۱۲(Hello)</font></item>
-        <item><font size="13"> ۱۳(Hello)</font></item>
-        <item><font size="14"> ۱۴(Hello)</font></item>
-        <item><font size="15"> ۱۵(Hello)</font></item>
-        <item><font size="16"> ۱۶(Hello)</font></item>
-        <item><font size="17"> ۱۷(Hello)</font></item>
-        <item><font size="18"> ۱۸(Hello)</font></item>
-        <item><font size="19"> ۱۹(Hello)</font></item>
-        <item><font size="20"> ۲۰(Hello)</font></item>
-        <item><font size="21"> ۲۱(Hello)</font></item>
-        <item><font size="22"> ۲۲(Hello)</font></item>
-        <item><font size="23"> ۲۳(Hello)</font></item>
-        <item><font size="24"> ۲۴(Hello)</font></item>
-        <item><font size="25"> ۲۵(Hello)</font></item>
-        <item><font size="26"> ۲۶(Hello)</font></item>
-        <item><font size="27"> ۲۷(Hello)</font></item>
-        <item><font size="28"> ۲۸(Hello)</font></item>
-        <item><font size="29"> ۲۹(Hello)</font></item>
-        <item><font size="30"> ۳۰(Hello)</font></item>
-    </string-array>
+  <string-array name="message_text_size">
+    <item><font size="11"> 11(Hello)</font></item>
+    <item><font size="12"> 12(Hello)</font></item>
+    <item><font size="13"> 13(Hello)</font></item>
+    <item><font size="14"> 14(Hello)</font></item>
+    <item><font size="15"> 15(Hello)</font></item>
+    <item><font size="16"> 16(Hello)</font></item>
+    <item><font size="17"> 17(Hello)</font></item>
+    <item><font size="18"> 18(Hello)</font></item>
+    <item><font size="19"> 19(Hello)</font></item>
+    <item><font size="20"> 20(Hello)</font></item>
+    <item><font size="21"> 21(Hello)</font></item>
+    <item><font size="22"> 22(Hello)</font></item>
+    <item><font size="23"> 23(Hello)</font></item>
+    <item><font size="24"> 24(Hello)</font></item>
+    <item><font size="25"> 25(Hello)</font></item>
+    <item><font size="26"> 26(Hello)</font></item>
+    <item><font size="27"> 27(Hello)</font></item>
+    <item><font size="28"> 28(Hello)</font></item>
+    <item><font size="29"> 29(Hello)</font></item>
+    <item><font size="30"> 30(Hello)</font></item>
+  </string-array>
 
 
-    <string-array name="auto_download_data">
-        <item>@string/array_Photo</item>
-        <item>@string/array_Voice_Message</item>
-        <item>@string/array_Video</item>
-        <item>@string/array_File</item>
-        <item>@string/array_Music</item>
-        <item>@string/array_GIF</item>
+  <string-array name="message_text_size_persian">
+    <item><font size="11"> ۱۱(Hello)</font></item>
+    <item><font size="12"> ۱۲(Hello)</font></item>
+    <item><font size="13"> ۱۳(Hello)</font></item>
+    <item><font size="14"> ۱۴(Hello)</font></item>
+    <item><font size="15"> ۱۵(Hello)</font></item>
+    <item><font size="16"> ۱۶(Hello)</font></item>
+    <item><font size="17"> ۱۷(Hello)</font></item>
+    <item><font size="18"> ۱۸(Hello)</font></item>
+    <item><font size="19"> ۱۹(Hello)</font></item>
+    <item><font size="20"> ۲۰(Hello)</font></item>
+    <item><font size="21"> ۲۱(Hello)</font></item>
+    <item><font size="22"> ۲۲(Hello)</font></item>
+    <item><font size="23"> ۲۳(Hello)</font></item>
+    <item><font size="24"> ۲۴(Hello)</font></item>
+    <item><font size="25"> ۲۵(Hello)</font></item>
+    <item><font size="26"> ۲۶(Hello)</font></item>
+    <item><font size="27"> ۲۷(Hello)</font></item>
+    <item><font size="28"> ۲۸(Hello)</font></item>
+    <item><font size="29"> ۲۹(Hello)</font></item>
+    <item><font size="30"> ۳۰(Hello)</font></item>
+  </string-array>
 
-    </string-array>
 
-    <string-array name="textMessageDialogItems">
-        <item>@string/replay_item_dialog</item>
-        <item>@string/copy_item_dialog</item>
-        <item>@string/share_item_dialog</item>
-        <item>@string/forward_item_dialog</item>
-        <item>@string/delete_item_dialog</item>
-        <item>@string/edit_item_dialog</item>
-    </string-array>
+  <string-array name="auto_download_data">
+    <item>@string/array_Photo</item>
+    <item>@string/array_Voice_Message</item>
+    <item>@string/array_Video</item>
+    <item>@string/array_File</item>
+    <item>@string/array_Music</item>
+    <item>@string/array_GIF</item>
 
-    <string-array name="fileTextMessageDialogItems">
-        <item>@string/replay_item_dialog</item>
-        <item>@string/copy_item_dialog</item>
-        <item>@string/saveToDownload_item_dialog</item>
-        <item>@string/share_item_dialog</item>
-        <item>@string/forward_item_dialog</item>
-        <item>@string/delete_item_dialog</item>
-        <item>@string/edit_item_dialog</item>
-    </string-array>
+  </string-array>
 
-    <string-array name="fileMessageDialogItems">
-        <item>@string/replay_item_dialog</item>
-        <item>@string/saveToDownload_item_dialog</item>
-        <item>@string/share_item_dialog</item>
-        <item>@string/forward_item_dialog</item>
-        <item>@string/delete_item_dialog</item>
-    </string-array>
+  <string-array name="textMessageDialogItems">
+    <item>@string/replay_item_dialog</item>
+    <item>@string/copy_item_dialog</item>
+    <item>@string/share_item_dialog</item>
+    <item>@string/forward_item_dialog</item>
+    <item>@string/delete_item_dialog</item>
+    <item>@string/edit_item_dialog</item>
+  </string-array>
 
-    <string-array name="otherMessageDialogItems">
-        <item>@string/replay_item_dialog</item>
-        <item>@string/share_item_dialog</item>
-        <item>@string/forward_item_dialog</item>
-        <item>@string/delete_item_dialog</item>
-    </string-array>
+  <string-array name="fileTextMessageDialogItems">
+    <item>@string/replay_item_dialog</item>
+    <item>@string/copy_item_dialog</item>
+    <item>@string/saveToDownload_item_dialog</item>
+    <item>@string/share_item_dialog</item>
+    <item>@string/forward_item_dialog</item>
+    <item>@string/delete_item_dialog</item>
+    <item>@string/edit_item_dialog</item>
+  </string-array>
 
-    <string-array name="profile">
-        <item>@string/array_From_Gallery</item>
-        <item>@string/array_From_Camera</item>
-    </string-array>
+  <string-array name="fileMessageDialogItems">
+    <item>@string/replay_item_dialog</item>
+    <item>@string/saveToDownload_item_dialog</item>
+    <item>@string/share_item_dialog</item>
+    <item>@string/forward_item_dialog</item>
+    <item>@string/delete_item_dialog</item>
+  </string-array>
 
-    <string-array name="profile_delete">
-        <item>@string/array_From_Gallery</item>
-        <item>@string/array_From_Camera</item>
-        <item>@string/array_Delete_photo</item>
-    </string-array>
+  <string-array name="otherMessageDialogItems">
+    <item>@string/replay_item_dialog</item>
+    <item>@string/share_item_dialog</item>
+    <item>@string/forward_item_dialog</item>
+    <item>@string/delete_item_dialog</item>
+  </string-array>
 
-    <string-array name="profile_delete_group">
-        <item>@string/array_From_Gallery</item>
-        <item>@string/array_From_Camera</item>
-        <item>@string/array_Delete_photo</item>
-    </string-array>
+  <string-array name="profile">
+    <item>@string/array_From_Gallery</item>
+    <item>@string/array_From_Camera</item>
+  </string-array>
 
-    <string-array name="phone_number">
-        <item>@string/add_to_contact</item>
-        <item>@string/chi_popup_call</item>
-        <item>@string/chi_popup_copy</item>
-    </string-array>
+  <string-array name="profile_delete">
+    <item>@string/array_From_Gallery</item>
+    <item>@string/array_From_Camera</item>
+    <item>@string/array_Delete_photo</item>
+  </string-array>
 
-    <string-array name="phone_number2">
-        <item>@string/chi_popup_call</item>
-        <item>@string/chi_popup_copy</item>
-    </string-array>
-    <!--<string-array name="st_popup">-->
-    <!--<item>@string/array_Log_Out</item>-->
-    <!--</string-array>-->
+  <string-array name="profile_delete_group">
+    <item>@string/array_From_Gallery</item>
+    <item>@string/array_From_Camera</item>
+    <item>@string/array_Delete_photo</item>
+  </string-array>
 
-    <string-array name="vibrate">
-        <item>@string/array_Default</item>
-        <item>@string/array_Short</item>
-        <item>@string/array_Long</item>
-        <item>@string/array_Only_if_silent</item>
-        <item>@string/array_Disable</item>
-    </string-array>
+  <string-array name="phone_number">
+    <item>@string/add_to_contact</item>
+    <item>@string/chi_popup_call</item>
+    <item>@string/chi_popup_copy</item>
+  </string-array>
 
-    <string-array name="notifications_vibrate">
-        <item>@string/array_Disable</item>
-        <item>@string/array_Default</item>
-        <item>@string/array_Short</item>
-        <item>@string/array_Long</item>
-    </string-array>
+  <string-array name="phone_number2">
+    <item>@string/chi_popup_call</item>
+    <item>@string/chi_popup_copy</item>
+  </string-array>
+  <!--<string-array name="st_popup">-->
+  <!--<item>@string/array_Log_Out</item>-->
+  <!--</string-array>-->
 
-    <string-array name="notifications_notification">
-        <item>@string/array_Default</item>
-        <item>@string/array_enable</item>
-        <item>@string/array_Disable</item>
-    </string-array>
+  <string-array name="vibrate">
+    <item>@string/array_Default</item>
+    <item>@string/array_Short</item>
+    <item>@string/array_Long</item>
+    <item>@string/array_Only_if_silent</item>
+    <item>@string/array_Disable</item>
+  </string-array>
 
-    <string-array name="popup_Notification">
-        <item>@string/array_No_popup</item>
-        <item>@string/array_Only_when_screen_on</item>
-        <item>@string/array_Only_when_screen_off</item>
-        <item>@string/array_Always_show_popup</item>
-    </string-array>
+  <string-array name="notifications_vibrate">
+    <item>@string/array_Disable</item>
+    <item>@string/array_Default</item>
+    <item>@string/array_Short</item>
+    <item>@string/array_Long</item>
+  </string-array>
 
-    <string-array name="repeat_notification">
-        <item>@string/array_Off</item>
-        <item>@string/array_5_minutes</item>
-        <item>@string/array_10_minutes</item>
-        <item>@string/array_30_minutes</item>
-        <item>@string/array_1_hour</item>
-        <item>@string/array_2_hour</item>
-        <item>@string/array_4_hour</item>
-    </string-array>
+  <string-array name="notifications_notification">
+    <item>@string/array_Default</item>
+    <item>@string/array_enable</item>
+    <item>@string/array_Disable</item>
+  </string-array>
 
-    <string-array name="phone_profile_chanel">
-        <item>@string/array_Add_to_Contact</item>
-        <item>@string/array_Call</item>
-        <item>@string/array_Copy</item>
-    </string-array>
+  <string-array name="popup_Notification">
+    <item>@string/array_No_popup</item>
+    <item>@string/array_Only_when_screen_on</item>
+    <item>@string/array_Only_when_screen_off</item>
+    <item>@string/array_Always_show_popup</item>
+  </string-array>
 
-    <string-array name="sound_message">
-        <item>@string/array_Default_Notification_tone</item>
-        <item>aooow</item>
-        <item>bbalert</item>
-        <item>boom</item>
-        <item>bounce</item>
-        <item>doodoo</item>
-        <item>jing</item>
-        <item>lili</item>
-        <item>msg</item>
-        <item>newa</item>
-        <item>none</item>
-        <item>onelime</item>
-        <item>tone</item>
-        <item>woow</item>
-    </string-array>
+  <string-array name="repeat_notification">
+    <item>@string/array_Off</item>
+    <item>@string/array_5_minutes</item>
+    <item>@string/array_10_minutes</item>
+    <item>@string/array_30_minutes</item>
+    <item>@string/array_1_hour</item>
+    <item>@string/array_2_hour</item>
+    <item>@string/array_4_hour</item>
+  </string-array>
 
-    <string-array name="pop_up_shared_media">
-        <item>@string/shared_image</item>
-        <item>@string/shared_video</item>
-        <item>@string/shared_audio</item>
-        <item>@string/shared_voice</item>
-        <item>@string/shared_gif</item>
-        <item>@string/shared_file</item>
-        <item>@string/shared_links</item>
-    </string-array>
+  <string-array name="phone_profile_chanel">
+    <item>@string/array_Add_to_Contact</item>
+    <item>@string/array_Call</item>
+    <item>@string/array_Copy</item>
+  </string-array>
 
-    <string-array name="pop_up_media_player">
-        <item>@string/save_to_Music</item>
-        <item>@string/share_item_dialog</item>
-    </string-array>
+  <string-array name="sound_message">
+    <item>@string/array_Default_Notification_tone</item>
+    <item>aooow</item>
+    <item>bbalert</item>
+    <item>boom</item>
+    <item>bounce</item>
+    <item>doodoo</item>
+    <item>jing</item>
+    <item>lili</item>
+    <item>msg</item>
+    <item>newa</item>
+    <item>none</item>
+    <item>onelime</item>
+    <item>tone</item>
+    <item>woow</item>
+  </string-array>
+
+  <string-array name="pop_up_shared_media">
+    <item>@string/shared_image</item>
+    <item>@string/shared_video</item>
+    <item>@string/shared_audio</item>
+    <item>@string/shared_voice</item>
+    <item>@string/shared_gif</item>
+    <item>@string/shared_file</item>
+    <item>@string/shared_links</item>
+  </string-array>
+
+  <string-array name="pop_up_media_player">
+    <item>@string/save_to_Music</item>
+    <item>@string/share_item_dialog</item>
+  </string-array>
 
   <string-array name="pop_up_call_log_menu">
     <item>@string/clean_log</item>
@@ -215,65 +215,65 @@
 
 
   <string-array name="pop_up_menu_show_image">
-        <item>@string/share_image</item>
-        <item>@string/save_to_gallery</item>
-    </string-array>
+    <item>@string/share_image</item>
+    <item>@string/save_to_gallery</item>
+  </string-array>
 
-    <string-array name="pop_up_menu_show_avatar">
-        <item>@string/save_to_gallery</item>
-    </string-array>
-    <string-array name="pop_up_menu_show_avatar_setting">
-      <!--<item>@string/save_to_gallery</item>-->
-        <item>@string/array_Delete_photo</item>
-    </string-array>
+  <string-array name="pop_up_menu_show_avatar">
+    <item>@string/save_to_gallery</item>
+  </string-array>
+  <string-array name="pop_up_menu_show_avatar_setting">
+    <!--<item>@string/save_to_gallery</item>-->
+    <item>@string/array_Delete_photo</item>
+  </string-array>
 
-    <string-array name="account_self_destruct">
-        <item>@string/month_1</item>
-        <item>@string/month_3</item>
-        <item>@string/month_6</item>
-        <item>@string/year_1</item>
-    </string-array>
+  <string-array name="account_self_destruct">
+    <item>@string/month_1</item>
+    <item>@string/month_3</item>
+    <item>@string/month_6</item>
+    <item>@string/year_1</item>
+  </string-array>
 
-    <string-array name="privacy_setting_array">
-        <item>@string/everybody</item>
-        <item>@string/my_contacts</item>
-        <item>@string/no_body</item>
-    </string-array>
+  <string-array name="privacy_setting_array">
+    <item>@string/everybody</item>
+    <item>@string/my_contacts</item>
+    <item>@string/no_body</item>
+  </string-array>
 
-    <string-array name="array_gander">
-        <item>@string/Male</item>
-        <item>@string/Female</item>
-    </string-array>
+  <string-array name="array_gander">
+    <item>@string/Male</item>
+    <item>@string/Female</item>
+  </string-array>
 
-    <string-array name="array_passCode">
-        <item>@string/PIN</item>
-        <item>@string/password</item>
-    </string-array>
+  <string-array name="array_passCode">
+    <item>@string/PIN</item>
+    <item>@string/password</item>
+  </string-array>
 
-    <string-array name="keepMedia">
-        <item>@string/keep_media_forever</item>
-      <item>@string/keep_media_1month</item>
-      <item>@string/keep_media_6month</item>
-    </string-array>
+  <string-array name="keepMedia">
+    <item>@string/keep_media_forever</item>
+    <item>@string/keep_media_1month</item>
+    <item>@string/keep_media_6month</item>
+  </string-array>
 
-    <string-array name="delete_account">
-        <item>@string/delete_account_text1</item>
-        <item>@string/delete_account_text2</item>
-        <item>@string/delete_account_text3</item>
-        <item>@string/delete_account_text4</item>
-    </string-array>
+  <string-array name="delete_account">
+    <item>@string/delete_account_text1</item>
+    <item>@string/delete_account_text2</item>
+    <item>@string/delete_account_text3</item>
+    <item>@string/delete_account_text4</item>
+  </string-array>
 
-    <string-array name="numberCountGroup">
-        <item>@string/from_beginning</item>
-        <item>@string/from_Now</item>
-        <item>@string/last_50_Messages</item>
-        <item>@string/customs</item>
-    </string-array>
+  <string-array name="numberCountGroup">
+    <item>@string/from_beginning</item>
+    <item>@string/from_Now</item>
+    <item>@string/last_50_Messages</item>
+    <item>@string/customs</item>
+  </string-array>
 
-    <string-array name="capture">
-        <item>@string/capture_image</item>
-        <item>@string/capture_video</item>
-    </string-array>
+  <string-array name="capture">
+    <item>@string/capture_image</item>
+    <item>@string/capture_video</item>
+  </string-array>
 
   <string-array name="securityRecoveryPassword">
     <item>@string/recovery_by_email_dialog</item>
@@ -284,9 +284,9 @@
     <item>@string/recovery_by_question_dialog</item>
   </string-array>
 
-    <string-array name="modePassCode">
-        <item>@string/PIN</item>
-        <item>@string/password</item>
-    </string-array>
+  <string-array name="modePassCode">
+    <item>@string/PIN</item>
+    <item>@string/password</item>
+  </string-array>
 
 </resources>

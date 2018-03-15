@@ -12,7 +12,7 @@ package net.iGap.module.structs;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.module.MyType;
 import net.iGap.proto.ProtoGlobal;
@@ -22,7 +22,10 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.realm.RealmRoomMessageLocation;
+
 import org.parceler.Parcels;
+
+import io.realm.Realm;
 
 import static net.iGap.G.userId;
 
@@ -355,6 +358,17 @@ public class StructMessageInfo implements Parcelable {
         return messageInfo;
     }
 
+    public static long getReplyMessageId(StructMessageInfo structMessageInfo) {
+        if (structMessageInfo != null && structMessageInfo.replayTo != null) {
+            if (structMessageInfo.replayTo.getMessageId() < 0) {
+                return (structMessageInfo.replayTo.getMessageId() * (-1));
+            } else {
+                return structMessageInfo.replayTo.getMessageId();
+            }
+        }
+        return 0;
+    }
+
     public boolean isSenderMe() {
 
         boolean result = false;
@@ -376,17 +390,6 @@ public class StructMessageInfo implements Parcelable {
         }
 
         return output;
-    }
-
-    public static long getReplyMessageId(StructMessageInfo structMessageInfo) {
-        if (structMessageInfo != null && structMessageInfo.replayTo != null) {
-            if (structMessageInfo.replayTo.getMessageId() < 0) {
-                return (structMessageInfo.replayTo.getMessageId() * (-1));
-            } else {
-                return structMessageInfo.replayTo.getMessageId();
-            }
-        }
-        return 0;
     }
 
     public boolean isTimeOrLogMessage() {

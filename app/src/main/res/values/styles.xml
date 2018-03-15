@@ -1,18 +1,18 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/green</item>
-        <item name="colorPrimaryDark">@color/greenStatus</item>
-        <item name="colorAccent">@color/green</item>
-        <item name="android:buttonStyle">@style/Button</item>
-        <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
-        <item name="md_medium_font">IRANSansMobile.ttf</item>
-        <item name="md_regular_font">IRANSansMobile.ttf</item>
-        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
-        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-    </style>
+  <!-- Base application theme. -->
+  <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/green</item>
+    <item name="colorPrimaryDark">@color/greenStatus</item>
+    <item name="colorAccent">@color/green</item>
+    <item name="android:buttonStyle">@style/Button</item>
+    <item name="drawerArrowStyle">@style/MaterialDrawer.DrawerArrowStyle</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
+    <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+  </style>
 
   <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
     <!--<item name="android:windowDisablePreview">true</item>-->
@@ -21,203 +21,203 @@
 
   <style name="AppTheme.Widget" />
 
-    <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
-        <item name="fontPath">fonts/IRANSansMobile.ttf</item>
-    </style>
+  <style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">
+    <item name="fontPath">fonts/IRANSansMobile.ttf</item>
+  </style>
 
-    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">false</item>
-        <item name="color">@android:color/white</item>
-    </style>
+  <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+    <item name="spinBars">false</item>
+    <item name="color">@android:color/white</item>
+  </style>
 
-    <style name="Button" parent="Widget.AppCompat.Button">
-        <item name="android:textAllCaps">false</item>
-    </style>
+  <style name="Button" parent="Widget.AppCompat.Button">
+    <item name="android:textAllCaps">false</item>
+  </style>
 
-    <style name="AppTheme" parent="BaseTheme">
+  <style name="AppTheme" parent="BaseTheme">
 
-    </style>
+  </style>
 
-    <style name="AppThemeTranslucent" parent="BaseTheme">
+  <style name="AppThemeTranslucent" parent="BaseTheme">
 
-    </style>
+  </style>
 
-    <style name="ThemeSpinner">
-        <!-- Color when pressed -->
-        <item name="colorAccent">@color/green</item>
-        <!-- Default color for the dropdown arrow and line -->
-        <item name="colorControlNormal">#dad7d7</item>
-    </style>
+  <style name="ThemeSpinner">
+    <!-- Color when pressed -->
+    <item name="colorAccent">@color/green</item>
+    <!-- Default color for the dropdown arrow and line -->
+    <item name="colorControlNormal">#dad7d7</item>
+  </style>
 
-    <style name="ChatMessages.EmojiTextView" parent="ChatMessages">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/dp16</item>
-      <item name="android:textColor">#333333</item>
-        <item name="android:textDirection">firstStrong</item>
-        <item name="android:layoutDirection">locale</item>
-        <item name="emojiSize">@dimen/dp16</item>
+  <style name="ChatMessages.EmojiTextView" parent="ChatMessages">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textSize">@dimen/dp16</item>
+    <item name="android:textColor">#333333</item>
+    <item name="android:textDirection">firstStrong</item>
+    <item name="android:layoutDirection">locale</item>
+    <item name="emojiSize">@dimen/dp16</item>
 
-        <item name="android:paddingLeft">@dimen/messageContainerPaddingLeftRight</item>
-        <item name="android:paddingRight">@dimen/messageContainerPaddingLeftRight</item>
-        <!-- <mList name="android:paddingTop">@dimen/messageContainerPadding</mList>  -->
-    </style>
+    <item name="android:paddingLeft">@dimen/messageContainerPaddingLeftRight</item>
+    <item name="android:paddingRight">@dimen/messageContainerPaddingLeftRight</item>
+    <!-- <mList name="android:paddingTop">@dimen/messageContainerPadding</mList>  -->
+  </style>
 
-    <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
+  <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
 
-    <style name="AppTheme22" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/black_register</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/toolbar_background</item>
+  <style name="AppTheme22" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/black_register</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/toolbar_background</item>
 
-    </style>
+  </style>
 
-    <style name="FabButton">
-        <item name="colorAccent">@android:color/white</item>
-    </style>
+  <style name="FabButton">
+    <item name="colorAccent">@android:color/white</item>
+  </style>
 
-    <style name="dialog_item_style">
-        <item name="android:paddingBottom">@dimen/dp8</item>
-        <item name="android:paddingLeft">@dimen/dp24</item>
-        <item name="android:paddingRight">@dimen/dp24</item>
-        <item name="android:paddingTop">@dimen/dp8</item>
-    </style>
-
-
-    <style name="RedHUGEText" parent="@android:style/Widget.TextView">
-
-        <item name="android:textColor">@color/black_register</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="MyToolbar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/colorAccent</item>
-    </style>
-
-    <style name="Setting_editText">
-        <item name="colorControlNormal">@color/st_line_editText</item>
-    </style>
+  <style name="dialog_item_style">
+    <item name="android:paddingBottom">@dimen/dp8</item>
+    <item name="android:paddingLeft">@dimen/dp24</item>
+    <item name="android:paddingRight">@dimen/dp24</item>
+    <item name="android:paddingTop">@dimen/dp8</item>
+  </style>
 
 
-    <style name="MySearch" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:editTextColor">@color/black_register</item>
-        <item name="android:textColorHint">@color/text_verify</item>
-        <item name="colorAccent">@color/toolbar_background</item>
-        <item name="android:tint">@color/border_editText</item>
-        <item name="android:gravity">end|right</item>
-        <item name="android:textColor">@color/text_verify</item>
-    </style>
+  <style name="RedHUGEText" parent="@android:style/Widget.TextView">
 
-    <style name="SearchViewToolbar" parent="Widget.AppCompat.Light.SearchView">
-        <item name="android:editTextColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="colorAccent">@color/white</item>
-        <item name="android:tint">@color/white</item>
-        <item name="android:gravity">right</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
+    <item name="android:textColor">@color/black_register</item>
+    <item name="android:textStyle">bold</item>
+  </style>
 
-    <style name="NavigationDrawer"/>
+  <style name="MyToolbar" parent="Theme.AppCompat">
+    <item name="colorControlNormal">@color/colorAccent</item>
+  </style>
 
-    <style name="NavigationDrawer.Item">
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
-    </style>
-
-    <style name="ChatMessages"/>
-
-    <style name="ChatMessages.CardView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">5dp</item>
-    </style>
-
-    <style name="ChatMessages.MaterialDesignTextView"/>
-
-    <style name="ChatMessages.Time">
-        <item name="android:textColor">@color/colorChatMessageTime</item>
-        <item name="android:textSize">@dimen/dp8</item>
-    </style>
-
-    <style name="ChatMessages.MaterialDesignTextView.Tick">
-
-    </style>
-
-    <style name="ChatMessages.MaterialDesignTextView.BottomIcon">
-        <item name="android:textSize">@dimen/dp22</item>
-    </style>
-
-    <style name="ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn" parent="ChatMessages.MaterialDesignTextView.BottomIcon">
-        <item name="android:textColor">@color/green</item>
-    </style>
-
-    <style name="error_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/red</item>
-        <item name="android:textColorHint">@color/red</item>
-        <item name="android:textSize">@dimen/dp12</item>
-    </style>
-
-    <style name="remove_error_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/hint_edit_text</item>
-        <item name="android:textColorHint">@color/hint_edit_text</item>
-        <item name="android:textSize">@dimen/dp12</item>
-    </style>
-
-    <style name="Hint_appearance" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/dp12</item>
-        <item name="android:textColorHint">@color/green</item>
-    </style>
-
-    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-    </style>
-
-    <!--<style name="AVLoadingIndicatorView">-->
-    <!--<item name="minWidth">48dip</item>-->
-    <!--<item name="maxWidth">48dip</item>-->
-    <!--<item name="minHeight">48dip</item>-->
-    <!--<item name="maxHeight">48dip</item>-->
-    <!--<item name="indicatorName">BallPulseIndicator</item>-->
-    <!--</style>-->
-
-    <!--<style name="AVLoadingIndicatorView.Large">-->
-    <!--<item name="minWidth">76dip</item>-->
-    <!--<item name="maxWidth">76dip</item>-->
-    <!--<item name="minHeight">76dip</item>-->
-    <!--<item name="maxHeight">76dip</item>-->
-    <!--<item name="indicatorName">BallPulseIndicator</item>-->
-    <!--</style>-->
-
-    <!--<style name="AVLoadingIndicatorView.Small">-->
-    <!--<item name="minWidth">@dimen/dp20</item>-->
-    <!--<item name="maxWidth">@dimen/dp20</item>-->
-    <!--<item name="minHeight">@dimen/dp20</item>-->
-    <!--<item name="maxHeight">@dimen/dp20</item>-->
-    <!--<item name="indicatorName">BallPulseIndicator</item>-->
-    <!--</style>-->
+  <style name="Setting_editText">
+    <item name="colorControlNormal">@color/st_line_editText</item>
+  </style>
 
 
-    <style name="TextIconAppearance.menu" parent="android:TextAppearance">
-      <item name="fontPath">fonts/iGap-Fontico.ttf</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/gray_4c</item>
-    </style>
+  <style name="MySearch" parent="android:Theme.Holo.Light.DarkActionBar">
+    <item name="android:editTextColor">@color/black_register</item>
+    <item name="android:textColorHint">@color/text_verify</item>
+    <item name="colorAccent">@color/toolbar_background</item>
+    <item name="android:tint">@color/border_editText</item>
+    <item name="android:gravity">end|right</item>
+    <item name="android:textColor">@color/text_verify</item>
+  </style>
 
-    <style name="TextIconAppearance.all" parent="android:TextAppearance">
-      <item name="fontPath">fonts/iGap-Fontico.ttf</item>
-      <item name="android:textSize">@dimen/dp22</item>
-    </style>
+  <style name="SearchViewToolbar" parent="Widget.AppCompat.Light.SearchView">
+    <item name="android:editTextColor">@color/white</item>
+    <item name="android:textColorHint">@color/white</item>
+    <item name="colorAccent">@color/white</item>
+    <item name="android:tint">@color/white</item>
+    <item name="android:gravity">right</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
 
-    <style name="TextIconAppearance_toolbar" parent="android:TextAppearance">
-      <item name="fontPath">fonts/iGap-Fontico.ttf</item>
-      <item name="android:textSize">@dimen/dp22</item>
-    </style>
+  <style name="NavigationDrawer" />
+
+  <style name="NavigationDrawer.Item">
+    <item name="android:clickable">true</item>
+    <item name="android:focusable">true</item>
+    <item name="android:background">?android:attr/selectableItemBackground</item>
+  </style>
+
+  <style name="ChatMessages" />
+
+  <style name="ChatMessages.CardView">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:padding">5dp</item>
+  </style>
+
+  <style name="ChatMessages.MaterialDesignTextView" />
+
+  <style name="ChatMessages.Time">
+    <item name="android:textColor">@color/colorChatMessageTime</item>
+    <item name="android:textSize">@dimen/dp8</item>
+  </style>
+
+  <style name="ChatMessages.MaterialDesignTextView.Tick">
+
+  </style>
+
+  <style name="ChatMessages.MaterialDesignTextView.BottomIcon">
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+  <style name="ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn" parent="ChatMessages.MaterialDesignTextView.BottomIcon">
+    <item name="android:textColor">@color/green</item>
+  </style>
+
+  <style name="error_appearance" parent="@android:style/TextAppearance">
+    <item name="android:textColor">@color/red</item>
+    <item name="android:textColorHint">@color/red</item>
+    <item name="android:textSize">@dimen/dp12</item>
+  </style>
+
+  <style name="remove_error_appearance" parent="@android:style/TextAppearance">
+    <item name="android:textColor">@color/hint_edit_text</item>
+    <item name="android:textColorHint">@color/hint_edit_text</item>
+    <item name="android:textSize">@dimen/dp12</item>
+  </style>
+
+  <style name="Hint_appearance" parent="@android:style/TextAppearance">
+    <item name="android:textSize">@dimen/dp12</item>
+    <item name="android:textColorHint">@color/green</item>
+  </style>
+
+  <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowAnimationStyle">@android:style/Animation</item>
+  </style>
+
+  <!--<style name="AVLoadingIndicatorView">-->
+  <!--<item name="minWidth">48dip</item>-->
+  <!--<item name="maxWidth">48dip</item>-->
+  <!--<item name="minHeight">48dip</item>-->
+  <!--<item name="maxHeight">48dip</item>-->
+  <!--<item name="indicatorName">BallPulseIndicator</item>-->
+  <!--</style>-->
+
+  <!--<style name="AVLoadingIndicatorView.Large">-->
+  <!--<item name="minWidth">76dip</item>-->
+  <!--<item name="maxWidth">76dip</item>-->
+  <!--<item name="minHeight">76dip</item>-->
+  <!--<item name="maxHeight">76dip</item>-->
+  <!--<item name="indicatorName">BallPulseIndicator</item>-->
+  <!--</style>-->
+
+  <!--<style name="AVLoadingIndicatorView.Small">-->
+  <!--<item name="minWidth">@dimen/dp20</item>-->
+  <!--<item name="maxWidth">@dimen/dp20</item>-->
+  <!--<item name="minHeight">@dimen/dp20</item>-->
+  <!--<item name="maxHeight">@dimen/dp20</item>-->
+  <!--<item name="indicatorName">BallPulseIndicator</item>-->
+  <!--</style>-->
+
+
+  <style name="TextIconAppearance.menu" parent="android:TextAppearance">
+    <item name="fontPath">fonts/iGap-Fontico.ttf</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:textColor">@color/gray_4c</item>
+  </style>
+
+  <style name="TextIconAppearance.all" parent="android:TextAppearance">
+    <item name="fontPath">fonts/iGap-Fontico.ttf</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+  <style name="TextIconAppearance_toolbar" parent="android:TextAppearance">
+    <item name="fontPath">fonts/iGap-Fontico.ttf</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
 
   <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
 
@@ -234,10 +234,10 @@
     <item name="android:windowExitAnimation">@anim/translate_exit_down</item>
   </style>
 
-    <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_exit_in_right</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_exit_out_left</item>
-    </style>
+  <style name="CustomActivityAnimation" parent="@android:style/Animation.Activity">
+    <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+    <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+    <item name="android:activityCloseEnterAnimation">@anim/slide_exit_in_right</item>
+    <item name="android:activityCloseExitAnimation">@anim/slide_exit_out_left</item>
+  </style>
 </resources>

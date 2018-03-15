@@ -1,75 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true">
 
 
-
-    <net.iGap.module.CircleImageView
-        android:id="@+id/fcsl_imv_picture"
-        android:layout_width="@dimen/dp48"
-        android:layout_height="@dimen/dp48"
-        android:layout_margin="@dimen/dp6"
-        android:layout_gravity="center"
-        />
+  <net.iGap.module.CircleImageView
+    android:id="@+id/fcsl_imv_picture"
+    android:layout_width="@dimen/dp48"
+    android:layout_height="@dimen/dp48"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dp6" />
 
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp68"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp68"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dp12"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp12">
 
       <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/dp6"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp6"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <net.iGap.module.EmojiTextViewE
-            android:id="@+id/fcsl_txt_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:paddingBottom="1dp"
-            android:singleLine="true"
-            android:text="Name"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp15"
-            android:textStyle="bold"
-            />
+          android:id="@+id/fcsl_txt_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="start"
+          android:paddingBottom="1dp"
+          android:singleLine="true"
+          android:text="Name"
+          android:textColor="@android:color/black"
+          android:textSize="@dimen/dp15"
+          android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
 
           <TextView
-              android:id="@+id/fcsl_txt_time_info"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="start"
-              android:singleLine="true"
-              android:text="(4) 9:24 am"
-              android:textColor="@color/gray_5c"
-              android:textSize="@dimen/dp12"
-              android:textStyle="bold"
-              android:textDirection="locale"
-              />
+            android:id="@+id/fcsl_txt_time_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:singleLine="true"
+            android:text="(4) 9:24 am"
+            android:textColor="@color/gray_5c"
+            android:textDirection="locale"
+            android:textSize="@dimen/dp12"
+            android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -78,34 +69,31 @@
 
 
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          android:layout_marginRight="@dimen/dp8"
-          android:layout_marginLeft="@dimen/dp8"
-          >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_marginRight="@dimen/dp8"
+        android:orientation="vertical">
 
         <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/fcsl_txt_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="@string/md_call_made"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp22"
-            />
+          android:id="@+id/fcsl_txt_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:text="@string/md_call_made"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp22" />
 
 
         <TextView
-            android:id="@+id/fcsl_txt_dureation_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2:24"
-            android:textColor="@color/btn_start_page5"
-            android:textSize="@dimen/dp12"
-            android:textStyle="bold"
-            />
+          android:id="@+id/fcsl_txt_dureation_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="2:24"
+          android:textColor="@color/btn_start_page5"
+          android:textSize="@dimen/dp12"
+          android:textStyle="bold" />
 
 
       </LinearLayout>
@@ -115,11 +103,11 @@
 
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray_3c"
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/gray_3c"
 
-        />
+      />
 
   </LinearLayout>
 

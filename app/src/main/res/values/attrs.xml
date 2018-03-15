@@ -1,91 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CircleImageView">
-        <attr name="civ_border_width" format="dimension" />
-        <attr name="civ_border_color" format="color" />
-        <attr name="civ_border_overlay" format="boolean" />
-        <attr name="civ_fill_color" format="color" />
-    </declare-styleable>
+  <declare-styleable name="CircleImageView">
+    <attr name="civ_border_width" format="dimension" />
+    <attr name="civ_border_color" format="color" />
+    <attr name="civ_border_overlay" format="boolean" />
+    <attr name="civ_fill_color" format="color" />
+  </declare-styleable>
 
-    <declare-styleable name="GifMoviewView">
-        <attr name="gif" format="reference" />
-        <attr name="paused" format="boolean" />
-    </declare-styleable>
+  <declare-styleable name="GifMoviewView">
+    <attr name="gif" format="reference" />
+    <attr name="paused" format="boolean" />
+  </declare-styleable>
 
-    <declare-styleable name="CustomTheme">
-        <attr name="gifMoviewViewStyle" format="reference" />
-    </declare-styleable>
+  <declare-styleable name="CustomTheme">
+    <attr name="gifMoviewViewStyle" format="reference" />
+  </declare-styleable>
 
-    <declare-styleable name="RatioImageView">
-        <attr name="groupId" format="string"/>
-        <attr name="adjustWidth" format="boolean"/>
-    </declare-styleable>
+  <declare-styleable name="RatioImageView">
+    <attr name="groupId" format="string" />
+    <attr name="adjustWidth" format="boolean" />
+  </declare-styleable>
 
-    <declare-styleable name="ArcMenu">
-        <attr name="menu_scr" format="integer" />
-        <attr name="menu_color" format="reference|color" />
-        <attr name="menu_ripple_color" format="color" />
-        <attr name="menu_radius" format="dimension" />
-        <attr name="menu_margin" format="dimension" />
-        <attr name="menu_open" format="enum">
-            <enum name="arc_left" value="0" />
-            <enum name="arc_right" value="1" />
-        </attr>
-        <attr name="menu_animation_time" format="integer" />
-        <attr name="menu_elevation" format="dimension" />
-    </declare-styleable>
-
-
-    <declare-styleable name="SelectableRoundedImageView">
-        <attr name="sriv_left_top_corner_radius" format="dimension" />
-        <attr name="sriv_right_top_corner_radius" format="dimension" />
-        <attr name="sriv_left_bottom_corner_radius" format="dimension" />
-        <attr name="sriv_right_bottom_corner_radius" format="dimension" />
-        <attr name="sriv_border_width" format="dimension" />
-        <attr name="sriv_border_color" format="color" />
-        <attr name="sriv_oval" format="boolean" />
-        <attr name="android:scaleType" />
-    </declare-styleable>
+  <declare-styleable name="ArcMenu">
+    <attr name="menu_scr" format="integer" />
+    <attr name="menu_color" format="reference|color" />
+    <attr name="menu_ripple_color" format="color" />
+    <attr name="menu_radius" format="dimension" />
+    <attr name="menu_margin" format="dimension" />
+    <attr name="menu_open" format="enum">
+      <enum name="arc_left" value="0" />
+      <enum name="arc_right" value="1" />
+    </attr>
+    <attr name="menu_animation_time" format="integer" />
+    <attr name="menu_elevation" format="dimension" />
+  </declare-styleable>
 
 
-    <!--ripple library-->
-    <declare-styleable name="RippleView">
-        <attr name="rv_alpha" format="integer" />
-        <attr name="rv_framerate" format="integer" />
-        <attr name="rv_rippleDuration" format="integer" />
-        <attr name="rv_zoomDuration" format="integer" />
-        <attr name="rv_color" format="color" />
-        <attr name="rv_centered" format="boolean" />
-        <attr name="rv_type" format="enum">
-            <enum name="simpleRipple" value="0" />
-            <enum name="doubleRipple" value="1" />
-            <enum name="rectangle" value="2" />
-        </attr>
-        <attr name="rv_ripplePadding" format="dimension" />
-        <attr name="rv_zoom" format="boolean" />
-        <attr name="rv_zoomScale" format="float" />
+  <declare-styleable name="SelectableRoundedImageView">
+    <attr name="sriv_left_top_corner_radius" format="dimension" />
+    <attr name="sriv_right_top_corner_radius" format="dimension" />
+    <attr name="sriv_left_bottom_corner_radius" format="dimension" />
+    <attr name="sriv_right_bottom_corner_radius" format="dimension" />
+    <attr name="sriv_border_width" format="dimension" />
+    <attr name="sriv_border_color" format="color" />
+    <attr name="sriv_oval" format="boolean" />
+    <attr name="android:scaleType" />
+  </declare-styleable>
 
-    </declare-styleable>
+
+  <!--ripple library-->
+  <declare-styleable name="RippleView">
+    <attr name="rv_alpha" format="integer" />
+    <attr name="rv_framerate" format="integer" />
+    <attr name="rv_rippleDuration" format="integer" />
+    <attr name="rv_zoomDuration" format="integer" />
+    <attr name="rv_color" format="color" />
+    <attr name="rv_centered" format="boolean" />
+    <attr name="rv_type" format="enum">
+      <enum name="simpleRipple" value="0" />
+      <enum name="doubleRipple" value="1" />
+      <enum name="rectangle" value="2" />
+    </attr>
+    <attr name="rv_ripplePadding" format="dimension" />
+    <attr name="rv_zoom" format="boolean" />
+    <attr name="rv_zoomScale" format="float" />
+
+  </declare-styleable>
 
   <!--NavigationTabStrip library-->
   <declare-styleable name="NavigationTabStrip">
-    <attr format="color" name="nts_color" />
-    <attr format="dimension" name="nts_size" />
-    <attr format="dimension" name="nts_weight" />
-    <attr format="float" name="nts_factor" />
-    <attr format="reference" name="nts_titles" />
-    <attr format="enum" name="nts_type">
+    <attr name="nts_color" format="color" />
+    <attr name="nts_size" format="dimension" />
+    <attr name="nts_weight" format="dimension" />
+    <attr name="nts_factor" format="float" />
+    <attr name="nts_titles" format="reference" />
+    <attr name="nts_type" format="enum">
       <enum name="line" value="0" />
       <enum name="point" value="1" />
     </attr>
-    <attr format="enum" name="nts_gravity">
+    <attr name="nts_gravity" format="enum">
       <enum name="bottom" value="0" />
       <enum name="top" value="1" />
     </attr>
-    <attr format="string" name="nts_typeface" />
-    <attr format="dimension" name="nts_corners_radius" />
-    <attr format="integer" name="nts_animation_duration" />
-    <attr format="color" name="nts_inactive_color" />
-    <attr format="color" name="nts_active_color" />
+    <attr name="nts_typeface" format="string" />
+    <attr name="nts_corners_radius" format="dimension" />
+    <attr name="nts_animation_duration" format="integer" />
+    <attr name="nts_inactive_color" format="color" />
+    <attr name="nts_active_color" format="color" />
   </declare-styleable>
 </resources>

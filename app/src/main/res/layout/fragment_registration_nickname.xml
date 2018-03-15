@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
   <data>
 
     <import type="android.graphics.Color" />
+
     <import type="net.iGap.G" />
+
     <variable
-        name="fragmentRegistrationNicknameViewModel"
-        type="net.iGap.viewmodel.FragmentRegistrationNicknameViewModel"
-        />
+      name="fragmentRegistrationNicknameViewModel"
+      type="net.iGap.viewmodel.FragmentRegistrationNicknameViewModel" />
   </data>
 
 
   <RelativeLayout
-      android:id="@+id/fragmentContainer_group_profile"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:clickable="true"
-      tools:ignore="MissingPrefix"
-      >
+    android:id="@+id/fragmentContainer_group_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:ignore="MissingPrefix">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/whit_background"
-        android:layoutDirection="ltr"
-        android:orientation="vertical"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:background="@color/whit_background"
+      android:layoutDirection="ltr"
+      android:orientation="vertical">
 
       <android.support.design.widget.AppBarLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
-            android:id="@+id/ap_ll_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp60"
-            android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            >
+          android:id="@+id/ap_ll_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp60"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          app:contentInsetLeft="0dp"
+          app:contentInsetStart="0dp">
 
           <TextView
-              android:id="@+id/pu_titleToolbar"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:text="@string/app_name"
-              android:textColor="@color/whit_background"
-              android:textSize="@dimen/dp20"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              />
+            android:id="@+id/pu_titleToolbar"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp20" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -65,150 +62,138 @@
 
 
       <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+          android:orientation="vertical">
 
 
           <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="ltr"
+            android:orientation="vertical">
+
+            <TextView
+              android:id="@+id/pu_txt_title_information"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layoutDirection="ltr"
-              android:orientation="vertical"
-              >
-
-            <TextView
-                android:id="@+id/pu_txt_title_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:text="@string/pu_title_profileUser"
-                android:textColor="@color/black_register"
-                android:textSize="@dimen/dp18"
-                android:textStyle="bold"
-                />
+              android:layout_marginTop="@dimen/dp16"
+              android:background="@android:color/transparent"
+              android:gravity="center"
+              android:text="@string/pu_title_profileUser"
+              android:textColor="@color/black_register"
+              android:textSize="@dimen/dp18"
+              android:textStyle="bold" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/dp52"
-                android:layout_marginRight="@dimen/dp52"
-                android:layout_marginTop="@dimen/dp8"
-                android:background="@color/line2_background"
-                />
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:layout_marginLeft="@dimen/dp52"
+              android:layout_marginRight="@dimen/dp52"
+              android:layout_marginTop="@dimen/dp8"
+              android:background="@color/line2_background" />
 
             <TextView
-                android:id="@+id/pu_txt_title_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp52"
-                android:layout_marginRight="@dimen/dp52"
-                android:layout_marginTop="@dimen/dp8"
-                android:gravity="center"
-                android:text="@string/pu_desc_profileUser"
-                android:textColor="@color/confirm_country"
-                android:textSize="@dimen/dp14"
-                />
+              android:id="@+id/pu_txt_title_desc"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp52"
+              android:layout_marginRight="@dimen/dp52"
+              android:layout_marginTop="@dimen/dp8"
+              android:gravity="center"
+              android:text="@string/pu_desc_profileUser"
+              android:textColor="@color/confirm_country"
+              android:textSize="@dimen/dp14" />
           </LinearLayout>
 
 
           <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:gravity="center"
-              android:orientation="vertical"
-              >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <net.iGap.module.CircleImageView
-                android:id="@+id/pu_profile_circle_image"
-                android:layout_width="@dimen/dp105"
-                android:layout_height="@dimen/dp105"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp12"
-                android:background="@drawable/circle_color_notificatin_setting"
-                android:gravity="center"
-                android:padding="@dimen/dp32"
-                android:src="@mipmap/plus"
-                app:civ_border_width="0dp"
-                />
+              android:id="@+id/pu_profile_circle_image"
+              android:layout_width="@dimen/dp105"
+              android:layout_height="@dimen/dp105"
+              android:layout_gravity="center"
+              android:layout_marginTop="@dimen/dp12"
+              android:background="@drawable/circle_color_notificatin_setting"
+              android:gravity="center"
+              android:padding="@dimen/dp32"
+              android:src="@mipmap/plus"
+              app:civ_border_width="0dp" />
 
 
             <TextView
-                android:id="@+id/pu_txt_addPhoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dp52"
-                android:layout_marginRight="@dimen/dp52"
-                android:layout_marginTop="@dimen/dp8"
-                android:gravity="center"
-                android:text="@string/pu_addPhoto_profileUser"
-                android:textColor="@color/text_dark_verify"
-                android:textSize="@dimen/dp14"
-                />
+              android:id="@+id/pu_txt_addPhoto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginLeft="@dimen/dp52"
+              android:layout_marginRight="@dimen/dp52"
+              android:layout_marginTop="@dimen/dp8"
+              android:gravity="center"
+              android:text="@string/pu_addPhoto_profileUser"
+              android:textColor="@color/text_dark_verify"
+              android:textSize="@dimen/dp14" />
 
           </LinearLayout>
 
 
           <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp52"
-              android:layout_marginRight="@dimen/dp52"
-              android:layout_marginTop="@dimen/dp12"
-              android:descendantFocusability="beforeDescendants"
-              android:focusableInTouchMode="true"
-              >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginRight="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp12"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/pu_txtInput_nikeName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
-                android:foregroundGravity="center"
-                android:gravity="center"
-                app:counterTextAppearance="@style/remove_error_appearance"
-                app:hintTextAppearance="@style/remove_error_appearance"
-                >
+              android:id="@+id/pu_txtInput_nikeName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentEnd="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentStart="true"
+              android:foregroundGravity="center"
+              android:gravity="center"
+              app:counterTextAppearance="@style/remove_error_appearance"
+              app:hintTextAppearance="@style/remove_error_appearance">
 
               <net.iGap.module.EditTextAdjustPan
-                  android:id="@+id/pu_edt_nikeName"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:afterTextChanged="@{fragmentRegistrationNicknameViewModel.watcher}"
-                  android:background="@android:color/transparent"
-                  android:gravity="center"
-                  android:hint="@{fragmentRegistrationNicknameViewModel.edtNikeNameHint , default = @string/pu_nikname_profileUser}"
-                  android:lines="1"
-                  android:maxLength="20"
-                  android:maxLines="1"
-                  android:minWidth="104dp"
-                  android:singleLine="true"
-                  android:text="@={fragmentRegistrationNicknameViewModel.callBackEdtNikeName}"
-                  android:textColor="@{fragmentRegistrationNicknameViewModel.edtNikeNameColor , default =@color/black_register}"
-                  android:textColorHint="@color/pu_edtHintText"
-                  android:textSize="@dimen/dp14"
-                  app:errorTextAppearance="@style/remove_error_appearance"
-                  />
+                android:id="@+id/pu_edt_nikeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{fragmentRegistrationNicknameViewModel.watcher}"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:hint="@{fragmentRegistrationNicknameViewModel.edtNikeNameHint , default = @string/pu_nikname_profileUser}"
+                android:lines="1"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:minWidth="104dp"
+                android:singleLine="true"
+                android:text="@={fragmentRegistrationNicknameViewModel.callBackEdtNikeName}"
+                android:textColor="@{fragmentRegistrationNicknameViewModel.edtNikeNameColor , default =@color/black_register}"
+                android:textColorHint="@color/pu_edtHintText"
+                android:textSize="@dimen/dp14"
+                app:errorTextAppearance="@style/remove_error_appearance" />
 
               <View
-                  android:id="@+id/pu_line_below_editText"
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:layout_below="@+id/pu_edt_nikeName"
-                  android:background="@{fragmentRegistrationNicknameViewModel.lineBelowEditTextColor , default =@color/border_editText}"
-                  />
+                android:id="@+id/pu_line_below_editText"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/pu_edt_nikeName"
+                android:background="@{fragmentRegistrationNicknameViewModel.lineBelowEditTextColor , default =@color/border_editText}" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -219,28 +204,27 @@
           <!--</LinearLayout>-->
 
           <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/dp24"
-              android:layout_marginTop="@dimen/dp24"
-              android:gravity="center"
-              >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp24"
+            android:gravity="center">
 
             <Button
-                android:id="@+id/pu_btn_letsGo"
-                android:layout_width="@dimen/dp120"
-                android:layout_height="@dimen/dp40"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
-                android:gravity="center"
-                android:onClick="@{fragmentRegistrationNicknameViewModel::OnClickBtnLetsGo}"
-                android:text="@string/pu_Lets_Go"
-                android:textAllCaps="false"
-                android:textColor="@color/whit_background"
-                android:textSize="@dimen/dp14"
+              android:id="@+id/pu_btn_letsGo"
+              android:layout_width="@dimen/dp120"
+              android:layout_height="@dimen/dp40"
+              android:layout_centerHorizontal="true"
+              android:layout_gravity="center"
+              android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+              android:gravity="center"
+              android:onClick="@{fragmentRegistrationNicknameViewModel::OnClickBtnLetsGo}"
+              android:text="@string/pu_Lets_Go"
+              android:textAllCaps="false"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp14"
 
-                />
+              />
 
           </RelativeLayout>
 
@@ -253,14 +237,13 @@
 
 
     <ProgressBar
-        android:id="@+id/prg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="@{fragmentRegistrationNicknameViewModel.prgVisibility , default = gone}"
-        />
+      android:id="@+id/prg"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      android:visibility="@{fragmentRegistrationNicknameViewModel.prgVisibility , default = gone}" />
   </RelativeLayout>
 </layout>
 

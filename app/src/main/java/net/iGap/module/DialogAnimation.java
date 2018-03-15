@@ -12,6 +12,7 @@ package net.iGap.module;
 import android.app.Dialog;
 import android.view.Gravity;
 import android.view.WindowManager;
+
 import net.iGap.R;
 
 /**

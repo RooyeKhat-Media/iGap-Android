@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +34,9 @@ import java.util.List;
 
 public class SlidingTabLayout extends HorizontalScrollView {
 
-    public interface TabColorizer {
-
-        int getIndicatorColor(int position);
-
-        int getDividerColor(int position);
-    }
-
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 18;
+    private final SlidingTabStrip mTabStrip;
     private List<tabParameter> mTabs = new ArrayList<tabParameter>();
 
     private int mTitleOffset;
@@ -50,8 +45,6 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
-
-    private final SlidingTabStrip mTabStrip;
 
     public SlidingTabLayout(Context context) {
         this(context, null);
@@ -103,11 +96,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         setCustomTabColorizer(new TabColorizer() {
 
-            @Override public int getIndicatorColor(int position) {
+            @Override
+            public int getIndicatorColor(int position) {
                 return mTabs.get(position).getIndicatorColor();
             }
 
-            @Override public int getDividerColor(int position) {
+            @Override
+            public int getDividerColor(int position) {
                 return mTabs.get(position).getDividerColor();
             }
         });
@@ -170,7 +165,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
         return textView;
     }
 
-    @SuppressWarnings("deprecation") private void populateTabStrip() {
+    @SuppressWarnings("deprecation")
+    private void populateTabStrip() {
         final PagerAdapter adapter = mViewPager.getAdapter();
         final OnClickListener tabClickListener = new TabClickListener();
 
@@ -199,7 +195,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
-    @Override protected void onAttachedToWindow() {
+    @Override
+    protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
         if (mViewPager != null) {
@@ -218,7 +215,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         for (int i = 0; i < mTabStrip.getChildCount(); i++) {
             //	mTabStrip.getChildAt(i).setBackgroundColor(Color.parseColor("#2bbfbd"));
 
-            //			
+            //
             //			if (i != 0) {
             //				mTabStrip.getChildAt(i).findViewById(R.id.btn_create).setVisibility(View.VISIBLE);
             //			} else {
@@ -243,11 +240,40 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
+    private void fillTabs() {
+
+        mTabs.add(new tabParameter(
+                //   getContext().getString(R.string.fa_map_signs_all) + " ",//+getContext().getString(R.string.all_en), // Title
+                "weekly", Color.WHITE, // Indicator color
+                Color.parseColor("#2bbfbd")// Divider color
+        ));
+
+        mTabs.add(new tabParameter(
+                //   getContext().getString(R.string.fa_user) + " ",//+getContext().getString(R.string.chats_en), // Title
+                "mounthly", Color.WHITE, // Indicator color
+                Color.parseColor("#2bbfbd") // Divider color
+        ));
+
+        mTabs.add(new tabParameter(
+                //    getContext().getString(R.string.fa_group) + " ",//+getContext().getString(R.string.group_en), // Title
+                "yearly", Color.WHITE, // Indicator color
+                Color.parseColor("#2bbfbd") // Divider color
+        ));
+    }
+
+    public interface TabColorizer {
+
+        int getIndicatorColor(int position);
+
+        int getDividerColor(int position);
+    }
+
     private class InternalViewPagerListener implements ViewPager.OnPageChangeListener {
 
         private int mScrollState;
 
-        @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             int tabStripChildCount = mTabStrip.getChildCount();
             if ((tabStripChildCount == 0) || (position < 0) || (position >= tabStripChildCount)) {
                 return;
@@ -264,7 +290,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
         }
 
-        @Override public void onPageScrollStateChanged(int state) {
+        @Override
+        public void onPageScrollStateChanged(int state) {
             mScrollState = state;
 
             if (mViewPagerPageChangeListener != null) {
@@ -272,7 +299,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
             }
         }
 
-        @Override public void onPageSelected(int position) {
+        @Override
+        public void onPageSelected(int position) {
 
             if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
                 mTabStrip.onViewPagerPageChanged(position, 0f);
@@ -287,7 +315,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private class TabClickListener implements OnClickListener {
 
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
 
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {
                 //	mTabStrip.getChildAt(i).setBackgroundColor(Color.parseColor("#2bbfbd"));
@@ -326,26 +355,5 @@ public class SlidingTabLayout extends HorizontalScrollView {
         int getDividerColor() {
             return mDividerColor;
         }
-    }
-
-    private void fillTabs() {
-
-        mTabs.add(new tabParameter(
-            //   getContext().getString(R.string.fa_map_signs_all) + " ",//+getContext().getString(R.string.all_en), // Title
-            "weekly", Color.WHITE, // Indicator color
-            Color.parseColor("#2bbfbd")// Divider color
-        ));
-
-        mTabs.add(new tabParameter(
-            //   getContext().getString(R.string.fa_user) + " ",//+getContext().getString(R.string.chats_en), // Title
-            "mounthly", Color.WHITE, // Indicator color
-            Color.parseColor("#2bbfbd") // Divider color
-        ));
-
-        mTabs.add(new tabParameter(
-            //    getContext().getString(R.string.fa_group) + " ",//+getContext().getString(R.string.group_en), // Title
-            "yearly", Color.WHITE, // Indicator color
-            Color.parseColor("#2bbfbd") // Divider color
-        ));
     }
 }

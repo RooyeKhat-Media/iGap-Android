@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+
 import net.iGap.G;
 import net.iGap.interfaces.OnSmsReceive;
 
@@ -34,7 +35,30 @@ public class IncomingSms extends BroadcastReceiver {
         this.listener = listener;
     }
 
-    @Override public void onReceive(Context context, Intent intent) {
+    public static void markMessageRead(String number, String body) {
+
+        //        Uri uri = Uri.parse("content://sms/inbox");
+        //        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        //        try {
+        //
+        //            while (cursor.moveToNext()) {
+        //                if ((cursor.getString(cursor.getColumnIndex("address")).equals(number)) && (cursor.getInt(cursor.getColumnIndex("read")) == 0)) {
+        //                    if (cursor.getString(cursor.getColumnIndex("body")).startsWith(body)) {
+        //                        String SmsMessageId = cursor.getString(cursor.getColumnIndex("_id"));
+        //                        ContentValues values = new ContentValues();
+        //                        values.put("read", 1);
+        //                        context.getContentResolver().update(Uri.parse("content://sms/inbox"), values, "_id=" + SmsMessageId, null);
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //        } catch (Exception e) {
+        //            Log.e("Mark Read", "Error in Read: " + e.toString());
+        //        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
 
         final Bundle bundle = intent.getExtras();
         try {
@@ -58,27 +82,5 @@ public class IncomingSms extends BroadcastReceiver {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void markMessageRead(String number, String body) {
-
-        //        Uri uri = Uri.parse("content://sms/inbox");
-        //        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-        //        try {
-        //
-        //            while (cursor.moveToNext()) {
-        //                if ((cursor.getString(cursor.getColumnIndex("address")).equals(number)) && (cursor.getInt(cursor.getColumnIndex("read")) == 0)) {
-        //                    if (cursor.getString(cursor.getColumnIndex("body")).startsWith(body)) {
-        //                        String SmsMessageId = cursor.getString(cursor.getColumnIndex("_id"));
-        //                        ContentValues values = new ContentValues();
-        //                        values.put("read", 1);
-        //                        context.getContentResolver().update(Uri.parse("content://sms/inbox"), values, "_id=" + SmsMessageId, null);
-        //                        return;
-        //                    }
-        //                }
-        //            }
-        //        } catch (Exception e) {
-        //            Log.e("Mark Read", "Error in Read: " + e.toString());
-        //        }
     }
 }

@@ -13,6 +13,16 @@ package net.iGap.realm;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+
+import net.iGap.G;
+import net.iGap.module.SUID;
+import net.iGap.proto.ProtoChannelGetMemberList;
+import net.iGap.proto.ProtoGlobal;
+import net.iGap.proto.ProtoGroupGetMemberList;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -20,49 +30,16 @@ import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
-import java.util.ArrayList;
-import java.util.List;
-import net.iGap.G;
-import net.iGap.module.SUID;
-import net.iGap.proto.ProtoChannelGetMemberList;
-import net.iGap.proto.ProtoGlobal;
-import net.iGap.proto.ProtoGroupGetMemberList;
 
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
 public class RealmMember extends RealmObject {
 
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
 
     private long peerId;
     private String role;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getPeerId() {
-        return peerId;
-    }
-
-    public void setPeerId(long peerId) {
-        this.peerId = peerId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
-
 
     public static RealmMember put(Realm realm, long userId, String role) {
         RealmMember realmMember = realm.createObject(RealmMember.class, SUID.id().get());
@@ -397,5 +374,29 @@ public class RealmMember extends RealmObject {
             }
         }
         return mList;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getPeerId() {
+        return peerId;
+    }
+
+    public void setPeerId(long peerId) {
+        this.peerId = peerId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

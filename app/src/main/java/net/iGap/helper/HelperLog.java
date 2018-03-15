@@ -1,6 +1,7 @@
 package net.iGap.helper;
 
 import android.util.Log;
+
 import com.crashlytics.android.Crashlytics;
 
 public class HelperLog {

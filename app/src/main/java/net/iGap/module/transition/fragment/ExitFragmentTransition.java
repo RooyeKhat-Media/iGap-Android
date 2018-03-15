@@ -26,6 +26,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.module.transition.core.MoveData;

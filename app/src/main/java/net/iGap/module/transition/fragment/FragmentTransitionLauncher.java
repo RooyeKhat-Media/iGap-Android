@@ -22,14 +22,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+
 import net.iGap.module.transition.core.TransitionBundleFactory;
 
 
 public class FragmentTransitionLauncher {
-    private static final String TAG = "TransitionLauncher";
     static final String TRANSITION_BUNDLE = "TransitionBundle";
-
-
+    private static final String TAG = "TransitionLauncher";
     private final Context context;
     private View fromView;
     private Bitmap bitmap;

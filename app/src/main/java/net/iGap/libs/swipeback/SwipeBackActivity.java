@@ -72,6 +72,10 @@ public class SwipeBackActivity extends AppCompatActivity {
         return getSupportFragmentManager().getBackStackEntryCount() <= 1;
     }
 
+    int getDefaultFragmentBackground() {
+        return mDefaultFragmentBackground;
+    }
+
     /**
      * 当Fragment根布局 没有 设定background属性时,
      * 库默认使用Theme的android:windowbackground作为Fragment的背景,
@@ -79,9 +83,5 @@ public class SwipeBackActivity extends AppCompatActivity {
      */
     protected void setDefaultFragmentBackground(@DrawableRes int backgroundRes) {
         mDefaultFragmentBackground = backgroundRes;
-    }
-
-    int getDefaultFragmentBackground() {
-        return mDefaultFragmentBackground;
     }
 }

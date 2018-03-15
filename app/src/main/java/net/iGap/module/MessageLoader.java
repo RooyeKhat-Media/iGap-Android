@@ -11,12 +11,6 @@
 
 package net.iGap.module;
 
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.util.ArrayList;
-import java.util.List;
 import net.iGap.G;
 import net.iGap.interfaces.OnClientGetRoomHistoryResponse;
 import net.iGap.interfaces.OnMessageReceive;
@@ -26,6 +20,14 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestClientGetRoomHistory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static net.iGap.fragments.FragmentChat.getRealmChat;
 import static net.iGap.proto.ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction.DOWN;
@@ -39,10 +41,10 @@ public final class MessageLoader {
      * fetch local message from RealmRoomMessage.
      * (hint : deleted message doesn't count)
      *
-     * @param roomId roomId that want show message for that
-     * @param messageId start query with this messageId
+     * @param roomId           roomId that want show message for that
+     * @param messageId        start query with this messageId
      * @param duplicateMessage if set true return message for messageId that used in this method (will be used "lessThanOrEqualTo") otherwise just return less or greater than messageId(will be used "lessThan" method)
-     * @param direction direction for load message up or down
+     * @param direction        direction for load message up or down
      * @return Object[] ==> [0] -> ArrayList<StructMessageInfo>, [1] -> boolean hasMore, [2] -> boolean hasGap
      */
     public static Object[] getLocalMessage(Realm realm, long roomId, long messageId, long gapMessageId, boolean duplicateMessage, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
@@ -245,7 +247,7 @@ public final class MessageLoader {
      * reachedId will be used for calculate that after get clientGetRoomHistory
      * this history really reached to local message and gap filled or no
      *
-     * @param roomId roomId that want show message for that
+     * @param roomId    roomId that want show message for that
      * @param messageId start query with this messageId
      * @param direction direction for load message up or down
      * @return [0] -> gapMessageId, [1] -> reachMessageId
@@ -341,7 +343,7 @@ public final class MessageLoader {
     /**
      * after each get history check all messages that are between first
      * and end message in history response and clear all gap state
-     *
+     * <p>
      * (hint : don't need use from transaction)
      */
     private static void clearGap(final long roomId, final long messageId, final long finalMessageId, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction, Realm realm) {
@@ -385,7 +387,7 @@ public final class MessageLoader {
 
     /**
      * set new gap state for UP or DOWN state
-     *
+     * <p>
      * (hint : don't need use from transaction)
      *
      * @param messageId message that want set gapMessageId to that

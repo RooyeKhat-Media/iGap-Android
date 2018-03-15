@@ -5,12 +5,14 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import dalvik.system.DexFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
+import dalvik.system.DexFile;
 
 public class MultiDexUtils {
     private static final String EXTRACTED_NAME_EXT = ".classes";

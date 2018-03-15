@@ -15,12 +15,15 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.helper.HelperLogMessage;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
 
@@ -52,6 +55,11 @@ public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
         holder.text.setText(HelperLogMessage.getLogMessageWithLink(mMessage.messageText));
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView text;
@@ -64,10 +72,5 @@ public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
             //text = (TextView) view.findViewById(R.id.csll_txt_log_text);
             //text.setMovementMethod(LinkMovementMethod.getInstance());
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

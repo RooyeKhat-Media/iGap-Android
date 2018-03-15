@@ -2,6 +2,7 @@ package net.iGap.module;
 
 import android.content.Context;
 import android.util.AttributeSet;
+
 import com.vanniktech.emoji.EmojiTextView;
 
 

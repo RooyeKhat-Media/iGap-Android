@@ -46,6 +46,9 @@ public class GeoGetNearbyCoordinateResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
+        if (G.onGetNearbyCoordinate != null) {
+            G.onGetNearbyCoordinate.onErrorGetNearbyCoordinate();
+        }
     }
 }
 

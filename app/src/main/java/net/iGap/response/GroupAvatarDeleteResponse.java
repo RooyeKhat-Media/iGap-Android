@@ -28,7 +28,8 @@ public class GroupAvatarDeleteResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoGroupAvatarDelete.GroupAvatarDeleteResponse.Builder groupAvatarDelete = (ProtoGroupAvatarDelete.GroupAvatarDeleteResponse.Builder) message;
@@ -39,14 +40,16 @@ public class GroupAvatarDeleteResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
         if (G.onGroupAvatarDelete != null) {
             G.onGroupAvatarDelete.onTimeOut();
         }
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;

@@ -10,15 +10,17 @@
 
 package net.iGap.module;
 
-import java.util.Comparator;
 import net.iGap.module.structs.StructCountry;
+
+import java.util.Comparator;
 
 /**
  * sort list of country
  */
 
 public class CountryListComparator implements Comparator<StructCountry> {
-    @Override public int compare(StructCountry structCountry, StructCountry t1)
+    @Override
+    public int compare(StructCountry structCountry, StructCountry t1)
 
     {
         return structCountry.getName().compareToIgnoreCase(t1.getName());

@@ -12,7 +12,7 @@ package net.iGap.module;
 
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.interfaces.OnChatSendMessageResponse;
 import net.iGap.proto.ProtoGlobal;
@@ -21,6 +21,8 @@ import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChannelSendMessage;
 import net.iGap.request.RequestChatSendMessage;
 import net.iGap.request.RequestGroupSendMessage;
+
+import io.realm.Realm;
 
 /**
  * util for chat send messages

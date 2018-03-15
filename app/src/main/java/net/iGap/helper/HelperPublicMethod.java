@@ -13,7 +13,7 @@ package net.iGap.helper;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.activities.ActivityMain;
 import net.iGap.interfaces.OnChatGetRoom;
@@ -25,18 +25,10 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestUserInfo;
 
+import io.realm.Realm;
+
 
 public class HelperPublicMethod {
-
-    public interface OnComplete {
-        void complete();
-    }
-
-    public interface OnError {
-        void error();
-    }
-
-    //**************************************************************************************************************************************
 
     public static void goToChatRoom(final long peerId, final OnComplete onComplete, final OnError onError) {
 
@@ -149,6 +141,8 @@ public class HelperPublicMethod {
         new RequestUserInfo().userInfo(peerId);
     }
 
+    //**************************************************************************************************************************************
+
     private static void goToRoom(long roomid, long peerId) {
 
         Intent intent = new Intent(G.context, ActivityMain.class);
@@ -159,6 +153,14 @@ public class HelperPublicMethod {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         G.context.startActivity(intent);
+    }
+
+    public interface OnComplete {
+        void complete();
+    }
+
+    public interface OnError {
+        void error();
     }
 
     //**************************************************************************************************************************************

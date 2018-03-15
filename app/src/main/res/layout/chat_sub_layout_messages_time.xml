@@ -1,147 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/csl_ll_time"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:clickable="true"
-    android:layout_marginTop="-1dp"
-    android:orientation="horizontal"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/csl_ll_time"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_marginBottom="4dp"
+  android:layout_marginTop="-1dp"
+  android:clickable="true"
+  android:orientation="horizontal">
 
   <View
-      android:id="@+id/cslm_view_left_dis"
-      android:layout_width="@dimen/dp52"
-      android:layout_height="1dp"
-      android:visibility="gone"
-      />
+    android:id="@+id/cslm_view_left_dis"
+    android:layout_width="@dimen/dp52"
+    android:layout_height="1dp"
+    android:visibility="gone" />
 
   <LinearLayout
-      android:id="@+id/lyt_see"
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:paddingRight="@dimen/dp4"
-      android:visibility="visible"
+    android:id="@+id/lyt_see"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/dp4"
+    android:visibility="visible"
 
-      >
+    >
 
     <LinearLayout
-        android:id="@+id/lyt_signature"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center|right"
-        android:orientation="horizontal"
-        android:paddingRight="@dimen/dp4"
-        android:paddingTop="@dimen/dp4"
-        android:visibility="gone"
-        >
+      android:id="@+id/lyt_signature"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="center|right"
+      android:orientation="horizontal"
+      android:paddingRight="@dimen/dp4"
+      android:paddingTop="@dimen/dp4"
+      android:visibility="gone">
 
       <TextView
-          android:id="@+id/txt_signature"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:gravity="center"
-          android:maxLength="25"
-          android:singleLine="true"
-          android:text=""
-          android:textColor="@color/room_message_gray"
-          style="@style/ChatMessages.Time"
-          />
+        android:id="@+id/txt_signature"
+        style="@style/ChatMessages.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:gravity="center"
+        android:maxLength="25"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/room_message_gray" />
     </LinearLayout>
 
 
     <TextView
-        android:id="@+id/txt_views_label"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:gravity="center"
-        android:paddingTop="2dp"
-        android:singleLine="true"
-        android:text="0"
-        android:textColor="@color/room_message_gray"
-        style="@style/ChatMessages.Time"
-        />
+      android:id="@+id/txt_views_label"
+      style="@style/ChatMessages.Time"
+      android:layout_width="wrap_content"
+      android:layout_height="16dp"
+      android:gravity="center"
+      android:paddingTop="2dp"
+      android:singleLine="true"
+      android:text="0"
+      android:textColor="@color/room_message_gray" />
 
     <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/img_eye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp4"
-        android:paddingTop="2dp"
-        android:singleLine="true"
-        android:text="@string/md_visibility"
-        android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/gray_6c"
-        android:textSize="@dimen/dp14"
-        />
+      android:id="@+id/img_eye"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp4"
+      android:paddingTop="2dp"
+      android:singleLine="true"
+      android:text="@string/md_visibility"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@color/gray_6c"
+      android:textSize="@dimen/dp14" />
 
   </LinearLayout>
 
   <TextView
-      android:id="@+id/txtEditedIndicator"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginRight="@dimen/dp4"
-      android:layout_marginTop="4dp"
-      android:gravity="center"
-      android:paddingLeft="@dimen/dp4"
-      android:singleLine="true"
-      android:text="@string/edited"
-      style="@style/ChatMessages.Time"
-      />
+    android:id="@+id/txtEditedIndicator"
+    style="@style/ChatMessages.Time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dp4"
+    android:layout_marginTop="4dp"
+    android:gravity="center"
+    android:paddingLeft="@dimen/dp4"
+    android:singleLine="true"
+    android:text="@string/edited" />
 
   <TextView
-      android:id="@+id/cslr_txt_time"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/dp4"
-      android:gravity="center"
-      android:paddingLeft="2dp"
-      android:paddingRight="2dp"
-      android:singleLine="true"
-      android:text="10:21"
-      style="@style/ChatMessages.Time"
-      />
+    android:id="@+id/cslr_txt_time"
+    style="@style/ChatMessages.Time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp4"
+    android:gravity="center"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:singleLine="true"
+    android:text="10:21" />
 
   <ImageView
-      android:id="@+id/cslr_txt_tic"
-      android:layout_width="16dp"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="@dimen/dp4"
-      android:layout_marginTop="-5dp"
-      android:tint="@color/colorOldBlack"
-      app:srcCompat="@drawable/ic_double_check"
-      style="@style/ChatMessages.MaterialDesignTextView.Tick"
-      />
+    android:id="@+id/cslr_txt_tic"
+    style="@style/ChatMessages.MaterialDesignTextView.Tick"
+    android:layout_width="16dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp4"
+    android:layout_marginTop="-5dp"
+    android:tint="@color/colorOldBlack"
+    app:srcCompat="@drawable/ic_double_check" />
 
   <net.iGap.module.MaterialDesignTextView
-      android:id="@+id/cslr_txt_hearing"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_gravity="left|center_vertical"
-      android:layout_marginLeft="@dimen/dp4"
-      android:gravity="center"
-      android:singleLine="true"
-      android:text="@string/md_hearing"
-      android:textColor="@color/black90"
-      android:textSize="@dimen/dp12"
-      android:visibility="gone"
-      fontPath="fonts/iGap-Fontico.ttf"
-      />
+    android:id="@+id/cslr_txt_hearing"
+    fontPath="fonts/iGap-Fontico.ttf"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="left|center_vertical"
+    android:layout_marginLeft="@dimen/dp4"
+    android:gravity="center"
+    android:singleLine="true"
+    android:text="@string/md_hearing"
+    android:textColor="@color/black90"
+    android:textSize="@dimen/dp12"
+    android:visibility="gone" />
 
 
   <LinearLayout
-      android:id="@+id/lyt_right"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:orientation="horizontal"
-      android:visibility="gone"
-      />
+    android:id="@+id/lyt_right"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:visibility="gone" />
 
 </LinearLayout>

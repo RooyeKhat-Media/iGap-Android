@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import net.iGap.R;
 import net.iGap.databinding.FragmentDataBinding;
 import net.iGap.viewmodel.FragmentDataViewModel;
@@ -18,9 +19,9 @@ import net.iGap.viewmodel.FragmentDataViewModel;
  */
 public class FragmentData extends BaseFragment {
 
+    public static OnFragmentRemoveData onFragmentRemoveData;
     private FragmentDataViewModel fragmentDataViewModel;
     private FragmentDataBinding fragmentDataBinding;
-    public static OnFragmentRemoveData onFragmentRemoveData;
 
     public FragmentData() {
         // Required empty public constructor

@@ -163,7 +163,7 @@ public class RealmMigration implements io.realm.RealmMigration {
             oldVersion++;
         }
 
-        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) {
+        if (oldVersion == 14) {
             RealmObjectSchema realmOfflineDelete = schema.get(RealmOfflineDelete.class.getSimpleName());
             if (realmOfflineDelete != null) {
                 realmOfflineDelete.addField(RealmOfflineDeleteFields.BOTH, boolean.class, FieldAttribute.REQUIRED);
@@ -178,6 +178,16 @@ public class RealmMigration implements io.realm.RealmMigration {
             if (registeredInfo != null) {
                 registeredInfo.addField("bio", String.class);
             }
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) {
+            RealmObjectSchema realmChannelRoom = schema.get(RealmChannelRoom.class.getSimpleName());
+            if (realmChannelRoom != null) {
+                realmChannelRoom.addField("verified", boolean.class, FieldAttribute.REQUIRED);
+                realmChannelRoom.addField("reactionStatus", boolean.class, FieldAttribute.REQUIRED);
+            }
+
             oldVersion++;
         }
     }

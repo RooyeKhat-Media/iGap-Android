@@ -35,13 +35,13 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
     ProtoClientSearchUsername.ClientSearchUsernameResponse.Result item;
     private Typeface typeFaceIcon;
 
+    public ProtoClientSearchUsername.ClientSearchUsernameResponse.Result getItem() {
+        return item;
+    }
+
     public SearchItamIGap setItem(ProtoClientSearchUsername.ClientSearchUsernameResponse.Result item) {
         this.item = item;
         return this;
-    }
-
-    public ProtoClientSearchUsername.ClientSearchUsernameResponse.Result getItem() {
-        return item;
     }
 
     @Override
@@ -142,6 +142,11 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
         }
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected CircleImageView avatar;
@@ -159,11 +164,6 @@ public class SearchItamIGap extends AbstractItem<SearchItamIGap, SearchItamIGap.
             txtIcon = (TextView) view.findViewById(R.id.sfsl_txt_icon);
             txtTime = (TextView) view.findViewById(R.id.sfsl_txt_time);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }
 

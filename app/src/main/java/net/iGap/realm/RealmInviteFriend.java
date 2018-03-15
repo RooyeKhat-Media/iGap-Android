@@ -10,8 +10,9 @@
 
 package net.iGap.realm;
 
-import io.realm.RealmObject;
 import net.iGap.helper.HelperString;
+
+import io.realm.RealmObject;
 
 public class RealmInviteFriend extends RealmObject {
 

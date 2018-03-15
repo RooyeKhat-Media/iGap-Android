@@ -36,18 +36,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmModel;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
@@ -98,6 +94,14 @@ import net.iGap.request.RequestUserProfileSetNickname;
 import net.iGap.request.RequestUserProfileUpdateUsername;
 import net.iGap.request.RequestUserSessionLogout;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmModel;
+
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.context;
 import static net.iGap.G.onRefreshActivity;
@@ -124,24 +128,8 @@ public class FragmentSettingViewModel {
     public static int KEY_AD_ROAMING_FILE = -1;
     public static int KEY_AD_ROAMING_MUSIC = -1;
     public static int KEY_AD_ROAMINGN_GIF = -1;
-    private SharedPreferences sharedPreferences;
-    private int poRbDialogTextSize = -1;
-    private Uri uriIntent;
-    private long idAvatar;
-    private String userName;
-    private String phoneName;
-    private String userEmail;
-    private String bio;
-    public long userId;
     static boolean isActiveRun = false;
-    private Realm mRealm;
-    private RealmUserInfo realmUserInfo;
-    private RealmPrivacy realmPrivacy;
-    private RealmRegisteredInfo mRealmRegisteredInfo;
-    private FragmentSetting fragmentSetting;
-    private FragmentSettingBinding fragmentSettingBinding;
-
-
+    public long userId;
     public ObservableField<String> callbackSetName = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.first_name));
     public ObservableField<String> callbackTextSize = new ObservableField<>("16");
     public ObservableField<String> callbackSetTitleName = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.first_name));
@@ -162,8 +150,26 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isAutoGif = new ObservableField<>();
     public ObservableField<Boolean> isCompress = new ObservableField<>();
     public ObservableField<Boolean> isTrim = new ObservableField<>();
+    public ObservableField<Boolean> isDefaultPlayer = new ObservableField<>();
     public ObservableField<Boolean> isCrop = new ObservableField<>();
     public ObservableField<Boolean> isCameraButtonSheet = new ObservableField<>(true);
+
+
+    private SharedPreferences sharedPreferences;
+    private int poRbDialogTextSize = -1;
+    private Uri uriIntent;
+    private long idAvatar;
+    private String userName;
+    private String phoneName;
+    private String userEmail;
+    private String bio;
+    private Realm mRealm;
+    private RealmUserInfo realmUserInfo;
+    private RealmPrivacy realmPrivacy;
+    private RealmRegisteredInfo mRealmRegisteredInfo;
+    private FragmentSetting fragmentSetting;
+    private FragmentSettingBinding fragmentSettingBinding;
+    private int[] fontSizeArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
 
 
     public FragmentSettingViewModel(FragmentSetting fragmentSetting, FragmentSettingBinding fragmentSettingBinding) {
@@ -173,11 +179,9 @@ public class FragmentSettingViewModel {
     }
 
 
-
     //===============================================================================
     //================================Event Listeners================================
     //===============================================================================
-
 
 
     public void onClickRippleCircleImage(View view) {
@@ -416,7 +420,7 @@ public class FragmentSettingViewModel {
         layoutNickname.addView(inputLastName, lastNameLayoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_nickname)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).customView(layoutNickname, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_nickname)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).customView(layoutNickname, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -579,7 +583,7 @@ public class FragmentSettingViewModel {
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -805,7 +809,7 @@ public class FragmentSettingViewModel {
         layoutEmail.addView(inputEmail, layoutParams);
 
         final MaterialDialog dialog =
-            new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_email)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutEmail, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_email)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutEmail, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -960,33 +964,32 @@ public class FragmentSettingViewModel {
     public void onClickMessageTextSize(View view) {
 
         new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_title_message_textSize))
-            .titleGravity(GravityEnum.START)
-            .titleColor(G.context.getResources().getColor(android.R.color.black))
-            .items(HelperCalander.isPersianUnicode ? R.array.message_text_size_persian : R.array.message_text_size)
-            .itemsCallbackSingleChoice(poRbDialogTextSize, new MaterialDialog.ListCallbackSingleChoice() {
-                @Override
-                public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                .titleGravity(GravityEnum.START)
+                .titleColor(G.context.getResources().getColor(android.R.color.black))
+                .items(HelperCalander.isPersianUnicode ? R.array.message_text_size_persian : R.array.message_text_size)
+                .itemsCallbackSingleChoice(poRbDialogTextSize, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                    if (text != null) {
-                        callbackTextSize.set(text.toString().replace("(Hello)", "").trim());
+                        if (text != null) {
+                            callbackTextSize.set(text.toString().replace("(Hello)", "").trim());
 
-                        if (HelperCalander.isPersianUnicode) {
-                            callbackTextSize.set(HelperCalander.convertToUnicodeFarsiNumber(callbackTextSize.get()));
+                            if (HelperCalander.isPersianUnicode) {
+                                callbackTextSize.set(HelperCalander.convertToUnicodeFarsiNumber(callbackTextSize.get()));
+                            }
                         }
+                        poRbDialogTextSize = which;
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, fontSizeArray[which]);
+                        editor.apply();
+
+                        StartupActions.textSizeDetection(sharedPreferences);
+
+                        return false;
                     }
-                    poRbDialogTextSize = which;
-                    int size = Integer.parseInt(text.toString().replace("(Hello)", "").trim());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, size);
-                    editor.apply();
-
-                    StartupActions.textSizeDetection(sharedPreferences);
-
-                    return false;
-                }
-            })
-            .positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
-            .show();
+                })
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
+                .show();
     }
 
     public void onClickChatBackground(View view) {
@@ -1031,7 +1034,8 @@ public class FragmentSettingViewModel {
             G.isRestartActivity = true;
             onRefreshActivity.refresh("ar");
         }
-        if (FragmentSetting.onRemoveFragmentSetting != null) FragmentSetting.onRemoveFragmentSetting.removeFragment();
+        if (FragmentSetting.onRemoveFragmentSetting != null)
+            FragmentSetting.onRemoveFragmentSetting.removeFragment();
 
     }
 
@@ -1122,7 +1126,7 @@ public class FragmentSettingViewModel {
         KEY_AD_DATA_GIF = sharedPreferences.getInt(SHP_SETTING.KEY_AD_DATA_GIF, 5);
 
         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.title_auto_download_data).items(R.array.auto_download_data).itemsCallbackMultiChoice(new Integer[]{
-            KEY_AD_DATA_PHOTO, KEY_AD_DATA_VOICE_MESSAGE, KEY_AD_DATA_VIDEO, KEY_AD_DATA_FILE, KEY_AD_DATA_MUSIC, KEY_AD_DATA_GIF
+                KEY_AD_DATA_PHOTO, KEY_AD_DATA_VOICE_MESSAGE, KEY_AD_DATA_VIDEO, KEY_AD_DATA_FILE, KEY_AD_DATA_MUSIC, KEY_AD_DATA_GIF
         }, new MaterialDialog.ListCallbackMultiChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
@@ -1170,7 +1174,7 @@ public class FragmentSettingViewModel {
         KEY_AD_WIFI_GIF = sharedPreferences.getInt(SHP_SETTING.KEY_AD_WIFI_GIF, 5);
 
         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.title_auto_download_wifi).items(R.array.auto_download_data).itemsCallbackMultiChoice(new Integer[]{
-            KEY_AD_WIFI_PHOTO, KEY_AD_WIFI_VOICE_MESSAGE, KEY_AD_WIFI_VIDEO, KEY_AD_WIFI_FILE, KEY_AD_WIFI_MUSIC, KEY_AD_WIFI_GIF
+                KEY_AD_WIFI_PHOTO, KEY_AD_WIFI_VOICE_MESSAGE, KEY_AD_WIFI_VIDEO, KEY_AD_WIFI_FILE, KEY_AD_WIFI_MUSIC, KEY_AD_WIFI_GIF
         }, new MaterialDialog.ListCallbackMultiChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
@@ -1221,7 +1225,7 @@ public class FragmentSettingViewModel {
         KEY_AD_ROAMINGN_GIF = sharedPreferences.getInt(SHP_SETTING.KEY_AD_ROAMING_GIF, -1);
 
         new MaterialDialog.Builder(G.fragmentActivity).title(R.string.title_auto_download_roaming).items(R.array.auto_download_data).itemsCallbackMultiChoice(new Integer[]{
-            KEY_AD_ROAMING_PHOTO, KEY_AD_ROAMING_VOICE_MESSAGE, KEY_AD_ROAMING_VIDEO, KEY_AD_ROAMING_FILE, KEY_AD_ROAMING_MUSIC, KEY_AD_ROAMINGN_GIF
+                KEY_AD_ROAMING_PHOTO, KEY_AD_ROAMING_VOICE_MESSAGE, KEY_AD_ROAMING_VIDEO, KEY_AD_ROAMING_FILE, KEY_AD_ROAMING_MUSIC, KEY_AD_ROAMINGN_GIF
         }, new MaterialDialog.ListCallbackMultiChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
@@ -1334,6 +1338,22 @@ public class FragmentSettingViewModel {
 
     }
 
+    public void onClickDefaultVideo(View view) {
+        isDefaultPlayer.set(!isDefaultPlayer.get());
+    }
+
+    public void onCheckedDefaultVideo(boolean isChecked) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        isDefaultPlayer.set(isChecked);
+        if (isChecked) {
+            editor.putInt(SHP_SETTING.KEY_DEFAULT_PLAYER, 1);
+            editor.apply();
+        } else {
+            editor.putInt(SHP_SETTING.KEY_DEFAULT_PLAYER, 0);
+            editor.apply();
+        }
+    }
+
     public void onClickCrop(View view) {
         isCrop.set(!isCrop.get());
     }
@@ -1407,6 +1427,8 @@ public class FragmentSettingViewModel {
         HelperUrl.openBrowser(supportLink);
 
     }
+
+
 
     private void getInfo() {
 
@@ -1492,8 +1514,11 @@ public class FragmentSettingViewModel {
         int checkedEnableTrim = sharedPreferences.getInt(SHP_SETTING.KEY_TRIM, 1);
         isTrim.set(getBoolean(checkedEnableTrim));
 
+        int checkedEnableDefaultPlayer = sharedPreferences.getInt(SHP_SETTING.KEY_DEFAULT_PLAYER, 0);
+        isDefaultPlayer.set(getBoolean(checkedEnableDefaultPlayer));
 
         callbackVersionApp.set(G.fragmentActivity.getResources().getString(R.string.iGap_version) + " " + getAppVersion());
+
 
     }
 
@@ -1548,7 +1573,6 @@ public class FragmentSettingViewModel {
         }
         return false;
     }
-
 
 
     private void useCamera() {

@@ -14,10 +14,6 @@ import net.iGap.proto.ProtoClientGetRoom;
 
 public class RequestClientGetRoom {
 
-    public enum CreateRoomMode {
-        requestFromServer, requestFromOwner, justInfo
-    }
-
     public void clientGetRoom(long roomId, CreateRoomMode mode) {
         ProtoClientGetRoom.ClientGetRoom.Builder clientGetRoom = ProtoClientGetRoom.ClientGetRoom.newBuilder();
         clientGetRoom.setRoomId(roomId);
@@ -30,6 +26,9 @@ public class RequestClientGetRoom {
         }
     }
 
+    public enum CreateRoomMode {
+        requestFromServer, requestFromOwner, justInfo
+    }
 
     public static class IdentityClientGetRoom {
         public long roomId;

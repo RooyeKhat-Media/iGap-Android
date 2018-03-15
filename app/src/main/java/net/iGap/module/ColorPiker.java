@@ -25,6 +25,7 @@ import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import net.iGap.R;
 import net.iGap.interfaces.OnColorChangedListenerSelect;
 
@@ -56,7 +57,8 @@ public class ColorPiker extends Dialog {
         init();
     }
 
-    @Override public void onWindowFocusChanged(boolean hasFocus) {
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
 
         adjustLineColor();
         adjustSqureColor(defaultColor);
@@ -72,7 +74,8 @@ public class ColorPiker extends Dialog {
 
         ivLineColor.setOnTouchListener(new OnTouchListener() {
 
-            @Override public boolean onTouch(View arg0, MotionEvent event) {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent event) {
 
                 adjustSqureColor(mHueBarColors[(int) event.getY()]);
 
@@ -82,7 +85,8 @@ public class ColorPiker extends Dialog {
 
         ivSquareColor.setOnTouchListener(new OnTouchListener() {
 
-            @Override public boolean onTouch(View arg0, MotionEvent event) {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent event) {
                 selectColor = bitmapsqure.getPixel((int) event.getX(), (int) event.getY());
                 btnOk.setBackgroundColor(selectColor);
 
@@ -92,7 +96,8 @@ public class ColorPiker extends Dialog {
 
         btnOk.setOnTouchListener(new OnTouchListener() {
 
-            @Override public boolean onTouch(View v, MotionEvent event) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
                 Listener.colorChanged("ok", selectColor);
                 dismiss();
@@ -102,7 +107,8 @@ public class ColorPiker extends Dialog {
 
         btnCancel.setOnTouchListener(new OnTouchListener() {
 
-            @Override public boolean onTouch(View v, MotionEvent event) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
                 dismiss();
                 return false;
             }

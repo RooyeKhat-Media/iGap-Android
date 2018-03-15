@@ -27,12 +27,9 @@ public class SUID {
     private static final int xFF = 0xFF;
 
     private static final DateFormat SDF_MED = SimpleDateFormat.getDateTimeInstance( //
-        SimpleDateFormat.MEDIUM, //
-        SimpleDateFormat.MEDIUM);
+            SimpleDateFormat.MEDIUM, //
+            SimpleDateFormat.MEDIUM);
     private static final SUID[] INSTANCES = new SUID[xFF + 1];
-
-    private final AtomicLong INC = new AtomicLong();
-    private int instanceId = 0; // instanceId for different applications
 
     static { // initiate 0-255 instances, to avoid duplication
         for (int i = 0; i <= xFF; i++) {
@@ -42,14 +39,10 @@ public class SUID {
         }
     }
 
-    private SUID() {
-    }
+    private final AtomicLong INC = new AtomicLong();
+    private int instanceId = 0; // instanceId for different applications
 
-    public long get() {
-        return ((System.currentTimeMillis() >> 10) << 32) // timestamp
-            + ((INC.incrementAndGet() & xFFFFFF) << 8) // auto incremental
-            + instanceId // instance id
-            ;
+    private SUID() {
     }
 
     public static SUID id(int instanceId) {
@@ -64,8 +57,8 @@ public class SUID {
     public static String toString(long id) {
         String hex = Long.toHexString(id);
         return hex.subSequence(0, 8) //
-            + "-" + hex.substring(8, 14) //
-            + "-" + hex.substring(14);
+                + "-" + hex.substring(8, 14) //
+                + "-" + hex.substring(14);
     }
 
     public static String toStringLong(long id) {
@@ -74,8 +67,8 @@ public class SUID {
         long instanceId = id & xFF;
 
         return id + " (DEC)"//
-            + "\n" + toString(id) + "  (HEX)" //
-            + "\ntime=" + SDF_MED.format(new Date(time)) + ", instanceId=" + instanceId + ", inc=" + inc;
+                + "\n" + toString(id) + "  (HEX)" //
+                + "\ntime=" + SDF_MED.format(new Date(time)) + ", instanceId=" + instanceId + ", inc=" + inc;
     }
 
     public static void main(String[] args) {
@@ -95,5 +88,12 @@ public class SUID {
             if (!set.add(id)) System.out.println("!!!!!! duplication found:" + toStringLong(id));
         }
         System.out.println("--- duplication test passed, cost " + (System.currentTimeMillis() - ts) + "ms");
+    }
+
+    public long get() {
+        return ((System.currentTimeMillis() >> 10) << 32) // timestamp
+                + ((INC.incrementAndGet() & xFFFFFF) << 8) // auto incremental
+                + instanceId // instance id
+                ;
     }
 }

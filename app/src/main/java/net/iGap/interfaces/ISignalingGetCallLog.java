@@ -11,8 +11,9 @@
 package net.iGap.interfaces;
 
 
-import java.util.List;
 import net.iGap.proto.ProtoSignalingGetLog;
+
+import java.util.List;
 
 public interface ISignalingGetCallLog {
 

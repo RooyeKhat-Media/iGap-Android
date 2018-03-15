@@ -10,10 +10,11 @@
 
 package net.iGap.response;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.proto.ProtoUserAvatarDelete;
 import net.iGap.realm.RealmAvatar;
+
+import io.realm.Realm;
 
 public class UserAvatarDeleteResponse extends MessageHandler {
 

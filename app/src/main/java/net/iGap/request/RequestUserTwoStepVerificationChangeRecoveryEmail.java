@@ -17,7 +17,7 @@ public class RequestUserTwoStepVerificationChangeRecoveryEmail {
     public void changeRecoveryEmail(String password, String email) {
 
         ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmail.Builder builder =
-            ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmail.newBuilder();
+                ProtoUserTwoStepVerificationChangeRecoveryEmail.UserTwoStepVerificationChangeRecoveryEmail.newBuilder();
         builder.setPassword(password);
         builder.setEmail(email);
 

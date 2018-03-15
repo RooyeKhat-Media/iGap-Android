@@ -67,20 +67,19 @@ import io.realm.Sort;
 public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
     public static final String OPEN_IN_FRAGMENT_MAIN = "OPEN_IN_FRAGMENT_MAIN";
+    public FloatingActionButton fabContactList;
     boolean openInMain = false;
-
+    boolean isSendRequestForLoading = false;
+    boolean isThereAnyMoreItemToLoad = true;
+    ProgressBar progressBar;
+    boolean canclick = false;
+    int move = 0;
     private int mOffset = 0;
     private int mLimit = 50;
     private RecyclerView.OnScrollListener onScrollListener;
-    boolean isSendRequestForLoading = false;
-    boolean isThereAnyMoreItemToLoad = true;
     private ImageView imgCallEmpty;
     private TextView empty_call;
-    ProgressBar progressBar;
     private int attampOnError = 0;
-    boolean canclick = false;
-    int move = 0;
-    public FloatingActionButton fabContactList;
     private RecyclerView mRecyclerView;
     private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
     //private CallAdapterA mAdapter;
@@ -94,6 +93,49 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
         fragmentCall.setArguments(bundle);
 
         return fragmentCall;
+    }
+
+    public static void call(long userID, boolean isIncomingCall) {
+
+        if (G.userLogin) {
+
+            if (!G.isInCall) {
+                Realm realm = Realm.getDefaultInstance();
+                RealmCallConfig realmCallConfig = realm.where(RealmCallConfig.class).findFirst();
+
+                if (realmCallConfig == null) {
+                    new RequestSignalingGetConfiguration().signalingGetConfiguration();
+                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
+                } else {
+
+                    if (G.currentActivity != null) {
+
+                        Intent intent = new Intent(G.currentActivity, ActivityCall.class);
+                        intent.putExtra(ActivityCall.USER_ID_STR, userID);
+                        intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
+                        ActivityCall.isGoingfromApp = true;
+                        G.currentActivity.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(G.context, ActivityCall.class);
+                        intent.putExtra(ActivityCall.USER_ID_STR, userID);
+                        intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                        ActivityCall.isGoingfromApp = true;
+                        G.context.startActivity(intent);
+                    }
+
+
+                }
+
+                realm.close();
+            }
+
+
+        } else {
+
+            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
+        }
     }
 
     @Nullable
@@ -366,6 +408,8 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
     }
 
+    //*************************************************************************************************************
+
     public void openDialogMenu() {
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
         View view = dialog.getCustomView();
@@ -410,51 +454,6 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                 }
             }
         });
-    }
-
-    //*************************************************************************************************************
-
-    public static void call(long userID, boolean isIncomingCall) {
-
-        if (G.userLogin) {
-
-            if (!G.isInCall) {
-                Realm realm = Realm.getDefaultInstance();
-                RealmCallConfig realmCallConfig = realm.where(RealmCallConfig.class).findFirst();
-
-                if (realmCallConfig == null) {
-                    new RequestSignalingGetConfiguration().signalingGetConfiguration();
-                    HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
-                } else {
-
-                    if (G.currentActivity != null) {
-
-                        Intent intent = new Intent(G.currentActivity, ActivityCall.class);
-                        intent.putExtra(ActivityCall.USER_ID_STR, userID);
-                        intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
-                        ActivityCall.isGoingfromApp = true;
-                        G.currentActivity.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(G.context, ActivityCall.class);
-                        intent.putExtra(ActivityCall.USER_ID_STR, userID);
-                        intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        ActivityCall.isGoingfromApp = true;
-                        G.context.startActivity(intent);
-                    }
-
-
-                }
-
-                realm.close();
-            }
-
-
-        } else {
-
-            HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
-        }
     }
 
     @Override
@@ -646,7 +645,26 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
     //        }
     //    }
     //}
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        if (progressBar != null) {
+            AppUtils.setProgresColler(progressBar);
+        }
+
+        if (G.isUpdateNotificaionCall) {
+            G.isUpdateNotificaionCall = false;
+
+            if (mRecyclerView != null) {
+                if (mRecyclerView.getAdapter() != null) {
+                    mRecyclerView.getAdapter().notifyDataSetChanged();
+                }
+            }
+        }
+
+
+    }
 
     /**
      * **********************************************************************************
@@ -658,66 +676,6 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
         public CallAdapter(RealmResults<RealmCallLog> realmResults) {
             super(realmResults, true);
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            private ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog callLog;
-            private CircleImageView image;
-            private EmojiTextViewE name;
-            private MaterialDesignTextView icon;
-            private TextView timeAndInfo;
-            private TextView timeDuration;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                imgCallEmpty.setVisibility(View.GONE);
-                empty_call.setVisibility(View.GONE);
-
-                timeDuration = (TextView) itemView.findViewById(R.id.fcsl_txt_dureation_time);
-                image = (CircleImageView) itemView.findViewById(R.id.fcsl_imv_picture);
-                name = (EmojiTextViewE) itemView.findViewById(R.id.fcsl_txt_name);
-                icon = (MaterialDesignTextView) itemView.findViewById(R.id.fcsl_txt_icon);
-                timeAndInfo = (TextView) itemView.findViewById(R.id.fcsl_txt_time_info);
-
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // HelperPublicMethod.goToChatRoom(realmResults.get(getPosition()).getLogProto().getPeer().getId(), null, null);
-
-                        if (canclick) {
-                            long userId = callLog.getPeer().getId();
-
-                            if (userId != 134 && G.userId != userId) {
-                                call(userId, false);
-                            }
-                        }
-                    }
-                });
-
-                itemView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                            move = (int) event.getX();
-                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                            int i = Math.abs((int) (move - event.getX()));
-
-                            if (i < 10) {
-                                canclick = true;
-                            } else {
-                                canclick = false;
-                            }
-                        }
-
-                        return false;
-                    }
-                });
-            }
         }
 
         @Override
@@ -802,26 +760,65 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                 }
             });
         }
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+        public class ViewHolder extends RecyclerView.ViewHolder {
 
-        if (progressBar != null) {
-            AppUtils.setProgresColler(progressBar);
-        }
+            private ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog callLog;
+            private CircleImageView image;
+            private EmojiTextViewE name;
+            private MaterialDesignTextView icon;
+            private TextView timeAndInfo;
+            private TextView timeDuration;
 
-        if (G.isUpdateNotificaionCall) {
-            G.isUpdateNotificaionCall = false;
+            public ViewHolder(View view) {
+                super(view);
 
-            if (mRecyclerView != null) {
-                if (mRecyclerView.getAdapter() != null) {
-                    mRecyclerView.getAdapter().notifyDataSetChanged();
-                }
+                imgCallEmpty.setVisibility(View.GONE);
+                empty_call.setVisibility(View.GONE);
+
+                timeDuration = (TextView) itemView.findViewById(R.id.fcsl_txt_dureation_time);
+                image = (CircleImageView) itemView.findViewById(R.id.fcsl_imv_picture);
+                name = (EmojiTextViewE) itemView.findViewById(R.id.fcsl_txt_name);
+                icon = (MaterialDesignTextView) itemView.findViewById(R.id.fcsl_txt_icon);
+                timeAndInfo = (TextView) itemView.findViewById(R.id.fcsl_txt_time_info);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // HelperPublicMethod.goToChatRoom(realmResults.get(getPosition()).getLogProto().getPeer().getId(), null, null);
+
+                        if (canclick) {
+                            long userId = callLog.getPeer().getId();
+
+                            if (userId != 134 && G.userId != userId) {
+                                call(userId, false);
+                            }
+                        }
+                    }
+                });
+
+                itemView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            move = (int) event.getX();
+                        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                            int i = Math.abs((int) (move - event.getX()));
+
+                            if (i < 10) {
+                                canclick = true;
+                            } else {
+                                canclick = false;
+                            }
+                        }
+
+                        return false;
+                    }
+                });
             }
         }
-
-
     }
 }

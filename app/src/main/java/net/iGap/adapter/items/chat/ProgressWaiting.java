@@ -14,12 +14,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat.ProgressWaiting, net.iGap.adapter.items.chat.ProgressWaiting.ViewHolder> {
 
@@ -55,8 +58,12 @@ public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat
         });
 
 
-
         super.bindView(holder, payloads);
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,10 +78,5 @@ public class ProgressWaiting extends AbstractMessage<net.iGap.adapter.items.chat
             //progressBar = (ProgressBar) view.findViewById(R.id.cslp_progress_bar_waiting);
             //AppUtils.setProgresColler(progressBar);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

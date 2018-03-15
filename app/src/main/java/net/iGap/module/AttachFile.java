@@ -37,17 +37,9 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityPaint;
@@ -61,6 +53,17 @@ import net.iGap.interfaces.IPickFile;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.proto.ProtoGlobal;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class AttachFile {
 
@@ -77,20 +80,17 @@ public class AttachFile {
     public static final int requestOpenGalleryForVideoMultipleSelect = 20;
     public static final int request_code_open_document = 21;
     public static final int request_code_trim_video = 22;
-
-    private PopupWindow popupWindow;
-
     public static boolean isInAttach = false;
-    OnComplete complete;
-    private Context context;
-    private LocationManager locationManager;
-    private ProgressDialog pd;
-    private Boolean sendPosition = false;
     public static String imagePath = "";
     public static Uri imageUri;
     public static String mCurrentPhotoPath;
     public static String videoPath = "";
-
+    OnComplete complete;
+    private PopupWindow popupWindow;
+    private Context context;
+    private LocationManager locationManager;
+    private ProgressDialog pd;
+    private Boolean sendPosition = false;
     LocationListener locationListener = new LocationListener() {
 
         @Override
@@ -141,6 +141,126 @@ public class AttachFile {
 
     //=================================== Start Android 7
 
+    public AttachFile(Context context) {
+        this.context = context;
+        locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
+    }
+
+    public static ArrayList<String> getClipData(ClipData clipData) {
+
+        if (clipData != null) {
+            ArrayList<String> list = new ArrayList<>();
+
+            for (int i = 0; i < clipData.getItemCount(); i++) {
+                ClipData.Item item = clipData.getItemAt(i);
+                if (item.getUri() == null) {
+                    continue;
+                }
+                String path = getFilePathFromUri(item.getUri());
+                list.add(path);
+            }
+
+            if (list.size() < 1) return null;
+
+            return list;
+        }
+
+        return null;
+    }
+
+    //=================================== End Android 7
+
+    public static String getFilePathFromUri(Uri uri) {
+
+        if (uri == null) {
+            return null;
+        }
+
+        String path;
+
+        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            path = FileUtils.getPath(G.context, uri);
+        } else {
+            path = uri.getPath();
+        }
+
+        return path;
+    }
+
+    public static String getFilePathFromUriAndCheckForAndroid7(Uri uri, HelperGetDataFromOtherApp.FileType fileType) {
+
+        String path = getFilePathFromUri(uri);
+
+        if (path == null) {
+            path = getPathN(uri, fileType);
+        }
+
+        return path;
+    }
+
+    //*************************************************************************************************************
+
+    public static String getPathN(Uri uri, HelperGetDataFromOtherApp.FileType fileType) {
+
+        if (uri == null) {
+            return null;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            try {
+                String name = AttachFile.getFileName(uri.getPath());
+                if (name == null || name.length() == 0) {
+                    name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                }
+
+                String destinationPath = "";
+
+                switch (fileType) {
+
+                    case video:
+                        destinationPath = G.DIR_VIDEOS;
+                        break;
+                    case audio:
+                        destinationPath = G.DIR_AUDIOS;
+                        break;
+                    case image:
+                        destinationPath = G.DIR_IMAGES;
+                        break;
+                    default:
+                        destinationPath = G.DIR_DOCUMENT;
+                        break;
+                }
+
+                destinationPath += File.separator + name;
+
+                InputStream input = G.context.getContentResolver().openInputStream(uri);
+
+                AndroidUtils.copyFile(input, new File(destinationPath));
+
+                return destinationPath;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public static String getFileName(String path) {
+
+        if (path == null) return "";
+        if (path.length() < 1) return "";
+
+        String filename = path.substring(path.lastIndexOf("/") + 1);
+
+        return filename;
+    }
+
+    //*************************************************************************************************************
+
     public void dispatchTakePictureIntent(Fragment fragment) throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -171,7 +291,7 @@ public class AttachFile {
         dispatchTakePictureIntent(null);
     }
 
-    //=================================== End Android 7
+    //*************************************************************************************************************
 
     /**
      * open page paint
@@ -211,9 +331,7 @@ public class AttachFile {
 
     //*************************************************************************************************************
 
-
     /**
-     *
      * open camera
      *
      * @param fragment
@@ -269,7 +387,6 @@ public class AttachFile {
     //*************************************************************************************************************
 
     /**
-     *
      * open gallery for multi choose image
      *
      * @param fragment
@@ -318,8 +435,7 @@ public class AttachFile {
     //*************************************************************************************************************
 
     /**
-     *
-     *  open gallery for multi choose Video
+     * open gallery for multi choose Video
      *
      * @param fragment
      * @throws IOException
@@ -360,9 +476,7 @@ public class AttachFile {
 
     //*************************************************************************************************************
 
-
     /**
-     *
      * open gallery for single choose image
      *
      * @param fragment
@@ -377,7 +491,9 @@ public class AttachFile {
                 intent.setType("image/*");
 
                 if (fragment != null) {
-                    fragment.startActivityForResult(Intent.createChooser(intent, context.getString(R.string.select_picture_en)), request_code_image_from_gallery_single_select);
+                    if (fragment.isAdded()) {
+                        fragment.startActivityForResult(Intent.createChooser(intent, context.getString(R.string.select_picture_en)), request_code_image_from_gallery_single_select);
+                    }
                 } else {
                     ((Activity) context).startActivityForResult(Intent.createChooser(intent, context.getString(R.string.select_picture_en)), request_code_image_from_gallery_single_select);
                 }
@@ -400,7 +516,6 @@ public class AttachFile {
     //*************************************************************************************************************
 
     /**
-     *
      * open camera for record video
      *
      * @param fragment
@@ -456,7 +571,6 @@ public class AttachFile {
     //*************************************************************************************************************
 
     /**
-     *
      * open gallery for pick Audio
      *
      * @param fragment
@@ -500,10 +614,7 @@ public class AttachFile {
         requestPickAudio(null);
     }
 
-    //*************************************************************************************************************
-
     /**
-     *
      * open folder for pick file
      *
      * @param listener
@@ -555,12 +666,9 @@ public class AttachFile {
             }
         });
     }
-
     //*************************************************************************************************************
 
-
     /**
-     *
      * pick contact number
      *
      * @param fragment
@@ -599,10 +707,7 @@ public class AttachFile {
         requestPickContact(null);
     }
 
-    //*************************************************************************************************************
-
     /**
-     *
      * get position
      *
      * @param complete
@@ -688,29 +793,6 @@ public class AttachFile {
 
         isInAttach = true;
     }
-    //*************************************************************************************************************
-
-    public static ArrayList<String> getClipData(ClipData clipData) {
-
-        if (clipData != null) {
-            ArrayList<String> list = new ArrayList<>();
-
-            for (int i = 0; i < clipData.getItemCount(); i++) {
-                ClipData.Item item = clipData.getItemAt(i);
-                if (item.getUri() == null) {
-                    continue;
-                }
-                String path = getFilePathFromUri(item.getUri());
-                list.add(path);
-            }
-
-            if (list.size() < 1) return null;
-
-            return list;
-        }
-
-        return null;
-    }
 
     public String saveGalleryPicToLocal(String galleryPath) {
 
@@ -733,89 +815,6 @@ public class AttachFile {
             return galleryPath;
         }
     }
-
-    public AttachFile(Context context) {
-        this.context = context;
-        locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
-    }
-
-    public static String getFilePathFromUri(Uri uri) {
-
-        if (uri == null) {
-            return null;
-        }
-
-        String path;
-
-        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-            path = FileUtils.getPath(G.context, uri);
-        } else {
-            path = uri.getPath();
-        }
-
-        return path;
-    }
-
-    public static String getFilePathFromUriAndCheckForAndroid7(Uri uri, HelperGetDataFromOtherApp.FileType fileType) {
-
-        String path = getFilePathFromUri(uri);
-
-        if (path == null) {
-            path = getPathN(uri, fileType);
-        }
-
-        return path;
-    }
-
-    public static String getPathN(Uri uri, HelperGetDataFromOtherApp.FileType fileType) {
-
-        if (uri == null) {
-            return null;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-            try {
-                String name = AttachFile.getFileName(uri.getPath());
-                if (name == null || name.length() == 0) {
-                    name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                }
-
-                String destinationPath = "";
-
-                switch (fileType) {
-
-                    case video:
-                        destinationPath = G.DIR_VIDEOS;
-                        break;
-                    case audio:
-                        destinationPath = G.DIR_AUDIOS;
-                        break;
-                    case image:
-                        destinationPath = G.DIR_IMAGES;
-                        break;
-                    default:
-                        destinationPath = G.DIR_DOCUMENT;
-                        break;
-                }
-
-                destinationPath += File.separator + name;
-
-                InputStream input = G.context.getContentResolver().openInputStream(uri);
-
-                AndroidUtils.copyFile(input, new File(destinationPath));
-
-                return destinationPath;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
 
     private Uri getOutputMediaFileUri(int type, int camera) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && camera == 0) {
@@ -934,15 +933,5 @@ public class AttachFile {
             intent1.setType("image/*");
             ((Activity) context).startActivityForResult(Intent.createChooser(intent1, "Select Picture"), request_code_image_from_gallery_single_select);
         }
-    }
-
-    public static String getFileName(String path) {
-
-        if (path == null) return "";
-        if (path.length() < 1) return "";
-
-        String filename = path.substring(path.lastIndexOf("/") + 1);
-
-        return filename;
     }
 }

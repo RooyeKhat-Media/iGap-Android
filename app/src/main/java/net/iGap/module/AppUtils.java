@@ -31,25 +31,30 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMap;
 import net.iGap.helper.HelperError;
+import net.iGap.helper.HelperMimeType;
 import net.iGap.interfaces.IResendMessage;
+import net.iGap.messageprogress.CircleProgress.CircularProgressView;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoUserUpdateStatus;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static net.iGap.G.context;
 
@@ -58,18 +63,9 @@ public final class AppUtils {
         throw new InstantiationException("This class is not for instantiation.");
     }
 
-    public static String[] exts = {".jpg", ".jpeg", ".gif", ".png", ".tif"};
 
     public static String suitableThumbFileName(String name) {
-        boolean isImage = false;
-        for (String ext : exts) {
-            if (name != null && name.endsWith(ext)) {
-                isImage = true;
-                break;
-            }
-        }
-
-        if (isImage) {
+        if (HelperMimeType.isFileImage(name.toLowerCase())) {
             return name;
         } else {
             return name.replaceFirst("([\\w\\W]+)(\\.(\\w+))$", "$1.jpg");
@@ -646,7 +642,6 @@ public final class AppUtils {
             e.getStackTrace();
         }
     }
-
 
 
 }

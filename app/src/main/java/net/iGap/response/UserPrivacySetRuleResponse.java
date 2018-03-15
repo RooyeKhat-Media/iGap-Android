@@ -27,17 +27,20 @@ public class UserPrivacySetRuleResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoUserPrivacySetRule.UserPrivacySetRuleResponse.Builder builder = (ProtoUserPrivacySetRule.UserPrivacySetRuleResponse.Builder) message;
         RealmPrivacy.updateRealmPrivacy(builder.getType(), builder.getLevel());
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
     }
 }

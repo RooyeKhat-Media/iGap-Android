@@ -1,73 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp48"
-    android:background="@color/messageBox_replyBoxBackgroundSend"
-    android:clickable="true"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp48"
+  android:background="@color/messageBox_replyBoxBackgroundSend"
+  android:clickable="true"
+  android:gravity="center_vertical"
+  android:orientation="horizontal">
 
   <ImageView
-      android:id="@+id/cslhs_imv_forward"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_marginRight="@dimen/dp4"
-      android:contentDescription="@null"
-      android:src="@mipmap/reply"
-      />
+    android:id="@+id/cslhs_imv_forward"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginRight="@dimen/dp4"
+    android:contentDescription="@null"
+    android:src="@mipmap/reply" />
 
   <ImageView
-      android:id="@+id/cslhf_imv_thumbnail"
-      android:layout_width="30dp"
-      android:layout_height="30dp"
-      android:layout_marginRight="@dimen/dp4"
-      android:contentDescription="@null"
-      />
+    android:id="@+id/cslhf_imv_thumbnail"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_marginRight="@dimen/dp4"
+    android:contentDescription="@null" />
 
   <LinearLayout
-      android:layout_width="0dp"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/dp6">
+
+    <net.iGap.module.EmojiTextViewE
+      android:id="@+id/cslhf_txt_forward_from"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:orientation="vertical"
-      android:paddingRight="@dimen/dp6"
-      >
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:text="@string/forward_message"
+      android:textColor="@color/green"
+      android:textSize="@dimen/dp14"
+      android:textStyle="bold" />
 
     <net.iGap.module.EmojiTextViewE
-        android:id="@+id/cslhf_txt_forward_from"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textSize="@dimen/dp14"
-        android:maxLines="1"
-        android:text="@string/forward_message"
-        android:textColor="@color/green"
-        android:textStyle="bold"
-        />
-
-    <net.iGap.module.EmojiTextViewE
-        android:id="@+id/cslhf_txt_message"
-        android:layout_width="match_parent"
-        android:textSize="@dimen/dp12"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:maxLines="1"
-        android:text="message"
-        />
+      android:id="@+id/cslhf_txt_message"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:text="message"
+      android:textSize="@dimen/dp12" />
   </LinearLayout>
 
   <net.iGap.module.MaterialDesignTextView
-      android:id="@+id/cslhf_imv_cansel"
-      android:layout_width="@dimen/dp40"
-      android:layout_height="match_parent"
-      android:background="@null"
-      android:gravity="center_vertical"
-      android:text="@string/md_close_button"
-      android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/gray_3c"
-      />
+    android:id="@+id/cslhf_imv_cansel"
+    android:layout_width="@dimen/dp40"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:gravity="center_vertical"
+    android:text="@string/md_close_button"
+    android:textAppearance="@style/TextIconAppearance.all"
+    android:textColor="@color/gray_3c" />
 
 
 </LinearLayout>

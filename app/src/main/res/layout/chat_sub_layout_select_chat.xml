@@ -1,116 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp68"
-    android:clickable="true"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp68"
+  android:clickable="true">
 
   <FrameLayout
-      android:layout_width="@dimen/dp68"
-      android:layout_height="match_parent"
-      >
+    android:layout_width="@dimen/dp68"
+    android:layout_height="match_parent">
 
     <net.iGap.module.CircleImageView
-        android:id="@+id/cs_img_contact_picture"
-        android:layout_width="@dimen/dp52"
-        android:layout_height="@dimen/dp52"
-        android:layout_gravity="center"
-        />
+      android:id="@+id/cs_img_contact_picture"
+      android:layout_width="@dimen/dp52"
+      android:layout_height="@dimen/dp52"
+      android:layout_gravity="center" />
   </FrameLayout>
 
   <View
-      android:id="@+id/cs_view_distance_color"
-      android:layout_width="@dimen/dp4"
-      android:layout_height="match_parent"
-      android:background="#f1f265"
-      android:visibility="gone"
-      />
+    android:id="@+id/cs_view_distance_color"
+    android:layout_width="@dimen/dp4"
+    android:layout_height="match_parent"
+    android:background="#f1f265"
+    android:visibility="gone" />
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dp12"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp12">
+
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/dp12"
-          android:layout_weight="1"
-          android:gravity="top|left"
-          android:orientation="vertical"
-          >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp12"
+        android:layout_weight="1"
+        android:gravity="top|left"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
 
           <TextView
-              android:id="@+id/cs_txt_contact_icon"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:layout_marginEnd="@dimen/dp8"
-              android:layout_marginRight="@dimen/dp8"
-              android:paddingBottom="2dp"
-              android:textColor="@android:color/black"
-              android:textSize="@dimen/dp14"
-              />
+            android:id="@+id/cs_txt_contact_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:paddingBottom="2dp"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dp14" />
 
           <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_contact_name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:maxWidth="@dimen/dp160"
-              android:paddingBottom="1dp"
-              android:singleLine="true"
-              android:text="Name"
-              android:textColor="@color/black90"
-              android:textSize="@dimen/dp15"
-              />
+            android:id="@+id/cs_txt_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/dp160"
+            android:paddingBottom="1dp"
+            android:singleLine="true"
+            android:text="Name"
+            android:textColor="@color/black90"
+            android:textSize="@dimen/dp15" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <net.iGap.module.EmojiTextViewE
+            android:id="@+id/cs_txt_last_message_sender"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:paddingBottom="1dp"
+            android:singleLine="true"
+            android:textColor="#2bbfbd"
+            android:textSize="@dimen/dp13" />
 
           <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_last_message_sender"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingBottom="1dp"
-              android:singleLine="true"
-              android:textColor="#2bbfbd"
-              android:textSize="@dimen/dp13"
-              />
-
-          <net.iGap.module.EmojiTextViewE
-              android:id="@+id/cs_txt_last_message"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="start"
-              android:gravity="start"
-              android:maxLines="1"
-              android:paddingBottom="1dp"
-              android:singleLine="true"
-              android:text="LAST MESSAGE"
-              android:textColor="#FF616161"
-              android:textSize="@dimen/dp13"
-              />
+            android:id="@+id/cs_txt_last_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:maxLines="1"
+            android:paddingBottom="1dp"
+            android:singleLine="true"
+            android:text="LAST MESSAGE"
+            android:textColor="#FF616161"
+            android:textSize="@dimen/dp13" />
 
           <!--  <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/cs_avi"
@@ -129,80 +117,77 @@
       </LinearLayout>
 
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginEnd="@dimen/dp8"
-          android:layout_marginRight="@dimen/dp8"
-          android:gravity="top|center_horizontal"
-          android:orientation="vertical"
-          >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dp8"
+        android:layout_marginRight="@dimen/dp8"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical">
 
         <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/cs_txt_mute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-          <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/cs_txt_mute"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/dp4"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginRight="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:text="@string/md_muted"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/grayNew"
-              android:textSize="@dimen/dp16"
-              />
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:text="@string/md_muted"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/grayNew"
+            android:textSize="@dimen/dp16" />
 
           <ImageView
-              android:id="@+id/cslr_txt_tic"
-              android:layout_width="16dp"
-              android:layout_height="16dp"
-              android:layout_marginEnd="@dimen/dp4"
-              android:layout_marginRight="@dimen/dp4"
-              style="@style/ChatMessages.MaterialDesignTextView.Tick"
-              />
+            android:id="@+id/cslr_txt_tic"
+            style="@style/ChatMessages.MaterialDesignTextView.Tick"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4" />
 
           <TextView
-              android:id="@+id/cs_txt_contact_time"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:maxLines="1"
-              android:singleLine="true"
-              android:text="time"
-              android:textColor="@color/gray"
-              android:textSize="@dimen/dp12"
-              android:gravity="center"
-              android:layout_gravity="center"
-              />
+            android:id="@+id/cs_txt_contact_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="time"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/dp12" />
 
 
         </LinearLayout>
+
         <TextView
-            android:id="@+id/cs_txt_unread_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center"
-            android:layout_marginTop="@dimen/dp4"
-            android:background="@drawable/oval_red"
-            android:gravity="center"
-            android:minHeight="@dimen/dp24"
-            android:minWidth="@dimen/dp24"
-            android:singleLine="true"
-            android:text="1"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp10"
-            />
+          android:id="@+id/cs_txt_unread_message"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end|center"
+          android:layout_marginTop="@dimen/dp4"
+          android:background="@drawable/oval_red"
+          android:gravity="center"
+          android:minHeight="@dimen/dp24"
+          android:minWidth="@dimen/dp24"
+          android:singleLine="true"
+          android:text="1"
+          android:textColor="@android:color/white"
+          android:textSize="@dimen/dp10" />
       </LinearLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray_3c"
 
-        />
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/gray_3c"
+
+      />
 
   </LinearLayout>
 

@@ -13,6 +13,7 @@ package net.iGap.response;
 import android.support.annotation.CallSuper;
 import android.util.Log;
 import android.widget.Toast;
+
 import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.WebSocketClient;

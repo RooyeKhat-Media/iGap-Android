@@ -14,6 +14,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import net.iGap.G;
 import net.iGap.activities.ActivityRegisteration;
 import net.iGap.module.LoginActions;
@@ -29,9 +30,10 @@ public final class HelperLogout {
      */
     public static void logout() {
         G.handler.post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 HelperRealm.realmTruncate();
-                HelperNotificationAndBadge.updateBadgeOnly();
+                HelperNotificationAndBadge.cleanBadge();
                 Intent intent = new Intent(G.context, ActivityRegisteration.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 new LoginActions();

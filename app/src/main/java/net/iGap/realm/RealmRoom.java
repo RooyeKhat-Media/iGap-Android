@@ -13,21 +13,25 @@ package net.iGap.realm;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateUtils;
-import io.realm.Realm;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
-import io.realm.Sort;
-import io.realm.annotations.PrimaryKey;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperString;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestClientGetRoom;
+
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.Sort;
+import io.realm.annotations.PrimaryKey;
 
 import static net.iGap.G.context;
 import static net.iGap.G.userId;
@@ -75,274 +79,6 @@ public class RealmRoom extends RealmObject {
     public RealmRoom(long id) {
         this.id = id;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public ProtoGlobal.Room.Type getType() {
-        return (type != null) ? ProtoGlobal.Room.Type.valueOf(type) : null;
-    }
-
-    public void setType(RoomType type) {
-        this.type = type.toString();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        try {
-            this.title = title;
-        } catch (Exception e) {
-            this.title = HelperString.getUtf8String(title);
-        }
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public int getUnreadCount() {
-        return unreadCount;
-    }
-
-    public void setUnreadCount(int unreadCount) {
-        this.unreadCount = unreadCount;
-    }
-
-    public boolean getReadOnly() {
-        return readOnly;
-    }
-
-    public void setReadOnly(boolean readOnly) {
-        this.readOnly = readOnly;
-    }
-
-    public boolean getMute() {
-        return mute;
-    }
-
-    public void setMute(ProtoGlobal.RoomMute muteState) {
-        if (muteState == ProtoGlobal.RoomMute.MUTE) {
-            this.mute = true;
-        } else {
-            this.mute = false;
-        }
-    }
-
-    public RealmChatRoom getChatRoom() {
-        return chatRoom;
-    }
-
-    public void setChatRoom(RealmChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
-    }
-
-    public RealmGroupRoom getGroupRoom() {
-        return groupRoom;
-    }
-
-    public void setGroupRoom(RealmGroupRoom groupRoom) {
-        this.groupRoom = groupRoom;
-    }
-
-    public RealmChannelRoom getChannelRoom() {
-        return channelRoom;
-    }
-
-    public void setChannelRoom(RealmChannelRoom channelRoom) {
-        this.channelRoom = channelRoom;
-    }
-
-    public RealmRoomDraft getDraft() {
-        return draft;
-    }
-
-    public void setDraft(RealmRoomDraft draft) {
-        this.draft = draft;
-    }
-
-    public RealmDraftFile getDraftFile() {
-        return draftFile;
-    }
-
-    public void setDraftFile(RealmDraftFile draftFile) {
-        this.draftFile = draftFile;
-    }
-
-    public RealmAvatar getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(RealmAvatar avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getSharedMediaCount() {
-
-        if (sharedMediaCount == null || sharedMediaCount.length() == 0) {
-            return context.getString(R.string.there_is_no_sheared_media);
-        }
-
-        String countList[] = sharedMediaCount.split("\n");
-        try {
-
-            int countOFImage = Integer.parseInt(countList[0]);
-            int countOFVIDEO = Integer.parseInt(countList[1]);
-            int countOFAUDIO = Integer.parseInt(countList[2]);
-            int countOFVOICE = Integer.parseInt(countList[3]);
-            int countOFGIF = Integer.parseInt(countList[4]);
-            int countOFFILE = Integer.parseInt(countList[5]);
-            int countOFLink = Integer.parseInt(countList[6]);
-
-            String result = "";
-
-            if (countOFImage > 0)
-                result += "\n" + countOFImage + " " + context.getString(R.string.shared_image);
-            if (countOFVIDEO > 0)
-                result += "\n" + countOFVIDEO + " " + context.getString(R.string.shared_video);
-            if (countOFAUDIO > 0)
-                result += "\n" + countOFAUDIO + " " + context.getString(R.string.shared_audio);
-            if (countOFVOICE > 0)
-                result += "\n" + countOFVOICE + " " + context.getString(R.string.shared_voice);
-            if (countOFGIF > 0)
-                result += "\n" + countOFGIF + " " + context.getString(R.string.shared_gif);
-            if (countOFFILE > 0)
-                result += "\n" + countOFFILE + " " + context.getString(R.string.shared_file);
-            if (countOFLink > 0)
-                result += "\n" + countOFLink + " " + context.getString(R.string.shared_links);
-
-            result = result.trim();
-
-            if (result.length() < 1) {
-                result = context.getString(R.string.there_is_no_sheared_media);
-            }
-
-            return result;
-        } catch (Exception e) {
-
-            return sharedMediaCount;
-        }
-
-
-    }
-
-    public void setSharedMediaCount(String sharedMediaCount) {
-        this.sharedMediaCount = sharedMediaCount;
-    }
-
-    public String getActionState() {
-        return actionState;
-    }
-
-    public void setActionState(String actionState, long userId) {
-        this.actionState = actionState;
-        this.actionStateUserId = userId;
-    }
-
-    public long getActionStateUserId() {
-        return actionStateUserId;
-    }
-
-    public boolean isPinned() {
-        return isPinned;
-    }
-
-    public void setPinned(boolean pinned) {
-        isPinned = pinned;
-    }
-
-    public long getPinId() {
-        return pinId;
-    }
-
-    public void setPinId(long pinId) {
-        this.pinId = pinId;
-    }
-
-    public long getUpdatedTime() {
-        if (getLastMessage() != null && getLastMessage().isValid()) {
-            if (getLastMessage().getUpdateOrCreateTime() > updatedTime) {
-                return getLastMessage().getUpdateOrCreateTime();
-            }
-        }
-        return updatedTime;
-    }
-
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public boolean isKeepRoom() {
-        return keepRoom;
-    }
-
-    public void setKeepRoom(boolean keepRoom) {
-        this.keepRoom = keepRoom;
-    }
-
-    public void setUpdatedTime(long updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public long getLastScrollPositionMessageId() {
-        return lastScrollPositionMessageId;
-    }
-
-    public void setLastScrollPositionMessageId(long lastScrollPositionMessageId) {
-        this.lastScrollPositionMessageId = lastScrollPositionMessageId;
-    }
-
-    public RealmRoomMessage getFirstUnreadMessage() {
-        return firstUnreadMessage;
-    }
-
-    public void setFirstUnreadMessage(RealmRoomMessage firstUnreadMessage) {
-        this.firstUnreadMessage = firstUnreadMessage;
-    }
-
-    public RealmRoomMessage getLastMessage() {
-        return lastMessage;
-    }
-
-    public void setLastMessage(RealmRoomMessage lastMessage) {
-        if (lastMessage != null) {
-            setUpdatedTime(lastMessage.getUpdateOrCreateTime());
-        }
-        this.lastMessage = lastMessage;
-    }
-
-    public long getOwnerId() {
-        switch (ProtoGlobal.Room.Type.valueOf(type)) {
-            case CHAT:
-                return getChatRoom().getPeerId();
-            default:
-                return id;
-        }
-    }
-
 
     public static RealmRoom getRealmRoom(Realm realm, long roomId) {
         return realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
@@ -404,6 +140,8 @@ public class RealmRoom extends RealmObject {
                 realmRoom.getChannelRoom().setUsername(room.getChannelRoomExtra().getPublicExtra().getUsername());
                 realmRoom.getChannelRoom().setSeenId(room.getChannelRoomExtra().getSeenId());
                 realmRoom.getChannelRoom().setPrivate(room.getChannelRoomExtra().hasPrivateExtra());
+                realmRoom.getChannelRoom().setVerified(room.getChannelRoomExtra().getVerified());
+                realmRoom.getChannelRoom().setReactionStatus(room.getChannelRoomExtra().getReactionStatus());
                 break;
             case CHAT:
                 realmRoom.setType(RoomType.CHAT);
@@ -624,6 +362,7 @@ public class RealmRoom extends RealmObject {
         if (memberId == userId) {
             final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
             if (realmRoom == null) {
+                realm.close();
                 return;
             }
 
@@ -732,13 +471,16 @@ public class RealmRoom extends RealmObject {
             }
         });
         realm.close();
-    }
 
-    public static void deleteRoomWithCheck(Realm realm, long roomId) {
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.IS_DELETED, true).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null) {
-            RealmRoom.deleteRoom(realmRoom.getId());
-        }
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /** call this listener for update tab bars unread count */
+                if (G.onUnreadChange != null) {
+                    G.onUnreadChange.onChange();
+                }
+            }
+        }, 100);
     }
 
     public static void addOwnerToDatabase(long roomId) {
@@ -794,6 +536,7 @@ public class RealmRoom extends RealmObject {
         Realm realm = Realm.getDefaultInstance();
         RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
         if (realmRoom != null) {
+            realm.close();
             return false;
         }
         new RequestClientGetRoom().clientGetRoom(roomId, RequestClientGetRoom.CreateRoomMode.justInfo);
@@ -884,17 +627,35 @@ public class RealmRoom extends RealmObject {
     }
 
     public static void updateMute(final long roomId, final ProtoGlobal.RoomMute muteState) {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        G.handler.post(new Runnable() {
             @Override
-            public void execute(Realm realm) {
-                RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                if (room != null) {
-                    room.setMute(muteState);
-                }
+            public void run() {
+                final Realm realm = Realm.getDefaultInstance();
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                        if (room != null) {
+                            room.setMute(muteState);
+                        }
+                    }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        /** call this listener for update tab bars unread count */
+                        if (G.onUnreadChange != null) {
+                            G.onUnreadChange.onChange();
+                        }
+                        realm.close();
+                    }
+                }, new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                        realm.close();
+                    }
+                });
             }
         });
-        realm.close();
     }
 
     public static void updatePin(final long roomId, final boolean pin, final long pinId) {
@@ -1134,22 +895,25 @@ public class RealmRoom extends RealmObject {
         realm.close();
     }
 
-    public static void joinRoom(long roomId) {
+    public static void joinRoom(final long roomId) {
         Realm realm = Realm.getDefaultInstance();
         final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if (realmRoom != null && realmRoom.isValid()) {
                     realmRoom.setDeleted(false);
                     if (realmRoom.getType() == GROUP) {
                         realmRoom.setReadOnly(false);
                     }
+                } else {
+                    new RequestClientGetRoom().clientGetRoom(roomId, RequestClientGetRoom.CreateRoomMode.requestFromOwner);
                 }
-            });
-        } else {
-            new RequestClientGetRoom().clientGetRoom(roomId, RequestClientGetRoom.CreateRoomMode.requestFromOwner);
-        }
+            }
+        });
+
+
         realm.close();
     }
 
@@ -1228,24 +992,6 @@ public class RealmRoom extends RealmObject {
         realm.close();
     }
 
-    public static void setLastMessage(final long roomId) {
-        //TODO [Saeed Mozaffari] [2017-10-22 5:26 PM] - Write Better Code
-        Realm realm = Realm.getDefaultInstance();
-        final RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
-        if (realmRoomMessages.size() > 0 && realmRoomMessages.first() != null) {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-                    if (realmRoom != null) {
-                        realmRoom.setLastMessage(realmRoomMessages.first());
-                    }
-                }
-            });
-        }
-        realm.close();
-    }
-
     public static void setLastMessageAfterLocalDelete(final long roomId, final long messageId) { // FragmentChat, is need this method?
         //TODO [Saeed Mozaffari] [2017-10-23 9:38 AM] - Write Better Code
         Realm realm = Realm.getDefaultInstance();
@@ -1302,4 +1048,326 @@ public class RealmRoom extends RealmObject {
         });
         realm.close();
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ProtoGlobal.Room.Type getType() {
+        return (type != null) ? ProtoGlobal.Room.Type.valueOf(type) : null;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type.toString();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        try {
+            this.title = title;
+        } catch (Exception e) {
+            this.title = HelperString.getUtf8String(title);
+        }
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (G.onUnreadChange != null) {
+                    G.onUnreadChange.onChange();
+                }
+            }
+        }, 100);
+    }
+
+    public boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public boolean getMute() {
+        return mute;
+    }
+
+    public void setMute(ProtoGlobal.RoomMute muteState) {
+        if (muteState == ProtoGlobal.RoomMute.MUTE) {
+            this.mute = true;
+        } else {
+            this.mute = false;
+        }
+    }
+
+    public RealmChatRoom getChatRoom() {
+        return chatRoom;
+    }
+
+    public void setChatRoom(RealmChatRoom chatRoom) {
+        this.chatRoom = chatRoom;
+    }
+
+    public RealmGroupRoom getGroupRoom() {
+        return groupRoom;
+    }
+
+    public void setGroupRoom(RealmGroupRoom groupRoom) {
+        this.groupRoom = groupRoom;
+    }
+
+    public RealmChannelRoom getChannelRoom() {
+        return channelRoom;
+    }
+
+    public void setChannelRoom(RealmChannelRoom channelRoom) {
+        this.channelRoom = channelRoom;
+    }
+
+    public RealmRoomDraft getDraft() {
+        return draft;
+    }
+
+    public void setDraft(RealmRoomDraft draft) {
+        this.draft = draft;
+    }
+
+    public RealmDraftFile getDraftFile() {
+        return draftFile;
+    }
+
+    public void setDraftFile(RealmDraftFile draftFile) {
+        this.draftFile = draftFile;
+    }
+
+    public RealmAvatar getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(RealmAvatar avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSharedMediaCount() {
+
+        if (sharedMediaCount == null || sharedMediaCount.length() == 0) {
+            return context.getString(R.string.there_is_no_sheared_media);
+        }
+
+        String countList[] = sharedMediaCount.split("\n");
+        try {
+
+            int countOFImage = Integer.parseInt(countList[0]);
+            int countOFVIDEO = Integer.parseInt(countList[1]);
+            int countOFAUDIO = Integer.parseInt(countList[2]);
+            int countOFVOICE = Integer.parseInt(countList[3]);
+            int countOFGIF = Integer.parseInt(countList[4]);
+            int countOFFILE = Integer.parseInt(countList[5]);
+            int countOFLink = Integer.parseInt(countList[6]);
+
+            String result = "";
+
+            if (countOFImage > 0)
+                result += "\n" + countOFImage + " " + context.getString(R.string.shared_image);
+            if (countOFVIDEO > 0)
+                result += "\n" + countOFVIDEO + " " + context.getString(R.string.shared_video);
+            if (countOFAUDIO > 0)
+                result += "\n" + countOFAUDIO + " " + context.getString(R.string.shared_audio);
+            if (countOFVOICE > 0)
+                result += "\n" + countOFVOICE + " " + context.getString(R.string.shared_voice);
+            if (countOFGIF > 0)
+                result += "\n" + countOFGIF + " " + context.getString(R.string.shared_gif);
+            if (countOFFILE > 0)
+                result += "\n" + countOFFILE + " " + context.getString(R.string.shared_file);
+            if (countOFLink > 0)
+                result += "\n" + countOFLink + " " + context.getString(R.string.shared_links);
+
+            result = result.trim();
+
+            if (result.length() < 1) {
+                result = context.getString(R.string.there_is_no_sheared_media);
+            }
+
+            return result;
+        } catch (Exception e) {
+
+            return sharedMediaCount;
+        }
+
+
+    }
+
+    public void setSharedMediaCount(String sharedMediaCount) {
+        this.sharedMediaCount = sharedMediaCount;
+    }
+
+    public String getActionState() {
+        return actionState;
+    }
+
+    public void setActionState(String actionState, long userId) {
+        this.actionState = actionState;
+        this.actionStateUserId = userId;
+    }
+
+    public long getActionStateUserId() {
+        return actionStateUserId;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        isPinned = pinned;
+    }
+
+    public long getPinId() {
+        return pinId;
+    }
+
+    public void setPinId(long pinId) {
+        this.pinId = pinId;
+    }
+
+    public long getUpdatedTime() {
+        if (getLastMessage() != null && getLastMessage().isValid()) {
+            if (getLastMessage().getUpdateOrCreateTime() > updatedTime) {
+                return getLastMessage().getUpdateOrCreateTime();
+            }
+        }
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(long updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public boolean isKeepRoom() {
+        return keepRoom;
+    }
+
+    public void setKeepRoom(boolean keepRoom) {
+        this.keepRoom = keepRoom;
+    }
+
+    public long getLastScrollPositionMessageId() {
+        return lastScrollPositionMessageId;
+    }
+
+    public void setLastScrollPositionMessageId(long lastScrollPositionMessageId) {
+        this.lastScrollPositionMessageId = lastScrollPositionMessageId;
+    }
+
+    public RealmRoomMessage getFirstUnreadMessage() {
+        return firstUnreadMessage;
+    }
+
+    public void setFirstUnreadMessage(RealmRoomMessage firstUnreadMessage) {
+        this.firstUnreadMessage = firstUnreadMessage;
+    }
+
+    public RealmRoomMessage getLastMessage() {
+        return lastMessage;
+    }
+
+    public static void setLastMessage(final long roomId) {
+        //TODO [Saeed Mozaffari] [2017-10-22 5:26 PM] - Write Better Code
+        Realm realm = Realm.getDefaultInstance();
+        final RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+        if (realmRoomMessages.size() > 0 && realmRoomMessages.first() != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                    if (realmRoom != null) {
+                        realmRoom.setLastMessage(realmRoomMessages.first());
+                    }
+                }
+            });
+        }
+        realm.close();
+    }
+
+    public void setLastMessage(RealmRoomMessage lastMessage) {
+        if (lastMessage != null) {
+            setUpdatedTime(lastMessage.getUpdateOrCreateTime());
+        }
+        this.lastMessage = lastMessage;
+    }
+
+    public long getOwnerId() {
+        switch (ProtoGlobal.Room.Type.valueOf(type)) {
+            case CHAT:
+                return getChatRoom().getPeerId();
+            default:
+                return id;
+        }
+    }
+
+    public static String[] getUnreadCountPages() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<RealmRoom> results = realm.where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.MUTE, false).equalTo(RealmRoomFields.IS_DELETED, false).findAll();
+        int all = 0, chat = 0, group = 0, channel = 0;
+        for (RealmRoom rm : results) {
+            switch (rm.getType()) {
+                case CHANNEL:
+                    channel += rm.getUnreadCount();
+                    break;
+                case CHAT:
+                    chat += rm.getUnreadCount();
+                    break;
+                case GROUP:
+                    group += rm.getUnreadCount();
+                    break;
+            }
+            all += rm.getUnreadCount();
+        }
+        String ar[];
+        if (HelperCalander.isPersianUnicode) {
+            ar = new String[]{"0", channel + "", group + "", chat + "", all + ""};
+        } else {
+            ar = new String[]{all + "", chat + "", group + "", channel + "", "0"};
+        }
+        realm.close();
+        return ar;
+    }
+
 }

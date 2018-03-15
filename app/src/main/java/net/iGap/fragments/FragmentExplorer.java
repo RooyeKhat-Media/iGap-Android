@@ -21,8 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.File;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.AdapterExplorer;
@@ -30,8 +29,15 @@ import net.iGap.helper.HelperMimeType;
 import net.iGap.interfaces.IOnBackPressed;
 import net.iGap.interfaces.IPickFile;
 import net.iGap.libs.rippleeffect.RippleView;
+import net.iGap.module.FileUtils;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.structs.StructExplorerItem;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.iGap.G.IGAP;
 
 public class FragmentExplorer extends BaseFragment {
 
@@ -42,16 +48,14 @@ public class FragmentExplorer extends BaseFragment {
     ArrayList<Integer> mscroll;
     TextView txtCurentPath;
     MaterialDesignTextView btnBack;
-    private boolean finish = false;
-
     StructExplorerItem x;
     RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-
     String mode = "normal";
     boolean first = true;
-
+    private boolean finish = false;
+    private RecyclerView.LayoutManager mLayoutManager;
     private IPickFile pickFile = null;
+    List<String> storageList = null;
 
     @Nullable
     @Override
@@ -158,6 +162,10 @@ public class FragmentExplorer extends BaseFragment {
         mscroll.clear();
         mscroll.add(0);
 
+        if (storageList == null) {
+            storageList = FileUtils.getSdCardPathList(false);
+        }
+
         if (new File(Environment.getExternalStorageDirectory().getAbsolutePath()).exists()) {
             x = new StructExplorerItem();
             x.name = "Device";
@@ -168,31 +176,38 @@ public class FragmentExplorer extends BaseFragment {
             rootcount++;
         }
 
-        if (new File("/storage/extSdCard/").exists()) {
-            x = new StructExplorerItem();
-            x.name = "SdCard";
-            x.image = R.mipmap.j_sdcard;
-            x.path = "/storage/extSdCard/";
-            item.add(x);
-            node.add("/storage/extSdCard/");
-            rootcount++;
+        for (String sdPath : storageList) {
+            if (new File(sdPath).exists()) {
+                x = new StructExplorerItem();
+                x.name = "SdCard";
+                x.image = R.mipmap.j_sdcard;
+                x.path = sdPath + "/";
+                item.add(x);
+                node.add(sdPath + "/");
+                rootcount++;
+            }
         }
-        if (new File("/storage/sdcard1/").exists()) {
-            x = new StructExplorerItem();
-            x.name = "SdCard1";
-            x.image = R.mipmap.j_sdcard;
-            x.path = "/storage/sdcard1/";
-            item.add(x);
-            node.add("/storage/sdcard1/");
-            rootcount++;
+
+        if (!G.DIR_SDCARD_EXTERNAL.equals("")) {
+            String sdPath = G.DIR_SDCARD_EXTERNAL + IGAP;
+            if (new File(sdPath).exists()) {
+                x = new StructExplorerItem();
+                x.name = "iGap SdCard";
+                x.image = R.mipmap.actionbar_icon_myfiles;
+                x.path = sdPath + "/";
+                item.add(x);
+                node.add(sdPath + "/");
+                rootcount++;
+            }
         }
-        if (new File("/storage/usbcard1/").exists()) {
+
+        if (new File(G.DIR_APP).exists()) {
             x = new StructExplorerItem();
-            x.name = "usbcard";
-            x.image = R.mipmap.j_usb;
-            x.path = "/storage/usbcard1/";
+            x.name = "iGap";
+            x.image = R.mipmap.actionbar_icon_myfiles;
+            x.path = G.DIR_APP + "/";
             item.add(x);
-            node.add("/storage/usbcard1/");
+            node.add(G.DIR_APP + "/");
             rootcount++;
         }
 
@@ -324,15 +339,15 @@ public class FragmentExplorer extends BaseFragment {
             mime = mime.toLowerCase();
 
             if (mime.endsWith(".txt")
-                || mime.endsWith(".pdf")
-                || mime.endsWith(".doc")
-                || mime.endsWith(".xls")
-                || mime.endsWith(".snb")
-                || mime.endsWith(".ppt")
-                || mime.endsWith(".html")
-                || mime.endsWith(".htm")
-                || mime.endsWith(".docx")
-                || mime.endsWith(".xml")) {
+                    || mime.endsWith(".pdf")
+                    || mime.endsWith(".doc")
+                    || mime.endsWith(".xls")
+                    || mime.endsWith(".snb")
+                    || mime.endsWith(".ppt")
+                    || mime.endsWith(".html")
+                    || mime.endsWith(".htm")
+                    || mime.endsWith(".docx")
+                    || mime.endsWith(".xml")) {
                 result = true;
             }
         } else {

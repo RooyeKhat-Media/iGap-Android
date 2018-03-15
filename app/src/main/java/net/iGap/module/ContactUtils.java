@@ -19,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -32,7 +33,7 @@ public final class ContactUtils {
         this.mContactUri = contactUri;
 
         // getting contact ID
-        Cursor cursorID = mContext.getContentResolver().query(mContactUri, new String[] { ContactsContract.Contacts._ID }, null, null, null);
+        Cursor cursorID = mContext.getContentResolver().query(mContactUri, new String[]{ContactsContract.Contacts._ID}, null, null, null);
 
         if (cursorID != null && cursorID.moveToFirst()) {
             mContactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
@@ -40,13 +41,14 @@ public final class ContactUtils {
         }
     }
 
-    @Nullable public Uri getPhotoUri() {
+    @Nullable
+    public Uri getPhotoUri() {
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
             Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, ContactsContract.Data.CONTACT_ID + "=" + mContactID + " AND "
 
-                + ContactsContract.Data.MIMETYPE + "='" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'", null, null);
+                    + ContactsContract.Data.MIMETYPE + "='" + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'", null, null);
 
             if (cursor != null) {
                 if (!cursor.moveToFirst()) {
@@ -68,7 +70,7 @@ public final class ContactUtils {
         try {
             Bitmap photo = null;
             InputStream inputStream =
-                ContactsContract.Contacts.openContactPhotoInputStream(mContext.getContentResolver(), ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(mContactID)));
+                    ContactsContract.Contacts.openContactPhotoInputStream(mContext.getContentResolver(), ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(mContactID)));
 
             if (inputStream != null) {
                 photo = BitmapFactory.decodeStream(inputStream);

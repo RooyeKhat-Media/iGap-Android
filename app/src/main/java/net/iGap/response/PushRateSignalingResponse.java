@@ -11,6 +11,7 @@
 package net.iGap.response;
 
 import android.content.Intent;
+
 import net.iGap.G;
 import net.iGap.activities.ActivityRatingBar;
 import net.iGap.proto.ProtoPushRateSignaling;
@@ -51,7 +52,6 @@ public class PushRateSignalingResponse extends MessageHandler {
                     intent.putExtra(ActivityRatingBar.ID_EXTRA, id);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     G.context.startActivity(intent);
-
 
 
                 }

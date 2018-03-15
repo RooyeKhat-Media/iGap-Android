@@ -11,6 +11,7 @@
 package net.iGap.response;
 
 import com.neovisionaries.ws.client.WebSocket;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
@@ -31,7 +32,8 @@ public class ConnectionSymmetricKeyResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
         ProtoConnectionSecuring.ConnectionSymmetricKeyResponse.Builder builder = (ProtoConnectionSecuring.ConnectionSymmetricKeyResponse.Builder) message;
         ProtoConnectionSecuring.ConnectionSymmetricKeyResponse.Status status = builder.getStatus();
@@ -65,13 +67,15 @@ public class ConnectionSymmetricKeyResponse extends MessageHandler {
         }
     }
 
-    @Override public void timeOut() {
+    @Override
+    public void timeOut() {
         // disconnect socket for do securing action again
         //WebSocketClient.getInstance().disconnect();
         super.timeOut();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         // disconnect socket for do securing action again
         //WebSocketClient.getInstance().disconnect();
         super.error();

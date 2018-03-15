@@ -1,83 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical"
+  android:paddingEnd="@dimen/dp28"
+  android:paddingLeft="@dimen/dp52"
+  android:paddingRight="@dimen/dp28"
+  android:paddingStart="@dimen/dp52">
+
+
+  <View
+    android:id="@+id/topLine"
+    android:layout_width="match_parent"
+    android:layout_height="1px"
+    android:layout_marginLeft="@dimen/dp8"
+    android:layout_marginStart="@dimen/dp8"
+    android:background="@color/gray" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingEnd="@dimen/dp28"
-    android:paddingLeft="@dimen/dp52"
-    android:clickable="true"
-    android:paddingRight="@dimen/dp28"
-    android:paddingStart="@dimen/dp52">
+    android:layout_marginTop="@dimen/dp16"
+    android:orientation="horizontal">
 
 
-    <View
-        android:id="@+id/topLine"
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/dp8"
-        android:layout_marginStart="@dimen/dp8"
-        android:background="@color/gray" />
+    <com.hanks.library.AnimateCheckBox
+      android:id="@+id/cig_checkBox_select_user"
+      android:layout_width="@dimen/dp24"
+      android:layout_height="@dimen/dp24"
+      android:layout_gravity="center"
+      android:clickable="false"
+      android:visibility="invisible"
+      app:animDuration="200"
+      app:checkedColor="#28B463"
+      app:lineColor="#fff"
+      app:lineWidth="1.2dp"
+      app:unCheckColor="#ff0" />
 
-    <LinearLayout
+    <net.iGap.module.CircleImageView
+      android:id="@+id/imageView"
+      android:layout_width="@dimen/dp48"
+      android:layout_height="@dimen/dp48" />
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="@dimen/dp8"
+      android:layout_marginStart="@dimen/dp8"
+      android:orientation="vertical">
+
+      <net.iGap.module.CustomTextViewMedium
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp16"
-        android:orientation="horizontal">
+        android:layout_alignParentTop="true"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="Dominika Faniz"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="#000000"
+        android:textSize="@dimen/dp16" />
 
+      <net.iGap.module.CustomTextViewMedium
+        android:id="@+id/subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom|left"
+        android:singleLine="true"
+        android:text="@string/last_seen_recently"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:textColor="#bbbbbb"
+        android:textSize="@dimen/dp14" />
+    </RelativeLayout>
 
-        <com.hanks.library.AnimateCheckBox
-            android:id="@+id/cig_checkBox_select_user"
-            android:layout_width="@dimen/dp24"
-            android:layout_height="@dimen/dp24"
-            android:layout_gravity="center"
-            android:clickable="false"
-            android:visibility="invisible"
-            app:animDuration="200"
-            app:checkedColor="#28B463"
-            app:lineColor="#fff"
-            app:lineWidth="1.2dp"
-            app:unCheckColor="#ff0" />
-
-      <net.iGap.module.CircleImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48"
-            />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginStart="@dimen/dp8"
-            android:orientation="vertical">
-
-          <net.iGap.module.CustomTextViewMedium
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="Dominika Faniz"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                android:textColor="#000000"
-              android:textSize="@dimen/dp16"
-              />
-
-          <net.iGap.module.CustomTextViewMedium
-                android:id="@+id/subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="bottom|left"
-                android:singleLine="true"
-                android:text="@string/last_seen_recently"
-              android:textSize="@dimen/dp14"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-                android:textColor="#bbbbbb" />
-        </RelativeLayout>
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

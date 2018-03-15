@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+
 import net.iGap.R;
 import net.iGap.helper.HelperMimeType;
 import net.iGap.module.structs.StructExplorerItem;
+
+import java.util.ArrayList;
 
 public class AdapterExplorer extends RecyclerView.Adapter<AdapterExplorer.ViewHolder> {
 
@@ -34,7 +36,8 @@ public class AdapterExplorer extends RecyclerView.Adapter<AdapterExplorer.ViewHo
         helperMimeType = new HelperMimeType();
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return item.size();
     }
 
@@ -51,7 +54,8 @@ public class AdapterExplorer extends RecyclerView.Adapter<AdapterExplorer.ViewHo
         }
     }
 
-    @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sub_layout_explorer, parent, false);
         viewholder = new ViewHolder(v);
         return viewholder;
@@ -74,7 +78,8 @@ public class AdapterExplorer extends RecyclerView.Adapter<AdapterExplorer.ViewHo
             imageView = (ImageView) itemView.findViewById(R.id.sle_sub_imageView1);
 
             itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View view) {
+                @Override
+                public void onClick(View view) {
                     int position = ViewHolder.super.getPosition();
                     onItemClickListener.onItemClick(view, position);
                 }

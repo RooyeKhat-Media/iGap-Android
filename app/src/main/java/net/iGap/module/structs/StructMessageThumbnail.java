@@ -12,16 +12,19 @@ package net.iGap.module.structs;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmThumbnail;
 
 public class StructMessageThumbnail implements Parcelable {
     public static final Parcelable.Creator<StructMessageThumbnail> CREATOR = new Parcelable.Creator<StructMessageThumbnail>() {
-        @Override public StructMessageThumbnail createFromParcel(Parcel source) {
+        @Override
+        public StructMessageThumbnail createFromParcel(Parcel source) {
             return new StructMessageThumbnail(source);
         }
 
-        @Override public StructMessageThumbnail[] newArray(int size) {
+        @Override
+        public StructMessageThumbnail[] newArray(int size) {
             return new StructMessageThumbnail[size];
         }
     };
@@ -58,11 +61,13 @@ public class StructMessageThumbnail implements Parcelable {
         return new StructMessageThumbnail(thumbnail.getSize(), thumbnail.getWidth(), thumbnail.getHeight(), thumbnail.getCacheId());
     }
 
-    @Override public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.size);
         dest.writeInt(this.width);
         dest.writeInt(this.height);

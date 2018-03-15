@@ -10,20 +10,31 @@
 
 package net.iGap.realm;
 
+import net.iGap.module.SUID;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import net.iGap.module.SUID;
 
 // note: realm doesn't support enum
 // as a workaround, we save its toString() value
 // https://github.com/realm/realm-java/issues/776
 public class RealmOfflineEdited extends RealmObject {
 
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
 
     private long messageId;
     private String message;
+
+    public static RealmOfflineEdited put(Realm realm, long messageId, String message) {
+        RealmOfflineEdited realmOfflineEdited = realm.createObject(RealmOfflineEdited.class, SUID.id().get());
+        realmOfflineEdited.setMessageId(messageId);
+        realmOfflineEdited.setMessage(message);
+        realmOfflineEdited = realm.copyToRealm(realmOfflineEdited);
+
+        return realmOfflineEdited;
+    }
 
     public long getId() {
         return id;
@@ -47,14 +58,5 @@ public class RealmOfflineEdited extends RealmObject {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public static RealmOfflineEdited put(Realm realm, long messageId, String message) {
-        RealmOfflineEdited realmOfflineEdited = realm.createObject(RealmOfflineEdited.class, SUID.id().get());
-        realmOfflineEdited.setMessageId(messageId);
-        realmOfflineEdited.setMessage(message);
-        realmOfflineEdited = realm.copyToRealm(realmOfflineEdited);
-
-        return realmOfflineEdited;
     }
 }

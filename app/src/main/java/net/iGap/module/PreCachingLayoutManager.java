@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 
 public class PreCachingLayoutManager extends LinearLayoutManager {
     private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 600;
+    private static final float MILLISECONDS_PER_INCH = 50f; //default is 25f (bigger = slower)
     private int extraLayoutSpace = -1;
     private Context context;
 
@@ -48,8 +49,6 @@ public class PreCachingLayoutManager extends LinearLayoutManager {
         }
         return DEFAULT_EXTRA_LAYOUT_SPACE;
     }
-
-    private static final float MILLISECONDS_PER_INCH = 50f; //default is 25f (bigger = slower)
 
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {

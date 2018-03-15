@@ -13,11 +13,7 @@ package net.iGap.helper;
 import android.os.AsyncTask;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -34,6 +30,13 @@ import net.iGap.request.RequestFileUpload;
 import net.iGap.request.RequestFileUploadInit;
 import net.iGap.request.RequestFileUploadOption;
 import net.iGap.request.RequestFileUploadStatus;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import io.realm.Realm;
 
 import static net.iGap.G.handler;
 import static net.iGap.proto.ProtoGlobal.ClientAction.CHOOSING_CONTACT;
@@ -56,33 +59,12 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
 
     private static int uploadingMaxsize = 1;
     private static Queue<StructUpload> myQueue = new LinkedList<StructUpload>();
-
-    public interface UpdateListener {
-        void OnProgress(int progress, FileUploadStructure struct);
-
-        void OnError();
-    }
-
-    public static class StructUpload {
-
-        public UpdateListener listener1;
-        public UpdateListener listener2;
-
-        public FileUploadStructure fileUploadStructure = null;
-        public int attampOnError = 2;
-        int progress = 0;
-        ProtoGlobal.Room.Type chatType = null;
-        public String identity = "";
-    }
+    private static ArrayMap<String, StructUpload> list = new ArrayMap<>();
 
     public HelperUploadFile() {
         onFileUploadStatusResponse = this;
         onFileUpload = this;
     }
-
-    //*******************************************************************************************************************
-
-    private static ArrayMap<String, StructUpload> list = new ArrayMap<>();
 
     private static void startUpload(FileUploadStructure uploadStructure, String identity, UpdateListener listener, ProtoGlobal.Room.Type chatType, boolean FromChat) {
 
@@ -120,193 +102,13 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         structUpload.progress = 1;
     }
 
-    @Override public void OnFileUploadOption(int firstBytesLimit, int lastBytesLimit, int maxConnection, String identity, ProtoResponse.Response response) {
-        try {
-            FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
-            // getting bytes from file as server said
-            byte[] bytesFromFirst = AndroidUtils.getBytesFromStart(fileUploadStructure, firstBytesLimit);
-            byte[] bytesFromLast = AndroidUtils.getBytesFromEnd(fileUploadStructure, lastBytesLimit);
-            // make second request
-            new RequestFileUploadInit().fileUploadInit(bytesFromFirst, bytesFromLast, fileUploadStructure.fileSize, fileUploadStructure.fileHash, Long.toString(fileUploadStructure.messageId),
-                fileUploadStructure.fileName);
-        } catch (IOException e) {
-            Log.i("BreakPoint", e.getMessage());
-        }
-    }
-
-    @Override public void OnFileUploadInit(String token, final double progress, long offset, int limit, final String identity, ProtoResponse.Response response) {
-        // token needed for requesting upload
-        // updating structure with new token
-
-        StructUpload sp = list.get(identity);
-
-        if (sp == null) {
-            return;
-        }
-
-        sp.progress = (int) progress;
-
-        FileUploadStructure fileUploadStructure = sp.fileUploadStructure;
-        fileUploadStructure.token = token;
-
-        if (progress < 100) {
-            updateListeners(sp);
-        }
-
-        // not already uploaded
-        if (progress != 100.0) {
-            try {
-                byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) offset, limit);
-                // make third request for first time
-                new RequestFileUpload().fileUpload(token, offset, bytes, identity);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-
-                onFileUploadComplete(identity, response);
-            } catch (Exception e) {
-                Log.i("BreakPoint", e.getMessage());
-            }
-        }
-    }
-
-    @Override public void onFileUpload(final double progress, long nextOffset, int nextLimit, final String identity, ProtoResponse.Response response) {
-        final long startOnFileUploadTime = System.currentTimeMillis();
-
-        // for specific views, tags must be set with files hashes
-        // get the view which has provided hash string
-        // then do anything you want to do wit that view
-
-        StructUpload sp = list.get(identity);
-        if (sp == null) {
-            return;
-        }
-        sp.progress = (int) progress;
-
-        try {
-            if (progress != 100.0) {
-                FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
-
-                updateListeners(list.get(identity));
-
-                byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) nextOffset, nextLimit);
-
-                // make request till uploading has finished
-                new RequestFileUpload().fileUpload(fileUploadStructure.token, nextOffset, bytes, identity);
-            } else {
-                onFileUploadComplete(identity, response);
-            }
-        } catch (IOException e) {
-            Log.i("BreakPoint", e.getMessage());
-        }
-    }
-
-    @Override public void onFileUploadComplete(String identity, ProtoResponse.Response response) {
-        final FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
-
-        new RequestFileUploadStatus().fileUploadStatus(fileUploadStructure.token, identity);
-    }
-
-    @Override public void onFileUploadTimeOut(String identity) {
-
-        StructUpload sp = list.get(identity);
-        if (sp != null) {
-
-            sp.attampOnError--;
-
-            if (sp.attampOnError > 0) {
-                reUpload(sp.identity);
-            } else {
-                updateListenersError(sp);
-                list.remove(identity);
-                addItemFromQueue();
-            }
-        }
-    }
+    //*******************************************************************************************************************
 
     public static void reUpload(String identity) {
 
         if (list.containsKey(identity)) {
 
             new RequestFileUploadOption().fileUploadOption(list.get(identity).fileUploadStructure, identity);
-        }
-    }
-
-    @Override
-    public void onFileUploadStatus(ProtoFileUploadStatus.FileUploadStatusResponse.Status status, double progress, int recheckDelayMS, final String identity, ProtoResponse.Response response) {
-
-        StructUpload sp = list.get(identity);
-
-        if (sp == null) {
-            return;
-        }
-
-        final FileUploadStructure fileUploadStructure = sp.fileUploadStructure;
-
-        if (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.PROCESSED) {
-
-            sp.progress = 100;
-            updateListeners(sp);
-
-            if (sp.chatType != null) {
-                UploadComplete(sp.fileUploadStructure, sp.identity, sp.chatType);
-            }
-
-            // close file into structure
-            try {
-                if (fileUploadStructure != null) {
-                    fileUploadStructure.closeFile();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            list.remove(identity);
-            addItemFromQueue();
-        } else if (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.PROCESSING || (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.UPLOADING) && progress == 100D) {
-            handler.postDelayed(new Runnable() {
-                @Override public void run() {
-                    new RequestFileUploadStatus().fileUploadStatus(fileUploadStructure.token, identity);
-                }
-            }, recheckDelayMS);
-        } else {
-
-            if (list.containsKey(identity)) {
-                StructUpload spl = list.get(identity);
-                list.remove(identity);
-                startUpload(spl.fileUploadStructure, spl.identity, null, spl.chatType, false);
-            }
-        }
-    }
-
-    private void UploadComplete(final FileUploadStructure uploadStructure, final String identity, ProtoGlobal.Room.Type chatType) {
-
-        HelperSetAction.sendCancel(uploadStructure.messageId);
-
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
-                RealmAttachment.updateToken(uploadStructure.messageId, uploadStructure.token);
-            }
-        });
-        realm.close();
-
-        /**
-         * this code should exist in under of other codes in this block
-         */
-        if (uploadStructure.replyMessageId == 0) {
-            new ChatSendMessageUtil().newBuilder(chatType, uploadStructure.messageType, uploadStructure.roomId)
-                .attachment(uploadStructure.token)
-                .message(uploadStructure.text)
-                .sendMessage(Long.toString(uploadStructure.messageId));
-        } else {
-            new ChatSendMessageUtil().newBuilder(chatType, uploadStructure.messageType, uploadStructure.roomId)
-                .replyMessage(uploadStructure.replyMessageId)
-                .attachment(uploadStructure.token)
-                .message(uploadStructure.text)
-                .sendMessage(Long.toString(uploadStructure.messageId));
         }
     }
 
@@ -393,8 +195,6 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         return -1;
     }
 
-    //*******************************************************************************************************************
-
     public static void addItemFromQueue() {
 
         if (myQueue.size() > 0) {
@@ -406,57 +206,8 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
     }
 
     public static void startUploadTaskChat(Long roomID, ProtoGlobal.Room.Type chatType, String filePath, long messageId, ProtoGlobal.RoomMessageType messageType, String messageText,
-        long replyMessageId, UpdateListener listener) {
+                                           long replyMessageId, UpdateListener listener) {
         new UploadTask(roomID, chatType, listener).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, filePath, messageId, messageType, roomID, messageText, replyMessageId);
-    }
-
-    private static class UploadTask extends AsyncTask<Object, FileUploadStructure, FileUploadStructure> {
-
-        private long roomID;
-        ProtoGlobal.Room.Type chatType;
-        UpdateListener listener;
-
-        public UploadTask(Long roomID, ProtoGlobal.Room.Type chatType, UpdateListener listener) {
-            this.roomID = roomID;
-            this.chatType = chatType;
-            this.listener = listener;
-        }
-
-        @Override protected FileUploadStructure doInBackground(Object... params) {
-            try {
-                String filePath = (String) params[0];
-                long messageId = (long) params[1];
-                ProtoGlobal.RoomMessageType messageType = (ProtoGlobal.RoomMessageType) params[2];
-                long roomId = (long) params[3];
-                String messageText = (String) params[4];
-                long replyMessageId = (long) params[5];
-                File file = new File(filePath);
-                String fileName = file.getName();
-                long fileSize = file.length();
-                FileUploadStructure fileUploadStructure = new FileUploadStructure(fileName, fileSize, filePath, messageId, messageType, roomId, replyMessageId);
-                fileUploadStructure.openFile(filePath);
-                fileUploadStructure.text = messageText;
-
-                byte[] fileHash = AndroidUtils.getFileHashFromPath(filePath);
-                fileUploadStructure.setFileHash(fileHash);
-
-                return fileUploadStructure;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override protected void onPostExecute(FileUploadStructure result) {
-            super.onPostExecute(result);
-
-            if (result != null) {
-                if (!list.containsKey(result.messageId)) {
-                    startUpload(result, Long.toString(result.messageId), listener, chatType, true);
-                    HelperSetAction.setActionFiles(roomID, result.messageId, getAction(result.messageType), chatType);
-                }
-            }
-        }
     }
 
     static ProtoGlobal.ClientAction getAction(ProtoGlobal.RoomMessageType type) {
@@ -496,6 +247,266 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         }
     }
 
+    @Override
+    public void OnFileUploadOption(int firstBytesLimit, int lastBytesLimit, int maxConnection, String identity, ProtoResponse.Response response) {
+        try {
+            FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
+            // getting bytes from file as server said
+            byte[] bytesFromFirst = AndroidUtils.getBytesFromStart(fileUploadStructure, firstBytesLimit);
+            byte[] bytesFromLast = AndroidUtils.getBytesFromEnd(fileUploadStructure, lastBytesLimit);
+            // make second request
+            new RequestFileUploadInit().fileUploadInit(bytesFromFirst, bytesFromLast, fileUploadStructure.fileSize, fileUploadStructure.fileHash, Long.toString(fileUploadStructure.messageId),
+                    fileUploadStructure.fileName);
+        } catch (IOException e) {
+            Log.i("BreakPoint", e.getMessage());
+        }
+    }
+
+    @Override
+    public void OnFileUploadInit(String token, final double progress, long offset, int limit, final String identity, ProtoResponse.Response response) {
+        // token needed for requesting upload
+        // updating structure with new token
+
+        StructUpload sp = list.get(identity);
+
+        if (sp == null) {
+            return;
+        }
+
+        sp.progress = (int) progress;
+
+        FileUploadStructure fileUploadStructure = sp.fileUploadStructure;
+        fileUploadStructure.token = token;
+
+        if (progress < 100) {
+            updateListeners(sp);
+        }
+
+        // not already uploaded
+        if (progress != 100.0) {
+            try {
+                byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) offset, limit);
+                // make third request for first time
+                new RequestFileUpload().fileUpload(token, offset, bytes, identity);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+
+                onFileUploadComplete(identity, response);
+            } catch (Exception e) {
+                Log.i("BreakPoint", e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onFileUpload(final double progress, long nextOffset, int nextLimit, final String identity, ProtoResponse.Response response) {
+        final long startOnFileUploadTime = System.currentTimeMillis();
+
+        // for specific views, tags must be set with files hashes
+        // get the view which has provided hash string
+        // then do anything you want to do wit that view
+
+        StructUpload sp = list.get(identity);
+        if (sp == null) {
+            return;
+        }
+        sp.progress = (int) progress;
+
+        try {
+            if (progress != 100.0) {
+                FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
+
+                updateListeners(list.get(identity));
+
+                byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) nextOffset, nextLimit);
+
+                // make request till uploading has finished
+                new RequestFileUpload().fileUpload(fileUploadStructure.token, nextOffset, bytes, identity);
+            } else {
+                onFileUploadComplete(identity, response);
+            }
+        } catch (IOException e) {
+            Log.i("BreakPoint", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onFileUploadComplete(String identity, ProtoResponse.Response response) {
+        final FileUploadStructure fileUploadStructure = list.get(identity).fileUploadStructure;
+
+        new RequestFileUploadStatus().fileUploadStatus(fileUploadStructure.token, identity);
+    }
+
+    @Override
+    public void onFileUploadTimeOut(String identity) {
+
+        StructUpload sp = list.get(identity);
+        if (sp != null) {
+
+            sp.attampOnError--;
+
+            if (sp.attampOnError > 0) {
+                reUpload(sp.identity);
+            } else {
+                updateListenersError(sp);
+                list.remove(identity);
+                addItemFromQueue();
+            }
+        }
+    }
+
+    //*******************************************************************************************************************
+
+    @Override
+    public void onFileUploadStatus(ProtoFileUploadStatus.FileUploadStatusResponse.Status status, double progress, int recheckDelayMS, final String identity, ProtoResponse.Response response) {
+
+        StructUpload sp = list.get(identity);
+
+        if (sp == null) {
+            return;
+        }
+
+        final FileUploadStructure fileUploadStructure = sp.fileUploadStructure;
+
+        if (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.PROCESSED) {
+
+            sp.progress = 100;
+            updateListeners(sp);
+
+            if (sp.chatType != null) {
+                UploadComplete(sp.fileUploadStructure, sp.identity, sp.chatType);
+            }
+
+            // close file into structure
+            try {
+                if (fileUploadStructure != null) {
+                    fileUploadStructure.closeFile();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            list.remove(identity);
+            addItemFromQueue();
+        } else if (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.PROCESSING || (status == ProtoFileUploadStatus.FileUploadStatusResponse.Status.UPLOADING) && progress == 100D) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    new RequestFileUploadStatus().fileUploadStatus(fileUploadStructure.token, identity);
+                }
+            }, recheckDelayMS);
+        } else {
+
+            if (list.containsKey(identity)) {
+                StructUpload spl = list.get(identity);
+                list.remove(identity);
+                startUpload(spl.fileUploadStructure, spl.identity, null, spl.chatType, false);
+            }
+        }
+    }
+
+    private void UploadComplete(final FileUploadStructure uploadStructure, final String identity, ProtoGlobal.Room.Type chatType) {
+
+        HelperSetAction.sendCancel(uploadStructure.messageId);
+
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmAttachment.updateToken(uploadStructure.messageId, uploadStructure.token);
+            }
+        });
+        realm.close();
+
+        /**
+         * this code should exist in under of other codes in this block
+         */
+        if (uploadStructure.replyMessageId == 0) {
+            new ChatSendMessageUtil().newBuilder(chatType, uploadStructure.messageType, uploadStructure.roomId)
+                    .attachment(uploadStructure.token)
+                    .message(uploadStructure.text)
+                    .sendMessage(Long.toString(uploadStructure.messageId));
+        } else {
+            new ChatSendMessageUtil().newBuilder(chatType, uploadStructure.messageType, uploadStructure.roomId)
+                    .replyMessage(uploadStructure.replyMessageId)
+                    .attachment(uploadStructure.token)
+                    .message(uploadStructure.text)
+                    .sendMessage(Long.toString(uploadStructure.messageId));
+        }
+    }
+
+    public interface UpdateListener {
+        void OnProgress(int progress, FileUploadStructure struct);
+
+        void OnError();
+    }
+
+    public static class StructUpload {
+
+        public UpdateListener listener1;
+        public UpdateListener listener2;
+
+        public FileUploadStructure fileUploadStructure = null;
+        public int attampOnError = 2;
+        public String identity = "";
+        int progress = 0;
+        ProtoGlobal.Room.Type chatType = null;
+    }
+
+    private static class UploadTask extends AsyncTask<Object, FileUploadStructure, FileUploadStructure> {
+
+        ProtoGlobal.Room.Type chatType;
+        UpdateListener listener;
+        private long roomID;
+
+        public UploadTask(Long roomID, ProtoGlobal.Room.Type chatType, UpdateListener listener) {
+            this.roomID = roomID;
+            this.chatType = chatType;
+            this.listener = listener;
+        }
+
+        @Override
+        protected FileUploadStructure doInBackground(Object... params) {
+            try {
+                String filePath = (String) params[0];
+                long messageId = (long) params[1];
+                ProtoGlobal.RoomMessageType messageType = (ProtoGlobal.RoomMessageType) params[2];
+                long roomId = (long) params[3];
+                String messageText = (String) params[4];
+                long replyMessageId = (long) params[5];
+                File file = new File(filePath);
+                String fileName = file.getName();
+                long fileSize = file.length();
+                FileUploadStructure fileUploadStructure = new FileUploadStructure(fileName, fileSize, filePath, messageId, messageType, roomId, replyMessageId);
+                fileUploadStructure.openFile(filePath);
+                fileUploadStructure.text = messageText;
+
+                byte[] fileHash = AndroidUtils.getFileHashFromPath(filePath);
+                fileUploadStructure.setFileHash(fileHash);
+
+                return fileUploadStructure;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(FileUploadStructure result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                if (!list.containsKey(result.messageId)) {
+                    startUpload(result, Long.toString(result.messageId), listener, chatType, true);
+                    HelperSetAction.setActionFiles(roomID, result.messageId, getAction(result.messageType), chatType);
+                }
+            }
+        }
+    }
+
     private static class UploadTaskAvatar extends AsyncTask<Object, FileUploadStructure, FileUploadStructure> {
 
         UpdateListener listener;
@@ -504,11 +515,13 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             this.listener = listener;
         }
 
-        @Override protected void onPreExecute() {
+        @Override
+        protected void onPreExecute() {
             super.onPreExecute();
         }
 
-        @Override protected FileUploadStructure doInBackground(Object... params) {
+        @Override
+        protected FileUploadStructure doInBackground(Object... params) {
             try {
                 String filePath = (String) params[0];
                 long avatarId = (long) params[1];
@@ -528,7 +541,8 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             return null;
         }
 
-        @Override protected void onPostExecute(FileUploadStructure result) {
+        @Override
+        protected void onPostExecute(FileUploadStructure result) {
             super.onPostExecute(result);
 
             if (result != null) {

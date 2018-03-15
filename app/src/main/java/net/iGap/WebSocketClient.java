@@ -11,15 +11,14 @@
 package net.iGap;
 
 import android.text.format.DateUtils;
+
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 import com.neovisionaries.ws.client.WebSocketState;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
 import net.iGap.helper.HelperConnectionState;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.module.enums.ConnectionState;
@@ -27,6 +26,10 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
 import net.iGap.response.HandleResponse;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import static net.iGap.Config.ALLOW_RECONNECT_AGAIN_NORMAL;
 import static net.iGap.G.latestHearBeatTime;
@@ -193,8 +196,8 @@ public class WebSocketClient {
      * clear securing state and reconnect to server
      *
      * @param force if set force true try for reconnect even socket is open.
-     * client do this action because maybe connection lost but client not
-     * detected this actions(android 7.*).
+     *              client do this action because maybe connection lost but client not
+     *              detected this actions(android 7.*).
      */
 
     public static void reconnect(boolean force) {

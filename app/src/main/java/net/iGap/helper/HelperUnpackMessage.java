@@ -11,12 +11,7 @@
 package net.iGap.helper;
 
 import android.util.Log;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
@@ -24,6 +19,13 @@ import net.iGap.proto.ProtoRequest;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * unpack message after get response from server

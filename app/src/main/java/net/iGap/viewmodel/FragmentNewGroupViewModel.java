@@ -47,18 +47,15 @@ import static net.iGap.module.MusicPlayer.roomId;
 
 public class FragmentNewGroupViewModel {
 
-    public Uri uriIntent;
     public static String prefix = "NewGroup";
-    private long groomId = 0;
-
     public static long avatarId = 0;
     public static ProtoGlobal.Room.Type type;
+    public static String mCurrentPhotoPath;
+    public Uri uriIntent;
     public String token;
     public boolean existAvatar = false;
     public String mInviteLink;
     public boolean isChannel = false;
-    public static String mCurrentPhotoPath;
-
     public ObservableField<String> titleToolbar = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.new_group));
     public ObservableField<String> txtInputName = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.group_name) + " " + G.fragmentActivity.getResources().getString(R.string.mandatory));
     public ObservableField<String> edtSetNewGroup = new ObservableField<>("");
@@ -69,6 +66,7 @@ public class FragmentNewGroupViewModel {
     public ObservableField<Integer> edtDescriptionImeOptions = new ObservableField<>(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
     public ObservableField<Integer> edtDescriptionInputType = new ObservableField<>(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
     public ObservableField<Boolean> nextStepEnable = new ObservableField<>(true);
+    private long groomId = 0;
 
 
     public FragmentNewGroupViewModel(Bundle arguments) {

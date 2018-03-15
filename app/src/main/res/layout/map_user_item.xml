@@ -1,118 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp68"
-    android:clickable="true"
-    android:orientation="vertical"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp68"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <LinearLayout
-      android:id="@+id/lyt_map_user"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="@dimen/dp8"
-      >
+    android:id="@+id/lyt_map_user"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
 
     <net.iGap.module.CircleImageView
-        android:id="@+id/img_user_avatar_map"
-        android:layout_width="@dimen/dp48"
-        android:layout_height="@dimen/dp48"
-        android:layout_marginLeft="@dimen/dp4"
-        />
+      android:id="@+id/img_user_avatar_map"
+      android:layout_width="@dimen/dp48"
+      android:layout_height="@dimen/dp48"
+      android:layout_marginLeft="@dimen/dp4" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:orientation="horizontal">
 
       <RelativeLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="@dimen/dp8"
-          android:layout_weight="1"
-          android:orientation="vertical"
-          >
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp8"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+          android:id="@+id/layout_user_name_map"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <net.iGap.module.CustomTextViewMedium
+            android:id="@+id/txt_user_name_map"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/layout_user_name_map"
-            >
-
-          <net.iGap.module.CustomTextViewMedium
-              android:id="@+id/txt_user_name_map"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:gravity="left"
-              android:singleLine="true"
-              android:text="NearBy User "
-              android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-              android:textColor="@color/black90"
-              android:textSize="@dimen/dp16"
-              />
+            android:layout_weight="1"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="NearBy User "
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/black90"
+            android:textSize="@dimen/dp16" />
 
 
           <net.iGap.module.CustomTextViewMedium
-              android:id="@+id/txt_user_distance_map"
-              android:layout_width="wrap_content"
+            android:id="@+id/txt_user_distance_map"
+            android:layout_width="wrap_content"
 
-              android:layout_height="match_parent"
-              android:gravity="end"
-              android:text="distance"
-              android:textColor="@color/gray_5c"
-              android:textSize="@dimen/dp14"
-              android:layout_gravity="end"
-              />
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:text="distance"
+            android:textColor="@color/gray_5c"
+            android:textSize="@dimen/dp14" />
 
         </LinearLayout>
 
 
         <net.iGap.module.CustomTextViewMedium
-            android:id="@+id/txt_user_comment_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|start"
-            android:layout_below="@+id/layout_user_name_map"
-            android:singleLine="true"
-            android:tag="menu"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:text="getting comment..."
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="@color/gray_5c"
-            android:textSize="@dimen/dp12"
-            />
+          android:id="@+id/txt_user_comment_map"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_below="@+id/layout_user_name_map"
+          android:gravity="center_vertical|start"
+          android:singleLine="true"
+          android:tag="menu"
+          android:text="getting comment..."
+          android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+          android:textColor="@color/gray_5c"
+          android:textSize="@dimen/dp12" />
       </RelativeLayout>
 
 
       <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/txt_arrow_list_map"
-          android:layout_width="@dimen/dp48"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:layout_gravity="end"
-          android:text="@string/md_right_arrow"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/iGapColor"
-          android:textStyle="bold"
-          />
+        android:id="@+id/txt_arrow_list_map"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:text="@string/md_right_arrow"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/iGapColor"
+        android:textStyle="bold" />
 
     </LinearLayout>
 
   </LinearLayout>
+
   <View
-      android:id="@+id/view_topLine_map"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:layout_marginLeft="@dimen/dp60"
-      android:layout_marginStart="@dimen/dp60"
-      android:background="@color/background_editText"
-      />
+    android:id="@+id/view_topLine_map"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="@dimen/dp60"
+    android:layout_marginStart="@dimen/dp60"
+    android:background="@color/background_editText" />
 
 </LinearLayout>

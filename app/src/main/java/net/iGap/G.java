@@ -26,9 +26,6 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tapstream.sdk.Config;
-import com.tapstream.sdk.Event;
-import com.tapstream.sdk.Tapstream;
 
 import net.iGap.activities.ActivityCustomError;
 import net.iGap.activities.ActivityMain;
@@ -62,12 +59,19 @@ import static net.iGap.Config.DEFAULT_BOTH_CHAT_DELETE_TIME;
 
 public class G extends MultiDexApplication {
 
+    public static final String IGAP = "/iGap";
+    public static final String IMAGES = "/iGap Images";
+    public static final String VIDEOS = "/iGap Videos";
+    public static final String AUDIOS = "/iGap Audios";
+    //public static Realm mRealm;
+    public static final String DOCUMENT = "/iGap Document";
+    public static final String TEMP = "/.temp";
+    public static final String CHAT_BACKGROUND = "/.chat_background";
+    public static final String IMAGE_USER = "/.image_user";
+    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static Context context;
     public static Handler handler;
     public static LayoutInflater inflater;
-    private Tracker mTracker;
-    //public static Realm mRealm;
-
     public static HelperNotificationAndBadge helperNotificationAndBadge;
     public static ConcurrentHashMap<String, RequestWrapper> requestQueueMap = new ConcurrentHashMap<>();
     public static List<Long> smsNumbers = new ArrayList<>();
@@ -76,38 +80,23 @@ public class G extends MultiDexApplication {
     public static ProtoClientCondition.ClientCondition.Builder clientConditionGlobal;
     public static HelperCheckInternetConnection.ConnectivityType latestConnectivityType;
     public static ImageLoader imageLoader;
-    public static ArrayList<Long> deletedRoomList = new ArrayList<>();
-
     public static ArrayList<String> unSecure = new ArrayList<>();
     public static ArrayList<String> unSecureResponseActionId = new ArrayList<>();
     public static ArrayList<String> unLogin = new ArrayList<>();// list of actionId that can be doing without secure
     public static ArrayList<String> waitingActionIds = new ArrayList<>();
     public static ArrayList<String> generalImmovableClasses = new ArrayList<>();
     public static ArrayList<Integer> forcePriorityActionId = new ArrayList<>();
-
     public static HashMap<Integer, String> lookupMap = new HashMap<>();
     public static HashMap<String, ArrayList<Object>> requestQueueRelationMap = new HashMap<>();
     public static HashMap<Long, HelperLogMessage.StructLog> logMessageUpdatList = new HashMap<>();
     public static HashMap<Integer, Integer> priorityActionId = new HashMap<>();
-
     public static Activity currentActivity;
     public static FragmentActivity fragmentActivity;
     public static String latestActivityName;
-
     public static File IMAGE_NEW_GROUP;
     public static File IMAGE_NEW_CHANEL;
     public static File imageFile;
-
-    public static final String IGAP = "/iGap";
-    public static final String IMAGES = "/iGap Images";
-    public static final String VIDEOS = "/iGap Videos";
-    public static final String AUDIOS = "/iGap Audios";
-    public static final String DOCUMENT = "/iGap Document";
-    public static final String TEMP = "/.temp";
-    public static final String CHAT_BACKGROUND = "/.chat_background";
-    public static final String IMAGE_USER = "/.image_user";
-
-    public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static String DIR_SDCARD_EXTERNAL = "";
     public static String DIR_APP = DIR_SDCARD + IGAP;
     public static String DIR_IMAGES = DIR_APP + IMAGES;
     public static String DIR_VIDEOS = DIR_APP + VIDEOS;
@@ -117,7 +106,6 @@ public class G extends MultiDexApplication {
     public static String DIR_CHAT_BACKGROUND = DIR_APP + CHAT_BACKGROUND;
     public static String DIR_IMAGE_USER = DIR_APP + IMAGE_USER;
     public static String CHAT_MESSAGE_TIME = "H:mm";
-
     public static String selectedLanguage = "en";
     public static String symmetricMethod;
     public static String appBarColor; // default color
@@ -128,7 +116,6 @@ public class G extends MultiDexApplication {
     public static String headerTextColor;
     public static String authorHash;
     public static String displayName;
-
     public static boolean isAppInFg = false;
     public static boolean isScrInFg = false;
     public static boolean isChangeScrFg = false;
@@ -149,34 +136,28 @@ public class G extends MultiDexApplication {
     public static boolean needGetSignalingConfiguration = true;
     public static boolean isInCall = false;
     public static boolean isShowRatingDialog = false;
-
     public static boolean isUpdateNotificaionColorMain = false;
     public static boolean isUpdateNotificaionColorChannel = false;
     public static boolean isUpdateNotificaionColorGroup = false;
     public static boolean isUpdateNotificaionColorChat = false;
     public static boolean isUpdateNotificaionCall = false;
     public static boolean isCalculatKeepMedia = true;
-
     public static boolean twoPaneMode = false;
     public static boolean isLandscape = false;
     public static boolean isAppRtl = false;
-
-
+    public static boolean isLinkClicked = false;
     public static String selectedTabInMainActivity = "";
-
     public static int ivSize;
     public static int userTextSize = 0;
     public static int COPY_BUFFER_SIZE = 1024;
     public static int maxChatBox = 0;
     public static int bothChatDeleteTime = DEFAULT_BOTH_CHAT_DELETE_TIME;
-
     public static long currentTime;
     public static long userId;
     public static long latestHearBeatTime = System.currentTimeMillis();
     public static long currentServerTime;
     public static long latestResponse = System.currentTimeMillis();
     public static long serverHeartBeatTiming = 60 * 1000;
-
     public static ClearMessagesUtil clearMessagesUtil = new ClearMessagesUtil();
     public static ChatSendMessageUtil chatSendMessageUtil = new ChatSendMessageUtil();
     public static ChatUpdateStatusUtil chatUpdateStatusUtil = new ChatUpdateStatusUtil();
@@ -273,6 +254,8 @@ public class G extends MultiDexApplication {
     public static OnChannelRemoveUsername onChannelRemoveUsername;
     public static OnChannelRevokeLink onChannelRevokeLink;
     public static OnChannelUpdateSignature onChannelUpdateSignature;
+    public static OnChannelUpdateReactionStatus onChannelUpdateReactionStatus;
+    public static OnChannelUpdateReactionStatus onChannelUpdateReactionStatusChat;
     public static OnClientCheckInviteLink onClientCheckInviteLink;
     public static OnClientGetRoomMessage onClientGetRoomMessage;
     public static OnClientJoinByInviteLink onClientJoinByInviteLink;
@@ -319,25 +302,22 @@ public class G extends MultiDexApplication {
     public static OnPhoneContact onPhoneContact;
     public static OnContactFetchForServer onContactFetchForServer;
     public static OnAudioFocusChangeListener onAudioFocusChangeListener;
-
     public static IDispatchTochEvent dispatchTochEventChat;
     public static IOnBackPressed onBackPressedChat;
     public static ISendPosition iSendPositionChat;
     public static ITowPanModDesinLayout iTowPanModDesinLayout;
     public static OnDateChanged onDateChanged;
-
     public static IOnBackPressed onBackPressedExplorer;
-
     public static OnLocationChanged onLocationChanged;
     public static OnGetNearbyCoordinate onGetNearbyCoordinate;
     public static OnGeoGetComment onGeoGetComment;
     public static OnMapRegisterState onMapRegisterState;
     public static OnMapRegisterStateMain onMapRegisterStateMain;
+    public static OnUnreadChange onUnreadChange;
     public static OnMapClose onMapClose;
     public static OnRegistrationInfo onRegistrationInfo;
     public static OnGeoCommentResponse onGeoCommentResponse;
     public static OnGeoGetConfiguration onGeoGetConfiguration;
-
     public static ISignalingOffer iSignalingOffer;
     public static ISignalingRinging iSignalingRinging;
     public static ISignalingAccept iSignalingAccept;
@@ -347,7 +327,6 @@ public class G extends MultiDexApplication {
     public static ISignalingGetCallLog iSignalingGetCallLog;
     public static ISignalingCallBack iSignalingCallBack;
     public static ISignalingErrore iSignalingErrore;
-
     public static Typeface typeface_IRANSansMobile;
     public static Typeface typeface_IRANSansMobile_Bold;
     public static Typeface typeface_Fontico;
@@ -359,8 +338,22 @@ public class G extends MultiDexApplication {
     public static boolean isRestartActivity = false; // for check passCode
     public static boolean isFirstPassCode = true; // for check passCode
     public static boolean multiTab = false;
-
     public static FragmentManager fragmentManager;
+    private Tracker mTracker;
+
+    public static void checkLanguage() {
+        try {
+            String selectedLanguage = G.selectedLanguage;
+            if (selectedLanguage == null) return;
+            Locale locale = new Locale(selectedLanguage);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreate() {
@@ -382,12 +375,6 @@ public class G extends MultiDexApplication {
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         new StartupActions();
-
-        Config config = new Config("igap", "rL3flccmQb-9qzwVcpIRZw");
-        Tapstream.create(this, config);
-
-        Event event = new Event("Run iGap", false);
-        Tapstream.getInstance().fireEvent(event);
     }
 
     @Override
@@ -403,19 +390,5 @@ public class G extends MultiDexApplication {
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return mTracker;
-    }
-
-    public static void checkLanguage() {
-        try {
-            String selectedLanguage = G.selectedLanguage;
-            if (selectedLanguage == null) return;
-            Locale locale = new Locale(selectedLanguage);
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.locale = locale;
-            context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

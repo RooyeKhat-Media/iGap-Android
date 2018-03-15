@@ -10,7 +10,6 @@
 
 package net.iGap.helper;
 
-import io.realm.Realm;
 import net.iGap.G;
 import net.iGap.interfaces.OnClientGetRoomResponse;
 import net.iGap.interfaces.OnUserInfoResponse;
@@ -22,16 +21,9 @@ import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
 
+import io.realm.Realm;
+
 public class HelperGetOwnerInfo {
-
-    public interface Listener {
-
-        void OnResponse();
-    }
-
-    enum RoomType {
-        Room, User
-    }
 
     public static void checkInfo(long id, RoomType roomType, Listener listener) {
 
@@ -124,5 +116,14 @@ public class HelperGetOwnerInfo {
         }
 
         realm.close();
+    }
+
+    enum RoomType {
+        Room, User
+    }
+
+    public interface Listener {
+
+        void OnResponse();
     }
 }

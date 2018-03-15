@@ -1,102 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ac_layoutParent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/ac_layoutParent"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@android:color/white"
 
-    android:clickable="true"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix"
-    >
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
 
 
   <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/fac_ll_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_collapseMode="pin"
-        >
+      android:id="@+id/fac_ll_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="@color/toolbar_background"
+      android:layoutDirection="ltr"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
+      app:layout_collapseMode="pin">
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/test"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/ac_ripple_back"
-            android:layout_toRightOf="@+id/ac_ripple_back"
-            android:gravity="center"
-            android:text="@string/fac_Add_Contact"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="bold"
-            android:visibility="visible"
-            />
+          android:id="@+id/test"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_toEndOf="@+id/ac_ripple_back"
+          android:layout_toRightOf="@+id/ac_ripple_back"
+          android:gravity="center"
+          android:text="@string/fac_Add_Contact"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp18"
+          android:textStyle="bold"
+          android:visibility="visible" />
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/ac_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+          android:id="@+id/ac_ripple_back"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/ac_txt_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
+            android:id="@+id/ac_txt_back"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/md_back_arrow"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
         </net.iGap.libs.rippleeffect.RippleView>
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/ac_ripple_set"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="100"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+          android:id="@+id/ac_ripple_set"
+          rv_centered="true"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="100"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/ac_txt_set"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentStart="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_check_symbol"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              android:textSize="@dimen/dp26"
-              />
+            android:id="@+id/ac_txt_set"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp26" />
 
 
         </net.iGap.libs.rippleeffect.RippleView>
@@ -107,167 +98,156 @@
 
 
   <LinearLayout
-      android:id="@+id/rootAddContact"
+    android:id="@+id/rootAddContact"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+      fontPath="fonts/IRANSansMobile_Bold.ttf"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      >
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp16"
-        android:text="@string/fac_contact_info"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp18"
-        fontPath="fonts/IRANSansMobile_Bold.ttf"
-        />
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dp16"
+      android:text="@string/fac_contact_info"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp18" />
 
     <android.support.design.widget.TextInputLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginRight="@dimen/dp16"
-        app:hintTextAppearance="@style/Hint_appearance"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp16"
+      android:layout_marginRight="@dimen/dp16"
+      app:hintTextAppearance="@style/Hint_appearance">
 
       <net.iGap.module.MEditText
-          android:id="@+id/ac_edt_firstName"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="@dimen/dp4"
-          android:layout_marginTop="@dimen/dp8"
-          android:background="@android:color/transparent"
-          android:hint="@string/fac_First_Name"
-          android:singleLine="true"
-          android:textColorHint="@color/hint_edit_text"
-          android:textSize="@dimen/dp15"
-          />
-
-      <View
-          android:id="@+id/ac_view_firstName"
-          android:layout_width="match_parent"
-          android:layout_height=".5dp"
-          android:background="@color/line_edit_text"
-          />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-
+        android:id="@+id/ac_edt_firstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginRight="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp12"
-        >
-
-      <net.iGap.module.MEditText
-          android:id="@+id/ac_edt_lastName"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@android:color/transparent"
-          android:hint="@string/fac_Last_Name"
-          android:singleLine="true"
-          android:textColorHint="@color/hint_edit_text"
-          android:textSize="@dimen/dp15"
-          />
-
-      <View
-          android:id="@+id/ac_view_lastName"
-          android:layout_width="match_parent"
-          android:layout_height=".5dp"
-          android:background="@color/line_edit_text"
-          />
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <TextView
-        android:id="@+id/ac_txt_chooseCountry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginRight="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp12"
-        android:gravity="center_vertical"
-        android:inputType="phone"
-        android:paddingBottom="@dimen/dp6"
-        android:paddingTop="@dimen/dp6"
+        android:layout_marginBottom="@dimen/dp4"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@android:color/transparent"
+        android:hint="@string/fac_First_Name"
         android:singleLine="true"
-        android:text="Iran"
-        android:textSize="@dimen/dp15"
-        />
+        android:textColorHint="@color/hint_edit_text"
+        android:textSize="@dimen/dp15" />
+
+      <View
+        android:id="@+id/ac_view_firstName"
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/line_edit_text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp16"
+      android:layout_marginRight="@dimen/dp16"
+      android:layout_marginTop="@dimen/dp12">
+
+      <net.iGap.module.MEditText
+        android:id="@+id/ac_edt_lastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/fac_Last_Name"
+        android:singleLine="true"
+        android:textColorHint="@color/hint_edit_text"
+        android:textSize="@dimen/dp15" />
+
+      <View
+        android:id="@+id/ac_view_lastName"
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/line_edit_text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+      android:id="@+id/ac_txt_chooseCountry"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp16"
+      android:layout_marginRight="@dimen/dp16"
+      android:layout_marginTop="@dimen/dp12"
+      android:gravity="center_vertical"
+      android:inputType="phone"
+      android:paddingBottom="@dimen/dp6"
+      android:paddingTop="@dimen/dp6"
+      android:singleLine="true"
+      android:text="Iran"
+      android:textSize="@dimen/dp15" />
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp12"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        >
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/dp12"
+      android:layoutDirection="ltr"
+      android:orientation="horizontal">
 
       <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/dp8"
+        android:paddingRight="@dimen/dp8">
+
+        <TextView
+          android:id="@+id/ac_txt_codeCountry"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:paddingRight="@dimen/dp8"
-          android:paddingEnd="@dimen/dp8"
-          >
-        <TextView
-            android:id="@+id/ac_txt_codeCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp6"
-            android:layout_marginRight="@dimen/dp6"
-            android:gravity="bottom"
-            android:inputType="phone"
-            android:paddingBottom="@dimen/dp6"
-            android:paddingTop="@dimen/dp6"
-            android:singleLine="true"
-            android:text="+98"
-            android:textSize="@dimen/dp15"
+          android:layout_marginLeft="@dimen/dp6"
+          android:layout_marginRight="@dimen/dp6"
+          android:gravity="bottom"
+          android:inputType="phone"
+          android:paddingBottom="@dimen/dp6"
+          android:paddingTop="@dimen/dp6"
+          android:singleLine="true"
+          android:text="+98"
+          android:textSize="@dimen/dp15"
 
-            />
+          />
+
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/line_edit_text"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_gravity="bottom"
+          android:background="@color/line_edit_text" />
       </LinearLayout>
 
       <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.vicmikhailau.maskededittext.MaskedEditText
-            android:id="@+id/ac_edt_phoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:imeOptions="flagNoExtractUi"
-            android:inputType="phone"
-            android:padding="@dimen/dp4"
-            android:textAlignment="gravity"
-            android:textColor="@color/rg_black_register"
-            android:textColorHint="@color/hint_edit_text"
-            android:textSize="@dimen/dp15"
-            app:mask="###-###-####"
-            />
+          android:id="@+id/ac_edt_phoneNumber"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/transparent"
+          android:imeOptions="flagNoExtractUi"
+          android:inputType="phone"
+          android:padding="@dimen/dp4"
+          android:textAlignment="gravity"
+          android:textColor="@color/rg_black_register"
+          android:textColorHint="@color/hint_edit_text"
+          android:textSize="@dimen/dp15"
+          android:maxLength="18"
+          app:mask="###-###-####" />
+
         <View
-            android:id="@+id/ac_view_phoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/line_edit_text"
-            android:layout_alignParentBottom="true"
-            />
+          android:id="@+id/ac_view_phoneNumber"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_alignParentBottom="true"
+          android:layout_gravity="bottom"
+          android:background="@color/line_edit_text" />
       </RelativeLayout>
 
     </LinearLayout>

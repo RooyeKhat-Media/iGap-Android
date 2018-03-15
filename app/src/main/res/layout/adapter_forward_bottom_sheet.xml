@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/root_forward_bottom_sheet"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp10">
+
+    <net.iGap.module.CircleImageView
+      android:id="@+id/imageView_forward_bottomSheet"
+      android:layout_width="@dimen/dp48"
+      android:layout_height="@dimen/dp48" />
+
+    <net.iGap.module.EmojiTextViewE
+      android:id="@+id/txtTitle_forward_bottomSheet"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:singleLine="true"
+      android:text="Dominika"
+      android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+      android:textColor="#000000"
+      android:textSize="@dimen/dp13" />
+
+  </LinearLayout>
+
+  <com.hanks.library.AnimateCheckBox
+    android:id="@+id/checkBox_forward_bottomSheet"
+    android:layout_width="@dimen/dp24"
+    android:layout_height="@dimen/dp24"
+    android:layout_alignBottom="@+id/main"
+    android:layout_alignEnd="@+id/main"
+    android:layout_alignRight="@+id/main"
+    android:layout_gravity="center"
+    android:clickable="false"
+    android:visibility="visible"
+    app:animDuration="200"
+    app:checkedColor="@color/green"
+    app:lineColor="#fff"
+    app:lineWidth="1.2dp"
+    app:unCheckColor="#ff0" />
+
+
+</RelativeLayout>

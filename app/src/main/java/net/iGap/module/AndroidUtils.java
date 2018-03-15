@@ -28,6 +28,11 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import net.iGap.G;
+import net.iGap.R;
+import net.iGap.proto.ProtoGlobal;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,9 +44,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import net.iGap.G;
-import net.iGap.R;
-import net.iGap.proto.ProtoGlobal;
 
 public final class AndroidUtils {
     private AndroidUtils() throws InstantiationException {
@@ -187,7 +189,7 @@ public final class AndroidUtils {
      * get n bytes from file, starts from beginning
      *
      * @param uploadStructure FileUploadStructure
-     * @param bytesCount total bytes
+     * @param bytesCount      total bytes
      * @return bytes
      * @throws IOException
      */
@@ -240,7 +242,7 @@ public final class AndroidUtils {
      * get n bytes from file, starts from end
      *
      * @param uploadStructure FileUploadStructure
-     * @param bytesCount total bytes
+     * @param bytesCount      total bytes
      * @return bytes
      * @throws IOException
      */
@@ -262,8 +264,8 @@ public final class AndroidUtils {
      * get n bytes from specified offset
      *
      * @param uploadStructure FileUploadStructure
-     * @param offset start reading from
-     * @param bytesCount total reading bytes
+     * @param offset          start reading from
+     * @param bytesCount      total reading bytes
      * @return bytes
      * @throws IOException
      */
@@ -384,7 +386,7 @@ public final class AndroidUtils {
      * convert bytes to human readable length
      *
      * @param bytes bytes
-     * @param si Boolean
+     * @param si    Boolean
      * @return String
      */
     public static String humanReadableByteCount(long bytes, boolean si) {
@@ -504,6 +506,12 @@ public final class AndroidUtils {
         int index = name.lastIndexOf(".");
         if (index >= 0) {
             _mimeType = name.substring(index);
+        }
+
+        if (messageType == ProtoGlobal.RoomMessageType.IMAGE || messageType == ProtoGlobal.RoomMessageType.IMAGE_TEXT) {
+            if (_mimeType.equals("")) {
+                _mimeType = ".jpg";
+            }
         }
 
         String _result = "";

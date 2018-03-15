@@ -46,11 +46,11 @@ import static net.iGap.fragments.FragmentiGapMap.pageUserList;
 
 public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBackPressedListener, OnMapUsersGet {
 
+    private final int DEFAULT_LOOP_TIME = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     private RecyclerView mRecyclerView;
     //private MapUserAdapterA mAdapter;
     private MapUserAdapter mAdapter;
     private HashMap<Long, CircleImageView> hashMapAvatar = new HashMap<>();
-    private final int DEFAULT_LOOP_TIME = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     private ImageView imvNothingFound;
     private TextView txtEmptyListComment;
     private RippleView rippleBack;
@@ -320,6 +320,26 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
     //        }
     //    }
     //}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (realmMapUsers != null && !realmMapUsers.isClosed()) {
+            realmMapUsers.close();
+        }
+        ((ActivityMain) G.fragmentActivity).setOnBackPressedListener(FragmentMapUsers.this, true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentiGapMap.page = FragmentiGapMap.pageUserList;
+        if (FragmentiGapMap.rippleMoreMap != null) {
+            FragmentiGapMap.rippleMoreMap.setVisibility(View.GONE);
+        }
+        if (FragmentiGapMap.fabGps != null) {
+            FragmentiGapMap.fabGps.setVisibility(View.GONE);
+        }
+    }
 
     /**
      * **********************************************************************************
@@ -442,27 +462,6 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
                 distance = (CustomTextViewMedium) itemView.findViewById(R.id.txt_user_distance_map);
 
             }
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (realmMapUsers != null && !realmMapUsers.isClosed()) {
-            realmMapUsers.close();
-        }
-        ((ActivityMain) G.fragmentActivity).setOnBackPressedListener(FragmentMapUsers.this, true);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        FragmentiGapMap.page = FragmentiGapMap.pageUserList;
-        if (FragmentiGapMap.rippleMoreMap != null) {
-            FragmentiGapMap.rippleMoreMap.setVisibility(View.GONE);
-        }
-        if (FragmentiGapMap.fabGps != null) {
-            FragmentiGapMap.fabGps.setVisibility(View.GONE);
         }
     }
 }

@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:clickable="true"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <TextView
-      android:id="@+id/cslum_txt_unread_message"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/dp8"
-      android:paddingTop="@dimen/dp4"
-      android:paddingBottom="@dimen/dp4"
-      android:layout_marginTop="@dimen/dp8"
-      android:background="@color/green"
-      android:textSize="@dimen/dp16"
-      android:gravity="center"
-      android:textStyle="bold"
-      android:text="@string/unread_message"
-      android:textColor="@color/white"
-      />
+    android:id="@+id/cslum_txt_unread_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp8"
+    android:layout_marginTop="@dimen/dp8"
+    android:background="@color/green"
+    android:gravity="center"
+    android:paddingBottom="@dimen/dp4"
+    android:paddingTop="@dimen/dp4"
+    android:text="@string/unread_message"
+    android:textColor="@color/white"
+    android:textSize="@dimen/dp16"
+    android:textStyle="bold" />
 </FrameLayout>

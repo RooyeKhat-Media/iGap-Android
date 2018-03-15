@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
+  android:shape="oval">
 
-    <solid android:color="@color/white" />
-    <gradient
-        android:startColor="@color/white"
-        android:centerColor="@color/white"
-        android:endColor="@color/white"/>
-    <stroke
-        android:color="@color/gray_f2"
-        android:width="1dp"/>
+  <solid android:color="@color/white" />
+  <gradient
+    android:centerColor="@color/white"
+    android:endColor="@color/white"
+    android:startColor="@color/white" />
+  <stroke
+    android:width="1dp"
+    android:color="@color/gray_f2" />
 
-    <padding
-        android:top="@dimen/dp4"
-        android:bottom="@dimen/dp4"
-        android:left="@dimen/dp4"
-        android:right="@dimen/dp4"/>
+  <padding
+    android:bottom="@dimen/dp4"
+    android:left="@dimen/dp4"
+    android:right="@dimen/dp4"
+    android:top="@dimen/dp4" />
 </shape>

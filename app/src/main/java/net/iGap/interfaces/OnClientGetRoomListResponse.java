@@ -10,9 +10,10 @@
 
 package net.iGap.interfaces;
 
-import java.util.List;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+
+import java.util.List;
 
 public interface OnClientGetRoomListResponse {
     void onClientGetRoomList(List<ProtoGlobal.Room> roomList, ProtoResponse.Response response, String identity);

@@ -31,7 +31,8 @@ public class NotTouchableCoordinatorLayout extends CoordinatorLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
         return false;
     }
 }

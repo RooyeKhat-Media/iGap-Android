@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:background="@color/black"
+  android:layout_margin="@dimen/dp2"
+  android:orientation="vertical">
+
+  <RelativeLayout
+    android:layout_width="@dimen/dp120"
+    android:layout_height="wrap_content">
+
+    <it.chengdazhi.styleimageview.StyleImageView
+      android:id="@+id/imgFilter"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="center"
+      app:enable_animation="false" />
+
+    <TextView
+      android:id="@+id/txtName"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:gravity="center"
+      android:textColor="@color/white"
+      android:textSize="@dimen/dp13"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:text="style"
+      android:layout_marginBottom="@dimen/dp10" />
+
+  </RelativeLayout>
+</LinearLayout>

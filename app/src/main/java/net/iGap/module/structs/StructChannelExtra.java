@@ -13,9 +13,11 @@ package net.iGap.module.structs;
 import net.iGap.G;
 import net.iGap.realm.RealmChannelExtra;
 import net.iGap.realm.RealmRoom;
+
 import org.parceler.Parcel;
 
-@Parcel public class StructChannelExtra {
+@Parcel
+public class StructChannelExtra {
 
     public long messageId = 0;
     public String signature = "";

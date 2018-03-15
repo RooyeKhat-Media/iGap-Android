@@ -17,9 +17,11 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
+
 import net.iGap.G;
 
-@TargetApi(Build.VERSION_CODES.M) public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
+@TargetApi(Build.VERSION_CODES.M)
+public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
 
     private Context context;

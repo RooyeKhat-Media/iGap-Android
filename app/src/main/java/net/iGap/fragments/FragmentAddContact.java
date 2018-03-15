@@ -28,11 +28,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.vicmikhailau.maskededittext.MaskedEditText;
-import java.io.IOException;
-import java.util.ArrayList;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperAddContact;
@@ -44,10 +44,14 @@ import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.request.RequestUserContactImport;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static net.iGap.G.context;
 
 public class FragmentAddContact extends BaseFragment {
 
+    public static OnCountryCallBack onCountryCallBack;
     private EditText edtFirstName;
     private EditText edtLastName;
     private MaskedEditText edtPhoneNumber;
@@ -55,7 +59,6 @@ public class FragmentAddContact extends BaseFragment {
     private RippleView rippleSet;
     private MaterialDesignTextView txtSet;
     private TextView txtChooseCountry;
-    public static OnCountryCallBack onCountryCallBack;
     private TextView txtCodeCountry;
 
     public static FragmentAddContact newInstance() {
@@ -90,7 +93,6 @@ public class FragmentAddContact extends BaseFragment {
         });
 
         view.findViewById(R.id.fac_ll_toolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
-
 
 
         txtSet = (MaterialDesignTextView) view.findViewById(R.id.ac_txt_set);
@@ -244,7 +246,11 @@ public class FragmentAddContact extends BaseFragment {
                         txtChooseCountry.setText(nameCountry);
                         txtCodeCountry.setText("+" + code);
                         edtPhoneNumber.setText("");
-                        edtPhoneNumber.setMask(mask.replace("X", "#").replace(" ", "-"));
+                        if (!mask.equals(" ")) {
+                            edtPhoneNumber.setMask(mask.replace("X", "#").replace(" ", "-"));
+                        } else {
+                            edtPhoneNumber.setMask("##################");
+                        }
                     }
                 });
             }

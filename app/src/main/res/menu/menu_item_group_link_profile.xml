@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_group_link_copy"
-        android:numericShortcut="1"
-        android:title="@string/group_link_copy"/>
-    <item
-        android:id="@+id/menu_group_link_revoke"
-        android:icon="@mipmap/cross"
-        android:numericShortcut="2"
-        android:title="@string/group_link_revoke"/>
+  <item
+    android:id="@+id/menu_group_link_copy"
+    android:numericShortcut="1"
+    android:title="@string/group_link_copy" />
+  <item
+    android:id="@+id/menu_group_link_revoke"
+    android:icon="@mipmap/cross"
+    android:numericShortcut="2"
+    android:title="@string/group_link_revoke" />
 
 
 </menu>

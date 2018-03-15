@@ -28,7 +28,8 @@ public final class HelperRealm {
     public static void realmTruncate() {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
-            @Override public void execute(Realm realm) {
+            @Override
+            public void execute(Realm realm) {
                 realm.deleteAll();
             }
         });

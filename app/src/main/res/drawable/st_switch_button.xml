@@ -3,10 +3,10 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/on" android:state_checked="true" android:state_pressed="true" />
-    <item android:drawable="@drawable/on" android:state_checked="true" android:state_focused="false" />
-    <item android:drawable="@drawable/off" android:state_checked="false" android:state_pressed="true" />
-    <item android:drawable="@drawable/off" android:state_checked="false" android:state_focused="false" />
+  <item android:drawable="@drawable/on" android:state_checked="true" android:state_pressed="true" />
+  <item android:drawable="@drawable/on" android:state_checked="true" android:state_focused="false" />
+  <item android:drawable="@drawable/off" android:state_checked="false" android:state_pressed="true" />
+  <item android:drawable="@drawable/off" android:state_checked="false" android:state_focused="false" />
 
 </selector>
 

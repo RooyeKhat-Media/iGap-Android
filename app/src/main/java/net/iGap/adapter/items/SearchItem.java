@@ -120,11 +120,16 @@ public class SearchItem extends AbstractItem<SearchItem, SearchItem.ViewHolder> 
                     @Override
                     public void run() {
                         hashMapAvatarSearchFragment.get(SearchItem.this.getIdentifier())
-                            .setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.avatar.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
+                                .setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.avatar.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                     }
                 });
             }
         });
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -144,11 +149,6 @@ public class SearchItem extends AbstractItem<SearchItem, SearchItem.ViewHolder> 
             txtIcon = (TextView) view.findViewById(R.id.sfsl_txt_icon);
             txtTime = (TextView) view.findViewById(R.id.sfsl_txt_time);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }
 

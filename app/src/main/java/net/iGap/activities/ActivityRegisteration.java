@@ -2,10 +2,7 @@ package net.iGap.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentIntroduce;
@@ -15,11 +12,13 @@ import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.StartupActions;
 
+import java.io.IOException;
+
 public class ActivityRegisteration extends ActivityEnhanced {
 
     public static final String showProfile = "showProfile";
 
-    FrameLayout layoutRoot;
+    // FrameLayout layoutRoot;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,7 @@ public class ActivityRegisteration extends ActivityEnhanced {
 
         boolean showPro = false;
         try {
-            if (getParent() != null && getIntent().getExtras() != null) {
+            if (getIntent() != null && getIntent().getExtras() != null) {
                 showPro = getIntent().getExtras().getBoolean(showProfile);
             }
 
@@ -64,7 +63,7 @@ public class ActivityRegisteration extends ActivityEnhanced {
             G.isLandscape = false;
         }
 
-        layoutRoot = (FrameLayout) findViewById(R.id.ar_layout_root);
+        //  layoutRoot = (FrameLayout) findViewById(R.id.ar_layout_root);
 
         if (showPro) {
             loadFragmentProfile();
@@ -74,23 +73,30 @@ public class ActivityRegisteration extends ActivityEnhanced {
     }
 
     private void loadFragmentProfile() {
-        FragmentRegistrationNickname fragment = new FragmentRegistrationNickname();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.ar_layout_root, fragment)
-                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left)
-                .commit();
+
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
+                FragmentRegistrationNickname fragment = new FragmentRegistrationNickname();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.ar_layout_root, fragment)
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left)
+                        .commitAllowingStateLoss();
+            }
+        });
+
     }
 
-    private void setFraymeSize() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        int size = Math.min(width, height) - 50;
-        ViewGroup.LayoutParams lp = layoutRoot.getLayoutParams();
-        lp.width = size;
-        lp.height = size;
-    }
+    //private void setFraymeSize() {
+    //    DisplayMetrics displayMetrics = new DisplayMetrics();
+    //    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+    //    int height = displayMetrics.heightPixels;
+    //    int width = displayMetrics.widthPixels;
+    //    int size = Math.min(width, height) - 50;
+    //    ViewGroup.LayoutParams lp = layoutRoot.getLayoutParams();
+    //    lp.width = size;
+    //    lp.height = size;
+    //}
 
     private void loadFragmentIntroduce() {
         G.handler.postDelayed(new Runnable() {
@@ -111,5 +117,10 @@ public class ActivityRegisteration extends ActivityEnhanced {
                 }
             }
         }, 1000);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

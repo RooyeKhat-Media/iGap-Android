@@ -1,74 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true"
-    tools:ignore="MissingPrefix"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
 
 
   <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/asn_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
+      android:id="@+id/asn_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="@color/toolbar_background"
+      android:layoutDirection="ltr"
+      android:padding="0dp"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
 
-        >
+      >
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stns_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+          android:id="@+id/stns_ripple_back"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/stns_txt_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
+            android:id="@+id/stns_txt_back"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_back_arrow"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
         </net.iGap.libs.rippleeffect.RippleView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/st_titleToolbar_page_Notification_and_sounds"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_toEndOf="@+id/stns_ripple_back"
+          android:layout_toRightOf="@+id/stns_ripple_back"
+          android:gravity="center"
+          android:text="@string/st_titleToolbar_page_Notification_and_sounds"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal"
+          android:visibility="visible" />
 
       </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -77,286 +71,259 @@
 
 
   <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@android:color/white"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp4"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp4"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="visible">
 
         <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_messageNotification"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_messageNotification"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
           <TextView
-              android:id="@+id/stns_txt_alert"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical|start"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_alert"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_alert"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_alert"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_alert"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:gravity="start"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_alert"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:gravity="start"
+            android:textOff=""
+            android:textOn="" />
 
         </LinearLayout>
 
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_messagePreview"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_messagePreview"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <ToggleButton
-              android:id="@+id/stns_toggle_messagePreview"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <LinearLayout
-            android:id="@+id/stns_layout_ledColorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
+            android:id="@+id/stns_txt_messagePreview"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_messagePreview"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
+
+          <ToggleButton
+            android:id="@+id/stns_toggle_messagePreview"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
+
+        </LinearLayout>
+
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
+
+        <LinearLayout
+          android:id="@+id/stns_layout_ledColorMessage"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
 
           <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_led_color"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_led_color"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
 
           <ImageView
-              android:id="@+id/stns_img_ledColorMessage"
-              android:layout_width="@dimen/dp24"
-              android:layout_height="@dimen/dp24"
-              android:layout_gravity="center_vertical"
-              android:layout_marginLeft="@dimen/dp16"
-              android:layout_marginRight="@dimen/dp16"
-              android:background="@drawable/circle_color_notificatin_setting"
-              android:gravity="center"
-              />
+            android:id="@+id/stns_img_ledColorMessage"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_vibrate_message"
+          android:id="@+id/stns_layout_vibrate_message"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_vibrate"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_vibrate"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_vibrate_message_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_vibrate_message_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_popupNotification_message"
+          android:id="@+id/stns_layout_popupNotification_message"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_popupNotification"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_popupNotification"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_popupNotification_message_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_popupNotification_message_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_sound_message"
+          android:id="@+id/stns_layout_sound_message"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_sound"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_sound"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_sound_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_sound_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
 
@@ -365,273 +332,248 @@
 
       <!--group-->
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/st_background2"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp4"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/st_background2"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp4"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="visible">
 
         <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_groupNotification"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_groupNotification"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_alert_group"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
+            android:id="@+id/stns_txt_alert_group"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
 
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_alert"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <ToggleButton
-              android:id="@+id/stns_toggle_alert_group"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
-
-
-          <TextView
-              android:id="@+id/stns_txt_messagePreview_group"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_messagePreview"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <ToggleButton
-              android:id="@+id/stns_toggle_messagePreview_group"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
-
-        <LinearLayout
-            android:id="@+id/stns_layout_ledColor_group"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            >
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_alert"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
+
+          <ToggleButton
+            android:id="@+id/stns_toggle_alert_group"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
+
+
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
+
 
           <TextView
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingLeft="@dimen/dp16"
-              android:paddingRight="@dimen/dp16"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_led_color"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_messagePreview_group"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_messagePreview"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
+
+          <ToggleButton
+            android:id="@+id/stns_toggle_messagePreview_group"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
+
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
+
+        <LinearLayout
+          android:id="@+id/stns_layout_ledColor_group"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:gravity="center_vertical"
+          android:orientation="horizontal">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_led_color"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ImageView
-              android:id="@+id/stns_img_ledColor_group"
-              android:layout_width="@dimen/dp24"
-              android:layout_height="@dimen/dp24"
-              android:layout_gravity="center_vertical"
-              android:layout_marginLeft="@dimen/dp16"
-              android:layout_marginRight="@dimen/dp16"
-              android:background="@drawable/circle_color_notificatin_setting"
-              android:gravity="center"
-              />
+            android:id="@+id/stns_img_ledColor_group"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_vibrate_group"
+          android:id="@+id/stns_layout_vibrate_group"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_vibrate"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_vibrate"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_vibrate_group_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_vibrate_group_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_popupNotification_group"
+          android:id="@+id/stns_layout_popupNotification_group"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_popupNotification"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_popupNotification"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_popupNotification_group_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_popupNotification_group_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:id="@+id/stns_layout_sound_group"
+          android:id="@+id/stns_layout_sound_group"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_sound"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_sound"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_sound_group_text"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_sound_group_text"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
       </LinearLayout>
@@ -639,193 +581,176 @@
 
       <!--in app notification-->
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@android:color/white"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp4"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp4"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="visible">
 
         <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_in_app_notification"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_in_app_notification"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_app_sound"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_in_app_sound"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_app_sound"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_in_app_sound"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_app_sound"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_app_sound"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_app_vibrate"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_in_app_vibrate"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_app_vibrate"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_in_app_vibrate"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_app_vibrate"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_app_vibrate"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_app_preview"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
+            android:id="@+id/stns_txt_app_preview"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
 
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_in_app_preview"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_in_app_preview"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_app_preview"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_app_preview"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_chat_sound"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_in_chat_sound"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_chat_sound"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_in_chat_sound"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_chat_sound"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_chat_sound"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
@@ -833,418 +758,382 @@
 
       <!--this part is Gone-->
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/st_background2"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp4"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="gone"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/st_background2"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp4"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="gone">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_Events"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_Events"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <TextView
-              android:id="@+id/stns_txt_Contact_joined"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
+            android:id="@+id/stns_txt_Contact_joined"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
 
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_Contact_joined_igap"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_Contact_joined_igap"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_Contact_joined"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_Contact_joined"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
           <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
 
             <ToggleButton
-                android:id="@+id/stns_toggle_pinned_message"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:background="@drawable/st_switch_button"
-                android:textOff=""
-                android:textOn=""
-                />
+              android:id="@+id/stns_toggle_pinned_message"
+              android:layout_width="@dimen/dp40"
+              android:layout_height="@dimen/dp40"
+              android:background="@drawable/st_switch_button"
+              android:textOff=""
+              android:textOn="" />
           </LinearLayout>
 
           <TextView
-              android:id="@+id/stns_txt_pinned_message"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_centerInParent="true"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_pinned_message"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_pinned_message"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_pinned_message"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
 
         </RelativeLayout>
       </LinearLayout>
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/st_background2"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp4"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/st_background2"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp4"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="visible">
 
         <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_other"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_other"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
 
         <TextView
-            android:id="@+id/stns_txt_title_keep_alive_service"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            android:text="@string/st_keep_alive_service"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp16"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile.ttf"
-            />
+          android:id="@+id/stns_txt_title_keep_alive_service"
+          fontPath="fonts/IRANSansMobile.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:text="@string/st_keep_alive_service"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp16"
+          android:textStyle="normal" />
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp12"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:paddingBottom="@dimen/dp12"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16">
 
 
           <com.uncopt.android.widget.text.justify.JustifiedTextView
-              android:id="@+id/stns_txt_keep_alive_service"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_text_keep_alive_service"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_keep_alive_service"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_text_keep_alive_service"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
           <ToggleButton
-              android:id="@+id/stns_toggle_keep_alive_service"
-              android:layout_width="@dimen/dp40"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn=""
-              />
+            android:id="@+id/stns_toggle_keep_alive_service"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/st_switch_button"
+            android:textOff=""
+            android:textOn="" />
 
 
         </LinearLayout>
 
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText"
+          android:visibility="gone" />
 
         <!--this part is Gone-->
         <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:padding="@dimen/dp12"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:visibility="gone">
+
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
+
+            <ToggleButton
+              android:id="@+id/stns_toggle_background_connection"
+              android:layout_width="@dimen/dp40"
+              android:layout_height="@dimen/dp40"
+              android:background="@drawable/st_switch_button"
+              android:textOff=""
+              android:textOn="" />
+
+          </LinearLayout>
+
+          <TextView
+            android:id="@+id/stns_txt_title_background_connection"
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp12"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            android:visibility="gone"
-            >
-
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
-
-            <ToggleButton
-                android:id="@+id/stns_toggle_background_connection"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:background="@drawable/st_switch_button"
-                android:textOff=""
-                android:textOn=""
-                />
-
-          </LinearLayout>
+            android:text="@string/st_background_connection"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:id="@+id/stns_txt_title_background_connection"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="@string/st_background_connection"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/stns_txt_background_connection"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/stns_txt_title_background_connection"
-              android:paddingEnd="@dimen/dp52"
-              android:paddingRight="@dimen/dp52"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_text_background_connection"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_background_connection"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stns_txt_title_background_connection"
+            android:paddingEnd="@dimen/dp52"
+            android:paddingRight="@dimen/dp52"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_text_background_connection"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
 
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText"
+          android:visibility="gone" />
 
         <!--this part is Gone-->
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            android:visibility="gone"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="horizontal"
+          android:paddingEnd="@dimen/dp16"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:paddingStart="@dimen/dp16"
+          android:visibility="gone">
 
           <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_centerInParent="true"
-              >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true">
 
             <ToggleButton
-                android:id="@+id/stns_badge_counter"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:background="@drawable/st_switch_button"
-                android:textOff=""
-                android:textOn=""
-                />
+              android:id="@+id/stns_badge_counter"
+              android:layout_width="@dimen/dp40"
+              android:layout_height="@dimen/dp40"
+              android:background="@drawable/st_switch_button"
+              android:textOff=""
+              android:textOn="" />
           </LinearLayout>
 
           <TextView
-              android:id="@+id/stns_txt_badge_countent"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_centerInParent="true"
-              android:gravity="center_vertical"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/st_badge_counter"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/stns_txt_badge_countent"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dp4"
+            android:text="@string/st_badge_counter"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
         </RelativeLayout>
 
         <!--this part is Gone-->
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_editText"
-            android:visibility="gone"
-            />
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/background_editText"
+          android:visibility="gone" />
 
 
         <!--this part is Gone-->
         <LinearLayout
-            android:id="@+id/st_layout_Repeat_Notifications"
+          android:id="@+id/st_layout_Repeat_Notifications"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp48"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16"
+          android:visibility="gone">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:visibility="gone"
-            >
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:gravity="center_vertical"
+            android:text="@string/st_Repeat_Notifications"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".6"
-              android:gravity="center_vertical"
-              android:text="@string/st_Repeat_Notifications"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:id="@+id/st_txt_Repeat_Notifications"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight=".4"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            android:id="@+id/st_txt_Repeat_Notifications"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_sound"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
       </LinearLayout>
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white"
-          android:orientation="vertical"
-          android:paddingBottom="@dimen/dp16"
-          android:paddingTop="@dimen/dp8"
-          android:visibility="visible"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp16"
+        android:paddingTop="@dimen/dp8"
+        android:visibility="visible">
 
         <net.iGap.module.HeaderTextview
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
-            android:paddingTop="@dimen/dp12"
-            android:text="@string/st_title_reset"
-            android:textColor="@color/green"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_title_reset"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal" />
 
         <LinearLayout
-            android:id="@+id/st_layout_reset_all_notification"
+          android:id="@+id/st_layout_reset_all_notification"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:paddingLeft="@dimen/dp16"
+          android:paddingRight="@dimen/dp16">
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            >
+            android:gravity="center_vertical"
+            android:text="@string/st_reset_all_notification"
+            android:textColor="@color/black_register"
+            android:textSize="@dimen/dp16"
+            android:textStyle="normal" />
 
           <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:text="@string/st_reset_all_notification"
-              android:textColor="@color/black_register"
-              android:textSize="@dimen/dp16"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical|top"
-              android:text="@string/st_text_reset_all_notification"
-              android:textColor="@color/cardview_dark_background"
-              android:textSize="@dimen/dp13"
-              android:textStyle="normal"
-              fontPath="fonts/IRANSansMobile.ttf"
-              />
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|top"
+            android:text="@string/st_text_reset_all_notification"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="@dimen/dp13"
+            android:textStyle="normal" />
 
         </LinearLayout>
       </LinearLayout>

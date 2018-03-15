@@ -10,20 +10,22 @@
 
 package net.iGap.module;
 
+import net.iGap.G;
+import net.iGap.helper.HelperNumerical;
+
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.Arrays;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import net.iGap.G;
-import net.iGap.helper.HelperNumerical;
 
 /**
  * Encrypt and decrypt messages using AES 256 bit encryption that are compatible with AESCrypt-ObjC
@@ -34,7 +36,7 @@ public final class AESCrypt {
     /**
      * More flexible AES encrypt that doesn't encode
      *
-     * @param key AES key typically 128, 192 or 256 bit
+     * @param key     AES key typically 128, 192 or 256 bit
      * @param message in bytes (assumed it's already been decoded)
      * @return Encrypted cipher text (not encoded)
      * @throws GeneralSecurityException if something goes wrong during encryption
@@ -60,8 +62,8 @@ public final class AESCrypt {
     /**
      * More flexible AES decrypt that doesn't encode
      *
-     * @param key AES key typically 128, 192 or 256 bit
-     * @param iv Initiation Vector
+     * @param key               AES key typically 128, 192 or 256 bit
+     * @param iv                Initiation Vector
      * @param decodedCipherText in bytes (assumed it's already been decoded)
      * @return Decrypted message cipher text (not encoded)
      * @throws GeneralSecurityException if something goes wrong during encryption
@@ -76,10 +78,10 @@ public final class AESCrypt {
     /**
      * encrypt symmetricKey with PublicKey
      *
-     * @param keyServer publicKey that get from server
-     * @param keyClient publicKey that exist in client
+     * @param keyServer    publicKey that get from server
+     * @param keyClient    publicKey that exist in client
      * @param symmetricKey random String that generate in client
-     * @param chunkSize split encrypted symmetricKey with this chunkSize and reEncrypt
+     * @param chunkSize    split encrypted symmetricKey with this chunkSize and reEncrypt
      */
 
     public static byte[] encryptSymmetricKey(PublicKey keyServer, PublicKey keyClient, byte[] symmetricKey, int chunkSize) {

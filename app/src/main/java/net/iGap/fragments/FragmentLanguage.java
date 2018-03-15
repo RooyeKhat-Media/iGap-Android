@@ -18,9 +18,9 @@ import net.iGap.viewmodel.FragmentLanguageViewModel;
 public class FragmentLanguage extends BaseFragment {
 
 
+    public static boolean languageChanged = false;
     private FragmentLanguageViewModel fragmentLanguageViewModel;
     private FragmentLanguageBinding fragmentLanguageBinding;
-    public static boolean languageChanged = false;
 
 
     public FragmentLanguage() {

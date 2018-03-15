@@ -28,12 +28,6 @@ public class HelperGetAction {
 
     private static CopyOnWriteArrayList<StructAction> structActions = new CopyOnWriteArrayList<>();
 
-    private static class StructAction {
-        public long roomId;
-        public long userId;
-        public ProtoGlobal.ClientAction action;
-    }
-
     public static String getAction(long roomId, ProtoGlobal.Room.Type type, ProtoGlobal.ClientAction clientAction) {
         if (type == ProtoGlobal.Room.Type.CHAT) {
             String action = convertActionEnum(clientAction);
@@ -197,5 +191,11 @@ public class HelperGetAction {
                 structActions.add(struct);
             }
         }
+    }
+
+    private static class StructAction {
+        public long roomId;
+        public long userId;
+        public ProtoGlobal.ClientAction action;
     }
 }

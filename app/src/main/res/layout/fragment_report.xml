@@ -1,103 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootFragmentLanguage"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:orientation="vertical"
-    tools:context="net.iGap.fragments.FragmentLanguage"
-    tools:ignore="MissingPrefix"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/rootFragmentLanguage"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/white"
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:context="net.iGap.fragments.FragmentLanguage"
+  tools:ignore="MissingPrefix"
 
-    >
+  >
 
   <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/asn_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:background="@color/toolbar_background"
-        android:layoutDirection="ltr"
-        android:padding="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
+      android:id="@+id/asn_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="@color/toolbar_background"
+      android:layoutDirection="ltr"
+      android:padding="0dp"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
 
-        >
+      >
 
       <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/stns_ripple_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            >
+          android:id="@+id/stns_ripple_back"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/stns_txt_back"
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:text="@string/md_back_arrow"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
+            android:id="@+id/stns_txt_back"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_back_arrow"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
         </net.iGap.libs.rippleeffect.RippleView>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/stns_ripple_back"
-            android:layout_toRightOf="@+id/stns_ripple_back"
-            android:gravity="center"
-            android:text="@string/report"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp18"
-            android:textStyle="normal"
-            android:visibility="visible"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_alignParentTop="true"
+          android:layout_toEndOf="@+id/stns_ripple_back"
+          android:layout_toRightOf="@+id/stns_ripple_back"
+          android:gravity="center"
+          android:text="@string/report"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp18"
+          android:textStyle="normal"
+          android:visibility="visible" />
 
         <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/verifyPassword_rippleOk"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp"
-            rv_centered="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            >
+          android:id="@+id/verifyPassword_rippleOk"
+          rv_centered="true"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentRight="true"
+          android:visibility="visible"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
 
           <net.iGap.module.MaterialDesignTextView
-              android:layout_width="@dimen/dp52"
-              android:layout_height="match_parent"
-              android:layout_alignParentEnd="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentTop="true"
-              android:gravity="center"
-              android:text="@string/md_check_symbol"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background"
-              />
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
 
         </net.iGap.libs.rippleeffect.RippleView>
 
@@ -107,33 +100,29 @@
   </android.support.design.widget.AppBarLayout>
 
   <LinearLayout
-      android:id="@+id/st_layout_fa"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      >
+    android:id="@+id/st_layout_fa"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp44"
-        android:layout_margin="@dimen/dp16"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp44"
+      android:layout_margin="@dimen/dp16">
 
       <EditText
-          android:id="@+id/edtReport"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@android:color/transparent"
-          android:hint="@string/desc"
-          android:minHeight="@dimen/dp44"
-          />
+        android:id="@+id/edtReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="@string/desc"
+        android:minHeight="@dimen/dp44" />
 
       <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_alignParentBottom="true"
-          android:background="@color/green"
-          />
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green" />
 
     </RelativeLayout>
   </LinearLayout>

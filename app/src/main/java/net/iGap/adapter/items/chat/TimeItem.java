@@ -14,11 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import io.realm.Realm;
-import java.util.List;
+
 import net.iGap.R;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.proto.ProtoGlobal;
+
+import java.util.List;
+
+import io.realm.Realm;
 
 public class TimeItem extends AbstractMessage<TimeItem, TimeItem.ViewHolder> {
 
@@ -51,6 +54,11 @@ public class TimeItem extends AbstractMessage<TimeItem, TimeItem.ViewHolder> {
         setTextIfNeeded(holder.text, mMessage.messageText);
     }
 
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView text;
@@ -62,10 +70,5 @@ public class TimeItem extends AbstractMessage<TimeItem, TimeItem.ViewHolder> {
              */
             //text = (TextView) view.findViewById(R.id.cslt_txt_time_date);
         }
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

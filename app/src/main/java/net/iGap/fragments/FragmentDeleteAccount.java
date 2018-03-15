@@ -25,9 +25,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import java.io.IOException;
+
 import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.R;
@@ -45,6 +46,8 @@ import net.iGap.module.IncomingSms;
 import net.iGap.proto.ProtoUserDelete;
 import net.iGap.request.RequestUserDelete;
 import net.iGap.request.RequestUserGetDeleteToken;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -202,61 +205,61 @@ public class FragmentDeleteAccount extends BaseFragment {
                 if (edtDeleteAccount.getText().length() > 0) {
 
                     new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.delete_account))
-                        .titleColor(G.context.getResources().getColor(android.R.color.black))
-                        .content(R.string.sure_delete_account).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
+                            .titleColor(G.context.getResources().getColor(android.R.color.black))
+                            .content(R.string.sure_delete_account).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
 
-                            //                                    String verificationCode = HelperString.regexExtractValue(smsMessage, regex);
-                            String verificationCode = edtDeleteAccount.getText().toString();
-                            if (verificationCode != null && !verificationCode.isEmpty() && isFirstClick) {
+                                    //                                    String verificationCode = HelperString.regexExtractValue(smsMessage, regex);
+                                    String verificationCode = edtDeleteAccount.getText().toString();
+                                    if (verificationCode != null && !verificationCode.isEmpty() && isFirstClick) {
 
-                                isFirstClick = false;
-                                G.onUserDelete = new OnUserDelete() {
-                                    @Override
-                                    public void onUserDeleteResponse() {
-                                        hideProgressBar();
-
-                                    }
-
-                                    @Override
-                                    public void Error(final int majorCode, final int minorCode, final int time) {
-
-                                        hideProgressBar();
-                                        isFirstClick = true;
-                                        G.handler.post(new Runnable() {
+                                        isFirstClick = false;
+                                        G.onUserDelete = new OnUserDelete() {
                                             @Override
-                                            public void run() {
-                                                if (dialog.isShowing()) dialog.dismiss();
-                                                switch (majorCode) {
-                                                    case 158:
-                                                        dialogWaitTime(R.string.USER_DELETE_MAX_TRY_LOCK, time, majorCode);
-                                                        break;
-                                                }
-                                            }
-                                        });
-                                    }
+                                            public void onUserDeleteResponse() {
+                                                hideProgressBar();
 
-                                    @Override
-                                    public void TimeOut() {
-                                        hideProgressBar();
-                                        isFirstClick = true;
-                                        G.handler.post(new Runnable() {
+                                            }
+
                                             @Override
-                                            public void run() {
+                                            public void Error(final int majorCode, final int minorCode, final int time) {
 
-                                                HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+                                                hideProgressBar();
+                                                isFirstClick = true;
+                                                G.handler.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        if (dialog.isShowing()) dialog.dismiss();
+                                                        switch (majorCode) {
+                                                            case 158:
+                                                                dialogWaitTime(R.string.USER_DELETE_MAX_TRY_LOCK, time, majorCode);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        });
-                                    }
-                                };
 
-                                showProgressBar();
-                                new RequestUserDelete().userDelete(verificationCode, ProtoUserDelete.UserDelete.Reason.OTHER);
-                            }
-                        }
-                    }).show();
+                                            @Override
+                                            public void TimeOut() {
+                                                hideProgressBar();
+                                                isFirstClick = true;
+                                                G.handler.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+
+                                                        HelperError.showSnackMessage(G.fragmentActivity.getResources().getString(R.string.time_out), false);
+                                                    }
+                                                });
+                                            }
+                                        };
+
+                                        showProgressBar();
+                                        new RequestUserDelete().userDelete(verificationCode, ProtoUserDelete.UserDelete.Reason.OTHER);
+                                    }
+                                }
+                            }).show();
                 } else {
 
 

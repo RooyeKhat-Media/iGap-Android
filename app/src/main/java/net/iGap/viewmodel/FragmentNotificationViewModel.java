@@ -45,26 +45,22 @@ import static net.iGap.R.string.array_Disable;
 
 public class FragmentNotificationViewModel {
 
+    private static final int DEFAULT = 0;
+    private static final int ENABLE = 1;
+    private static final int DISABLE = 2;
+    public ObservableField<String> notificationState = new ObservableField<>(G.fragmentActivity.getResources().getString(array_Default));
+    public ObservableField<String> vibrate = new ObservableField<>(G.fragmentActivity.getResources().getString(array_Default));
+    public ObservableField<String> sound = new ObservableField<>();
     private Realm realm;
     private RealmNotificationSetting realmNotificationSetting;
     private ProtoGlobal.Room.Type roomType;
     private FragmentNotificationBinding fragmentNotificationBinding;
-
-    private static final int DEFAULT = 0;
-    private static final int ENABLE = 1;
-    private static final int DISABLE = 2;
     private int realmNotification = 0;
     private int realmVibrate = 0;
     private int realmIdSound = 0;
     private int realmLedColor;
-
     private String realmSound = "iGap";
-
     private long roomId;
-
-    public ObservableField<String> notificationState = new ObservableField<>(G.fragmentActivity.getResources().getString(array_Default));
-    public ObservableField<String> vibrate = new ObservableField<>(G.fragmentActivity.getResources().getString(array_Default));
-    public ObservableField<String> sound = new ObservableField<>();
 
     public FragmentNotificationViewModel(FragmentNotificationBinding fragmentNotificationBinding, long roomId) {
         this.fragmentNotificationBinding = fragmentNotificationBinding;

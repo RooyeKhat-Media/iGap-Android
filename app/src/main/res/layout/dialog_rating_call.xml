@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    >
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <LinearLayout
-      android:id="@+id/arb_layout_rate"
-      android:layout_width="@dimen/dp280"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
+    android:id="@+id/arb_layout_rate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
 
-      >
+    >
+
     <RatingBar
-        android:id="@+id/arb_ratingBar_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dp12"
-        android:numStars="5"
-        android:rating="0"
-        android:stepSize="1"
-        />
+      android:id="@+id/arb_ratingBar_call"
+      style="?android:attr/ratingBarStyleIndicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="left"
+      android:layout_marginTop="@dimen/dp12"
+      android:numStars="5"
+      android:rating="3"
+      android:isIndicator="false"
+      android:stepSize="1" />
+
     <net.iGap.module.MEditText
-        android:id="@+id/arb_edt_resone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:maxLines="2"
-        android:textColor="@color/black90"
-        android:visibility="gone"
-        android:hint="@string/please_write_your_reasons"
-        android:textColorHint="@color/gray"
-        />
+      android:id="@+id/arb_edt_resone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minHeight="@dimen/dp60"
+      android:hint="@string/please_write_your_reasons"
+      android:textSize="@dimen/dp13"
+      android:maxLines="2"
+      android:textColor="@color/black90"
+      android:textColorHint="@color/gray"
+      android:visibility="gone" />
 
   </LinearLayout>
 </LinearLayout>

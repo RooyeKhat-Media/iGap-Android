@@ -14,10 +14,7 @@ import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentMap;
@@ -30,21 +27,30 @@ import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessageLocation;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import io.realm.Realm;
+
 public class LocationItem extends AbstractMessage<LocationItem, LocationItem.ViewHolder> {
 
     public LocationItem(Realm realmChat, ProtoGlobal.Room.Type type, IMessageItem messageClickListener) {
         super(realmChat, true, type, messageClickListener);
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return R.id.chatSubLayoutLocation;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.chat_sub_layout_message;
     }
 
-    @Override public void bindView(final ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(final ViewHolder holder, List payloads) {
 
         if (holder.itemView.findViewById(R.id.mainContainer) == null) {
             ((ViewGroup) holder.itemView).addView(ViewMaker.getLocationItem());
@@ -74,14 +80,16 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
                 G.imageLoader.displayImage(AndroidUtils.suitablePath(item.getImagePath()), holder.imgMapPosition);
             } else {
                 FragmentMap.loadImageFromPosition(item.getLocationLat(), item.getLocationLong(), new FragmentMap.OnGetPicture() {
-                    @Override public void getBitmap(Bitmap bitmap) {
+                    @Override
+                    public void getBitmap(Bitmap bitmap) {
                         holder.imgMapPosition.setImageBitmap(bitmap);
 
                         final String savedPath = FragmentMap.saveBitmapToFile(bitmap);
 
                         Realm realm = Realm.getDefaultInstance();
                         realm.executeTransaction(new Realm.Transaction() {
-                            @Override public void execute(Realm realm) {
+                            @Override
+                            public void execute(Realm realm) {
 
                                 if (mMessage.forwardedFrom != null) {
                                     if (mMessage.forwardedFrom.getLocation() != null) {
@@ -101,10 +109,12 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
 
             final RealmRoomMessageLocation finalItem = item;
             holder.imgMapPosition.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     try {
                         HelperPermission.getLocationPermission(G.currentActivity, new OnGetPermission() {
-                            @Override public void Allow() {
+                            @Override
+                            public void Allow() {
                                 G.handler.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -114,7 +124,8 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
                                 });
                             }
 
-                            @Override public void deny() {
+                            @Override
+                            public void deny() {
 
                             }
                         });
@@ -126,15 +137,18 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
         }
     }
 
-    @Override protected void updateLayoutForReceive(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
     }
 
-    @Override protected void updateLayoutForSend(ViewHolder holder) {
+    @Override
+    protected void updateLayoutForSend(ViewHolder holder) {
         super.updateLayoutForSend(holder);
     }
 
-    @Override public ViewHolder getViewHolder(View v) {
+    @Override
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 

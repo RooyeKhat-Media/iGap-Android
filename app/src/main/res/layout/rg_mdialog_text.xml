@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical">
+
+  <TextView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/dp8"
+    android:text="@string/Re_dialog_verify_number_part1"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/dp14" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingTop="@dimen/dp8"
-        android:text="@string/Re_dialog_verify_number_part1"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp14"
-        />
+  <TextView
+    android:id="@+id/rg_dialog_txt_number"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layoutDirection="ltr"
+    android:text="@string/number"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/dp15"
+    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/rg_dialog_txt_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="@string/number"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp15"
-        android:textStyle="bold"
-        android:layoutDirection="ltr"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingTop="@dimen/dp8"
-        android:text="@string/Re_dialog_verify_number_part2"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/dp14"
-        />
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/dp8"
+    android:text="@string/Re_dialog_verify_number_part2"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/dp14" />
 
 </LinearLayout>

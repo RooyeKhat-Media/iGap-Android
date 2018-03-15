@@ -21,9 +21,10 @@ import android.support.v4.app.ActivityCompat;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -33,31 +34,15 @@ import net.iGap.module.DialogAnimation;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.realm.RealmUserInfo;
 
+import io.realm.Realm;
+
 import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.context;
 
 public class FragmentPassCodeViewModel {
 
-    private Realm realm;
-    private boolean isPassCode;
-    private boolean isFingerPrintCode;
-    private String passCode;
-    private String password;
-    private int page = 0;
-    private net.iGap.module.NumberPicker numberPickerMinutes;
-    private boolean deviceHasFingerPrint;
     private final int PIN = 0;
     private final int PASSWORD = 1;
-    private int kindPassword = 0;
-    private SharedPreferences sharedPreferences;
-    private boolean screenShot;
-    private RealmUserInfo realmUserInfo;
-
-
-    public FragmentPassCodeViewModel() {
-        getInfo();
-    }
-
     public ObservableField<String> titlePassCode = new ObservableField<>(G.context.getResources().getString(R.string.two_step_pass_code));
     public ObservableField<String> autoLockText = new ObservableField<>("in 1 hour");
     public ObservableField<String> edtSetPasswordText = new ObservableField<>("");
@@ -78,7 +63,22 @@ public class FragmentPassCodeViewModel {
     public ObservableField<Integer> rippleOkVisibility = new ObservableField<>(View.GONE);
     public ObservableField<Integer> layoutModePassCode = new ObservableField<>(View.GONE);
     public ObservableField<Integer> vgToggleFingerPrintVisibility = new ObservableField<>(View.GONE);
+    private Realm realm;
+    private boolean isPassCode;
+    private boolean isFingerPrintCode;
+    private String passCode;
+    private String password;
+    private int page = 0;
+    private net.iGap.module.NumberPicker numberPickerMinutes;
+    private boolean deviceHasFingerPrint;
+    private int kindPassword = 0;
+    private SharedPreferences sharedPreferences;
+    private boolean screenShot;
+    private RealmUserInfo realmUserInfo;
 
+    public FragmentPassCodeViewModel() {
+        getInfo();
+    }
 
     public void onClickTogglePassCode(View v) {
 

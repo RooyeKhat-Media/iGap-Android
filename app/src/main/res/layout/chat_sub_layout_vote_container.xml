@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vote_container"
-    android:layout_width="@dimen/dp36"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:clickable="true"
-    android:layout_marginBottom="@dimen/dp32"
-    android:orientation="vertical"
-    android:visibility="gone"
+  android:id="@+id/vote_container"
+  android:layout_width="@dimen/dp36"
+  android:layout_height="wrap_content"
+  android:layout_gravity="bottom"
+  android:layout_marginBottom="@dimen/dp32"
+  android:clickable="true"
+  android:orientation="vertical"
+  android:visibility="gone"
 
-    >
+  >
 
 
 </LinearLayout>

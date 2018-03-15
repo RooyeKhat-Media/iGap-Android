@@ -23,11 +23,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+
 import net.iGap.module.transition.core.MoveData;
 import net.iGap.module.transition.core.TransitionAnimation;
 
 import static net.iGap.module.transition.fragment.FragmentTransitionLauncher.TRANSITION_BUNDLE;
-
 
 
 public class FragmentTransition {

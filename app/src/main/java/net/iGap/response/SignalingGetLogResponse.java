@@ -10,10 +10,11 @@
 
 package net.iGap.response;
 
-import java.util.List;
 import net.iGap.G;
 import net.iGap.proto.ProtoSignalingGetLog;
 import net.iGap.realm.RealmCallLog;
+
+import java.util.List;
 
 public class SignalingGetLogResponse extends MessageHandler {
 

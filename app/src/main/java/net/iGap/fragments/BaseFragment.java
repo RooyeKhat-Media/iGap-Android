@@ -19,20 +19,19 @@ import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
 import net.iGap.G;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperFragment;
 import net.iGap.libs.swipeback.SwipeBackFragment;
 import net.iGap.libs.swipeback.SwipeBackLayout;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static net.iGap.G.fragmentActivity;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class BaseFragment extends SwipeBackFragment {
 
-    protected Fragment currentFragment;
     public boolean isNeedResume = false;
-
+    protected Fragment currentFragment;
 
     @Override
     public void onAttach(Context context) {
@@ -126,7 +125,6 @@ public class BaseFragment extends SwipeBackFragment {
     }
 
 
-
     private void hideKeyboard() {
         View view = G.fragmentActivity.getCurrentFocus();
         if (view != null) {
@@ -136,7 +134,10 @@ public class BaseFragment extends SwipeBackFragment {
     }
 
     public void popBackStackFragment() {
-        fragmentActivity.getSupportFragmentManager().popBackStack();
+
+        if (!G.fragmentActivity.isFinishing()) {
+            G.fragmentActivity.getSupportFragmentManager().popBackStack();
+        }
 
         if (G.iTowPanModDesinLayout != null) {
             G.iTowPanModDesinLayout.onLayout(ActivityMain.chatLayoutMode.none);

@@ -12,7 +12,7 @@ package net.iGap.response;
 
 import android.os.Handler;
 import android.os.Looper;
-import io.realm.Realm;
+
 import net.iGap.G;
 import net.iGap.helper.HelperTimeOut;
 import net.iGap.proto.ProtoGlobal;
@@ -20,8 +20,11 @@ import net.iGap.proto.ProtoUserContactsGetList;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmRegisteredInfo;
 
+import io.realm.Realm;
+
 public class UserContactsGetListResponse extends MessageHandler {
 
+    private static long getListTime;
     public int actionId;
     public Object message;
     public String identity;
@@ -33,8 +36,6 @@ public class UserContactsGetListResponse extends MessageHandler {
         this.actionId = actionId;
         this.identity = identity;
     }
-
-    private static long getListTime;
 
     @Override
     public void handler() {

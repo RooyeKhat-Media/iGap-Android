@@ -14,16 +14,19 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import io.realm.RealmResults;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MyDialog {
 
@@ -90,14 +93,16 @@ public class MyDialog {
         });
 
         txtMuteNotification.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 if (complete != null) complete.complete(true, "txtMuteNotification", "");
                 dialog.dismiss();
             }
         });
 
         txtClearHistory.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 dialog.dismiss();
 
                 new MaterialDialog.Builder(context).title(itemName).titleColor(G.context.getResources().getColor(R.color.toolbar_background)).content(context.getString(R.string.do_you_want_clear_history_this)).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -142,7 +147,8 @@ public class MyDialog {
         }
 
         txtDeleteChat.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 String str0 = "";
                 String str = "";
                 if (mType == ProtoGlobal.Room.Type.CHAT) {
@@ -181,19 +187,21 @@ public class MyDialog {
     public static void showDialogNotification(Context context, String title, String Message, final OnComplete complete, final String result) {
 
         new MaterialDialog.Builder(context).title(title)
-            .content(Message).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
-            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    if (complete != null) complete.complete(true, result, "yes");
+                .content(Message).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (complete != null) complete.complete(true, result, "yes");
 
-                    dialog.dismiss();
-                }
-            })
-            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                @Override public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    dialog.dismiss();
-                }
-            })
-            .show();
+                        dialog.dismiss();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

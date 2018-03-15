@@ -116,19 +116,28 @@ public class Contacts {
                     while (cur.moveToNext()) {
                         int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
                         onlinePhoneContactId = contactId + 1;
-                        if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
 
-                            if (pCur != null) {
-                                while (pCur.moveToNext()) {
-                                    StructListOfContact itemContact = new StructListOfContact();
-                                    itemContact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
-                                    itemContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                                    contactList.add(itemContact);
+                        try {
+                            if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                                Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                        new String[]{String.valueOf(contactId)}, null);
+
+                                if (pCur != null) {
+                                    while (pCur.moveToNext()) {
+                                        StructListOfContact itemContact = new StructListOfContact();
+                                        itemContact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+                                        itemContact.setPhone(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                                        contactList.add(itemContact);
+                                    }
+                                    pCur.close();
                                 }
-                                pCur.close();
                             }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        } catch (NullPointerException e1) {
+                            e1.printStackTrace();
                         }
+
                         fetchCount++;
 
                         if (fetchCount > PHONE_CONTACT_FETCH_LIMIT) {
@@ -177,7 +186,7 @@ public class Contacts {
             }
 
             if (G.onContactFetchForServer != null) {
-                G.onContactFetchForServer.onFetch(resultContactList);
+                G.onContactFetchForServer.onFetch(resultContactList, isEnd);
             }
 
             if (!isEnd) {
@@ -221,22 +230,32 @@ public class Contacts {
 
                     int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
                     localPhoneContactId = contactId + 1;//plus for fetch next contact in future query
-                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactId)}, null);
-                        if (pCur != null) {
-                            while (pCur.moveToNext()) {
-                                String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                                if (!tempList.contains(number.replace("[\\s\\-()]", "").replace(" ", ""))) {
-                                    StructListOfContact itemContact = new StructListOfContact();
-                                    itemContact.setDisplayName(name);
-                                    itemContact.setPhone(number);
-                                    contactList.add(itemContact);
-                                    tempList.add(number.replace("[\\s\\-()]", "").replace(" ", ""));
+
+                    try {
+                        if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                                    new String[]{String.valueOf(contactId)}, null);
+                            if (pCur != null) {
+                                while (pCur.moveToNext()) {
+                                    String number = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    if (number != null) {
+                                        String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                                        if (!tempList.contains(number.replace("[\\s\\-()]", "").replace(" ", ""))) {
+                                            StructListOfContact itemContact = new StructListOfContact();
+                                            itemContact.setDisplayName(name);
+                                            itemContact.setPhone(number);
+                                            contactList.add(itemContact);
+                                            tempList.add(number.replace("[\\s\\-()]", "").replace(" ", ""));
+                                        }
+                                    }
                                 }
+                                pCur.close();
                             }
-                            pCur.close();
                         }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e1) {
+                        e1.printStackTrace();
                     }
 
                     fetchCount++;

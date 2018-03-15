@@ -62,6 +62,7 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
     //private BlockListAdapter mAdapter;
     private Realm realmBlockedUser;
     private StickyRecyclerHeadersDecoration decoration;
+
     private Realm getRealmBlockedUser() {
         if (realmBlockedUser == null || realmBlockedUser.isClosed()) {
             realmBlockedUser = Realm.getDefaultInstance();
@@ -288,44 +289,6 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
             super(realmResults, true);
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            RealmRegisteredInfo realmRegisteredInfo;
-            protected CircleImageView image;
-            protected CustomTextViewMedium title;
-            protected CustomTextViewMedium subtitle;
-            View bottomLine;
-            private SwipeLayout swipeLayout;
-
-
-            public ViewHolder(View view) {
-                super(view);
-
-                image = (CircleImageView) view.findViewById(R.id.imageView);
-                title = (CustomTextViewMedium) view.findViewById(R.id.title);
-                subtitle = (CustomTextViewMedium) view.findViewById(R.id.subtitle);
-                bottomLine = view.findViewById(R.id.bottomLine);
-                bottomLine.setVisibility(View.VISIBLE);
-                view.findViewById(R.id.topLine).setVisibility(View.GONE);
-
-                //itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                //    @Override
-                //    public boolean onLongClick(View v) {
-                //        openDialogToggleBlock(realmRegisteredInfo.getId());
-                //        return true;
-                //    }
-                //});
-                swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeRevealLayout);
-                swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        openDialogToggleBlock(realmRegisteredInfo.getId());
-                    }
-                });
-            }
-        }
-
         @Override
         public BlockListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View v = inflater.inflate(R.layout.contact_item, viewGroup, false);
@@ -412,6 +375,44 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
 
                 }
             });
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            protected CircleImageView image;
+            protected CustomTextViewMedium title;
+            protected CustomTextViewMedium subtitle;
+            RealmRegisteredInfo realmRegisteredInfo;
+            View bottomLine;
+            private SwipeLayout swipeLayout;
+
+
+            public ViewHolder(View view) {
+                super(view);
+
+                image = (CircleImageView) view.findViewById(R.id.imageView);
+                title = (CustomTextViewMedium) view.findViewById(R.id.title);
+                subtitle = (CustomTextViewMedium) view.findViewById(R.id.subtitle);
+                bottomLine = view.findViewById(R.id.bottomLine);
+                bottomLine.setVisibility(View.VISIBLE);
+                view.findViewById(R.id.topLine).setVisibility(View.GONE);
+
+                //itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                //    @Override
+                //    public boolean onLongClick(View v) {
+                //        openDialogToggleBlock(realmRegisteredInfo.getId());
+                //        return true;
+                //    }
+                //});
+                swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeRevealLayout);
+                swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        openDialogToggleBlock(realmRegisteredInfo.getId());
+                    }
+                });
+            }
         }
     }
 

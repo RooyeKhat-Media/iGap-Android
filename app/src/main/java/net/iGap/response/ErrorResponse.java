@@ -26,7 +26,8 @@ public class ErrorResponse extends MessageHandler {
         this.identity = identity;
     }
 
-    @Override public void handler() {
+    @Override
+    public void handler() {
         super.handler();
 
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
@@ -36,7 +37,8 @@ public class ErrorResponse extends MessageHandler {
         String errorMessage = errorResponse.getMessage();
     }
 
-    @Override public void error() {
+    @Override
+    public void error() {
         super.error();
         ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
         double majorCode = errorResponse.getMajorCode();

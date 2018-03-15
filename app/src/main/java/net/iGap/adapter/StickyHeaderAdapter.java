@@ -28,7 +28,12 @@ import net.iGap.module.CustomTextViewMedium;
 import java.util.List;
 
 public class StickyHeaderAdapter<Item extends IItem> extends RecyclerView.Adapter implements StickyRecyclerHeadersAdapter {
-    @Override public long getHeaderId(int position) {
+    //private AbstractAdapter mParentAdapter;
+    //keep a reference to the FastAdapter which contains the base logic
+    private FastAdapter<Item> mFastAdapter;
+
+    @Override
+    public long getHeaderId(int position) {
         IItem item = getItem(position);
 
         //we want a separate header per first letter of our items
@@ -42,14 +47,16 @@ public class StickyHeaderAdapter<Item extends IItem> extends RecyclerView.Adapte
         return -1;
     }
 
-    @Override public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+    @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
         //we create the view for the header
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_header_item, parent, false);
         return new RecyclerView.ViewHolder(view) {
         };
     }
 
-    @Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         CustomTextViewMedium textView = (CustomTextViewMedium) holder.itemView;
 
         IItem item = getItem(position);
@@ -64,10 +71,6 @@ public class StickyHeaderAdapter<Item extends IItem> extends RecyclerView.Adapte
             textView.setText(String.valueOf(((ContactItemGroup) item).mContact.displayName.toUpperCase().charAt(0)));
         }
     }
-
-    //private AbstractAdapter mParentAdapter;
-    //keep a reference to the FastAdapter which contains the base logic
-    private FastAdapter<Item> mFastAdapter;
 
     /**
      * Wrap the FastAdapter with this AbstractAdapter and keep its reference to forward all events correctly

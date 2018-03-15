@@ -1,65 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:gravity="center"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp300"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8"
+    android:weightSum="5">
+
+    <ImageView
+      android:id="@+id/imageView_square_color"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_margin="20dp"
+      android:layout_weight="4" />
+
+    <ImageView
+      android:id="@+id/imageView_line_color"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1" />
+  </LinearLayout>
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layoutDirection="ltr"
-    android:clickable="true"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp300"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp8"
-        android:weightSum="5">
+    <Button
+      android:id="@+id/button_ok"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/dp40"
+      android:layout_weight=".4"
+      android:background="@color/green"
+      android:text="@string/ok"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/dp18" />
 
-        <ImageView
-            android:id="@+id/imageView_square_color"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:layout_weight="4" />
+    <Button
+      android:id="@+id/button_cancel"
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/dp40"
+      android:layout_weight=".4"
+      android:background="@color/red"
+      android:text="@string/cancel"
+      android:textColor="@android:color/white"
+      android:textSize="@dimen/dp18" />
 
-        <ImageView
-            android:id="@+id/imageView_line_color"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:weightSum="1">
-
-        <Button
-            android:id="@+id/button_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp40"
-            android:layout_weight=".4"
-            android:background="@color/green"
-            android:text="@string/ok"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp18"
-            />
-
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp40"
-            android:layout_weight=".4"
-            android:background="@color/red"
-            android:text="@string/cancel"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/dp18"
-            />
-
-    </LinearLayout>
+  </LinearLayout>
 
 </LinearLayout>

@@ -15,14 +15,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,15 +29,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import net.iGap.G;
 import net.iGap.R;
-import net.iGap.activities.ActivityCrop;
 import net.iGap.databinding.ActivityNewGroupBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperFragment;
@@ -58,36 +52,37 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
-import net.iGap.module.IntentRequests;
 import net.iGap.module.LinedEditText;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.viewmodel.FragmentNewGroupViewModel;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import io.realm.Realm;
+
 import static net.iGap.G.context;
 import static net.iGap.module.AttachFile.isInAttach;
-import static net.iGap.module.AttachFile.request_code_TAKE_PICTURE;
 import static net.iGap.module.AttachFile.request_code_image_from_gallery_single_select;
 
 public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarResponse, OnChannelAvatarAdd {
 
-    private CircleImageView imgCircleImageView;
-    private long groomId = 0;
-    //  private String path;
-
-    private EditText edtGroupName;
-    private LinedEditText edtDescription;
-
-    private int lastSpecialRequestsCursorPosition = 0;
-    private String specialRequests;
     public static long avatarId = 0;
+    public static OnRemoveFragmentNewGroup onRemoveFragmentNewGroup;
+    //  private String path;
     private static ProtoGlobal.Room.Type type;
-
     FragmentNewGroupViewModel fragmentNewGroupViewModel;
     ActivityNewGroupBinding fragmentNewGroupBinding;
-
-
-    public static OnRemoveFragmentNewGroup onRemoveFragmentNewGroup;
+    private CircleImageView imgCircleImageView;
+    private long groomId = 0;
+    private EditText edtGroupName;
+    private LinedEditText edtDescription;
+    private int lastSpecialRequestsCursorPosition = 0;
+    private String specialRequests;
+    private String pathSaveImage;
 
     public static FragmentNewGroup newInstance() {
         return new FragmentNewGroup();
@@ -105,27 +100,61 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
         super.onViewCreated(view, savedInstanceState);
 
         initDataBinding();
-
         initComponent(view);
 
-        onRemoveFragmentNewGroup = new OnRemoveFragmentNewGroup() {
+        FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
             @Override
-            public void onRemove() {
-                try {
-                    popBackStackFragment();
-                } catch (IllegalStateException e) {
-                    e.printStackTrace();
-                }
+            public void result(String path, String message) {
+
+                pathSaveImage = path;
+                avatarId = System.nanoTime();
+
+                fragmentNewGroupViewModel.showProgressBar();
+                //showProgressBar();
+                HelperUploadFile.startUploadTaskAvatar(pathSaveImage, avatarId, new HelperUploadFile.UpdateListener() {
+                    @Override
+                    public void OnProgress(int progress, FileUploadStructure struct) {
+                        if (progress < 100) {
+                            fragmentNewGroupBinding.ngPrgWaiting.setProgress(progress);
+                        } else {
+                            fragmentNewGroupViewModel.hideProgressBar();
+                            fragmentNewGroupViewModel.existAvatar = true;
+                            fragmentNewGroupViewModel.token = struct.token;
+                            setImage(pathSaveImage);
+                        }
+                    }
+
+                    @Override
+                    public void OnError() {
+                        fragmentNewGroupViewModel.hideProgressBar();
+                    }
+                });
             }
-        };
+        }
+
+        ;
+
+
+        onRemoveFragmentNewGroup = new
+
+                OnRemoveFragmentNewGroup() {
+                    @Override
+                    public void onRemove() {
+                        try {
+                            popBackStackFragment();
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+        ;
     }
 
     private void initDataBinding() {
         fragmentNewGroupViewModel = new FragmentNewGroupViewModel(this.getArguments());
         fragmentNewGroupBinding.setFragmentNewGroupVieModel(fragmentNewGroupViewModel);
     }
-
-
 
     private void showDialogSelectGallery() {
         new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.choose_picture)).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel)).items(R.array.profile).itemsCallback(new MaterialDialog.ListCallback() {
@@ -219,9 +248,7 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
                     }
                     // Continue only if the File was successfully created
                     if (photoFile != null) {
-                        fragmentNewGroupViewModel.uriIntent = FileProvider.getUriForFile(G.fragmentActivity, G.fragmentActivity.getApplicationContext().getPackageName() + ".provider", createImageFile());
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fragmentNewGroupViewModel.uriIntent);
-                        startActivityForResult(takePictureIntent, request_code_TAKE_PICTURE);
+                        new AttachFile(G.fragmentActivity).dispatchTakePictureIntent(FragmentNewGroup.this);
                     }
                 }
             } catch (IOException e) {
@@ -229,15 +256,12 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
             }
         } else {
 
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (fragmentNewGroupViewModel.prefix.equals("NewChanel")) {
-                fragmentNewGroupViewModel.uriIntent = Uri.fromFile(G.IMAGE_NEW_CHANEL);
-            } else {
-                fragmentNewGroupViewModel.uriIntent = Uri.fromFile(G.IMAGE_NEW_GROUP);
+            try {
+                new AttachFile(G.fragmentActivity).requestTakePicture(FragmentNewGroup.this);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fragmentNewGroupViewModel.uriIntent);
-            startActivityForResult(intent, request_code_TAKE_PICTURE);
         }
     }
 
@@ -339,7 +363,6 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
         realm.close();
     }
 
-
     private void setImage(final String imagePath) {
         G.handler.post(new Runnable() {
             @Override
@@ -422,69 +445,23 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == request_code_TAKE_PICTURE && resultCode == Activity.RESULT_OK) {// result for camera
+        if (requestCode == AttachFile.request_code_TAKE_PICTURE && resultCode == Activity.RESULT_OK) {// result for camera
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                ImageHelper.correctRotateImage(fragmentNewGroupViewModel.mCurrentPhotoPath, true);
-                intent.putExtra("IMAGE_CAMERA", fragmentNewGroupViewModel.mCurrentPhotoPath);
-                intent.putExtra("TYPE", "camera");
-                intent.putExtra("PAGE", fragmentNewGroupViewModel.prefix);
-                startActivityForResult(intent, IntentRequests.REQ_CROP);
-            } else {
+                ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true); //rotate image
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, false)).setReplace(false).load();
 
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                if (fragmentNewGroupViewModel.uriIntent != null) {
-                    intent.putExtra("IMAGE_CAMERA", fragmentNewGroupViewModel.uriIntent.toString());
-                    intent.putExtra("TYPE", "camera");
-                    intent.putExtra("PAGE", fragmentNewGroupViewModel.prefix);
-                    startActivityForResult(intent, IntentRequests.REQ_CROP);
-                } else {
-                    Toast.makeText(context, R.string.can_not_save_picture_pleas_try_again, Toast.LENGTH_SHORT).show();
-                }
+
+            } else {
+                ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false)).setReplace(false).load();
             }
         } else if (requestCode == request_code_image_from_gallery_single_select && resultCode == Activity.RESULT_OK) {// result for gallery
             if (data != null) {
-
-                Intent intent = new Intent(G.fragmentActivity, ActivityCrop.class);
-                intent.putExtra("IMAGE_CAMERA", AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image));
-                intent.putExtra("TYPE", "gallery");
-                intent.putExtra("PAGE", fragmentNewGroupViewModel.prefix);
-                startActivityForResult(intent, IntentRequests.REQ_CROP);
-            }
-        } else if (requestCode == IntentRequests.REQ_CROP) {
-
-            if (data != null) {
-                pathSaveImage = data.getData().toString();
-                avatarId = System.nanoTime();
-
-                fragmentNewGroupViewModel.showProgressBar();
-                //showProgressBar();
-                HelperUploadFile.startUploadTaskAvatar(pathSaveImage, avatarId, new HelperUploadFile.UpdateListener() {
-                    @Override
-                    public void OnProgress(int progress, FileUploadStructure struct) {
-                        if (progress < 100) {
-                            fragmentNewGroupBinding.ngPrgWaiting.setProgress(progress);
-                        } else {
-                            fragmentNewGroupViewModel.hideProgressBar();
-                            ;
-                            fragmentNewGroupViewModel.existAvatar = true;
-                            fragmentNewGroupViewModel.token = struct.token;
-                            setImage(pathSaveImage);
-                        }
-                    }
-
-                    @Override
-                    public void OnError() {
-                        fragmentNewGroupViewModel.hideProgressBar();
-                        ;
-                    }
-                });
+                new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, false)).setReplace(false).load();
             }
         }
     }
-
-    private String pathSaveImage;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -505,7 +482,6 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
     public interface OnRemoveFragmentNewGroup {
         void onRemove();
     }
-
 
 
 }

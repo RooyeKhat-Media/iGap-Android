@@ -2,6 +2,7 @@ package net.iGap.viewmodel;
 
 import android.content.SharedPreferences;
 import android.view.View;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentData;
@@ -16,12 +17,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentDataViewModel {
 
-    private SharedPreferences sharedPreferences;
-    private int typeData;
-
     private final int MILADI = 0;
     private final int SHAMSI = 1;
     private final int GHAMARY = 2;
+    private SharedPreferences sharedPreferences;
+    private int typeData;
 
 
     public FragmentDataViewModel() {
@@ -39,7 +39,8 @@ public class FragmentDataViewModel {
         editor.putInt(SHP_SETTING.KEY_DATA, MILADI);
         editor.apply();
 
-        if (FragmentData.onFragmentRemoveData != null) FragmentData.onFragmentRemoveData.removeFragment();
+        if (FragmentData.onFragmentRemoveData != null)
+            FragmentData.onFragmentRemoveData.removeFragment();
 
         if (FragmentSetting.dateType != null) {
             FragmentSetting.dateType.dataName(G.fragmentActivity.getResources().getString(R.string.miladi));
@@ -57,7 +58,8 @@ public class FragmentDataViewModel {
         editor.putInt(SHP_SETTING.KEY_DATA, SHAMSI);
         editor.apply();
 
-        if (FragmentData.onFragmentRemoveData != null) FragmentData.onFragmentRemoveData.removeFragment();
+        if (FragmentData.onFragmentRemoveData != null)
+            FragmentData.onFragmentRemoveData.removeFragment();
 
         if (FragmentSetting.dateType != null) {
             FragmentSetting.dateType.dataName(G.fragmentActivity.getResources().getString(R.string.shamsi));
@@ -73,7 +75,8 @@ public class FragmentDataViewModel {
         editor.putInt(SHP_SETTING.KEY_DATA, GHAMARY);
         editor.apply();
 
-        if (FragmentData.onFragmentRemoveData != null) FragmentData.onFragmentRemoveData.removeFragment();
+        if (FragmentData.onFragmentRemoveData != null)
+            FragmentData.onFragmentRemoveData.removeFragment();
 
         if (FragmentSetting.dateType != null) {
             FragmentSetting.dateType.dataName(G.fragmentActivity.getResources().getString(R.string.ghamari));

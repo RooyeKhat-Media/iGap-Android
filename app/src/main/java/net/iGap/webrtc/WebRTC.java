@@ -45,14 +45,36 @@ public class WebRTC {
     private static PeerConnection peerConnection;
     private static PeerConnectionFactory peerConnectionFactory;
     private static MediaStream mediaStream;
+    private static String offerSdp;
     private MediaConstraints mediaConstraints;
     private MediaConstraints audioConstraints;
     private AudioTrack audioTrack;
     private AudioSource audioSource;
-    private static String offerSdp;
 
     public WebRTC() {
         peerConnectionInstance();
+    }
+
+    public static void muteSound() {
+
+        if (mediaStream == null) {
+            return;
+        }
+
+        for (AudioTrack audioTrack : mediaStream.audioTracks) {
+            audioTrack.setEnabled(false);
+        }
+    }
+
+    public static void unMuteSound() {
+
+        if (mediaStream == null) {
+            return;
+        }
+
+        for (AudioTrack audioTrack : mediaStream.audioTracks) {
+            audioTrack.setEnabled(true);
+        }
     }
 
     private void addAudioTrack(MediaStream mediaStream) {
@@ -125,29 +147,6 @@ public class WebRTC {
 
         return peerConnection;
     }
-
-    public static void muteSound() {
-
-        if (mediaStream == null) {
-            return;
-        }
-
-        for (AudioTrack audioTrack : mediaStream.audioTracks) {
-            audioTrack.setEnabled(false);
-        }
-    }
-
-    public static void unMuteSound() {
-
-        if (mediaStream == null) {
-            return;
-        }
-
-        for (AudioTrack audioTrack : mediaStream.audioTracks) {
-            audioTrack.setEnabled(true);
-        }
-    }
-
 
     public void createOffer(final long userIdCallee) {
         peerConnectionInstance().createOffer(new SdpObserver() {

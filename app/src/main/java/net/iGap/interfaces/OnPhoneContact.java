@@ -10,8 +10,9 @@
 
 package net.iGap.interfaces;
 
-import java.util.ArrayList;
 import net.iGap.module.structs.StructListOfContact;
+
+import java.util.ArrayList;
 
 public interface OnPhoneContact {
     void onPhoneContact(ArrayList<StructListOfContact> contacts, boolean isEnd);

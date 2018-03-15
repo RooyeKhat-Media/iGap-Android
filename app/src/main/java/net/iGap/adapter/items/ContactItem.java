@@ -43,15 +43,18 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
         return this;
     }
 
-    @Override public int getType() {
+    @Override
+    public int getType() {
         return 0;
     }
 
-    @Override public int getLayoutRes() {
+    @Override
+    public int getLayoutRes() {
         return R.layout.contact_item;
     }
 
-    @Override public void bindView(ViewHolder holder, List payloads) {
+    @Override
+    public void bindView(ViewHolder holder, List payloads) {
         super.bindView(holder, payloads);
         if (mContact.isHeader) {
             holder.topLine.setVisibility(View.VISIBLE);
@@ -84,14 +87,21 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
     private void setAvatar(final ViewHolder holder) {
 
         HelperAvatar.getAvatar(mContact.peerId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
-            @Override public void onAvatarGet(final String avatarPath, long ownerId) {
+            @Override
+            public void onAvatarGet(final String avatarPath, long ownerId) {
                 G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), holder.image);
             }
 
-            @Override public void onShowInitials(final String initials, final String color) {
+            @Override
+            public void onShowInitials(final String initials, final String color) {
                 holder.image.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) holder.image.getContext().getResources().getDimension(R.dimen.dp60), initials, color));
             }
         });
+    }
+
+    @Override
+    public ViewHolder getViewHolder(View v) {
+        return new ViewHolder(v);
     }
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
@@ -108,9 +118,5 @@ public class ContactItem extends AbstractItem<ContactItem, ContactItem.ViewHolde
             subtitle = (CustomTextViewMedium) view.findViewById(R.id.subtitle);
             topLine = (View) view.findViewById(R.id.topLine);
         }
-    }
-
-    @Override public ViewHolder getViewHolder(View v) {
-        return new ViewHolder(v);
     }
 }

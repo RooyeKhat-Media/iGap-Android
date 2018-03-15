@@ -1,316 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sliding_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/backgroundToolbarMap"
-    android:gravity="bottom"
-    sothree:umanoDragView="@+id/dragView"
-    sothree:umanoOverlay="true"
-    sothree:umanoPanelHeight="@dimen/dp40"
-    sothree:umanoParallaxOffset="@dimen/dp10"
-    sothree:umanoScrollableView="@+id/rcy_map_user"
-    sothree:umanoShadowHeight="0dp"
-    >
+  xmlns:sothree="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/sliding_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_below="@+id/backgroundToolbarMap"
+  android:gravity="bottom"
+  sothree:umanoDragView="@+id/dragView"
+  sothree:umanoOverlay="true"
+  sothree:umanoPanelHeight="@dimen/dp40"
+  sothree:umanoParallaxOffset="@dimen/dp10"
+  sothree:umanoScrollableView="@+id/rcy_map_user"
+  sothree:umanoShadowHeight="0dp">
 
   <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      android:id="@+id/mapContainer_main"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="#EEEEEE"
-      android:clickable="true"
-      android:fitsSystemWindows="false"
-      android:orientation="vertical"
-      tools:ignore="MissingPrefix"
-      >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapContainer_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:clickable="true"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
 
     <RelativeLayout
-        android:id="@+id/mapContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+      android:id="@+id/mapContainer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-          android:orientation="vertical"
-          >
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/backgroundToolbarMap"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/iGapColorDarker"
-            >
+          android:id="@+id/backgroundToolbarMap"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/iGapColorDarker">
+
           <android.support.v7.widget.Toolbar
 
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/dp60"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentStart="true"
-              android:layout_alignParentTop="true"
-              android:layoutDirection="ltr"
-              app:contentInsetLeft="0dp"
-              app:contentInsetStart="0dp"
-              app:layout_collapseMode="pin"
-              >
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp60"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layoutDirection="ltr"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
               <net.iGap.libs.rippleeffect.RippleView
-                  android:id="@+id/ripple_back_map"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  app:rv_alpha="200"
-                  app:rv_centered="true"
-                  app:rv_rippleDuration="0"
-                  app:rv_ripplePadding="5dp"
-                  rv_centered="true"
-                  >
+                android:id="@+id/ripple_back_map"
+                rv_centered="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rv_alpha="200"
+                app:rv_centered="true"
+                app:rv_rippleDuration="0"
+                app:rv_ripplePadding="5dp">
 
                 <net.iGap.module.MaterialDesignTextView
-                    android:id="@+id/txt_back_map"
-                    android:layout_width="@dimen/dp52"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/md_back_arrow"
-                    android:textAppearance="@style/TextIconAppearance_toolbar"
-                    android:textColor="@color/whit_background"
-                    />
+                  android:id="@+id/txt_back_map"
+                  android:layout_width="@dimen/dp52"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:text="@string/md_back_arrow"
+                  android:textAppearance="@style/TextIconAppearance_toolbar"
+                  android:textColor="@color/whit_background" />
               </net.iGap.libs.rippleeffect.RippleView>
 
               <TextView
-                  android:id="@+id/txt_titleToolbar_map"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent"
-                  android:gravity="center"
-                  android:text="@string/igap_nearby"
-                  android:textColor="@color/whit_background"
-                  android:textSize="@dimen/dp18"
-                  android:visibility="visible"
-                  fontPath="fonts/IRANSansMobile.ttf"
-                  />
+                android:id="@+id/txt_titleToolbar_map"
+                fontPath="fonts/IRANSansMobile.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/igap_nearby"
+                android:textColor="@color/whit_background"
+                android:textSize="@dimen/dp18"
+                android:visibility="visible" />
 
 
               <View
-                  android:layout_width="0dp"
-                  android:layout_height="match_parent"
-                  android:layout_weight="1"
-                  android:orientation="horizontal"
-                  />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal" />
+
               <net.iGap.libs.rippleeffect.RippleView
-                  android:id="@+id/ripple_more_map"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  app:rv_alpha="200"
-                  app:rv_centered="true"
-                  app:rv_rippleDuration="100"
-                  app:rv_ripplePadding="5dp"
-                  rv_centered="true"
-                  >
+                android:id="@+id/ripple_more_map"
+                rv_centered="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:rv_alpha="200"
+                app:rv_centered="true"
+                app:rv_rippleDuration="100"
+                app:rv_ripplePadding="5dp">
 
                 <net.iGap.module.MaterialDesignTextView
-                    android:layout_width="@dimen/dp52"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/md_show_more_button"
-                    android:textAppearance="@style/TextIconAppearance_toolbar"
-                    android:textColor="@color/whit_background"
-                    />
+                  android:layout_width="@dimen/dp52"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:text="@string/md_show_more_button"
+                  android:textAppearance="@style/TextIconAppearance_toolbar"
+                  android:textColor="@color/whit_background" />
 
               </net.iGap.libs.rippleeffect.RippleView>
             </LinearLayout>
           </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:visibility="visible">
 
           <RelativeLayout
-              android:id="@+id/replace"
+            android:id="@+id/replace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+              android:orientation="vertical">
 
               <LinearLayout
-                  android:id="@+id/vgMessageGps"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@color/gray10"
-                  android:orientation="horizontal"
-                  >
+                android:id="@+id/vgMessageGps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray10"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    >
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:orientation="vertical">
 
                   <net.iGap.module.MEditText
-                      android:id="@+id/edtMessageGps"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@android:color/transparent"
-                      android:hint="@string/hint_gps"
-                      android:lineSpacingMultiplier=".8"
-                      android:maxLength="255"
-                      android:maxLines="4"
-                      android:minHeight="@dimen/dp52"
-                      android:paddingEnd="@dimen/dp10"
-                      android:paddingLeft="@dimen/dp10"
-                      android:paddingRight="@dimen/dp10"
-                      android:paddingStart="@dimen/dp12"
-                      android:textColorHint="@color/light_gray"
-                      android:textSize="@dimen/dp15"
-                      fontPath="fonts/IRANSansMobile.ttf"
-                      />
+                    android:id="@+id/edtMessageGps"
+                    fontPath="fonts/IRANSansMobile.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/hint_gps"
+                    android:lineSpacingMultiplier=".8"
+                    android:maxLength="255"
+                    android:maxLines="4"
+                    android:minHeight="@dimen/dp52"
+                    android:paddingEnd="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10"
+                    android:paddingStart="@dimen/dp12"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="@dimen/dp15" />
 
                   <View
-                      android:layout_width="match_parent"
-                      android:layout_height="1dp"
-                      android:layout_marginBottom="@dimen/dp8"
-                      android:background="@color/gray_9d"
-                      />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/dp8"
+                    android:background="@color/gray_9d" />
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
                   <TextView
-                      android:id="@+id/txtSendMessageGps"
-                      android:layout_width="@dimen/dp52"
-                      android:layout_height="@dimen/dp52"
-                      android:gravity="center"
-                      android:text="@string/md_close_button"
-                      android:textAppearance="@style/TextIconAppearance_toolbar"
-                      android:textColor="@color/gray_4c"
-                      android:visibility="gone"
-                      />
+                    android:id="@+id/txtSendMessageGps"
+                    android:layout_width="@dimen/dp52"
+                    android:layout_height="@dimen/dp52"
+                    android:gravity="center"
+                    android:text="@string/md_close_button"
+                    android:textAppearance="@style/TextIconAppearance_toolbar"
+                    android:textColor="@color/gray_4c"
+                    android:visibility="gone" />
 
                   <ProgressBar
-                      android:id="@+id/prgWaitSendMessage"
-                      android:layout_width="@dimen/dp52"
-                      android:layout_height="@dimen/dp52"
-                      android:padding="@dimen/dp12"
-                      android:visibility="gone"
-                      />
+                    android:id="@+id/prgWaitSendMessage"
+                    android:layout_width="@dimen/dp52"
+                    android:layout_height="@dimen/dp52"
+                    android:padding="@dimen/dp12"
+                    android:visibility="gone" />
                 </RelativeLayout>
 
               </LinearLayout>
+
               <org.osmdroid.views.MapView
-                  android:id="@+id/map"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  />
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
             </LinearLayout>
           </RelativeLayout>
 
           <ScrollView
-              android:id="@+id/scrollView"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/background_check_gps"
-              android:visibility="visible"
-              >
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_check_gps"
+            android:visibility="visible">
 
             <LinearLayout
-                android:id="@+id/rootTurnOnGps"
-                android:layout_width="match_parent"
+              android:id="@+id/rootTurnOnGps"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical"
+
+              >
+
+              <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical"
-
-                >
+                android:text="@string/md_igap_alert"
+                android:textAppearance="@style/TextIconAppearance_toolbar"
+                android:textColor="@color/layout_background_top_connectivity"
+                android:textSize="@dimen/dp70" />
 
               <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:text="@string/md_igap_alert"
-                  android:textAppearance="@style/TextIconAppearance_toolbar"
-                  android:textColor="@color/layout_background_top_connectivity"
-                  android:textSize="@dimen/dp70"
-                  />
-              <TextView
-                  android:id="@+id/txtTextTurnOnOffGps"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:lineSpacingExtra="@dimen/dp4"
-                  android:paddingBottom="@dimen/dp8"
-                  android:paddingLeft="@dimen/dp48"
-                  android:paddingRight="@dimen/dp48"
-                  android:paddingTop="@dimen/dp20"
-                  android:text="@string/turn_on_gps_explain"
-                  android:textColor="@color/white"
-                  android:textSize="@dimen/dp18"
-                  fontPath="fonts/IRANSansMobile_Bold.ttf"
-                  />
+                android:id="@+id/txtTextTurnOnOffGps"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp48"
+                android:paddingRight="@dimen/dp48"
+                android:paddingTop="@dimen/dp20"
+                android:text="@string/turn_on_gps_explain"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp18" />
 
               <ToggleButton
-                  android:id="@+id/toggleGps"
-                  android:layout_width="@dimen/dp52"
-                  android:layout_height="@dimen/dp52"
-                  android:background="@drawable/st_switch_button"
-                  android:textOff=""
-                  android:textOn=""
-                  />
+                android:id="@+id/toggleGps"
+                android:layout_width="@dimen/dp52"
+                android:layout_height="@dimen/dp52"
+                android:background="@drawable/st_switch_button"
+                android:textOff=""
+                android:textOn="" />
 
               <TextView
-                  android:id="@+id/txtDescriptionMap"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:lineSpacingExtra="@dimen/dp4"
-                  android:paddingBottom="@dimen/dp8"
-                  android:paddingLeft="@dimen/dp48"
-                  android:paddingRight="@dimen/dp48"
-                  android:paddingTop="@dimen/dp20"
-                  android:text="@string/info_map"
-                  android:textColor="@color/white"
-                  android:textSize="@dimen/dp18"
-                  fontPath="fonts/IRANSansMobile_Bold.ttf"
-                  />
+                android:id="@+id/txtDescriptionMap"
+                fontPath="fonts/IRANSansMobile_Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/dp4"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingLeft="@dimen/dp48"
+                android:paddingRight="@dimen/dp48"
+                android:paddingTop="@dimen/dp20"
+                android:text="@string/info_map"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp18" />
             </LinearLayout>
           </ScrollView>
 
           <android.support.design.widget.FloatingActionButton
-              android:id="@+id/st_fab_gps"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentBottom="true"
-              android:layout_marginBottom="@dimen/dp24"
-              android:layout_marginLeft="@dimen/dp24"
-              android:layout_marginStart="19dp"
-              android:background="@color/iGapColor"
-              android:clickable="true"
-              android:theme="@style/FabButton"
-              android:tint="@color/white"
-              app:fabSize="normal"
-              app:layout_anchor="@+id/replace"
-              app:layout_anchorGravity="bottom|right|end"
-              app:srcCompat="@drawable/ic_gps_fixed_black_24px"
+            android:id="@+id/st_fab_gps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp24"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginStart="19dp"
+            android:background="@color/iGapColor"
+            android:clickable="true"
+            android:theme="@style/FabButton"
+            android:tint="@color/white"
+            app:fabSize="normal"
+            app:layout_anchor="@+id/replace"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@drawable/ic_gps_fixed_black_24px"
 
-              />
+            />
 
         </RelativeLayout>
       </LinearLayout>
@@ -320,56 +298,51 @@
   </FrameLayout>
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp52">
 
       <View
-          android:id="@+id/vgSlideUp"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp52"
-          android:alpha="0"
-          android:background="@color/white"
-          />
+        android:id="@+id/vgSlideUp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp52"
+        android:alpha="0"
+        android:background="@color/white" />
 
 
       <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/ml_user_on_map"
-          android:layout_width="@dimen/dp52"
-          android:layout_height="@dimen/dp52"
-          android:layout_centerInParent="true"
-          android:layout_gravity="center"
-          android:layout_marginLeft="@dimen/dp24"
-          android:layout_marginRight="@dimen/dp24"
-          android:background="@null"
-          android:gravity="center"
-          android:text="@string/md_igap_chevron_double_up"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/green"
-          android:textSize="@dimen/dp26"
-          android:visibility="visible"
-          />
+        android:id="@+id/ml_user_on_map"
+        android:layout_width="@dimen/dp52"
+        android:layout_height="@dimen/dp52"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/dp24"
+        android:layout_marginRight="@dimen/dp24"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/md_igap_chevron_double_up"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/green"
+        android:textSize="@dimen/dp26"
+        android:visibility="visible" />
     </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcy_map_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:fadeScrollbars="false"
-        android:overScrollMode="never"
-        android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@color/toolbar_background"
-        android:scrollbars="vertical"
-        />
+      android:id="@+id/rcy_map_user"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:fadeScrollbars="false"
+      android:overScrollMode="never"
+      android:scrollbarSize="5dp"
+      android:scrollbarThumbVertical="@color/toolbar_background"
+      android:scrollbars="vertical" />
   </LinearLayout>
 
 

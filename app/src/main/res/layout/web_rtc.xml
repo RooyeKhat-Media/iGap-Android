@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <net.iGap.module.MEditText
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:inputType="textPersonName"
-      android:ems="10"
-      android:id="@+id/edtUserId"
-      android:hint="Contact UserId"
-      />
+    android:id="@+id/edtUserId"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:ems="10"
+    android:hint="Contact UserId"
+    android:inputType="textPersonName" />
+
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      android:orientation="horizontal"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal">
+
     <Button
-        android:id="@+id/btnCall"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_weight="1"
-        android:text="Call"
-        />
-    <Button
-        android:id="@+id/btnAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_weight="1.11"
-        android:text="Answer"
-        />
-    <Button
-        android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_weight="1"
-        android:text="Cancel"
-        />
-  </LinearLayout>
-  <Button
-      android:id="@+id/btnUserId"
-      android:layout_width="match_parent"
+      android:id="@+id/btnCall"
+      android:layout_width="wrap_content"
       android:layout_height="48dp"
-      android:text="Show My UserId"
-      />
+      android:layout_weight="1"
+      android:text="Call" />
+
+    <Button
+      android:id="@+id/btnAnswer"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:layout_weight="1.11"
+      android:text="Answer" />
+
+    <Button
+      android:id="@+id/btnCancel"
+      android:layout_width="wrap_content"
+      android:layout_height="48dp"
+      android:layout_weight="1"
+      android:text="Cancel" />
+  </LinearLayout>
+
+  <Button
+    android:id="@+id/btnUserId"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:text="Show My UserId" />
 </LinearLayout>

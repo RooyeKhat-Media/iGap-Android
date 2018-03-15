@@ -38,7 +38,8 @@ public class MyAppBarLayout extends AppBarLayout implements AppBarLayout.OnOffse
         this.mListener = listener;
     }
 
-    @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
         int verticalOffsetAbs = Math.abs(verticalOffset);
         int appBarLayoutHeight = appBarLayout.getHeight();
 

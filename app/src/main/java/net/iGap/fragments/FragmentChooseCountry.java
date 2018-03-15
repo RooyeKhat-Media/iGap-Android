@@ -15,14 +15,13 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -30,6 +29,10 @@ import net.iGap.module.CountryListComparator;
 import net.iGap.module.CountryReader;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.structs.StructCountry;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static net.iGap.fragments.FragmentAddContact.onCountryCallBack;
 
@@ -39,7 +42,7 @@ import static net.iGap.fragments.FragmentAddContact.onCountryCallBack;
 public class FragmentChooseCountry extends BaseFragment {
     private ArrayList<StructCountry> structCountryArrayList = new ArrayList();
     private ArrayList<StructCountry> items = new ArrayList<>();
-
+    private long index = 1500;
     private RecyclerView rcvChooseCountry;
     private EditText edtSearch;
 
@@ -78,11 +81,10 @@ public class FragmentChooseCountry extends BaseFragment {
         });
 
 
-
         final FastItemAdapter fastItemAdapter = new FastItemAdapter();
         items = getLIstCountry();
         for (int i = 0; i < items.size(); i++) {
-            fastItemAdapter.add(new AdapterChooseCountry(items.get(i)).withIdentifier(100 + i));
+            fastItemAdapter.add(new AdapterChooseCountry(items.get(i)).withIdentifier(index++));
         }
         rcvChooseCountry = (RecyclerView) view.findViewById(R.id.rcvChooseCountry);
         rcvChooseCountry.setItemViewCacheSize(1000);
@@ -105,7 +107,6 @@ public class FragmentChooseCountry extends BaseFragment {
         });
 
 
-
         edtSearch = (EditText) view.findViewById(R.id.edtCountrySearch);
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -121,7 +122,6 @@ public class FragmentChooseCountry extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
 
 
             }
@@ -171,6 +171,17 @@ public class FragmentChooseCountry extends BaseFragment {
 
         Collections.sort(structCountryArrayList, new CountryListComparator());
         return structCountryArrayList;
+    }
+
+    private void closeKeyboard(View v) {
+        if (isAdded()) {
+            try {
+                InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            } catch (IllegalStateException e) {
+                e.getStackTrace();
+            }
+        }
     }
 
     private class StickyHeader implements StickyRecyclerHeadersAdapter {
@@ -253,6 +264,11 @@ public class FragmentChooseCountry extends BaseFragment {
 
         }
 
+        @Override
+        public ViewHolder getViewHolder(View v) {
+            return new ViewHolder(v);
+        }
+
         //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
         protected class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -268,22 +284,6 @@ public class FragmentChooseCountry extends BaseFragment {
                 txtCodeCountry = (TextView) view.findViewById(R.id.txtCodeCountry);
                 vgListCountry = (ViewGroup) view.findViewById(R.id.vgListCountry);
 
-            }
-        }
-
-        @Override
-        public ViewHolder getViewHolder(View v) {
-            return new ViewHolder(v);
-        }
-    }
-
-    private void closeKeyboard(View v) {
-        if (isAdded()) {
-            try {
-                InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            } catch (IllegalStateException e) {
-                e.getStackTrace();
             }
         }
     }

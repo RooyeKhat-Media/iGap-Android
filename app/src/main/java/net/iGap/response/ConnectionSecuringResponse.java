@@ -11,13 +11,7 @@
 package net.iGap.response;
 
 import com.google.protobuf.ByteString;
-import java.io.IOException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPublicKeySpec;
+
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.helper.HelperString;
@@ -25,6 +19,14 @@ import net.iGap.module.AESCrypt;
 import net.iGap.proto.ProtoConnectionSecuring;
 import net.iGap.request.RequestQueue;
 import net.iGap.request.RequestWrapper;
+
+import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 
 public class ConnectionSecuringResponse extends MessageHandler {
 

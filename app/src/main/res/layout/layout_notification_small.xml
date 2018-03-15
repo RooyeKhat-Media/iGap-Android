@@ -1,81 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="64dp"
-              android:gravity="center"
-              android:layoutDirection="ltr"
-    android:clickable="true"
-              android:orientation="horizontal"
-    >
+  android:layout_width="match_parent"
+  android:layout_height="64dp"
+  android:clickable="true"
+  android:gravity="center"
+  android:layoutDirection="ltr"
+  android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/ln_imv_avatar_notification"
-        android:layout_width="@dimen/dp48"
-        android:layout_height="@dimen/dp48"
-        android:layout_margin="@dimen/dp4"
-        android:padding="@dimen/dp4"
-        android:src="@mipmap/icon"
-        />
+  <ImageView
+    android:id="@+id/ln_imv_avatar_notification"
+    android:layout_width="@dimen/dp48"
+    android:layout_height="@dimen/dp48"
+    android:layout_margin="@dimen/dp4"
+    android:padding="@dimen/dp4"
+    android:src="@mipmap/icon" />
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp12"
+    android:layout_marginStart="@dimen/dp12"
+    android:orientation="vertical"
+    android:padding="@dimen/dp4"
+
+    >
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/ln_txt_header"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp12"
-        android:layout_marginStart="@dimen/dp12"
-        android:padding="@dimen/dp4"
-
-        >
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:id="@+id/ln_txt_header"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="true"
-                android:text="New Text"
-                android:textAppearance="@style/NotificationText"
-                android:textDirection="ltr"
-                android:textSize="@dimen/dp16"
-                />
+        android:layout_weight="1"
+        android:gravity="left"
+        android:singleLine="true"
+        android:text="New Text"
+        android:textAppearance="@style/NotificationText"
+        android:textDirection="ltr"
+        android:textSize="@dimen/dp16" />
 
 
-            <TextView
-                android:id="@+id/ln_txt_time"
-                android:layout_width="@dimen/dp80"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="10:52"
-                android:textAppearance="@style/NotificationText"
-                android:textSize="@dimen/dp12"
-                />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/ln_txt_message_notification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp12"
-            android:gravity="left"
-            android:singleLine="true"
-            android:text="New Text"
-            android:textAppearance="@style/NotificationText"
-            android:textSize="@dimen/dp12"
-            />
-
+      <TextView
+        android:id="@+id/ln_txt_time"
+        android:layout_width="@dimen/dp80"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="10:52"
+        android:textAppearance="@style/NotificationText"
+        android:textSize="@dimen/dp12" />
 
     </LinearLayout>
+
+
+    <TextView
+      android:id="@+id/ln_txt_message_notification"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="@dimen/dp12"
+      android:gravity="left"
+      android:singleLine="true"
+      android:text="New Text"
+      android:textAppearance="@style/NotificationText"
+      android:textSize="@dimen/dp12" />
+
+
+  </LinearLayout>
 
 
 </LinearLayout>

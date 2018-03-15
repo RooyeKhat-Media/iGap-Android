@@ -1,91 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
   <data>
 
     <import type="android.graphics.Color" />
+
     <import type="net.iGap.G" />
+
     <variable
-        name="fragmentCreateChannelViewModel"
-        type="net.iGap.viewmodel.FragmentCreateChannelViewModel"
-        />
+      name="fragmentCreateChannelViewModel"
+      type="net.iGap.viewmodel.FragmentCreateChannelViewModel" />
   </data>
 
 
   <RelativeLayout
-      android:id="@+id/fch_root"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/whit_background"
-      android:clickable="true"
-      tools:context="net.iGap.fragments.FragmentCreateChannel"
-      tools:ignore="MissingPrefix"
-      >
+    android:id="@+id/fch_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whit_background"
+    android:clickable="true"
+    tools:context="net.iGap.fragments.FragmentCreateChannel"
+    tools:ignore="MissingPrefix">
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/fch_backgroundToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
-        >
+      android:id="@+id/fch_backgroundToolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}">
+
       <android.support.v7.widget.Toolbar
 
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp60"
-          android:layout_alignParentLeft="true"
-          android:layout_alignParentStart="true"
-          android:layout_alignParentTop="true"
-          android:layoutDirection="ltr"
-          app:contentInsetLeft="0dp"
-          app:contentInsetStart="0dp"
-          app:layout_collapseMode="pin"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layoutDirection="ltr"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_collapseMode="pin">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
 
           <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_alignParentTop="true"
-              android:layout_toEndOf="@+id/rippleView"
-              android:layout_toRightOf="@+id/rippleView"
-              android:gravity="center"
-              android:text="@string/new_chanel"
-              android:textColor="@color/whit_background"
-              android:textSize="@dimen/dp18"
-              android:visibility="visible"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              />
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/rippleView"
+            android:layout_toRightOf="@+id/rippleView"
+            android:gravity="center"
+            android:text="@string/new_chanel"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:visibility="visible" />
 
           <net.iGap.libs.rippleeffect.RippleView
-              android:id="@+id/rippleView"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:rv_alpha="200"
-              app:rv_centered="true"
-              app:rv_rippleDuration="0"
-              app:rv_ripplePadding="5dp"
-              rv_centered="true"
-              android:onClick="@{fragmentCreateChannelViewModel::txtBack}"
-              >
+            android:id="@+id/rippleView"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{fragmentCreateChannelViewModel::txtBack}"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
 
             <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/fch_txt_back"
-                android:layout_width="@dimen/dp52"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
-                android:text="@string/md_back_arrow"
-                android:textAppearance="@style/TextIconAppearance_toolbar"
-                android:textColor="@color/whit_background"
-                />
+              android:id="@+id/fch_txt_back"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:layout_alignParentLeft="true"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
 
           </net.iGap.libs.rippleeffect.RippleView>
 
@@ -97,21 +92,97 @@
 
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/fch_backgroundToolbar"
-        >
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/fch_backgroundToolbar">
 
       <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
         <net.iGap.module.HeaderTextview
+          fontPath="fonts/IRANSansMobile_Bold.ttf"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:paddingBottom="@dimen/dp16"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/st_Info"
+          android:textColor="@color/green"
+          android:textSize="@dimen/dp18"
+          android:textStyle="bold" />
+
+        <RadioGroup
+          android:id="@+id/fch_radioGroup"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="12dp"
+          android:onCheckedChanged="@{fragmentCreateChannelViewModel.isRadioGroup}"
+          android:paddingEnd="@dimen/dp12"
+          android:paddingLeft="@dimen/dp12"
+          android:paddingRight="@dimen/dp12"
+          android:paddingStart="@dimen/dp12">
+          <!--android:onCheckedChanged="@{fragmentCreateChannelViewModel.isRadioGroup}"-->
+
+          <RadioButton
+            android:id="@+id/fch_radioButton_Public"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPublic}"
+            android:gravity="start|center"
+            android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPublic}"
+            android:text="@string/public_channel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dp15"
+
+            />
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:text="@string/desc_public_channel"
+            android:textSize="@dimen/dp14" />
+
+          <RadioButton
+            android:id="@+id/fch_radioButton_private"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPrivate}"
+            android:gravity="start|center"
+            android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPrivate}"
+            android:text="@string/private_channel"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dp15" />
+
+          <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp8"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:text="@string/desc_private_channel"
+            android:textSize="@dimen/dp14" />
+        </RadioGroup>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/fch_radioGroup"
+          android:background="@color/background_editText"
+          android:orientation="vertical"
+          android:padding="@dimen/dp8"
+
+          >
+
+          <net.iGap.module.HeaderTextview
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -120,124 +191,37 @@
             android:text="@string/st_Info"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
-            android:textStyle="bold"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            />
-
-        <RadioGroup
-            android:id="@+id/fch_radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingEnd="@dimen/dp12"
-            android:paddingLeft="@dimen/dp12"
-            android:paddingRight="@dimen/dp12"
-            android:paddingStart="@dimen/dp12"
-            android:onCheckedChanged="@{fragmentCreateChannelViewModel.isRadioGroup}"
-            >
-          <!--android:onCheckedChanged="@{fragmentCreateChannelViewModel.isRadioGroup}"-->
-
-          <RadioButton
-              android:id="@+id/fch_radioButton_Public"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="start|center"
-              android:text="@string/public_channel"
-              android:textColor="@android:color/black"
-              android:textSize="@dimen/dp15"
-              android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPublic}"
-              android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPublic}"
-
-              />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:text="@string/desc_public_channel"
-              android:textSize="@dimen/dp14"
-              />
-
-          <RadioButton
-              android:id="@+id/fch_radioButton_private"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/dp8"
-              android:gravity="start|center"
-              android:text="@string/private_channel"
-              android:textColor="@android:color/black"
-              android:textSize="@dimen/dp15"
-              android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPrivate}"
-              android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPrivate}"
-              />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:text="@string/desc_private_channel"
-              android:textSize="@dimen/dp14"
-              />
-        </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fch_radioGroup"
-            android:background="@color/background_editText"
-            android:orientation="vertical"
-            android:padding="@dimen/dp8"
-
-            >
-
-          <net.iGap.module.HeaderTextview
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:paddingBottom="@dimen/dp16"
-              android:paddingTop="@dimen/dp12"
-              android:text="@string/st_Info"
-              android:textColor="@color/green"
-              android:textSize="@dimen/dp18"
-              android:textStyle="bold"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              />
+            android:textStyle="bold" />
 
 
           <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fch_txtInput_nikeName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
-                app:hintTextAppearance="@style/Hint_appearance"
-                app:errorEnabled="@{fragmentCreateChannelViewModel.txtInputLinkEnable}"
-                android:onClick="@{fragmentCreateChannelViewModel::onClickTxtInputLink}"
-                >
+              android:id="@+id/fch_txtInput_nikeName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:onClick="@{fragmentCreateChannelViewModel::onClickTxtInputLink}"
+              app:errorEnabled="@{fragmentCreateChannelViewModel.txtInputLinkEnable}"
+              app:errorTextAppearance="@style/error_appearance"
+              app:hintTextAppearance="@style/Hint_appearance">
 
               <net.iGap.module.MEditText
-                  android:id="@+id/fch_edt_link"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center_vertical"
-                  android:hint="@string/your_link"
-                  android:singleLine="true"
-                  android:text="@={fragmentCreateChannelViewModel.edtSetLink}"
-                  android:textColorHint="@color/default_shadow_color"
-                  android:textDirection="ltr"
-                  android:textSize="@dimen/dp15"
-                  android:afterTextChanged="@{fragmentCreateChannelViewModel.afterTextChanged}"
-                  android:enabled="@{fragmentCreateChannelViewModel.edtSetLinkEnable}"
-                  android:layoutDirection="ltr"
-                  />
+                android:id="@+id/fch_edt_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:afterTextChanged="@{fragmentCreateChannelViewModel.afterTextChanged}"
+                android:enabled="@{fragmentCreateChannelViewModel.edtSetLinkEnable}"
+                android:hint="@string/your_link"
+                android:layoutDirection="ltr"
+                android:singleLine="true"
+                android:text="@={fragmentCreateChannelViewModel.edtSetLink}"
+                android:textColorHint="@color/default_shadow_color"
+                android:textDirection="ltr"
+                android:textSize="@dimen/dp15" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -246,41 +230,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/dp8"
+          android:gravity="right|center_horizontal"
+          android:layoutDirection="ltr"
+          android:padding="@dimen/dp20">
+
+          <TextView
+            android:id="@+id/fch_txt_cancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp8"
-            android:gravity="right|center_horizontal"
-            android:layoutDirection="ltr"
-            android:padding="@dimen/dp20"
-            >
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:onClick="@{fragmentCreateChannelViewModel::onClickCancel}"
+            android:text="@string/B_cancel"
+            android:textColor="@color/toolbar_background"
+            android:textSize="@dimen/dp15"
+            android:textStyle="bold" />
 
           <TextView
-              android:id="@+id/fch_txt_cancel"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp20"
-              android:layout_marginRight="@dimen/dp20"
-              android:onClick="@{fragmentCreateChannelViewModel::onClickCancel}"
-              android:text="@string/B_cancel"
-              android:textColor="@color/toolbar_background"
-              android:textSize="@dimen/dp15"
-              android:textStyle="bold"
-              />
+            android:id="@+id/fch_txt_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:enabled="@{fragmentCreateChannelViewModel.txtFinishEnable}"
+            android:onClick="@{fragmentCreateChannelViewModel::onClickFinish}"
+            android:text="@string/chi_NEXT_STEP"
+            android:textColor="@{fragmentCreateChannelViewModel.txtFinishColor , default=@color/toolbar_background}"
+            android:textSize="@dimen/dp15"
+            android:textStyle="bold"
 
-          <TextView
-              android:id="@+id/fch_txt_finish"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp20"
-              android:layout_marginRight="@dimen/dp20"
-              android:onClick="@{fragmentCreateChannelViewModel::onClickFinish}"
-              android:text="@string/chi_NEXT_STEP"
-              android:textColor="@{fragmentCreateChannelViewModel.txtFinishColor , default=@color/toolbar_background}"
-              android:textSize="@dimen/dp15"
-              android:textStyle="bold"
-              android:enabled="@{fragmentCreateChannelViewModel.txtFinishEnable}"
-
-              />
+            />
 
         </LinearLayout>
 
@@ -288,14 +270,13 @@
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/fch_prgWaiting_addContact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="@{fragmentCreateChannelViewModel.prgWaiting}"
-        />
+      android:id="@+id/fch_prgWaiting_addContact"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      android:visibility="@{fragmentCreateChannelViewModel.prgWaiting}" />
 
   </RelativeLayout>
 </layout>

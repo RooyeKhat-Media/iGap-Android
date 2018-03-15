@@ -1,7 +1,6 @@
 package net.iGap.fragments;
 
 
-
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.FragmentBioBinding;
@@ -20,9 +20,9 @@ import net.iGap.viewmodel.FragmentBioViewModel;
  */
 public class FragmentBio extends BaseFragment {
 
+    public static OnBackFragment onBackFragment;
     private FragmentBioViewModel fragmentBioViewModel;
     private FragmentBioBinding fragmentBioBinding;
-    public static OnBackFragment onBackFragment;
 
     public FragmentBio() {
         // Required empty public constructor

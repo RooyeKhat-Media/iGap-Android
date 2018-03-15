@@ -1,95 +1,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:clickable="true"
-              android:background="@color/rg_whit_background"
-              android:orientation="vertical"
-              android:layoutDirection="ltr">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/rg_whit_background"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
 
-    <!-- Pretty hint text, and maxLines -->
+  <!-- Pretty hint text, and maxLines -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layoutDirection="ltr"
-        >
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp60"
+    android:layoutDirection="ltr">
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/rg_edtSearch_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:theme="@style/MySearch"
-            app:submitBackground="@color/red" />
+    <android.support.v7.widget.SearchView
+      android:id="@+id/rg_edtSearch_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clickable="true"
+      android:theme="@style/MySearch"
+      app:submitBackground="@color/red" />
 
-        <TextView
-            android:id="@+id/rg_txt_titleToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/dp24"
-            android:paddingRight="@dimen/dp52"
-            android:paddingStart="@dimen/dp52"
-            android:singleLine="true"
-            android:text="@string/rg_Select_Country"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dp20"
-            android:layoutDirection="rtl"
-            android:textStyle="bold" />
+    <TextView
+      android:id="@+id/rg_txt_titleToolbar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical"
+      android:layoutDirection="rtl"
+      android:maxLines="1"
+      android:paddingLeft="@dimen/dp24"
+      android:paddingRight="@dimen/dp52"
+      android:paddingStart="@dimen/dp52"
+      android:singleLine="true"
+      android:text="@string/rg_Select_Country"
+      android:textColor="@android:color/black"
+      android:textSize="@dimen/dp20"
+      android:textStyle="bold" />
 
-    </RelativeLayout>
-
-
-    <View
-        android:id="@+id/rg_borderButton"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_editText"
-        android:visibility="gone" />
-
-    <ListView
-
-        android:layoutDirection="rtl"
-        android:id="@+id/lstContent"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:background="@color/structCountry"
-        android:choiceMode="singleChoice"
-        android:divider="@color/rg_background_editText"
-        android:fadeScrollbars="false"
-        android:scrollbarSize="@dimen/dp4"
-        android:scrollbarThumbVertical="@color/rg_start_background" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_editText" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:gravity="right"
-        android:layoutDirection="ltr"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp8">
+  </RelativeLayout>
 
 
-        <TextView
-            android:id="@+id/rg_txt_okDialog"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="@dimen/dp36"
-            android:layout_marginLeft="@dimen/dp8"
-            android:layout_marginRight="@dimen/dp8"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="@string/B_cancel"
-            android:textColor="@color/toolbar_background"
-            android:textSize="@dimen/dp14"
-            android:textStyle="bold" />
+  <View
+    android:id="@+id/rg_borderButton"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/background_editText"
+    android:visibility="gone" />
 
-    </LinearLayout>
+  <ListView
+
+    android:id="@+id/lstContent"
+    android:layout_width="fill_parent"
+    android:layout_height="0dip"
+    android:layout_weight="1"
+    android:background="@color/structCountry"
+    android:choiceMode="singleChoice"
+    android:divider="@color/rg_background_editText"
+    android:fadeScrollbars="false"
+    android:layoutDirection="rtl"
+    android:scrollbarSize="@dimen/dp4"
+    android:scrollbarThumbVertical="@color/rg_start_background" />
+
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/background_editText" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp52"
+    android:gravity="right"
+    android:layoutDirection="ltr"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
+
+
+    <TextView
+      android:id="@+id/rg_txt_okDialog"
+      android:layout_width="@dimen/dp60"
+      android:layout_height="@dimen/dp36"
+      android:layout_marginLeft="@dimen/dp8"
+      android:layout_marginRight="@dimen/dp8"
+      android:background="@android:color/transparent"
+      android:gravity="center"
+      android:text="@string/B_cancel"
+      android:textColor="@color/toolbar_background"
+      android:textSize="@dimen/dp14"
+      android:textStyle="bold" />
+
+  </LinearLayout>
 
 </LinearLayout>

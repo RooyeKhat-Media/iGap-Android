@@ -12,6 +12,7 @@ package net.iGap.helper;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityEnterPassCode;
@@ -59,8 +60,8 @@ public class HelperConnectionState {
         }
 
         if ((G.currentActivity instanceof ActivityMain || G.currentActivity instanceof ActivityEnterPassCode || G.currentActivity instanceof ActivityRegisteration || G.currentActivity instanceof ActivityManageSpace) && (!G.isFragmentMapActive
-            || connectionState == ConnectionState.IGAP
-            || connectionState == ConnectionState.UPDATING)) {
+                || connectionState == ConnectionState.IGAP
+                || connectionState == ConnectionState.UPDATING)) {
 
             if (snack != null) {
                 if (snack.isShown()) {

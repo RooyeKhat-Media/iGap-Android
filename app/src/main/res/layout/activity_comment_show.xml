@@ -1,254 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layoutDirection="ltr"
-    tools:ignore="MissingPrefix"
-    android:orientation="vertical"
-    >
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
 
+
+  <LinearLayout
+    android:id="@+id/acs_ll_replay"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp60"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:visibility="gone">
+
+
+    <ImageView
+      android:layout_width="@dimen/dp40"
+      android:layout_height="@dimen/dp40"
+      android:layout_marginLeft="@dimen/dp8"
+      android:adjustViewBounds="true"
+      android:padding="@dimen/dp4"
+      android:src="@mipmap/reply"
+      android:visibility="visible" />
+
+    <View
+      android:layout_width="3dp"
+      android:layout_height="@dimen/dp40"
+      android:layout_marginLeft="@dimen/dp8"
+      android:background="@color/green" />
+
+
+    <net.iGap.module.CircleImageView
+      android:id="@+id/acs_imv_replay_pic"
+      android:layout_width="@dimen/dp40"
+      android:layout_height="@dimen/dp40"
+      android:layout_marginLeft="@dimen/dp8"
+      android:src="@mipmap/empty"
+      android:visibility="visible" />
 
     <LinearLayout
-        android:id="@+id/acs_ll_replay"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_marginLeft="@dimen/dp8"
+      android:layout_weight="1"
+      android:gravity="left|center"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/acs_txt_replay_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/dp280"
+        android:singleLine="true"
+        android:text="New Text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/acs_txt_replay_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp4"
+        android:maxWidth="@dimen/dp280"
+        android:singleLine="true"
+        android:text="New Text"
+        android:textSize="@dimen/dp14" />
+    </LinearLayout>
+
+    <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/acs_btn_close"
+      android:layout_width="@dimen/dp40"
+      android:layout_height="match_parent"
+      android:background="@null"
+      android:text="@string/md_close_button"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      android:textColor="@android:color/darker_gray"
+      android:textSize="@dimen/dp22"
+      android:visibility="visible" />
+
+  </LinearLayout>
+
+
+  <android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="#e6e6e6"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/acs_recycler_view_comment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="vertical"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layoutDirection="ltr">
+
+      <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp60"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-
-
-        <ImageView
-            android:layout_width="@dimen/dp40"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginLeft="@dimen/dp8"
-            android:adjustViewBounds="true"
-            android:padding="@dimen/dp4"
-            android:src="@mipmap/reply"
-            android:visibility="visible"
-            />
-
-        <View
-            android:layout_width="3dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginLeft="@dimen/dp8"
-            android:background="@color/green"
-            />
-
-
-      <net.iGap.module.CircleImageView
-            android:id="@+id/acs_imv_replay_pic"
-            android:layout_width="@dimen/dp40"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginLeft="@dimen/dp8"
-            android:src="@mipmap/empty"
-            android:visibility="visible"
-            />
+        android:orientation="vertical"
+        app:elevation="8dp"
+        app:layout_scrollFlags="scroll|enterAlways">
 
         <LinearLayout
+          android:id="@+id/acs_ll_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:background="@color/green"
+          android:orientation="horizontal">
+
+          <net.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/acs_ripple_back"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/acs_btn_back"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:background="@null"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@android:color/white" />
+
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+            android:id="@+id/acs_txt_number_of_comment"
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp8"
             android:layout_weight="1"
-            android:gravity="left|center"
-            android:orientation="vertical"
-            >
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:text="23 Comments"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dp18"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/acs_txt_replay_from"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="@dimen/dp280"
-                android:singleLine="true"
-                android:text="New Text"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/dp14"
-                />
+          <net.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/acs_ripple_menu"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="150"
+            app:rv_ripplePadding="5dp">
 
-            <TextView
-                android:id="@+id/acs_txt_replay_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp4"
-                android:maxWidth="@dimen/dp280"
-                android:singleLine="true"
-                android:text="New Text"
-                android:textSize="@dimen/dp14"
-                />
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/acs_btn_menu"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_check_box"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@android:color/white"
+              android:textSize="@dimen/dp22" />
+
+          </net.iGap.libs.rippleeffect.RippleView>
         </LinearLayout>
+      </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+  </android.support.design.widget.CoordinatorLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#d1d1d1" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp48"
+      android:background="@color/gray_f2"
+      android:orientation="horizontal">
 
       <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/acs_btn_close"
-            android:layout_width="@dimen/dp40"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:text="@string/md_close_button"
-            android:textColor="@android:color/darker_gray"
-          android:textSize="@dimen/dp22"
-            android:visibility="visible"
-            />
-
-    </LinearLayout>
-
-
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#e6e6e6"
-        android:orientation="vertical">
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/acs_recycler_view_comment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="ltr">
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp60"
-                android:orientation="vertical"
-                app:elevation="8dp"
-                app:layout_scrollFlags="scroll|enterAlways">
-
-                <LinearLayout
-                    android:id="@+id/acs_ll_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/green"
-                    android:orientation="horizontal">
-
-                  <net.iGap.libs.rippleeffect.RippleView
-                        android:id="@+id/acs_ripple_back"
-                        rv_centered="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:rv_alpha="200"
-                        app:rv_centered="true"
-                        app:rv_rippleDuration="0"
-                        app:rv_ripplePadding="5dp">
-
-                    <net.iGap.module.MaterialDesignTextView
-                            android:id="@+id/acs_btn_back"
-                            android:textAppearance="@style/TextIconAppearance_toolbar"
-                            android:layout_width="@dimen/dp52"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:gravity="center"
-                            android:text="@string/md_back_arrow"
-                            android:textColor="@android:color/white"
-                            />
-
-                  </net.iGap.libs.rippleeffect.RippleView>
-
-                    <TextView
-                        android:id="@+id/acs_txt_number_of_comment"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center|left"
-                        android:singleLine="true"
-                        android:text="23 Comments"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/dp18"
-                        fontPath="fonts/IRANSansMobile_Bold.ttf"
-                        android:textStyle="bold" />
-
-                  <net.iGap.libs.rippleeffect.RippleView
-                        android:id="@+id/acs_ripple_menu"
-                        rv_centered="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        app:rv_alpha="200"
-                        app:rv_centered="true"
-                        app:rv_rippleDuration="150"
-                        app:rv_ripplePadding="5dp">
-
-                    <net.iGap.module.MaterialDesignTextView
-                            android:id="@+id/acs_btn_menu"
-                            android:textAppearance="@style/TextIconAppearance_toolbar"
-                            android:layout_width="@dimen/dp52"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="@string/md_check_box"
-                            android:textColor="@android:color/white"
-                        android:textSize="@dimen/dp22"
-                            />
-
-                  </net.iGap.libs.rippleeffect.RippleView>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/acs_btn_smile"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="@dimen/dp8"
+        android:text="@string/md_emoticon_with_happy_face"
+        android:textAppearance="@style/TextIconAppearance.all" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#d1d1d1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp48"
-            android:background="@color/gray_f2"
-            android:orientation="horizontal">
-
-          <net.iGap.module.MaterialDesignTextView
-                android:id="@+id/acs_btn_smile"
-                style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-                android:textAppearance="@style/TextIconAppearance.all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp8"
-                android:text="@string/md_emoticon_with_happy_face"/>
-
-          <net.iGap.module.EmojiEditTextE
-                android:id="@+id/acs_edt_chat"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                app:emojiSize="26sp"
-                android:hint="   Type Message"
-                android:maxLines="4"
-                android:paddingLeft="@dimen/dp6"
-                android:paddingRight="@dimen/dp4"
-                android:textColorHint="@color/gray" />
+      <net.iGap.module.EmojiEditTextE
+        android:id="@+id/acs_edt_chat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="   Type Message"
+        android:maxLines="4"
+        android:paddingLeft="@dimen/dp6"
+        android:paddingRight="@dimen/dp4"
+        android:textColorHint="@color/gray"
+        app:emojiSize="26sp" />
 
 
-            <Button
-                android:id="@+id/acs_btn_send"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp36"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/send_button_gray"
-                android:gravity="center"
-                android:textSize="@dimen/dp26"
-                android:visibility="visible" />
+      <Button
+        android:id="@+id/acs_btn_send"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp36"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/dp26"
+        android:visibility="visible"
+        app:srcCompat="@drawable/send_button_gray" />
 
-
-        </LinearLayout>
 
     </LinearLayout>
+
+  </LinearLayout>
 
 
 </LinearLayout>

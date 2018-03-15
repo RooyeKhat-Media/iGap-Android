@@ -43,12 +43,15 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
+
+import net.iGap.R;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Random;
-import net.iGap.R;
 
-@SuppressWarnings("unused") public class NavigationTabStrip extends View implements ViewPager.OnPageChangeListener {
+@SuppressWarnings("unused")
+public class NavigationTabStrip extends View implements ViewPager.OnPageChangeListener {
 
     // NTS constants
     private final static int HIGH_QUALITY_FLAGS = Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG;
@@ -63,7 +66,10 @@ import net.iGap.R;
     private final static int DEFAULT_INACTIVE_COLOR = Color.GRAY;
     private final static int DEFAULT_ACTIVE_COLOR = Color.WHITE;
     private final static int DEFAULT_STRIP_COLOR = Color.RED;
+    private final static int DEFAULT_BADGE_COLOR = Color.BLACK;
     private final static int DEFAULT_TITLE_SIZE = 0;
+    private static int DEFAULT_TITLE_BADGE_TOP = 0;
+    private static int PADDING = 0;
 
     // Title size offer to view height
     private final static float TITLE_SIZE_FRACTION = 0.35F;
@@ -76,6 +82,7 @@ import net.iGap.R;
     private final RectF mBounds = new RectF();
     private final RectF mStripBounds = new RectF();
     private final Rect mTitleBounds = new Rect();
+    private final RectF mBoundsOval = new RectF();
 
     // Main paint
     private final Paint mStripPaint = new Paint(HIGH_QUALITY_FLAGS) {
@@ -91,6 +98,16 @@ import net.iGap.R;
         }
     };
 
+    private final Paint mTitlePaintBadge = new TextPaint(HIGH_QUALITY_FLAGS) {
+        {
+            setTextAlign(Align.CENTER);
+        }
+    };
+
+    private final Paint mTitlePaintOval = new TextPaint(HIGH_QUALITY_FLAGS) {
+
+    };
+
     // Variables for animator
     private final ValueAnimator mAnimator = new ValueAnimator();
     private final ArgbEvaluator mColorEvaluator = new ArgbEvaluator();
@@ -99,6 +116,7 @@ import net.iGap.R;
 
     // NTS titles
     private String[] mTitles;
+    private String[] mTitlesBadge = {"0", "0", "0", "0", "0"};
 
     // Variables for ViewPager
     private ViewPager mViewPager;
@@ -167,6 +185,8 @@ import net.iGap.R;
         // Speed and fix for pre 17 API
         ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, null);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
+        DEFAULT_TITLE_BADGE_TOP = (int) getResources().getDimension(R.dimen.dp12);
+        PADDING = (int) getResources().getDimension(R.dimen.dp4);
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NavigationTabStrip);
         try {
@@ -232,17 +252,22 @@ import net.iGap.R;
         return mTitles;
     }
 
+    public void setTitles(final String... titles) {
+        for (int i = 0; i < titles.length; i++) titles[i] = titles[i].toUpperCase();
+        mTitles = titles;
+        requestLayout();
+    }
+
+    public void setTitleBadge(String[] titleBadge) {
+        this.mTitlesBadge = titleBadge;
+        postInvalidate();
+    }
+
     public void setTitles(final int... titleResIds) {
         final String[] titles = new String[titleResIds.length];
         for (int i = 0; i < titleResIds.length; i++)
             titles[i] = getResources().getString(titleResIds[i]);
         setTitles(titles);
-    }
-
-    public void setTitles(final String... titles) {
-        for (int i = 0; i < titles.length; i++) titles[i] = titles[i].toUpperCase();
-        mTitles = titles;
-        requestLayout();
     }
 
     public int getStripColor() {
@@ -263,6 +288,11 @@ import net.iGap.R;
         return mStripGravity;
     }
 
+    public void setStripGravity(final StripGravity stripGravity) {
+        mStripGravity = stripGravity;
+        requestLayout();
+    }
+
     private void setStripGravity(final int index) {
         switch (index) {
             case StripGravity.TOP_INDEX:
@@ -275,13 +305,13 @@ import net.iGap.R;
         }
     }
 
-    public void setStripGravity(final StripGravity stripGravity) {
-        mStripGravity = stripGravity;
-        requestLayout();
-    }
-
     public StripType getStripType() {
         return mStripType;
+    }
+
+    public void setStripType(final StripType stripType) {
+        mStripType = stripType;
+        requestLayout();
     }
 
     private void setStripType(final int index) {
@@ -296,11 +326,6 @@ import net.iGap.R;
         }
     }
 
-    public void setStripType(final StripType stripType) {
-        mStripType = stripType;
-        requestLayout();
-    }
-
     public float getStripFactor() {
         return mResizeInterpolator.getFactor();
     }
@@ -311,6 +336,13 @@ import net.iGap.R;
 
     public Typeface getTypeface() {
         return mTypeface;
+    }
+
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTitlePaint.setTypeface(typeface);
+        mTitlePaintBadge.setTypeface(typeface);
+        postInvalidate();
     }
 
     public void setTypeface(final String typeface) {
@@ -325,12 +357,6 @@ import net.iGap.R;
         }
 
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTitlePaint.setTypeface(typeface);
-        postInvalidate();
     }
 
     public int getActiveColor() {
@@ -367,6 +393,7 @@ import net.iGap.R;
     public void setTitleSize(final float titleSize) {
         mTitleSize = titleSize;
         mTitlePaint.setTextSize(titleSize);
+        mTitlePaintBadge.setTextSize(getResources().getDimension(R.dimen.dp10));
         postInvalidate();
     }
 
@@ -382,7 +409,8 @@ import net.iGap.R;
             mAnimatorListener = new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(final Animator animation) {
-                    if (mOnTabStripSelectedIndexListener != null) mOnTabStripSelectedIndexListener.onStartTabSelected(mTitles[mIndex], mIndex);
+                    if (mOnTabStripSelectedIndexListener != null)
+                        mOnTabStripSelectedIndexListener.onStartTabSelected(mTitles[mIndex], mIndex);
 
                     animation.removeListener(this);
                     animation.addListener(this);
@@ -395,7 +423,8 @@ import net.iGap.R;
                     animation.removeListener(this);
                     animation.addListener(this);
 
-                    if (mOnTabStripSelectedIndexListener != null) mOnTabStripSelectedIndexListener.onEndTabSelected(mTitles[mIndex], mIndex);
+                    if (mOnTabStripSelectedIndexListener != null)
+                        mOnTabStripSelectedIndexListener.onEndTabSelected(mTitles[mIndex], mIndex);
                 }
             };
         }
@@ -415,7 +444,8 @@ import net.iGap.R;
         {
             mViewPager.setOnPageChangeListener(null);
         }
-        if (viewPager.getAdapter() == null) throw new IllegalStateException("ViewPager does not provide adapter instance.");
+        if (viewPager.getAdapter() == null)
+            throw new IllegalStateException("ViewPager does not provide adapter instance.");
 
         mIsViewPagerMode = true;
         mViewPager = viewPager;
@@ -607,7 +637,8 @@ import net.iGap.R;
 
         // Get smaller side
         mTabSize = width / (float) mTitles.length;
-        if ((int) mTitleSize == DEFAULT_TITLE_SIZE) setTitleSize((height - mStripWeight) * TITLE_SIZE_FRACTION);
+        if ((int) mTitleSize == DEFAULT_TITLE_SIZE)
+            setTitleSize((height - mStripWeight) * TITLE_SIZE_FRACTION);
 
         // Set start position of strip for preview or on start
         if (isInEditMode() || !mIsViewPagerMode) {
@@ -641,6 +672,7 @@ import net.iGap.R;
             final float leftTitleOffset = (mTabSize * i) + (mTabSize * 0.5F);
 
             mTitlePaint.getTextBounds(title, 0, title.length(), mTitleBounds);
+            mTitlePaintBadge.getTextBounds(title, 0, title.length(), mTitleBounds);
             final float topTitleOffset = (mBounds.height() - mStripWeight) * 0.5F + mTitleBounds.height() * 0.5F - mTitleBounds.bottom;
 
             // Get interpolated fraction for left last and current tab
@@ -666,27 +698,42 @@ import net.iGap.R;
             }
 
             canvas.drawText(title, leftTitleOffset, topTitleOffset + (mStripGravity == StripGravity.TOP ? mStripWeight : 0.0F), mTitlePaint);
+
+            if (!mTitlesBadge[i].equals("0")) {
+                int sizeBadge = (int) mTitlePaintBadge.measureText(mTitlesBadge[i], 0, mTitlesBadge[i].length());
+                mBoundsOval.set(leftTitleOffset - PADDING - sizeBadge / 2, topTitleOffset + 2, leftTitleOffset + PADDING + sizeBadge / 2, topTitleOffset + DEFAULT_TITLE_BADGE_TOP + PADDING);
+                canvas.drawRoundRect(mBoundsOval, 5, 5, mTitlePaintOval);
+                canvas.drawText(mTitlesBadge[i], leftTitleOffset, topTitleOffset + DEFAULT_TITLE_BADGE_TOP, mTitlePaintBadge);
+            }
         }
     }
 
     // Method to transform current fraction of NTS and position
     private void updateCurrentTitle(final float interpolation) {
         mTitlePaint.setColor((int) mColorEvaluator.evaluate(interpolation, mInactiveColor, mActiveColor));
+        mTitlePaintBadge.setColor((int) mColorEvaluator.evaluate(interpolation, mInactiveColor, DEFAULT_BADGE_COLOR));
+        mTitlePaintOval.setColor((int) mColorEvaluator.evaluate(interpolation, mInactiveColor, mActiveColor));
+
     }
 
     // Method to transform last fraction of NTS and position
     private void updateLastTitle(final float lastInterpolation) {
         mTitlePaint.setColor((int) mColorEvaluator.evaluate(lastInterpolation, mActiveColor, mInactiveColor));
+        mTitlePaintBadge.setColor((int) mColorEvaluator.evaluate(lastInterpolation, DEFAULT_BADGE_COLOR, mInactiveColor));
+        mTitlePaintOval.setColor((int) mColorEvaluator.evaluate(lastInterpolation, mActiveColor, mInactiveColor));
     }
 
     // Method to transform others fraction of NTS and position
     private void updateInactiveTitle() {
         mTitlePaint.setColor(mInactiveColor);
+        mTitlePaintBadge.setColor(mInactiveColor);
+        mTitlePaintOval.setColor(mInactiveColor);
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, final int positionOffsetPixels) {
-        if (mOnPageChangeListener != null) mOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        if (mOnPageChangeListener != null)
+            mOnPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
 
         // If we animate, don`t call this
         if (!mIsSetIndexFromTabBar) {
@@ -743,39 +790,6 @@ import net.iGap.R;
         return savedState;
     }
 
-    // Save current index instance
-    private static class SavedState extends BaseSavedState {
-
-        private int index;
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            index = in.readInt();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(index);
-        }
-
-        @SuppressWarnings("UnusedDeclaration") public static final Creator<SavedState> CREATOR = new Creator<NavigationTabStrip.SavedState>() {
-            @Override
-            public NavigationTabStrip.SavedState createFromParcel(Parcel in) {
-                return new NavigationTabStrip.SavedState(in);
-            }
-
-            @Override
-            public NavigationTabStrip.SavedState[] newArray(int size) {
-                return new NavigationTabStrip.SavedState[size];
-            }
-        };
-    }
-
     @Override
     protected void onConfigurationChanged(final Configuration newConfig) {
         // Config view on rotate etc.
@@ -793,21 +807,59 @@ import net.iGap.R;
         });
     }
 
-    // Custom scroller with custom scroll duration
-    private class ResizeViewPagerScroller extends Scroller {
+    // NTS strip type
+    public enum StripType {
+        LINE, POINT;
 
-        public ResizeViewPagerScroller(Context context) {
-            super(context, new AccelerateDecelerateInterpolator());
+        private final static int LINE_INDEX = 0;
+        private final static int POINT_INDEX = 1;
+    }
+
+    // NTS strip gravity
+    public enum StripGravity {
+        BOTTOM, TOP;
+
+        private final static int BOTTOM_INDEX = 0;
+        private final static int TOP_INDEX = 1;
+    }
+
+    // Out listener for selected index
+    public interface OnTabStripSelectedIndexListener {
+        void onStartTabSelected(final String title, final int index);
+
+        void onEndTabSelected(final String title, final int index);
+    }
+
+    // Save current index instance
+    private static class SavedState extends BaseSavedState {
+
+        @SuppressWarnings("UnusedDeclaration")
+        public static final Creator<SavedState> CREATOR = new Creator<NavigationTabStrip.SavedState>() {
+            @Override
+            public NavigationTabStrip.SavedState createFromParcel(Parcel in) {
+                return new NavigationTabStrip.SavedState(in);
+            }
+
+            @Override
+            public NavigationTabStrip.SavedState[] newArray(int size) {
+                return new NavigationTabStrip.SavedState[size];
+            }
+        };
+        private int index;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            index = in.readInt();
         }
 
         @Override
-        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-            super.startScroll(startX, startY, dx, dy, mAnimationDuration);
-        }
-
-        @Override
-        public void startScroll(int startX, int startY, int dx, int dy) {
-            super.startScroll(startX, startY, dx, dy, mAnimationDuration);
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeInt(index);
         }
     }
 
@@ -843,26 +895,21 @@ import net.iGap.R;
         }
     }
 
-    // NTS strip type
-    public enum StripType {
-        LINE, POINT;
+    // Custom scroller with custom scroll duration
+    private class ResizeViewPagerScroller extends Scroller {
 
-        private final static int LINE_INDEX = 0;
-        private final static int POINT_INDEX = 1;
-    }
+        public ResizeViewPagerScroller(Context context) {
+            super(context, new AccelerateDecelerateInterpolator());
+        }
 
-    // NTS strip gravity
-    public enum StripGravity {
-        BOTTOM, TOP;
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+            super.startScroll(startX, startY, dx, dy, mAnimationDuration);
+        }
 
-        private final static int BOTTOM_INDEX = 0;
-        private final static int TOP_INDEX = 1;
-    }
-
-    // Out listener for selected index
-    public interface OnTabStripSelectedIndexListener {
-        void onStartTabSelected(final String title, final int index);
-
-        void onEndTabSelected(final String title, final int index);
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy) {
+            super.startScroll(startX, startY, dx, dy, mAnimationDuration);
+        }
     }
 }

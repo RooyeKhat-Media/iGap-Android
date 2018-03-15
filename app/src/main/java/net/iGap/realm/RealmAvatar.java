@@ -10,20 +10,23 @@
 
 package net.iGap.realm;
 
+import net.iGap.module.enums.AttachmentFor;
+import net.iGap.proto.ProtoGlobal;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
-import net.iGap.module.enums.AttachmentFor;
-import net.iGap.proto.ProtoGlobal;
 
 public class RealmAvatar extends RealmObject {
 
-    @PrimaryKey private long id;
+    @PrimaryKey
+    private long id;
     private long uid; // id for sorting avatars
-    @Index private long ownerId; // userId for users and roomId for rooms
+    @Index
+    private long ownerId; // userId for users and roomId for rooms
     private RealmAttachment file;
 
     public RealmAvatar() {
@@ -35,7 +38,7 @@ public class RealmAvatar extends RealmObject {
 
     /**
      * HINT : use this method in transaction. and never use this method in loop for one userId.
-     *
+     * <p>
      * put avatar to realm and manage need delete any avatar for this ownerId or no
      */
     public static RealmAvatar putOrUpdateAndManageDelete(Realm realm, final long ownerId, final ProtoGlobal.Avatar input) {

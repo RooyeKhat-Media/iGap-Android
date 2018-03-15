@@ -12,12 +12,14 @@ package net.iGap.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,8 +28,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v4.util.ArrayMap;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,12 +59,14 @@ import net.iGap.interfaces.OnClientSearchRoomHistory;
 import net.iGap.interfaces.OnComplete;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.messageprogress.MessageProgress;
+import net.iGap.messageprogress.OnProgress;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.DialogAnimation;
 import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.PreCachingLayoutManager;
+import net.iGap.module.SHP_SETTING;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoClientCountRoomHistory;
 import net.iGap.proto.ProtoClientSearchRoomHistory;
@@ -94,17 +98,26 @@ import io.realm.RealmResults;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
+import static android.content.Context.MODE_PRIVATE;
 import static net.iGap.G.fragmentActivity;
 import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class FragmentShearedMedia extends BaseFragment {
 
-    private RealmResults<RealmRoomMessage> mRealmList;
-    private ArrayList<StructShearedMedia> mNewList;
+    private static final String ROOM_ID = "RoomId";
+    public static ArrayList<Long> list = new ArrayList<>();
+    private static long countOFImage = 0;
+    private static long countOFVIDEO = 0;
+    private static long countOFAUDIO = 0;
+    private static long countOFVOICE = 0;
+    private static long countOFGIF = 0;
+    private static long countOFFILE = 0;
+    private static long countOFLink = 0;
     public ArrayList<Long> SelectedList = new ArrayList<>();
     public ArrayList<Long> bothDeleteMessageId = new ArrayList<>();
-    public static ArrayList<Long> list = new ArrayList<>();
     protected ArrayMap<Long, Boolean> needDownloadList = new ArrayMap<>();
+    private RealmResults<RealmRoomMessage> mRealmList;
+    private ArrayList<StructShearedMedia> mNewList;
     private RealmChangeListener<RealmResults<RealmRoomMessage>> changeListener;
     private ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter mFilter;
     private RecyclerView recyclerView;
@@ -119,37 +132,18 @@ public class FragmentShearedMedia extends BaseFragment {
     private TextView txtSharedMedia;
     private TextView txtNumberOfSelected;
     private ProtoGlobal.Room.Type roomType;
-
     private int numberOfSelected = 0;
     private int listCount = 0;
     private int changeSize = 0;
     private int spanItemCount = 3;
     private int offset;
-
     private boolean isChangeSelectType = false;
     private boolean canUpdateAfterDownload = false;
     private boolean isSelectedMode = false; // for determine user select some file
     private boolean isSendRequestForLoading = false;
     private boolean isThereAnyMoreItemToLoad = false;
-
-    private static long countOFImage = 0;
-    private static long countOFVIDEO = 0;
-    private static long countOFAUDIO = 0;
-    private static long countOFVOICE = 0;
-    private static long countOFGIF = 0;
-    private static long countOFFILE = 0;
-    private static long countOFLink = 0;
     private long nextMessageId = 0;
     private long roomId = 0;
-
-    private static final String ROOM_ID = "RoomId";
-
-    public class StructShearedMedia {
-        RealmRoomMessage item;
-        boolean isItemTime = false;
-        String messageTime;
-        long messageId;
-    }
 
     public static FragmentShearedMedia newInstance(long roomId) {
         Bundle args = new Bundle();
@@ -157,6 +151,29 @@ public class FragmentShearedMedia extends BaseFragment {
         FragmentShearedMedia fragment = new FragmentShearedMedia();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void updateStringSharedMediaCount(ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder proto, long roomId) {
+
+        if (proto != null) {
+
+            countOFImage = proto.getImage();
+            countOFVIDEO = proto.getVideo();
+            countOFAUDIO = proto.getAudio();
+            countOFVOICE = proto.getVoice();
+            countOFGIF = proto.getGif();
+            countOFFILE = proto.getFile();
+            countOFLink = proto.getUrl();
+
+            String result = countOFImage + "\n" + countOFVIDEO + "\n" + countOFAUDIO + "\n" + countOFVOICE + "\n" + countOFGIF + "\n" + countOFFILE + "\n" + countOFLink;
+
+            RealmRoom.setCountShearedMedia(roomId, result);
+        }
+    }
+
+    public static void getCountOfSharedMedia(long roomId) {
+
+        new RequestClientCountRoomHistory().clientCountRoomHistory(roomId);
     }
 
     @Nullable
@@ -434,6 +451,8 @@ public class FragmentShearedMedia extends BaseFragment {
         adapter.resetSelected();
     }
 
+    //********************************************************************************************
+
     private void callBack(boolean result, int whatAction, String number) {
 
         switch (whatAction) {
@@ -575,23 +594,6 @@ public class FragmentShearedMedia extends BaseFragment {
         DialogAnimation.animationUp(dialog);
         dialog.show();
     }
-
-    //********************************************************************************************
-
-    private class PreCashGridLayout extends GridLayoutManager {
-
-        public PreCashGridLayout(Context context, int spanCount) {
-            super(context, spanCount);
-        }
-
-        private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 7000;
-
-        @Override
-        protected int getExtraLayoutSpace(RecyclerView.State state) {
-            return DEFAULT_EXTRA_LAYOUT_SPACE;
-        }
-    }
-
 
     private void initLayoutRecycleviewForImage() {
 
@@ -862,6 +864,11 @@ public class FragmentShearedMedia extends BaseFragment {
             }
 
             @Override
+            public void onTimeOut() {
+
+            }
+
+            @Override
             public void onError(final int majorCode, int minorCode, ProtoClientSearchRoomHistory.ClientSearchRoomHistory.Filter identity) {
 
                 G.handler.post(new Runnable() {
@@ -919,6 +926,52 @@ public class FragmentShearedMedia extends BaseFragment {
     }
 
     //********************************************************************************************
+
+    private void setListener() {
+
+        changeListener = new RealmChangeListener<RealmResults<RealmRoomMessage>>() {
+            @Override
+            public void onChange(RealmResults<RealmRoomMessage> element) {
+
+                if (isChangeSelectType) {
+                    return;
+                }
+
+                if (changeSize - element.size() != 0) {
+
+                    mNewList.clear();
+                    mNewList.addAll(addTimeToList(element));
+
+                    int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                    if (adapter instanceof ImageAdapter) {
+                        adapter = new ImageAdapter(fragmentActivity, mNewList);
+                    } else if (adapter instanceof VideoAdapter) {
+                        adapter = new VideoAdapter(fragmentActivity, mNewList);
+                    } else if (adapter instanceof VoiceAdapter) {
+                        adapter = new VoiceAdapter(fragmentActivity, mNewList);
+                    } else if (adapter instanceof GifAdapter) {
+                        adapter = new GifAdapter(fragmentActivity, mNewList);
+                    } else if (adapter instanceof FileAdapter) {
+                        adapter = new FileAdapter(fragmentActivity, mNewList);
+                    } else if (adapter instanceof LinkAdapter) {
+                        adapter = new LinkAdapter(fragmentActivity, mNewList);
+                    }
+
+                    recyclerView.setAdapter(adapter);
+
+                    recyclerView.scrollToPosition(position);
+
+                    listCount = element.size();
+                    changeSize = element.size();
+                }
+            }
+        };
+
+        if (changeListener != null) {
+            mRealmList.addChangeListener(changeListener);
+        }
+    }
 
     /**
      * Simple Class to serialize object to byte arrays
@@ -989,72 +1042,24 @@ public class FragmentShearedMedia extends BaseFragment {
         }
     }
 
-    public static void updateStringSharedMediaCount(ProtoClientCountRoomHistory.ClientCountRoomHistoryResponse.Builder proto, long roomId) {
+    public class StructShearedMedia {
+        RealmRoomMessage item;
+        boolean isItemTime = false;
+        String messageTime;
+        long messageId;
+    }
 
-        if (proto != null) {
+    private class PreCashGridLayout extends GridLayoutManager {
 
-            countOFImage = proto.getImage();
-            countOFVIDEO = proto.getVideo();
-            countOFAUDIO = proto.getAudio();
-            countOFVOICE = proto.getVoice();
-            countOFGIF = proto.getGif();
-            countOFFILE = proto.getFile();
-            countOFLink = proto.getUrl();
+        private static final int DEFAULT_EXTRA_LAYOUT_SPACE = 7000;
 
-            String result = countOFImage + "\n" + countOFVIDEO + "\n" + countOFAUDIO + "\n" + countOFVOICE + "\n" + countOFGIF + "\n" + countOFFILE + "\n" + countOFLink;
-
-            RealmRoom.setCountShearedMedia(roomId, result);
+        public PreCashGridLayout(Context context, int spanCount) {
+            super(context, spanCount);
         }
-    }
 
-    public static void getCountOfSharedMedia(long roomId) {
-
-        new RequestClientCountRoomHistory().clientCountRoomHistory(roomId);
-    }
-
-    private void setListener() {
-
-        changeListener = new RealmChangeListener<RealmResults<RealmRoomMessage>>() {
-            @Override
-            public void onChange(RealmResults<RealmRoomMessage> element) {
-
-                if (isChangeSelectType) {
-                    return;
-                }
-
-                if (changeSize - element.size() != 0) {
-
-                    mNewList.clear();
-                    mNewList.addAll(addTimeToList(element));
-
-                    int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-                    if (adapter instanceof ImageAdapter) {
-                        adapter = new ImageAdapter(fragmentActivity, mNewList);
-                    } else if (adapter instanceof VideoAdapter) {
-                        adapter = new VideoAdapter(fragmentActivity, mNewList);
-                    } else if (adapter instanceof VoiceAdapter) {
-                        adapter = new VoiceAdapter(fragmentActivity, mNewList);
-                    } else if (adapter instanceof GifAdapter) {
-                        adapter = new GifAdapter(fragmentActivity, mNewList);
-                    } else if (adapter instanceof FileAdapter) {
-                        adapter = new FileAdapter(fragmentActivity, mNewList);
-                    } else if (adapter instanceof LinkAdapter) {
-                        adapter = new LinkAdapter(fragmentActivity, mNewList);
-                    }
-
-                    recyclerView.setAdapter(adapter);
-
-                    recyclerView.scrollToPosition(position);
-
-                    listCount = element.size();
-                    changeSize = element.size();
-                }
-            }
-        };
-
-        if (changeListener != null) {
-            mRealmList.addChangeListener(changeListener);
+        @Override
+        protected int getExtraLayoutSpace(RecyclerView.State state) {
+            return DEFAULT_EXTRA_LAYOUT_SPACE;
         }
     }
 
@@ -1065,59 +1070,12 @@ public class FragmentShearedMedia extends BaseFragment {
         protected ArrayList<StructShearedMedia> mList;
         protected Context context;
 
-        abstract void openSelectedItem(int position, RecyclerView.ViewHolder holder);
-
         public mAdapter(Context context, ArrayList<StructShearedMedia> mList) {
             this.mList = mList;
             this.context = context;
         }
 
-        public class mHolder extends RecyclerView.ViewHolder {
-
-            public MessageProgress messageProgress;
-            public ContentLoadingProgressBar contentLoading;
-
-            public mHolder(View view) {
-                super(view);
-
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (isSelectedMode) {
-                            setSelectedItem(getPosition());
-                        } else {
-
-                            openSelected(getPosition(), mAdapter.mHolder.this);
-                        }
-                    }
-                });
-
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        isSelectedMode = true;
-                        setSelectedItem(getPosition());
-                        return true;
-                    }
-                });
-
-                messageProgress = (MessageProgress) itemView.findViewById(R.id.progress);
-                AppUtils.setProgresColor(messageProgress.progressBar);
-
-                messageProgress.withDrawable(R.drawable.ic_download, true);
-
-                contentLoading = (ContentLoadingProgressBar) itemView.findViewById(R.id.ch_progress_loadingContent);
-                contentLoading.getIndeterminateDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.MULTIPLY);
-
-                messageProgress.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        downloadFile(getPosition(), messageProgress, contentLoading);
-                    }
-                });
-            }
-        }
+        abstract void openSelectedItem(int position, RecyclerView.ViewHolder holder);
 
         @Override
         public int getItemViewType(int position) {
@@ -1146,10 +1104,9 @@ public class FragmentShearedMedia extends BaseFragment {
 
                     holder1.messageProgress.setTag(mList.get(position).messageId);
                     holder1.messageProgress.withDrawable(R.drawable.ic_download, true);
-                    holder1.contentLoading.setVisibility(View.GONE);
 
                     if (HelperDownloadFile.isDownLoading(mList.get(position).item.getAttachment().getCacheId())) {
-                        startDownload(position, holder1.messageProgress, holder1.contentLoading);
+                        startDownload(position, holder1.messageProgress);
                     }
                 }
             } else {
@@ -1234,9 +1191,7 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
-        private void startDownload(final int position, final MessageProgress messageProgress, final ContentLoadingProgressBar contentLoading) {
-
-            contentLoading.setVisibility(View.VISIBLE);
+        private void startDownload(final int position, final MessageProgress messageProgress) {
 
             messageProgress.withDrawable(R.drawable.ic_cancel, true);
 
@@ -1245,26 +1200,32 @@ public class FragmentShearedMedia extends BaseFragment {
 
             String dirPath = AndroidUtils.getFilePathWithCashId(at.getCacheId(), at.getName(), messageType);
 
+            messageProgress.withOnProgress(new OnProgress() {
+                @Override
+                public void onProgressFinished() {
+                    if (messageProgress.getTag() != null && messageProgress.getTag().equals(mList.get(position).messageId)) {
+                        G.currentActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageProgress.withProgress(0);
+                                messageProgress.setVisibility(View.GONE);
+                                updateViewAfterDownload(at.getCacheId());
+                            }
+                        });
+                    }
+                }
+            });
+
             HelperDownloadFile.startDownload(mList.get(position).messageId + "", at.getToken(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(String path, final int progress) {
 
                     if (canUpdateAfterDownload) {
-
-                        if (messageProgress != null && messageProgress.getTag() != null && messageProgress.getTag().equals(mList.get(position).messageId)) {
-
+                        if (messageProgress.getTag() != null && messageProgress.getTag().equals(mList.get(position).messageId)) {
                             G.currentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (progress < 100) {
-                                        messageProgress.withProgress(progress);
-                                    } else {
-                                        messageProgress.withProgress(0);
-                                        messageProgress.setVisibility(View.GONE);
-                                        contentLoading.setVisibility(View.GONE);
-
-                                        updateViewAfterDownload(at.getCacheId());
-                                    }
+                                    messageProgress.withProgress(progress);
                                 }
                             });
                         }
@@ -1275,13 +1236,12 @@ public class FragmentShearedMedia extends BaseFragment {
                 public void OnError(String token) {
                     if (canUpdateAfterDownload) {
 
-                        if (messageProgress != null && messageProgress.getTag() != null && messageProgress.getTag().equals(mList.get(position).messageId)) {
+                        if (messageProgress.getTag() != null && messageProgress.getTag().equals(mList.get(position).messageId)) {
                             G.currentActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     messageProgress.withProgress(0);
                                     messageProgress.withDrawable(R.drawable.ic_download, true);
-                                    contentLoading.setVisibility(View.GONE);
                                 }
                             });
                         }
@@ -1319,17 +1279,17 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
-        private void stopDownload(int position, final MessageProgress messageProgress, final ContentLoadingProgressBar contentLoading) {
+        private void stopDownload(int position) {
 
             HelperDownloadFile.stopDownLoad(mList.get(position).item.getAttachment().getCacheId());
         }
 
-        private void downloadFile(int position, MessageProgress messageProgress, final ContentLoadingProgressBar contentLoading) {
+        private void downloadFile(int position, MessageProgress messageProgress) {
 
             if (HelperDownloadFile.isDownLoading(mList.get(position).item.getAttachment().getCacheId())) {
-                stopDownload(position, messageProgress, contentLoading);
+                stopDownload(position);
             } else {
-                startDownload(position, messageProgress, contentLoading);
+                startDownload(position, messageProgress);
             }
         }
 
@@ -1388,6 +1348,50 @@ public class FragmentShearedMedia extends BaseFragment {
             }
 
             return result;
+        }
+
+        public class mHolder extends RecyclerView.ViewHolder {
+
+            public MessageProgress messageProgress;
+
+            public mHolder(View view) {
+                super(view);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isSelectedMode) {
+                            setSelectedItem(getPosition());
+                        } else {
+
+                            openSelected(getPosition(), mAdapter.mHolder.this);
+                        }
+                    }
+                });
+
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        isSelectedMode = true;
+                        setSelectedItem(getPosition());
+                        return true;
+                    }
+                });
+
+                messageProgress = (MessageProgress) itemView.findViewById(R.id.progress);
+                AppUtils.setProgresColor(messageProgress.progressBar);
+
+                messageProgress.withDrawable(R.drawable.ic_download, true);
+
+
+                messageProgress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        downloadFile(getPosition(), messageProgress);
+                    }
+                });
+            }
         }
 
         public class ViewHolderTime extends RecyclerView.ViewHolder {
@@ -1494,19 +1498,6 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
-        public class ViewHolder extends mHolder {
-
-            public ImageView imvPicFile;
-            public String tempFilePath;
-            public String filePath;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                imvPicFile = (ImageView) itemView.findViewById(R.id.smsl_imv_file_pic);
-            }
-        }
-
         @Override
         void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
             showImage(position, holder.itemView);
@@ -1526,6 +1517,19 @@ public class FragmentShearedMedia extends BaseFragment {
 
             fragment.appBarLayout = appBarLayout;
             new HelperFragment(fragment).setReplace(false).load();
+        }
+
+        public class ViewHolder extends mHolder {
+
+            public ImageView imvPicFile;
+            public String tempFilePath;
+            public String filePath;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                imvPicFile = (ImageView) itemView.findViewById(R.id.smsl_imv_file_pic);
+            }
         }
     }
 
@@ -1628,6 +1632,61 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
+        void openVideoByDefaultApp(int position) {
+
+            try {
+                RealmRoomMessage rm = mNewList.get(position).item;
+                if (rm.getAttachment().isFileExistsOnLocal()) {
+                    File file = new File(rm.getAttachment().getLocalFilePath());
+                    Intent intent = new Intent();
+                    intent.setAction(android.content.Intent.ACTION_VIEW);
+                    Uri uri;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+                    } else {
+                        uri = Uri.fromFile(file);
+                    }
+
+                    intent.setDataAndType(uri, "video/*");
+
+                    try {
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        // to prevent from 'No Activity found to handle Intent'
+                        e.printStackTrace();
+                    }
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
+            playVideo(position, holder.itemView);
+        }
+
+        private void playVideo(int position, View itemView) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            if (sharedPreferences.getInt(SHP_SETTING.KEY_DEFAULT_PLAYER, 0) == 1) {
+                openVideoByDefaultApp(position);
+            } else {
+                long selectedFileToken = mNewList.get(position).messageId;
+                Fragment fragment = FragmentShowImage.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putLong("RoomId", roomId);
+                bundle.putLong("SelectedImage", selectedFileToken);
+                bundle.putString("TYPE", ProtoGlobal.RoomMessageType.VIDEO.toString());
+                fragment.setArguments(bundle);
+
+                //FragmentTransitionLauncher.with(G.fragmentActivity).from(itemView).prepare(fragment);
+                new HelperFragment(fragment).setReplace(false).load();
+            }
+        }
+
         public class ViewHolder extends mHolder {
             public ImageView imvPicFile;
             public TextView txtVideoIcon;
@@ -1648,27 +1707,6 @@ public class FragmentShearedMedia extends BaseFragment {
 
                 txtVideoSize = (TextView) itemView.findViewById(R.id.smsl_txt_video_size);
             }
-        }
-
-        @Override
-        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-            playVideo(position, holder.itemView);
-        }
-
-        private void playVideo(int position, View itemView) {
-            long selectedFileToken = mNewList.get(position).messageId;
-
-            Fragment fragment = FragmentShowImage.newInstance();
-            Bundle bundle = new Bundle();
-            bundle.putLong("RoomId", roomId);
-            bundle.putLong("SelectedImage", selectedFileToken);
-            bundle.putString("TYPE", ProtoGlobal.RoomMessageType.VIDEO.toString());
-            fragment.setArguments(bundle);
-
-            //FragmentTransitionLauncher.with(G.fragmentActivity).from(itemView).prepare(fragment);
-
-
-            new HelperFragment(fragment).setReplace(false).load();
         }
     }
 
@@ -1766,6 +1804,20 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
+        @Override
+        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
+            playAudio(position, holder);
+        }
+
+        private void playAudio(int position, RecyclerView.ViewHolder holder) {
+
+            VoiceAdapter.ViewHolder vh = (VoiceAdapter.ViewHolder) holder;
+
+            String name = mList.get(position).item.getAttachment().getName();
+
+            MusicPlayer.startPlayer(name, vh.filePath, name, roomId, true, mList.get(position).messageId + "");
+        }
+
         public class ViewHolder extends mHolder {
             public ImageView imvPicFile;
             public TextView txtFileName;
@@ -1782,20 +1834,6 @@ public class FragmentShearedMedia extends BaseFragment {
                 txtFileSize = (TextView) itemView.findViewById(R.id.smslf_txt_file_size);
                 txtFileInfo = (TextView) itemView.findViewById(R.id.smslf_txt_file_info);
             }
-        }
-
-        @Override
-        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-            playAudio(position, holder);
-        }
-
-        private void playAudio(int position, RecyclerView.ViewHolder holder) {
-
-            VoiceAdapter.ViewHolder vh = (VoiceAdapter.ViewHolder) holder;
-
-            String name = mList.get(position).item.getAttachment().getName();
-
-            MusicPlayer.startPlayer(name, vh.filePath, name, roomId, true, mList.get(position).messageId + "");
         }
     }
 
@@ -1901,21 +1939,6 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
-        public class ViewHolder extends mHolder {
-
-            GifImageView gifView;
-            GifDrawable gifDrawable;
-
-            public String tempFilePath;
-            public String filePath;
-
-            public ViewHolder(View view) {
-                super(view);
-
-                gifView = (GifImageView) itemView.findViewById(R.id.smslg_gif_view);
-            }
-        }
-
         @Override
         void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
             playAndPusGif(position, holder);
@@ -1954,6 +1977,20 @@ public class FragmentShearedMedia extends BaseFragment {
                     vh.gifDrawable.start();
                     vh.messageProgress.setVisibility(View.GONE);
                 }
+            }
+        }
+
+        public class ViewHolder extends mHolder {
+
+            public String tempFilePath;
+            public String filePath;
+            GifImageView gifView;
+            GifDrawable gifDrawable;
+
+            public ViewHolder(View view) {
+                super(view);
+
+                gifView = (GifImageView) itemView.findViewById(R.id.smslg_gif_view);
             }
         }
     }
@@ -2019,6 +2056,19 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
+        @Override
+        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
+            openFile(position, holder);
+        }
+
+        private void openFile(int position, RecyclerView.ViewHolder holder) {
+
+            FileAdapter.ViewHolder vh = (FileAdapter.ViewHolder) holder;
+
+            Intent intent = HelperMimeType.appropriateProgram(vh.filePath);
+            if (intent != null) context.startActivity(intent);
+        }
+
         public class ViewHolder extends mHolder {
             public ImageView imvPicFile;
             public String tempFilePath;
@@ -2037,19 +2087,6 @@ public class FragmentShearedMedia extends BaseFragment {
                 txtFileInfo = (TextView) itemView.findViewById(R.id.smslf_txt_file_info);
                 txtFileSize = (TextView) itemView.findViewById(R.id.smslf_txt_file_size);
             }
-        }
-
-        @Override
-        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-            openFile(position, holder);
-        }
-
-        private void openFile(int position, RecyclerView.ViewHolder holder) {
-
-            FileAdapter.ViewHolder vh = (FileAdapter.ViewHolder) holder;
-
-            Intent intent = HelperMimeType.appropriateProgram(vh.filePath);
-            if (intent != null) context.startActivity(intent);
         }
     }
 
@@ -2090,6 +2127,11 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         }
 
+        @Override
+        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
+
+        }
+
         public class ViewHolder extends mHolder {
             public TextView txtLink;
 
@@ -2098,11 +2140,6 @@ public class FragmentShearedMedia extends BaseFragment {
 
                 txtLink = (TextView) itemView.findViewById(R.id.smsll_txt_shared_link);
             }
-        }
-
-        @Override
-        void openSelectedItem(int position, RecyclerView.ViewHolder holder) {
-
         }
     }
 }

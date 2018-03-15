@@ -23,19 +23,10 @@ import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import io.realm.Realm;
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
@@ -48,6 +39,20 @@ import net.iGap.module.FingerprintHandler;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+
+import io.realm.Realm;
+
 import static android.content.Context.FINGERPRINT_SERVICE;
 import static android.content.Context.KEYGUARD_SERVICE;
 import static android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD;
@@ -55,19 +60,22 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
 
 public class ActivityEnterPassCodeViewModel {
 
+    // Variable used for storing the key in the Android Keystore container
+    private static final String KEY_NAME = "androidHive";
+    private final int PIN = 0;
+    private final int PASSWORD = 1;
+    public ObservableField<String> edtSetPassword = new ObservableField<>("");
+    public ObservableField<Integer> rippleOkVisibility = new ObservableField<>(View.VISIBLE);
+    public ObservableField<Integer> edtSetPasswordInput = new ObservableField<>(TYPE_TEXT_VARIATION_PASSWORD);
+    public ObservableField<Integer> onTextChangedMaxLine = new ObservableField<>(4);
     private Realm realm;
     private String password;
     private boolean isFingerPrint;
-
     private KeyStore keyStore;
-    // Variable used for storing the key in the Android Keystore container
-    private static final String KEY_NAME = "androidHive";
     private Cipher cipher;
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private int kindPassCode;
-    private final int PIN = 0;
-    private final int PASSWORD = 1;
     private MaterialDialog dialog;
     private RealmUserInfo realmUserInfo;
     private MaterialDialog dialogForgot;
@@ -76,17 +84,22 @@ public class ActivityEnterPassCodeViewModel {
     private TextView iconFingerPrint;
     private TextView textFingerPrint;
     private View view;
-
     public ActivityEnterPassCodeViewModel(Context context, View view) {
         this.view = view;
         this.context = context;
         getInfo();
     }
 
-    public ObservableField<String> edtSetPassword = new ObservableField<>("");
-    public ObservableField<Integer> rippleOkVisibility = new ObservableField<>(View.VISIBLE);
-    public ObservableField<Integer> edtSetPasswordInput = new ObservableField<>(TYPE_TEXT_VARIATION_PASSWORD);
-    public ObservableField<Integer> onTextChangedMaxLine = new ObservableField<>(4);
+    public static void closeKeyboard(View v) {
+        try {
+            InputMethodManager imm = (InputMethodManager) G.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        } catch (IllegalStateException e) {
+            e.getStackTrace();
+        }
+    }
 
     public void afterTextChanged(Editable s) {
         if (kindPassCode == PIN) {
@@ -127,10 +140,13 @@ public class ActivityEnterPassCodeViewModel {
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
                 G.isPassCode = false;
-                logout(v);
 
+                if (ActivityMain.finishActivity != null) {
+                    ActivityMain.finishActivity.finishActivity();
+                }
                 G.currentActivity.finish();
-
+                closeKeyboard(v);
+                logout(v);
 
             }
         }).negativeText(R.string.cancel).onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -176,7 +192,7 @@ public class ActivityEnterPassCodeViewModel {
 
         if (isFingerPrint) {
 
-            dialog = new MaterialDialog.Builder(G.currentActivity).title(G.context.getString(R.string.FingerPrint)).customView(R.layout.dialog_finger_print, true).onNegative(new MaterialDialog.SingleButtonCallback() {
+            dialog = new MaterialDialog.Builder(context).title(G.context.getString(R.string.FingerPrint)).customView(R.layout.dialog_finger_print, true).onNegative(new MaterialDialog.SingleButtonCallback() {
                 @Override
                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
@@ -192,7 +208,9 @@ public class ActivityEnterPassCodeViewModel {
             iconFingerPrint = (TextView) viewDialog.findViewById(R.id.iconDialogTitle);
             textFingerPrint = (TextView) viewDialog.findViewById(R.id.txtDialogTitle);
 
-            dialog.show();
+            if (!(G.currentActivity).isFinishing()) {
+                dialog.show();
+            }
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 generateKey();
                 if (cipherInit()) {
@@ -216,6 +234,7 @@ public class ActivityEnterPassCodeViewModel {
 
                             ActivityMain.isLock = false;
                             G.currentActivity.finish();
+                            closeKeyboard(view);
                         }
                     });
                 }
@@ -243,7 +262,7 @@ public class ActivityEnterPassCodeViewModel {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        HelperLogout.logout();
+
                     }
                 });
             }
@@ -267,8 +286,8 @@ public class ActivityEnterPassCodeViewModel {
         };
 
         new RequestUserSessionLogout().userSessionLogout();
+        HelperLogout.logout();
     }
-
 
     @TargetApi(Build.VERSION_CODES.M)
     protected void generateKey() {
@@ -292,7 +311,6 @@ public class ActivityEnterPassCodeViewModel {
         }
     }
 
-
     @TargetApi(Build.VERSION_CODES.M)
     public boolean cipherInit() {
         try {
@@ -314,7 +332,6 @@ public class ActivityEnterPassCodeViewModel {
         onTextChangedMaxLine.set(numberOfLenth);
     }
 
-
     public void onStart() {
         ActivityMain.isActivityEnterPassCode = true;
     }
@@ -327,6 +344,7 @@ public class ActivityEnterPassCodeViewModel {
         }
         realm.close();
         ActivityMain.isActivityEnterPassCode = false;
+        closeKeyboard(view);
     }
 
     public void onResume() {
@@ -340,17 +358,6 @@ public class ActivityEnterPassCodeViewModel {
                     helper.startAuth(fingerprintManager, cryptoObject);
                 }
             }
-        }
-    }
-
-    public static void closeKeyboard(View v) {
-        try {
-            InputMethodManager imm = (InputMethodManager) G.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-            }
-        } catch (IllegalStateException e) {
-            e.getStackTrace();
         }
     }
 }

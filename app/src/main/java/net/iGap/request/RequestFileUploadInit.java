@@ -11,10 +11,12 @@
 package net.iGap.request;
 
 import com.google.protobuf.ByteString;
-import java.io.UnsupportedEncodingException;
+
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoFileUploadInit;
 import net.iGap.proto.ProtoRequest;
+
+import java.io.UnsupportedEncodingException;
 
 public class RequestFileUploadInit {
 

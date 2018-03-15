@@ -12,5 +12,5 @@ package net.iGap.interfaces;
 
 public interface OnPathAdapterBottomSheet {
 
-    void path(String path, boolean isCheck);
+    void path(String path, boolean isCheck, boolean isEdit);
 }

@@ -1,102 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@color/notification_music_icons"
-    android:layoutDirection="ltr"
-    android:gravity="left"
-    android:orientation="horizontal">
+  android:layout_width="match_parent"
+  android:layout_height="64dp"
+  android:background="@color/notification_music_icons"
+  android:gravity="left"
+  android:layoutDirection="ltr"
+  android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/mln_img_picture_music"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:padding="2dp"
-        android:src="@mipmap/music_icon_green" />
+  <ImageView
+    android:id="@+id/mln_img_picture_music"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:padding="2dp"
+    android:src="@mipmap/music_icon_green" />
+
+
+  <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+
+    <TextView
+      android:id="@+id/mln_txt_music_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="12dp"
+      android:gravity="left"
+      android:singleLine="true"
+      android:text="@string/music_name"
+      android:textColor="@color/notification_music_background"
+      android:textSize="16dp" />
+
+
+    <TextView
+      android:id="@+id/mln_txt_music_outher"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="12dp"
+      android:gravity="left"
+      android:singleLine="true"
+      android:text="hamid asgari"
+      android:textColor="@color/notification_music_background"
+      android:textSize="12dp" />
 
 
     <LinearLayout
-        android:layout_width="0dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center">
+
+      <ImageView
+        android:id="@+id/mln_btn_Previous_music"
+        android:layout_width="32dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:padding="4dp"
+        android:src="@mipmap/previous_track"
+        android:tint="@color/notification_music_background" />
 
+      <ImageView
+        android:id="@+id/mln_btn_play_music"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:src="@mipmap/play_button"
+        android:tint="@color/notification_music_background" />
 
-        <TextView
-            android:id="@+id/mln_txt_music_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="left"
-            android:singleLine="true"
-            android:text="@string/music_name"
-            android:textColor="@color/notification_music_background"
-            android:textSize="16dp"
-            />
+      <ImageView
+        android:id="@+id/mln_btn_forward_music"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="4dp"
+        android:src="@mipmap/play_next_button"
+        android:tint="@color/notification_music_background" />
 
-
-        <TextView
-            android:id="@+id/mln_txt_music_outher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:gravity="left"
-            android:singleLine="true"
-            android:text="hamid asgari"
-            android:textColor="@color/notification_music_background"
-            android:textSize="12dp"
-            />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/mln_btn_Previous_music"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="4dp"
-                android:tint="@color/notification_music_background"
-                android:src="@mipmap/previous_track" />
-
-            <ImageView
-                android:id="@+id/mln_btn_play_music"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:gravity="center"
-                android:padding="4dp"
-                android:tint="@color/notification_music_background"
-                android:src="@mipmap/play_button" />
-
-            <ImageView
-                android:id="@+id/mln_btn_forward_music"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="4dp"
-                android:src="@mipmap/play_next_button"
-                android:tint="@color/notification_music_background"
-                />
-
-
-        </LinearLayout>
 
     </LinearLayout>
 
+  </LinearLayout>
 
-    <ImageView
-        android:id="@+id/mln_btn_close"
-        android:layout_width="40dp"
-        android:tint="@color/notification_music_background"
-        android:layout_height="match_parent"
-        android:gravity="top|center"
-        android:paddingBottom="24dp"
-        android:paddingLeft="12dp"
-        android:src="@mipmap/cross" />
+
+  <ImageView
+    android:id="@+id/mln_btn_close"
+    android:layout_width="40dp"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:paddingBottom="24dp"
+    android:paddingLeft="12dp"
+    android:src="@mipmap/cross"
+    android:tint="@color/notification_music_background" />
 
 </LinearLayout>

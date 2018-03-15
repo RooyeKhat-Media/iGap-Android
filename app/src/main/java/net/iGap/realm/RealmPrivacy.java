@@ -10,11 +10,12 @@
 
 package net.iGap.realm;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestUserPrivacyGetRule;
 import net.iGap.request.RequestUserPrivacySetRule;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 public class RealmPrivacy extends RealmObject {
 
@@ -24,48 +25,6 @@ public class RealmPrivacy extends RealmObject {
     private String whoCanSeeMyLastSeen;
     private String whoCanVoiceCallToMe;
 
-    public String getWhoCanSeeMyAvatar() {
-        return whoCanSeeMyAvatar;
-    }
-
-    public void setWhoCanSeeMyAvatar(String whoCanSeeMyAvatar) {
-        this.whoCanSeeMyAvatar = whoCanSeeMyAvatar;
-    }
-
-    public String getWhoCanSeeMyLastSeen() {
-        return whoCanSeeMyLastSeen;
-    }
-
-    public void setWhoCanSeeMyLastSeen(String whoCanSeeMyLastSeen) {
-        this.whoCanSeeMyLastSeen = whoCanSeeMyLastSeen;
-    }
-
-    public String getWhoCanInviteMeToGroup() {
-        return whoCanInviteMeToGroup;
-    }
-
-    public void setWhoCanInviteMeToGroup(String whoCanInviteMeToGroup) {
-        this.whoCanInviteMeToGroup = whoCanInviteMeToGroup;
-    }
-
-    public String getWhoCanInviteMeToChannel() {
-        return whoCanInviteMeToChannel;
-    }
-
-    public void setWhoCanInviteMeToChannel(String whoCanInviteMeToChannel) {
-        this.whoCanInviteMeToChannel = whoCanInviteMeToChannel;
-    }
-
-    public String getWhoCanVoiceCallToMe() {
-        return whoCanVoiceCallToMe;
-    }
-
-    public void setWhoCanVoiceCallToMe(String whoCanVoiceCallToMe) {
-        this.whoCanVoiceCallToMe = whoCanVoiceCallToMe;
-    }
-
-    //********************************************************************************************************************************************
-
     public static void updatePrivacy(final String avatar, final String channel, final String Group, final String lastSeen, final String voiceCall) {
 
         Realm realm = Realm.getDefaultInstance();
@@ -74,7 +33,8 @@ public class RealmPrivacy extends RealmObject {
         if (realmPrivacy != null) {
 
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
 
                     if (avatar.length() > 0) realmPrivacy.setWhoCanSeeMyAvatar(avatar);
                     if (channel.length() > 0) realmPrivacy.setWhoCanInviteMeToChannel(channel);
@@ -86,7 +46,8 @@ public class RealmPrivacy extends RealmObject {
         } else {
 
             realm.executeTransaction(new Realm.Transaction() {
-                @Override public void execute(Realm realm) {
+                @Override
+                public void execute(Realm realm) {
 
                     RealmPrivacy realmPrivacy1 = realm.createObject(RealmPrivacy.class);
 
@@ -137,5 +98,47 @@ public class RealmPrivacy extends RealmObject {
                 break;
 
         }
+    }
+
+    public String getWhoCanSeeMyAvatar() {
+        return whoCanSeeMyAvatar;
+    }
+
+    public void setWhoCanSeeMyAvatar(String whoCanSeeMyAvatar) {
+        this.whoCanSeeMyAvatar = whoCanSeeMyAvatar;
+    }
+
+    public String getWhoCanSeeMyLastSeen() {
+        return whoCanSeeMyLastSeen;
+    }
+
+    public void setWhoCanSeeMyLastSeen(String whoCanSeeMyLastSeen) {
+        this.whoCanSeeMyLastSeen = whoCanSeeMyLastSeen;
+    }
+
+    public String getWhoCanInviteMeToGroup() {
+        return whoCanInviteMeToGroup;
+    }
+
+    public void setWhoCanInviteMeToGroup(String whoCanInviteMeToGroup) {
+        this.whoCanInviteMeToGroup = whoCanInviteMeToGroup;
+    }
+
+    //********************************************************************************************************************************************
+
+    public String getWhoCanInviteMeToChannel() {
+        return whoCanInviteMeToChannel;
+    }
+
+    public void setWhoCanInviteMeToChannel(String whoCanInviteMeToChannel) {
+        this.whoCanInviteMeToChannel = whoCanInviteMeToChannel;
+    }
+
+    public String getWhoCanVoiceCallToMe() {
+        return whoCanVoiceCallToMe;
+    }
+
+    public void setWhoCanVoiceCallToMe(String whoCanVoiceCallToMe) {
+        this.whoCanVoiceCallToMe = whoCanVoiceCallToMe;
     }
 }

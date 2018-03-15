@@ -1,176 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/adp_rootLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:clickable="true"
-    >
+  android:id="@+id/adp_rootLayout"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:orientation="vertical">
 
   <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:padding="@dimen/dp8"
-      >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp8">
 
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="@dimen/dp12"
-        >
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:padding="@dimen/dp12">
 
 
       <net.iGap.module.HeaderTextview
-          android:id="@+id/adp_currentSession"
+        android:id="@+id/adp_currentSession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/current_session"
+        android:textColor="@color/toolbar_background"
+        android:textSize="@dimen/dp14" />
+
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:orientation="horizontal">
+
+        <TextView
+
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/current_session"
-          android:textColor="@color/toolbar_background"
+          android:text="@string/device"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
+
+        <TextView
+          android:id="@+id/adp_device"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp4"
+          android:text="pc"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
+
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text=" , "
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
+
+        <TextView
+          android:id="@+id/adp_platform"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="windows"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp4"
+        android:orientation="horizontal">
+
+        <TextView
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/country"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
+
+        <TextView
+          android:id="@+id/adp_country"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp4"
+          android:text="Iran"
+          android:textColor="@color/black_register"
           android:textSize="@dimen/dp14"
+
           />
 
-
-      <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp20"
-          android:orientation="horizontal"
-          >
-
         <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/device"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:id="@+id/adp_device"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp4"
-            android:text="pc"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" , "
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:id="@+id/adp_platform"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="windows"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
+          android:id="@+id/adp_terminate"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="right|end"
+          android:text="@string/TERMINATE"
+          android:textColor="@color/red"
+          android:textSize="@dimen/dp14" />
 
       </LinearLayout>
 
       <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp4"
+        android:orientation="horizontal">
+
+        <TextView
+
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp4"
-          android:orientation="horizontal"
-          >
+          android:text="@string/create_time"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
 
         <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/country"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:id="@+id/adp_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp4"
-            android:text="Iran"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-
-            />
-
-        <TextView
-            android:id="@+id/adp_terminate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right|end"
-            android:text="@string/TERMINATE"
-            android:textColor="@color/red"
-            android:textSize="@dimen/dp14"
-            />
+          android:id="@+id/adp_create_time"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp4"
+          android:text=" 17 Nov 2016"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
 
       </LinearLayout>
 
       <LinearLayout
-          android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp4"
+        android:orientation="horizontal">
+
+        <TextView
+
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp4"
-          android:orientation="horizontal"
-          >
+          android:text="@string/ip"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
 
         <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/create_time"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:id="@+id/adp_create_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp4"
-            android:text=" 17 Nov 2016"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="wrap_content"
+          android:id="@+id/adp_ip"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/dp4"
-          android:orientation="horizontal"
-          >
-
-        <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ip"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
-
-        <TextView
-            android:id="@+id/adp_ip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp4"
-            android:text=" 192.168.1.1"
-            android:textColor="@color/black_register"
-            android:textSize="@dimen/dp14"
-            />
+          android:layout_marginLeft="@dimen/dp4"
+          android:text=" 192.168.1.1"
+          android:textColor="@color/black_register"
+          android:textSize="@dimen/dp14" />
 
       </LinearLayout>
     </LinearLayout>
@@ -178,11 +160,10 @@
   </LinearLayout>
 
   <View
-      android:id="@+id/adp_line"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/black_register"
-      />
+    android:id="@+id/adp_line"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/black_register" />
 
 
 </LinearLayout>

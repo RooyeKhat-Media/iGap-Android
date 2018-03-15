@@ -31,8 +31,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.vicmikhailau.maskededittext.MaskedEditText;
-import java.io.IOException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.ActivityRegisterBinding;
@@ -43,6 +44,8 @@ import net.iGap.interfaces.OnSmsReceive;
 import net.iGap.module.AppUtils;
 import net.iGap.module.IncomingSms;
 import net.iGap.viewmodel.FragmentRegisterViewModel;
+
+import java.io.IOException;
 
 public class FragmentRegister extends BaseFragment {
 
@@ -57,24 +60,18 @@ public class FragmentRegister extends BaseFragment {
     public static MaskedEditText edtPhoneNumber;
     public static TextView btnOk;
     public static int positionRadioButton = -1;
+    public static boolean smsPermission = true;
+    public static OnStartAnimationRegister onStartAnimationRegister;
     private TextView txtAgreement_register;
     private ViewGroup layout_verify;
     //Array List for Store List of StructCountry Object
     private IncomingSms smsReceiver;
-    public static boolean smsPermission = true;
     private FragmentActivity mActivity;
     private ScrollView scrollView;
     private int headerLayoutHeight;
     private LinearLayout headerLayout;
-    public static OnStartAnimationRegister onStartAnimationRegister;
-
     private FragmentRegisterViewModel fragmentRegisterViewModel;
     private ActivityRegisterBinding fragmentRegisterBinding;
-
-    public enum Reason {
-        SOCKET, TIME_OUT, INVALID_CODE
-    }
-
 
     @Nullable
     @Override
@@ -209,7 +206,6 @@ public class FragmentRegister extends BaseFragment {
         };
 
 
-
         fragmentRegisterViewModel.saveInstance(savedInstanceState, getArguments());
 
 
@@ -219,8 +215,6 @@ public class FragmentRegister extends BaseFragment {
         fragmentRegisterViewModel = new FragmentRegisterViewModel(this, fragmentRegisterBinding.getRoot(), mActivity);
         fragmentRegisterBinding.setFragmentRegisterViewModel(fragmentRegisterViewModel);
     }
-
-
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
@@ -285,6 +279,10 @@ public class FragmentRegister extends BaseFragment {
         }
         fragmentRegisterViewModel.onStop();
         super.onStop();
+    }
+
+    public enum Reason {
+        SOCKET, TIME_OUT, INVALID_CODE
     }
 
     public interface OnStartAnimationRegister {

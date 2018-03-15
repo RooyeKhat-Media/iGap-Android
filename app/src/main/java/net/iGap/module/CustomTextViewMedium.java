@@ -12,6 +12,7 @@ package net.iGap.module;
 
 import android.content.Context;
 import android.util.AttributeSet;
+
 import net.iGap.G;
 
 public class CustomTextViewMedium extends android.support.v7.widget.AppCompatTextView {

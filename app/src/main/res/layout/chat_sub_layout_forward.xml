@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cslr_ll_forward"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/cslr_ll_forward"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:layoutDirection="locale"
+  android:orientation="horizontal"
+  android:paddingBottom="@dimen/messageContainerPadding"
+  android:paddingLeft="@dimen/messageContainerPaddingLeftRight"
+  android:paddingRight="@dimen/messageContainerPaddingLeftRight"
+  android:paddingTop="@dimen/messageContainerPadding"
+  android:textDirection="locale"
+  tools:ignore="MissingPrefix">
+
+  <View
+    android:layout_width="2dp"
+    android:layout_height="match_parent"
+    android:layout_marginRight="3dp"
+    android:background="@color/newBlack" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/messageContainerPadding"
-    android:paddingLeft="@dimen/messageContainerPaddingLeftRight"
-    android:paddingRight="@dimen/messageContainerPaddingLeftRight"
-    android:paddingTop="@dimen/messageContainerPadding"
-    android:textDirection="locale"
-    android:layoutDirection="locale"
-    tools:ignore="MissingPrefix"
-    >
+    android:orientation="horizontal">
 
-    <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
-        android:layout_marginRight="3dp"
-        android:background="@color/newBlack"/>
+    <TextView
+      android:id="@+id/cslr_txt_prefix_forward"
+      fontPath="fonts/IRANSansMobile.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/dp6"
+      android:layout_marginRight="@dimen/dp4"
+      android:singleLine="true"
+      android:text="@string/forwarded_from"
+      android:textColor="@color/newBlack"
+      android:textSize="@dimen/dp12"
+      android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/cslr_txt_prefix_forward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp4"
-            android:layout_marginLeft="@dimen/dp6"
-            android:singleLine="true"
-            android:text="@string/forwarded_from"
-            android:textColor="@color/newBlack"
-            android:textSize="@dimen/dp12"
-            fontPath="fonts/IRANSansMobile.ttf"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/cslr_txt_forward_from"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:minWidth="@dimen/dp100"
-            android:textColor="@color/newBlack"
-            android:textSize="@dimen/dp12"
-            fontPath="fonts/IRANSansMobile.ttf"
-            android:textStyle="bold"/>
-    </LinearLayout>
+    <TextView
+      android:id="@+id/cslr_txt_forward_from"
+      fontPath="fonts/IRANSansMobile.ttf"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:minWidth="@dimen/dp100"
+      android:singleLine="true"
+      android:textColor="@color/newBlack"
+      android:textSize="@dimen/dp12"
+      android:textStyle="bold" />
+  </LinearLayout>
 
 </LinearLayout>
