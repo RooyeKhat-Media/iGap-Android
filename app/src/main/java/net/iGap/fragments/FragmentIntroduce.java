@@ -13,7 +13,6 @@ package net.iGap.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -29,7 +28,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -390,28 +388,6 @@ public class FragmentIntroduce extends BaseFragment {
         AdapterViewPager adapterViewPager = new AdapterViewPager(layout);
         viewPager.setAdapter(adapterViewPager);
         adapterViewPager.notifyDataSetChanged();
-
-        //        loop fo image city
-        final ImageView backgroundOne = (ImageView) view.findViewById(R.id.int_background_one);
-        final ImageView backgroundTwo = (ImageView) view.findViewById(R.id.int_background_two);
-
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(20000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                assert backgroundOne != null;
-                final float width = backgroundOne.getWidth();
-                final float translationX = width * progress;
-                backgroundOne.setTranslationX(translationX);
-                assert backgroundTwo != null;
-                backgroundTwo.setTranslationX(translationX - width);
-            }
-        });
-        animator.start();
 
     }
 

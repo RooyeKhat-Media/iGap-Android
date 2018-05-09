@@ -234,7 +234,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp60"
-            android:background="@android:color/white"
+            style="?backgroundSubChatTheme"
             android:orientation="horizontal">
 
 
@@ -257,7 +257,7 @@
                 android:gravity="center"
                 android:text="@string/md_close_button"
                 android:textAppearance="@style/TextIconAppearance.all"
-                android:textColor="@color/gray"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp20" />
             </net.iGap.libs.rippleeffect.RippleView>
 
@@ -270,6 +270,7 @@
               android:minWidth="@dimen/dp48"
               android:singleLine="true"
               android:text=""
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp18" />
 
 
@@ -301,7 +302,7 @@
                   android:gravity="center"
                   android:text="@string/md_back_arrow_reply"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  android:textColor="@color/gray"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -324,7 +325,7 @@
                   android:gravity="center"
                   android:text="@string/md_copy"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  android:textColor="@color/gray"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -347,7 +348,7 @@
                   android:gravity="center"
                   android:text="@string/md_forward"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  android:textColor="@color/gray"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -373,7 +374,7 @@
                   android:gravity="center"
                   android:text="@string/md_rubbish_delete_file"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  android:textColor="@color/gray"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
             </LinearLayout>
@@ -487,13 +488,14 @@
 
       <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="?backgroundColorSettingTheme_2">
 
         <ImageView
           android:id="@+id/chl_img_view_chat"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="#f7f7f7"
+          style="?backgroundColorSettingTheme_2"
           android:scaleType="centerCrop" />
 
         <android.support.v7.widget.RecyclerView
@@ -574,7 +576,7 @@
       android:id="@+id/ac_ll_attach_text"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
-      android:background="@color/white"
+      android:backgroundTint="@color/messageBox_replyBoxBackgroundSend"
       android:clickable="true"
       android:gravity="center"
       android:orientation="horizontal"
@@ -588,6 +590,7 @@
         android:layout_weight="1"
         android:paddingLeft="@dimen/dp12"
         android:text="New Text"
+        android:singleLine="true"
         android:textSize="@dimen/dp13" />
 
       <net.iGap.module.MaterialDesignTextView
@@ -656,7 +659,7 @@
       android:id="@+id/ac_ll_hash_navigation"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
-      android:background="@color/white"
+      style="?backgroundColorSettingTheme"
       android:clickable="true"
       android:gravity="center"
       android:orientation="horizontal"
@@ -769,7 +772,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
+        style="?backgroundColorSettingTheme"
         android:orientation="horizontal">
 
         <TextView

@@ -449,7 +449,12 @@ public class HelperLogMessage {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = Color.DKGRAY;
+                if (G.isDarkTheme) {
+                    ds.linkColor = Color.parseColor(G.textTitleTheme);
+                } else {
+                    ds.linkColor = Color.DKGRAY;
+                }
+
                 super.updateDrawState(ds);
             }
         };

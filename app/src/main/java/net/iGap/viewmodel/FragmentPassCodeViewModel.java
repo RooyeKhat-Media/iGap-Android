@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
+import android.graphics.Color;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -194,7 +195,11 @@ public class FragmentPassCodeViewModel {
                 rootEnterPassword.set(View.GONE);
                 rootSettingPassword.set(View.VISIBLE);
                 txtChangePassCodeEnable.set(true);
-                txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                if (G.isDarkTheme) {
+                    txtChangePassCodeColor.set(Color.parseColor(G.textTitleTheme));
+                } else {
+                    txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                }
                 if (deviceHasFingerPrint) {
                     vgToggleFingerPrintVisibility.set(View.VISIBLE);
                 } else {
@@ -243,7 +248,11 @@ public class FragmentPassCodeViewModel {
                 titlePassCodeVisibility.set(View.VISIBLE);
                 layoutModePassCode.set(View.GONE);
                 txtChangePassCodeEnable.set(true);
-                txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                if (G.isDarkTheme) {
+                    txtChangePassCodeColor.set(Color.parseColor(G.textTitleTheme));
+                } else {
+                    txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                }
                 AppUtils.closeKeyboard(v);
             } else {
                 AppUtils.closeKeyboard(v);
@@ -440,7 +449,11 @@ public class FragmentPassCodeViewModel {
             rippleOkVisibility.set(View.VISIBLE);
             txtSetPassword.set(G.fragmentActivity.getResources().getString(R.string.enter_pass_code));
             txtChangePassCodeEnable.set(true);
-            txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+            if (G.isDarkTheme) {
+                txtChangePassCodeColor.set(Color.parseColor(G.textTitleTheme));
+            } else {
+                txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+            }
             isTogglePassCode.set(true);
 
         } else {
@@ -530,7 +543,11 @@ public class FragmentPassCodeViewModel {
                 rootEnterPassword.set(View.GONE);
                 rootSettingPassword.set(View.VISIBLE);
                 txtChangePassCodeEnable.set(true);
-                txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                if (G.isDarkTheme) {
+                    txtChangePassCodeColor.set(Color.parseColor(G.textTitleTheme));
+                } else {
+                    txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                }
                 if (deviceHasFingerPrint) {
                     vgToggleFingerPrintVisibility.set(View.VISIBLE);
                 } else {
@@ -575,7 +592,12 @@ public class FragmentPassCodeViewModel {
                 titlePassCodeVisibility.set(View.VISIBLE);
                 layoutModePassCode.set(View.GONE);
                 txtChangePassCodeEnable.set(true);
-                txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                if (G.isDarkTheme) {
+                    txtChangePassCodeColor.set(Color.parseColor(G.textTitleTheme));
+                } else {
+                    txtChangePassCodeColor.set(G.context.getResources().getColor(R.color.black_register));
+                }
+//
             } else {
                 AppUtils.error(G.fragmentActivity.getResources().getString(R.string.invalid_password));
                 edtSetPasswordText.set("");

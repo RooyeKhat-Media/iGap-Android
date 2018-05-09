@@ -21,7 +21,7 @@
     android:id="@+id/container_contact_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -29,7 +29,7 @@
       android:id="@+id/chi_layoutParent"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white"
+      style="?backgroundColorSettingTheme"
       tools:ignore="MissingPrefix">
 
       <android.support.design.widget.AppBarLayout
@@ -213,14 +213,14 @@
       <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        style="?backgroundColorSettingTheme"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@android:color/white"
+          style="?backgroundColorSettingTheme"
           android:descendantFocusability="beforeDescendants"
           android:focusableInTouchMode="true"
           android:orientation="vertical">
@@ -228,7 +228,7 @@
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            style="?backgroundColorSettingTheme"
             android:orientation="vertical"
             android:paddingBottom="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
@@ -263,7 +263,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_contactName"
-                android:textColor="@android:color/secondary_text_light"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
@@ -280,7 +280,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.contactName, default=`contact name`}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13"
                 app:emojiSize="@dimen/dp14" />
 
@@ -302,7 +302,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_username"
-                android:textColor="@android:color/secondary_text_light"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
@@ -319,7 +319,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.username, default=`user name`}"
-                android:textColor="@color/cardview_dark_background"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
 
             </LinearLayout>
@@ -341,7 +341,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_phoneNumber"
-                android:textColor="@android:color/secondary_text_light"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
@@ -356,7 +356,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{HelperCalander.unicodeManage(viewModel.phone), default=`phone number`}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
               <!--android:text="@{viewModel.phone, default=`phone number`}"-->
             </LinearLayout>
@@ -376,7 +376,7 @@
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_bio"
-                android:textColor="@color/black_register"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="normal" />
 
@@ -389,7 +389,7 @@
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.bio, default=@string/st_bio}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText" />
             </LinearLayout>
@@ -410,7 +410,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/chi_shared_Media"
-                android:textColor="@android:color/secondary_text_light"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
@@ -425,7 +425,7 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.sharedMedia}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13"
                 android:theme="@style/Setting_editText" />
 
@@ -436,7 +436,7 @@
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/st_background2"
+            style="?backgroundColorSettingTheme_2"
             android:orientation="vertical">
 
             <net.iGap.module.HeaderTextview
@@ -461,14 +461,14 @@
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:text="@string/st_title_notification_sounds"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
             <View
               android:layout_width="match_parent"
               android:layout_height="1dp"
-              android:background="@color/background_editText" />
+              style="?lineColorSettingTheme" />
 
             <TextView
               android:id="@+id/chi_txt_clearChat"
@@ -478,7 +478,7 @@
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:text="@string/chi_clearChat"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal"
               android:visibility="@{viewModel.showNumber ? View.VISIBLE : View.GONE}" />
@@ -488,7 +488,7 @@
             <View
               android:layout_width="match_parent"
               android:layout_height="1dp"
-              android:background="@color/background_editText"
+              style="?lineColorSettingTheme"
               android:visibility="gone" />
 
             <TextView
@@ -517,10 +517,11 @@
         android:layout_margin="@dimen/dp20"
         android:clickable="true"
         android:src="@mipmap/comment"
-        android:theme="@style/FabButton"
-        android:tint="@color/gray"
+        android:background="@android:color/white"
+        app:backgroundTint="@android:color/white"
         app:fabSize="normal"
         app:layout_anchor="@+id/chi_appbar"
+        app:tint="@color/gray"
         app:layout_anchorGravity="bottom|right|end" />
 
     </android.support.design.widget.CoordinatorLayout>

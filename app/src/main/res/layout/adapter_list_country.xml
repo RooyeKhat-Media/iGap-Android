@@ -3,7 +3,7 @@
   android:id="@+id/rootAdapterChooseCountry"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:orientation="horizontal">
 
@@ -20,6 +20,7 @@
       android:layout_marginStart="@dimen/dp40"
       android:padding="@dimen/dp10"
       android:text="@string/iran"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp14" />
 
     <View

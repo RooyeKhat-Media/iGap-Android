@@ -43,6 +43,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -2066,7 +2067,11 @@ public class FragmentShearedMedia extends BaseFragment {
             FileAdapter.ViewHolder vh = (FileAdapter.ViewHolder) holder;
 
             Intent intent = HelperMimeType.appropriateProgram(vh.filePath);
-            if (intent != null) context.startActivity(intent);
+            if (intent != null) {
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, R.string.can_not_open_file, Toast.LENGTH_SHORT).show();
+            }
         }
 
         public class ViewHolder extends mHolder {

@@ -18,6 +18,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
@@ -77,17 +78,23 @@ public class HelperMimeType {
             return null;
         }
 
-        String path = filePath.toLowerCase();
-
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+            try {
+                uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+            } catch (IllegalArgumentException e) {
+                HelperLog.setErrorLog(" HelperMimeType  appropriateProgram          **    " + e + "    **     " + filePath + "     **     " + Environment.getExternalStorageDirectory().getAbsolutePath());
+                return null;
+            }
+
         } else {
             uri = Uri.fromFile(file);
         }
+
+        String path = filePath.toLowerCase();
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         if (isFileText(path)) {
             intent.setDataAndType(uri, "text/*");

@@ -32,7 +32,7 @@
         android:layout_marginBottom="@dimen/dp52"
         android:layout_marginTop="@dimen/dp20"
         android:text="@string/empty_room"
-        android:textColor="@color/black90"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp18" />
     </LinearLayout>
   </android.support.v4.widget.NestedScrollView>

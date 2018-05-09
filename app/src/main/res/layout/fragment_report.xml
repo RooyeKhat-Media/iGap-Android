@@ -5,7 +5,7 @@
   android:id="@+id/rootFragmentLanguage"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:orientation="vertical"
   tools:context="net.iGap.fragments.FragmentLanguage"
@@ -116,6 +116,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:hint="@string/desc"
+        style="?hintColorSettingTheme"
         android:minHeight="@dimen/dp44" />
 
       <View

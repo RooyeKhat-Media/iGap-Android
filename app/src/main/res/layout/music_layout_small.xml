@@ -9,7 +9,7 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp40"
-    android:background="#f9f9f9"
+    style="?backgroundSubChatTheme"
     android:gravity="left|center">
 
 
@@ -34,7 +34,7 @@
       android:layout_weight="1"
       android:singleLine="true"
       android:text=""
-      android:textColor="@android:color/black"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp14" />
 
     <TextView
@@ -61,7 +61,7 @@
       android:layout_height="wrap_content"
       android:layout_marginRight="@dimen/dp4"
       android:text="time"
-      android:textColor="@android:color/black"
+      style="?backgroundSubChatTheme"
       android:textSize="@dimen/dp12" />
 
     <net.iGap.module.MaterialDesignTextView
@@ -73,7 +73,7 @@
       android:gravity="center"
       android:text="@string/md_close_button"
       android:textAppearance="@style/TextIconAppearance_toolbar"
-      android:textColor="@android:color/black"
+      style="?backgroundSubChatTheme"
       android:textSize="@dimen/dp20" />
 
   </LinearLayout>

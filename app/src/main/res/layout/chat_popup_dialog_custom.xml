@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@android:color/white"
+  android:background="@android:color/transparent"
   android:clickable="true"
   android:orientation="vertical">
 
@@ -20,18 +20,21 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18"
 
       />
 
     <TextView
       android:id="@+id/dialog_text_item1_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -50,16 +53,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item2_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -78,16 +84,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item3_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -106,16 +115,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item4_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -134,16 +146,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item5_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -162,16 +177,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item6_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -190,16 +208,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item7_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -218,16 +239,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/dialog_text_item8_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/report"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>

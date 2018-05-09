@@ -18,7 +18,7 @@
     android:id="@+id/rootPassCode"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_f2"
+    style="?backgroundColorSettingTheme_2"
     android:clickable="true"
     android:orientation="vertical"
     tools:context="net.iGap.activities.ActivityManageSpace"
@@ -160,7 +160,7 @@
       android:id="@+id/rootEnterPassword"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white"
+      style="?backgroundColorSettingTheme"
       android:orientation="vertical"
       android:visibility="@{fragmentPassCodeViewModel.rootEnterPassword , default = gone}">
 
@@ -171,7 +171,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@{fragmentPassCodeViewModel.txtSetPassword  ,default =@string/enter_pass_code}"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp16" />
 
 
@@ -188,6 +188,7 @@
         android:maxLines="1"
         android:padding="@dimen/dp10"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentPassCodeViewModel.edtSetPasswordText}"
         android:textSize="@dimen/dp15" />
 
@@ -202,7 +203,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-
+        style="?hintColorSettingTheme"
         >
 
 
@@ -216,7 +217,7 @@
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:background="@color/white"
+            style="?backgroundColorSettingTheme"
             android:onClick="@{fragmentPassCodeViewModel::onClickTogglePassCode}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
@@ -233,7 +234,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/two_step_pass_code"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
@@ -256,14 +257,14 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
 
           <LinearLayout
             android:id="@+id/st_layout_ChangePassCode"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:background="@color/white"
+            style="?backgroundColorSettingTheme"
             android:onClick="@{fragmentPassCodeViewModel::onClickChangePassCode}"
             android:orientation="horizontal"
 
@@ -281,7 +282,8 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp8"
               android:text="@string/change_pass_code"
-              android:textColor="@{fragmentPassCodeViewModel.txtChangePassCodeColor , default=@color/gray_5c}"
+              android:textColor="@{fragmentPassCodeViewModel.txtChangePassCodeColor }"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal"
 
@@ -292,7 +294,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <RelativeLayout
             android:layout_width="wrap_content"
@@ -304,14 +306,14 @@
               android:layout_height="wrap_content"
               android:padding="@dimen/dp14"
               android:text="@string/set_pass_code_description"
-              android:textColor="@color/black_register"
+              style="?textBackgroundColor_2"
               android:textSize="@dimen/dp12" />
           </RelativeLayout>
 
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
         </LinearLayout>
 
         <LinearLayout
@@ -322,11 +324,10 @@
           android:visibility="@{fragmentPassCodeViewModel.rootSettingPassword ,default= gone}">
 
           <LinearLayout
-
             android:id="@+id/vgToggleFingerPrint"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:background="@color/white"
+            style="?backgroundColorSettingTheme"
             android:onClick="@{fragmentPassCodeViewModel::onClickChangeVgToggleFingerPrint}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
@@ -346,7 +347,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/unlock_with_fingerPrint"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
@@ -366,13 +367,13 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/st_layout_autoLock"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:background="@color/white"
+            style="?backgroundColorSettingTheme"
             android:onClick="@{fragmentPassCodeViewModel::onClickChangeAutoLock}"
             android:orientation="horizontal"
 
@@ -388,7 +389,7 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp8"
               android:text="@string/auto_lock"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
@@ -413,11 +414,12 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="?backgroundColorSettingTheme_2">
 
             <com.uncopt.android.widget.text.justify.JustifiedTextView
               fontPath="fonts/IRANSansMobile.ttf"
@@ -425,7 +427,7 @@
               android:layout_height="wrap_content"
               android:padding="@dimen/dp14"
               android:text="@string/Auto_lock_description"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp12" />
           </RelativeLayout>
 
@@ -433,7 +435,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp48"
-            android:background="@color/white"
+            style="?backgroundColorSettingTheme"
             android:onClick="@{fragmentPassCodeViewModel::onClickAllowScreenCapture}"
             android:orientation="horizontal"
             android:paddingEnd="@dimen/dp16"
@@ -452,7 +454,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/allow_screen_capture"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
@@ -471,7 +473,8 @@
 
           <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            style="?backgroundColorSettingTheme_2">
 
             <com.uncopt.android.widget.text.justify.JustifiedTextView
               fontPath="fonts/IRANSansMobile.ttf"
@@ -479,7 +482,7 @@
               android:layout_height="wrap_content"
               android:padding="@dimen/dp14"
               android:text="@string/Allow_Screen_Capture_description"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp12" />
           </RelativeLayout>
 

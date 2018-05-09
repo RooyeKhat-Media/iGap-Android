@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@android:color/white"
+  android:background="@android:color/transparent"
   android:clickable="true"
   android:orientation="vertical"
   tools:ignore="MissingPrefix">
@@ -13,7 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <net.iGap.module.MaterialDesignTextView
       android:id="@+id/cm_icon_mute_pinToTop"
       fontPath="fonts/iGap-Fontico.ttf"
       android:layout_width="@dimen/dp26"
@@ -21,16 +21,19 @@
       android:layout_gravity="center"
       android:gravity="center"
       android:text="@string/md_pin"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/cm_txt_mute_pinToTop"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/pin_to_top"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -49,16 +52,19 @@
       android:gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/cm_txt_mute_notification"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>
@@ -76,16 +82,19 @@
       android:gravity="center"
       android:text="@string/md_clearHistory"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/cm_txt_clear_history"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/clear_history"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
   </LinearLayout>
 
@@ -102,16 +111,19 @@
       android:gravity="center"
       android:text="@string/md_rubbish_delete_file"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
       android:id="@+id/cm_txt_delete_chat"
-      style="@style/dialog_item_style"
+      style="?textTitleColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/to_delete_chat"
-      android:textColor="@color/black90"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
       android:textSize="@dimen/dp14" />
 
   </LinearLayout>

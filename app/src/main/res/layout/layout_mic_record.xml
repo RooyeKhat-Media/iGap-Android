@@ -14,7 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:layout_gravity="bottom"
-      android:background="@color/white" />
+      style="?backgroundColorSettingTheme" />
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -42,7 +42,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="5dp"
           android:text="00:00"
-          android:textColor="@color/gray"
+          style="?textSubColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -52,7 +52,7 @@
           android:layout_weight="1"
           android:gravity="left"
           android:text="99"
-          android:textColor="@color/gray"
+          style="?textSubColorSettingTheme"
           android:textSize="@dimen/dp14" />
       </LinearLayout>
 
@@ -70,7 +70,7 @@
           android:layout_weight="1"
           android:gravity="right|center"
           android:text="@string/slide_to_cancel_en"
-          android:textColor="@color/gray"
+          style="?textSubColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <LinearLayout

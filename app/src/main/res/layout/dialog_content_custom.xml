@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@android:color/white"
+  android:background="@android:color/transparent"
   android:clickable="true"
   android:orientation="vertical"
   tools:ignore="MissingPrefix">
@@ -21,7 +21,7 @@
       android:layout_gravity="center"
       android:text="@string/md_muted"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp26"
 
       />
@@ -35,7 +35,7 @@
       android:paddingRight="@dimen/dp24"
       android:paddingTop="@dimen/dp8"
       android:text="@string/mute_notification"
-      android:textColor="@color/black90"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp20" />
   </LinearLayout>
 
@@ -53,7 +53,7 @@
       android:paddingBottom="@dimen/dp16"
       android:paddingTop="@dimen/dp16"
       android:text="@string/content_log_out"
-      android:textColor="@color/gray_6c"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp14"
 
       />

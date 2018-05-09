@@ -5,6 +5,7 @@
   android:clickable="true"
   android:gravity="center"
   android:layoutDirection="ltr"
+  android:background="@android:color/transparent"
   android:orientation="vertical">
 
   <LinearLayout

@@ -96,7 +96,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@android:color/white"
+          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -134,7 +134,7 @@
               android:gravity="center_vertical|start"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_alert"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -158,7 +158,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -180,7 +180,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_messagePreview"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -202,7 +202,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_ledColorMessage"
@@ -222,7 +222,7 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_led_color"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -242,7 +242,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_vibrate_message"
@@ -260,7 +260,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_vibrate"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -272,7 +272,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateMessage , default=@string/array_Default}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -281,7 +281,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_popupNotification_message"
@@ -299,7 +299,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_popupNotification"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -311,7 +311,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationMessage , default=@string/st_sound}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -320,7 +320,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_sound_message"
@@ -338,7 +338,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_sound"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -350,7 +350,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackSoundMessage , default = @string/st_sound}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -363,7 +363,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/st_background2"
+          style="?backgroundColorSettingTheme_2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -401,7 +401,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_alert"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -421,7 +421,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -443,7 +443,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_messagePreview"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -462,7 +462,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_ledColor_group"
@@ -482,7 +482,7 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_led_color"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -501,7 +501,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_vibrate_group"
@@ -519,7 +519,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_vibrate"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -531,7 +531,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateGroup , default=@string/array_Default}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -540,7 +540,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_popupNotification_group"
@@ -558,7 +558,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_popupNotification"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -570,7 +570,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationGroup,default = @string/st_sound}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -579,7 +579,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:id="@+id/stns_layout_sound_group"
@@ -597,7 +597,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_sound"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -610,7 +610,7 @@
               android:gravity="center_vertical|top"
 
               android:text="@{FragmentNotificationAndSoundViewModel.callBackSoundGroup , default =@string/st_sound}"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal"
 
@@ -624,7 +624,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@android:color/white"
+          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -663,7 +663,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_sound"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -685,7 +685,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -709,7 +709,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_vibrate"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -731,7 +731,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
 
@@ -755,7 +755,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_preview"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -777,7 +777,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -799,7 +799,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_chat_sound"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -823,7 +823,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/st_background2"
+          style="?backgroundColorSettingTheme_2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -861,7 +861,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_Contact_joined_igap"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -879,7 +879,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText" />
+            style="?lineColorSettingTheme" />
 
           <RelativeLayout
             android:layout_width="match_parent"
@@ -915,7 +915,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_pinned_message"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -926,7 +926,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/st_background2"
+          style="?backgroundColorSettingTheme_2"
           android:onClick="@{FragmentNotificationAndSoundViewModel::onClickKeepService}"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
@@ -956,7 +956,7 @@
             android:paddingRight="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
             android:text="@string/st_keep_alive_service"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16"
             android:textStyle="normal" />
 
@@ -980,7 +980,7 @@
               android:layout_weight="1"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_text_keep_alive_service"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -1001,7 +1001,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
+            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
           <!--this part is Gone-->
@@ -1039,7 +1039,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/st_background_connection"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1053,7 +1053,7 @@
               android:paddingRight="@dimen/dp52"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_text_background_connection"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1063,7 +1063,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
+            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
           <!--this part is Gone-->
@@ -1102,7 +1102,7 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_badge_counter"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1112,7 +1112,7 @@
           <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_editText"
+            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
 
@@ -1133,7 +1133,7 @@
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_Repeat_Notifications"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1145,7 +1145,7 @@
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@string/st_sound"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -1155,7 +1155,7 @@
         <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/white"
+          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp16"
           android:paddingTop="@dimen/dp8"
@@ -1187,7 +1187,7 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:text="@string/st_reset_all_notification"
-              android:textColor="@color/black_register"
+              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1197,7 +1197,7 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical|top"
               android:text="@string/st_text_reset_all_notification"
-              android:textColor="@color/cardview_dark_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 

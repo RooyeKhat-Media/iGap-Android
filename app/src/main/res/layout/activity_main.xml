@@ -7,6 +7,7 @@
   android:layout_height="match_parent"
   android:clickable="true"
   android:fitsSystemWindows="true"
+  style="?backgroundColorSettingTheme"
   android:orientation="horizontal">
 
   <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +24,7 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#99f7f7f7">
+        style="?backgroundColorSettingTheme">
 
         <FrameLayout
           android:id="@+id/am_frame_main_container"
@@ -209,7 +210,7 @@
               android:id="@+id/viewpager"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              style="?backgroundColorSettingTheme"
               android:layoutDirection="ltr"
               android:overScrollMode="never"
               app:layout_behavior="@string/appbar_scrolling_view_behavior" />

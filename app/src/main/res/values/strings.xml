@@ -1094,6 +1094,7 @@
   <string name="exceed_4_line">Your status cannot exceed 4 lines.</string>
 
   <string name="st_Auto_Rotate">Auto-Rotate Screen</string>
+  <string name="Theme_Dark">Dark Theme</string>
   <string name="two_step_pass_code">PassCode Lock</string>
   <string name="unlock_with_fingerPrint">Unlock With FingerPrint</string>
   <string name="change_pass_code">Change PassCode</string>
@@ -1192,5 +1193,6 @@
   <string name="lbl_saturation">Saturation</string>
   <string name="tab_filters">Filters</string>
   <string name="tab_edit">Edit</string>
+  <string name="can_not_open_file">This file can not be opened</string>
 
 </resources>

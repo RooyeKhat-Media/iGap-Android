@@ -26,7 +26,7 @@ public class Config {
     public static final int ACTION_CHECKING = 500;
     public static final int GROUP_SHOW_ACTIONS_COUNT = 3;
     public static final int LIMIT_GET_HISTORY_LOW = 10;
-    public static final int LIMIT_GET_HISTORY_NORMAL = 100;
+    public static final int LIMIT_GET_HISTORY_NORMAL = 50;
     public static final int LIMIT_LOAD_ROOM = 50;
     public static final int FAST_START_PAGE_TIME = (int) 20;
     public static final int LOW_START_PAGE_TIME = (int) 25;
@@ -82,7 +82,8 @@ public class Config {
     public static String default_dark_notificationColor = "#000000";
     public static String default_dark_toggleButtonColor = "#000000";
     public static String default_dark_attachmentColor = "#000000";
-    public static String default_dark_headerTextColor = "#111111";
+    public static String default_dark_menuBackgroundColor = "#000000";
+    public static String default_dark_headerTextColor = "#ffffff";
     public static String default_dark_progressColor = "#ffffff";
 
 }

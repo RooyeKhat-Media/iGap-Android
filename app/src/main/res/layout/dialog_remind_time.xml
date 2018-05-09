@@ -4,6 +4,7 @@
   android:layout_height="match_parent"
   android:clickable="true"
   android:orientation="vertical"
+  android:background="@android:color/transparent"
   android:padding="@dimen/dp16">
 
   <TextView
@@ -12,7 +13,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:text="@string/Toast_time_wait"
-    android:textColor="@color/black_register"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp18" />
 
   <net.iGap.module.HeaderTextview

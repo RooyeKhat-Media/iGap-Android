@@ -35,7 +35,7 @@
   </style>
 
   <style name="AppTheme" parent="BaseTheme">
-
+    <!--<item name="md_dark_theme">true</item>-->
   </style>
 
   <style name="AppThemeTranslucent" parent="BaseTheme">
@@ -73,9 +73,7 @@
 
   </style>
 
-  <style name="FabButton">
-    <item name="colorAccent">@android:color/white</item>
-  </style>
+
 
   <style name="dialog_item_style">
     <item name="android:paddingBottom">@dimen/dp8</item>
@@ -240,4 +238,185 @@
     <item name="android:activityCloseEnterAnimation">@anim/slide_exit_in_right</item>
     <item name="android:activityCloseExitAnimation">@anim/slide_exit_out_left</item>
   </style>
+
+
+  <!--custom theme-->
+
+  <!--==================================Black==================================-->
+  <style name="page_background_black">
+    <item name="android:background">@color/black90</item>
+  </style>
+
+  <style name="text_style_black">
+    <item name="android:textColor">#fff</item>
+  </style>
+
+  <!--Menu-->
+  <style name="background_menu_dark">
+    <item name="android:background">@color/black90</item>
+  </style>
+
+  <style name="text_style_menu_dark">
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="icon_style_menu_dark">
+    <item name="android:textColor">@color/white</item>
+  </style>
+  <!---->
+
+  <!--setting-->
+  <style name="background_setting_dark">
+    <item name="android:background">@color/background_setting_dark</item>
+  </style>
+
+  <style name="background_2_setting_dark">
+    <item name="android:background">@color/background_setting_dark_2</item>
+  </style>
+
+  <style name="text_title_style_setting_dark">
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="text_sub_style_setting_dark">
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="line_style_setting_dark">
+    <item name="android:background">@color/line</item>
+  </style>
+
+  <style name="hint_style_setting_dark">
+    <item name="android:textColorHint">@color/hint_edit_text</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="text_background_dark">
+    <item name="android:background">@color/background_setting_dark</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="text_background_dark_2">
+    <item name="android:background">@color/black90</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="text_title_security_dark">
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="emojiColorChat_dark">
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textColorHint">@color/hint_edit_text</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+  <style name="dialog_dark">
+    <item name="md_dark_theme">true</item>
+  </style>
+
+  <style name="backgroundColorCallDark">
+    <item name="android:background">@drawable/background_call_fragment_dark</item>
+  </style>
+
+  <style name="backgroundSubChat_dark">
+    <item name="android:background">@color/line</item>
+  </style>
+
+  <style name="FabButtonDark">
+    <item name="backgroundTint">@color/colorOldBlack</item>
+    <item name="android:tint">@color/white</item>
+    <item name="android:theme">@color/colorOldBlack</item>
+  </style>
+
+
+  <!--==================================Light==================================-->
+  <style name="page_background_light">
+    <item name="android:background">@color/white</item>
+  </style>
+
+  <style name="text_style_light">
+    <item name="android:textColor">@color/black90</item>
+  </style>
+
+  <!--Menu-->
+
+  <style name="background_menu_light">
+    <item name="android:background">@color/white</item>
+  </style>
+
+  <style name="text_style_menu_light">
+    <item name="android:textColor">@color/black90</item>
+  </style>
+
+  <style name="icon_style_menu_light">
+    <item name="android:textColor">@color/grayNew</item>
+  </style>
+
+  <!---->
+
+
+  <!--setting-->
+  <style name="background_setting_light">
+    <item name="android:background">@color/white</item>
+  </style>
+
+  <style name="background_2_setting_light">
+    <item name="android:background">@color/st_background2</item>
+  </style>
+
+  <style name="text_title_style_setting_light">
+    <item name="android:textColor">@color/black_register</item>
+  </style>
+
+  <style name="text_sub_style_setting_light">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_light">
+    <item name="android:background">@color/background_editText</item>
+  </style>
+
+  <style name="hint_style_setting_light">
+    <item name="android:textColorHint">@color/hint_edit_text</item>
+    <item name="android:textColor">@color/black90</item>
+  </style>
+
+  <style name="text_background_light_2">
+    <item name="android:background">@color/st_background2</item>
+    <item name="android:textColor">@color/black90</item>
+  </style>
+
+  <style name="text_background_light">
+    <item name="android:background">@color/white</item>
+    <item name="android:textColor">@color/black90</item>
+  </style>
+
+  <style name="text_title_security_light">
+    <item name="android:textColor">@color/gray_4c</item>
+  </style>
+
+  <style name="emojiColorChat_light">
+    <item name="android:textColor">@color/black90</item>
+    <item name="android:textColorHint">@color/light_gray</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+  <style name="dialog_light">
+    <item name="md_dark_theme">false</item>
+  </style>
+
+  <style name="backgroundColorCallLight">
+    <item name="android:background">@drawable/background_call_fragment</item>
+  </style>
+
+  <style name="backgroundSubChat_light">
+    <item name="android:background">@color/pin_color</item>
+  </style>
+
+  <style name="FabButton">
+    <item name="android:backgroundTint">@android:color/white</item>
+    <item name="android:tint">@color/gray</item>
+  </style>
+
 </resources>

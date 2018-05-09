@@ -4,6 +4,7 @@
   android:layout_height="@dimen/dp80"
   android:clickable="true"
   android:gravity="center"
+  android:background="@android:color/transparent"
   android:orientation="horizontal">
 
 
@@ -27,7 +28,7 @@
       android:layout_height="wrap_content"
       android:singleLine="true"
       android:text="hame khoba"
-      android:textColor="@color/black90"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <TextView
@@ -35,6 +36,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:singleLine="true"
+      style="?textSubColorSettingTheme"
       android:text="12 member" />
   </LinearLayout>
 

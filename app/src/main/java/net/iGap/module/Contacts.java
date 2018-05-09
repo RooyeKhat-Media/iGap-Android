@@ -42,7 +42,6 @@ import static net.iGap.Config.PHONE_CONTACT_MAX_COUNT_LIMIT;
 public class Contacts {
 
     public static final int PHONE_CONTACT_FETCH_LIMIT = 100;
-    private static List<StructListOfContact> resultContactList;
     public static boolean isSendingContactToServer = false;
 
     //Local Fetch Contacts Fields
@@ -102,7 +101,7 @@ public class Contacts {
 
     public static void showLimitDialog() {
         try {
-            if (G.currentActivity != null) {
+            if (G.currentActivity != null && !G.currentActivity.isFinishing()) {
                 G.currentActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -174,34 +173,33 @@ public class Contacts {
                 cur.close();
             }
 
+            List<StructListOfContact> resultContactList = new ArrayList<>();
 
-            resultContactList = new ArrayList<>();
-            for (int i = 0; i < contactList.size(); i++) {
+            for (StructListOfContact item : contactList) {
 
-                if (contactList.get(i).getPhone() != null && contactList.get(i).getDisplayName() != null) {
+                if (item.getPhone() != null && item.getDisplayName() != null) {
                     StructListOfContact itemContact = new StructListOfContact();
-                    String[] sp = contactList.get(i).getDisplayName().split(" ");
+                    String[] sp = item.getDisplayName().split(" ");
                     if (sp.length == 1) {
-
                         itemContact.setFirstName(sp[0]);
                         itemContact.setLastName("");
-                        itemContact.setPhone(contactList.get(i).getPhone());
-                        itemContact.setDisplayName(contactList.get(i).displayName);
+                        itemContact.setPhone(item.getPhone());
+                        itemContact.setDisplayName(item.displayName);
                     } else if (sp.length == 2) {
                         itemContact.setFirstName(sp[0]);
                         itemContact.setLastName(sp[1]);
-                        itemContact.setPhone(contactList.get(i).getPhone());
-                        itemContact.setDisplayName(contactList.get(i).displayName);
+                        itemContact.setPhone(item.getPhone());
+                        itemContact.setDisplayName(item.displayName);
                     } else if (sp.length == 3) {
                         itemContact.setFirstName(sp[0]);
-                        itemContact.setLastName(sp[1] + sp[2]);
-                        itemContact.setPhone(contactList.get(i).getPhone());
-                        itemContact.setDisplayName(contactList.get(i).displayName);
+                        itemContact.setLastName(sp[1] + " " + sp[2]);
+                        itemContact.setPhone(item.getPhone());
+                        itemContact.setDisplayName(item.displayName);
                     } else if (sp.length >= 3) {
-                        itemContact.setFirstName(contactList.get(i).getDisplayName());
+                        itemContact.setFirstName(item.getDisplayName());
                         itemContact.setLastName("");
-                        itemContact.setPhone(contactList.get(i).getPhone());
-                        itemContact.setDisplayName(contactList.get(i).displayName);
+                        itemContact.setPhone(item.getPhone());
+                        itemContact.setDisplayName(item.displayName);
                     }
 
                     resultContactList.add(itemContact);

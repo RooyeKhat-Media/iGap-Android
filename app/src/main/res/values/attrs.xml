@@ -88,4 +88,34 @@
     <attr name="nts_inactive_color" format="color" />
     <attr name="nts_active_color" format="color" />
   </declare-styleable>
+
+
+  <!--=======================custom theme=====================-->
+
+  <attr name="pageBackgroundTheme" format="reference" />
+  <attr name="textColorTheme" format="reference" />
+
+  <!--Menu-->
+  <attr name="textColorMenuTheme" format="reference" />
+  <attr name="iconColorMenuTheme" format="reference" />
+  <attr name="backgroundColorMenuTheme" format="reference" />
+
+  <!--setting-->
+
+  <attr name="backgroundColorSettingTheme" format="reference" />
+  <attr name="backgroundColorSettingTheme_2" format="reference" />
+  <attr name="textTitleColorSettingTheme" format="reference" />
+  <attr name="textSubColorSettingTheme" format="reference" />
+  <attr name="lineColorSettingTheme" format="reference" />
+  <attr name="hintColorSettingTheme" format="reference" />
+  <attr name="textBackgroundColor" format="reference" />
+  <attr name="textBackgroundColor_2" format="reference" />
+  <attr name="textSecurityColor" format="reference" />
+  <attr name="textColorCall" format="reference" />
+  <attr name="backgroundColorCall" format="reference" />
+  <attr name="emojiChat" format="reference" />
+  <attr name="backgroundSubChatTheme" format="reference" />
+  <attr name="fabButtoniGap" format="reference" />
+
+
 </resources>

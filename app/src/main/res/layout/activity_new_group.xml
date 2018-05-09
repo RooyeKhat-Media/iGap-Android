@@ -18,7 +18,7 @@
     android:id="@+id/ng_fragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     android:fitsSystemWindows="false"
     tools:ignore="MissingPrefix">
@@ -137,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp20"
+            style="?hintColorSettingTheme"
             android:hint="@{fragmentNewGroupVieModel.txtInputName}">
 
             <net.iGap.module.MEditText
@@ -148,6 +149,7 @@
               android:paddingBottom="@dimen/dp4"
               android:paddingTop="@dimen/dp8"
               android:singleLine="true"
+              style="?hintColorSettingTheme"
               android:text="@={fragmentNewGroupVieModel.edtSetNewGroup}"
               android:textSize="@dimen/dp15" />
 
@@ -166,6 +168,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@+id/ng_root_newGroup"
           android:layout_marginTop="@dimen/dp12"
+          style="?hintColorSettingTheme"
           android:hint="@string/desc_group_chanel">
 
           <net.iGap.module.LinedEditText
@@ -187,6 +190,7 @@
             android:paddingBottom="@dimen/dp8"
             android:paddingTop="@dimen/dp8"
             android:singleLine="false"
+            style="?hintColorSettingTheme"
             android:text="@={fragmentNewGroupVieModel.edtDescription}"
             android:textCursorDrawable="@drawable/editext_cursor"
             android:textSize="@dimen/dp15" />

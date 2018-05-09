@@ -5,7 +5,7 @@
   android:id="@+id/cardView"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:layoutDirection="ltr"
   android:orientation="vertical"
@@ -22,6 +22,7 @@
       android:id="@+id/rcvContent"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/dp100"
+      style="?backgroundColorSettingTheme"
       android:layout_marginLeft="@dimen/dp6" />
 
   </LinearLayout>
@@ -37,7 +38,7 @@
       android:layout_width="match_parent"
       android:layout_height="1dp"
       android:layout_marginTop="@dimen/dp8"
-      android:background="@color/gray_3c" />
+      style="?lineColorSettingTheme" />
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -75,7 +76,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_document"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -108,7 +109,7 @@
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_music"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -140,7 +141,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_video"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -172,7 +173,7 @@
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_picture"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -206,7 +207,7 @@
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_camera"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -247,7 +248,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_contact"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -280,7 +281,7 @@
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_location"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -312,7 +313,7 @@
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_paint"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -343,7 +344,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_file"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -376,7 +377,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/navigation_drawer_close"
-          android:textColor="@color/gray_4c"
+          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 

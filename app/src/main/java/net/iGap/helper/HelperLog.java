@@ -4,12 +4,16 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+import net.iGap.BuildConfig;
+
 public class HelperLog {
 
     public static void setErrorLog(String message) {
 
         Crashlytics.logException(new Exception(message));
 
-        Log.e("debug", message);
+        if (BuildConfig.DEBUG) {
+            Log.e("debug", message);
+        }
     }
 }

@@ -5,7 +5,7 @@
   android:id="@+id/rootShowMember"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:orientation="vertical"
   tools:ignore="MissingPrefix">
@@ -134,6 +134,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+      android:id="@+id/fcg_prgWaiting"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_gravity="center|bottom"
+      android:layout_margin="@dimen/dp20"
+      android:visibility="gone" />
+
     <android.support.v7.widget.RecyclerView
       android:id="@+id/fcm_recycler_view_show_member"
       android:layout_width="match_parent"
@@ -143,15 +152,6 @@
       android:scrollbarSize="5dp"
       android:scrollbarThumbVertical="@color/toolbar_background"
       android:scrollbars="vertical" />
-
-    <ProgressBar
-      android:id="@+id/fcg_prgWaiting"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:layout_gravity="center|bottom"
-      android:layout_margin="@dimen/dp20"
-      android:visibility="gone" />
 
 
   </FrameLayout>

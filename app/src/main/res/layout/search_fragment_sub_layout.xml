@@ -4,6 +4,7 @@
   android:layout_height="@dimen/dp68"
   android:clickable="true"
   android:orientation="horizontal"
+  style="?backgroundColorSettingTheme"
   android:padding="@dimen/dp8">
 
 
@@ -30,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp8"
         android:layout_marginRight="@dimen/dp8"
+        style="?textSubColorSettingTheme"
         android:text="how"
         android:textSize="@dimen/dp18" />
 
@@ -42,7 +44,7 @@
         android:singleLine="true"
         android:text="Dominika Faniz"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="#000000"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
     </LinearLayout>
@@ -60,13 +62,13 @@
 
         <net.iGap.module.EmojiTextViewE
           android:id="@+id/sfsl_txt_contact_lastseen"
+          style="?textSubColorSettingTheme"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="start"
           android:singleLine="true"
           android:text="@string/last_seen_recently"
           android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-          android:textColor="#bbbbbb"
           android:textSize="@dimen/dp14" />
 
       </LinearLayout>
@@ -74,6 +76,7 @@
 
       <TextView
         android:id="@+id/sfsl_txt_time"
+        style="?textSubColorSettingTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/dp8"

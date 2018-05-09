@@ -10,6 +10,7 @@
 
 package net.iGap.adapter.items.chat;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
@@ -255,8 +256,8 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
         }
 
-        holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
-        holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
+        holder.txt_Timer.setTextColor(Color.parseColor(G.textTitleTheme));
+        holder.author.setTextColor(Color.parseColor(G.textTitleTheme));
     }
 
     @Override
@@ -269,8 +270,8 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
             }
 
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
-            holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
+            holder.txt_Timer.setTextColor(Color.parseColor(G.textTitleTheme));
+            holder.author.setTextColor(Color.parseColor(G.textTitleTheme));
         } else {
             if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
                 holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.gray_6c), PorterDuff.Mode.SRC_IN);
@@ -278,7 +279,7 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
 
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.grayNewDarker));
-            holder.author.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
+            holder.author.setTextColor(Color.parseColor(G.textTitleTheme));
         }
     }
 

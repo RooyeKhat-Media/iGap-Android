@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  style="?backgroundColorSettingTheme_2"
   android:layout_width="wrap_content"
   android:layout_height="match_parent"
   android:orientation="vertical">
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/rcvBottomSheetForward"
+    style="?backgroundColorSettingTheme_2"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
@@ -28,7 +30,7 @@
       android:gravity="center"
       android:text="@string/md_searching_magnifying_glass"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/gray_6c" />
+      style="?textTitleColorSettingTheme" />
 
     <net.iGap.module.MEditText
       android:id="@+id/edtSearch"
@@ -36,6 +38,7 @@
       android:layout_height="match_parent"
       android:layout_weight="1"
       android:background="@color/transparent"
+      style="?hintColorSettingTheme"
       android:hint="Send to ..." />
 
     <net.iGap.module.MaterialDesignTextView

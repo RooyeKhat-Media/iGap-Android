@@ -1,7 +1,6 @@
 package net.iGap.module;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
@@ -42,7 +41,7 @@ import static net.iGap.G.isAppInFg;
 /**
  * all actions that need doing after login
  */
-public class LoginActions extends Application {
+public class LoginActions {
 
     public LoginActions() {
         initSecureInterface();

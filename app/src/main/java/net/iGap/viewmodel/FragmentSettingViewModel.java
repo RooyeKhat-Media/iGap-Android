@@ -16,7 +16,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -164,7 +163,7 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isCameraButtonSheet = new ObservableField<>(true);
 
 
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     private int poRbDialogTextSize = -1;
     private Uri uriIntent;
     private long idAvatar;
@@ -1094,50 +1093,72 @@ public class FragmentSettingViewModel {
     }
 
     public void onClickThemeDark(View view) {
-
         isThemeDark.set(!isThemeDark.get());
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         if (isThemeDark.get()) {
-            editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, true);
-            editor.putString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_dark_appBarColor);
-            editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_dark_notificationColor);
-            editor.putString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_dark_toggleButtonColor);
-            editor.putString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_dark_attachmentColor);
-            editor.putString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_dark_headerTextColor);
-            editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_dark_progressColor);
-            editor.apply();
-
-            appBarColor = Config.default_dark_appBarColor;
-            notificationColor = Config.default_dark_notificationColor;
-            toggleButtonColor = Config.default_dark_toggleButtonColor;
-            attachmentColor = Config.default_dark_attachmentColor;
-            headerTextColor = Config.default_dark_headerTextColor;
-            G.progressColor = Config.default_dark_progressColor;
-
-            G.isRestartActivity = true;
-            G.isUpdateNotificaionColorMain = true;
-            G.isUpdateNotificaionColorChannel = true;
-            G.isUpdateNotificaionColorGroup = true;
-            G.isUpdateNotificaionColorChat = true;
-            G.fragmentActivity.recreate();
-
-            if (G.onRefreshActivity != null) {
-                G.onRefreshActivity.refresh("");
-                G.isRestartActivity = true;
-            }
-
+            setDarkTheme(editor);
         } else {
-            editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, false);
-            editor.apply();
-            notificationColorClick(Color.parseColor(Config.default_notificationColor), false);
-            headerColorClick(Color.parseColor(Config.default_headerTextColor), false);
-            toggleBottomClick(Color.parseColor(Config.default_toggleButtonColor));
-            sendAndAttachColorClick(Color.parseColor(Config.default_attachmentColor));
-            appBarColorClick(Color.parseColor(Config.default_appBarColor));
-            progressColorClick(Color.parseColor(Config.default_appBarColor), false);
+            setLightTheme(editor);
         }
+    }
 
+    public static void setLightTheme(SharedPreferences.Editor editor) {
+        G.isDarkTheme = false;
+        editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+        editor.apply();
+        G.backgroundTheme = "#FFFFFF";
+        G.textTitleTheme = "#000000";
+        G.textSubTheme = "#bbbbbb";
+        G.tintImage = "#000000";
+        G.backgroundTheme_2 = "#f9f9f9";
+        G.logLineTheme = "#e9e9e9";
+        G.voteIconTheme = "#696969";
+        notificationColorClick(Color.parseColor(Config.default_notificationColor), false);
+        headerColorClick(Color.parseColor(Config.default_headerTextColor), false);
+        toggleBottomClick(Color.parseColor(Config.default_toggleButtonColor));
+        sendAndAttachColorClick(Color.parseColor(Config.default_attachmentColor));
+        appBarColorClick(Color.parseColor(Config.default_appBarColor));
+        progressColorClick(Color.parseColor(Config.default_appBarColor), false);
+        menuBackgroundClick(Color.parseColor(Config.default_appBarColor), false);
+    }
+
+    public static void setDarkTheme(SharedPreferences.Editor editor) {
+        G.isDarkTheme = true;
+
+        editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, true);
+        editor.putString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_dark_appBarColor);
+        editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_dark_notificationColor);
+        editor.putString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_dark_toggleButtonColor);
+        editor.putString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_dark_attachmentColor);
+        editor.putString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_dark_headerTextColor);
+        editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_dark_progressColor);
+        editor.putString(SHP_SETTING.KEY_MENU_BACKGROUND_COLOR, Config.default_dark_menuBackgroundColor);
+        editor.apply();
+
+        appBarColor = Config.default_dark_appBarColor;
+        notificationColor = Config.default_dark_notificationColor;
+        toggleButtonColor = Config.default_dark_toggleButtonColor;
+        attachmentColor = Config.default_dark_attachmentColor;
+        headerTextColor = Config.default_dark_headerTextColor;
+        G.progressColor = Config.default_dark_progressColor;
+        G.backgroundTheme = "#151515";
+        G.textTitleTheme = "#ffffff";
+        G.textSubTheme = "#ffffff";
+        G.tintImage = "#ffffff";
+        G.backgroundTheme_2 = "#151515";
+        G.logLineTheme = "#4b4b4b";
+        G.voteIconTheme = "#cacaca";
+
+        G.isUpdateNotificaionColorMain = true;
+        G.isUpdateNotificaionColorChannel = true;
+        G.isUpdateNotificaionColorGroup = true;
+        G.isUpdateNotificaionColorChat = true;
+        G.fragmentActivity.recreate();
+
+        if (G.onRefreshActivity != null) {
+            G.isRestartActivity = true;
+            G.onRefreshActivity.refresh("");
+        }
     }
 
     public void onCheckedChangedThemeDark(boolean isChecked) {
@@ -1821,28 +1842,40 @@ public class FragmentSettingViewModel {
         }).show();
     }
 
-    private void appBarColorClick(int color) {
+    public static void appBarColorClick(int color) {
 
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
 
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgTitleBarColor.getBackground();
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgTitleBarColor.getBackground();
+//        bgShape.setColor(color);
         G.appBarColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_APP_BAR_COLOR, G.appBarColor);
         editor.apply();
 
         // G.fragmentActivity.recreate();
         if (G.onRefreshActivity != null) {
-            G.onRefreshActivity.refresh("");
             G.isRestartActivity = true;
+            G.onRefreshActivity.refresh("");
         }
     }
 
-    private void notificationColorClick(int color, boolean updateUi) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgNotificationColor.getBackground();
+    public static void notificationColorClick(int color, boolean updateUi) {
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgNotificationColor.getBackground();
+//        bgShape.setColor(color);
         G.notificationColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, G.notificationColor);
         editor.apply();
 
@@ -1856,12 +1889,18 @@ public class FragmentSettingViewModel {
         //}
     }
 
-    private void progressColorClick(int color, boolean updateUi) {
+    public static void progressColorClick(int color, boolean updateUi) {
 
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
+//        bgShape.setColor(color);
         G.progressColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, G.progressColor);
         editor.apply();
 
@@ -1870,20 +1909,49 @@ public class FragmentSettingViewModel {
         //}
     }
 
-    private void toggleBottomClick(int color) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgToggleBottonColor.getBackground();
+    public static void menuBackgroundClick(int color, boolean updateUi) {
+
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
+//        bgShape.setColor(color);
+        G.progressColor = "#" + Integer.toHexString(color);
+        editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, G.progressColor);
+        editor.apply();
+
+    }
+
+    public static void toggleBottomClick(int color) {
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgToggleBottonColor.getBackground();
+//        bgShape.setColor(color);
         G.toggleButtonColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, G.toggleButtonColor);
         editor.apply();
     }
 
-    private void headerColorClick(int color, boolean updateUi) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultHeaderFontColor.getBackground();
+    public static void headerColorClick(int color, boolean updateUi) {
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultHeaderFontColor.getBackground();
+//        bgShape.setColor(color);
         G.headerTextColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_FONT_HEADER_COLOR, G.headerTextColor);
         editor.apply();
 
@@ -1893,11 +1961,17 @@ public class FragmentSettingViewModel {
         }
     }
 
-    private void sendAndAttachColorClick(int color) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgSendAndAttachColor.getBackground();
+    public static void sendAndAttachColorClick(int color) {
+        SharedPreferences.Editor editor;
+        if (sharedPreferences == null) {
+            SharedPreferences sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        } else {
+            editor = sharedPreferences.edit();
+        }
+//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgSendAndAttachColor.getBackground();
+//        bgShape.setColor(color);
         G.attachmentColor = "#" + Integer.toHexString(color);
-        bgShape.setColor(color);
         editor.putString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, G.attachmentColor);
         editor.apply();
     }

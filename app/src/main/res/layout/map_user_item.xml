@@ -46,20 +46,18 @@
             android:gravity="left"
             android:singleLine="true"
             android:text="NearBy User "
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/black90"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16" />
 
 
           <net.iGap.module.CustomTextViewMedium
             android:id="@+id/txt_user_distance_map"
             android:layout_width="wrap_content"
-
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:gravity="end"
             android:text="distance"
-            android:textColor="@color/gray_5c"
+            style="?textSubColorSettingTheme"
             android:textSize="@dimen/dp14" />
 
         </LinearLayout>
@@ -76,8 +74,7 @@
           android:singleLine="true"
           android:tag="menu"
           android:text="getting comment..."
-          android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-          android:textColor="@color/gray_5c"
+          style="?textSubColorSettingTheme"
           android:textSize="@dimen/dp12" />
       </RelativeLayout>
 
@@ -103,6 +100,6 @@
     android:layout_height="1dp"
     android:layout_marginLeft="@dimen/dp60"
     android:layout_marginStart="@dimen/dp60"
-    android:background="@color/background_editText" />
+    style="?lineColorSettingTheme" />
 
 </LinearLayout>

@@ -101,6 +101,7 @@
     android:id="@+id/rootAddContact"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="?backgroundColorSettingTheme"
     android:orientation="vertical">
 
 
@@ -110,7 +111,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/dp16"
       android:text="@string/fac_contact_info"
-      android:textColor="@android:color/black"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp18" />
 
     <android.support.design.widget.TextInputLayout
@@ -119,7 +120,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dp16"
       android:layout_marginRight="@dimen/dp16"
-      app:hintTextAppearance="@style/Hint_appearance">
+      style="?hintColorSettingTheme">
 
       <net.iGap.module.MEditText
         android:id="@+id/ac_edt_firstName"
@@ -130,14 +131,14 @@
         android:background="@android:color/transparent"
         android:hint="@string/fac_First_Name"
         android:singleLine="true"
-        android:textColorHint="@color/hint_edit_text"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15" />
 
       <View
         android:id="@+id/ac_view_firstName"
         android:layout_width="match_parent"
         android:layout_height=".5dp"
-        android:background="@color/line_edit_text" />
+        style="?lineColorSettingTheme" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -147,6 +148,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/dp16"
       android:layout_marginRight="@dimen/dp16"
+      style="?hintColorSettingTheme"
       android:layout_marginTop="@dimen/dp12">
 
       <net.iGap.module.MEditText
@@ -156,14 +158,14 @@
         android:background="@android:color/transparent"
         android:hint="@string/fac_Last_Name"
         android:singleLine="true"
-        android:textColorHint="@color/hint_edit_text"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15" />
 
       <View
         android:id="@+id/ac_view_lastName"
         android:layout_width="match_parent"
         android:layout_height=".5dp"
-        android:background="@color/line_edit_text" />
+        style="?lineColorSettingTheme" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -180,6 +182,7 @@
       android:paddingBottom="@dimen/dp6"
       android:paddingTop="@dimen/dp6"
       android:singleLine="true"
+      style="?textTitleColorSettingTheme"
       android:text="Iran"
       android:textSize="@dimen/dp15" />
 
@@ -211,14 +214,14 @@
           android:singleLine="true"
           android:text="+98"
           android:textSize="@dimen/dp15"
-
+          style="?textTitleColorSettingTheme"
           />
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:layout_gravity="bottom"
-          android:background="@color/line_edit_text" />
+          style="?lineColorSettingTheme" />
       </LinearLayout>
 
       <RelativeLayout
@@ -235,8 +238,7 @@
           android:inputType="phone"
           android:padding="@dimen/dp4"
           android:textAlignment="gravity"
-          android:textColor="@color/rg_black_register"
-          android:textColorHint="@color/hint_edit_text"
+          style="?hintColorSettingTheme"
           android:textSize="@dimen/dp15"
           android:maxLength="18"
           app:mask="###-###-####" />
@@ -247,7 +249,7 @@
           android:layout_height="1dp"
           android:layout_alignParentBottom="true"
           android:layout_gravity="bottom"
-          android:background="@color/line_edit_text" />
+          style="?lineColorSettingTheme" />
       </RelativeLayout>
 
     </LinearLayout>

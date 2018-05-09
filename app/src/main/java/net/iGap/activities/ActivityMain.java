@@ -47,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
@@ -134,6 +135,7 @@ import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
 import net.iGap.viewmodel.ActivityCallViewModel;
+import net.iGap.viewmodel.FragmentSettingViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -336,6 +338,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     private void checkIntent(Intent intent) {
 
+        if (G.isRestartActivity) {
+            return;
+        }
+
         new HelperGetDataFromOtherApp(intent);
 
         Bundle extras = intent.getExtras();
@@ -365,12 +371,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.AppThemeTranslucent);
+//        setTheme(R.style.AppThemeTranslucent);
 
         if (G.isFirstPassCode) {
             openActivityPassCode();
         }
-
         //if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
         //isNeedToRegister = true; // continue app even don't have storage permission
         //isOnGetPermission = true;
@@ -443,8 +448,12 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 editor.apply();
             }
         }
-
-
+        SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        if (preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false)) {
+            this.setTheme(R.style.Material_blackCustom);
+        } else {
+            this.setTheme(R.style.Material_lightCustom);
+        }
         setContentView(R.layout.activity_main);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -1347,6 +1356,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
         ViewGroup itemQrCode = (ViewGroup) findViewById(R.id.lm_ll_qrCode);
+
         itemQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1367,6 +1377,30 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
                 lockNavigation();
                 closeDrawer();
+            }
+        });
+        final ToggleButton toggleButton = findViewById(R.id.st_txt_st_toggle_theme_dark);
+        ViewGroup rootDarkTheme = (ViewGroup) findViewById(R.id.lt_txt_st_theme_dark);
+        rootDarkTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleButton.performClick();
+            }
+        });
+        boolean checkedThemeDark = sharedPreferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+
+        toggleButton.setChecked(checkedThemeDark);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                if (toggleButton.isChecked()) {
+                    FragmentSettingViewModel.setDarkTheme(editor);
+                } else {
+                    FragmentSettingViewModel.setLightTheme(editor);
+                }
             }
         });
 

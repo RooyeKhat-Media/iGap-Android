@@ -263,7 +263,8 @@ public final class AppUtils {
             case DELIVERED:
 
                 setImageDrawable(view, R.drawable.ic_double_check);
-                view.setColorFilter(Color.BLACK);
+//                view.setColorFilter(Color.BLACK);
+                view.setColorFilter(Color.parseColor(G.tintImage), PorterDuff.Mode.SRC_IN);
                 break;
             case FAILED:
                 setImageDrawable(view, R.drawable.ic_error);
@@ -275,11 +276,13 @@ public final class AppUtils {
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.iGapColor));
                 break;
             case SENDING:
-                view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
+//                view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
+                view.setColorFilter(Color.parseColor(G.tintImage), PorterDuff.Mode.SRC_IN);
                 break;
             case SENT:
                 setImageDrawable(view, R.drawable.ic_check);
-                view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
+//                view.setColorFilter(view.getContext().getResources().getColor(R.color.black_register));
+                view.setColorFilter(Color.parseColor(G.tintImage), PorterDuff.Mode.SRC_IN);
                 break;
             default:
                 view.setVisibility(View.GONE);

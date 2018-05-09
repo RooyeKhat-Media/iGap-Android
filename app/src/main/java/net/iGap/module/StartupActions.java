@@ -63,6 +63,7 @@ import static net.iGap.G.helperNotificationAndBadge;
 import static net.iGap.G.imageFile;
 import static net.iGap.G.imageLoader;
 import static net.iGap.G.isSaveToGallery;
+import static net.iGap.G.menuBackgroundColor;
 import static net.iGap.G.notificationColor;
 import static net.iGap.G.selectedLanguage;
 import static net.iGap.G.toggleButtonColor;
@@ -289,20 +290,29 @@ public final class StartupActions {
         SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
 
         /** clear map cache and use from new map tile url */
-        if (preferences.getBoolean(SHP_SETTING.KEY_MAP_CLEAR_CACHE, true)) {
+        if (preferences.getBoolean(SHP_SETTING.KEY_MAP_CLEAR_CACHE_GOOGLE, true)) {
             FragmentiGapMap.deleteMapFileCash();
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(SHP_SETTING.KEY_MAP_CLEAR_CACHE, false);
+            editor.putBoolean(SHP_SETTING.KEY_MAP_CLEAR_CACHE_GOOGLE, false);
             editor.apply();
         }
 
-        if (preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false)) {
+        G.isDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+        if (G.isDarkTheme) {
             appBarColor = Config.default_dark_appBarColor;
             notificationColor = Config.default_dark_notificationColor;
             toggleButtonColor = Config.default_dark_toggleButtonColor;
             attachmentColor = Config.default_dark_attachmentColor;
             headerTextColor = Config.default_dark_headerTextColor;
             G.progressColor = Config.default_dark_progressColor;
+            menuBackgroundColor = Config.default_dark_menuBackgroundColor;
+            G.backgroundTheme = "#151515";
+            G.backgroundTheme_2 = "#000000";
+            G.textTitleTheme = "#ffffff";
+            G.textSubTheme = "#ffffff";
+            G.tintImage = "#ffffff";
+            G.logLineTheme = "#4b4b4b";
+            G.voteIconTheme = "#cacaca";
         } else {
             appBarColor = preferences.getString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_appBarColor);
             notificationColor = preferences.getString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_notificationColor);
@@ -310,6 +320,14 @@ public final class StartupActions {
             attachmentColor = preferences.getString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_attachmentColor);
             headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
             G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
+            headerTextColor = preferences.getString(SHP_SETTING.KEY_MENU_BACKGROUND_COLOR, "#000000");
+            G.backgroundTheme = "#FFFFFF";
+            G.textTitleTheme = "#000000";
+            G.textSubTheme = "#bbbbbb";
+            G.tintImage = "#000000";
+            G.backgroundTheme_2 = "#f9f9f9";
+            G.logLineTheme = "#e9e9e9";
+            G.voteIconTheme = "#696969";
         }
 
         G.multiTab = preferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);

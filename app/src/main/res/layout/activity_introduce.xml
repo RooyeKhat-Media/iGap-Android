@@ -11,53 +11,14 @@
   android:orientation="vertical"
   tools:ignore="MissingPrefix">
 
-
-  <android.support.percent.PercentRelativeLayout
-    android:id="@+id/int_layout_0"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_alignParentBottom="true"
-    android:background="@android:color/transparent"
-    app:layout_heightPercent="42%">
-
-    <ImageView
-      android:id="@+id/int_background_one"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:adjustViewBounds="true"
-      android:scaleType="centerCrop"
-      app:layout_heightPercent="100%"
-      app:srcCompat="@mipmap/city" />
-
-    <ImageView
-      android:id="@+id/int_background_two"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:adjustViewBounds="true"
-      android:scaleType="centerCrop"
-      app:layout_heightPercent="100%"
-      app:srcCompat="@mipmap/city" />
-
-    <ImageView
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_alignParentLeft="true"
-      android:adjustViewBounds="true"
-      android:scaleType="fitEnd"
-      app:layout_heightPercent="100%"
-      app:srcCompat="@drawable/sabz" />
-
-
-  </android.support.percent.PercentRelativeLayout>
-
   <RelativeLayout
-
     android:id="@+id/int_layout_1"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_alignParentTop="true"
     app:layout_heightPercent="63%"
-    app:layout_widthPercent="100%">
+    app:layout_widthPercent="100%"
+    android:layout_marginTop="@dimen/dp80">
 
     <RelativeLayout
       android:id="@+id/int_mainImage"

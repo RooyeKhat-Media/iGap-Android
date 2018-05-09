@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
-
+  style="?backgroundColorSettingTheme_2"
   >
 
   <LinearLayout
@@ -54,7 +54,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/music_name"
-        android:textColor="@android:color/black"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
       <TextView
@@ -64,7 +64,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/place"
-        android:textColor="@color/gray_4c"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14" />
 
     </LinearLayout>
@@ -74,6 +74,6 @@
   <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/gray_3c" />
+    style="?lineColorSettingTheme" />
 
 </LinearLayout>

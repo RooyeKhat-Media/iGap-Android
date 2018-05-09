@@ -14,7 +14,7 @@
     android:id="@+id/ae_recycler_view_explorer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    style="?backgroundSubChatTheme"
     android:scrollbars="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

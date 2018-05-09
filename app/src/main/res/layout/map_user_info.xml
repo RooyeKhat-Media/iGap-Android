@@ -86,7 +86,7 @@
           android:layout_height="wrap_content"
           android:singleLine="true"
           android:text="Display Name"
-          android:textColor="@color/black"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp18" />
       </LinearLayout>
 
@@ -116,6 +116,7 @@
           android:ellipsize="end"
           android:gravity="right"
           android:maxLines="1"
+          style="?textSubColorSettingTheme"
           android:text="Comment"
           android:textSize="@dimen/dp16" />
       </LinearLayout>

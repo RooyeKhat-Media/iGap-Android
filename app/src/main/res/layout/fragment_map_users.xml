@@ -111,6 +111,7 @@
           android:paddingRight="@dimen/dp20"
           android:text="@string/text_empty_user_map"
           android:textSize="@dimen/dp13"
+          style="?textTitleColorSettingTheme"
           android:visibility="gone" />
 
       </LinearLayout>

@@ -5,6 +5,7 @@
   android:layout_marginLeft="@dimen/dp8"
   android:layout_marginStart="@dimen/dp8"
   android:clickable="true"
+  style="?backgroundColorSettingTheme"
   android:textColor="@color/gray_4c"
   android:textDirection="ltr"
   android:textSize="@dimen/dp20" />

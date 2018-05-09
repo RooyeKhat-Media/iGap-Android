@@ -129,10 +129,12 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textSize="@dimen/dp15"
+      style="?backgroundColorSettingTheme_2"
       app:chip_deletable="true"
       app:chip_deleteIconColor="@color/green"
       app:deleteIconColor="@android:color/white"
       app:hint="Enter a name"
+      app:hintColor="#7e7e7e"
       app:showChipDetailed="false" />
 
   </LinearLayout>
@@ -144,6 +146,7 @@
     android:layout_height="match_parent"
     android:layout_below="@+id/fcg_layout_search"
     android:paddingBottom="@dimen/dp8"
+    style="?backgroundColorSettingTheme"
     android:scrollbars="vertical" />
 
 

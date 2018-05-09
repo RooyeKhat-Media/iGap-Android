@@ -13,7 +13,7 @@
     android:id="@+id/ntg_fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     android:orientation="vertical"
     tools:context="net.iGap.fragments.FragmentNotification"
@@ -80,7 +80,7 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
       android:layout_marginTop="@dimen/dp8"
-      android:background="@android:color/white"
+      style="?textSubColorSettingTheme"
       android:gravity="center_vertical"
       android:onClick="@{fragmentNotificationViewModel::onNotificationStateClick}"
       android:orientation="vertical"
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/ntg_notifications"
-        android:textColor="@color/black_register"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15"
         android:textStyle="normal" />
 
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
         android:text="@{fragmentNotificationViewModel.notificationState}"
-        android:textColor="@color/cardview_dark_background"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14"
         android:textStyle="normal" />
     </LinearLayout>
@@ -112,13 +112,13 @@
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText" />
+      style="?lineColorSettingTheme" />
 
     <LinearLayout
       android:id="@+id/ntg_layout_vibrate"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
-      android:background="@color/white"
+      style="?textSubColorSettingTheme"
       android:gravity="center_vertical"
       android:onClick="@{fragmentNotificationViewModel::onNotificationVibrateClick}"
       android:orientation="vertical"
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/st_vibrate"
-        android:textColor="@color/black_register"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15"
         android:textStyle="normal" />
 
@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
         android:text="@{fragmentNotificationViewModel.vibrate, default=@string/array_Default}"
-        android:textColor="@color/cardview_dark_background"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14"
         android:textStyle="normal" />
 
@@ -151,7 +151,7 @@
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText" />
+      style="?lineColorSettingTheme" />
 
     <LinearLayout
       android:id="@+id/ntg_layout_sound"
@@ -170,7 +170,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/ntg_Sound"
-        android:textColor="@color/black_register"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15"
         android:textStyle="normal" />
 
@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|top"
         android:text="@{fragmentNotificationViewModel.sound, default=@string/st_sound}"
-        android:textColor="@color/cardview_dark_background"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14"
         android:textStyle="normal" />
 
@@ -189,7 +189,7 @@
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/background_editText" />
+      style="?lineColorSettingTheme" />
 
     <LinearLayout
       android:id="@+id/ntg_layout_ledColorMessage"
@@ -209,7 +209,7 @@
         android:paddingRight="@dimen/dp16"
         android:paddingStart="@dimen/dp16"
         android:text="@string/st_led_color"
-        android:textColor="@color/black_register"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp15"
         android:textStyle="normal" />
 

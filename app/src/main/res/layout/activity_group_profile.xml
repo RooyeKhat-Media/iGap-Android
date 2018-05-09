@@ -23,7 +23,7 @@
     android:id="@+id/fragmentContainer_group_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -218,6 +218,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
+            style="?backgroundColorSettingTheme"
             android:visibility="visible">
 
 
@@ -259,7 +260,7 @@
                   android:paddingStart="@dimen/dp4"
                   android:singleLine="true"
                   android:text="@string/group_name"
-                  android:textColor="@color/black_register"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp15" />
 
                 <net.iGap.module.EmojiTextViewE
@@ -274,7 +275,7 @@
                   android:paddingTop="@dimen/dp4"
                   android:singleLine="true"
                   android:text="@{fragmentGroupProfileViewModel.callbackGroupName}"
-                  android:textColor="@color/gray_5c"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp13"
                   app:emojiSize="@dimen/dp14" />
 
@@ -295,7 +296,7 @@
                   android:paddingStart="@dimen/dp4"
                   android:singleLine="true"
                   android:text="@string/member"
-                  android:textColor="@color/black_register"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp15" />
 
                 <TextView
@@ -308,7 +309,7 @@
                   android:paddingTop="@dimen/dp4"
                   android:singleLine="true"
                   android:text="@{fragmentGroupProfileViewModel.callbackMemberNumber}"
-                  android:textColor="@color/gray_5c"
+                  style="?textSubColorSettingTheme"
                   android:textSize="@dimen/dp13"
 
                   />
@@ -335,7 +336,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@{fragmentGroupProfileViewModel.callbackGroupLinkTitle , default = @string/group_link}"
-                android:textColor="@color/black_register"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
 
               <TextView
@@ -348,7 +349,7 @@
                 android:paddingTop="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@{fragmentGroupProfileViewModel.callbackGroupLink}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
 
             </LinearLayout>
@@ -373,7 +374,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@string/group_description"
-                android:textColor="@color/black_register"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
 
               <net.iGap.module.EmojiTextViewE
@@ -388,7 +389,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:paddingTop="@dimen/dp4"
                 android:text="@{fragmentGroupProfileViewModel.callbackGroupDescription}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13"
                 app:emojiSize="@dimen/dp14" />
             </LinearLayout>
@@ -409,7 +410,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@string/shared_media"
-                android:textColor="@color/black_register"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
@@ -422,7 +423,7 @@
                 android:paddingStart="@dimen/dp4"
                 android:paddingTop="@dimen/dp4"
                 android:text="@{fragmentGroupProfileViewModel.callbackGroupShearedMedia}"
-                android:textColor="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
             </LinearLayout>
 
@@ -433,7 +434,7 @@
             android:id="@+id/agp_root_layout_group_add_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_f2"
+            style="?backgroundColorSettingTheme_2"
             android:gravity="left"
             android:orientation="vertical"
             android:visibility="@{fragmentGroupProfileViewModel.callbackAddMemberVisibility}"
@@ -484,6 +485,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/dp8"
                 android:text="@string/add_new_member"
+                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp16" />
 
 
@@ -516,7 +518,7 @@
                 android:layout_marginStart="@dimen/dp4"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:tint="@color/gray_5c"
+                style="?textSubColorSettingTheme"
                 app:srcCompat="@drawable/account_multiple"
 
                 />
@@ -528,6 +530,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/dp8"
                 android:gravity=""
+                style="?textSubColorSettingTheme"
                 android:text="@string/show_member"
                 android:textSize="@dimen/dp16" />
             </LinearLayout>
@@ -542,6 +545,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:orientation="vertical"
+            style="?backgroundColorSettingTheme"
             android:visibility="@{fragmentGroupProfileViewModel.settingVisibility}">
 
             <net.iGap.module.HeaderTextview
@@ -579,7 +583,7 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_admin"
-                android:textColor="@android:color/black"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
 
 
@@ -589,7 +593,7 @@
               android:id="@+id/agp_ll_line_admin"
               android:layout_width="match_parent"
               android:layout_height="1px"
-              android:background="@color/background_editText"
+              style="?lineColorSettingTheme"
               android:visibility="@{fragmentGroupProfileViewModel.lineAdminVisibility}" />
 
             <LinearLayout
@@ -611,7 +615,7 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_modereator"
-                android:textColor="@android:color/black"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
 
 
@@ -620,7 +624,7 @@
             <View
               android:layout_width="match_parent"
               android:layout_height="1px"
-              android:background="@color/background_editText" />
+              style="?lineColorSettingTheme" />
 
             <LinearLayout
               android:id="@+id/agp_ll_member_can_add_member"
@@ -644,7 +648,7 @@
                   android:gravity="center_vertical"
                   android:singleLine="true"
                   android:text="@string/member_can_add_new_member"
-                  android:textColor="@android:color/black"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp15" />
 
                 <ToggleButton
@@ -664,7 +668,7 @@
               <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/background_editText" />
+                style="?lineColorSettingTheme" />
             </LinearLayout>
 
             <LinearLayout
@@ -685,7 +689,7 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/notificaion_and_sound"
-                android:textColor="@android:color/black"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
 
             </LinearLayout>
@@ -694,7 +698,7 @@
               android:layout_width="match_parent"
               android:layout_height="1px"
 
-              android:background="@color/background_editText" />
+              style="?lineColorSettingTheme" />
 
             <LinearLayout
               android:id="@+id/agp_ll_delete_and_left_group"
@@ -716,7 +720,7 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@{fragmentGroupProfileViewModel.callBackDeleteLeaveGroup , default=@string/Delete_and_leave_Group}"
-                android:textColor="@android:color/black"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15" />
             </LinearLayout>
 
@@ -734,11 +738,12 @@
         android:layout_margin="@dimen/dp20"
         android:clickable="true"
         android:src="@mipmap/pu_camera"
-        android:theme="@style/FabButton"
-        android:tint="@color/gray"
+        android:background="@android:color/white"
+        app:backgroundTint="@android:color/white"
         android:visibility="gone"
         app:fabSize="normal"
         app:layout_anchor="@+id/agp_appbar"
+        app:tint="@color/gray"
         app:layout_anchorGravity="bottom|right|end" />
 
     </android.support.design.widget.CoordinatorLayout>

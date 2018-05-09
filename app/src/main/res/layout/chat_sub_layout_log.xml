@@ -20,6 +20,6 @@
     android:singleLine="false"
     android:text="Log"
     android:textAllCaps="false"
-    android:textColor="#4a5d5c"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp12" />
 </FrameLayout>

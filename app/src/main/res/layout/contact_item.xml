@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  style="?backgroundColorSettingTheme"
   android:orientation="vertical">
 
   <View
@@ -12,7 +13,7 @@
     android:layout_marginLeft="@dimen/dp8"
     android:layout_marginRight="@dimen/dp20"
     android:layout_marginStart="@dimen/dp8"
-    android:background="@color/gray" />
+    style="?lineColorSettingTheme" />
 
   <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRevealLayout"
@@ -75,8 +76,7 @@
             android:gravity="center_vertical|start"
             android:singleLine="true"
             android:text="Dominika Faniz"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="#000000"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16" />
 
           <net.iGap.module.CustomTextViewMedium
@@ -87,15 +87,14 @@
             android:gravity="center_vertical|start"
             android:singleLine="true"
             android:text="@string/last_seen_recently"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-            android:textColor="#bbbbbb"
+            style="?textSubColorSettingTheme"
             android:textSize="@dimen/dp14" />
 
           <View
             android:id="@+id/bottomLine"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/gray"
+            style="?lineColorSettingTheme"
             android:visibility="gone" />
         </LinearLayout>
       </LinearLayout>

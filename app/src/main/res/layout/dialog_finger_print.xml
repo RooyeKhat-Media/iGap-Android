@@ -3,13 +3,14 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:clickable="true"
+  android:background="@android:color/transparent"
   android:orientation="vertical">
 
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/Confirm_fingerPrint_continue"
-    android:textColor="@color/black90"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp13" />
 
   <LinearLayout
@@ -26,7 +27,7 @@
       android:layout_gravity="center"
       android:text="@string/md_igap_fingerprint"
       android:textAppearance="@style/TextIconAppearance.all"
-      android:textColor="@color/grayNew"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp26"
 
       />
@@ -37,7 +38,7 @@
       android:layout_height="wrap_content"
       android:paddingTop="@dimen/dp8"
       android:text="@string/Touch_sensor"
-      android:textColor="@color/gray_4c"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp12" />
   </LinearLayout>
 </LinearLayout>

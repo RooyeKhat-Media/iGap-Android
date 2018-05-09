@@ -108,6 +108,7 @@
       android:id="@+id/sfl_recycleview"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      style="?backgroundSubChatTheme"
       android:scrollbars="vertical" />
 
     <LinearLayout
@@ -150,6 +151,7 @@
             android:paddingRight="@dimen/dp20"
             android:text="@string/empty_message"
             android:textSize="@dimen/dp13"
+            style="?textTitleColorSettingTheme"
             android:visibility="gone" />
 
         </LinearLayout>

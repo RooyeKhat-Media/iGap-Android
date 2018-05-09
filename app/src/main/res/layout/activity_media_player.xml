@@ -20,7 +20,7 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="?backgroundSubChatTheme"
     android:clickable="true"
     android:layoutDirection="ltr"
     android:orientation="vertical">
@@ -32,7 +32,7 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp60"
-        android:background="@color/white"
+        style="?backgroundColorSettingTheme"
         android:gravity="left|center">
 
         <net.iGap.libs.rippleeffect.RippleView
@@ -56,7 +56,7 @@
             android:gravity="center"
             android:text="@string/md_back_arrow"
             android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@android:color/darker_gray" />
+            style="?textSubColorSettingTheme" />
         </net.iGap.libs.rippleeffect.RippleView>
 
         <LinearLayout
@@ -73,7 +73,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@{fragmentMediaPlayerViewModel.callBackMusicName , default = @string/music_name}"
-            android:textColor="@android:color/black"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16" />
 
           <TextView
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@{fragmentMediaPlayerViewModel.callBackMusicPlace , default = @string/place}"
-            android:textColor="@color/gray_4c"
+            style="?textSubColorSettingTheme"
             android:textSize="@dimen/dp14" />
         </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:gravity="center"
             android:text="@string/md_show_more_button"
             android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@android:color/darker_gray" />
+            style="?textSubColorSettingTheme" />
         </net.iGap.libs.rippleeffect.RippleView>
 
 
@@ -132,7 +132,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        style="?backgroundColorSettingTheme"
         android:clickable="true"
         android:layoutDirection="ltr"
         android:orientation="vertical">
@@ -187,7 +187,7 @@
         android:id="@+id/dragView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        style="?backgroundColorSettingTheme"
         android:clickable="true"
         android:focusable="false"
         android:orientation="vertical">
@@ -223,6 +223,7 @@
               android:id="@+id/ml_txt_music_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              style="?textSubColorSettingTheme"
               android:text="@{fragmentMediaPlayerViewModel.callBackTxtMusicTime , default = @string/music_time}" />
           </LinearLayout>
 

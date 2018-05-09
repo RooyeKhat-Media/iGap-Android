@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  style="?backgroundColorSettingTheme"
   android:clickable="true">
 
 
@@ -40,7 +41,7 @@
           android:paddingBottom="1dp"
           android:singleLine="true"
           android:text="Name"
-          android:textColor="@android:color/black"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp15"
           android:textStyle="bold" />
 
@@ -57,7 +58,7 @@
             android:gravity="start"
             android:singleLine="true"
             android:text="(4) 9:24 am"
-            android:textColor="@color/gray_5c"
+            style="?textSubColorSettingTheme"
             android:textDirection="locale"
             android:textSize="@dimen/dp12"
             android:textStyle="bold" />

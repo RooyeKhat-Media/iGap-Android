@@ -376,7 +376,7 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
                 holder.arrow.setText(G.fragmentActivity.getResources().getString(R.string.md_back_arrow));
             }
 
-            holder.arrow.setTextColor(Color.parseColor(G.appBarColor));
+//            holder.arrow.setTextColor(Color.parseColor(G.appBarColor));
 
             holder.layoutMap.setOnClickListener(new View.OnClickListener() {
                 @Override

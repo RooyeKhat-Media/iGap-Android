@@ -4,7 +4,7 @@
   android:id="@+id/rootDeleteAccount"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
 
   android:clickable="true"
   android:orientation="vertical"
@@ -99,7 +99,7 @@
     android:layout_marginTop="@dimen/dp20"
     android:gravity="center"
     android:text="@string/Destruction_Des"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp15" />
 
   <TextView
@@ -112,7 +112,7 @@
     android:layout_marginTop="@dimen/dp8"
     android:gravity="center"
     android:text="9121111111"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp16" />
 
   <android.support.design.widget.TextInputLayout
@@ -129,7 +129,7 @@
       android:hint="@string/Enter_Code"
       android:maxLength="10"
       android:singleLine="true"
-      android:textColorHint="@color/colorAccent"
+      style="?hintColorSettingTheme"
       android:textSize="@dimen/dp15" />
 
     <View
@@ -149,7 +149,7 @@
     android:layout_marginRight="@dimen/dp20"
     android:gravity="center"
     android:text="@string/iGap_autofill_Destruction_Code"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp15" />
 
   <RelativeLayout
@@ -180,7 +180,7 @@
       android:layout_centerInParent="true"
       android:padding="@dimen/dp12"
       android:text="@string/please_wait"
-      android:textColor="@android:color/black"
+      androstyle="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp15" />
   </RelativeLayout>
 

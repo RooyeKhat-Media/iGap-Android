@@ -3,7 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@android:color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   tools:ignore="MissingPrefix">
 
@@ -12,7 +12,6 @@
     android:id="@+id/activity_main_swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     >
 
 
@@ -20,7 +19,8 @@
       android:id="@+id/cl_recycler_view_contact"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:overScrollMode="never" />
+      android:overScrollMode="never"
+      style="?backgroundColorSettingTheme" />
 
 
   </android.support.v4.widget.SwipeRefreshLayout>

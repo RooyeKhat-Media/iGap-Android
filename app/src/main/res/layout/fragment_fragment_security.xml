@@ -21,7 +21,7 @@
     android:id="@+id/rootFragmentSecurity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_f2"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     android:layoutDirection="ltr"
     android:orientation="vertical"
@@ -132,21 +132,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        style="?backgroundColorSettingTheme"
         android:visibility="@{fragmentSecurityViewModel.rootSetAdditionPassword ,default = visible}">
 
         <TextView
           android:id="@+id/tsv_txtSetAdditionPassword"
-          fontPath="fonts/IRANSansMobile.ttf"
+          style="?textTitleColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickSetAdditionPassword}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/set_additional_password"
-          android:textColor="@color/black_register"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
 
@@ -155,7 +154,7 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="visible" />
       </LinearLayout>
 
@@ -164,6 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        style="?backgroundColorSettingTheme"
         android:visibility="@{fragmentSecurityViewModel.rootChangePassword ,default=gone}"
 
         >
@@ -173,24 +173,22 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickChangePassword}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/Change_password"
-          android:textColor="@color/black_register"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="visible"
-
+          style="?textTitleColorSettingTheme"
           />
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="visible" />
 
         <TextView
@@ -198,22 +196,21 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickChangeHint}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/Change_hint"
-          android:textColor="@color/black_register"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
-          android:visibility="visible" />
+          android:visibility="visible"
+          style="?textTitleColorSettingTheme" />
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="visible" />
 
         <TextView
@@ -221,24 +218,22 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickTurnPasswordOff}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/turn_Password_off"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="visible"
-
           />
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="visible" />
 
         <TextView
@@ -246,14 +241,13 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
+          style="?textTitleColorSettingTheme"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickSetRecoveryEmail}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/change_email_recovery"
-          android:textColor="@color/black_register"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="@{fragmentSecurityViewModel.setRecoveryEmail}"
@@ -264,7 +258,7 @@
           android:id="@+id/tsv_viewRecoveryEmail"
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="@{fragmentSecurityViewModel.viewRecoveryEmail}" />
 
         <TextView
@@ -272,14 +266,14 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
+
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClickSetConfirmedEmail}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/set_unconfirmed_email"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="@{fragmentSecurityViewModel.setConfirmedEmail}" />
@@ -288,7 +282,7 @@
           android:id="@+id/tsv_viewConfirmedEmail"
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="@{fragmentSecurityViewModel.lineConfirmView}" />
 
         <TextView
@@ -296,14 +290,13 @@
           fontPath="fonts/IRANSansMobile.ttf"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp40"
-          android:background="@color/white"
           android:gravity="center_vertical|start"
           android:onClick="@{fragmentSecurityViewModel::onClicksetRecoveryQuestion}"
           android:paddingLeft="@dimen/dp8"
           android:paddingRight="@dimen/dp8"
           android:paddingTop="@dimen/dp4"
           android:text="@string/Change_question_recovery"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="visible" />
@@ -311,7 +304,7 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="visible" />
 
 
@@ -331,6 +324,7 @@
         android:textColor="@color/gray_6c"
         android:textSize="@dimen/dp14"
         android:textStyle="normal"
+        style="?textBackgroundColor"
 
         />
     </LinearLayout>
@@ -349,7 +343,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_enter_your_password"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp16" />
 
 
@@ -363,6 +357,7 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtCheckPassword}"
         android:textSize="@dimen/dp13" />
 
@@ -400,7 +395,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_create_hint_for_your_password"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp16" />
 
       <EditText
@@ -411,6 +406,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtChangeHintText}"
         android:textSize="@dimen/dp13" />
 
@@ -430,7 +426,7 @@
         android:layout_marginTop="@dimen/dp24"
         android:gravity="center"
         android:text="@string/password_Question_title_one"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp18" />
 
       <EditText
@@ -442,6 +438,7 @@
         android:hint="@string/password_Question_one"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtSetQuestionPassOne}"
         android:textSize="@dimen/dp13" />
 
@@ -454,6 +451,7 @@
         android:hint="@string/password_answer"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtSetAnswerPassOne}"
         android:textSize="@dimen/dp13" />
 
@@ -463,7 +461,7 @@
         android:layout_marginTop="@dimen/dp24"
         android:gravity="center"
         android:text="@string/password_Question_title_two"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp18"
 
         />
@@ -477,6 +475,7 @@
         android:hint="@string/password_Question_two"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtSetQuestionPassTwo}"
         android:textSize="@dimen/dp13" />
 
@@ -489,6 +488,7 @@
         android:hint="@string/password_answer"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtSetAnswerPassTwo}"
         android:textSize="@dimen/dp13"
 
@@ -504,7 +504,7 @@
         android:layout_marginTop="@dimen/dp8"
         android:gravity="center"
         android:text="@string/confirm_email_text"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp14"
 
         />
@@ -525,7 +525,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/your_email"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp16" />
 
 
@@ -541,6 +541,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtSetEmailText}"
         android:textSize="@dimen/dp13" />
 
@@ -554,7 +555,7 @@
         android:layout_marginTop="@dimen/dp18"
         android:gravity="left|start"
         android:text="@string/your_email_desc"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp14" />
     </LinearLayout>
 
@@ -572,7 +573,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_enter_confirm_code"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp16" />
 
 
@@ -589,6 +590,7 @@
         android:hint="@{fragmentSecurityViewModel.edtConfirmedEmailHint}"
         android:maxLines="1"
         android:singleLine="true"
+        style="?hintColorSettingTheme"
         android:text="@={fragmentSecurityViewModel.edtConfirmedEmailText}"
         android:textSize="@dimen/dp13" />
 
@@ -602,7 +604,7 @@
         android:layout_marginTop="@dimen/dp8"
         android:gravity="center"
         android:text="@string/confirm_email_text"
-        android:textColor="@color/gray_4c"
+        style="?textSecurityColor"
         android:textSize="@dimen/dp14"
 
         />

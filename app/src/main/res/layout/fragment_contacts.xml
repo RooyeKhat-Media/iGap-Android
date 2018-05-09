@@ -5,7 +5,7 @@
   android:id="@+id/menu_parent_layout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@android:color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   tools:ignore="MissingPrefix">
 
@@ -91,6 +91,7 @@
         android:layout_weight="1"
         android:autoText="false"
         android:background="@null"
+        android:singleLine="true"
         android:hint="@string/search"
         android:paddingEnd="@dimen/dp8"
         android:paddingLeft="@dimen/dp8"
@@ -115,7 +116,7 @@
 
         <net.iGap.module.MaterialDesignTextView
           android:id="@+id/menu_btn_close"
-          android:layout_width="@dimen/dp52"
+          android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:background="@null"
           android:gravity="center"
@@ -142,12 +143,14 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:elevation="0dp"
+      style="?backgroundSubChatTheme"
       app:popupTheme="@style/ThemeOverlay.AppCompat">
 
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        style="?backgroundSubChatTheme"
         app:layout_scrollFlags="scroll|enterAlways">
 
 
@@ -155,13 +158,13 @@
           android:id="@+id/menu_layout_addContact"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@color/gray_f2"
           android:gravity="center"
           android:orientation="horizontal"
           android:paddingBottom="@dimen/dp6"
           android:paddingEnd="@dimen/dp20"
           android:paddingLeft="@dimen/dp52"
           android:paddingRight="@dimen/dp20"
+          style="?backgroundSubChatTheme"
           android:paddingTop="@dimen/dp12">
 
           <ImageView
@@ -180,7 +183,7 @@
             android:singleLine="true"
             android:text="@string/menu_add_contact"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/cardview_dark_background"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16" />
 
         </LinearLayout>
@@ -225,7 +228,7 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
         <TextView
           android:id="@+id/txtNon_User"

@@ -19,7 +19,7 @@
     android:id="@+id/fch_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whit_background"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     tools:context="net.iGap.fragments.FragmentCreateChannel"
     tools:ignore="MissingPrefix">
@@ -136,7 +136,7 @@
             android:gravity="start|center"
             android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPublic}"
             android:text="@string/public_channel"
-            android:textColor="@android:color/black"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15"
 
             />
@@ -147,6 +147,7 @@
             android:paddingLeft="@dimen/dp8"
             android:paddingRight="@dimen/dp8"
             android:text="@string/desc_public_channel"
+            style="?textSubColorSettingTheme"
             android:textSize="@dimen/dp14" />
 
           <RadioButton
@@ -158,7 +159,7 @@
             android:gravity="start|center"
             android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPrivate}"
             android:text="@string/private_channel"
-            android:textColor="@android:color/black"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15" />
 
           <TextView
@@ -168,6 +169,7 @@
             android:paddingLeft="@dimen/dp8"
             android:paddingRight="@dimen/dp8"
             android:text="@string/desc_private_channel"
+            style="?textSubColorSettingTheme"
             android:textSize="@dimen/dp14" />
         </RadioGroup>
 
@@ -175,7 +177,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_below="@id/fch_radioGroup"
-          android:background="@color/background_editText"
+          style="?backgroundColorSettingTheme_2"
           android:orientation="vertical"
           android:padding="@dimen/dp8"
 
@@ -206,7 +208,8 @@
               android:onClick="@{fragmentCreateChannelViewModel::onClickTxtInputLink}"
               app:errorEnabled="@{fragmentCreateChannelViewModel.txtInputLinkEnable}"
               app:errorTextAppearance="@style/error_appearance"
-              app:hintTextAppearance="@style/Hint_appearance">
+              app:hintTextAppearance="@style/Hint_appearance"
+              style="?hintColorSettingTheme">
 
               <net.iGap.module.MEditText
                 android:id="@+id/fch_edt_link"
@@ -219,7 +222,7 @@
                 android:layoutDirection="ltr"
                 android:singleLine="true"
                 android:text="@={fragmentCreateChannelViewModel.edtSetLink}"
-                android:textColorHint="@color/default_shadow_color"
+                style="?hintColorSettingTheme"
                 android:textDirection="ltr"
                 android:textSize="@dimen/dp15" />
 

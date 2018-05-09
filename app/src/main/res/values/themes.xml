@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Material_blackCustom" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+    <item name="textColorMenuTheme">@style/text_style_menu_dark</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_dark</item>
+    <item name="backgroundColorMenuTheme">@style/background_menu_dark</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_setting_dark</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_dark</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_dark</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_dark</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_dark</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_dark</item>
+    <item name="textBackgroundColor_2">@style/text_background_dark_2</item>
+    <item name="textBackgroundColor">@style/text_background_dark</item>
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_dark</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallDark</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_dark</item>
+    <item name="fabButtoniGap">@style/FabButtonDark</item>
+    <item name="md_dark_theme">true</item>
+    <!--<item name="colorAccent">@color/colorOldBlack</item>-->
+
+  </style>
+
+
+  <style name="Material_lightCustom" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="pageBackgroundTheme">@style/page_background_light</item>
+    <item name="textColorTheme">@style/text_style_light</item>
+    <item name="textColorMenuTheme">@style/text_style_menu_light</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_light</item>
+    <item name="backgroundColorMenuTheme">@style/background_menu_light</item>
+
+
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_light</item>
+    <item name="textBackgroundColor_2">@style/text_background_light_2</item>
+    <item name="textBackgroundColor">@style/text_background_light</item>
+    <item name="textSecurityColor">@style/text_title_security_light</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallLight</item>
+    <item name="emojiChat">@style/emojiColorChat_light</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_light</item>
+    <item name="fabButtoniGap">@style/FabButton</item>
+    <item name="md_dark_theme">false</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+</resources>

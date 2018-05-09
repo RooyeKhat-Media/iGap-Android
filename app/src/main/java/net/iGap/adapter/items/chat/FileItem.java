@@ -10,6 +10,7 @@
 
 package net.iGap.adapter.items.chat;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +116,14 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
     @Override
     protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
-        holder.cslf_txt_file_name.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
-        holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+        if (G.isDarkTheme) {
+            holder.cslf_txt_file_name.setTextColor(Color.parseColor(G.textTitleTheme));
+            holder.cslf_txt_file_size.setTextColor(Color.parseColor(G.textSubTheme));
+        } else {
+            holder.cslf_txt_file_name.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+            holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+        }
+
     }
 
     @Override

@@ -22,9 +22,9 @@
 
   <RelativeLayout
     android:id="@+id/fragmentContainer_channel_profile"
+    style="?backgroundColorSettingTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -171,16 +171,16 @@
 
 
       <android.support.v4.widget.NestedScrollView
+        style="?backgroundColorSettingTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+          style="?backgroundColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@android:color/white"
           android:descendantFocusability="beforeDescendants"
           android:focusableInTouchMode="true"
           android:orientation="vertical">
@@ -229,6 +229,7 @@
                   android:orientation="horizontal">
 
                   <TextView
+                    style="?textTitleColorSettingTheme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:enabled="@{fragmentChannelProfileViewModel.channelNameEnable}"
@@ -237,7 +238,6 @@
                     android:paddingStart="@dimen/dp4"
                     android:singleLine="true"
                     android:text="@string/channel_name"
-                    android:textColor="@color/black_register"
                     android:textSize="@dimen/dp15" />
 
                   <LinearLayout
@@ -309,13 +309,13 @@
 
               <TextView
                 android:id="@+id/txt_channel_link_title"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@{fragmentChannelProfileViewModel.callbackChannelLinkTitle , default=@string/channel_link}"
-                android:textColor="@color/black_register"
                 android:textSize="@dimen/dp15" />
 
               <TextView
@@ -344,6 +344,7 @@
               android:visibility="@{fragmentChannelProfileViewModel.descriptionVisibility}">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="@{fragmentChannelProfileViewModel.channelDescriptionEnable}"
@@ -352,7 +353,6 @@
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@string/channel_description"
-                android:textColor="@color/black_register"
                 android:textSize="@dimen/dp15" />
 
               <net.iGap.module.EmojiTextViewE
@@ -383,13 +383,13 @@
               android:paddingRight="@dimen/dp12">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:singleLine="true"
                 android:text="@string/shared_media"
-                android:textColor="@color/black_register"
                 android:textSize="@dimen/dp15" />
 
               <TextView
@@ -410,9 +410,9 @@
 
           <LinearLayout
             android:id="@+id/agp_root_layout_add_member"
+            style="?backgroundColorSettingTheme_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_f2"
             android:gravity="left"
             android:orientation="vertical"
             android:visibility="@{fragmentChannelProfileViewModel.addMemberVisibility}">
@@ -455,6 +455,7 @@
 
               <TextView
                 android:id="@+id/textView8"
+                style="?textSubColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -501,6 +502,7 @@
 
               <TextView
                 android:id="@+id/agp_txt_show_member"
+                style="?textSubColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -515,6 +517,7 @@
 
           <LinearLayout
             android:id="@+id/agp_ll_seetting"
+            style="?backgroundColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left"
@@ -548,6 +551,7 @@
 
               <TextView
                 android:id="@+id/txt_list_admin"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -558,16 +562,15 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_admin"
-                android:textColor="@android:color/black"
                 android:textSize="@dimen/dp15" />
 
 
             </LinearLayout>
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/background_editText" />
+              android:layout_height="1px" />
 
             <LinearLayout
               android:id="@+id/lyt_list_moderator"
@@ -579,6 +582,7 @@
 
               <TextView
                 android:id="@+id/txt_list_moderator"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -588,16 +592,15 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/list_modereator"
-                android:textColor="@android:color/black"
                 android:textSize="@dimen/dp15" />
 
 
             </LinearLayout>
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/background_editText" />
+              android:layout_height="1px" />
 
             <LinearLayout
               android:id="@+id/agp_ll_member_can_add_member"
@@ -616,12 +619,12 @@
                 android:paddingStart="@dimen/dp16">
 
                 <TextView
+                  style="?textTitleColorSettingTheme"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:gravity="center_vertical"
                   android:singleLine="true"
                   android:text="@string/member_can_add_new_member"
-                  android:textColor="@android:color/black"
                   android:textSize="@dimen/dp15" />
 
                 <ToggleButton
@@ -639,9 +642,9 @@
               </RelativeLayout>
 
               <View
+                style="?lineColorSettingTheme"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/background_editText" />
+                android:layout_height="1px" />
             </LinearLayout>
 
             <LinearLayout
@@ -653,6 +656,7 @@
 
               <TextView
                 android:id="@+id/txt_notification"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -662,15 +666,14 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@string/notificaion_and_sound"
-                android:textColor="@android:color/black"
                 android:textSize="@dimen/dp15" />
 
             </LinearLayout>
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/background_editText" />
+              android:layout_height="1px" />
 
             <LinearLayout
               android:id="@+id/lyt_delete_channel"
@@ -681,6 +684,7 @@
 
               <TextView
                 android:id="@+id/txt_delete_channel"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -690,14 +694,13 @@
                 android:paddingStart="@dimen/dp16"
                 android:singleLine="true"
                 android:text="@{fragmentChannelProfileViewModel.callBackDeleteLeaveChannel , default=@string/delete_and_leave_channel}"
-                android:textColor="@android:color/black"
                 android:textSize="@dimen/dp15" />
             </LinearLayout>
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/background_editText" />
+              android:layout_height="1px" />
 
             <LinearLayout
               android:id="@+id/agp_layout_signature"
@@ -713,6 +716,7 @@
 
               <TextView
                 android:id="@+id/agp_txt_signature"
+                style="?textTitleColorSettingTheme"
                 fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -720,7 +724,6 @@
                 android:gravity="center_vertical"
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/st_signature"
-                android:textColor="@color/black_register"
                 android:textSize="@dimen/dp15"
                 android:textStyle="normal" />
 
@@ -737,9 +740,9 @@
             </LinearLayout>
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1px"
-              android:background="@color/background_editText" />
+              android:layout_height="1px" />
 
             <LinearLayout
               android:id="@+id/agp_layout_reaction_status"
@@ -754,6 +757,7 @@
               android:visibility="@{fragmentChannelProfileViewModel.showLayoutReactStatus}">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -761,7 +765,6 @@
                 android:gravity="center_vertical"
                 android:paddingTop="@dimen/dp4"
                 android:text="@string/show_channel_vote"
-                android:textColor="@color/black_register"
                 android:textSize="@dimen/dp15"
                 android:textStyle="normal" />
 
@@ -798,11 +801,12 @@
         android:layout_margin="@dimen/dp20"
         android:clickable="true"
         android:src="@mipmap/pu_camera"
-        android:theme="@style/FabButton"
-        android:tint="@color/gray"
+        android:background="@android:color/white"
+        app:backgroundTint="@android:color/white"
         android:visibility="@{fragmentChannelProfileViewModel.fabVisibility}"
         app:fabSize="normal"
         app:layout_anchor="@+id/pch_appbar"
+        app:tint="@color/gray"
         app:layout_anchorGravity="bottom|right|end"
 
         />

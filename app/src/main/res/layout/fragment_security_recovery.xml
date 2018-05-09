@@ -4,7 +4,7 @@
   android:id="@+id/rootRecoveryPassword"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:layoutDirection="ltr"
   android:orientation="vertical"
@@ -109,7 +109,7 @@
       android:layout_marginTop="@dimen/dp24"
       android:gravity="center"
       android:text="@string/password_Question_title_one"
-      android:textColor="@color/gray_4c"
+      style="?textSecurityColor"
       android:textSize="@dimen/dp18" />
 
     <TextView
@@ -120,7 +120,7 @@
       android:layout_marginRight="@dimen/dp32"
       android:layout_marginTop="@dimen/dp12"
       android:singleLine="true"
-      android:text="@string/password_Question_one"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp13"
 
       />
@@ -133,6 +133,7 @@
       android:layout_marginRight="@dimen/dp32"
       android:hint="@string/password_answer"
       android:singleLine="true"
+      style="?hintColorSettingTheme"
       android:textSize="@dimen/dp13" />
 
     <TextView
@@ -141,7 +142,7 @@
       android:layout_marginTop="@dimen/dp24"
       android:gravity="center"
       android:text="@string/password_Question_title_two"
-      android:textColor="@color/gray_4c"
+      style="?textSecurityColor"
       android:textSize="@dimen/dp18" />
 
     <TextView
@@ -152,6 +153,7 @@
       android:layout_marginRight="@dimen/dp32"
       android:layout_marginTop="@dimen/dp12"
       android:singleLine="true"
+      style="?textSubColorSettingTheme"
       android:text="@string/password_Question_two"
       android:textSize="@dimen/dp13" />
 
@@ -162,6 +164,7 @@
       android:layout_marginLeft="@dimen/dp32"
       android:layout_marginRight="@dimen/dp32"
       android:hint="@string/password_answer"
+      style="?textSubColorSettingTheme"
       android:singleLine="true"
       android:textSize="@dimen/dp13" />
 

@@ -68,6 +68,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder.getItemViewType() == ALL) {
 
             final ViewHolderItem holder2 = (ViewHolderItem) holder;
+            holder2.img.setImageDrawable(null);
 
             if (mList.size() < (position + 1)) {
                 return;

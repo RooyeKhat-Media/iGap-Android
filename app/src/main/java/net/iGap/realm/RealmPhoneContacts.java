@@ -135,7 +135,7 @@ public class RealmPhoneContacts extends RealmObject {
     private static void addContactToDB(final StructListOfContact item, Realm realm) {
         try {
             RealmPhoneContacts realmPhoneContacts = new RealmPhoneContacts();
-            realmPhoneContacts.setPhone(item.getPhone());
+            realmPhoneContacts.setPhone(item.getPhone() + "_" + item.firstName + item.lastName);
             realmPhoneContacts.setFirstName(item.firstName);
             realmPhoneContacts.setLastName(item.lastName);
             realm.copyToRealmOrUpdate(realmPhoneContacts);
@@ -157,42 +157,12 @@ public class RealmPhoneContacts extends RealmObject {
             @Override
             public void execute(Realm realm) {
                 for (int i = 0; i < list.size(); i++) {
-
-                    boolean _addItem = false;
-                    final StructListOfContact _item = list.get(i);
-
-                    if (_item.getPhone() == null || _item.getPhone().length() == 0) {
+                    StructListOfContact _item = list.get(i);
+                    if (_item == null || _item.getPhone() == null || _item.getPhone().length() == 0) {
                         continue;
                     }
 
-                    final RealmPhoneContacts _realmPhoneContacts = realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, _item.getPhone()).findFirst();
-
-                    if (_realmPhoneContacts == null) {
-                        _addItem = true;
-                    } else {
-                        if (!_item.getFirstName().equals(_realmPhoneContacts.getFirstName()) || !_item.getLastName().equals(_realmPhoneContacts.getLastName())) {
-                            _addItem = true;
-
-                            // if one number save with tow or more different name
-                            int count = 0;
-                            for (int j = 0; j < list.size(); j++) {
-                                if (list.get(j).getPhone().equals(_item.getPhone())) {
-                                    count++;
-                                    if (count > 1) {
-                                        _addItem = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (_addItem) {
-                                _realmPhoneContacts.setFirstName(_item.getFirstName());
-                                _realmPhoneContacts.setLastName(_item.getLastName());
-                            }
-                        }
-                    }
-
-                    if (_addItem) {
+                    if (realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, _item.getPhone() + "_" + _item.firstName + _item.lastName).findFirst() == null) {
                         notImportedList.add(_item);
                     }
                 }

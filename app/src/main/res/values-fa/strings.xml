@@ -1070,6 +1070,7 @@
   <string name="info_map">تنها کاربرانی برای شما قابل مشاهده اند که تا شعاع پنج کیلومتری از شما قرار دارند و وضعیت نقشه آنها روشن است.</string>
 
   <string name="st_Auto_Rotate">چرخش خودکار صفحه</string>
+  <string name="Theme_Dark">حالت شب</string>
 
   <string name="two_step_pass_code">قفل ورود به برنامه</string>
 
@@ -1166,5 +1167,6 @@
   <string name="lbl_saturation">اشباع</string>
   <string name="tab_filters">فیلتر رنگ</string>
   <string name="tab_edit">ویرایش</string>
+  <string name="can_not_open_file">این فایل باز نمی شود</string>
 
 </resources>

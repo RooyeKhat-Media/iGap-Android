@@ -18,6 +18,7 @@ import net.iGap.BuildConfig;
 import net.iGap.G;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperError;
+import net.iGap.helper.HelperLog;
 import net.iGap.proto.ProtoError;
 
 import static net.iGap.G.latestResponse;
@@ -67,6 +68,10 @@ public abstract class MessageHandler {
         int minorCode = errorResponse.getMinorCode();
 
         HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode), false);
+
+        HelperLog.setErrorLog("MessageHandler  error   majorCode : " + errorResponse.getMajorCode() +
+                "  minorCode : " + errorResponse.getMinorCode() + "           " + G.lookupMap.get(actionId));
+
 
         if (BuildConfig.DEBUG) {
             Log.i("MSGE", "MessageHandler error : " + actionId + " || " + G.lookupMap.get(actionId) + " || " + message);

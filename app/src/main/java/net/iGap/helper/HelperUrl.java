@@ -69,6 +69,7 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 public class HelperUrl {
 
     public static int LinkColor = Color.BLUE;
+    public static int LinkColorDark = Color.CYAN;
     public static MaterialDialog dialogWaiting;
     public static String igapResolve = "igap://resolve?";
 
@@ -180,7 +181,12 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = LinkColor;
+                if (G.isDarkTheme) {
+                    ds.linkColor = LinkColorDark;
+                } else {
+                    ds.linkColor = LinkColor;
+                }
+
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -243,7 +249,11 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = LinkColor;
+                if (G.isDarkTheme) {
+                    ds.linkColor = LinkColorDark;
+                } else {
+                    ds.linkColor = LinkColor;
+                }
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -275,7 +285,12 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = LinkColor;
+                if (G.isDarkTheme) {
+                    ds.linkColor = LinkColorDark;
+                } else {
+                    ds.linkColor = LinkColor;
+                }
+
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -343,7 +358,11 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = LinkColor;
+                if (G.isDarkTheme) {
+                    ds.linkColor = LinkColorDark;
+                } else {
+                    ds.linkColor = LinkColor;
+                }
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -415,7 +434,11 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                ds.linkColor = LinkColor;
+                if (G.isDarkTheme) {
+                    ds.linkColor = LinkColorDark;
+                } else {
+                    ds.linkColor = LinkColor;
+                }
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -652,7 +675,7 @@ public class HelperUrl {
                         imageView[0].setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) imageView[0].getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                     }
                 });
-                if (!G.fragmentActivity.isFinishing()) {
+                if (G.fragmentActivity != null && !G.fragmentActivity.isFinishing() && !G.currentActivity.isFinishing()) {
                     dialog.show();
                 }
             }

@@ -2171,7 +2171,12 @@ public class FragmentChat extends BaseFragment
         });
 
         imvSendButton = (MaterialDesignTextView) rootView.findViewById(R.id.chl_imv_send_button);
-        imvSendButton.setTextColor(Color.parseColor(G.attachmentColor));
+        if (G.isDarkTheme) {
+            imvSendButton.setTextColor(Color.parseColor(G.textTitleTheme));
+        } else {
+            imvSendButton.setTextColor(Color.parseColor(G.attachmentColor));
+        }
+
 
         imvAttachFileButton = (MaterialDesignTextView) rootView.findViewById(R.id.chl_imv_attach_button);
         layoutAttachBottom = (LinearLayout) rootView.findViewById(R.id.layoutAttachBottom);
@@ -3371,12 +3376,13 @@ public class FragmentChat extends BaseFragment
         Intent intent = HelperMimeType.appropriateProgram(_filePath);
         if (intent != null) {
             try {
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
             } catch (Exception e) {
                 // to prevent from 'No Activity found to handle Intent'
                 e.printStackTrace();
             }
+        } else {
+            Toast.makeText(context, R.string.can_not_open_file, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -5294,14 +5300,17 @@ public class FragmentChat extends BaseFragment
         btnDownHash = (TextView) rootView.findViewById(R.id.ac_btn_hash_down);
         txtHashCounter = (TextView) rootView.findViewById(R.id.ac_txt_hash_counter);
 
-        btnUpHash.setTextColor(Color.parseColor(G.appBarColor));
-        btnDownHash.setTextColor(Color.parseColor(G.appBarColor));
-        txtHashCounter.setTextColor(Color.parseColor(G.appBarColor));
+        if (!G.isDarkTheme) {
+            btnUpHash.setTextColor(Color.parseColor(G.appBarColor));
+            btnDownHash.setTextColor(Color.parseColor(G.appBarColor));
+            txtHashCounter.setTextColor(Color.parseColor(G.appBarColor));
+        }
+
 
         searchHash = new SearchHash();
 
         btnHashLayoutClose = (MaterialDesignTextView) rootView.findViewById(R.id.ac_btn_hash_close);
-        btnHashLayoutClose.setTextColor(Color.parseColor(G.appBarColor));
+        if (!G.isDarkTheme) btnHashLayoutClose.setTextColor(Color.parseColor(G.appBarColor));
         btnHashLayoutClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -5607,16 +5616,16 @@ public class FragmentChat extends BaseFragment
         TextView txtContact = (TextView) viewBottomSheet.findViewById(R.id.txtContact);
         send = (TextView) viewBottomSheet.findViewById(R.id.txtSend);
 
-        txtCamera.setTextColor(Color.parseColor(G.attachmentColor));
-        textPicture.setTextColor(Color.parseColor(G.attachmentColor));
-        txtVideo.setTextColor(Color.parseColor(G.attachmentColor));
-        txtMusic.setTextColor(Color.parseColor(G.attachmentColor));
-        txtDocument.setTextColor(Color.parseColor(G.attachmentColor));
-        txtFile.setTextColor(Color.parseColor(G.attachmentColor));
-        txtPaint.setTextColor(Color.parseColor(G.attachmentColor));
-        txtLocation.setTextColor(Color.parseColor(G.attachmentColor));
-        txtContact.setTextColor(Color.parseColor(G.attachmentColor));
-        send.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtCamera.setTextColor(Color.parseColor(G.attachmentColor));
+//        textPicture.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtVideo.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtMusic.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtDocument.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtFile.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtPaint.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtLocation.setTextColor(Color.parseColor(G.attachmentColor));
+//        txtContact.setTextColor(Color.parseColor(G.attachmentColor));
+//        send.setTextColor(Color.parseColor(G.attachmentColor));
 
         txtCountItem = (TextView) viewBottomSheet.findViewById(R.id.txtNumberItem);
         ViewGroup camera = (ViewGroup) viewBottomSheet.findViewById(R.id.camera);

@@ -5,6 +5,7 @@
   android:clickable="true"
   android:layoutDirection="ltr"
   android:orientation="vertical"
+  style="?backgroundColorSettingTheme"
   android:paddingEnd="@dimen/dp28"
   android:paddingLeft="@dimen/dp52"
   android:paddingRight="@dimen/dp28"
@@ -17,7 +18,7 @@
     android:layout_height="1px"
     android:layout_marginLeft="@dimen/dp8"
     android:layout_marginStart="@dimen/dp8"
-    android:background="@color/gray" />
+    style="?lineColorSettingTheme" />
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -46,7 +47,7 @@
         android:singleLine="true"
         android:text="Dominika Faniz"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="#000000"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
       <net.iGap.module.CustomTextViewMedium
@@ -58,7 +59,7 @@
         android:singleLine="true"
         android:text="@string/last_seen_recently"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-        android:textColor="#bbbbbb"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14" />
     </RelativeLayout>
   </LinearLayout>

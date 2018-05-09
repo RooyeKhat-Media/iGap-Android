@@ -10,6 +10,7 @@
 
 package net.iGap.adapter.items.chat;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
@@ -264,7 +265,12 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
         }
 
         View audioBoxView = holder.itemView.findViewById(R.id.audioBox);
-        audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
+        if (G.isDarkTheme) {
+            audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner_dark);
+        } else {
+            audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
+        }
+
 
         //if ((mMessage.forwardedFrom != null && mMessage.forwardedFrom.getForwardMessage() != null && mMessage.forwardedFrom.getForwardMessage().getMessage() != null && !TextUtils.isEmpty(mMessage.forwardedFrom.getForwardMessage().getMessage())) || !TextUtils.isEmpty(mMessage.messageText)) {
         //    audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
@@ -309,7 +315,7 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
         }
         holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-        holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
+        holder.txt_Timer.setTextColor(Color.parseColor(G.textTitleTheme));
     }
 
     @Override
@@ -321,14 +327,14 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
                 holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
             }
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.text_line1_igap_dark), android.graphics.PorterDuff.Mode.SRC_IN);
-            holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.black90));
+            holder.txt_Timer.setTextColor(Color.parseColor(G.textTitleTheme));
         } else {
             if (Build.VERSION.SDK_INT >= JELLY_BEAN) {
                 holder.musicSeekbar.getThumb().mutate().setColorFilter(G.context.getResources().getColor(R.color.iGapColorDarker), PorterDuff.Mode.SRC_IN);
             }
             holder.musicSeekbar.getProgressDrawable().setColorFilter(holder.itemView.getResources().getColor(R.color.gray10), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.txt_Timer.setTextColor(holder.itemView.getResources().getColor(R.color.grayNewDarker));
-            holder.fileName.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+            holder.fileName.setTextColor(Color.parseColor(G.textSubTheme));
         }
     }
 

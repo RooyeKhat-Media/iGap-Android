@@ -3,6 +3,7 @@
   android:id="@+id/adp_rootLayout"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  style="?backgroundColorSettingTheme"
   android:clickable="true"
   android:orientation="vertical">
 
@@ -10,6 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    style="?backgroundColorSettingTheme"
     android:padding="@dimen/dp8">
 
 
@@ -41,7 +43,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/device"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -50,14 +52,14 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/dp4"
           android:text="pc"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text=" , "
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -65,7 +67,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="windows"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
       </LinearLayout>
@@ -81,7 +83,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/country"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -90,7 +92,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/dp4"
           android:text="Iran"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14"
 
           />
@@ -117,7 +119,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/create_time"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -126,7 +128,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/dp4"
           android:text=" 17 Nov 2016"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
       </LinearLayout>
@@ -142,7 +144,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/ip"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
         <TextView
@@ -151,7 +153,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/dp4"
           android:text=" 192.168.1.1"
-          android:textColor="@color/black_register"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14" />
 
       </LinearLayout>
@@ -163,7 +165,7 @@
     android:id="@+id/adp_line"
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/black_register" />
+    style="?textTitleColorSettingTheme" />
 
 
 </LinearLayout>

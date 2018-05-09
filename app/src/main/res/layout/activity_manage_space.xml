@@ -21,6 +21,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:orientation="vertical"
+    style="?backgroundColorSettingTheme"
     tools:context="net.iGap.activities.ActivityManageSpace"
     tools:ignore="MissingPrefix">
 
@@ -88,7 +89,8 @@
 
     <android.support.v4.widget.NestedScrollView
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      style="?backgroundColorSettingTheme_2">
 
       <LinearLayout
         android:layout_width="wrap_content"
@@ -99,7 +101,7 @@
           android:id="@+id/st_layout_keepMedia"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp52"
-          android:background="@color/white"
+          style="?backgroundColorSettingTheme"
           android:onClick="@{activityManageSpaceViewModel::onClickKeepMedia}"
           android:orientation="horizontal">
 
@@ -116,7 +118,7 @@
             android:paddingTop="@dimen/dp4"
             android:singleLine="true"
             android:text="@string/st_keepMedia"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15"
             android:textStyle="normal"
             android:visibility="visible" />
@@ -139,12 +141,13 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
 
         <RelativeLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          style="?backgroundColorSettingTheme">
 
           <com.uncopt.android.widget.text.justify.JustifiedTextView
             fontPath="fonts/IRANSansMobile.ttf"
@@ -152,20 +155,20 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp14"
             android:text="@string/st_dialog_content_keepMedia"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp12" />
         </RelativeLayout>
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
         <LinearLayout
           android:id="@+id/st_layout_clearCache"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp48"
-          android:background="@color/white"
+          style="?backgroundColorSettingTheme"
           android:onClick="@{activityManageSpaceViewModel::onClickClearCache}"
           android:orientation="horizontal">
 
@@ -180,7 +183,7 @@
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp8"
             android:text="@string/st_title_Clear_Cache"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
@@ -206,11 +209,12 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
         <RelativeLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          style="?backgroundColorSettingTheme_2">
 
           <com.uncopt.android.widget.text.justify.JustifiedTextView
             fontPath="fonts/IRANSansMobile.ttf"
@@ -218,20 +222,20 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp14"
             android:text="@string/clear_cache_desc"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp12" />
         </RelativeLayout>
 
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
         <LinearLayout
           android:id="@+id/st_layout_cleanUp"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp48"
-          android:background="@color/white"
+          style="?backgroundColorSettingTheme"
           android:onClick="@{activityManageSpaceViewModel::onClickCleanUp}"
           android:orientation="horizontal">
 
@@ -245,7 +249,7 @@
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp8"
             android:text="@string/clean_up_chat_rooms"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15"
             android:textStyle="normal" />
 
@@ -270,11 +274,12 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText" />
+          style="?lineColorSettingTheme" />
 
         <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          style="?backgroundColorSettingTheme_2">
 
           <com.uncopt.android.widget.text.justify.JustifiedTextView
             fontPath="fonts/IRANSansMobile.ttf"
@@ -282,7 +287,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp14"
             android:text="@string/clean_up_description"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp12" />
         </RelativeLayout>
 
@@ -290,10 +295,11 @@
         <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/background_editText"
+          style="?lineColorSettingTheme"
           android:visibility="@{activityManageSpaceViewModel.showLayoutSdk}" />
 
         <LinearLayout
+          style="?backgroundColorSettingTheme_2"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp48"
           android:onClick="@{activityManageSpaceViewModel::onClickSdkEnable}"
@@ -313,7 +319,7 @@
             android:gravity="center_vertical"
             android:paddingTop="@dimen/dp4"
             android:text="@string/save_data_in_sd_card"
-            android:textColor="@color/black_register"
+            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp15"
             android:textStyle="normal"
             fontPath="fonts/IRANSansMobile.ttf" />

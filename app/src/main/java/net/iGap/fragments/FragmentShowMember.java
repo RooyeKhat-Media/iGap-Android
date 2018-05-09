@@ -1060,6 +1060,11 @@ public class FragmentShowMember extends BaseFragment implements OnGroupAddAdmin,
             }
 
             holder.title.setText(mContact.displayName);
+            holder.title.setTextColor(Color.parseColor(G.textTitleTheme));
+            holder.subtitle.setTextColor(Color.parseColor(G.textSubTheme));
+            holder.btnMenu.setTextColor(Color.parseColor(G.textSubTheme));
+            holder.txtNumberOfSharedMedia.setTextColor(Color.parseColor(G.textSubTheme));
+            holder.topLine.setBackgroundColor(Color.parseColor(G.textSubTheme));
 
             setRoleStarColor(holder.roleStar, mContact);
 

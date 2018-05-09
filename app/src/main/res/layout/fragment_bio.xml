@@ -20,7 +20,7 @@
     android:id="@+id/rootFragmentLanguage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="?backgroundColorSettingTheme"
     android:clickable="true"
     android:orientation="vertical"
     tools:context="net.iGap.fragments.FragmentLanguage"
@@ -136,6 +136,7 @@
           android:afterTextChanged="@{fragmentBioViewModel.afterTextChanged}"
           android:background="@android:color/transparent"
           android:hint="@string/st_bio"
+          style="?hintColorSettingTheme"
           android:minHeight="@dimen/dp44"
           android:onTextChanged="@{fragmentBioViewModel.onTextChanged}"
           android:paddingEnd="@dimen/dp32"
@@ -153,6 +154,7 @@
           android:layout_marginStart="@dimen/dp10"
           android:gravity="center"
           android:maxLength="70"
+          style="?textSubColorSettingTheme"
           android:text="@{fragmentBioViewModel.callBackTxtCountBio ,default = 70}" />
 
 
@@ -171,6 +173,7 @@
         android:layout_marginTop="@dimen/dp16"
         android:paddingLeft="@dimen/dp16"
         android:paddingRight="@dimen/dp16"
+        style="?textSubColorSettingTheme"
         android:text="@string/st_des_bio" />
 
 
