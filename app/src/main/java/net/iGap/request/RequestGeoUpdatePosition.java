@@ -10,11 +10,17 @@
 
 package net.iGap.request;
 
+import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.proto.ProtoGeoUpdatePosition;
 
 public class RequestGeoUpdatePosition {
 
     public void updatePosition(double latitude, double longitude) {
+
+        if (!FragmentiGapMap.mapRegistrationStatus) {
+            return;
+        }
+
         ProtoGeoUpdatePosition.GeoUpdatePosition.Builder builder = ProtoGeoUpdatePosition.GeoUpdatePosition.newBuilder();
         builder.setLat(latitude);
         builder.setLon(longitude);

@@ -13,11 +13,11 @@ package net.iGap.request;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoUserContactsImport;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RequestUserContactImport {
 
-    public void contactImport(ArrayList<StructListOfContact> itemContactList, boolean force, boolean getContactList) {
+    public void contactImport(List<StructListOfContact> itemContactList, boolean force, boolean getContactList) {
         RequestWrapper requestWrapper = new RequestWrapper(106, contact(itemContactList, force), getContactList);
         try {
             RequestQueue.sendRequest(requestWrapper);
@@ -26,7 +26,7 @@ public class RequestUserContactImport {
         }
     }
 
-    public void contactImport(ArrayList<StructListOfContact> itemContactList, boolean force) {
+    public void contactImport(List<StructListOfContact> itemContactList, boolean force) {
         RequestWrapper requestWrapper = new RequestWrapper(106, contact(itemContactList, force));
         try {
             RequestQueue.sendRequest(requestWrapper);
@@ -35,7 +35,7 @@ public class RequestUserContactImport {
         }
     }
 
-    private ProtoUserContactsImport.UserContactsImport.Builder contact(ArrayList<StructListOfContact> itemContactList, boolean force) {
+    private ProtoUserContactsImport.UserContactsImport.Builder contact(List<StructListOfContact> itemContactList, boolean force) {
         ProtoUserContactsImport.UserContactsImport.Builder userContactsImport = ProtoUserContactsImport.UserContactsImport.newBuilder();
 
         for (int i = 0; i < itemContactList.size(); i++) {

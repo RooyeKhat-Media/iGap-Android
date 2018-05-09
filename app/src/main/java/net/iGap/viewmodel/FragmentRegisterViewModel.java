@@ -942,7 +942,7 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
 
     private void dialogWaitTime(int title, long time, int majorCode) {
 
-        if (!G.fragmentActivity.hasWindowFocus()) {
+        if (!G.fragmentActivity.hasWindowFocus() || G.fragmentActivity.isFinishing()) {
             return;
         }
 
@@ -1102,7 +1102,9 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                             @Override
                             public void run() {
                                 // There is no registered user with given username
-                                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_GIVEN_USERNAME).content(R.string.Toast_Number_Block).positiveText(R.string.B_ok).show();
+                                if (!G.fragmentActivity.isFinishing()) {
+                                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_GIVEN_USERNAME).content(R.string.Toast_Number_Block).positiveText(R.string.B_ok).show();
+                                }
                             }
                         });
                     } else if (majorCode == 105) {
@@ -1110,7 +1112,9 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                             @Override
                             public void run() {
                                 // User is blocked , You cannot verify the user
-                                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_BLOCKED_USER).content(R.string.Toast_Number_Block).positiveText(R.string.B_ok).show();
+                                if (!G.fragmentActivity.isFinishing()) {
+                                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_BLOCKED_USER).content(R.string.Toast_Number_Block).positiveText(R.string.B_ok).show();
+                                }
                             }
                         });
                     } else if (majorCode == 106) {
@@ -1126,15 +1130,17 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                             @Override
                             public void run() {
                                 // Verification code is expired
-                                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_EXPIRED)
-                                        .content(R.string.Toast_Number_Block)
-                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                            @Override
-                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            }
-                                        })
-                                        .positiveText(R.string.B_ok)
-                                        .show();
+                                if (!G.fragmentActivity.isFinishing()) {
+                                    new MaterialDialog.Builder(G.fragmentActivity).title(R.string.USER_VERIFY_EXPIRED)
+                                            .content(R.string.Toast_Number_Block)
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                }
+                                            })
+                                            .positiveText(R.string.B_ok)
+                                            .show();
+                                }
                             }
                         });
                     } else if (majorCode == 108) {

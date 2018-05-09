@@ -71,6 +71,7 @@ public class RealmRoom extends RealmObject {
      */
     private boolean keepRoom = false;
     private long lastScrollPositionMessageId;
+    private int lastScrollPositionOffset;
 
     public RealmRoom() {
 
@@ -811,7 +812,7 @@ public class RealmRoom extends RealmObject {
         realm.close();
     }
 
-    public static void setLastScrollPosition(final long roomId, final long messageId) {
+    public static void setLastScrollPosition(final long roomId, final long messageId, final int offset) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -819,10 +820,23 @@ public class RealmRoom extends RealmObject {
                 RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                 if (realmRoom != null) {
                     realmRoom.setLastScrollPositionMessageId(messageId);
+                    realmRoom.setLastScrollPositionOffset(offset);
                 }
             }
         });
         realm.close();
+    }
+
+    public static void clearAllScrollPositions() {
+        Realm realm = Realm.getDefaultInstance();
+        for (RealmRoom realmRoom : realm.where(RealmRoom.class).findAll()) {
+            clearScrollPosition(realmRoom.id);
+        }
+        realm.close();
+    }
+
+    public static void clearScrollPosition(long roomId) {
+        setLastScrollPosition(roomId, 0, 0);
     }
 
     public static void setDraft(final long roomId, final String message, final long replyToMessageId) {
@@ -1296,6 +1310,14 @@ public class RealmRoom extends RealmObject {
         this.lastScrollPositionMessageId = lastScrollPositionMessageId;
     }
 
+    public int getLastScrollPositionOffset() {
+        return lastScrollPositionOffset;
+    }
+
+    public void setLastScrollPositionOffset(int lastScrollPositionOffset) {
+        this.lastScrollPositionOffset = lastScrollPositionOffset;
+    }
+
     public RealmRoomMessage getFirstUnreadMessage() {
         return firstUnreadMessage;
     }
@@ -1311,7 +1333,7 @@ public class RealmRoom extends RealmObject {
     public static void setLastMessage(final long roomId) {
         //TODO [Saeed Mozaffari] [2017-10-22 5:26 PM] - Write Better Code
         Realm realm = Realm.getDefaultInstance();
-        final RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+        final RealmResults<RealmRoomMessage> realmRoomMessages = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
         if (realmRoomMessages.size() > 0 && realmRoomMessages.first() != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override

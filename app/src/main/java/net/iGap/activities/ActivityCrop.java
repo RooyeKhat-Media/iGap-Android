@@ -172,6 +172,7 @@ public class ActivityCrop extends ActivityEnhanced {
         if (resultCode == Activity.RESULT_OK && requestCode == AttachFile.request_code_TAKE_PICTURE) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
                 uri = Uri.parse(AttachFile.mCurrentPhotoPath);
                 imgPic.setImageURI(uri);
             } else {

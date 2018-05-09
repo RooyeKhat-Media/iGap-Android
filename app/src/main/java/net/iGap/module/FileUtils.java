@@ -30,14 +30,16 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 public class FileUtils {
@@ -548,66 +550,52 @@ public class FileUtils {
         return size;
     }
 
-    public static List<String> getSdCardPathList(boolean writeMode) {
+    public static List<String> getSdCardPathList() {
         List<String> storageList = new ArrayList<String>();
-        List<String> mMounts = new ArrayList<String>(10);
-        List<String> mVold = new ArrayList<String>(10);
+        String externalPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
+        BufferedReader bufferedReader = null;
         try {
-            File mountFile = new File("/proc/mounts");
-            if (mountFile.exists()) {
-                Scanner scanner = new Scanner(mountFile);
-                while (scanner.hasNext()) {
-                    String line = scanner.nextLine();
-                    if (line.startsWith("/dev/block/vold/")) {
-                        String[] lineElements = line.split(" ");
-                        String element = lineElements[1];
-                        if (!element.equals("/mnt/sdcard"))
-                            mMounts.add(element);
+            bufferedReader = new BufferedReader(new FileReader("/proc/mounts"));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains("vfat") || line.contains("/mnt")) {
+                    StringTokenizer tokens = new StringTokenizer(line, " ");
+                    String unused = tokens.nextToken();
+                    String path = tokens.nextToken();
+                    if (storageList.contains(path)) {
+                        continue;
+                    }
+                    if (line.contains("/dev/block/vold")) {
+                        if (!line.contains("/mnt/secure") && !line.contains("/mnt/asec") && !line.contains("/mnt/obb") && !line.contains("/dev/mapper") && !line.contains("tmpfs")) {
+                            if (!new File(path).isDirectory()) {
+                                int index = path.lastIndexOf('/');
+                                if (index != -1) {
+                                    String newPath = "/storage/" + path.substring(index + 1);
+                                    if (new File(newPath).isDirectory()) {
+                                        path = newPath;
+                                    }
+                                }
+                            }
+                            if (!path.equals(externalPath)) {
+                                storageList.add(path);
+                            }
+
+                        }
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        try {
-            File voldFile = new File("/system/etc/vold.fstab");
-            if (voldFile.exists()) {
-                Scanner scanner = new Scanner(voldFile);
-                while (scanner.hasNext()) {
-                    String line = scanner.nextLine();
-                    if (line.startsWith("dev_mount")) {
-                        String[] lineElements = line.split(" ");
-                        String element = lineElements[2];
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (Exception e) {
 
-                        if (element.contains(":"))
-                            element = element.substring(0, element.indexOf(":"));
-                        if (!element.equals("/mnt/sdcard"))
-                            mVold.add(element);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < mMounts.size(); i++) {
-            String mount = mMounts.get(i);
-            if (!mVold.contains(mount))
-                mMounts.remove(i--);
-        }
-        mVold.clear();
-
-        for (String mount : mMounts) {
-            File root = new File(mount);
-            if (root.exists() && root.isDirectory()) {
-                if ((writeMode && root.canWrite()) || (!writeMode && root.canRead())) {
-                    storageList.add(mount);
                 }
             }
         }
-
         return storageList;
     }
 }

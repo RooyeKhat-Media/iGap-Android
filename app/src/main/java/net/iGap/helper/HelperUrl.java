@@ -652,7 +652,9 @@ public class HelperUrl {
                         imageView[0].setImageBitmap(HelperImageBackColor.drawAlphabetOnPicture((int) imageView[0].getContext().getResources().getDimension(R.dimen.dp60), initials, color));
                     }
                 });
-                dialog.show();
+                if (!G.fragmentActivity.isFinishing()) {
+                    dialog.show();
+                }
             }
         });
     }

@@ -275,7 +275,7 @@ public class AttachFile {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", createImageFile());
+                Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 
                 if (fragment != null) {
@@ -341,7 +341,7 @@ public class AttachFile {
     public void requestTakePicture(final Fragment fragment) throws IOException {
 
         PackageManager packageManager = context.getPackageManager();
-        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA) == false) {
+        if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             Toast.makeText(context, context.getString(R.string.device_dosenot_camera_en), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -799,7 +799,7 @@ public class AttachFile {
         String result = "";
         if (galleryPath == null) return "";
 
-        if (ImageHelper.isNeedToCompress(new File(galleryPath))) {
+        if (ImageHelper.isNeedToCompress(new File(galleryPath)) || ImageHelper.isRotateNeed(galleryPath)) {
 
             Bitmap bitmap = ImageHelper.decodeFile(new File(galleryPath));
             bitmap = ImageHelper.correctRotate(galleryPath, bitmap);

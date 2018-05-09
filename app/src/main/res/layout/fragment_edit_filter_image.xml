@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/dp120"
+  android:gravity="center_vertical"
+  android:orientation="vertical"
+  android:paddingLeft="@dimen/dp10"
+  android:paddingRight="@dimen/dp10"
+  android:background="@android:color/transparent"
+  tools:context="net.iGap.fragments.filterImage.EditImageFragment">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp10"
+    android:paddingTop="@dimen/dp10">
+
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/lbl_brightness"
+      android:textColor="@color/green" />
+
+    <SeekBar
+      android:id="@+id/seekbar_brightness"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp10"
+    android:paddingTop="@dimen/dp10">
+
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/lbl_contrast"
+      android:textColor="@color/green" />
+
+    <SeekBar
+      android:id="@+id/seekbar_contrast"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dp10"
+    android:paddingTop="@dimen/dp10">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/lbl_saturation"
+      android:textColor="@color/green" />
+
+    <SeekBar
+      android:id="@+id/seekbar_saturation"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1" />
+  </LinearLayout>
+
+</LinearLayout>

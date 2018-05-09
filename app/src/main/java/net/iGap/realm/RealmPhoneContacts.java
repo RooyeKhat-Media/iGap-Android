@@ -10,12 +10,16 @@
 
 package net.iGap.realm;
 
+import net.iGap.G;
 import net.iGap.helper.HelperString;
+import net.iGap.interfaces.OnQueueSendContact;
+import net.iGap.module.Contacts;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.request.RequestUserContactImport;
 import net.iGap.request.RequestUserContactsGetList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -28,38 +32,104 @@ public class RealmPhoneContacts extends RealmObject {
     private String firstName;
     private String lastName;
 
-    public static void sendContactList(final ArrayList<StructListOfContact> list, final boolean force) {
+//    public static void sendContactList(final List<StructListOfContact> list, final boolean force) {
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                List<StructListOfContact> _list = fillContactsToDB(list);
+//                if (_list.size() > 0) {
+//                    RequestUserContactImport listContact = new RequestUserContactImport();
+//                    listContact.contactImport(_list, force);
+//                } else {
+//                    new RequestUserContactsGetList().userContactGetList();
+//                }
+//            }
+//        }).start();
+//    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-                ArrayList<StructListOfContact> _list = fillContactsToDB(list);
-                if (_list.size() > 0) {
-                    RequestUserContactImport listContact = new RequestUserContactImport();
-                    listContact.contactImport(_list, force);
-                } else {
-                    new RequestUserContactsGetList().userContactGetList();
-                }
+    private static List<StructListOfContact> tmpList;
+
+    public static void sendContactList(final List<StructListOfContact> list, final boolean force, final boolean getContactList) {
+
+        if (Contacts.isSendingContactToServer) {
+            return;
+        }
+
+        final List<StructListOfContact> _list = fillContactsToDB(list);
+
+        if (_list.size() > 0) {
+
+            if (_list.size() > Contacts.PHONE_CONTACT_FETCH_LIMIT) {
+                RequestUserContactImport listContact = new RequestUserContactImport();
+                tmpList = _list.subList(0, Contacts.PHONE_CONTACT_FETCH_LIMIT);
+                Contacts.isSendingContactToServer = true;
+
+                G.onQueueSendContact = new OnQueueSendContact() {
+                    @Override
+                    public void sendContact() {
+
+                        if (tmpList.size() > 0) {
+                            addListToDB(tmpList);
+                            tmpList.clear();
+                        } else {
+                            addListToDB(_list);
+                            _list.clear();
+                        }
+
+
+                        if (_list.size() == 0) {
+                            G.onQueueSendContact = null;
+                            Contacts.isSendingContactToServer = false;
+                            return;
+                        }
+
+                        if (_list.size() > Contacts.PHONE_CONTACT_FETCH_LIMIT) {
+                            RequestUserContactImport listContact = new RequestUserContactImport();
+                            tmpList = _list.subList(0, Contacts.PHONE_CONTACT_FETCH_LIMIT);
+                            listContact.contactImport(tmpList, force, false);
+
+                        } else {
+                            RequestUserContactImport listContact = new RequestUserContactImport();
+                            listContact.contactImport(_list, force, true);
+                        }
+
+                    }
+                };
+
+                listContact.contactImport(tmpList, force, false);
+
+            } else {
+                RequestUserContactImport listContact = new RequestUserContactImport();
+                listContact.contactImport(_list, force, true);
+                G.onQueueSendContact = new OnQueueSendContact() {
+                    @Override
+                    public void sendContact() {
+                        addListToDB(_list);
+                        G.onQueueSendContact = null;
+                        Contacts.isSendingContactToServer = false;
+                    }
+                };
             }
-        }).start();
+        } else if (getContactList) {
+            new RequestUserContactsGetList().userContactGetList();
+        }
     }
 
-    public static void sendContactList(final ArrayList<StructListOfContact> list, final boolean force, final boolean getContactList) {
-
-        new Thread(new Runnable() {
+    private static void addListToDB(final List<StructListOfContact> list) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void run() {
-
-                ArrayList<StructListOfContact> _list = fillContactsToDB(list);
-                if (_list.size() > 0) {
-                    RequestUserContactImport listContact = new RequestUserContactImport();
-                    listContact.contactImport(_list, force, getContactList);
-                } else if (getContactList) {
-                    new RequestUserContactsGetList().userContactGetList();
+            public void execute(Realm realm) {
+                for (int i = 0; i < list.size(); i++) {
+                    addContactToDB(list.get(i), realm);
                 }
             }
-        }).start();
+        });
+
+        realm.close();
     }
 
     private static void addContactToDB(final StructListOfContact item, Realm realm) {
@@ -74,9 +144,9 @@ public class RealmPhoneContacts extends RealmObject {
         }
     }
 
-    private static ArrayList<StructListOfContact> fillContactsToDB(final ArrayList<StructListOfContact> list) {
+    private static List<StructListOfContact> fillContactsToDB(final List<StructListOfContact> list) {
 
-        final ArrayList<StructListOfContact> notImportedList = new ArrayList<>();
+        final List<StructListOfContact> notImportedList = new ArrayList<>();
 
         if (list == null) {
             return notImportedList;
@@ -99,7 +169,6 @@ public class RealmPhoneContacts extends RealmObject {
 
                     if (_realmPhoneContacts == null) {
                         _addItem = true;
-                        //addContactToDB(_item, realm);
                     } else {
                         if (!_item.getFirstName().equals(_realmPhoneContacts.getFirstName()) || !_item.getLastName().equals(_realmPhoneContacts.getLastName())) {
                             _addItem = true;

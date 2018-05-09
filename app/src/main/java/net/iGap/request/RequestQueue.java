@@ -155,6 +155,7 @@ public class RequestQueue {
                     message = AESCrypt.encrypt(G.symmetricKey, message);
                     WebSocket webSocket = WebSocketClient.getInstance();
                     if (webSocket != null) {
+                        Log.i("MSGR", "prepareRequest: " + G.lookupMap.get(30000 + requestWrapper.actionId));
                         webSocket.sendBinary(message, requestWrapper);
                     }
                 } else {

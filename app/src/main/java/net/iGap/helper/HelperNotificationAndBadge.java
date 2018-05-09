@@ -323,6 +323,10 @@ public class HelperNotificationAndBadge {
 
     public void checkAlert(boolean updateNotification, ProtoGlobal.Room.Type type, long roomId) {
 
+        if (G.isAppInFg || AttachFile.isInAttach) {
+            return;
+        }
+
         idRoom = roomId;
         int vipCheck = checkSpecialNotification(updateNotification, type, roomId);
         SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, Context.MODE_PRIVATE);
@@ -451,7 +455,7 @@ public class HelperNotificationAndBadge {
                     unreadMessageCount++;
                     messageOne = roomMessage.getMessage();
 
-                    if (unreadMessageCount > 3 && (!isEnablepopUpSettin || G.isAppInFg || AttachFile.isInAttach)) {
+                    if (unreadMessageCount > 3 && (!isEnablepopUpSettin)) {
                         break;
                     }
 
@@ -505,32 +509,29 @@ public class HelperNotificationAndBadge {
                 }
             }
 
+            if (unreadMessageCount == 0) {
+                HelperNotificationAndBadge.updateBadgeOnly(realm, -1);
+                return;
+            }
+
             startActivityPopUpNotification(popUpList);
             int[] result = HelperNotificationAndBadge.updateBadgeOnly(realm, -1);
 
             unreadMessageCount = result[0];
             countUnicChat = result[1];
-            isFromOnRoom = false;
+            isFromOnRoom = countUnicChat == 1;
 
-            if (countUnicChat == 1) {
-                isFromOnRoom = true;
-            } else {
-                isFromOnRoom = false;
+
+            try {
+                if (updateNotification) {
+                    setNotification();
+                }
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
 
-        if (unreadMessageCount == 0) {
-            return;
-        }
-
-        try {
-            if (updateNotification) {
-                setNotification();
-            }
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         realm.close();

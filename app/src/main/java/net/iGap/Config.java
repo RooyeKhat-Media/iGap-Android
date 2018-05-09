@@ -16,8 +16,8 @@ public class Config {
 
     public static final int ACCEPT = 1;
     public static final int REJECT = 0;
-    public static final int REALM_SCHEMA_VERSION = 16;
-    public static final int REALM_LATEST_MIGRATION_VERSION = REALM_SCHEMA_VERSION - 1;
+    public static final int REALM_SCHEMA_VERSION = 17;
+    public static final int REALM_LATEST_MIGRATION_VERSION = REALM_SCHEMA_VERSION - 1; // 17-1 = 16
     public static final int LOOKUP_MAP_RESPONSE_OFFSET = 30000;
     public static final int MAX_TEXT_ATTACHMENT_LENGTH = 200;
     public static final int MAX_TEXT_LENGTH = 4096;
@@ -30,6 +30,7 @@ public class Config {
     public static final int LIMIT_LOAD_ROOM = 50;
     public static final int FAST_START_PAGE_TIME = (int) 20;
     public static final int LOW_START_PAGE_TIME = (int) 25;
+    public static final int PHONE_CONTACT_MAX_COUNT_LIMIT = 9999;
 
     public static final int TIME_OUT_DELAY_MS = (int) (DateUtils.SECOND_IN_MILLIS);
     public static final int FAKE_PM_DELAY = (int) (10 * DateUtils.SECOND_IN_MILLIS);
@@ -46,7 +47,7 @@ public class Config {
     public static final int GET_MESSAGE_STATE_TIME_OUT_CHECKING = (int) (DateUtils.SECOND_IN_MILLIS);
     public static final int LAST_SEEN_DELAY_CHECKING = (int) (60 * DateUtils.SECOND_IN_MILLIS);
     public static final int GET_CONTACT_LIST_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
-    public static final int HEART_BEAT_CHECKING_TIME_OUT = (int) (60 * DateUtils.SECOND_IN_MILLIS);
+    public static final int HEART_BEAT_CHECKING_TIME_OUT = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     public static final int UPDATING_TIME_SHOWING = (int) (2 * DateUtils.SECOND_IN_MILLIS);
     public static final int CONNECTION_OPEN_TIME_OUT = (int) (20 * DateUtils.SECOND_IN_MILLIS);
     public static final int FETCH_CONTACT_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
@@ -76,5 +77,12 @@ public class Config {
     public static String default_attachmentColor = "#00B0BF";
     public static String default_headerTextColor = "#00B0BF";
     public static String default_progressColor = "#00B0BF";
+
+    public static String default_dark_appBarColor = "#000000";
+    public static String default_dark_notificationColor = "#000000";
+    public static String default_dark_toggleButtonColor = "#000000";
+    public static String default_dark_attachmentColor = "#000000";
+    public static String default_dark_headerTextColor = "#111111";
+    public static String default_dark_progressColor = "#ffffff";
 
 }

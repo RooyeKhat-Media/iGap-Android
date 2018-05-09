@@ -16,10 +16,10 @@ import org.parceler.Parcel;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.RealmThumbnailRealmProxy;
 import io.realm.annotations.PrimaryKey;
+import io.realm.net_iGap_realm_RealmThumbnailRealmProxy;
 
-@Parcel(implementations = {RealmThumbnailRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmThumbnail.class})
+@Parcel(implementations = {net_iGap_realm_RealmThumbnailRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmThumbnail.class})
 public class RealmThumbnail extends RealmObject {
     @PrimaryKey
     private long id;

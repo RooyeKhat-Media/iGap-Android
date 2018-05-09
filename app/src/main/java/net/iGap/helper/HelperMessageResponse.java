@@ -11,6 +11,7 @@
 package net.iGap.helper;
 
 import net.iGap.G;
+import net.iGap.module.AttachFile;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.realm.RealmRegisteredInfo;
@@ -89,7 +90,7 @@ public class HelperMessageResponse {
                         room.setUnreadCount(room.getUnreadCount() + 1);
 
                         if (!room.getMute()) {
-                            if (G.isAppInFg) {
+                            if (G.isAppInFg || AttachFile.isInAttach) {
                                 //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
                             } else {
 

@@ -12,8 +12,8 @@ package net.iGap.interfaces;
 
 import net.iGap.module.structs.StructListOfContact;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface OnContactFetchForServer {
-    void onFetch(ArrayList<StructListOfContact> contacts, boolean getContactList);
+    void onFetch(List<StructListOfContact> contacts, boolean getContactList);
 }

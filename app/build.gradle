@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.22.0'
+        classpath 'io.fabric.tools:gradle:1.25.3'
     }
 }
 apply plugin: 'com.android.application'
@@ -24,8 +24,8 @@ android {
         applicationId "net.iGap"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 59
-        versionName "0.5.0"
+        versionCode 60
+        versionName "0.6.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -61,9 +61,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile('com.mikepenz:fastadapter:3.0.4@aar') {
-        transitive = true
-    }
     compile project(':messageprogress')
     compile project(':proto')
     compile project(':websocket')
@@ -83,10 +80,12 @@ dependencies {
         exclude group: 'com.googlecode.mp4parser', module: 'isoparser'
     }
 
-    compile 'com.mikepenz:fastadapter-commons:3.0.3@aar'
-    compile 'com.mikepenz:fastadapter-extensions:3.0.3@aar'
-    compile 'com.mikepenz:materialize:1.0.3@aar'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.mikepenz:fastadapter:3.2.5'
+    implementation 'com.mikepenz:fastadapter-commons:3.2.5'
+    implementation 'com.mikepenz:fastadapter-extensions-expandable:3.2.5'
+    implementation 'com.mikepenz:fastadapter-extensions:3.2.5'
+
+    compile 'com.android.support:multidex:1.0.3'
     compile 'com.android.support:appcompat-v7:26.0.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:recyclerview-v7:26.0.2'
@@ -110,8 +109,8 @@ dependencies {
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
     compile 'com.google.zxing:core:3.3.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
-    compile 'com.google.android.gms:play-services-analytics:10.2.1'
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
+    compile 'com.google.android.gms:play-services-analytics:15.0.0'
+    compile 'com.google.android.gms:play-services-maps:15.0.0'
     compile 'me.zhanghai.android.customtabshelper:library:1.0.3'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     compile 'cat.ereza:customactivityoncrash:2.1.0'
@@ -126,8 +125,9 @@ dependencies {
     provided 'com.android.support:support-annotations:26.0.2'
     compile group: 'com.github.msarhan', name: 'ummalqura-calendar', version: '1.1.7'
     compile 'com.sothree.slidinguppanel:library:3.4.0'
-    compile 'it.chengdazhi.styleimageview:styleimageview:1.0.4'
     compile 'com.github.krokyze:ucropnedit:2.2.2'
+    implementation 'info.androidhive:imagefilters:1.0.7'
+    compile 'com.mindorks.android:prdownloader:0.3.0'
 }
 
 configurations.all {

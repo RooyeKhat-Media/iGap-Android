@@ -13,7 +13,9 @@ package net.iGap.helper;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -25,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import static net.iGap.G.context;
+import static net.iGap.module.AttachFile.getFilePathFromUri;
+import static net.iGap.module.AttachFile.getPathN;
+
 /**
  * this class use when get share file in another app
  */
@@ -35,7 +41,7 @@ public class HelperGetDataFromOtherApp {
     // after use intent set this to false
     public static FileType messageType = null;
     public static String message = "";
-    public static ArrayList<Uri> messageFileAddress;
+    public static ArrayList<String> messageFileAddress;
     public static ArrayList<FileType> fileTypeArray = new ArrayList<FileType>();
     private Intent intent;
 
@@ -85,6 +91,9 @@ public class HelperGetDataFromOtherApp {
      * check intent data and get type and address message
      */
     private void checkData(Intent intent) {
+
+        messageType = null;
+        fileTypeArray.clear();
 
         String action = intent.getAction();
         String type = intent.getType();
@@ -141,7 +150,6 @@ public class HelperGetDataFromOtherApp {
         Uri fileAddressUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM); // get file attachment
         //String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT); get text
         if (fileAddressUri != null) {
-            hasSharedData = true;
             messageType = type;
             String extension = HelperString.dotSplit(fileAddressUri.getPath());
             /**
@@ -150,8 +158,28 @@ public class HelperGetDataFromOtherApp {
             if (extension != null && extension.equals("mp4")) {
                 messageType = FileType.video;
             }
-            messageFileAddress = new ArrayList<Uri>();
-            messageFileAddress.add(fileAddressUri);
+
+            String _path = null;
+            _path = getFilePathFromUri(fileAddressUri);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && fileAddressUri.getScheme() != null && fileAddressUri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+                if (_path == null) {
+                    _path = getPathN(fileAddressUri, messageType);
+                } else {
+                    try {
+                        FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(_path));
+                    } catch (IllegalArgumentException e) {
+                        _path = getPathN(fileAddressUri, messageType);
+                    }
+                }
+            }
+
+            if (_path != null) {
+                hasSharedData = true;
+                messageFileAddress = new ArrayList<String>();
+                messageFileAddress.add(_path);
+            }
+
         }
     }
 
@@ -162,23 +190,38 @@ public class HelperGetDataFromOtherApp {
         ArrayList<Uri> fileAddressUri = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         if (fileAddressUri != null) {
 
-            hasSharedData = true;
             messageType = type;
-            messageFileAddress = fileAddressUri;
+            messageFileAddress = new ArrayList<>();
 
-            for (int i = 0; i < messageFileAddress.size(); i++) {
-                FileType fileType = getMimeType(fileAddressUri.get(i));
-                if (fileType == null) {
-                    messageFileAddress.clear();
-                    return;
+            for (int i = 0; i < fileAddressUri.size(); i++) {
+                Uri _Uri = fileAddressUri.get(i);
+                String _path = null;
+
+                _path = getFilePathFromUri(_Uri);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && _Uri.getScheme() != null && _Uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+                    if (_path == null) {
+                        _path = getPathN(_Uri, messageType);
+                    } else {
+                        try {
+                            FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(_path));
+                        } catch (IllegalArgumentException e) {
+                            _path = getPathN(_Uri, messageType);
+                        }
+                    }
                 }
 
-                String extension = HelperString.dotSplit(fileAddressUri.get(i).getPath());
-                if (extension != null && extension.equals("mp4")) {
-                    fileType = FileType.video;
+                if (_path != null) {
+                    FileType fileType = getMimeType(fileAddressUri.get(i));
+                    if (fileType != null) {
+                        messageFileAddress.add(_path);
+                        fileTypeArray.add(fileType);
+                    }
                 }
+            }
 
-                fileTypeArray.add(fileType);
+            if (messageFileAddress.size() > 0) {
+                hasSharedData = true;
             }
         }
     }
@@ -217,10 +260,6 @@ public class HelperGetDataFromOtherApp {
     }
 
     //*****************************************************************************************************
-
-    public ArrayList<Uri> getInfo() {
-        return messageFileAddress;
-    }
 
     public enum FileType {
         message, video, file, audio, image

@@ -175,6 +175,19 @@ public class WebSocketClient {
     }
 
     /**
+     * detect socket is connected or no
+     *
+     * @return true if is connect otherwise return false
+     */
+
+    public static boolean isConnect() {
+        if (webSocketClient != null && webSocketClient.isOpen()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * check current state of socket for insuring that
      * connection established and if socket connection
      * wasn't open or is null try for reconnecting

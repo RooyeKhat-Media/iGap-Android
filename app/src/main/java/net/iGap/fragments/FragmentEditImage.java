@@ -1,3 +1,13 @@
+/*
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
+
 package net.iGap.fragments;
 
 
@@ -8,7 +18,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +47,7 @@ import static android.app.Activity.RESULT_OK;
 import static net.iGap.R.id.ac_ll_parent;
 import static net.iGap.module.AndroidUtils.suitablePath;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class FragmentEditImage extends Fragment {
 
     private final static String PATH = "PATH";
@@ -94,6 +101,13 @@ public class FragmentEditImage extends Fragment {
             isNicknamePage = bundle.getBoolean(ISNICKNAMEPAGE);
         }
 
+        if (path == null) {
+            if (G.fragmentManager != null) {
+                G.fragmentManager.beginTransaction().remove(FragmentEditImage.this).commit();
+            }
+            return;
+        }
+
         imgEditImage = (ImageView) view.findViewById(R.id.imgEditImage);
 
         TextView txtEditImage = (TextView) view.findViewById(R.id.txtEditImage);
@@ -109,7 +123,6 @@ public class FragmentEditImage extends Fragment {
                 }
             }
         });
-        Log.i("FFFFFFF", "00 nActivityResult: " + path);
         G.imageLoader.displayImage(suitablePath(path), imgEditImage);
 
         updateImage = new UpdateImage() {
@@ -117,9 +130,6 @@ public class FragmentEditImage extends Fragment {
             public void result(String pathImageFilter) {
 
                 path = pathImageFilter;
-
-                Log.i("FFFFFFF", "o2 nActivityResult: " + path);
-
                 G.imageLoader.displayImage(suitablePath(path), imgEditImage);
             }
         };
@@ -234,7 +244,6 @@ public class FragmentEditImage extends Fragment {
             path = AttachFile.getFilePathFromUri(resultUri);
 //            G.imageLoader.displayImage(path, imgEditImage);
 
-            Log.i("FFFFFFF", "o1 nActivityResult: " + path);
             imgEditImage.setImageURI(Uri.parse(path));
         }
 

@@ -69,15 +69,19 @@ public class ConnectionSymmetricKeyResponse extends MessageHandler {
 
     @Override
     public void timeOut() {
-        // disconnect socket for do securing action again
-        //WebSocketClient.getInstance().disconnect();
+        /**
+         * disconnect socket for do securing action again.
+         * if socket is not connect don't need to try for disconnect again because after establish
+         * internet connection these steps will be done
+         */
+        if (WebSocketClient.isConnect()) {
+            WebSocketClient.getInstance().disconnect();
+        }
         super.timeOut();
     }
 
     @Override
     public void error() {
-        // disconnect socket for do securing action again
-        //WebSocketClient.getInstance().disconnect();
         super.error();
     }
 }

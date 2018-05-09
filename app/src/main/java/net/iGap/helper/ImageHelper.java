@@ -204,4 +204,25 @@ public class ImageHelper {
 
         return bitmap;
     }
+
+    public static boolean isRotateNeed(String filepath) {
+        try {
+            ExifInterface exif = new ExifInterface(filepath);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
 }

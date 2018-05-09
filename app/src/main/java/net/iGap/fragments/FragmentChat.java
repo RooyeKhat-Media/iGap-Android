@@ -295,7 +295,6 @@ import static net.iGap.R.string.item;
 import static net.iGap.helper.HelperCalander.convertToUnicodeFarsiNumber;
 import static net.iGap.helper.HelperGetDataFromOtherApp.messageType;
 import static net.iGap.module.AttachFile.getFilePathFromUri;
-import static net.iGap.module.AttachFile.getPathN;
 import static net.iGap.module.AttachFile.request_code_VIDEO_CAPTURED;
 import static net.iGap.module.AttachFile.request_code_open_document;
 import static net.iGap.module.AttachFile.request_code_pic_file;
@@ -499,38 +498,6 @@ public class FragmentChat extends BaseFragment
     private ArrayList<Long> multiForwardList = new ArrayList<>();
     private ArrayList<StructBottomSheetForward> mListForwardNotExict = new ArrayList<>();
     private String messageEdit = "";
-    /**
-     * **********************************************************************
-     * *************************** Message Loader ***************************
-     * **********************************************************************
-     */
-
-    private boolean addToView; // allow to message for add to recycler view or no
-    private boolean topMore = true; // more message exist in local for load in up direction (topMore default value is true for allowing that try load top message )
-    private boolean bottomMore; // more message exist in local for load in bottom direction
-    private boolean isWaitingForHistoryUp; // client send request for getHistory, avoid for send request again
-    private boolean isWaitingForHistoryDown; // client send request for getHistory, avoid for send request again
-    private boolean allowGetHistoryUp = true;
-    // after insuring for get end of message from server set this false. (set false in history error maybe was wrong , because maybe this was for another error not end  of message, (hint: can check error code for end of message from history))
-    private boolean allowGetHistoryDown = true;
-    // after insuring for get end of message from server set this false. (set false in history error maybe was wrong , because maybe this was for another error not end  of message, (hint: can check error code for end of message from history))
-    private boolean firstUp = true; // if is firstUp getClientRoomHistory with low limit in UP direction
-    private boolean firstDown = true; // if is firstDown getClientRoomHistory with low limit in DOWN direction
-    private long gapMessageIdUp; // messageId that maybe lost in local
-    private long gapMessageIdDown; // messageId that maybe lost in local
-    private long reachMessageIdUp; // messageId that will be checked after getHistory for detect reached to that or no
-    private long reachMessageIdDown; // messageId that will be checked after getHistory for detect reached to that or no
-    private long startFutureMessageIdUp;
-    // for get history from local or online in next step use from this param, ( hint : don't use from adapter items, because maybe this item was deleted and in this state messageId for get history won't be detected.
-    private long startFutureMessageIdDown;
-    // for get history from local or online in next step use from this param, ( hint : don't use from adapter items, because maybe this item was deleted and in this state messageId for get history won't be detected.
-    private long progressIdentifierUp; // store identifier for Up progress item and use it if progress not removed from view after check 'instanceOf' in 'progressItem' method
-    private long progressIdentifierDown; // store identifier for Down progress item and use it if progress not removed from view after check 'instanceOf' in 'progressItem' method
-    private int firstVisiblePosition; // difference between start of adapter item and items that Showing.
-    private int visibleItemCount; // visible item in recycler view
-    private int totalItemCount; // all item in recycler view
-    private int scrollEnd = 80; // (hint: It should be less than MessageLoader.LOCAL_LIMIT ) to determine the limits to get to the bottom or top of the list
-
 
     public static Realm getRealmChat() {
         if (realmChat == null || realmChat.isClosed()) {
@@ -1480,6 +1447,8 @@ public class FragmentChat extends BaseFragment
                 layoutJoin.setBackgroundColor(Color.parseColor(G.appBarColor));
                 layoutJoin.setVisibility(View.VISIBLE);
                 layoutMute.setVisibility(View.GONE);
+                viewAttachFile.setVisibility(View.GONE);
+
                 layoutJoin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1553,7 +1522,7 @@ public class FragmentChat extends BaseFragment
                 unreadCount = realmRoom.getUnreadCount();
                 firstUnreadMessage = realmRoom.getFirstUnreadMessage();
                 savedScrollMessageId = realmRoom.getLastScrollPositionMessageId();
-
+                firstVisiblePositionOffset = realmRoom.getLastScrollPositionOffset();
                 if (isChatReadOnly) {
                     viewAttachFile.setVisibility(View.GONE);
                     (rootView.findViewById(R.id.chl_recycler_view_chat)).setPadding(0, 0, 0, 0);
@@ -1601,7 +1570,7 @@ public class FragmentChat extends BaseFragment
         initAppbarSelected();
         getDraft();
         getUserInfo();
-        insertShearedData();
+        insertShearedData(HelperGetDataFromOtherApp.messageFileAddress);
     }
 
     private void registerListener() {
@@ -2282,6 +2251,11 @@ public class FragmentChat extends BaseFragment
         llScrollNavigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (isWaitingForHistoryUp || isWaitingForHistoryDown) {
+                    return;
+                }
+
                 latestButtonClickTime = System.currentTimeMillis();
                 /**
                  * have unread
@@ -2940,7 +2914,8 @@ public class FragmentChat extends BaseFragment
                         int selectedPosition = -1;
                         for (int i = (mAdapter.getAdapterItemCount() - 1); i >= 0; i--) {
                             try {
-                                if (Long.parseLong(mAdapter.getAdapterItem(i).mMessage.messageID) == clearId) {
+                                StructMessageInfo structMessageInfo = mAdapter.getAdapterItem(i).mMessage;
+                                if (structMessageInfo != null && Long.parseLong(structMessageInfo.messageID) == clearId) {
                                     selectedPosition = i;
                                     break;
                                 }
@@ -3258,7 +3233,7 @@ public class FragmentChat extends BaseFragment
     @Override
     public void onMessageFailed(long roomId, RealmRoomMessage message) {
 
-        if (mAdapter != null && message != null && roomId == mRoomId) {
+        if (roomId == mRoomId && mAdapter != null && message != null) {
             mAdapter.updateMessageStatus(message.getMessageId(), ProtoGlobal.RoomMessageStatus.FAILED);
         }
     }
@@ -3851,6 +3826,7 @@ public class FragmentChat extends BaseFragment
                     String cacheId = message.forwardedFrom != null ? message.forwardedFrom.getAttachment().getCacheId() : message.getAttachment().cashID;
                     final String name = message.forwardedFrom != null ? message.forwardedFrom.getAttachment().getName() : message.getAttachment().name;
                     String fileToken = message.forwardedFrom != null ? message.forwardedFrom.getAttachment().getToken() : message.getAttachment().token;
+                    String fileUrl = message.forwardedFrom != null ? message.forwardedFrom.getAttachment().getUrl() : message.getAttachment().url;
                     Long size = message.forwardedFrom != null ? message.forwardedFrom.getAttachment().getSize() : message.getAttachment().size;
 
                     if (cacheId == null) {
@@ -3860,7 +3836,7 @@ public class FragmentChat extends BaseFragment
 
                     final String _path = AndroidUtils.getFilePathWithCashId(cacheId, name, _messageType);
                     if (fileToken != null && fileToken.length() > 0 && size > 0) {
-                        HelperDownloadFile.startDownload(message.messageID, fileToken, cacheId, name, size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
+                        HelperDownloadFile.startDownload(message.messageID, fileToken, fileUrl, cacheId, name, size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
                             @Override
                             public void OnProgress(String path, int progress) {
 
@@ -4490,28 +4466,14 @@ public class FragmentChat extends BaseFragment
      * @param fakeMessageId messageId that create when created this message
      */
     private void makeFailed(final long fakeMessageId) {
-        // message failed
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void run() {
-                final Realm realm = Realm.getDefaultInstance();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        RealmRoomMessage.setStatusFailedInChat(realm, fakeMessageId);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, fakeMessageId).findFirst();
-                        if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
-                            chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
-                        }
-                        realm.close();
-                    }
-                });
+            public void execute(Realm realm) {
+                RealmRoomMessage.setStatusFailedInChat(realm, fakeMessageId);
             }
         });
+        realm.close();
     }
 
     private void showErrorDialog(final int time) {
@@ -4826,23 +4788,20 @@ public class FragmentChat extends BaseFragment
     private void storingLastPosition() {
         try {
             if (recyclerView != null && mAdapter != null) {
-                int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                if (mAdapter.getItem(lastVisibleItemPosition) instanceof TimeItem || mAdapter.getItem(lastVisibleItemPosition) instanceof UnreadMessage) {
-                    lastVisibleItemPosition--;
+
+                int firstVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                if (mAdapter.getItem(firstVisiblePosition) instanceof TimeItem || mAdapter.getItem(firstVisiblePosition) instanceof UnreadMessage) {
+                    firstVisiblePosition++;
                 }
 
-                if (mAdapter.getItem(lastVisibleItemPosition) instanceof TimeItem || mAdapter.getItem(lastVisibleItemPosition) instanceof UnreadMessage) {
-                    lastVisibleItemPosition--;
+                if (mAdapter.getItem(firstVisiblePosition) instanceof TimeItem || mAdapter.getItem(firstVisiblePosition) instanceof UnreadMessage) {
+                    firstVisiblePosition++;
                 }
 
                 long lastScrolledMessageID = 0;
 
-                //if (firstVisiblePosition + 15 < mAdapter.getAdapterItemCount()) {
-                //    lastScrolledMessageID = parseLong(mAdapter.getItem(firstVisiblePosition).mMessage.messageID);
-                //}
-
-                if (lastVisibleItemPosition < mAdapter.getAdapterItemCount() - 2) {
-                    lastScrolledMessageID = parseLong(mAdapter.getItem(lastVisibleItemPosition).mMessage.messageID);
+                if (firstVisiblePosition + 10 < mAdapter.getAdapterItemCount()) {
+                    lastScrolledMessageID = parseLong(mAdapter.getItem(firstVisiblePosition).mMessage.messageID);
                 }
 
                 saveMessageIdPositionState(lastScrolledMessageID);
@@ -4880,7 +4839,7 @@ public class FragmentChat extends BaseFragment
      * save latest messageId position that user saw in chat before close it
      */
     private void saveMessageIdPositionState(final long messageId) {
-        RealmRoom.setLastScrollPosition(mRoomId, messageId);
+        RealmRoom.setLastScrollPosition(mRoomId, messageId, firstVisiblePositionOffset);
     }
 
     /**
@@ -5121,7 +5080,7 @@ public class FragmentChat extends BaseFragment
      */
 
 
-    private void insertShearedData() {
+    private void insertShearedData(final ArrayList<String> pathList) {
         /**
          * run this method with delay , because client get local message with delay
          * for show messages with async state and before run getLocalMessage this shared
@@ -5133,32 +5092,6 @@ public class FragmentChat extends BaseFragment
             public void run() {
                 if (HelperGetDataFromOtherApp.hasSharedData) {
                     HelperGetDataFromOtherApp.hasSharedData = false;
-
-                    ArrayList<String> pathList = new ArrayList<String>();
-
-                    if (messageType != HelperGetDataFromOtherApp.FileType.message) {
-                        if (HelperGetDataFromOtherApp.messageFileAddress.size() == 1) {
-
-                            Uri _Uri = HelperGetDataFromOtherApp.messageFileAddress.get(0);
-                            String _path = getFilePathFromUri(Uri.parse(_Uri.toString()));
-                            if (_path == null) {
-                                _path = getPathN(_Uri, messageType);
-                            }
-                            pathList.add(_path);
-                        } else {
-
-                            for (int i = 0; i < HelperGetDataFromOtherApp.messageFileAddress.size(); i++) {
-
-                                Uri _Uri = HelperGetDataFromOtherApp.messageFileAddress.get(i);
-                                String _path = getFilePathFromUri(Uri.parse(_Uri.toString()));
-
-                                if (_path == null) {
-                                    _path = getPathN(_Uri, HelperGetDataFromOtherApp.fileTypeArray.get(i));
-                                }
-                                pathList.add(_path);
-                            }
-                        }
-                    }
 
                     if (messageType == HelperGetDataFromOtherApp.FileType.message) {
                         String message = HelperGetDataFromOtherApp.message;
@@ -5232,7 +5165,6 @@ public class FragmentChat extends BaseFragment
                             }
                         }
                     }
-                    messageType = null;
                 }
             }
         }, 300);
@@ -5300,7 +5232,6 @@ public class FragmentChat extends BaseFragment
                         ContentResolver cR = context.getContentResolver();
                         MimeTypeMap mime = MimeTypeMap.getSingleton();
                         String mimeType = mime.getExtensionFromMimeType(cR.getType(uri));
-
 
                         if (mimeType == null || mimeType.length() < 1) {
                             mimeType = "*/*";
@@ -5815,7 +5746,6 @@ public class FragmentChat extends BaseFragment
                                     G.handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-
                                             fotoapparatSwitcher = Fotoapparat.with(G.fragmentActivity).into((CameraRenderer) view.findViewById(R.id.cameraView))           // view which will draw the camera preview
                                                     .photoSize(biggestSize())   // we want to have the biggest photo possible
                                                     .lensPosition(back())       // we want back camera
@@ -5859,6 +5789,7 @@ public class FragmentChat extends BaseFragment
                                     G.handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
+
                                             fotoapparatSwitcher = Fotoapparat.with(G.fragmentActivity).into((CameraRenderer) view.findViewById(R.id.cameraView))           // view which will draw the camera preview
                                                     .photoSize(biggestSize())   // we want to have the biggest photo possible
                                                     .lensPosition(back())       // we want back camera
@@ -6013,14 +5944,15 @@ public class FragmentChat extends BaseFragment
                             G.handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ArrayList<String> pathStrings = listPathString;
-                                    if (pathStrings.size() == 1) {
+
+                                    if (listPathString.size() == 1) {
                                         showDraftLayout();
+                                        listPathString.set(0, attachFile.saveGalleryPicToLocal(listPathString.get(0)));
                                         setDraftMessage(AttachFile.requestOpenGalleryForImageMultipleSelect);
                                         latestRequestCode = AttachFile.requestOpenGalleryForImageMultipleSelect;
                                         //sendMessage(AttachFile.requestOpenGalleryForImageMultipleSelect, pathStrings.get(0));
                                     } else {
-                                        for (String path : pathStrings) {
+                                        for (String path : listPathString) {
                                             //if (!path.toLowerCase().endsWith(".gif")) {
                                             String localPathNew = attachFile.saveGalleryPicToLocal(path);
                                             sendMessage(AttachFile.requestOpenGalleryForImageMultipleSelect, localPathNew);
@@ -6481,7 +6413,7 @@ public class FragmentChat extends BaseFragment
         results = getRealmChat().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).
                 equalTo(RealmRoomFields.READ_ONLY, false).notEqualTo(RealmRoomFields.ID, mRoomId).findAll().sort(fieldNames, sort);
 
-        resultsContact = getRealmChat().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+        resultsContact = getRealmChat().where(RealmContacts.class).findAll().sort(RealmContactsFields.DISPLAY_NAME);
 
         List<Long> te = new ArrayList<>();
         te.add(chatPeerId);
@@ -6538,13 +6470,9 @@ public class FragmentChat extends BaseFragment
                     @Override
                     public void Allow() throws IOException {
 
+                        fastItemAdapter.add(new AdapterCamera("").withIdentifier(99));
                         for (int i = 0; i < itemGalleryList.size(); i++) {
-                            if (i == 0) {
-                                fastItemAdapter.add(new AdapterCamera("").withIdentifier(99 + i));
-                                fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
-                            } else {
-                                fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
-                            }
+                            fastItemAdapter.add(new AdapterBottomSheet(itemGalleryList.get(i)).withIdentifier(100 + i));
                             isPermissionCamera = true;
                         }
                         G.handler.postDelayed(new Runnable() {
@@ -6988,7 +6916,14 @@ public class FragmentChat extends BaseFragment
         }
 
         realm.close();
-        scrollToEnd();
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollToEnd();
+            }
+        }, 100);
+
     }
 
     public void sendCancelAction() {
@@ -7129,17 +7064,20 @@ public class FragmentChat extends BaseFragment
 
     private void sendForwardedMessage(final StructMessageInfo messageInfo, final long mRoomId, final boolean isSingleForward) {
 
-        final long messageId = SUID.id().get();
 
-        RealmRoom realmRoom = getRealmChat().where(RealmRoom.class).equalTo(RealmRoomFields.ID, mRoomId).findFirst();
-        if (realmRoom == null || realmRoom.getReadOnly()) {
-            return;
-        }
-
-        final ProtoGlobal.Room.Type type = realmRoom.getType();
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
+
+                final long messageId = SUID.id().get();
+
+                RealmRoom realmRoom = getRealmChat().where(RealmRoom.class).equalTo(RealmRoomFields.ID, mRoomId).findFirst();
+                if (realmRoom == null || realmRoom.getReadOnly()) {
+                    return;
+                }
+
+                final ProtoGlobal.Room.Type type = realmRoom.getType();
+
                 //final Realm realm = Realm.getDefaultInstance();
 
                 getRealmChat().executeTransactionAsync(new Realm.Transaction() {
@@ -7345,6 +7283,36 @@ public class FragmentChat extends BaseFragment
         }
     }
 
+
+    /**
+     * **********************************************************************
+     * *************************** Message Loader ***************************
+     * **********************************************************************
+     */
+
+    private boolean addToView; // allow to message for add to recycler view or no
+    private boolean topMore = true; // more message exist in local for load in up direction (topMore default value is true for allowing that try load top message )
+    private boolean bottomMore; // more message exist in local for load in bottom direction
+    private boolean isWaitingForHistoryUp; // client send request for getHistory, avoid for send request again
+    private boolean isWaitingForHistoryDown; // client send request for getHistory, avoid for send request again
+    private boolean allowGetHistoryUp = true; // after insuring for get end of message from server set this false. (set false in history error maybe was wrong , because maybe this was for another error not end  of message, (hint: can check error code for end of message from history))
+    private boolean allowGetHistoryDown = true; // after insuring for get end of message from server set this false. (set false in history error maybe was wrong , because maybe this was for another error not end  of message, (hint: can check error code for end of message from history))
+    private boolean firstUp = true; // if is firstUp getClientRoomHistory with low limit in UP direction
+    private boolean firstDown = true; // if is firstDown getClientRoomHistory with low limit in DOWN direction
+    private long gapMessageIdUp; // messageId that maybe lost in local
+    private long gapMessageIdDown; // messageId that maybe lost in local
+    private long reachMessageIdUp; // messageId that will be checked after getHistory for detect reached to that or no
+    private long reachMessageIdDown; // messageId that will be checked after getHistory for detect reached to that or no
+    private long startFutureMessageIdUp; // for get history from local or online in next step use from this param, ( hint : don't use from adapter items, because maybe this item was deleted and in this state messageId for get history won't be detected.
+    private long startFutureMessageIdDown; // for get history from local or online in next step use from this param, ( hint : don't use from adapter items, because maybe this item was deleted and in this state messageId for get history won't be detected.
+    private long progressIdentifierUp = 0; // store identifier for Up progress item and use it if progress not removed from view after check 'instanceOf' in 'progressItem' method
+    private long progressIdentifierDown = 0; // store identifier for Down progress item and use it if progress not removed from view after check 'instanceOf' in 'progressItem' method
+    private int firstVisiblePosition; // difference between start of adapter item and items that Showing.
+    private int firstVisiblePositionOffset; // amount of offset from top of view for first visible item in adapter
+    private int visibleItemCount; // visible item in recycler view
+    private int totalItemCount; // all item in recycler view
+    private int scrollEnd = 80; // (hint: It should be less than MessageLoader.LOCAL_LIMIT ) to determine the limits to get to the bottom or top of the list
+
     private void getMessages() {
         //+Realm realm = Realm.getDefaultInstance();
 
@@ -7403,12 +7371,11 @@ public class FragmentChat extends BaseFragment
             direction = UP;
         }
 
-        resultsUp = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).notEqualTo(RealmRoomMessageFields.CREATE_TIME, 0).equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.SHOW_MESSAGE, true).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+        resultsUp = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).notEqualTo(RealmRoomMessageFields.CREATE_TIME, 0).equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.SHOW_MESSAGE, true).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
 
         long gapMessageId;
         if (direction == DOWN) {
-            resultsUp =
-                    getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).lessThanOrEqualTo(RealmRoomMessageFields.MESSAGE_ID, fetchMessageId).notEqualTo(RealmRoomMessageFields.CREATE_TIME, 0).equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.SHOW_MESSAGE, true).findAllSorted(RealmRoomMessageFields.CREATE_TIME, Sort.DESCENDING);
+            resultsUp = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).lessThanOrEqualTo(RealmRoomMessageFields.MESSAGE_ID, fetchMessageId).notEqualTo(RealmRoomMessageFields.CREATE_TIME, 0).equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.SHOW_MESSAGE, true).findAll().sort(RealmRoomMessageFields.CREATE_TIME, Sort.DESCENDING);
             /**
              * if for UP state client have message detect gap otherwise try for get online message
              * because maybe client have message but not exist in Realm yet
@@ -7503,7 +7470,7 @@ public class FragmentChat extends BaseFragment
             if (hasSavedState()) {
                 int position = mAdapter.findPositionByMessageId(savedScrollMessageId);
                 LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
-                linearLayout.scrollToPositionWithOffset(position, 0);
+                linearLayout.scrollToPositionWithOffset(position, firstVisiblePositionOffset);
                 savedScrollMessageId = 0;
             }
         }
@@ -7515,9 +7482,16 @@ public class FragmentChat extends BaseFragment
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                visibleItemCount = (recyclerView.getLayoutManager()).getChildCount();
-                totalItemCount = (recyclerView.getLayoutManager()).getItemCount();
-                firstVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+                int firstVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition();
+                View view = linearLayoutManager.getChildAt(0);
+                if (firstVisiblePosition > 0 && view != null) {
+                    firstVisiblePositionOffset = view.getTop();
+                }
+
+                visibleItemCount = linearLayoutManager.getChildCount();
+                totalItemCount = linearLayoutManager.getItemCount();
 
                 if (firstVisiblePosition < scrollEnd) {
                     /**
@@ -7632,7 +7606,15 @@ public class FragmentChat extends BaseFragment
      */
     private void getOnlineMessage(final long oldMessageId, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
         if ((direction == UP && !isWaitingForHistoryUp && allowGetHistoryUp) || (direction == DOWN && !isWaitingForHistoryDown && allowGetHistoryDown)) {
+            /**
+             * show progress when start for get history from server
+             */
+            progressItem(SHOW, direction);
 
+            if (!G.userLogin) {
+                getOnlineMessageAfterTimeOut(oldMessageId, direction);
+                return;
+            }
             long reachMessageId;
             if (direction == UP) {
                 reachMessageId = reachMessageIdUp;
@@ -7642,10 +7624,6 @@ public class FragmentChat extends BaseFragment
                 isWaitingForHistoryDown = true;
             }
 
-            /**
-             * show progress when start for get history from server
-             */
-            progressItem(SHOW, direction);
 
             int limit = Config.LIMIT_GET_HISTORY_NORMAL;
             if ((firstUp && direction == UP) || (firstDown && direction == DOWN)) {
@@ -7678,7 +7656,7 @@ public class FragmentChat extends BaseFragment
                         sort = Sort.ASCENDING;
                         isWaitingForHistoryDown = false;
                     }
-                    realmRoomMessages = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).notEqualTo(RealmRoomMessageFields.DELETED, true).between(RealmRoomMessageFields.MESSAGE_ID, startMessageId, endMessageId).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, sort);
+                    realmRoomMessages = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).notEqualTo(RealmRoomMessageFields.DELETED, true).between(RealmRoomMessageFields.MESSAGE_ID, startMessageId, endMessageId).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, sort);
                     MessageLoader.sendMessageStatus(roomId, realmRoomMessages, chatType, ProtoGlobal.RoomMessageStatus.SEEN, getRealmChat());
 
                     //                    if (realmRoomMessages.size() == 0) { // Hint : link browsable ; Commented Now!!!
@@ -7751,7 +7729,6 @@ public class FragmentChat extends BaseFragment
 
                         if (direction == UP) {
                             isWaitingForHistoryUp = false;
-                            isWaitingForHistoryUp = false;
                             allowGetHistoryUp = false;
                             G.handler.post(new Runnable() {
                                 @Override
@@ -7772,13 +7749,27 @@ public class FragmentChat extends BaseFragment
                      */
                     if (majorCode == 5) {
                         if (direction == UP) {
-                            //getOnlineMessage(messageIdGetHistory, UP);
+                            isWaitingForHistoryUp = false;
                         } else {
-                            //getOnlineMessage(messageIdGetHistory, DOWN);
+                            isWaitingForHistoryDown = false;
                         }
+                        getOnlineMessageAfterTimeOut(messageIdGetHistory, direction);
                     }
                 }
             });
+        }
+    }
+
+    private void getOnlineMessageAfterTimeOut(final long messageIdGetHistory, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+        if (G.userLogin) {
+            getOnlineMessage(messageIdGetHistory, direction);
+        } else {
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getOnlineMessageAfterTimeOut(messageIdGetHistory, direction);
+                }
+            }, 1000);
         }
     }
 
@@ -7879,10 +7870,10 @@ public class FragmentChat extends BaseFragment
                         recyclerView.post(new Runnable() {
                             @Override
                             public void run() {
-                                if (direction == DOWN) {
+                                if (direction == DOWN && progressIdentifierDown == 0) {
                                     progressIdentifierDown = SUID.id().get();
                                     mAdapter.add(new ProgressWaiting(getRealmChat(), FragmentChat.this).withIdentifier(progressIdentifierDown));
-                                } else {
+                                } else if (direction == UP && progressIdentifierUp == 0) {
                                     progressIdentifierUp = SUID.id().get();
                                     mAdapter.add(0, new ProgressWaiting(getRealmChat(), FragmentChat.this).withIdentifier(progressIdentifierUp));
                                 }
@@ -7896,6 +7887,11 @@ public class FragmentChat extends BaseFragment
                      */
                     if ((mAdapter.getItemCount() > 0) && (mAdapter.getAdapterItem(progressIndex) instanceof ProgressWaiting)) {
                         mAdapter.remove(progressIndex);
+                        if (direction == DOWN) {
+                            progressIdentifierDown = 0;
+                        } else {
+                            progressIdentifierUp = 0;
+                        }
                     } else {
                         G.handler.post(new Runnable() {
                             @Override
@@ -7926,14 +7922,6 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-    }
-
-    private void progressItem(final ProgressState progressState, final String direction) {
-        if (direction.equals(UP.toString())) {
-            progressItem(progressState, UP);
-        } else {
-            progressItem(progressState, DOWN);
-        }
     }
 
     /**

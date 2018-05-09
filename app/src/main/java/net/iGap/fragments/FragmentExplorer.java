@@ -163,7 +163,7 @@ public class FragmentExplorer extends BaseFragment {
         mscroll.add(0);
 
         if (storageList == null) {
-            storageList = FileUtils.getSdCardPathList(false);
+            storageList = FileUtils.getSdCardPathList();
         }
 
         if (new File(Environment.getExternalStorageDirectory().getAbsolutePath()).exists()) {

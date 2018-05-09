@@ -10,14 +10,10 @@
 
 package net.iGap.module;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import net.iGap.G;
 import net.iGap.interfaces.OnChatSendMessageResponse;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoomMessage;
-import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestChannelSendMessage;
 import net.iGap.request.RequestChatSendMessage;
 import net.iGap.request.RequestGroupSendMessage;
@@ -242,29 +238,15 @@ public class ChatSendMessageUtil implements OnChatSendMessageResponse {
      * @param fakeMessageId messageId that create when created this message
      */
     private void makeFailed(final long fakeMessageId) {
-        // message failed
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                final Realm realm = Realm.getDefaultInstance();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        RealmRoomMessage.setStatusFailedInChat(realm, fakeMessageId);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        final RealmRoomMessage message = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, fakeMessageId).findFirst();
-                        if (message != null && message.getStatus().equals(ProtoGlobal.RoomMessageStatus.FAILED.toString())) {
-                            G.chatSendMessageUtil.onMessageFailed(message.getRoomId(), message);
-                        }
 
-                        realm.close();
-                    }
-                });
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoomMessage.setStatusFailedInChat(realm, fakeMessageId);
             }
         });
+        realm.close();
     }
 
     @Override

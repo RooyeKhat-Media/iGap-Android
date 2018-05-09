@@ -16,13 +16,17 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import net.iGap.G;
+import net.iGap.R;
 import net.iGap.helper.HelperPermission;
 import net.iGap.module.structs.StructContactInfo;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
+import net.iGap.realm.RealmUserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +34,16 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static net.iGap.Config.PHONE_CONTACT_MAX_COUNT_LIMIT;
+
 /**
  * work with saved contacts in database
  */
 public class Contacts {
 
-    private static final int PHONE_CONTACT_FETCH_LIMIT = 100;
-
-    //Online Fetch Contacts Fields
-    public static int onlinePhoneContactId = 0;
+    public static final int PHONE_CONTACT_FETCH_LIMIT = 100;
+    private static List<StructListOfContact> resultContactList;
+    public static boolean isSendingContactToServer = false;
 
     //Local Fetch Contacts Fields
     public static boolean getContact = true;
@@ -58,9 +63,9 @@ public class Contacts {
 
         RealmResults<RealmContacts> contacts;
         if (filter == null) {
-            contacts = realm.where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+            contacts = realm.where(RealmContacts.class).findAll().sort(RealmContactsFields.DISPLAY_NAME);
         } else {
-            contacts = realm.where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, filter).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+            contacts = realm.where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, filter).findAll().sort(RealmContactsFields.DISPLAY_NAME);
         }
 
         String lastHeader = "";
@@ -94,29 +99,55 @@ public class Contacts {
         return items;
     }
 
-    public static void getPhoneContactForServer() { //get List Of Contact
+
+    public static void showLimitDialog() {
+        try {
+            if (G.currentActivity != null) {
+                G.currentActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new MaterialDialog.Builder(G.currentActivity)
+                                .title(R.string.title_import_contact_limit)
+                                .content(R.string.content_import_contact_limit)
+                                .positiveText(G.context.getResources().getString(R.string.B_ok)).show();
+                    }
+                });
+            }
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+
+    private static void getPhoneContactForServer() { //get List Of Contact
         if (!HelperPermission.grantedContactPermission()) {
             return;
         }
 
-        int fetchCount = 0;
-        boolean isEnd = false;
+        if (RealmUserInfo.isLimitImportContacts()) {
+            showLimitDialog();
+            return;
+        }
 
         ArrayList<StructListOfContact> contactList = new ArrayList<>();
         ContentResolver cr = G.context.getContentResolver();
 
-        String startContactId = ">=" + onlinePhoneContactId;
-        String selection = ContactsContract.Contacts._ID + startContactId;
-
         try {
-            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);
-
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
             if (cur != null) {
+
+                if (cur.getCount() > PHONE_CONTACT_MAX_COUNT_LIMIT) {
+                    cur.close();
+                    showLimitDialog();
+                    return;
+                }
+
                 if (cur.getCount() > 0) {
                     while (cur.moveToNext()) {
                         int contactId = cur.getInt(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                        onlinePhoneContactId = contactId + 1;
-
                         try {
                             if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                                 Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
@@ -138,21 +169,13 @@ public class Contacts {
                             e1.printStackTrace();
                         }
 
-                        fetchCount++;
-
-                        if (fetchCount > PHONE_CONTACT_FETCH_LIMIT) {
-                            break;
-                        }
                     }
                 }
                 cur.close();
             }
 
-            if (fetchCount < PHONE_CONTACT_FETCH_LIMIT) {
-                isEnd = true;
-            }
 
-            ArrayList<StructListOfContact> resultContactList = new ArrayList<>();
+            resultContactList = new ArrayList<>();
             for (int i = 0; i < contactList.size(); i++) {
 
                 if (contactList.get(i).getPhone() != null && contactList.get(i).getDisplayName() != null) {
@@ -185,18 +208,12 @@ public class Contacts {
                 }
             }
 
+
             if (G.onContactFetchForServer != null) {
-                G.onContactFetchForServer.onFetch(resultContactList, isEnd);
+                G.onContactFetchForServer.onFetch(resultContactList, true);
             }
 
-            if (!isEnd) {
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        new FetchContactForServer().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                }, 100);
-            }
+
         } catch (SQLiteException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {

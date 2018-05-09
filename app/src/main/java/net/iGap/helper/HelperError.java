@@ -15,6 +15,7 @@ import android.view.View;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.WebSocketClient;
 import net.iGap.module.AppUtils;
 import net.iGap.module.LoginActions;
 
@@ -43,6 +44,9 @@ public class HelperError {
                 break;
             case 5:
                 //if (minorCode == 1) error = "time out  server not response";
+                break;
+            case 7:
+                WebSocketClient.getInstance().disconnect();
                 break;
             case 9:
                 /*if (G.currentActivity != null) {
@@ -424,7 +428,7 @@ public class HelperError {
                 break;
             case 615:
                 if (minorCode == 1) {
-                    error = G.fragmentActivity.getResources().getString(R.string.E_615_1);
+                    //error = G.fragmentActivity.getResources().getString(R.string.E_615_1);
                 } else if (minorCode == 2) {
                     error = G.fragmentActivity.getResources().getString(R.string.E_615_2);
                 }

@@ -36,7 +36,6 @@ import net.iGap.databinding.FragmentRegistrationNicknameBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperError;
-import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
@@ -178,22 +177,31 @@ public class FragmentRegistrationNickname extends BaseFragment implements OnUser
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case AttachFile.request_code_TAKE_PICTURE:
+                    String path = "";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        path = AttachFile.mCurrentPhotoPath;
+                    } else {
+                        path = AttachFile.imagePath;
+                    }
+                    ImageHelper.correctRotateImage(path, true); //rotate image
+                    G.fragmentActivity.getSupportFragmentManager().beginTransaction().
+                            add(R.id.ar_layout_root, FragmentEditImage.newInstance(path, false, true))
+                            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left).commitAllowingStateLoss();
 
-        if (requestCode == AttachFile.request_code_TAKE_PICTURE && resultCode == RESULT_OK) {// result for camera
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, true)).setReplace(false).setStateLoss(true).load();
-
-            } else {
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, true)).setReplace(false).setStateLoss(true).load();
-                ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
-            }
-        } else if (requestCode == AttachFile.request_code_image_from_gallery_single_select && resultCode == RESULT_OK) {// result for gallery
-            if (data != null) {
-                if (data.getData() == null) {
-                    return;
-                }
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, true)).setReplace(false).setStateLoss(true).load();
+                    break;
+                case AttachFile.request_code_image_from_gallery_single_select:
+                    if (data != null) {
+                        if (data.getData() == null) {
+                            return;
+                        }
+                        G.fragmentActivity.getSupportFragmentManager().beginTransaction().
+                                add(R.id.ar_layout_root, FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, true))
+                                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_exit_in_right, R.anim.slide_exit_out_left).commitAllowingStateLoss();
+                    }
+                    break;
             }
         }
     }

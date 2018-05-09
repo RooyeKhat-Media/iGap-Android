@@ -157,7 +157,7 @@
 //                        } else {
 //                            Realm realm1 = Realm.getDefaultInstance();
 //                            RealmResults<RealmRoomMessage> results =
-//                                realm1.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mInfo.getId()).findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+//                                realm1.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mInfo.getId()).findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
 //                            if (!results.isEmpty()) {
 //                                RealmRoomMessage realmRoomMessage = results.first();
 //                                if (realmRoomMessage != null) {
@@ -391,7 +391,7 @@
 //
 //    private RealmAvatar getLastAvatar(long ownerId) {
 //        Realm realm = Realm.getDefaultInstance();
-//        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAllSorted(RealmAvatarFields.UID, Sort.DESCENDING)) {
+//        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAll().sort(RealmAvatarFields.UID, Sort.DESCENDING)) {
 //            if (avatar.getFile() != null) {
 //                return avatar;
 //            }

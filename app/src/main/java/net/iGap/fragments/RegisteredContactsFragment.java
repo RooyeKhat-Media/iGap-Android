@@ -259,9 +259,9 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 fastItemAdapter.filter(s.toString().toLowerCase());
 
                 if (s.length() > 0) {
-                    results = getRealm().where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+                    results = getRealm().where(RealmContacts.class).contains(RealmContactsFields.DISPLAY_NAME, s.toString(), Case.INSENSITIVE).findAll().sort(RealmContactsFields.DISPLAY_NAME);
                 } else {
-                    results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+                    results = getRealm().where(RealmContacts.class).findAll().sort(RealmContactsFields.DISPLAY_NAME);
                 }
 
                 realmRecyclerView.setAdapter(new ContactListAdapter(results));
@@ -310,7 +310,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         realmRecyclerView.setLayoutManager(new LinearLayoutManager(G.fragmentActivity));
         realmRecyclerView.setNestedScrollingEnabled(false);
 
-        results = getRealm().where(RealmContacts.class).findAllSorted(RealmContactsFields.DISPLAY_NAME);
+        results = getRealm().where(RealmContacts.class).findAll().sort(RealmContactsFields.DISPLAY_NAME);
 
         G.handler.postDelayed(new Runnable() {
             @Override

@@ -36,6 +36,7 @@ public class StructMessageAttachment implements Parcelable {
         }
     };
     public String token;
+    public String url;
     public String cashID;
     public String name;
     public long size;
@@ -50,9 +51,10 @@ public class StructMessageAttachment implements Parcelable {
     public String localFilePath;
     public String compressing = ""; // use for show compressing text when video is in compressing state
 
-    public StructMessageAttachment(String token, String name, long size, int width, int height, double duration, @Nullable String localThumbnailPath, @Nullable String localFilePath,
+    public StructMessageAttachment(String token, String url, String name, long size, int width, int height, double duration, @Nullable String localThumbnailPath, @Nullable String localFilePath,
                                    StructMessageThumbnail largeThumbnail, StructMessageThumbnail smallThumbnail) {
         this.token = token;
+        this.url = url;
         this.name = name;
         this.size = size;
         this.width = width;
@@ -67,6 +69,7 @@ public class StructMessageAttachment implements Parcelable {
 
     public StructMessageAttachment(RealmAttachment realmAttachment) {
         this.token = realmAttachment.getToken();
+        this.url = realmAttachment.getUrl();
         this.name = realmAttachment.getName();
         this.size = realmAttachment.getSize();
         this.width = realmAttachment.getWidth();
@@ -82,6 +85,7 @@ public class StructMessageAttachment implements Parcelable {
 
     protected StructMessageAttachment(Parcel in) {
         this.token = in.readString();
+        this.url = in.readString();
         this.name = in.readString();
         this.size = in.readLong();
         this.width = in.readInt();
@@ -98,7 +102,7 @@ public class StructMessageAttachment implements Parcelable {
         if (attachment == null) {
             return new StructMessageAttachment();
         }
-        return new StructMessageAttachment(attachment.getToken(), attachment.getName(), attachment.getSize(), attachment.getWidth(), attachment.getHeight(), attachment.getDuration(), null, null,
+        return new StructMessageAttachment(attachment.getToken(), attachment.getPublicUrl(), attachment.getName(), attachment.getSize(), attachment.getWidth(), attachment.getHeight(), attachment.getDuration(), null, null,
                 StructMessageThumbnail.convert(attachment.getLargeThumbnail()), StructMessageThumbnail.convert(attachment.getSmallThumbnail()));
     }
 
@@ -106,7 +110,7 @@ public class StructMessageAttachment implements Parcelable {
         if (attachment == null) {
             return new StructMessageAttachment();
         }
-        return new StructMessageAttachment(attachment.getFile().getToken(), attachment.getFile().getName(), attachment.getFile().getSize(), attachment.getFile().getWidth(),
+        return new StructMessageAttachment(attachment.getFile().getToken(), attachment.getFile().getPublicUrl(), attachment.getFile().getName(), attachment.getFile().getSize(), attachment.getFile().getWidth(),
                 attachment.getFile().getHeight(), attachment.getFile().getDuration(), null, null, StructMessageThumbnail.convert(attachment.getFile().getLargeThumbnail()),
                 StructMessageThumbnail.convert(attachment.getFile().getSmallThumbnail()));
     }
@@ -115,7 +119,7 @@ public class StructMessageAttachment implements Parcelable {
         if (attachment == null) {
             return new StructMessageAttachment();
         }
-        return new StructMessageAttachment(attachment.getToken(), attachment.getName(), attachment.getSize(), attachment.getWidth(), attachment.getHeight(), attachment.getDuration(),
+        return new StructMessageAttachment(attachment.getToken(), attachment.getUrl(), attachment.getName(), attachment.getSize(), attachment.getWidth(), attachment.getHeight(), attachment.getDuration(),
                 attachment.getLocalThumbnailPath(), attachment.getLocalFilePath(), StructMessageThumbnail.convert(attachment.getLargeThumbnail()),
                 StructMessageThumbnail.convert(attachment.getSmallThumbnail()));
     }
@@ -124,7 +128,7 @@ public class StructMessageAttachment implements Parcelable {
         if (attachment == null || attachment.getFile() == null) {
             return new StructMessageAttachment();
         }
-        return new StructMessageAttachment(attachment.getFile().getToken(), attachment.getFile().getName(), attachment.getFile().getSize(), attachment.getFile().getWidth(),
+        return new StructMessageAttachment(attachment.getFile().getToken(), attachment.getFile().getUrl(), attachment.getFile().getName(), attachment.getFile().getSize(), attachment.getFile().getWidth(),
                 attachment.getFile().getHeight(), attachment.getFile().getDuration(), attachment.getFile().getLocalThumbnailPath(), attachment.getFile().getLocalFilePath(),
                 StructMessageThumbnail.convert(attachment.getFile().getLargeThumbnail()), StructMessageThumbnail.convert(attachment.getFile().getSmallThumbnail()));
     }
@@ -208,6 +212,7 @@ public class StructMessageAttachment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.token);
+        dest.writeString(this.url);
         dest.writeString(this.name);
         dest.writeLong(this.size);
         dest.writeInt(this.width);

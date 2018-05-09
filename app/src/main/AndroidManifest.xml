@@ -15,7 +15,7 @@
   <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -90,8 +90,8 @@
     <activity
       android:name=".activities.ActivityCall"
       android:configChanges="keyboard|keyboardHidden|orientation|screenSize|locale"
-      android:launchMode="singleInstance"
-      android:excludeFromRecents="true">
+      android:excludeFromRecents="true"
+      android:launchMode="singleInstance">
 
       <!--
       <intent-filter>
@@ -206,14 +206,6 @@
       <intent-filter>
         <action android:name="android.intent.action.MEDIA_BUTTON" />
         <action android:name="android.media.AUDIO_BECOMING_NOISY" />
-      </intent-filter>
-    </receiver>
-
-    <receiver
-      android:name="com.tapstream.sdk.ReferrerReceiver"
-      android:exported="true">
-      <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
       </intent-filter>
     </receiver>
 

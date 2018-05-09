@@ -191,7 +191,7 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
         Realm realm = Realm.getDefaultInstance();
 
-        final RealmResults<RealmCallLog> results = realm.where(RealmCallLog.class).findAllSorted(RealmCallLogFields.TIME, Sort.DESCENDING);
+        final RealmResults<RealmCallLog> results = realm.where(RealmCallLog.class).findAll().sort(RealmCallLogFields.TIME, Sort.DESCENDING);
 
         if (results.size() > 0) {
             imgCallEmpty.setVisibility(View.GONE);
@@ -438,7 +438,7 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             Realm realm = Realm.getDefaultInstance();
                             try {
-                                RealmCallLog realmCallLog = realm.where(RealmCallLog.class).findAllSorted(RealmCallLogFields.TIME, Sort.DESCENDING).first();
+                                RealmCallLog realmCallLog = realm.where(RealmCallLog.class).findAll().sort(RealmCallLogFields.TIME, Sort.DESCENDING).first();
                                 new RequestSignalingClearLog().signalingClearLog(realmCallLog.getId());
                                 imgCallEmpty.setVisibility(View.VISIBLE);
                                 empty_call.setVisibility(View.VISIBLE);

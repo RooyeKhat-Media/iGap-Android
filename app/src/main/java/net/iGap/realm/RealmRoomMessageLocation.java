@@ -17,10 +17,10 @@ import org.parceler.Parcel;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.RealmRoomMessageLocationRealmProxy;
 import io.realm.annotations.PrimaryKey;
+import io.realm.net_iGap_realm_RealmRoomMessageLocationRealmProxy;
 
-@Parcel(implementations = {RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class})
+@Parcel(implementations = {net_iGap_realm_RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class})
 public class RealmRoomMessageLocation extends RealmObject {
     private double locationLat;
     private double locationLong;

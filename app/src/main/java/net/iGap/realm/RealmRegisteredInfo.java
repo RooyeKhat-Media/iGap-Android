@@ -376,7 +376,7 @@ public class RealmRegisteredInfo extends RealmObject {
     public RealmList<RealmAvatar> getAvatars() {
         RealmList<RealmAvatar> avatars = new RealmList<>();
         Realm realm = Realm.getDefaultInstance();
-        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, id).findAllSorted(RealmAvatarFields.ID, Sort.ASCENDING)) {
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, id).findAll().sort(RealmAvatarFields.ID, Sort.ASCENDING)) {
             avatars.add(avatar);
         }
         realm.close();

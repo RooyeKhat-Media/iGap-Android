@@ -49,10 +49,10 @@
 
             <net.iGap.module.MaterialDesignTextView
               android:id="@+id/pu_txt_agreeImage"
-              android:layout_width="@dimen/dp52"
+              android:layout_width="@dimen/dp48"
               android:layout_height="match_parent"
               android:gravity="center"
-              android:text="@string/md_back_arrow"
+              android:text="@string/md_close_button"
               android:textAppearance="@style/TextIconAppearance_toolbar"
               android:textColor="@color/whit_background" />
           </net.iGap.libs.rippleeffect.RippleView>

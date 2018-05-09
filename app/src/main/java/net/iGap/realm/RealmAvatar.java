@@ -114,7 +114,7 @@ public class RealmAvatar extends RealmObject {
      * @return return latest RealmAvatar for this ownerId
      */
     public static RealmAvatar getLastAvatar(long ownerId, Realm realm) {
-        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING)) {
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, ownerId).findAll().sort(RealmAvatarFields.ID, Sort.DESCENDING)) {
             if (avatar.getFile() != null) {
                 return avatar;
             }

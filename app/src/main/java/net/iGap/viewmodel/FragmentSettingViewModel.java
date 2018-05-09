@@ -7,7 +7,7 @@ package net.iGap.viewmodel;
  * iGap Messenger | Free, Fast and Secure instant messaging application
  * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
  * All rights reserved.
-*/
+ */
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -103,8 +103,13 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 
 import static android.content.Context.MODE_PRIVATE;
+import static net.iGap.G.appBarColor;
+import static net.iGap.G.attachmentColor;
 import static net.iGap.G.context;
+import static net.iGap.G.headerTextColor;
+import static net.iGap.G.notificationColor;
 import static net.iGap.G.onRefreshActivity;
+import static net.iGap.G.toggleButtonColor;
 import static net.iGap.R.string.log_out;
 
 public class FragmentSettingViewModel {
@@ -130,6 +135,9 @@ public class FragmentSettingViewModel {
     public static int KEY_AD_ROAMINGN_GIF = -1;
     static boolean isActiveRun = false;
     public long userId;
+
+    boolean isCheckedThemeDark;
+
     public ObservableField<String> callbackSetName = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.first_name));
     public ObservableField<String> callbackTextSize = new ObservableField<>("16");
     public ObservableField<String> callbackSetTitleName = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.first_name));
@@ -146,6 +154,7 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isShowVote = new ObservableField<>();
     public ObservableField<Boolean> isSenderNameGroup = new ObservableField<>();
     public ObservableField<Boolean> isSendEnter = new ObservableField<>();
+    public ObservableField<Boolean> isThemeDark = new ObservableField<>();
     public ObservableField<Boolean> isSaveGallery = new ObservableField<>();
     public ObservableField<Boolean> isAutoGif = new ObservableField<>();
     public ObservableField<Boolean> isCompress = new ObservableField<>();
@@ -1084,6 +1093,57 @@ public class FragmentSettingViewModel {
         }
     }
 
+    public void onClickThemeDark(View view) {
+
+        isThemeDark.set(!isThemeDark.get());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (isThemeDark.get()) {
+            editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, true);
+            editor.putString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_dark_appBarColor);
+            editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_dark_notificationColor);
+            editor.putString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_dark_toggleButtonColor);
+            editor.putString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_dark_attachmentColor);
+            editor.putString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_dark_headerTextColor);
+            editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_dark_progressColor);
+            editor.apply();
+
+            appBarColor = Config.default_dark_appBarColor;
+            notificationColor = Config.default_dark_notificationColor;
+            toggleButtonColor = Config.default_dark_toggleButtonColor;
+            attachmentColor = Config.default_dark_attachmentColor;
+            headerTextColor = Config.default_dark_headerTextColor;
+            G.progressColor = Config.default_dark_progressColor;
+
+            G.isRestartActivity = true;
+            G.isUpdateNotificaionColorMain = true;
+            G.isUpdateNotificaionColorChannel = true;
+            G.isUpdateNotificaionColorGroup = true;
+            G.isUpdateNotificaionColorChat = true;
+            G.fragmentActivity.recreate();
+
+            if (G.onRefreshActivity != null) {
+                G.onRefreshActivity.refresh("");
+                G.isRestartActivity = true;
+            }
+
+        } else {
+            editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+            editor.apply();
+            notificationColorClick(Color.parseColor(Config.default_notificationColor), false);
+            headerColorClick(Color.parseColor(Config.default_headerTextColor), false);
+            toggleBottomClick(Color.parseColor(Config.default_toggleButtonColor));
+            sendAndAttachColorClick(Color.parseColor(Config.default_attachmentColor));
+            appBarColorClick(Color.parseColor(Config.default_appBarColor));
+            progressColorClick(Color.parseColor(Config.default_appBarColor), false);
+        }
+
+    }
+
+    public void onCheckedChangedThemeDark(boolean isChecked) {
+
+    }
+
     public void onClickTitleBarColor(View view) {
         showSelectAppColorDialog(R.string.app_theme);
     }
@@ -1429,7 +1489,6 @@ public class FragmentSettingViewModel {
     }
 
 
-
     private void getInfo() {
 
         realmPrivacy = getRealm().where(RealmPrivacy.class).findFirst();
@@ -1503,6 +1562,9 @@ public class FragmentSettingViewModel {
         int checkedSendByEnter = sharedPreferences.getInt(SHP_SETTING.KEY_SEND_BT_ENTER, 0);
         isSendEnter.set(getBoolean(checkedSendByEnter));
 
+
+        boolean checkedThemeDark = sharedPreferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+        isThemeDark.set(checkedThemeDark);
 
         int checkedAutoGif = sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS);
         isAutoGif.set(getBoolean(checkedAutoGif));

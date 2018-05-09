@@ -16,9 +16,9 @@ import org.parceler.Parcel;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.RealmStringRealmProxy;
+import io.realm.net_iGap_realm_RealmStringRealmProxy;
 
-@Parcel(implementations = {RealmStringRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmString.class})
+@Parcel(implementations = {net_iGap_realm_RealmStringRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmString.class})
 public class RealmString extends RealmObject {
 
     private String string;

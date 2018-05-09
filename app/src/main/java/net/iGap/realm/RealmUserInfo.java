@@ -29,6 +29,7 @@ public class RealmUserInfo extends RealmObject {
     private int selfRemove;
     private String token;
     private String authorHash;
+    private boolean importContactLimit;
 
     public static RealmUserInfo getRealmUserInfo(Realm realm) {
         return realm.where(RealmUserInfo.class).findFirst();
@@ -141,6 +142,35 @@ public class RealmUserInfo extends RealmObject {
         realm.close();
     }
 
+
+    public static void updateImportContactLimit() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setImportContactLimit(true);
+                }
+            }
+        });
+        realm.close();
+    }
+
+    public static boolean isLimitImportContacts() {
+        boolean result = false;
+        Realm realm = Realm.getDefaultInstance();
+        RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
+        if (userInfo != null) {
+            if (userInfo.isImportContactLimit()) {
+                result = true;
+            }
+        }
+        realm.close();
+        return result;
+    }
+
+
     public RealmRegisteredInfo getUserInfo() {
         return userInfo;
     }
@@ -244,4 +274,13 @@ public class RealmUserInfo extends RealmObject {
         }
         return false;
     }
+
+    public boolean isImportContactLimit() {
+        return importContactLimit;
+    }
+
+    public void setImportContactLimit(boolean value) {
+        importContactLimit = value;
+    }
+
 }

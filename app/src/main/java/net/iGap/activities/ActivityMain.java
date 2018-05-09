@@ -596,13 +596,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 HelperPermission.getContactPermision(ActivityMain.this, new OnGetPermission() {
                     @Override
                     public void Allow() throws IOException {
-                        /**
-                         * set G.isSendContact = false to permitted user
-                         * for import contacts
-                         */
-                        G.isSendContact = false;
-                        LoginActions.importContact();
-
+                        if (!G.isSendContact) {
+                            G.isSendContact = true;
+                            LoginActions.importContact();
+                        }
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean(SHP_SETTING.KEY_GET_CONTACT, true);
                         editor.apply();
@@ -1948,7 +1945,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
             }
             if (updateFromServer) {
-                getUserInfo(realmUserInfo);
+                //getUserInfo(realmUserInfo);
             }
             setImage();
         }

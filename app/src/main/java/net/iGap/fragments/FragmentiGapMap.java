@@ -218,7 +218,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         String pathName = "";
         Bitmap bitmap = null;
         Realm realm = Realm.getDefaultInstance();
-        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAllSorted(RealmAvatarFields.ID, Sort.DESCENDING)) {
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAll().sort(RealmAvatarFields.ID, Sort.DESCENDING)) {
             if (avatar.getFile() != null) {
                 pathName = avatar.getFile().getLocalFilePath();
                 if (pathName == null) {
@@ -512,7 +512,9 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         map.setTileSource(new OnlineTileSourceBase("USGS Topo", ZOOM_LEVEL_MIN, ZOOM_LEVEL_MAX, 256, ".png", new String[]{url}) {
             @Override
             public String getTileURLString(MapTile aTile) {
-                return getBaseUrl() + aTile.getZoomLevel() + "/" + aTile.getX() + "/" + aTile.getY() + mImageFilenameEnding;
+                String mapUrl = "http://mt.google.com/vt/lyrs=r&x=" + aTile.getX() + "&y=" + aTile.getY() + "&z=" + aTile.getZoomLevel();
+                return mapUrl;
+                //return getBaseUrl() + aTile.getZoomLevel() + "/" + aTile.getX() + "/" + aTile.getY() + mImageFilenameEnding;
             }
         });
 
@@ -1038,7 +1040,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                     }
                 }
             }
-        }, GET_NEARBY_DELAY);
+        }, 0);
     }
 
     private void initMapListener() {
@@ -1172,20 +1174,54 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         //}
     }
 
-    @Override
-    public void onNearbyCoordinate(List<ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse.Result> results) {
-        map.getOverlays().removeAll(markers);
+    private void downloadMarkerAvatar(Realm realm, long userId) {
+        for (RealmAvatar avatar : realm.where(RealmAvatar.class).equalTo(RealmAvatarFields.OWNER_ID, userId).findAll().sort(RealmAvatarFields.ID, Sort.DESCENDING)) {
+            if (avatar.getFile() != null) {
+                String pathName = avatar.getFile().getLocalFilePath();
+                if (pathName == null) {
+                    pathName = avatar.getFile().getLocalThumbnailPath();
+                    if (pathName == null) {
+                        HelperAvatar.getAvatar(G.userId, HelperAvatar.AvatarType.USER, false, new OnAvatarGet() {
+                            @Override
+                            public void onAvatarGet(String avatarPath, long roomId) {
+                            }
 
-        for (final ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse.Result result : results) {
-            if (G.userId != result.getUserId()) { // don't show mine
-                RealmRegisteredInfo.getRegistrationInfo(result.getUserId(), new OnInfo() {
-                    @Override
-                    public void onInfo(RealmRegisteredInfo registeredInfo) {
-                        drawMark(result.getLat(), result.getLon(), result.getHasComment(), result.getUserId());
+                            @Override
+                            public void onShowInitials(String initials, String color) {
+                            }
+                        });
                     }
-                });
+                }
+                break;
             }
         }
+
+    }
+
+    @Override
+    public void onNearbyCoordinate(final List<ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse.Result> results) {
+        map.getOverlays().removeAll(markers);
+        Realm realm = Realm.getDefaultInstance();
+        for (final ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse.Result result : results) {
+            downloadMarkerAvatar(realm, result.getUserId());
+        }
+        realm.close();
+
+        G.handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for (final ProtoGeoGetNearbyCoordinate.GeoGetNearbyCoordinateResponse.Result result : results) {
+                    if (G.userId != result.getUserId()) { // don't show mine
+                        RealmRegisteredInfo.getRegistrationInfo(result.getUserId(), new OnInfo() {
+                            @Override
+                            public void onInfo(RealmRegisteredInfo registeredInfo) {
+                                drawMark(result.getLat(), result.getLon(), result.getHasComment(), result.getUserId());
+                            }
+                        });
+                    }
+                }
+            }
+        }, 2000);
 
         isSendRequestGeoCoordinate = false;
     }

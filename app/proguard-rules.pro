@@ -16,8 +16,6 @@
 #   public *;
 #}
 
-### TapStream
--keep class com.google.android.gms.ads.identifier.** { *; }
 
 ########## My Tricks
 -keep class net.iGap.proto.** , com.neovisionaries.ws.client.** { *; }

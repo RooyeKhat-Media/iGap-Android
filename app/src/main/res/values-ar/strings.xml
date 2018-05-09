@@ -2099,7 +2099,7 @@
   <string name="zihaje">ذیحجه</string>
 
   <string name="st_multi_tab">تبويب متعدد</string>
-
+  <string name="st_dark_theme">موضوع الظلام</string>
   <string name="dont_ask_again">حصلت عليه</string>
   <string name="attention">اهتمام</string>
   <string name="content_attention_dialog">ملاحظة: تجدر الإشارة إلى أن الأفراد على الخريطة سيتم عرض مع وجود خطأ من 500 متر. لذلك لا تقلق</string>
@@ -2110,9 +2110,17 @@
   <string name="another_room">غرفة أخرى</string>
   <string name="send">إرسال</string>
   <string name="do_not_send">لا ترسل</string>
-  <string name="save_data_in_sd_card">Save data in sd card</string>
-  <string name="are_you_sure">Are you sure</string>
-  <string name="change_storage_place">Change storage place</string>
-  <string name="other_files">Other Files</string>
+  <string name="save_data_in_sd_card">حفظ المعلومات على البطاقة الجانبية</string>
+  <string name="are_you_sure">هل أنت متأكد؟</string>
+  <string name="change_storage_place">تغيير موقع التخزين</string>
+  <string name="other_files">ملفات اخرى</string>
+  <string name="title_import_contact_limit">دخول قائمة الاتصال</string>
+  <string name="content_import_contact_limit">عذرًا ، عدد جهات الاتصال لديك كبير جدًا لا يمكننا التحقق من الخادم ، يرجى حفظ جهات الاتصال على مستوى معقول</string>
 
+  <string name="filter_cancel_content">هل تخليت عن التغييرات؟</string>
+  <string name="lbl_brightness">سطوع</string>
+  <string name="lbl_contrast">تباين</string>
+  <string name="lbl_saturation">التشبع</string>
+  <string name="tab_filters">مرشح اللون</string>
+  <string name="tab_edit">تحرير</string>
 </resources>

@@ -26,16 +26,17 @@ import java.io.File;
 import java.io.IOException;
 
 import io.realm.Realm;
-import io.realm.RealmAttachmentRealmProxy;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.net_iGap_realm_RealmAttachmentRealmProxy;
 
-@Parcel(implementations = {RealmAttachmentRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmAttachment.class})
+@Parcel(implementations = {net_iGap_realm_RealmAttachmentRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmAttachment.class})
 public class RealmAttachment extends RealmObject {
     // should be message id for message attachment and user id for avatar
     @PrimaryKey
     private long id;
     private String token;
+    private String url;
     private String name;
     private long size;
     private int width;
@@ -82,6 +83,7 @@ public class RealmAttachment extends RealmObject {
         realmAttachment.setName(attachment.getName());
         realmAttachment.setSize(attachment.getSize());
         realmAttachment.setToken(attachment.getToken());
+        realmAttachment.setUrl(attachment.getPublicUrl());
         realmAttachment.setWidth(attachment.getWidth());
 
         long smallMessageThumbnail = SUID.id().get();
@@ -136,6 +138,7 @@ public class RealmAttachment extends RealmObject {
             realmAttachment.setName(file.getName());
             realmAttachment.setSize(file.getSize());
             realmAttachment.setToken(file.getToken());
+            realmAttachment.setUrl(file.getPublicUrl());
             realmAttachment.setWidth(file.getWidth());
         } else {
 
@@ -263,6 +266,14 @@ public class RealmAttachment extends RealmObject {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getName() {

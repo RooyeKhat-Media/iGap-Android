@@ -14,6 +14,7 @@ import com.google.protobuf.ByteString;
 
 import net.iGap.Config;
 import net.iGap.G;
+import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperString;
 import net.iGap.module.AESCrypt;
 import net.iGap.proto.ProtoConnectionSecuring;
@@ -84,15 +85,19 @@ public class ConnectionSecuringResponse extends MessageHandler {
 
     @Override
     public void timeOut() {
-        // disconnect socket for do securing action again
-        //WebSocketClient.getInstance().disconnect();
+        /**
+         * disconnect socket for do securing action again.
+         * if socket is not connect don't need to try for disconnect again because after establish
+         * internet connection these steps will be done
+         */
+        if (WebSocketClient.isConnect()) {
+            WebSocketClient.getInstance().disconnect();
+        }
         super.timeOut();
     }
 
     @Override
     public void error() {
-        // disconnect socket for do securing action again
-        //WebSocketClient.getInstance().disconnect();
         super.error();
     }
 }

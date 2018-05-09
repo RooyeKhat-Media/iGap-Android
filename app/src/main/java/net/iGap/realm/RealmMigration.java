@@ -181,11 +181,30 @@ public class RealmMigration implements io.realm.RealmMigration {
             oldVersion++;
         }
 
-        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) {
+        if (oldVersion == 15) {
             RealmObjectSchema realmChannelRoom = schema.get(RealmChannelRoom.class.getSimpleName());
             if (realmChannelRoom != null) {
                 realmChannelRoom.addField("verified", boolean.class, FieldAttribute.REQUIRED);
                 realmChannelRoom.addField("reactionStatus", boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 16
+            RealmObjectSchema realmUserInfo = schema.get(RealmUserInfo.class.getSimpleName());
+            if (realmUserInfo != null) {
+                realmUserInfo.addField("importContactLimit", boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            RealmObjectSchema realmAttachment = schema.get(RealmAttachment.class.getSimpleName());
+            if (realmAttachment != null) {
+                realmAttachment.addField("url", String.class);
+            }
+
+            RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
+            if (realmRoom != null) {
+                realmRoom.addField("lastScrollPositionOffset", int.class, FieldAttribute.REQUIRED);
             }
 
             oldVersion++;

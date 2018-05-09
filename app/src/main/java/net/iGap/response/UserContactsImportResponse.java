@@ -10,6 +10,10 @@
 
 package net.iGap.response;
 
+import net.iGap.G;
+import net.iGap.module.Contacts;
+import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestUserContactsGetList;
 
 public class UserContactsImportResponse extends MessageHandler {
@@ -35,6 +39,12 @@ public class UserContactsImportResponse extends MessageHandler {
             getContactList = (Boolean) identity;
         }
 
+
+        if (G.onQueueSendContact != null) {
+            G.onQueueSendContact.sendContact();
+        }
+
+
         if (getContactList) {
             new RequestUserContactsGetList().userContactGetList();
         }
@@ -48,6 +58,18 @@ public class UserContactsImportResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
+
+        Contacts.isSendingContactToServer = false;
+        G.onQueueSendContact = null;
+
+        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
+        int majorCode = errorResponse.getMajorCode();
+        int minorCode = errorResponse.getMinorCode();
+        if (majorCode == 118) {
+            if (minorCode == 5) {
+                RealmUserInfo.updateImportContactLimit();
+            }
+        }
 
         /**
          * even the import wasn't successful send request for get contacts list

@@ -319,9 +319,9 @@ public class RealmMember extends RealmObject {
         RealmResults<RealmRegisteredInfo> findMember;
 
         if (filter != null && filter.length() > 0) {
-            findMember = realm.where(RealmRegisteredInfo.class).contains(RealmRegisteredInfoFields.DISPLAY_NAME, filter, Case.INSENSITIVE).findAllSorted(RealmRegisteredInfoFields.DISPLAY_NAME);
+            findMember = realm.where(RealmRegisteredInfo.class).contains(RealmRegisteredInfoFields.DISPLAY_NAME, filter, Case.INSENSITIVE).findAll().sort(RealmRegisteredInfoFields.DISPLAY_NAME);
         } else {
-            findMember = realm.where(RealmRegisteredInfo.class).equalTo(RealmRoomFields.ID, roomId).findAllSorted(RealmRegisteredInfoFields.DISPLAY_NAME);
+            findMember = realm.where(RealmRegisteredInfo.class).equalTo(RealmRoomFields.ID, roomId).findAll().sort(RealmRegisteredInfoFields.DISPLAY_NAME);
         }
         try {
             RealmQuery<RealmMember> query;

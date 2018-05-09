@@ -60,6 +60,7 @@ import net.iGap.proto.ProtoUserReport;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
+import net.iGap.realm.RealmUserInfo;
 import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestUserContactImport;
 import net.iGap.request.RequestUserContactsBlock;
@@ -72,11 +73,13 @@ import net.iGap.viewmodel.FragmentContactsProfileViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
+import static net.iGap.module.Contacts.showLimitDialog;
 
 
 public class FragmentContactsProfile extends BaseFragment {
@@ -564,7 +567,13 @@ public class FragmentContactsProfile extends BaseFragment {
      * import contact to server with True force
      */
     private void addContactToServer() {
-        ArrayList<StructListOfContact> contacts = new ArrayList<>();
+
+        if (RealmUserInfo.isLimitImportContacts()) {
+            showLimitDialog();
+            return;
+        }
+
+        List<StructListOfContact> contacts = new ArrayList<>();
         StructListOfContact contact = new StructListOfContact();
         contact.firstName = fragmentContactsProfileViewModel.firstName;
         contact.lastName = fragmentContactsProfileViewModel.lastName;

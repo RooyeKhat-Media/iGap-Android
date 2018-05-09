@@ -12,6 +12,7 @@ package net.iGap.response;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 
 import net.iGap.G;
 import net.iGap.adapter.items.chat.AbstractMessage;
@@ -50,14 +51,16 @@ public class UserInfoResponse extends MessageHandler {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                final Realm realm = Realm.getDefaultInstance();
+                Realm realm = Realm.getDefaultInstance();
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
-                    public void execute(Realm realm) {
+                    public void execute(@NonNull Realm realm) {
                         RealmRegisteredInfo.putOrUpdate(realm, builder.getUser());
                         RealmAvatar.putOrUpdateAndManageDelete(realm, builder.getUser().getId(), builder.getUser().getAvatar());
                     }
                 });
+
+                realm.close();
 
                 G.handler.postDelayed(new Runnable() {
                     @Override
@@ -75,7 +78,6 @@ public class UserInfoResponse extends MessageHandler {
                     return;
                 }
 
-                realm.close();
 
                 G.handler.post(new Runnable() {
                     @Override

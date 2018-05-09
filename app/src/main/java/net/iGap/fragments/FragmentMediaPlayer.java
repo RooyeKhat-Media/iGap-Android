@@ -280,8 +280,6 @@ public class FragmentMediaPlayer extends BaseFragment {
                 return false;
             }
         });
-
-        rcvListMusicPlayer.scrollToPosition(fastItemAdapter.getPosition(Long.parseLong(MusicPlayer.messageId)));
         rcvListMusicPlayer.scrollToPosition(fastItemAdapter.getPosition(Long.parseLong(MusicPlayer.messageId)));
     }
 
@@ -549,7 +547,7 @@ public class FragmentMediaPlayer extends BaseFragment {
         });
 
 
-        HelperDownloadFile.startDownload(MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.startDownload(MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getUrl(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String path, final int progress) {
 
@@ -643,7 +641,7 @@ public class FragmentMediaPlayer extends BaseFragment {
                     .notEqualTo(RealmRoomMessageFields.DELETED, true)
                     .contains(RealmRoomMessageFields.MESSAGE_TYPE, ProtoGlobal.RoomMessageType.AUDIO.toString())
                     .lessThan(RealmRoomMessageFields.MESSAGE_ID, MusicPlayer.mediaList.get(MusicPlayer.mediaList.size() - 1).getMessageId())
-                    .findAllSorted(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
+                    .findAll().sort(RealmRoomMessageFields.MESSAGE_ID, Sort.DESCENDING);
         } catch (IllegalStateException e) {
         }
 

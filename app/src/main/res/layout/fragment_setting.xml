@@ -967,7 +967,53 @@
             <View
               android:layout_width="match_parent"
               android:layout_height="1dp"
+              android:visibility="gone"
               android:background="@color/background_editText" />
+
+            <LinearLayout
+
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp48"
+              android:onClick="@{fragmentSettingViewModel::onClickThemeDark}"
+              android:orientation="horizontal"
+              android:paddingEnd="@dimen/dp16"
+              android:visibility="gone"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingStart="@dimen/dp16">
+
+              <TextView
+                android:id="@+id/st_txt_st_theme_dark"
+                fontPath="fonts/IRANSansMobile.ttf"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dp4"
+                android:text="@string/st_dark_theme"
+                android:textColor="@color/black_register"
+                android:textSize="@dimen/dp15"
+                android:textStyle="normal" />
+
+
+              <ToggleButton
+                android:id="@+id/st_txt_st_toggle_theme_dark"
+                android:layout_width="@dimen/dp44"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/st_switch_button"
+                android:checked="@{fragmentSettingViewModel.isThemeDark}"
+                android:onClick="@{fragmentSettingViewModel::onClickThemeDark}"
+                android:textOff=""
+                android:textOn="" />
+
+            </LinearLayout>
+
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/background_editText"
+              android:visibility="visible" />
+
 
             <LinearLayout
               android:layout_width="match_parent"
