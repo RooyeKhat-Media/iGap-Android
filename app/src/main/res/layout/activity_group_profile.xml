@@ -518,7 +518,7 @@
                 android:layout_marginStart="@dimen/dp4"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                style="?textSubColorSettingTheme"
+                android:tint="@color/gray_5c"
                 app:srcCompat="@drawable/account_multiple"
 
                 />

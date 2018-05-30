@@ -22,11 +22,13 @@ public class HelperMember {
             new RequestClientGetRoom().clientGetRoom(roomId, null);
         } else {
             RealmMember.addMember(roomId, userId, role);
+            RealmRoom.updateMemberCount(roomId, true);
         }
     }
 
     public static void kickMember(long roomId, long memberId) {
         RealmMember.kickMember(roomId, memberId);
+        RealmRoom.updateMemberCount(roomId, false);
     }
 
     public static void updateRole(long roomId, long memberId, String role) {

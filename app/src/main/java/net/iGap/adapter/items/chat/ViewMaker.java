@@ -980,7 +980,7 @@ public class ViewMaker {
         fileName.setTextAppearance(context, android.R.style.TextAppearance_Medium);
         fileName.setMaxWidth((int) G.context.getResources().getDimension(R.dimen.dp160));
         fileName.setText("file_name.ext");
-        fileName.setTextColor(Color.parseColor(G.textSubTheme));
+        fileName.setTextColor(Color.parseColor(G.textTitleTheme));
         setTextSize(fileName, R.dimen.dp14);
         fileName.setTypeface(G.typeface_IRANSansMobile_Bold);
         LinearLayout.LayoutParams layout_298 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1395,7 +1395,7 @@ public class ViewMaker {
     private static View getTextView() {
         LinearLayout csliwt_layout_container_message = new LinearLayout(G.context);
         csliwt_layout_container_message.setId(R.id.csliwt_layout_container_message);
-        csliwt_layout_container_message.setBackgroundColor(Color.parseColor(G.backgroundTheme));
+//        csliwt_layout_container_message.setBackgroundColor(Color.parseColor(G.backgroundTheme));
         csliwt_layout_container_message.setOrientation(HORIZONTAL);
         LinearLayout.LayoutParams layout_327 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         csliwt_layout_container_message.setLayoutParams(layout_327);

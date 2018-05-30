@@ -12,7 +12,9 @@ package net.iGap.response;
 
 import net.iGap.G;
 import net.iGap.proto.ProtoClientGetRoomMessage;
-import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmRoomMessage;
+
+import io.realm.Realm;
 
 public class ClientGetRoomMessageResponse extends MessageHandler {
 
@@ -31,9 +33,21 @@ public class ClientGetRoomMessageResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
-        ProtoClientGetRoomMessage.ClientGetRoomMessageResponse.Builder builder = (ProtoClientGetRoomMessage.ClientGetRoomMessageResponse.Builder) message;
+        final ProtoClientGetRoomMessage.ClientGetRoomMessageResponse.Builder builder = (ProtoClientGetRoomMessage.ClientGetRoomMessageResponse.Builder) message;
+        final Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoomMessage.putOrUpdate(builder.getMessage(), Long.parseLong(identity), false, true, realm);
+            }
+        });
+
+        realm.close();
+
+
         if (G.onClientGetRoomMessage != null) {
-            G.onClientGetRoomMessage.onClientGetRoomMessageResponse(builder.getMessage());
+            G.onClientGetRoomMessage.onClientGetRoomMessageResponse(builder.getMessage().getMessageId());
         }
     }
 
@@ -45,12 +59,7 @@ public class ClientGetRoomMessageResponse extends MessageHandler {
     @Override
     public void error() {
         super.error();
-        ProtoError.ErrorResponse.Builder errorResponse = (ProtoError.ErrorResponse.Builder) message;
-        int majorCode = errorResponse.getMajorCode();
-        int minorCode = errorResponse.getMinorCode();
-        if (G.onClientGetRoomMessage != null) {
-            G.onClientGetRoomMessage.onError(majorCode, minorCode);
-        }
+
     }
 }
 

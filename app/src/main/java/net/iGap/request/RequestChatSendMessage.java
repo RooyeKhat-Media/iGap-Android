@@ -55,6 +55,7 @@ public class RequestChatSendMessage {
     }
 
     public RequestChatSendMessage sendMessage(String fakeMessageIdAsIdentity) {
+        chatSendMessage.setRandomId(Long.parseLong(fakeMessageIdAsIdentity));
         RequestWrapper requestWrapper = new RequestWrapper(201, chatSendMessage, fakeMessageIdAsIdentity);
         try {
             RequestQueue.sendRequest(requestWrapper);

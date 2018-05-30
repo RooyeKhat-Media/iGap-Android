@@ -21,7 +21,6 @@ import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperFragment;
 import net.iGap.interfaces.OnAvatarGet;
-import net.iGap.interfaces.OnMapUsersGet;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.CircleImageView;
@@ -44,7 +43,7 @@ import static net.iGap.fragments.FragmentiGapMap.btnBack;
 import static net.iGap.fragments.FragmentiGapMap.isBackPress;
 import static net.iGap.fragments.FragmentiGapMap.pageUserList;
 
-public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBackPressedListener, OnMapUsersGet {
+public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBackPressedListener {
 
     private final int DEFAULT_LOOP_TIME = (int) (10 * DateUtils.SECOND_IN_MILLIS);
     private RecyclerView mRecyclerView;
@@ -73,7 +72,7 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //G.onMapUsersGet = this;
+
         initComponent(view);
         if (FragmentiGapMap.location != null) {
             getDistanceLoop(0, false);
@@ -178,20 +177,6 @@ public class FragmentMapUsers extends BaseFragment implements ActivityMain.OnBac
         if (btnBack != null) btnBack.performClick();
     }
 
-    @Override
-    public void onMapUsersGet(final long userId) {
-        //if (mAdapter != null) {
-        //    G.handler.post(new Runnable() {
-        //        @Override
-        //        public void run() {
-        //            RealmGeoNearbyDistance realmGeoNearbyDistance = getRealmMapUsers().where(RealmGeoNearbyDistance.class).equalTo(RealmGeoNearbyDistanceFields.USER_ID, userId).findFirst();
-        //            if (realmGeoNearbyDistance != null) {
-        //                mAdapter.add(new MapUserItem().setInfo(realmGeoNearbyDistance).withIdentifier(realmGeoNearbyDistance.getUserId()));
-        //            }
-        //        }
-        //    });
-        //}
-    }
 
     /**
      * ***********************************************************************************

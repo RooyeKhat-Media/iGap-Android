@@ -449,7 +449,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         }
         SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-        if (preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false)) {
+        if (G.isDarkTheme) {
             this.setTheme(R.style.Material_blackCustom);
         } else {
             this.setTheme(R.style.Material_lightCustom);

@@ -73,7 +73,7 @@ public class HelperMessageResponse {
                 }
 
                 if (identity != null && identity.length() > 0) {
-                    RealmRoomMessage.deleteMessage(realm, Long.parseLong(identity));
+                    RealmRoomMessage.deleteMessage(realm, Long.parseLong(identity), roomId);
                 }
 
                 if (room == null) {

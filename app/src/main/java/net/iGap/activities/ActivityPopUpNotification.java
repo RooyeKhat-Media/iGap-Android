@@ -70,6 +70,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityPopUpNotification extends AppCompatActivity {
 
@@ -178,9 +179,13 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(G.updateResources(newBase)));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        G.checkLanguage();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         super.onCreate(savedInstanceState);

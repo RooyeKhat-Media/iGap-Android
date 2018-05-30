@@ -16,6 +16,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ import net.iGap.databinding.FragmentSettingBinding;
 import net.iGap.fragments.FragmentBio;
 import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentChatBackground;
+import net.iGap.fragments.FragmentDarkTheme;
 import net.iGap.fragments.FragmentData;
 import net.iGap.fragments.FragmentDeleteAccount;
 import net.iGap.fragments.FragmentLanguage;
@@ -160,7 +162,9 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isTrim = new ObservableField<>();
     public ObservableField<Boolean> isDefaultPlayer = new ObservableField<>();
     public ObservableField<Boolean> isCrop = new ObservableField<>();
+    public ObservableField<Boolean> isTime = new ObservableField<>();
     public ObservableField<Boolean> isCameraButtonSheet = new ObservableField<>(true);
+    public ObservableField<Integer> isAutoThemeDark = new ObservableField<>(View.GONE);
 
 
     private static SharedPreferences sharedPreferences;
@@ -176,7 +180,7 @@ public class FragmentSettingViewModel {
     private RealmPrivacy realmPrivacy;
     private RealmRegisteredInfo mRealmRegisteredInfo;
     private FragmentSetting fragmentSetting;
-    private FragmentSettingBinding fragmentSettingBinding;
+    private static FragmentSettingBinding fragmentSettingBinding;
     private int[] fontSizeArray = {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
 
 
@@ -1047,6 +1051,26 @@ public class FragmentSettingViewModel {
 
     }
 
+    public void onClickTime(View view) {
+
+        isTime.set(!isTime.get());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        if (isTime.get()) {
+            G.isTimeWhole = true;
+            editor.putBoolean(SHP_SETTING.KEY_WHOLE_TIME, true);
+            editor.apply();
+        } else {
+            G.isTimeWhole = false;
+            editor.putBoolean(SHP_SETTING.KEY_WHOLE_TIME, false);
+            editor.apply();
+        }
+        if (G.onNotifyTime != null) {
+            G.onNotifyTime.notifyTime();
+        }
+    }
+
     public void onCheckedChangedMultiTab(boolean isChecked) {
 
 
@@ -1096,23 +1120,27 @@ public class FragmentSettingViewModel {
         isThemeDark.set(!isThemeDark.get());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (isThemeDark.get()) {
+            isAutoThemeDark.set(View.VISIBLE);
             setDarkTheme(editor);
         } else {
+            isAutoThemeDark.set(View.GONE);
             setLightTheme(editor);
         }
+    }
+
+//    public boolean isDarkTheme() {
+//        return isThemeDark.get();
+//    }
+
+    public void onClickAutoTimeDarkTheme(View v) {
+        new HelperFragment(FragmentDarkTheme.newInstance()).setReplace(false).load();
     }
 
     public static void setLightTheme(SharedPreferences.Editor editor) {
         G.isDarkTheme = false;
         editor.putBoolean(SHP_SETTING.KEY_THEME_DARK, false);
+        editor.putBoolean(SHP_SETTING.KEY_DISABLE_TIME_DARK_THEME, true);
         editor.apply();
-        G.backgroundTheme = "#FFFFFF";
-        G.textTitleTheme = "#000000";
-        G.textSubTheme = "#bbbbbb";
-        G.tintImage = "#000000";
-        G.backgroundTheme_2 = "#f9f9f9";
-        G.logLineTheme = "#e9e9e9";
-        G.voteIconTheme = "#696969";
         notificationColorClick(Color.parseColor(Config.default_notificationColor), false);
         headerColorClick(Color.parseColor(Config.default_headerTextColor), false);
         toggleBottomClick(Color.parseColor(Config.default_toggleButtonColor));
@@ -1120,6 +1148,7 @@ public class FragmentSettingViewModel {
         appBarColorClick(Color.parseColor(Config.default_appBarColor));
         progressColorClick(Color.parseColor(Config.default_appBarColor), false);
         menuBackgroundClick(Color.parseColor(Config.default_appBarColor), false);
+        Config.lightThemeColor();
     }
 
     public static void setDarkTheme(SharedPreferences.Editor editor) {
@@ -1141,13 +1170,8 @@ public class FragmentSettingViewModel {
         attachmentColor = Config.default_dark_attachmentColor;
         headerTextColor = Config.default_dark_headerTextColor;
         G.progressColor = Config.default_dark_progressColor;
-        G.backgroundTheme = "#151515";
-        G.textTitleTheme = "#ffffff";
-        G.textSubTheme = "#ffffff";
-        G.tintImage = "#ffffff";
-        G.backgroundTheme_2 = "#151515";
-        G.logLineTheme = "#4b4b4b";
-        G.voteIconTheme = "#cacaca";
+
+        Config.darkThemeColor();
 
         G.isUpdateNotificaionColorMain = true;
         G.isUpdateNotificaionColorChannel = true;
@@ -1572,6 +1596,9 @@ public class FragmentSettingViewModel {
         boolean checkedEnableMultiTab = sharedPreferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
         isMultiTab.set(checkedEnableMultiTab);
 
+        boolean checkedEnableTime = sharedPreferences.getBoolean(SHP_SETTING.KEY_WHOLE_TIME, false);
+        isTime.set(checkedEnableTime);
+
         poRbDialogTextSize = sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14) - 11;
         String textSize = "" + sharedPreferences.getInt(SHP_SETTING.KEY_MESSAGE_TEXT_SIZE, 14);
         callbackTextSize.set(textSize);
@@ -1586,6 +1613,11 @@ public class FragmentSettingViewModel {
 
         boolean checkedThemeDark = sharedPreferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
         isThemeDark.set(checkedThemeDark);
+        if (isThemeDark.get()) {
+            isAutoThemeDark.set(View.VISIBLE);
+        } else {
+            isAutoThemeDark.set(View.GONE);
+        }
 
         int checkedAutoGif = sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS);
         isAutoGif.set(getBoolean(checkedAutoGif));
@@ -1851,9 +1883,11 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgTitleBarColor.getBackground();
+            bgShape.setColor(color);
+        }
 
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgTitleBarColor.getBackground();
-//        bgShape.setColor(color);
         G.appBarColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_APP_BAR_COLOR, G.appBarColor);
         editor.apply();
@@ -1873,8 +1907,10 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgNotificationColor.getBackground();
-//        bgShape.setColor(color);
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgNotificationColor.getBackground();
+            bgShape.setColor(color);
+        }
         G.notificationColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_NOTIFICATION_COLOR, G.notificationColor);
         editor.apply();
@@ -1898,8 +1934,12 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
-//        bgShape.setColor(color);
+
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
+            bgShape.setColor(color);
+        }
+
         G.progressColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, G.progressColor);
         editor.apply();
@@ -1918,8 +1958,11 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
-//        bgShape.setColor(color);
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultProgressColor.getBackground();
+            bgShape.setColor(color);
+        }
+
         G.progressColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_PROGRES_COLOR, G.progressColor);
         editor.apply();
@@ -1934,8 +1977,11 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgToggleBottonColor.getBackground();
-//        bgShape.setColor(color);
+
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgToggleBottonColor.getBackground();
+            bgShape.setColor(color);
+        }
         G.toggleButtonColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, G.toggleButtonColor);
         editor.apply();
@@ -1949,8 +1995,13 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultHeaderFontColor.getBackground();
-//        bgShape.setColor(color);
+
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgDefaultHeaderFontColor.getBackground();
+            bgShape.setColor(color);
+        }
+
+
         G.headerTextColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_FONT_HEADER_COLOR, G.headerTextColor);
         editor.apply();
@@ -1969,8 +2020,10 @@ public class FragmentSettingViewModel {
         } else {
             editor = sharedPreferences.edit();
         }
-//        GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgSendAndAttachColor.getBackground();
-//        bgShape.setColor(color);
+        if (fragmentSettingBinding != null) {
+            GradientDrawable bgShape = (GradientDrawable) fragmentSettingBinding.asnImgSendAndAttachColor.getBackground();
+            bgShape.setColor(color);
+        }
         G.attachmentColor = "#" + Integer.toHexString(color);
         editor.putString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, G.attachmentColor);
         editor.apply();

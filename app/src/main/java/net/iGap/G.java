@@ -13,7 +13,9 @@ package net.iGap;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
@@ -30,7 +32,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import net.iGap.activities.ActivityCustomError;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperCheckInternetConnection;
-import net.iGap.helper.HelperLogMessage;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.interfaces.*;
 import net.iGap.module.ChatSendMessageUtil;
@@ -88,7 +89,6 @@ public class G extends MultiDexApplication {
     public static ArrayList<Integer> forcePriorityActionId = new ArrayList<>();
     public static HashMap<Integer, String> lookupMap = new HashMap<>();
     public static HashMap<String, ArrayList<Object>> requestQueueRelationMap = new HashMap<>();
-    public static HashMap<Long, HelperLogMessage.StructLog> logMessageUpdatList = new HashMap<>();
     public static HashMap<Integer, Integer> priorityActionId = new HashMap<>();
     public static Activity currentActivity;
     public static FragmentActivity fragmentActivity;
@@ -298,6 +298,7 @@ public class G extends MultiDexApplication {
     public static OnContactsGetList onContactsGetList;
     public static OnCallLogClear onCallLogClear;
     public static OnMapUsersGet onMapUsersGet;
+    public static OnPinedMessage onPinedMessage;
     public static OnSelectMenu onSelectMenu;
     public static OnRemoveFragment onRemoveFragment;
     public static OnChatDeleteInRoomList onChatDeleteInRoomList;
@@ -323,11 +324,13 @@ public class G extends MultiDexApplication {
     public static OnGeoGetComment onGeoGetComment;
     public static OnMapRegisterState onMapRegisterState;
     public static OnMapRegisterStateMain onMapRegisterStateMain;
+    public static OpenBottomSheetItem openBottomSheetItem;
     public static OnUnreadChange onUnreadChange;
     public static OnMapClose onMapClose;
     public static OnRegistrationInfo onRegistrationInfo;
     public static OnGeoCommentResponse onGeoCommentResponse;
     public static OnGeoGetConfiguration onGeoGetConfiguration;
+    public static OnNotifyTime onNotifyTime;
     public static ISignalingOffer iSignalingOffer;
     public static ISignalingRinging iSignalingRinging;
     public static ISignalingAccept iSignalingAccept;
@@ -348,22 +351,10 @@ public class G extends MultiDexApplication {
     public static boolean isRestartActivity = false; // for check passCode
     public static boolean isFirstPassCode = true; // for check passCode
     public static boolean multiTab = false;
+    public static boolean isTimeWhole = false;
     public static FragmentManager fragmentManager;
     private Tracker mTracker;
 
-    public static void checkLanguage() {
-        try {
-            String selectedLanguage = G.selectedLanguage;
-            if (selectedLanguage == null) return;
-            Locale locale = new Locale(selectedLanguage);
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.locale = locale;
-            context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onCreate() {
@@ -379,7 +370,6 @@ public class G extends MultiDexApplication {
             }
         }).start();
 
-
         context = getApplicationContext();
         handler = new Handler();
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -389,9 +379,43 @@ public class G extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        //MultiDex.install(this);
+        super.attachBaseContext(updateResources(base));
         new MultiDexUtils().getLoadedExternalDexClasses(this);
+    }
+
+    public static Context updateResources(Context baseContext) {
+        String selectedLanguage = G.selectedLanguage;
+        if (selectedLanguage == null) {
+            selectedLanguage = "en";
+        }
+
+        Locale locale = new Locale(selectedLanguage);
+        Locale.setDefault(locale);
+
+        Resources res = baseContext.getResources();
+        Configuration configuration = res.getConfiguration();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLocale(locale);
+        } else {
+            configuration.locale = locale;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            baseContext = baseContext.createConfigurationContext(configuration);
+        } else {
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+        }
+
+        G.context = baseContext;
+
+        return baseContext;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateResources(this);
     }
 
     synchronized public Tracker getDefaultTracker() {

@@ -54,6 +54,7 @@ public class RequestGroupSendMessage {
     }
 
     public RequestGroupSendMessage sendMessage(String fakeMessageIdAsIdentity) {
+        groupSendMessage.setRandomId(Long.parseLong(fakeMessageIdAsIdentity));
         RequestWrapper requestWrapper = new RequestWrapper(310, groupSendMessage, fakeMessageIdAsIdentity);
         try {
             RequestQueue.sendRequest(requestWrapper);

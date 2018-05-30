@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -39,10 +40,13 @@ import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.OnCallLeaveView;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.MaterialDesignTextView;
+import net.iGap.module.SHP_SETTING;
 import net.iGap.viewmodel.ActivityCallViewModel;
 import net.iGap.webrtc.WebRTC;
 
 import java.io.IOException;
+
+import static net.iGap.G.context;
 
 public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
@@ -121,6 +125,13 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     public void onCreate(Bundle savedInstanceState) {
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN | LayoutParams.FLAG_KEEP_SCREEN_ON | LayoutParams.FLAG_DISMISS_KEYGUARD | LayoutParams.FLAG_SHOW_WHEN_LOCKED | LayoutParams.FLAG_TURN_SCREEN_ON);
+
+        SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        if (preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false)) {
+            this.setTheme(R.style.Material_blackCustom);
+        } else {
+            this.setTheme(R.style.Material_lightCustom);
+        }
 
         super.onCreate(savedInstanceState);
 

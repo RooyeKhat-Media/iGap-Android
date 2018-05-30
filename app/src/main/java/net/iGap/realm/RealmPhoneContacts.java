@@ -18,6 +18,7 @@ import net.iGap.module.structs.StructListOfContact;
 import net.iGap.request.RequestUserContactImport;
 import net.iGap.request.RequestUserContactsGetList;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,9 +136,9 @@ public class RealmPhoneContacts extends RealmObject {
     private static void addContactToDB(final StructListOfContact item, Realm realm) {
         try {
             RealmPhoneContacts realmPhoneContacts = new RealmPhoneContacts();
-            realmPhoneContacts.setPhone(item.getPhone() + "_" + item.firstName + item.lastName);
-            realmPhoneContacts.setFirstName(item.firstName);
-            realmPhoneContacts.setLastName(item.lastName);
+            realmPhoneContacts.setPhone(checkString(item));
+//            realmPhoneContacts.setFirstName(item.firstName);
+//            realmPhoneContacts.setLastName(item.lastName);
             realm.copyToRealmOrUpdate(realmPhoneContacts);
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,7 +163,7 @@ public class RealmPhoneContacts extends RealmObject {
                         continue;
                     }
 
-                    if (realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, _item.getPhone() + "_" + _item.firstName + _item.lastName).findFirst() == null) {
+                    if (realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, checkString(_item)).findFirst() == null) {
                         notImportedList.add(_item);
                     }
                 }
@@ -172,6 +173,17 @@ public class RealmPhoneContacts extends RealmObject {
         realm.close();
 
         return notImportedList;
+    }
+
+    private static String checkString(StructListOfContact item) {
+        String phoneText = item.getPhone() + "_" + item.firstName + item.lastName;
+
+        try {
+            phoneText.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            phoneText = item.getPhone();
+        }
+        return phoneText;
     }
 
     public String getPhone() {

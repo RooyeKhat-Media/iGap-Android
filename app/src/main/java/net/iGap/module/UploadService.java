@@ -42,7 +42,7 @@ public class UploadService extends Service {
     private void sendVoice(final String savedPath, final Long mRoomId) {
         ProtoGlobal.Room.Type chatType = RealmRoom.detectType(mRoomId);
 
-        final long messageId = SUID.id().get();
+        final long messageId = AppUtils.makeRandomId();
         final long updateTime = TimeUtils.currentLocalTime();
         final long duration = AndroidUtils.getAudioDuration(getApplicationContext(), savedPath);
 

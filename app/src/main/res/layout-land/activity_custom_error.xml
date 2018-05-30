@@ -2,7 +2,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/gray_3c"
+  style="?backgroundSubChatTheme"
   android:clickable="true"
   android:gravity="center_horizontal"
   android:orientation="vertical">
@@ -37,6 +37,7 @@
           android:layout_marginTop="@dimen/dp10"
           android:text="@string/iGap_has_crashed"
           android:textAlignment="center"
+          style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp18"
           android:textStyle="bold" />
 
@@ -50,6 +51,7 @@
           android:text="@string/iGap_has_crashed_desc"
           android:textAlignment="center"
           android:textSize="@dimen/dp14"
+          style="?textTitleColorSettingTheme"
           android:textStyle="bold" />
 
 

@@ -47,6 +47,7 @@ public class FragmentContactsProfileViewModel implements OnUserContactEdit, OnUs
     public String lastName;
     public boolean isBlockUser = false;
     public boolean disableDeleteContact = true;
+    public boolean isVerified = false;
     public ObservableInt callVisibility = new ObservableInt(View.GONE);
     public ObservableInt toolbarVisibility = new ObservableInt(View.GONE);
     public ObservableInt bioVisibility = new ObservableInt(View.VISIBLE);
@@ -57,6 +58,7 @@ public class FragmentContactsProfileViewModel implements OnUserContactEdit, OnUs
     public ObservableField<String> phone = new ObservableField<>("0");
     public ObservableField<String> bio = new ObservableField<>();
     public ObservableField<String> sharedMedia = new ObservableField<>();
+    public ObservableField<Integer> verifyTextVisibility = new ObservableField<>(View.VISIBLE);
     private Realm realm;
     private RealmRoom mRoom;
     private RealmRegisteredInfo registeredInfo;
@@ -147,7 +149,7 @@ public class FragmentContactsProfileViewModel implements OnUserContactEdit, OnUs
             color = registeredInfo.getColor();
             initials = registeredInfo.getInitials();
             userStatus = registeredInfo.getStatus();
-
+            isVerified = registeredInfo.isVerified();
         } else if (realmUser != null) {
             if (realmUser.getDisplay_name() != null && !realmUser.getDisplay_name().equals("")) {
                 contactName.set(realmUser.getDisplay_name());
@@ -162,6 +164,19 @@ public class FragmentContactsProfileViewModel implements OnUserContactEdit, OnUs
             lastSeenValue = realmUser.getLast_seen();
             color = realmUser.getColor();
             initials = realmUser.getInitials();
+            isVerified = realmUser.isVerified();
+
+            if (realmUser.getBio() == null || realmUser.getBio().length() == 0) {
+                bioVisibility.set(View.GONE);
+            } else {
+                bio.set(realmUser.getBio());
+            }
+        }
+
+        if (isVerified) {
+            verifyTextVisibility.set(View.VISIBLE);
+        } else {
+            verifyTextVisibility.set(View.INVISIBLE);
         }
 
         if (userId != 134 && G.userId != userId) {

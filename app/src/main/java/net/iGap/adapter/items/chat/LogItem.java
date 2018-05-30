@@ -52,7 +52,7 @@ public class LogItem extends AbstractMessage<LogItem, LogItem.ViewHolder> {
         holder.text.setMovementMethod(LinkMovementMethod.getInstance());
 
         super.bindView(holder, payloads);
-        holder.text.setText(HelperLogMessage.getLogMessageWithLink(mMessage.messageText));
+        holder.text.setText(HelperLogMessage.deserializeLog(mMessage.logs, true));
     }
 
     @Override

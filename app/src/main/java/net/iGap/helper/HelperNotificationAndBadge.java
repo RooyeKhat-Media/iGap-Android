@@ -474,8 +474,8 @@ public class HelperNotificationAndBadge {
 
                         String text = "";
                         try {
-                            if (roomMessage.getLogMessage() != null) {
-                                text = roomMessage.getLogMessage();
+                            if (roomMessage.getLogs() != null) {
+                                text = HelperLogMessage.deserializeLog(roomMessage.getLogs(), false).toString();
                             } else {
                                 text = RealmRoomMessage.getFinalMessage(roomMessage).getMessage();
                             }
@@ -706,7 +706,7 @@ public class HelperNotificationAndBadge {
 
         String text = "";
 
-        if (roomMessage.getLogMessage() != null) {
+        if (roomMessage.getLogs() != null) {
             return;
         }
 

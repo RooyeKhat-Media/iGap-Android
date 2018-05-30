@@ -13,5 +13,6 @@
     android:paddingLeft="@dimen/dp20"
     android:paddingTop="@dimen/dp4"
     android:text="New Text"
+    style="?textSubColorSettingTheme"
     android:textSize="@dimen/dp16" />
 </LinearLayout>

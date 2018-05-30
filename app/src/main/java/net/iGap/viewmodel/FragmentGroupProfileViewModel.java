@@ -153,7 +153,7 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
     private Realm realmGroupProfile;
     private Fragment fragment;
     private boolean isNotJoin = false;
-    private int memberCount;
+    private String memberCount;
 
 
     //===============================================================================
@@ -1063,7 +1063,7 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setMemberCount(roomIdUser, true);
+                        setMemberCount(roomIdUser);
                         //+Realm realm = Realm.getDefaultInstance();
                         RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
 
@@ -1091,7 +1091,7 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setMemberCount(roomId, false);
+                        setMemberCount(roomId);
                     }
                 });
             }
@@ -1108,15 +1108,15 @@ public class FragmentGroupProfileViewModel implements OnGroupRevokeLink {
         };
     }
 
-    private void setMemberCount(final long roomId, final boolean plus) {
+    private void setMemberCount(final long roomId) {
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                memberCount = RealmRoom.updateMemberCount(realm, roomId, plus);
+                memberCount = RealmRoom.getMemberCount(realm, roomId);
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callbackMemberNumber.set(memberCount + "");
+                        callbackMemberNumber.set(memberCount);
                         if (HelperCalander.isPersianUnicode) {
                             callbackMemberNumber.set(HelperCalander.convertToUnicodeFarsiNumber(callbackMemberNumber.get()));
                         }

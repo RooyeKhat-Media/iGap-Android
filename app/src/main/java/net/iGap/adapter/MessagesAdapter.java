@@ -114,14 +114,12 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         for (int i = (getAdapterItemCount() - 1); i >= 0; i--) {
             Item item = getItem(i);
             if (item.mMessage != null) {
-                if (item.mMessage.forwardedFrom != null) {
+                if (Long.parseLong(item.mMessage.messageID) == messageId) {
+                    item = null;
+                    return i;
+                } else if (item.mMessage.forwardedFrom != null) {
                     if (item.mMessage.forwardedFrom.getMessageId() == messageId) {
                         item = null; // set null for clear memory, is it true?
-                        return i;
-                    }
-                } else {
-                    if (Long.parseLong(item.mMessage.messageID) == messageId) {
-                        item = null;
                         return i;
                     }
                 }

@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,6 +137,8 @@ public class FragmentEditImage extends BaseFragment {
             public void onClick(View v) {
                 AndroidUtils.closeKeyboard(v);
                 new HelperFragment(FragmentEditImage.this).remove();
+                if (G.openBottomSheetItem != null && isChatPage)
+                    G.openBottomSheetItem.openBottomSheet(false);
             }
         });
 
@@ -314,5 +318,29 @@ public class FragmentEditImage extends BaseFragment {
 
     public interface CompleteEditImage {
         void result(String path, String message);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getView() == null) {
+            return;
+        }
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    AndroidUtils.closeKeyboard(v);
+                    new HelperFragment(FragmentEditImage.this).remove();
+                    if (G.openBottomSheetItem != null && isChatPage)
+                        G.openBottomSheetItem.openBottomSheet(false);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

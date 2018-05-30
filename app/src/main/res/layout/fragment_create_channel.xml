@@ -222,7 +222,7 @@
                 android:layoutDirection="ltr"
                 android:singleLine="true"
                 android:text="@={fragmentCreateChannelViewModel.edtSetLink}"
-                style="?hintColorSettingTheme"
+                style="?textTitleColorSettingTheme"
                 android:textDirection="ltr"
                 android:textSize="@dimen/dp15" />
 

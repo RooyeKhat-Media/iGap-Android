@@ -67,7 +67,7 @@ public class ClientGetRoomResponse extends MessageHandler {
                     /**
                      * update log message in realm room message after get room info
                      */
-                    if (G.logMessageUpdatList.containsKey(clientGetRoom.getRoom().getId())) {
+                    if (HelperLogMessage.logMessageUpdateList.containsKey(clientGetRoom.getRoom().getId())) {
                         G.handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {

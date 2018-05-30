@@ -33,8 +33,12 @@ import net.iGap.webrtc.CallObserver;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import io.realm.DynamicRealm;
 import io.realm.Realm;
@@ -63,7 +67,6 @@ import static net.iGap.G.helperNotificationAndBadge;
 import static net.iGap.G.imageFile;
 import static net.iGap.G.imageLoader;
 import static net.iGap.G.isSaveToGallery;
-import static net.iGap.G.menuBackgroundColor;
 import static net.iGap.G.notificationColor;
 import static net.iGap.G.selectedLanguage;
 import static net.iGap.G.toggleButtonColor;
@@ -87,6 +90,7 @@ public final class StartupActions {
         makeFolder();
         ConnectionManager.manageConnection();
         configDownloadManager();
+        manageTime();
 
 
         new CallObserver();
@@ -95,6 +99,11 @@ public final class StartupActions {
          */
         new HelperDownloadFile();
         new HelperUploadFile();
+    }
+
+    private void manageTime() {
+        SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        G.isTimeWhole = sharedPreferences.getBoolean(SHP_SETTING.KEY_WHOLE_TIME, false);
     }
 
     private void configDownloadManager() {
@@ -298,38 +307,26 @@ public final class StartupActions {
         }
 
         G.isDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
-        if (G.isDarkTheme) {
-            appBarColor = Config.default_dark_appBarColor;
-            notificationColor = Config.default_dark_notificationColor;
-            toggleButtonColor = Config.default_dark_toggleButtonColor;
-            attachmentColor = Config.default_dark_attachmentColor;
-            headerTextColor = Config.default_dark_headerTextColor;
-            G.progressColor = Config.default_dark_progressColor;
-            menuBackgroundColor = Config.default_dark_menuBackgroundColor;
-            G.backgroundTheme = "#151515";
-            G.backgroundTheme_2 = "#000000";
-            G.textTitleTheme = "#ffffff";
-            G.textSubTheme = "#ffffff";
-            G.tintImage = "#ffffff";
-            G.logLineTheme = "#4b4b4b";
-            G.voteIconTheme = "#cacaca";
-        } else {
-            appBarColor = preferences.getString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_appBarColor);
-            notificationColor = preferences.getString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_notificationColor);
-            toggleButtonColor = preferences.getString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_toggleButtonColor);
-            attachmentColor = preferences.getString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_attachmentColor);
-            headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
-            G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
-            headerTextColor = preferences.getString(SHP_SETTING.KEY_MENU_BACKGROUND_COLOR, "#000000");
-            G.backgroundTheme = "#FFFFFF";
-            G.textTitleTheme = "#000000";
-            G.textSubTheme = "#bbbbbb";
-            G.tintImage = "#000000";
-            G.backgroundTheme_2 = "#f9f9f9";
-            G.logLineTheme = "#e9e9e9";
-            G.voteIconTheme = "#696969";
+
+        appBarColor = preferences.getString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_appBarColor);
+        notificationColor = preferences.getString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_notificationColor);
+        toggleButtonColor = preferences.getString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_toggleButtonColor);
+        attachmentColor = preferences.getString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_attachmentColor);
+        headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
+        G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
+
+
+        boolean isDisableAutoDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_DISABLE_TIME_DARK_THEME, true);
+        if (!isDisableAutoDarkTheme) {
+            checkTimeForAutoTheme(preferences);
         }
 
+        if (G.isDarkTheme) {
+            Config.darkThemeColor();
+
+        } else {
+            Config.lightThemeColor();
+        }
         G.multiTab = preferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
 
         // setting for show layout vote in channel
@@ -346,6 +343,65 @@ public final class StartupActions {
 
         textSizeDetection(preferences);
         languageDetection(preferences);
+    }
+
+    private void checkTimeForAutoTheme(SharedPreferences preferences) {
+        long toMs;
+        long fromMs;
+        boolean auto = preferences.getBoolean(SHP_SETTING.KEY_IS_AUTOMATIC_TIME_DARK_THEME, true);
+
+        int offset = TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings();
+        long now = System.currentTimeMillis() + offset;
+
+        if (auto) {
+            toMs = 28800000;
+            fromMs = 68400000;
+        } else {
+            toMs = preferences.getLong(SHP_SETTING.KEY_SELECTED_MILISECOND_TO, 28800000);
+            fromMs = preferences.getLong(SHP_SETTING.KEY_SELECTED_MILISECOND_FROM, 68400000);
+        }
+
+        try {
+            String string1 = time(fromMs);
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
+
+            String string2 = time(toMs);
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
+
+            String someRandomTime = time(now);
+            Date currentTime = new SimpleDateFormat("HH:mm:ss").parse(someRandomTime);
+
+            if (currentTime.getTime() > time1.getTime() && currentTime.getTime() < time2.getTime()) {
+
+                //checkes whether the current time is between 14:49:00 and 20:11:13.
+                G.isDarkTheme = true;
+                appBarColor = Config.default_dark_appBarColor;
+                notificationColor = Config.default_dark_notificationColor;
+                toggleButtonColor = Config.default_dark_toggleButtonColor;
+                attachmentColor = Config.default_dark_attachmentColor;
+                headerTextColor = Config.default_dark_headerTextColor;
+                G.progressColor = Config.default_dark_progressColor;
+            } else {
+                G.isDarkTheme = false;
+                appBarColor = Config.default_appBarColor;
+                notificationColor = Config.default_notificationColor;
+                toggleButtonColor = Config.default_toggleButtonColor;
+                attachmentColor = Config.default_attachmentColor;
+                headerTextColor = Config.default_headerTextColor;
+                G.progressColor = Config.default_progressColor;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String time(long timeNow) {
+        long second = (timeNow / 1000) % 60;
+        long minute = (timeNow / (1000 * 60)) % 60;
+        long hour = (timeNow / (1000 * 60 * 60)) % 24;
+
+        return String.format("%02d:%02d:%02d:%d", hour, minute, second, timeNow);
     }
 
     /**

@@ -765,7 +765,7 @@
   <string name="ROOM_CONVERTED_TO_PUBLIC">"از خصوصی به عمومی تبدیل شد"</string>
   <string name="ROOM_CONVERTED_TO_PRIVATE">"از عمومی به خصوصی تبدیل شد"</string>
   <string name="MEMBER_JOINED_BY_INVITE_LINK">"با دعوت به"</string>
-  <string name="Room_Deleted_log">"اضافه شد"</string>
+  <string name="Room_Deleted_log">"حذف شد"</string>
   <string name="revoke">ابطال</string>
   <string name="conversation">صفحه</string>
 
@@ -1111,6 +1111,7 @@
   <string name="password">رمز</string>
   <string name="text_empty_user_map">متأسفانه هیچ کاربری اطراف شما نفشه خود را فعال نکرده است</string>
   <string name="send_message_to">ارسال پیام به  </string>
+  <string name="send_forward_to">آیا شما مطمئنید میخواهید انتقال دهید به </string>
 
   <string name="st_bio">بیو</string>
   <string name="st_des_bio">شما می توانید توضیح مختصری دربارهٔ خود در پروفایل وارد کنید. لازم به ذکر است هر کاربر با ورود به پروفایل شما این متن را خواهد دید.</string>
@@ -1154,12 +1155,14 @@
   <string name="open_default_player">ویدئو را با پخش کننده پیشفرض باز کن</string>
   <string name="show_channel_vote">واکنش در کانال</string>
   <string name="verify_channel">کانال تأیید شده</string>
+  <string name="verify_user">کاربر تأیید شده</string>
   <string name="save_data_in_sd_card">ذخیره اطلاعات در کارت جانبی</string>
   <string name="are_you_sure">شما مطمئن هستید ؟</string>
   <string name="change_storage_place">تغییر مکان ذخیره سازی</string>
   <string name="other_files">سایر فایل ها</string>
   <string name="title_import_contact_limit">در حال وارد کردن لیست تماس</string>
   <string name="content_import_contact_limit">متاسفانه تعداد مخاطبین شما بیش از حد مجاز میباشد. نمیتوانیم با سرور بررسی کنیم ، لطفا مخاطبین را در حد معقول ذخیره کنید</string>
+  <string name="another_room">اتاق دیگر</string>
 
   <string name="filter_cancel_content">آیا از تغییرات انجام داده منصرف شدید ؟</string>
   <string name="lbl_brightness">روشنایی</string>
@@ -1168,5 +1171,20 @@
   <string name="tab_filters">فیلتر رنگ</string>
   <string name="tab_edit">ویرایش</string>
   <string name="can_not_open_file">این فایل باز نمی شود</string>
+  <string name="st_24_Clock">زمان ۲۴ ساعته</string>
+  <string name="pin_messages_content" formatted="false">"میخواهید این پیام را %s کنید؟"</string>
+  <string name="unpin">غیرسنجاق</string>
+  <string name="pin_message">سنجاق</string>
+  <string name="pined_message">سنجاق</string>
+  <string name="all_member">همه اعضا</string>
+  <string name="this_page">همین صفحه</string>
+  <string name="disable">غیرفعال</string>
+  <string name="scheduled">برنامه ریزی: </string>
+  <string name="from_theme">از:</string>
+  <string name="to_theme">تا:</string>
+  <string name="automatic">خودکار</string>
+  <string name="automatic_description_theme">حالت شب از 19 تا 8 با انتخاب حالت خودکار فعال شد</string>
+  <string name="setting_dark_theme">تنظیمات پوسته تاریک</string>
+  <string name="Select_Time">انتخاب زمان</string>
 
 </resources>

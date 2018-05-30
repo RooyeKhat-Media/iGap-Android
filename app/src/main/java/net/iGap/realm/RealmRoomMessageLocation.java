@@ -10,7 +10,7 @@
 
 package net.iGap.realm;
 
-import net.iGap.module.SUID;
+import net.iGap.module.AppUtils;
 import net.iGap.proto.ProtoGlobal;
 
 import org.parceler.Parcel;
@@ -35,7 +35,7 @@ public class RealmRoomMessageLocation extends RealmObject {
             messageLocation = realm.where(RealmRoomMessageLocation.class).equalTo(RealmRoomMessageLocationFields.ID, id).findFirst();
         }
         if (messageLocation == null) {
-            messageLocation = realm.createObject(RealmRoomMessageLocation.class, SUID.id().get());
+            messageLocation = realm.createObject(RealmRoomMessageLocation.class, AppUtils.makeRandomId());
         }
         messageLocation.setLocationLat(input.getLat());
         messageLocation.setLocationLong(input.getLon());
@@ -45,7 +45,7 @@ public class RealmRoomMessageLocation extends RealmObject {
     }
 
     public static RealmRoomMessageLocation put(Realm realm, double latitude, double longitude, String imagePath) {
-        RealmRoomMessageLocation messageLocation = realm.createObject(RealmRoomMessageLocation.class, SUID.id().get());
+        RealmRoomMessageLocation messageLocation = realm.createObject(RealmRoomMessageLocation.class, AppUtils.makeRandomId());
         messageLocation.setLocationLat(latitude);
         messageLocation.setLocationLong(longitude);
         messageLocation.setImagePath(imagePath);

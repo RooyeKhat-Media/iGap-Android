@@ -5,5 +5,5 @@ package net.iGap.interfaces;
  */
 
 public interface IUpdateLogItem {
-    void onUpdate(String logText, long messageId);
+    void onUpdate(byte[] log, long messageId);
 }

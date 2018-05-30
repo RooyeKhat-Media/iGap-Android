@@ -1425,7 +1425,7 @@
 
   <string name="un_block_user">"إزالة حظر جهة الاتصال"</string>
 
-  <string name="prefix">"الاختصار"</string>
+  <string name="prefix">"بواسطة"</string>
 
   <string name="USER_JOINED">"إنضمّ إلى آي كب "</string>
 
@@ -1445,7 +1445,7 @@
 
   <string name="MEMBER_JOINED_BY_INVITE_LINK">"بالدعوة إلى "</string>
 
-  <string name="Room_Deleted_log">"تمّت الإضافة "</string>
+  <string name="Room_Deleted_log">"تم الحذف "</string>
 
   <string name="revoke">الإبطال </string>
 
@@ -2107,6 +2107,7 @@
   <string name="open_default_player">فتح الفيديو باستخدام المشغل الافتراضي</string>
   <string name="show_channel_vote">تفاعل القناة</string>
   <string name="verify_channel">تم التحقق من القناة</string>
+  <string name="verify_user">تم التحقق من المستخدم</string>
   <string name="another_room">غرفة أخرى</string>
   <string name="send">إرسال</string>
   <string name="do_not_send">لا ترسل</string>
@@ -2124,4 +2125,20 @@
   <string name="tab_filters">مرشح اللون</string>
   <string name="tab_edit">تحرير</string>
   <string name="can_not_open_file">لا يمكن فتح هذا الملف</string>
+  <string name="st_24_Clock">24 ساعة</string>
+  <string name="pin_messages_content" formatted="false">"ترید %s هذه الرسالة?"</string>
+  <string name="unpin">غير دبوس</string>
+  <string name="pin_message">دبوس</string>
+  <string name="pined_message">دبوس</string>
+  <string name="all_member">جميع الأعضاء</string>
+  <string name="this_page">ههذه الصفحة</string>
+  <string name="disable">معاق</string>
+  <string name="scheduled">تخطيط: </string>
+  <string name="from_theme">من:</string>
+  <string name="to_theme">يصل الى:</string>
+  <string name="automatic">تلقائيا</string>
+  <string name="automatic_description_theme">تم تنشيط الوضع الليلي من 19 إلى 8 عن طريق تحديد الوضع التلقائي</string>
+  <string name="setting_dark_theme">إعدادات قذيفة الظلام</string>
+  <string name="Select_Time">اختر الوقت</string>
+
 </resources>

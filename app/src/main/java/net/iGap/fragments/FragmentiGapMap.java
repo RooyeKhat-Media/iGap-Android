@@ -76,6 +76,7 @@ import net.iGap.interfaces.OnInfo;
 import net.iGap.interfaces.OnLocationChanged;
 import net.iGap.interfaces.OnMapClose;
 import net.iGap.interfaces.OnMapRegisterState;
+import net.iGap.interfaces.OnMapUsersGet;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.CircleImageView;
@@ -139,7 +140,7 @@ import static net.iGap.G.inflater;
 import static net.iGap.G.userId;
 import static net.iGap.R.id.st_fab_gps;
 
-public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, OnGetNearbyCoordinate, OnMapRegisterState, OnMapClose, OnGeoGetComment, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
+public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, OnGetNearbyCoordinate, OnMapRegisterState, OnMapClose, OnMapUsersGet, OnGeoGetComment, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
 
     public static final int pageiGapMap = 1;
     public static final int pageUserList = 2;
@@ -173,6 +174,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
     private TextView txtSendMessageGps;
     private EditText edtMessageGps;
     private ProgressBar prgWaitingSendMessage;
+    private ProgressBar prgWaitingGetUser, prgWaitingGetUserList;
     private ItemizedIconOverlay<OverlayItem> itemizedIconOverlay = null;
     private GestureDetector mGestureDetector;
     private String specialRequests;
@@ -425,7 +427,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         G.onMapRegisterState = this;
         G.onMapClose = this;
         G.onGeoGetComment = this;
-
+        G.onMapUsersGet = this;
         attentionDialog();
         startMap(view);
         //clickDrawMarkActive();
@@ -560,6 +562,10 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                 return false;
             }
         });
+
+        prgWaitingGetUser = (ProgressBar) view.findViewById(R.id.prgWaitingGetUser);
+        prgWaitingGetUserList = (ProgressBar) view.findViewById(R.id.prgWaitingGetUserList);
+
         toggleGps = (ToggleButton) view.findViewById(R.id.toggleGps);
         toggleGps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -888,6 +894,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
 
                         if (location != null && !isSendRequestGeoCoordinate) {
                             new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                            showProgress(true);
                             isSendRequestGeoCoordinate = true;
                         }
 
@@ -1050,6 +1057,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                             public void run() {
                                 if (!isSendRequestGeoCoordinate) {
                                     new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                                    showProgress(true);
                                     isSendRequestGeoCoordinate = true;
                                 }
 
@@ -1059,6 +1067,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                     } else {
                         if (!isSendRequestGeoCoordinate) {
                             new RequestGeoGetNearbyCoordinate().getNearbyCoordinate(location.getLatitude(), location.getLongitude());
+                            showProgress(true);
                             isSendRequestGeoCoordinate = true;
                         }
 
@@ -1245,14 +1254,49 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                         });
                     }
                 }
+
+                showProgress(false);
+
             }
         }, 2000);
 
         isSendRequestGeoCoordinate = false;
     }
 
+    private void showProgress(final boolean show) {
+        G.currentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (prgWaitingGetUser != null) {
+                    if (show) {
+                        prgWaitingGetUser.setVisibility(View.VISIBLE);
+                    } else {
+                        prgWaitingGetUser.setVisibility(View.GONE);
+
+                    }
+                }
+            }
+        });
+    }
+
+    private void showProgressList(final boolean show) {
+        G.currentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (prgWaitingGetUserList != null) {
+                    if (show) {
+                        prgWaitingGetUserList.setVisibility(View.VISIBLE);
+                    } else {
+                        prgWaitingGetUserList.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public void onErrorGetNearbyCoordinate() {
+        showProgress(false);
         isSendRequestGeoCoordinate = false;
     }
 
@@ -1464,10 +1508,12 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                         public void run() {
                             new RequestGeoGetNearbyDistance().getNearbyDistance(FragmentiGapMap.location.getLatitude(), FragmentiGapMap.location.getLongitude());
                             getDistanceLoop(DEFAULT_LOOP_TIME, true);
+                            showProgressList(true);
                         }
                     }, delay);
                 } else {
                     new RequestGeoGetNearbyDistance().getNearbyDistance(FragmentiGapMap.location.getLatitude(), FragmentiGapMap.location.getLongitude());
+                    showProgressList(true);
                 }
             }
         }, GET_NEARBY_DELAY);
@@ -1479,6 +1525,11 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         if (realmMapUsers != null && !realmMapUsers.isClosed()) {
             realmMapUsers.close();
         }
+    }
+
+    @Override
+    public void onMapUsersGet() {
+        showProgressList(false);
     }
 
     public enum MarkerColor {

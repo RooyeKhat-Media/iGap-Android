@@ -469,6 +469,13 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
+      <include
+        android:id="@+id/ac_ll_strip_Pin"
+        layout="@layout/chat_sub_layout_strip_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     </net.iGap.module.MyAppBarLayout>
 
     <include

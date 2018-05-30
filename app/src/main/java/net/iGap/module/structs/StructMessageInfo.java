@@ -68,7 +68,7 @@ public class StructMessageInfo implements Parcelable {
     public boolean showTime = false;
     public String username = "";
     public boolean showMessage = true;
-
+    public byte[] logs;
     public String fileMime = "";
     public String filePic = "";
     public String filePath = "";
@@ -339,10 +339,9 @@ public class StructMessageInfo implements Parcelable {
             messageInfo.location = roomMessage.getLocation();
         }
 
-        if (roomMessage.getLog() != null) {
+        if (roomMessage.getLogs() != null) {
             messageInfo.senderID = "-1";
-            //messageInfo.messageText = roomMessage.getLog().getType().toString();
-            messageInfo.messageText = roomMessage.getLogMessageWithLinkInfo();
+            messageInfo.logs = roomMessage.getLogs();
         }
 
         messageInfo.replayTo = roomMessage.getReplyTo();

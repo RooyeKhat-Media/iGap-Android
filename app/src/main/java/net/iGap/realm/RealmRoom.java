@@ -18,11 +18,13 @@ import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperString;
+import net.iGap.interfaces.OnClientGetRoomMessage;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestClientGetRoom;
+import net.iGap.request.RequestClientGetRoomMessage;
 
 import java.util.List;
 
@@ -65,6 +67,9 @@ public class RealmRoom extends RealmObject {
     private boolean isDeleted = false;
     private boolean isPinned;
     private long pinId;
+    private long pinMessageId;
+    private long pinMessageIdDeleted;
+
     /**
      * client need keepRoom info for show in forward message that forward
      * from a room that user don't have that room
@@ -129,6 +134,11 @@ public class RealmRoom extends RealmObject {
         } else {
             realmRoom.setPinned(false);
         }
+
+        if (room.getPinnedMessage() != null) {
+            realmRoom.setPinMessageId(room.getPinnedMessage().getMessageId());
+        }
+
         realmRoom.setActionState(null, 0);
         switch (room.getType()) {
             case CHANNEL:
@@ -451,6 +461,21 @@ public class RealmRoom extends RealmObject {
             });
         }
         realm.close();
+    }
+
+    public static String getMemberCount(Realm realm, long roomId) {
+
+        String memberCount = "";
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+        if (realmRoom != null) {
+            if (realmRoom.getType() == GROUP) {
+                memberCount = realmRoom.getGroupRoom().getParticipantsCountLabel();
+            } else if (realmRoom.getType() == CHANNEL) {
+                memberCount = realmRoom.getGroupRoom().getParticipantsCountLabel();
+            }
+        }
+
+        return memberCount;
     }
 
     /**
@@ -1271,6 +1296,113 @@ public class RealmRoom extends RealmObject {
 
     public void setPinId(long pinId) {
         this.pinId = pinId;
+    }
+
+
+    public long getPinMessageId() {
+        return pinMessageId;
+    }
+
+    public void setPinMessageId(long pinMessageId) {
+        this.pinMessageId = pinMessageId;
+    }
+
+    public long getPinMessageIdDeleted() {
+        return pinMessageIdDeleted;
+    }
+
+    public void setPinMessageIdDeleted(long pinMessageIdDeleted) {
+        this.pinMessageIdDeleted = pinMessageIdDeleted;
+    }
+
+    public static boolean isPinedMessage(long roomId, long messageId) {
+        boolean result = false;
+        Realm realm = Realm.getDefaultInstance();
+        RealmRoom room = RealmRoom.getRealmRoom(realm, roomId);
+        if (room != null) {
+            if (room.getPinMessageId() == messageId) {
+                result = true;
+            }
+        }
+        realm.close();
+        return result;
+    }
+
+    public static void updatePinedMessage(long roomId, final long messageId) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRoom room = RealmRoom.getRealmRoom(realm, roomId);
+        if (room != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    room.setPinMessageId(messageId);
+                }
+            });
+
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (G.onPinedMessage != null) {
+                        G.onPinedMessage.onPinMessage();
+                    }
+                }
+            }, 200);
+
+        }
+        realm.close();
+    }
+
+    public static void updatePinedMessageDeleted(long roomId, final boolean reset) {
+        Realm realm = Realm.getDefaultInstance();
+        final RealmRoom room = RealmRoom.getRealmRoom(realm, roomId);
+        if (room != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    room.setPinMessageIdDeleted(reset ? 0 : room.getPinMessageId());
+                }
+            });
+        }
+        realm.close();
+    }
+
+    public static long hasPinedMessage(long roomId) {
+        long result = 0;
+        Realm realm = Realm.getDefaultInstance();
+        RealmRoom room = RealmRoom.getRealmRoom(realm, roomId);
+        if (room != null) {
+            if (room.getPinMessageId() > 0) {
+                RealmRoomMessage roomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
+                        equalTo(RealmRoomMessageFields.MESSAGE_ID, room.getPinMessageId()).findFirst();
+                if (roomMessage == null) {
+                    G.onClientGetRoomMessage = new OnClientGetRoomMessage() {
+                        @Override
+                        public void onClientGetRoomMessageResponse(long messageId) {
+                            G.onClientGetRoomMessage = null;
+                            G.handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (G.onPinedMessage != null) {
+                                        G.onPinedMessage.onPinMessage();
+                                    }
+                                }
+                            }, 200);
+                        }
+                    };
+
+                    new RequestClientGetRoomMessage().clientGetRoomMessage(roomId, room.getPinMessageId());
+                } else {
+                    RealmRoomMessage roomMessage1 = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, roomId).
+                            equalTo(RealmRoomMessageFields.MESSAGE_ID, room.getPinMessageId()).notEqualTo(RealmRoomMessageFields.MESSAGE_ID, room.getPinMessageIdDeleted()).
+                            equalTo(RealmRoomMessageFields.DELETED, false).equalTo(RealmRoomMessageFields.SHOW_MESSAGE, true).findFirst();
+                    if (roomMessage1 != null) {
+                        result = roomMessage1.getMessageId();
+                    }
+                }
+            }
+        }
+        realm.close();
+        return result;
     }
 
     public long getUpdatedTime() {

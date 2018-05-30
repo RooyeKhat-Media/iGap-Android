@@ -44,7 +44,7 @@ public class BaseFragment extends SwipeBackFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        G.checkLanguage();
+
         checkFont();
         super.onCreate(savedInstanceState);
 

@@ -54,6 +54,7 @@ public class RequestChannelSendMessage {
     }
 
     public RequestChannelSendMessage sendMessage(String fakeMessageIdAsIdentity) {
+        channelSendMessage.setRandomId(Long.parseLong(fakeMessageIdAsIdentity));
         RequestWrapper requestWrapper = new RequestWrapper(410, channelSendMessage, fakeMessageIdAsIdentity);
         try {
             RequestQueue.sendRequest(requestWrapper);

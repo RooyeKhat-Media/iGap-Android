@@ -11,5 +11,5 @@
 package net.iGap.interfaces;
 
 public interface OnMapUsersGet {
-    void onMapUsersGet(long userId);
+    void onMapUsersGet();
 }

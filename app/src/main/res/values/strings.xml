@@ -788,7 +788,7 @@
   <string name="ROOM_CONVERTED_TO_PRIVATE">"converted to Private"</string>
   <string name="MEMBER_JOINED_BY_INVITE_LINK">"joined via Invite Link"</string>
   <string name="Room_Deleted_log">"deleted Room"</string>
-  <string name="conversation">""</string>
+  <string name="conversation">"conversation"</string>
 
   <string name="MISSED_SCREEN_SHARE">"Missed Screen Share"</string>
   <string name="MISSED_VOICE_CALL">"Missed Voice Call"</string>
@@ -1094,6 +1094,7 @@
   <string name="exceed_4_line">Your status cannot exceed 4 lines.</string>
 
   <string name="st_Auto_Rotate">Auto-Rotate Screen</string>
+  <string name="st_24_Clock">24 hour clock</string>
   <string name="Theme_Dark">Dark Theme</string>
   <string name="two_step_pass_code">PassCode Lock</string>
   <string name="unlock_with_fingerPrint">Unlock With FingerPrint</string>
@@ -1177,6 +1178,7 @@
   <string name="open_default_player">Open video with default player</string>
   <string name="show_channel_vote">Channel Reaction</string>
   <string name="verify_channel">Verified Channel</string>
+  <string name="verify_user">Verified User</string>
   <string name="another_room">Another Room</string>
   <string name="send">Send</string>
   <string name="do_not_send">Don\'t Send</string>
@@ -1194,5 +1196,19 @@
   <string name="tab_filters">Filters</string>
   <string name="tab_edit">Edit</string>
   <string name="can_not_open_file">This file can not be opened</string>
+  <string name="pin_messages_content" formatted="false">"Do you want to %s this message?"</string>
+  <string name="unpin">UnPin</string>
+  <string name="pin_message">Pin</string>
+  <string name="pined_message">Pinned Message</string>
+  <string name="all_member">All Members</string>
+  <string name="this_page">This Page</string>
+  <string name="disable">Disable</string>
+  <string name="scheduled">Scheduled: </string>
+  <string name="from_theme">From: </string>
+  <string name="to_theme">Until: </string>
+  <string name="automatic">Automatic</string>
+  <string name="automatic_description_theme">The night mode was activated from 19 to 8 with automatic mode selection</string>
+  <string name="setting_dark_theme">Setting Dark Theme</string>
+  <string name="Select_Time">Select Time</string>
 
 </resources>

@@ -379,7 +379,9 @@ public class HelperCalander {
 
         String result;
 
-        if (HelperCalander.isPersianUnicode) {
+        if (G.isTimeWhole){
+            result = TimeUtils.toLocal(timeinMili, "kk:mm");
+        }else if (HelperCalander.isPersianUnicode) {
             result = TimeUtils.toLocal(timeinMili, "h:mm a");
             String[] _date = result.split(" ");
             if (_date.length > 1) {

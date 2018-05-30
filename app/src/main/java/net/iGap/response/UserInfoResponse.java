@@ -116,7 +116,7 @@ public class UserInfoResponse extends MessageHandler {
                 });
 
                 // update log message in realm room message after get user info
-                if (G.logMessageUpdatList.containsKey(builder.getUser().getId())) {
+                if (HelperLogMessage.logMessageUpdateList.containsKey(builder.getUser().getId())) {
                     G.handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {

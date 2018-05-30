@@ -295,6 +295,14 @@
 
     </RelativeLayout>
 
+    <ProgressBar
+      android:id="@+id/prgWaitingGetUser"
+      android:layout_width="@dimen/dp52"
+      android:layout_height="@dimen/dp52"
+      android:padding="@dimen/dp12"
+      android:layout_gravity="center"
+      android:visibility="gone" />
+
   </FrameLayout>
 
   <LinearLayout
@@ -332,17 +340,29 @@
         android:visibility="visible" />
     </RelativeLayout>
 
-
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/rcy_map_user"
+    <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      style="?backgroundColorSettingTheme"
-      android:fadeScrollbars="false"
-      android:overScrollMode="never"
-      android:scrollbarSize="5dp"
-      android:scrollbarThumbVertical="@color/toolbar_background"
-      android:scrollbars="vertical" />
+      android:layout_height="match_parent">
+
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy_map_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="?backgroundColorSettingTheme"
+        android:fadeScrollbars="false"
+        android:overScrollMode="never"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@color/toolbar_background"
+        android:scrollbars="vertical" />
+
+      <ProgressBar
+        android:id="@+id/prgWaitingGetUserList"
+        android:layout_width="@dimen/dp52"
+        android:layout_height="@dimen/dp52"
+        android:padding="@dimen/dp12"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+    </FrameLayout>
   </LinearLayout>
 
 

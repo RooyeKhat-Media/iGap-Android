@@ -46,6 +46,7 @@ import net.iGap.interfaces.OnDateChanged;
 import net.iGap.interfaces.OnDraftMessage;
 import net.iGap.interfaces.OnGroupDeleteInRoomList;
 import net.iGap.interfaces.OnMute;
+import net.iGap.interfaces.OnNotifyTime;
 import net.iGap.interfaces.OnRemoveFragment;
 import net.iGap.interfaces.OnSelectMenu;
 import net.iGap.interfaces.OnSetActionInRoom;
@@ -93,6 +94,7 @@ import static net.iGap.G.firstTimeEnterToApp;
 import static net.iGap.G.userId;
 import static net.iGap.fragments.FragmentMain.MainType.all;
 import static net.iGap.proto.ProtoGlobal.Room.Type.CHANNEL;
+import static net.iGap.proto.ProtoGlobal.Room.Type.CHAT;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 import static net.iGap.realm.RealmRoom.putChatToDatabase;
 
@@ -281,6 +283,18 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
             });
         }
+
+        G.onNotifyTime = new OnNotifyTime() {
+            @Override
+            public void notifyTime() {
+                if (mRecyclerView != null) {
+                    if (mRecyclerView.getAdapter() != null) {
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                }
+            }
+        };
+
     }
 
     //***************************************************************************************************************************
@@ -556,7 +570,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                     clearHistory(item.getId());
                     break;
                 case "txtDeleteChat":
-                    if (item.getType() == ProtoGlobal.Room.Type.CHAT) {
+                    if (item.getType() == CHAT) {
                         new RequestChatDelete().chatDelete(item.getId());
                     } else if (item.getType() == GROUP) {
                         if (item.getGroupRoom().getRole() == GroupChatRole.OWNER) {
@@ -1084,7 +1098,9 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
                 holder.name.setText(mInfo.getTitle());
 
-                if ((mInfo.getType() == CHANNEL) && mInfo.getChannelRoom().isVerified()) {
+                if ((mInfo.getType() == CHAT) && mInfo.getChatRoom().isVerified()) {
+                    holder.imgVerifyRoom.setVisibility(View.VISIBLE);
+                } else if ((mInfo.getType() == CHANNEL) && mInfo.getChannelRoom().isVerified()) {
                     holder.imgVerifyRoom.setVisibility(View.VISIBLE);
                 } else {
                     holder.imgVerifyRoom.setVisibility(View.INVISIBLE);
@@ -1314,7 +1330,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         private void setAvatar(final RealmRoom mInfo, CircleImageView imageView) {
             long idForGetAvatar;
             HelperAvatar.AvatarType avatarType;
-            if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
+            if (mInfo.getType() == CHAT) {
                 idForGetAvatar = mInfo.getChatRoom().getPeerId();
                 avatarType = HelperAvatar.AvatarType.USER;
             } else {
@@ -1335,7 +1351,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 @Override
                 public void onShowInitials(String initials, String color) {
                     long idForGetAvatar;
-                    if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT) {
+                    if (mInfo.getType() == CHAT) {
                         idForGetAvatar = mInfo.getChatRoom().getPeerId();
                     } else {
                         idForGetAvatar = mInfo.getId();
@@ -1351,7 +1367,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             /**
              * ********************* chat icon *********************
              */
-            if (mInfo.getType() == ProtoGlobal.Room.Type.CHAT || mainType != MainType.all) {
+            if (mInfo.getType() == CHAT || mainType != MainType.all) {
                 textView.setVisibility(View.GONE);
             } else {
 

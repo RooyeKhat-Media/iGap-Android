@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:layoutDirection="ltr"
+  android:orientation="vertical">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="?backgroundSubChatTheme">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:layout_marginLeft="@dimen/dp4"
+      android:orientation="vertical"
+      style="?backgroundSubChatTheme">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/pined_message"
+        android:textColor="@color/md_blue_700"
+        style="?textTitleColorSettingTheme"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        android:id="@+id/pl_txt_pined_Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text=""
+        style="?textTitleColorSettingTheme"
+        android:textSize="@dimen/dp12" />
+
+    </LinearLayout>
+
+    <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/pl_btn_close"
+      android:layout_width="@dimen/dp40"
+      android:layout_height="match_parent"
+      android:layout_marginRight="@dimen/dp8"
+      android:background="@null"
+      android:gravity="center"
+      android:text="@string/md_close_button"
+      android:textAppearance="@style/TextIconAppearance_toolbar"
+      style="?backgroundSubChatTheme"
+      android:textSize="@dimen/dp20" />
+
+  </LinearLayout>
+
+</LinearLayout>

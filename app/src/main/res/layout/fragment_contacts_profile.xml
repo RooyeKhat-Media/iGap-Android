@@ -19,17 +19,17 @@
 
   <RelativeLayout
     android:id="@+id/container_contact_profile"
+    style="?backgroundColorSettingTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="?backgroundColorSettingTheme"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
     <android.support.design.widget.CoordinatorLayout
       android:id="@+id/chi_layoutParent"
+      style="?backgroundColorSettingTheme"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      style="?backgroundColorSettingTheme"
       tools:ignore="MissingPrefix">
 
       <android.support.design.widget.AppBarLayout
@@ -211,24 +211,24 @@
 
 
       <android.support.v4.widget.NestedScrollView
+        style="?backgroundColorSettingTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="?backgroundColorSettingTheme"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+          style="?backgroundColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme"
           android:descendantFocusability="beforeDescendants"
           android:focusableInTouchMode="true"
           android:orientation="vertical">
 
           <LinearLayout
+            style="?backgroundColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?backgroundColorSettingTheme"
             android:orientation="vertical"
             android:paddingBottom="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
@@ -255,21 +255,64 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-              <TextView
+              <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/dp4"
-                android:paddingLeft="@dimen/dp4"
-                android:paddingRight="@dimen/dp4"
-                android:paddingStart="@dimen/dp4"
-                android:text="@string/st_contactName"
-                style="?textTitleColorSettingTheme"
-                android:textSize="@dimen/dp15"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <TextView
+                  style="?textTitleColorSettingTheme"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingEnd="@dimen/dp4"
+                  android:paddingLeft="@dimen/dp4"
+                  android:paddingRight="@dimen/dp4"
+                  android:paddingStart="@dimen/dp4"
+                  android:text="@string/st_contactName"
+                  android:textSize="@dimen/dp15"
+                  android:textStyle="bold" />
+
+                <LinearLayout
+                  android:layout_width="0dp"
+                  android:layout_height="1dp"
+                  android:layout_weight="1"
+                  android:orientation="horizontal" />
+
+                <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:orientation="horizontal">
+
+                  <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/ac_txt_verify"
+                    android:layout_width="@dimen/dp24"
+                    android:layout_height="@dimen/dp24"
+                    android:paddingLeft="@dimen/dp4"
+                    android:paddingRight="@dimen/dp4"
+                    android:visibility="@{viewModel.isVerified ? View.VISIBLE : View.GONE , default=visible}"
+                    app:srcCompat="@drawable/ic_verify" />
+
+                  <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/dp4"
+                    android:paddingStart="@dimen/dp4"
+                    android:singleLine="true"
+                    android:text="@string/verify_user"
+                    android:textColor="@color/verify_color"
+                    android:textSize="@dimen/dp16"
+                    android:visibility="@{viewModel.verifyTextVisibility}" />
+
+                </LinearLayout>
+              </LinearLayout>
 
 
               <net.iGap.module.EmojiTextViewE
                 android:id="@+id/chi_txt_nikName"
+                style="?textSubColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -280,7 +323,6 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.contactName, default=`contact name`}"
-                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13"
                 app:emojiSize="@dimen/dp14" />
 
@@ -294,6 +336,7 @@
 
               <TextView
                 android:id="@+id/textView"
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
@@ -302,12 +345,12 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_username"
-                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
               <TextView
                 android:id="@+id/chi_txt_userName"
+                style="?textSubColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -319,7 +362,6 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.username, default=`user name`}"
-                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
 
             </LinearLayout>
@@ -333,6 +375,7 @@
               android:visibility="@{viewModel.phone.equals(`0`) || !viewModel.showNumber ? View.GONE : View.VISIBLE}">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp4"
@@ -341,13 +384,13 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_phoneNumber"
-                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
 
               <TextView
                 android:id="@+id/chi_txt_phoneNumber"
+                style="?textSubColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -356,7 +399,6 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{HelperCalander.unicodeManage(viewModel.phone), default=`phone number`}"
-                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13" />
               <!--android:text="@{viewModel.phone, default=`phone number`}"-->
             </LinearLayout>
@@ -369,6 +411,7 @@
               android:visibility="@{viewModel.bioVisibility}">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -376,12 +419,12 @@
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/st_bio"
-                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="normal" />
 
               <TextView
                 android:id="@+id/st_txt_bio"
+                style="?textSubColorSettingTheme"
                 fontPath="fonts/IRANSansMobile.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -389,7 +432,6 @@
                 android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.bio, default=@string/st_bio}"
-                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp14"
                 android:theme="@style/Setting_editText" />
             </LinearLayout>
@@ -401,6 +443,7 @@
               android:orientation="vertical">
 
               <TextView
+                style="?textTitleColorSettingTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
@@ -410,12 +453,12 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@string/chi_shared_Media"
-                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp15"
                 android:textStyle="bold" />
 
               <TextView
                 android:id="@+id/chi_txt_count_of_sharedMedia"
+                style="?textSubColorSettingTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -425,7 +468,6 @@
                 android:paddingRight="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
                 android:text="@{viewModel.sharedMedia}"
-                style="?textSubColorSettingTheme"
                 android:textSize="@dimen/dp13"
                 android:theme="@style/Setting_editText" />
 
@@ -434,9 +476,9 @@
           </LinearLayout>
 
           <LinearLayout
+            style="?backgroundColorSettingTheme_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?backgroundColorSettingTheme_2"
             android:orientation="vertical">
 
             <net.iGap.module.HeaderTextview
@@ -455,30 +497,30 @@
 
             <TextView
               android:id="@+id/chi_txtNotifyAndSound"
+              style="?textTitleColorSettingTheme"
               android:layout_width="match_parent"
               android:layout_height="@dimen/dp48"
               android:gravity="center_vertical"
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:text="@string/st_title_notification_sounds"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal" />
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
-              android:layout_height="1dp"
-              style="?lineColorSettingTheme" />
+              android:layout_height="1dp" />
 
             <TextView
               android:id="@+id/chi_txt_clearChat"
+              style="?textTitleColorSettingTheme"
               android:layout_width="match_parent"
               android:layout_height="@dimen/dp48"
               android:gravity="center_vertical"
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:text="@string/chi_clearChat"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp15"
               android:textStyle="normal"
               android:visibility="@{viewModel.showNumber ? View.VISIBLE : View.GONE}" />
@@ -486,9 +528,9 @@
             <!--this part is gone-->
 
             <View
+              style="?lineColorSettingTheme"
               android:layout_width="match_parent"
               android:layout_height="1dp"
-              style="?lineColorSettingTheme"
               android:visibility="gone" />
 
             <TextView
@@ -515,14 +557,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp20"
+        android:background="@android:color/white"
         android:clickable="true"
         android:src="@mipmap/comment"
-        android:background="@android:color/white"
         app:backgroundTint="@android:color/white"
         app:fabSize="normal"
         app:layout_anchor="@+id/chi_appbar"
-        app:tint="@color/gray"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        app:tint="@color/gray" />
 
     </android.support.design.widget.CoordinatorLayout>
 

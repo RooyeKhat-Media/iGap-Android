@@ -30,6 +30,9 @@ public class RealmContacts extends RealmObject {
     private String cacheId;
     private long last_seen;
     private int avatarCount;
+    private String bio;
+    private boolean verified;
+    private boolean mutual;
     private RealmAvatar avatar;
     private boolean blockUser = false;
 
@@ -48,6 +51,9 @@ public class RealmContacts extends RealmObject {
         listResponse.setAvatarCount(registerUser.getAvatarCount());
         listResponse.setCacheId(registerUser.getCacheId());
         listResponse.setAvatar(RealmAvatar.putOrUpdateAndManageDelete(realm, registerUser.getId(), registerUser.getAvatar()));
+        listResponse.setBio(registerUser.getBio());
+        listResponse.setVerified(registerUser.getVerified());
+        listResponse.setMutual(registerUser.getMutual());
     }
 
     public static void deleteContact(final String phone) {
@@ -221,5 +227,29 @@ public class RealmContacts extends RealmObject {
 
     public void setBlockUser(boolean blockUser) {
         this.blockUser = blockUser;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+    public boolean isMutual() {
+        return mutual;
+    }
+
+    public void setMutual(boolean mutual) {
+        this.mutual = mutual;
     }
 }

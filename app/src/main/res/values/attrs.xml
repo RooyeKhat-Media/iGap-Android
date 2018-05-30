@@ -116,6 +116,6 @@
   <attr name="emojiChat" format="reference" />
   <attr name="backgroundSubChatTheme" format="reference" />
   <attr name="fabButtoniGap" format="reference" />
-
+  <attr name="backgroundPassCode" format="reference" />
 
 </resources>

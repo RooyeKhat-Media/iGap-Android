@@ -256,4 +256,33 @@
 
   </LinearLayout>
 
+  <LinearLayout
+    android:id="@+id/dialog_root_item9_notification"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone">
+
+    <net.iGap.module.MaterialDesignTextView
+      android:id="@+id/dialog_icon_item9_notification"
+      android:layout_width="@dimen/dp26"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/md_pin"
+      android:textAppearance="@style/TextIconAppearance.all"
+      style="?textSubColorSettingTheme"
+      android:textSize="@dimen/dp18" />
+
+    <TextView
+      android:id="@+id/dialog_text_item9_notification"
+      style="?textTitleColorSettingTheme"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/PIN"
+      android:paddingTop="@dimen/dp8"
+      android:paddingBottom="@dimen/dp8"
+      android:paddingLeft="@dimen/dp8"
+      android:paddingRight="@dimen/dp8"
+      android:textSize="@dimen/dp14" />
+  </LinearLayout>
 </LinearLayout>

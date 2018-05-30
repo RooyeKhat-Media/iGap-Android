@@ -23,443 +23,374 @@ import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentContactsProfile;
 import net.iGap.interfaces.OnChatGetRoom;
+import net.iGap.module.AppUtils;
+import net.iGap.module.SerializationUtils;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
-import net.iGap.realm.RealmRoomMessage;
 import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestUserInfo;
 
+import java.io.Serializable;
+import java.util.HashMap;
+
 import io.realm.Realm;
+
+import static net.iGap.proto.ProtoGlobal.RoomMessageLog.Type.PINNED_MESSAGE;
 
 /**
  * return correct log message with author and target
  */
 public class HelperLogMessage {
 
-    public static void updateLogMessageAfterGetUserInfo(final long id) {
+    public static HashMap<Long, StructMyLog> logMessageUpdateList = new HashMap<>();
 
-        final StructLog item;
-
-        if (G.logMessageUpdatList.containsKey(id)) {
-
-            item = G.logMessageUpdatList.get(id);
-        } else {
-            return;
-        }
-
-        String logMessage = HelperLogMessage.logMessage(item.roomId, item.author, item.messageLog, item.messageID);
-        RealmRoomMessage.setLogMessage(item.messageID, logMessage);
-
-        G.logMessageUpdatList.remove(item.updateID);
-        if (FragmentChat.iUpdateLogItem != null) {
-            FragmentChat.iUpdateLogItem.onUpdate(logMessage, item.messageID);
-        }
-    }
-
-    public static String logMessage(long roomId, ProtoGlobal.RoomMessage.Author author, ProtoGlobal.RoomMessageLog messageLog, long messageID) {
-
-        String authorName = "";
-        String targetName = "";
-        String logMessage;
-        String persianResult = null;
-        Realm realm = Realm.getDefaultInstance();
-        ProtoGlobal.Room.Type typeRoom = null;
-
-        String linkInfoEnglish = "";
-        String linlInfoPersian = "";
-
-        long updateID = 0;
-
-        /**
-         * detect authorName
-         */
-        if (author.hasUser()) {
-
-            updateID = author.getUser().getUserId();
-
-            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, author.getUser().getUserId());
-            if (realmRegisteredInfo != null) {
-                authorName = realmRegisteredInfo.getDisplayName();
-            } else {
-
-                StructLog item = new StructLog();
-                item.roomId = roomId;
-                item.messageID = messageID;
-                item.author = author;
-                item.messageLog = messageLog;
-                item.updateID = updateID;
-
-                G.logMessageUpdatList.put(updateID, item);
-
-                new RequestUserInfo().userInfoAvoidDuplicate(author.getUser().getUserId());
-            }
-        } else if (author.hasRoom()) {
-
-            updateID = author.getRoom().getRoomId();
-
-            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, author.getRoom().getRoomId()).findFirst();
-            if (realmRoom != null) {
-                authorName = realmRoom.getTitle();
-            } else {
-                StructLog item = new StructLog();
-                item.roomId = roomId;
-                item.messageID = messageID;
-                item.author = author;
-                item.messageLog = messageLog;
-                item.updateID = updateID;
-
-                G.logMessageUpdatList.put(updateID, item);
-
-                RealmRoom.needUpdateRoomInfo(author.getRoom().getRoomId());
-
-                new RequestClientGetRoom().clientGetRoom(author.getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
-            }
-        }
-
-        /**
-         * detect targetName
-         */
-        if (messageLog.hasTargetUser()) {
-
-            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, messageLog.getTargetUser().getId());
-            if (realmRegisteredInfo != null) {
-                targetName = realmRegisteredInfo.getDisplayName();
-            } else {
-
-                StructLog item = new StructLog();
-                item.roomId = roomId;
-                item.messageID = messageID;
-                item.author = author;
-                item.messageLog = messageLog;
-                item.updateID = messageLog.getTargetUser().getId();
-                G.logMessageUpdatList.put(messageLog.getTargetUser().getId(), item);
-                new RequestUserInfo().userInfo(messageLog.getTargetUser().getId());
-            }
-        }
-
-        /**
-         * detect log message
-         */
-        logMessage = logMessageString(messageLog.getType(), author);
-        String englishResult = "";
-
-        /**
-         * final message
-         */
-        String finalTypeRoom;
-        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
-        if (realmRoom != null && realmRoom.getType() != null) {
-            typeRoom = realmRoom.getType();
-
-            if (typeRoom.toString().equals("CHANNEL")) {
-                //   finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.channel);
-                finalTypeRoom = "کانال";
-            } else if (typeRoom.toString().equals("GROUP")) {
-                // finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.group);
-                finalTypeRoom = "گروه";
-            } else {
-                //  finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.conversation);
-                finalTypeRoom = "صفحه";
-            }
-        } else {
-            // finalTypeRoom = G.fragmentActivity.getResources().getString(R.string.conversation);
-            finalTypeRoom = "صفحه";
-        }
-
-        if (authorName == null || authorName.length() == 0) {
-            return "";
-        }
-
-        englishResult = "\u200E" + authorName + " " + logMessage + " " + targetName;
-
-        linkInfoEnglish = englishResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + englishResult.lastIndexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
-
-        switch (messageLog.getType()) {
-            case USER_JOINED:
-                persianResult = "\u200F" + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-                break;
-            case USER_DELETED:
-                persianResult = "\u200F" + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-                break;
-            case ROOM_CREATED:
-
-                if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
-                    persianResult = finalTypeRoom + " " + authorName + " " + logMessage;
-
-                    englishResult = "Channel" + " " + logMessage.replace("Created Room", "Created") + " " + targetName;
-                } else {
-                    persianResult = finalTypeRoom + " توسط " + authorName + " " + logMessage;
-
-                    englishResult = "Group" + " " + logMessage.replace("Room", "") + " " + targetName;
-                }
-
-                linkInfoEnglish = "";
-                linlInfoPersian = "";
-
-                break;
-            case MEMBER_ADDED:
-                persianResult = "\u200F" + targetName + " توسط " + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.lastIndexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + persianResult.indexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
-
-                break;
-            case MEMBER_KICKED:
-                persianResult = "\u200F" + targetName + " توسط " + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.lastIndexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser() + "@" + persianResult.indexOf(targetName) + "@" + targetName.length() + "@" + messageLog.getTargetUser().getId();
-
-                break;
-            case MEMBER_LEFT:
-                persianResult = "\u200F" + authorName + " " + finalTypeRoom + " " + logMessage;
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-                break;
-            case ROOM_CONVERTED_TO_PUBLIC:
-
-                if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
-                    persianResult = finalTypeRoom + " " + logMessage;
-
-                    englishResult = "Channel" + " " + logMessage + " " + targetName;
-                } else {
-                    persianResult = finalTypeRoom + " " + logMessage;
-
-                    englishResult = "Group" + " " + logMessage + " " + targetName;
-                }
-                linlInfoPersian = "";
-                linkInfoEnglish = "";
-                break;
-            case ROOM_CONVERTED_TO_PRIVATE:
-
-                if ((typeRoom == null) || (typeRoom.toString().equals("CHANNEL"))) {
-                    persianResult = finalTypeRoom + " " + logMessage;
-                    englishResult = "Channel" + " " + logMessage + " " + targetName;
-                } else {
-                    persianResult = finalTypeRoom + " " + logMessage;
-                    englishResult = "Group" + " " + logMessage + " " + targetName;
-                }
-
-                linlInfoPersian = "";
-                linkInfoEnglish = "";
-
-                break;
-            case MEMBER_JOINED_BY_INVITE_LINK:
-                persianResult = "\u200F" + authorName + " " + logMessage + " " + finalTypeRoom + " اضافه شد ";
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-
-                break;
-            case ROOM_DELETED:
-                persianResult = finalTypeRoom + " توسط " + authorName + " " + logMessage;
-                linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-                break;
-            case MISSED_VOICE_CALL:
-                // persianResult = authorName + " " + logMessage;
-                //  linlInfoPersian = persianResult.indexOf(authorName) + "@" + authorName.length() + "@" + updateID + "@" + author.hasUser();
-
-                persianResult = englishResult = logMessage;
-                linkInfoEnglish = linlInfoPersian = "";
-
-                break;
-        }
-
-        realm.close();
-
-        return (englishResult + "\n" + persianResult + "\n" + linkInfoEnglish + "\n" + linlInfoPersian);
-    }
-
-    private static String logMessageString(ProtoGlobal.RoomMessageLog.Type type, ProtoGlobal.RoomMessage.Author author) {
+    static class StructMyLog implements Serializable {
+        long roomId;
+        ProtoGlobal.RoomMessage.Author author;
+        ProtoGlobal.RoomMessageLog messageLog;
+        long messageID;
         String message;
-        if (type == ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL) {
-            if (G.authorHash.equals(author.getHash())) {
-                message = ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL + "1";
-            } else {
-                message = ProtoGlobal.RoomMessageLog.Type.MISSED_VOICE_CALL + "2";
-            }
-        } else {
-            message = type + "";
-        }
-        return "*" + message + "*";
     }
 
-    public static String getStringFromLog(String text) {
+    public static byte[] serializeLog(long roomId, ProtoGlobal.RoomMessage.Author author, ProtoGlobal.RoomMessageLog messageLog, long messageID, String message, ProtoGlobal.RoomMessageType messageType) {
+
+        StructMyLog log = new StructMyLog();
+        log.roomId = roomId;
+        log.author = author;
+        log.messageLog = messageLog;
+        log.messageID = messageID;
+
+        if (messageLog.getType() == PINNED_MESSAGE) {
+            if (message.length() > 0) {
+                log.message = message.length() > 30 ? message.substring(0, 30) : message;
+            } else if (messageType != null) {
+                log.message = AppUtils.conversionMessageType(messageType);
+            }
+        }
+
+        return SerializationUtils.serialize(log);
+    }
+
+    public static SpannableStringBuilder deserializeLog(byte[] logs, boolean withLink) {
+
+
+        if (logs == null) {
+            return new SpannableStringBuilder("");
+        }
+        try {
+            StructMyLog log = (StructMyLog) SerializationUtils.deserialize(logs);
+            if (log != null) {
+                return extractLog(log, withLink);
+            }
+        } catch (Exception e) {
+            HelperLog.setErrorLog(" helper log message     deserializeLog()       " + e.toString());
+            return new SpannableStringBuilder("");
+        }
+
+        return new SpannableStringBuilder("");
+    }
+
+    private static SpannableStringBuilder extractLog(StructMyLog log, boolean withLink) {
+        Realm realm = Realm.getDefaultInstance();
+        String authorName = getAuthorName(log, realm);
+        String targetName = getTargetName(log, realm);
+        String finalTypeRoom = getRoomTypeString(log, realm);
+        String LogMessageTypeString = getLogTypeString(log.messageLog.getType(), log.author);
+        realm.close();
+        return getLogMessage(authorName, targetName, finalTypeRoom, LogMessageTypeString, log, withLink);
+    }
+
+    private static String getAuthorName(StructMyLog log, Realm realm) {
+        String result = "";
+
+        if (log.author.hasUser()) {
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, log.author.getUser().getUserId());
+            if (realmRegisteredInfo != null) {
+                result = " " + realmRegisteredInfo.getDisplayName() + " ";
+            } else {
+                logMessageUpdateList.put(log.author.getUser().getUserId(), log);
+                new RequestUserInfo().userInfoAvoidDuplicate(log.author.getUser().getUserId());
+            }
+        } else if (log.author.hasRoom()) {
+            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, log.author.getRoom().getRoomId()).findFirst();
+            if (realmRoom != null) {
+                result = " " + realmRoom.getTitle() + " ";
+            } else {
+                logMessageUpdateList.put(log.author.getRoom().getRoomId(), log);
+                RealmRoom.needUpdateRoomInfo(log.author.getRoom().getRoomId());
+                new RequestClientGetRoom().clientGetRoom(log.author.getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
+            }
+        }
+
+        return result;
+    }
+
+    private static String getTargetName(StructMyLog log, Realm realm) {
+        String result = "";
+        if (log.messageLog.hasTargetUser()) {
+            long userId = log.messageLog.getTargetUser().getId();
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+            if (realmRegisteredInfo != null) {
+                result = " " + realmRegisteredInfo.getDisplayName() + " ";
+            } else {
+                logMessageUpdateList.put(log.messageLog.getTargetUser().getId(), log);
+                new RequestUserInfo().userInfo(userId);
+            }
+        }
+        return result;
+    }
+
+    private static String getRoomTypeString(StructMyLog log, Realm realm) {
+        String result = G.fragmentActivity.getResources().getString(R.string.conversation);
+        RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, log.roomId).findFirst();
+        if (realmRoom != null && realmRoom.getType() != null) {
+            switch (realmRoom.getType()) {
+                case GROUP:
+                    result = G.fragmentActivity.getResources().getString(R.string.group);
+                    break;
+                case CHANNEL:
+                    result = G.fragmentActivity.getResources().getString(R.string.channel);
+                    break;
+            }
+        }
+        return " " + result + " ";
+    }
+
+    private static String getLogTypeString(ProtoGlobal.RoomMessageLog.Type type, ProtoGlobal.RoomMessage.Author author) {
         int messageID = 0;
-        switch (text) {
-            case "USER_JOINED":
+
+        switch (type) {
+            case USER_JOINED:
                 messageID = R.string.USER_JOINED;
                 break;
-            case "USER_DELETED":
+            case USER_DELETED:
                 messageID = R.string.USER_DELETED;
                 break;
-            case "ROOM_CREATED":
+            case ROOM_CREATED:
                 messageID = R.string.ROOM_CREATED;
                 break;
-            case "MEMBER_ADDED":
-                //message = "member added";
+            case MEMBER_ADDED:
                 messageID = R.string.MEMBER_ADDED;
                 break;
-            case "MEMBER_KICKED":
-                //message = "member kicked";
+            case MEMBER_KICKED:
                 messageID = R.string.MEMBER_KICKED;
                 break;
-            case "MEMBER_LEFT":
-                //message = "member left";
+            case MEMBER_LEFT:
                 messageID = R.string.MEMBER_LEFT;
                 break;
-            case "ROOM_CONVERTED_TO_PUBLIC":
+            case ROOM_CONVERTED_TO_PUBLIC:
                 messageID = R.string.ROOM_CONVERTED_TO_PUBLIC;
                 break;
-            case "ROOM_CONVERTED_TO_PRIVATE":
+            case ROOM_CONVERTED_TO_PRIVATE:
                 messageID = R.string.ROOM_CONVERTED_TO_PRIVATE;
                 break;
-            case "MEMBER_JOINED_BY_INVITE_LINK":
+            case MEMBER_JOINED_BY_INVITE_LINK:
                 messageID = R.string.MEMBER_JOINED_BY_INVITE_LINK;
                 break;
-            case "ROOM_DELETED":
+            case ROOM_DELETED:
                 messageID = R.string.Room_Deleted_log;
                 break;
-            case "MISSED_SCREEN_SHARE":
+            case MISSED_VOICE_CALL:
+                if (G.authorHash.equals(author.getHash())) {
+                    messageID = R.string.not_answerd_call;
+                } else {
+                    messageID = R.string.MISSED_VOICE_CALL;
+                }
+                break;
+            case MISSED_VIDEO_CALL:
+                messageID = R.string.MISSED_VIDEO_CALL;
+                break;
+            case MISSED_SCREEN_SHARE:
                 messageID = R.string.MISSED_SCREEN_SHARE;
                 break;
-            case "MISSED_VOICE_CALL1":
-                messageID = R.string.not_answerd_call;
+            case MISSED_SECRET_CHAT:
                 break;
-            case "MISSED_VOICE_CALL2":
-                messageID = R.string.MISSED_VOICE_CALL;
+            case PINNED_MESSAGE:
+                messageID = R.string.pined_message;
                 break;
-            case "MISSED_VIDEO_CALL":
-                messageID = R.string.MISSED_VIDEO_CALL;
+            case UNRECOGNIZED:
                 break;
         }
 
         if (messageID > 0) {
             return G.context.getString(messageID);
-        } else {
-
-            try {
-                return G.context.getString(Integer.parseInt(text));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
+
         return "";
     }
 
-    public static String convertLogmessage(String message) {
-        if (message == null || message.length() == 0) return null;
-        String result = "";
-        String str[] = message.split("\n");
-        String tmp;
-        try {
-            if (HelperCalander.isPersianUnicode) {
-                tmp = str[1];
-            } else {
-                tmp = str[0];
-            }
-            int indexFirst = tmp.indexOf("*");
-            int indexLast = tmp.lastIndexOf("*");
-            result = tmp.substring(0, indexFirst) + getStringFromLog(tmp.substring(indexFirst + 1, indexLast)) + tmp.substring(indexLast + 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+    private static SpannableStringBuilder getLogMessage(String authorName, String targetName, String finalTypeRoom, String LogMessageTypeString, StructMyLog log, boolean withLink) {
 
-    public static SpannableStringBuilder getLogMessageWithLink(String text) {
+//        if (authorName == null || authorName.length() == 0) {
+//            return "";
+//        }
 
-        if (text == null || text.length() == 0) {
-            return null;
-        }
+        long authorId = 0;
+        boolean isAuthorUser = false;
+        long targetId = 0;
 
-        String str[] = text.split("\n");
-        String tmp = null;
-
-        try {
-            if (HelperCalander.isPersianUnicode) {
-                tmp = str[1];
-            } else {
-                tmp = str[0];
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (str.length < 3) {
-            return new SpannableStringBuilder(convertLogmessage(text));
-        }
-
-        SpannableStringBuilder strBuilder = new SpannableStringBuilder(tmp);
-
-        String linkInfo = "";
-
-        try {
-
-            if (HelperCalander.isPersianUnicode) {
-                linkInfo = str[3];
-            } else {
-                linkInfo = str[2];
+        if (withLink) {
+            if (log.author.hasUser()) {
+                authorId = log.author.getUser().getUserId();
+                isAuthorUser = true;
+            } else if (log.author.hasRoom()) {
+                authorId = log.author.getRoom().getRoomId();
+                isAuthorUser = false;
             }
 
-            String splitText[] = linkInfo.split("@");
-
-            int autherIndex = Integer.parseInt(splitText[0]);
-            int authLeng = Integer.parseInt(splitText[1]);
-            long id = Long.parseLong(splitText[2]);
-            boolean isAutherUser = Boolean.parseBoolean(splitText[3]);
-
-            insertClickSpanLink(strBuilder, autherIndex, autherIndex + authLeng, isAutherUser, id);
-
-            if (splitText.length > 4) {
-
-                int targetIndex = Integer.parseInt(splitText[4]);
-                int targetLeng = Integer.parseInt(splitText[5]);
-                long targetId = Long.parseLong(splitText[6]);
-
-                insertClickSpanLink(strBuilder, targetIndex, targetIndex + targetLeng, true, targetId);
+            if (log.messageLog.hasTargetUser()) {
+                targetId = log.messageLog.getTargetUser().getId();
             }
-
-            int indexFirst = tmp.indexOf("*");
-            int indexLast = tmp.lastIndexOf("*");
-
-            strBuilder.replace(indexFirst, indexLast + 1, getStringFromLog(tmp.substring(indexFirst + 1, indexLast)));
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+
+        SpannableStringBuilder strBuilder = new SpannableStringBuilder();
+
+        strBuilder.append("\u200E");
+        insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+        strBuilder.append(LogMessageTypeString);
+        insertClickSpanLink(strBuilder, targetName, true, targetId);
+
+        switch (log.messageLog.getType()) {
+
+            case ROOM_CREATED:
+                strBuilder.clear();
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(G.context.getString(R.string.prefix));
+                    insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+                    strBuilder.append(LogMessageTypeString);
+                } else {
+                    insertClickSpanLink(strBuilder, targetName, true, targetId);
+                    strBuilder.append(LogMessageTypeString);
+                    strBuilder.append(finalTypeRoom);
+                }
+                break;
+            case MEMBER_ADDED:
+            case MEMBER_KICKED:
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.clear();
+                    strBuilder.append("\u200E");
+                    insertClickSpanLink(strBuilder, targetName, true, targetId);
+                    strBuilder.append(G.context.getString(R.string.prefix));
+                    insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+                    strBuilder.append(LogMessageTypeString);
+                }
+                break;
+            case MEMBER_LEFT:
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.clear();
+                    strBuilder.append("\u200E");
+                    insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(LogMessageTypeString);
+                }
+                break;
+            case ROOM_CONVERTED_TO_PUBLIC:
+            case ROOM_CONVERTED_TO_PRIVATE:
+                strBuilder.clear();
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(LogMessageTypeString);
+                } else {
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(LogMessageTypeString);
+                    insertClickSpanLink(strBuilder, targetName, true, targetId);
+                }
+                break;
+            case MEMBER_JOINED_BY_INVITE_LINK:
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.clear();
+                    strBuilder.append("\u200E");
+                    insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+                    strBuilder.append(LogMessageTypeString);
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(G.context.getString(R.string.MEMBER_ADDED));
+                }
+                break;
+            case ROOM_DELETED:
+                if (HelperCalander.isPersianUnicode) {
+                    strBuilder.clear();
+                    strBuilder.append(finalTypeRoom);
+                    strBuilder.append(G.context.getString(R.string.prefix));
+                    insertClickSpanLink(strBuilder, authorName, isAuthorUser, authorId);
+                    strBuilder.append(LogMessageTypeString);
+                }
+                break;
+            case MISSED_VOICE_CALL:
+            case MISSED_VIDEO_CALL:
+            case MISSED_SCREEN_SHARE:
+            case MISSED_SECRET_CHAT:
+                strBuilder.clear();
+                strBuilder.append(LogMessageTypeString);
+                break;
+            case PINNED_MESSAGE:
+                strBuilder.clear();
+                String temp = log.message + "  " + LogMessageTypeString;
+                strBuilder.append(temp);
+                break;
+            case UNRECOGNIZED:
+                strBuilder.clear();
+                break;
+        }
+
 
         return strBuilder;
     }
 
-    private static void insertClickSpanLink(SpannableStringBuilder builder, int start, int end, final boolean isUser, final long id) {
+    public static void updateLogMessageAfterGetUserInfo(long id) {
+        if (logMessageUpdateList.containsKey(id)) {
+            if (FragmentChat.iUpdateLogItem != null) {
+                StructMyLog log = logMessageUpdateList.get(id);
+                FragmentChat.iUpdateLogItem.onUpdate(SerializationUtils.serialize(log), log.messageID);
+            }
+            logMessageUpdateList.remove(id);
+        }
+    }
 
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
 
-                if (isUser) {
+    private static void insertClickSpanLink(SpannableStringBuilder strBuilder, String message, final boolean isUser, final long id) {
 
-                    if (id > 0) {
-                        gotToUserRoom(id);
-                    }
-                } else {
-                    if (id > 0) {
-                        goToRoom(id);
+        if (message.length() == 0) {
+            return;
+        }
+
+        strBuilder.append(message);
+
+        if (id != 0) {
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+
+                    if (isUser) {
+
+                        if (id > 0) {
+                            gotToUserRoom(id);
+                        }
+                    } else {
+                        if (id > 0) {
+                            goToRoom(id);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = Color.parseColor(G.textTitleTheme);
-                } else {
-                    ds.linkColor = Color.DKGRAY;
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    if (G.isDarkTheme) {
+                        ds.linkColor = Color.parseColor(G.textTitleTheme);
+                    } else {
+                        ds.linkColor = Color.DKGRAY;
+                    }
+
+                    super.updateDrawState(ds);
                 }
+            };
+            strBuilder.setSpan(clickableSpan, strBuilder.length() - message.length(), strBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
 
-                super.updateDrawState(ds);
-            }
-        };
-
-        builder.setSpan(clickableSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private static void gotToUserRoom(final long id) {
@@ -535,13 +466,5 @@ public class HelperLogMessage {
         realm.close();
     }
 
-    public static class StructLog {
 
-        long roomId;
-        ProtoGlobal.RoomMessage.Author author;
-        ProtoGlobal.RoomMessageLog messageLog;
-        long messageID;
-
-        long updateID;
-    }
 }

@@ -655,6 +655,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         ViewGroup frameLayout = (ViewGroup) holder.itemView.findViewById(R.id.mainContainer);
         ImageView imgTick = (ImageView) holder.itemView.findViewById(R.id.cslr_txt_tic);
         TextView messageText = (TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage);
+        LinearLayout timeLayout = (LinearLayout) holder.itemView.findViewById(R.id.contentContainer).getParent();
+        timeLayout.setGravity(Gravity.LEFT);
 
         if (messageText != null) {
             messageText.setTextColor(Color.parseColor(G.textTitleTheme));
@@ -720,10 +722,20 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         //   ProtoGlobal.RoomMessageType messageType = mMessage.forwardedFrom == null ? mMessage.messageType : mMessage.forwardedFrom.getMessageType();
 
         if (ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.SEEN) {
-            setTextColor(imgTick, R.color.iGapColor);
+            if (G.isDarkTheme) {
+                setTextColor(imgTick, R.color.iGapColor);
+            }else {
+                setTextColor(imgTick, R.color.backgroundColorCall2);
+            }
+
         } else if (ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.LISTENED) {
             // iconHearing.setVisibility(View.VISIBLE);
-            setTextColor(imgTick, R.color.iGapColor);
+            if (G.isDarkTheme) {
+                setTextColor(imgTick, R.color.iGapColor);
+            }else {
+                setTextColor(imgTick, R.color.backgroundColorCall2);
+            }
+
             imgTick.setVisibility(View.VISIBLE);
         } else {
 
@@ -807,11 +819,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
                 if (mMessage.isSenderMe() && type != ProtoGlobal.Room.Type.CHANNEL) {
                     if (G.isDarkTheme) {
-                        replayView.setBackgroundColor(Color.parseColor(G.backgroundTheme));
+                        replayView.setBackgroundResource(R.drawable.rectangle_reply_sender_round_color_dark);
                         replyFrom.setTextColor(Color.parseColor(G.textTitleTheme));
                         replayMessage.setTextColor(Color.parseColor(G.textTitleTheme));
                     } else {
-                        replayView.setBackgroundColor(holder.itemView.getResources().getColor(R.color.messageBox_replyBoxBackgroundSend));
+                        replayView.setBackgroundResource(R.drawable.rectangle_reply_sender_round_color);
                         replyFrom.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
                         replayMessage.setTextColor(holder.itemView.getResources().getColor(R.color.replay_message_text));
                     }
@@ -821,12 +833,12 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 } else {
 
                     if (G.isDarkTheme) {
-                        replayView.setBackgroundColor(Color.parseColor(G.backgroundTheme));
+                        replayView.setBackgroundResource(R.drawable.rectangle_reply_recive_round_color_dark);
                         // holder.itemView.findViewById(R.id.verticalLine).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.messageBox_receiveColor));
                         replyFrom.setTextColor(Color.parseColor(G.textTitleTheme));
                         replayMessage.setTextColor(Color.parseColor(G.textTitleTheme));
                     } else {
-                        replayView.setBackgroundColor(holder.itemView.getResources().getColor(R.color.messageBox_replyBoxBackgroundReceive));
+                        replayView.setBackgroundResource(R.drawable.rectangle_reply_recive_round_color);
                         // holder.itemView.findViewById(R.id.verticalLine).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.messageBox_receiveColor));
                         replyFrom.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
                         replayMessage.setTextColor(holder.itemView.getResources().getColor(R.color.replay_message_text));

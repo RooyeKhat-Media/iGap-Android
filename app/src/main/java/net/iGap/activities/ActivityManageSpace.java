@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
+import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.ActivityManageSpaceBinding;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -18,7 +19,7 @@ public class ActivityManageSpace extends ActivityEnhanced {
     public void onCreate(Bundle savedInstanceState) {
 
         SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-        if (preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false)) {
+        if (G.isDarkTheme) {
             this.setTheme(R.style.Material_blackCustom);
         } else {
             this.setTheme(R.style.Material_lightCustom);

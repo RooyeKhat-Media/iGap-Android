@@ -19,7 +19,7 @@ public class RequestClientGetRoomMessage {
         builder.setRoomId(roomId);
         builder.setMessageId(messageId);
 
-        RequestWrapper requestWrapper = new RequestWrapper(604, builder);
+        RequestWrapper requestWrapper = new RequestWrapper(604, builder, roomId + "");
         try {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {

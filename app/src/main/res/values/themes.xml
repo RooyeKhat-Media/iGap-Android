@@ -22,6 +22,7 @@
     <item name="backgroundSubChatTheme">@style/backgroundSubChat_dark</item>
     <item name="fabButtoniGap">@style/FabButtonDark</item>
     <item name="md_dark_theme">true</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
     <!--<item name="colorAccent">@color/colorOldBlack</item>-->
 
   </style>
@@ -49,6 +50,7 @@
     <item name="backgroundSubChatTheme">@style/backgroundSubChat_light</item>
     <item name="fabButtoniGap">@style/FabButton</item>
     <item name="md_dark_theme">false</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeLight</item>
     <!--<item name="colorAccent">@color/white</item>-->
   </style>
 

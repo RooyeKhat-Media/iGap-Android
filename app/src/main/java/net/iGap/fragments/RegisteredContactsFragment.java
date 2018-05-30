@@ -442,7 +442,12 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                         if (results.size() == 0) {
                             new RequestUserContactsGetList().userContactGetList();
                         }
-                        prgWaitingLiadList.setVisibility(View.GONE);
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                prgWaitingLiadList.setVisibility(View.GONE);
+                            }
+                        });
                     }
                 });
             } else {

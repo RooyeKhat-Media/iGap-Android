@@ -117,7 +117,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 import static net.iGap.G.context;
 
 public class FragmentChannelProfileViewModel
-        implements OnChannelAddMember, OnChannelKickMember, OnChannelAddModerator, OnChannelUpdateReactionStatus, OnChannelKickModerator, OnChannelAddAdmin, OnChannelKickAdmin, OnChannelDelete,
+        implements OnChannelAddMember, OnChannelAddModerator, OnChannelUpdateReactionStatus, OnChannelKickModerator, OnChannelAddAdmin, OnChannelKickAdmin, OnChannelDelete,
         OnChannelLeft, OnChannelEdit, OnChannelRevokeLink {
 
     public static final String FRAGMENT_TAG = "FragmentChannelProfile";
@@ -272,7 +272,6 @@ public class FragmentChannelProfileViewModel
     private void getInfo(Bundle arguments) {
 
         G.onChannelAddMember = this;
-        G.onChannelKickMember = this;
         G.onChannelAddAdmin = this;
         G.onChannelKickAdmin = this;
         G.onChannelAddModerator = this;
@@ -690,15 +689,8 @@ public class FragmentChannelProfileViewModel
 
     //********** channel Add Member
 
-    private void setMemberCount(final long roomId, final boolean plus) {
-        RealmRoom.updateMemberCount(roomId, plus);
-    }
-
     private void channelAddMemberResponse(long roomIdResponse, final long userId, final ProtoGlobal.ChannelRoom.Role role) {
         if (roomIdResponse == roomId) {
-
-            setMemberCount(roomId, true);
-
             RealmRegisteredInfo realmRegistered = RealmRegisteredInfo.getRegistrationInfo(getRealm(), userId);
             if (realmRegistered == null) {
                 new RequestUserInfo().userInfo(userId, roomId + "");
@@ -707,12 +699,6 @@ public class FragmentChannelProfileViewModel
     }
 
     //********** dialog for edit channel
-
-    private void channelKickMember(final long roomIdResponse, final long memberId) {
-        if (roomIdResponse == roomId) {
-            setMemberCount(roomId, false);
-        }
-    }
 
     private void ChangeGroupDescription(final View v) {
         MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.channel_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -955,16 +941,6 @@ public class FragmentChannelProfileViewModel
             @Override
             public void run() {
                 channelAddMemberResponse(roomId, userId, role);
-            }
-        });
-    }
-
-    @Override
-    public void onChannelKickMember(final long roomId, final long memberId) {
-        G.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                channelKickMember(roomId, memberId);
             }
         });
     }

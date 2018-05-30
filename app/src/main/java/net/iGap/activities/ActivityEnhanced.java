@@ -70,7 +70,7 @@ public class ActivityEnhanced extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(G.updateResources(newBase)));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ActivityEnhanced extends AppCompatActivity {
     }
 
     public void onCreate(Bundle savedInstanceState) {
-        G.checkLanguage();
+
         checkFont();
 
         IntentFilter screenStateFilter = new IntentFilter();

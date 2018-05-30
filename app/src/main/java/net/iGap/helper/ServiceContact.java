@@ -54,9 +54,12 @@ public class ServiceContact extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (contentObserver == null) {
-            contentObserver = new MyContentObserver();
-            getApplicationContext().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contentObserver);
+
+        if ((ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED)) {
+            if (contentObserver == null) {
+                contentObserver = new MyContentObserver();
+                getApplicationContext().getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contentObserver);
+            }
         }
 
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);

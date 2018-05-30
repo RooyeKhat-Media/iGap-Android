@@ -11,7 +11,7 @@
 package net.iGap.realm;
 
 import net.iGap.helper.HelperString;
-import net.iGap.module.SUID;
+import net.iGap.module.AppUtils;
 import net.iGap.module.StringListParcelConverter;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.proto.ProtoGlobal;
@@ -38,7 +38,7 @@ public class RealmRoomMessageContact extends RealmObject {
 
     public static RealmRoomMessageContact put(final ProtoGlobal.RoomMessageContact input) {
         Realm realm = Realm.getDefaultInstance();
-        RealmRoomMessageContact messageContact = realm.createObject(RealmRoomMessageContact.class, SUID.id().get());
+        RealmRoomMessageContact messageContact = realm.createObject(RealmRoomMessageContact.class, AppUtils.makeRandomId());
         messageContact.setLastName(input.getLastName());
         messageContact.setFirstName(input.getFirstName());
         messageContact.setNickName(input.getNickname());
@@ -54,7 +54,7 @@ public class RealmRoomMessageContact extends RealmObject {
     }
 
     public static RealmRoomMessageContact put(Realm realm, StructMessageInfo structMessageInfo) {
-        RealmRoomMessageContact realmRoomMessageContact = realm.createObject(RealmRoomMessageContact.class, SUID.id().get());
+        RealmRoomMessageContact realmRoomMessageContact = realm.createObject(RealmRoomMessageContact.class, AppUtils.makeRandomId());
         realmRoomMessageContact.setFirstName(structMessageInfo.userInfo.firstName);
         realmRoomMessageContact.setLastName(structMessageInfo.userInfo.lastName);
         realmRoomMessageContact.addPhone(structMessageInfo.userInfo.phone);

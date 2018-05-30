@@ -43,7 +43,7 @@ public class RealmRegisteredInfo extends RealmObject {
     private int lastSeen;
     private int avatarCount;
     private String bio;
-
+    private boolean verified;
     private boolean mutual;
     private boolean blockUser = false;
     private boolean DoNotshowSpamBar = false;
@@ -69,6 +69,7 @@ public class RealmRegisteredInfo extends RealmObject {
         registeredInfo.setPhoneNumber(Long.toString(input.getPhone()));
         registeredInfo.setUsername(input.getUsername());
         registeredInfo.setBio(input.getBio());
+        registeredInfo.setVerified(input.getVerified());
 
         return registeredInfo;
     }
@@ -349,6 +350,14 @@ public class RealmRegisteredInfo extends RealmObject {
         this.bio = bio;
     }
 
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
     public boolean isMutual() {
         return mutual;
     }
@@ -396,29 +405,5 @@ public class RealmRegisteredInfo extends RealmObject {
             }
         }
         return null;
-    }
-
-    /**
-     * fill object from proto to realm
-     *
-     * @param registeredUser proto that get from server
-     * @param info           object from RealmRegisteredInfo
-     */
-
-    public void fillRegisteredUserInfo(ProtoGlobal.RegisteredUser registeredUser, RealmRegisteredInfo info) {
-        info.setUsername(registeredUser.getUsername());
-        info.setPhoneNumber(Long.toString(registeredUser.getPhone()));
-        info.setFirstName(registeredUser.getFirstName());
-        info.setLastName(registeredUser.getLastName());
-        info.setDisplayName(registeredUser.getDisplayName());
-        info.setInitials(registeredUser.getInitials());
-        info.setColor(registeredUser.getColor());
-        info.setStatus(registeredUser.getStatus().toString());
-        info.setLastName(registeredUser.getLastName());
-        info.setAvatarCount(registeredUser.getAvatarCount());
-        info.setMutual(registeredUser.getMutual());
-        info.setLastSeen(registeredUser.getLastSeen());
-        info.setCacheId(registeredUser.getCacheId());
-        info.setBio(registeredUser.getBio());
     }
 }

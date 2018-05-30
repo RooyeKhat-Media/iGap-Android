@@ -319,6 +319,10 @@
     <item name="android:background">@drawable/background_call_fragment_dark</item>
   </style>
 
+  <style name="backgroundPassCodeDark">
+    <item name="android:background">@color/black90</item>
+  </style>
+
   <style name="backgroundSubChat_dark">
     <item name="android:background">@color/line</item>
   </style>
@@ -417,6 +421,10 @@
   <style name="FabButton">
     <item name="android:backgroundTint">@android:color/white</item>
     <item name="android:tint">@color/gray</item>
+  </style>
+
+  <style name="backgroundPassCodeLight">
+    <item name="android:background">@color/green</item>
   </style>
 
 </resources>

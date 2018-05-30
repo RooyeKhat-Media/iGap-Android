@@ -108,6 +108,11 @@ public final class ProtoGroupSendMessage {
      * <code>optional .proto.RoomMessageForwardFrom forward_from = 9;</code>
      */
     net.iGap.proto.ProtoGlobal.RoomMessageForwardFromOrBuilder getForwardFromOrBuilder();
+
+    /**
+     * <code>optional uint64 random_id = 10;</code>
+     */
+    long getRandomId();
   }
   /**
    * Protobuf type {@code proto.GroupSendMessage}
@@ -126,6 +131,7 @@ public final class ProtoGroupSendMessage {
       message_ = "";
       attachment_ = "";
       replyTo_ = 0L;
+      randomId_ = 0L;
     }
 
     @java.lang.Override
@@ -231,6 +237,11 @@ public final class ProtoGroupSendMessage {
                 forwardFrom_ = subBuilder.buildPartial();
               }
 
+              break;
+            }
+            case 80: {
+
+              randomId_ = input.readUInt64();
               break;
             }
           }
@@ -442,6 +453,15 @@ public final class ProtoGroupSendMessage {
       return getForwardFrom();
     }
 
+    public static final int RANDOM_ID_FIELD_NUMBER = 10;
+    private long randomId_;
+    /**
+     * <code>optional uint64 random_id = 10;</code>
+     */
+    public long getRandomId() {
+      return randomId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -480,6 +500,9 @@ public final class ProtoGroupSendMessage {
       }
       if (forwardFrom_ != null) {
         output.writeMessage(9, getForwardFrom());
+      }
+      if (randomId_ != 0L) {
+        output.writeUInt64(10, randomId_);
       }
     }
 
@@ -521,6 +544,10 @@ public final class ProtoGroupSendMessage {
       if (forwardFrom_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(9, getForwardFrom());
+      }
+      if (randomId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(10, randomId_);
       }
       memoizedSize = size;
       return size;
@@ -567,6 +594,8 @@ public final class ProtoGroupSendMessage {
         result = result && getForwardFrom()
             .equals(other.getForwardFrom());
       }
+      result = result && (getRandomId()
+          == other.getRandomId());
       return result;
     }
 
@@ -605,6 +634,9 @@ public final class ProtoGroupSendMessage {
         hash = (37 * hash) + FORWARD_FROM_FIELD_NUMBER;
         hash = (53 * hash) + getForwardFrom().hashCode();
       }
+      hash = (37 * hash) + RANDOM_ID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getRandomId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -757,6 +789,8 @@ public final class ProtoGroupSendMessage {
           forwardFrom_ = null;
           forwardFromBuilder_ = null;
         }
+        randomId_ = 0L;
+
         return this;
       }
 
@@ -804,6 +838,7 @@ public final class ProtoGroupSendMessage {
         } else {
           result.forwardFrom_ = forwardFromBuilder_.build();
         }
+        result.randomId_ = randomId_;
         onBuilt();
         return result;
       }
@@ -873,6 +908,9 @@ public final class ProtoGroupSendMessage {
         }
         if (other.hasForwardFrom()) {
           mergeForwardFrom(other.getForwardFrom());
+        }
+        if (other.getRandomId() != 0L) {
+          setRandomId(other.getRandomId());
         }
         onChanged();
         return this;
@@ -1600,6 +1638,32 @@ public final class ProtoGroupSendMessage {
           forwardFrom_ = null;
         }
         return forwardFromBuilder_;
+      }
+
+      private long randomId_ ;
+      /**
+       * <code>optional uint64 random_id = 10;</code>
+       */
+      public long getRandomId() {
+        return randomId_;
+      }
+      /**
+       * <code>optional uint64 random_id = 10;</code>
+       */
+      public Builder setRandomId(long value) {
+        
+        randomId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint64 random_id = 10;</code>
+       */
+      public Builder clearRandomId() {
+        
+        randomId_ = 0L;
+        onChanged();
+        return this;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2488,7 +2552,7 @@ public final class ProtoGroupSendMessage {
   static {
     java.lang.String[] descriptorData = {
       "\n\026GroupSendMessage.proto\022\005proto\032\rRequest" +
-      ".proto\032\016Response.proto\032\014Global.proto\"\270\002\n" +
+      ".proto\032\016Response.proto\032\014Global.proto\"\313\002\n" +
       "\020GroupSendMessage\022\037\n\007request\030\001 \001(\0132\016.pro" +
       "to.Request\022,\n\014message_type\030\002 \001(\0162\026.proto" +
       ".RoomMessageType\022\017\n\007room_id\030\003 \001(\004\022\017\n\007mes" +
@@ -2496,12 +2560,12 @@ public final class ProtoGroupSendMessage {
       "on\030\006 \001(\0132\032.proto.RoomMessageLocation\022*\n\007" +
       "contact\030\007 \001(\0132\031.proto.RoomMessageContact" +
       "\022\020\n\010reply_to\030\010 \001(\004\0223\n\014forward_from\030\t \001(\013" +
-      "2\035.proto.RoomMessageForwardFrom\"x\n\030Group",
-      "SendMessageResponse\022!\n\010response\030\001 \001(\0132\017." +
-      "proto.Response\022\017\n\007room_id\030\002 \001(\004\022(\n\014room_" +
-      "message\030\003 \001(\0132\022.proto.RoomMessageB\'\n\016net" +
-      ".iGap.protoB\025ProtoGroupSendMessageb\006prot" +
-      "o3"
+      "2\035.proto.RoomMessageForwardFrom\022\021\n\trando",
+      "m_id\030\n \001(\004\"x\n\030GroupSendMessageResponse\022!" +
+      "\n\010response\030\001 \001(\0132\017.proto.Response\022\017\n\007roo" +
+      "m_id\030\002 \001(\004\022(\n\014room_message\030\003 \001(\0132\022.proto" +
+      ".RoomMessageB\'\n\016net.iGap.protoB\025ProtoGro" +
+      "upSendMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -2523,7 +2587,7 @@ public final class ProtoGroupSendMessage {
     internal_static_proto_GroupSendMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_GroupSendMessage_descriptor,
-        new java.lang.String[] { "Request", "MessageType", "RoomId", "Message", "Attachment", "Location", "Contact", "ReplyTo", "ForwardFrom", });
+        new java.lang.String[] { "Request", "MessageType", "RoomId", "Message", "Attachment", "Location", "Contact", "ReplyTo", "ForwardFrom", "RandomId", });
     internal_static_proto_GroupSendMessageResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_proto_GroupSendMessageResponse_fieldAccessorTable = new

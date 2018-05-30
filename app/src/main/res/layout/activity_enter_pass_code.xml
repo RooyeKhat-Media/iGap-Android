@@ -19,7 +19,7 @@
     android:id="@+id/mainRootEnterPassword"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
+    style="?backgroundPassCode"
     android:clickable="true"
     android:elevation="1999dp"
     android:orientation="vertical"
