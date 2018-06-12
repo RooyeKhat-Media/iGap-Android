@@ -13,6 +13,7 @@ package net.iGap.activities;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -47,6 +48,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -137,12 +139,16 @@ import net.iGap.request.RequestUserSessionLogout;
 import net.iGap.viewmodel.ActivityCallViewModel;
 import net.iGap.viewmodel.FragmentSettingViewModel;
 
+import org.paygear.wallet.WalletActivity;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import ir.radsense.raadcore.Raad;
+import ir.radsense.raadcore.model.Auth;
 
 import static net.iGap.G.context;
 import static net.iGap.G.isSendContact;
@@ -1973,6 +1979,33 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             TextView txtNavPhone = (TextView) findViewById(R.id.lm_txt_phone_number);
             txtNavName.setText(username);
             txtNavPhone.setText(phoneNumber);
+
+
+            //token should be initialized by token that you received from iGap server which belongs to paygear
+            // language fa or en
+
+            TextView txtNavwalletCredit=(TextView)findViewById(R.id.lm_txt_wallet_credit);
+            txtNavwalletCredit.setVisibility(View.VISIBLE);
+            final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzY0ODg5MzgsImlkIjoiNTlhYmZlY2ZiMTY0NjgxZGQ4Mzc5YWY2IiwidW5pcXVlX25hbWUiOiJ1bmtub3duKDIpIiwiYXBwIjoiNTliZWMzZmEwZWNhODEwMDAxY2VlYjg2IiwibmFtZWlkIjoiMiIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QvIiwibmJmIjoxNTI4NzEyOTM4LCJ1c2VybmFtZSI6InNhZWVkIiwic3ZjIjp7ImRlbGl2ZXJ5Ijp7InBlcm0iOjB9LCJnYW1pZmljYXRpb24iOnsicGVybSI6MH0sInN5bmMiOnsicGVybSI6MH0sInBheW1lbnQiOnsicGVybSI6MH0sIm1lc3NhZ2luZyI6eyJwZXJtIjowfSwiY2x1YiI6eyJwZXJtIjowfSwiZ2VvIjp7InBlcm0iOjB9LCJmaWxlIjp7InBlcm0iOjB9LCJzZWFyY2giOnsicGVybSI6MH0sInFyIjp7InBlcm0iOjB9LCJ0cmFuc3BvcnQiOnsicGVybSI6MH0sImFjY291bnQiOnsicGVybSI6MH0sInByb2R1Y3QiOnsicGVybSI6MH0sImNhc2hpZXIiOnsicGVybSI6MH0sInNvY2lhbCI6eyJwZXJtIjowfSwiY291cG9uIjp7InBlcm0iOjB9LCJldmVudCI6eyJwZXJtIjowfSwiY3JlZGl0Ijp7InBlcm0iOjB9LCJwdXNoIjp7InBlcm0iOjB9fSwic3ViIjoidW5rbm93bigyKSIsImF1ZCI6ImI5ZGM3MTJjOTUyYjRhYWZiNDgxYWJlZGUwZmVjNGQ4IiwibWVyY2hhbnRfcm9sZXMiOnsiNWFlZWE5MzQxNmE4NjgwMDBiYWQyYzQ2IjpbImFkbWluIl0sIjU5YWJmZjM3YjE2NDY4MWRkODM3ZDExMCI6WyJhZG1pbiIsImNhc2hpZXIiXX19.0qKJsJoaHu68TrWcVWgNeq2uF9qGxuo_70ZklCbq_ZE";
+            txtNavwalletCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Raad.init(getApplicationContext());
+                    Auth auth = new Auth(token, "bearer");
+                    if (auth.getJWT() == null) {
+                        Toast.makeText(ActivityMain.this, R.string.authorization_not_valid, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    auth.save();
+                    Intent intent = new Intent(ActivityMain.this, WalletActivity.class);
+                    intent.putExtra("Language", "fa");
+                    intent.putExtra("Mobile", "09332399949");
+                    startActivity(intent);
+                }
+            });
+
+
+
 
             if (HelperCalander.isPersianUnicode) {
                 txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
