@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.activities;
 
@@ -47,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -58,6 +59,9 @@ import com.google.android.gms.analytics.Tracker;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.items.chat.ViewMaker;
+import net.iGap.eventbus.EventListener;
+import net.iGap.eventbus.EventManager;
+import net.iGap.eventbus.socketMessages;
 import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentIgapSearch;
 import net.iGap.fragments.FragmentLanguage;
@@ -134,8 +138,14 @@ import net.iGap.request.RequestGeoGetConfiguration;
 import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
+import net.iGap.request.RequestWalletGetAccessToken;
 import net.iGap.viewmodel.ActivityCallViewModel;
 import net.iGap.viewmodel.FragmentSettingViewModel;
+
+import org.paygear.wallet.WalletActivity;
+import org.paygear.wallet.model.Card;
+import org.paygear.wallet.model.PaymentResult;
+import org.paygear.wallet.web.Web;
 
 import java.io.File;
 import java.io.IOException;
@@ -143,6 +153,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import ir.radsense.raadcore.model.Auth;
+import ir.radsense.raadcore.web.WebBase;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static net.iGap.G.context;
 import static net.iGap.G.isSendContact;
@@ -150,7 +165,7 @@ import static net.iGap.G.userId;
 import static net.iGap.R.string.updating;
 import static net.iGap.fragments.FragmentiGapMap.mapUrls;
 
-public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnUnreadChange, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, DrawerLayout.DrawerListener, OnMapRegisterStateMain {
+public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnUnreadChange, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, DrawerLayout.DrawerListener, OnMapRegisterStateMain, EventListener {
 
     public static final String openChat = "openChat";
     public static final String openMediaPlyer = "openMediaPlyer";
@@ -196,6 +211,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     private ViewPager mViewPager;
     private ArrayList<Fragment> pages = new ArrayList<Fragment>();
     private String phoneNumber;
+    private TextView txtNavwalletCredit;
+
 
     public static void setWeight(View view, int value) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
@@ -318,7 +335,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         if (G.onAudioFocusChangeListener != null) {
             G.onAudioFocusChangeListener.onAudioFocusChangeListener(AudioManager.AUDIOFOCUS_LOSS);
         }
-
+        EventManager.getInstance().removeEventListener(EventManager.ON_ACCESS_TOKEN_RECIVE, this);
     }
 
     /**
@@ -381,6 +398,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         //isOnGetPermission = true;
         //}
         super.onCreate(savedInstanceState);
+
+        EventManager.getInstance().addEventListener(EventManager.ON_ACCESS_TOKEN_RECIVE, this);
+
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -699,6 +719,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 });
             }
         };
+
+        txtNavwalletCredit = (TextView) findViewById(R.id.lm_txt_wallet_credit);
+        txtNavwalletCredit.setVisibility(View.GONE);
+
+
     }
 
     private void checkKeepMedia() {
@@ -727,6 +752,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 }
             }, 5000);
         }
+
     }
 
 
@@ -775,6 +801,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         btnStartNewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                new RequestWalletGetAccessToken().walletGetAccessToken();
+
                 final Fragment fragment = RegisteredContactsFragment.newInstance();
                 Bundle bundle = new Bundle();
                 bundle.putString("TITLE", "New Chat");
@@ -1974,6 +2002,21 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             txtNavName.setText(username);
             txtNavPhone.setText(phoneNumber);
 
+
+            //token should be initialized by token that you received from iGap server which belongs to paygear
+            // language fa or en
+
+//            txtNavwalletCredit.setVisibility(View.GONE);
+//            if (updateFromServer) {
+//                new RequestWalletGetAccessToken().walletGetAccessToken();
+//
+//                Raad.init(getApplicationContext());
+//                Utils.setLocale(this, "fa");
+//                WebBase.apiKey = "5aa7e856ae7fbc00016ac5a01c65909797d94a16a279f46a4abb5faa";
+//
+//
+//
+//            }
             if (HelperCalander.isPersianUnicode) {
                 txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
                 txtNavName.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavName.getText().toString()));
@@ -1983,6 +2026,42 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
             setImage();
         }
+    }
+
+    public void getUserCredit() {
+        WebBase.apiKey = "5aa7e856ae7fbc00016ac5a01c65909797d94a16a279f46a4abb5faa";
+        Web.getInstance().getWebService().getCredit(Auth.getCurrentAuth().getId()).enqueue(new Callback<ArrayList<Card>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Card>> call, Response<ArrayList<Card>> response) {
+                if (response.body() != null) {
+                    Card selectedCard = null;
+                    if (response.body().size() > 0)
+                        selectedCard=response.body().get(0);
+                    if (selectedCard != null) {
+                        txtNavwalletCredit.setVisibility(View.VISIBLE);
+                        txtNavwalletCredit.setText("اعتبار شما : " + String.valueOf(selectedCard.cashOutBalance) + " ریال ");
+                        txtNavwalletCredit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ActivityMain.this, WalletActivity.class);
+                                intent.putExtra("Language", "fa");
+                                intent.putExtra("Mobile", "0" + phoneNumber.substring(2));
+                                intent.putExtra("PrimaryColor", "#f69228");
+                                intent.putExtra("DarkPrimaryColor", "#f99228");
+                                intent.putExtra("AccentColor","#cdcbcb");
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
+                getUserCredit();
+            }
+        });
+
     }
 
     private void getUserInfo(final RealmUserInfo realmUserInfo) {
@@ -2065,12 +2144,15 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         resume();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getUserCredit();
     }
 
     public void resume() {
         /**
          * after change language in ActivitySetting this part refresh Activity main
          */
+
+
         G.onRefreshActivity = new OnRefreshActivity() {
             @Override
             public void refresh(String changeLanguag) {
@@ -2139,12 +2221,14 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         G.onUserInfoMyClient = this;
         G.onMapRegisterStateMain = this;
         G.onUnreadChange = this;
+        G.onWalletGetAccessToken = this;
 
         startService(new Intent(this, ServiceContact.class));
 
         HelperUrl.getLinkinfo(getIntent(), ActivityMain.this);
         getIntent().setData(null);
         setDrawerInfo(false);
+
         if (drawer != null) {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -2590,6 +2674,31 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         });
     }
 
+    @Override
+    public void receivedMessage(int id, Object... message) {
+        switch (id) {
+            case EventManager.ON_ACCESS_TOKEN_RECIVE:
+                int response = (int) message[0];
+                switch (response) {
+                    case socketMessages.SUCCESS:
+                        new android.os.Handler(getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                getUserCredit();
+                            }
+                        });
+
+                        break;
+
+                    case socketMessages.FAILED:
+                        new RequestWalletGetAccessToken().walletGetAccessToken();
+                        break;
+                }
+                // backthread
+
+        }
+    }
+
     public enum MainAction {
         downScrool, clinetCondition
     }
@@ -2632,4 +2741,24 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 66) {
+            if (resultCode == RESULT_OK) {
+                PaymentResult paymentResult = (PaymentResult) data.getSerializableExtra("result");
+                if (paymentResult != null) {
+                    Toast.makeText(this, "trace number:" + String.valueOf(paymentResult.traceNumber) + "amount :" + String.valueOf(paymentResult.amount), Toast.LENGTH_SHORT).show();
+                    EventManager.getInstance().postEvent(EventManager.ON_PAYMENT_RESULT_RECIEVED, socketMessages.PaymentResultRecievedSuccess);
+                }else {
+                    Toast.makeText(this, "ناموفق", Toast.LENGTH_SHORT).show();
+                    EventManager.getInstance().postEvent(EventManager.ON_PAYMENT_RESULT_RECIEVED, socketMessages.PaymentResultRecievedFailed);
+
+                }
+            }else {
+                Toast.makeText(this, "payment is canceled", Toast.LENGTH_SHORT).show();
+                EventManager.getInstance().postEvent(EventManager.ON_PAYMENT_RESULT_RECIEVED, socketMessages.PaymentResultNotRecieved);
+            }
+        }
+    }
 }

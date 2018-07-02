@@ -111,6 +111,8 @@ import net.iGap.adapter.items.chat.VideoItem;
 import net.iGap.adapter.items.chat.VideoWithTextItem;
 import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.adapter.items.chat.VoiceItem;
+import net.iGap.databinding.PaymentDialogBinding;
+import net.iGap.eventbus.PaymentFragment;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
@@ -350,6 +352,8 @@ public class FragmentChat extends BaseFragment
     private static List<StructBottomSheet> contacts;
     private static ArrayMap<String, Boolean> compressedPath = new ArrayMap<>(); // keep compressedPath and also keep video path that never be won't compressed
     private static ArrayList<StructUploadVideo> structUploadVideos = new ArrayList<>();
+    PaymentDialogBinding paymentDialogBinding;
+    PaymentFragment paymentDialog;
 
     /**
      * *************************** common method ***************************
@@ -548,7 +552,7 @@ public class FragmentChat extends BaseFragment
         Cursor cursor;
         int column_index_data = 0, column_index_folder_name;
         String absolutePathOfImage = null;
-        uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
         String[] projection = {
                 MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME
@@ -1024,7 +1028,7 @@ public class FragmentChat extends BaseFragment
             /**
              * compress video if BuildVersion is bigger that 18
              */
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 if (requestCode == request_code_VIDEO_CAPTURED) {
                     if (sharedPreferences.getInt(SHP_SETTING.KEY_TRIM, 1) == 1) {
                         Intent intent = new Intent(G.fragmentActivity, ActivityTrimVideo.class);
@@ -1082,7 +1086,7 @@ public class FragmentChat extends BaseFragment
                 /**
                  * compress video if BuildVersion is bigger that 18
                  */
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     if (requestCode == AttachFile.requestOpenGalleryForVideoMultipleSelect) {
                         if (sharedPreferences.getInt(SHP_SETTING.KEY_TRIM, 1) == 1) {
                             Intent intent = new Intent(G.fragmentActivity, ActivityTrimVideo.class);
@@ -4793,7 +4797,7 @@ public class FragmentChat extends BaseFragment
             }
         }
 
-        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Copied Text", copyText));
 
         mAdapter.deselect();
@@ -5281,7 +5285,7 @@ public class FragmentChat extends BaseFragment
                             sendMessage(AttachFile.request_code_TAKE_PICTURE, pathList.get(i));
                         }
                     } else if (messageType == HelperGetDataFromOtherApp.FileType.video) {
-                        if (pathList.size() == 1 && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
+                        if (pathList.size() == 1 && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
 //                            final String savePathVideoCompress = Environment.getExternalStorageDirectory() + File.separator + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR + "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
                             final String savePathVideoCompress = G.DIR_TEMP + "/VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
                             mainVideoPath = pathList.get(0);
@@ -5319,7 +5323,7 @@ public class FragmentChat extends BaseFragment
                             if (fileType == HelperGetDataFromOtherApp.FileType.image) {
                                 sendMessage(AttachFile.request_code_TAKE_PICTURE, pathList.get(i));
                             } else if (fileType == HelperGetDataFromOtherApp.FileType.video) {
-                                if (pathList.size() == 1 && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
+                                if (pathList.size() == 1 && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
                                     //                                    final String savePathVideoCompress = Environment.getExternalStorageDirectory() + File.separator + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR + "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format
                                     // (new Date()) + ".mp4";
                                     final String savePathVideoCompress = G.DIR_TEMP + "/VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
@@ -5787,7 +5791,17 @@ public class FragmentChat extends BaseFragment
         ViewGroup file = (ViewGroup) viewBottomSheet.findViewById(R.id.file);
         ViewGroup paint = (ViewGroup) viewBottomSheet.findViewById(R.id.paint);
         ViewGroup location = (ViewGroup) viewBottomSheet.findViewById(R.id.location);
-        ViewGroup contact = (ViewGroup) viewBottomSheet.findViewById(R.id.contact);
+        final ViewGroup contact = (ViewGroup) viewBottomSheet.findViewById(R.id.contact);
+        ViewGroup money = (ViewGroup) viewBottomSheet.findViewById(R.id.money);
+
+        RealmRoom realmRoom = getRealmChat().where(RealmRoom.class).equalTo(RealmRoomFields.ID, mRoomId).findFirst();
+        if (realmRoom != null) {
+            chatType = realmRoom.getType();
+            if (chatType != CHAT) {
+                money.setVisibility(View.GONE);
+            }
+        }
+
 
         onPathAdapterBottomSheet = new OnPathAdapterBottomSheet() {
             @Override
@@ -6084,7 +6098,35 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-        close.setOnClickListener(new View.OnClickListener() {
+
+
+        money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+                showPaymentDialog();
+
+            }
+
+            private void showPaymentDialog() {
+                RealmRoom realmRoom = getRealmChat().where(RealmRoom.class).equalTo(RealmRoomFields.ID, mRoomId).findFirst();
+                if (realmRoom != null) {
+                    chatType = realmRoom.getType();
+                    if (chatType == CHAT) {
+                        chatPeerId = realmRoom.getChatRoom().getPeerId();
+                        if (imvUserPicture != null && txtName != null) {
+                            paymentDialog = PaymentFragment.newInstance(chatPeerId, imvUserPicture.getDrawable(), txtName.getText().toString());
+                            paymentDialog.show(getFragmentManager(), "payment_dialog");
+                        }
+                    }
+                }
+
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
 
@@ -6127,7 +6169,9 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-        file.setOnClickListener(new View.OnClickListener() {
+        file.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -6147,7 +6191,9 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-        paint.setOnClickListener(new View.OnClickListener() {
+        paint.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -6158,7 +6204,9 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-        location.setOnClickListener(new View.OnClickListener() {
+        location.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -6169,7 +6217,9 @@ public class FragmentChat extends BaseFragment
                 }
             }
         });
-        contact.setOnClickListener(new View.OnClickListener() {
+        contact.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -7095,7 +7145,8 @@ public class FragmentChat extends BaseFragment
         HelperSetAction.sendCancel(messageId);
     }
 
-    public void sendPosition(final Double latitude, final Double longitude, final String imagePath) {
+    public void sendPosition(final Double latitude, final Double longitude,
+                             final String imagePath) {
         sendCancelAction();
 
         if (isShowLayoutUnreadMessage) {
@@ -7226,7 +7277,8 @@ public class FragmentChat extends BaseFragment
         }
     }
 
-    private void sendForwardedMessage(final StructMessageInfo messageInfo, final long mRoomId, final boolean isSingleForward, int k) {
+    private void sendForwardedMessage(final StructMessageInfo messageInfo, final long mRoomId,
+                                      final boolean isSingleForward, int k) {
 
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -7678,7 +7730,8 @@ public class FragmentChat extends BaseFragment
     /**
      * manage load message from local or from server(online)
      */
-    private void loadMessage(final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+    private void loadMessage(
+            final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
         long gapMessageId;
         long startFutureMessageId;
         if (direction == UP) {
@@ -7768,7 +7821,8 @@ public class FragmentChat extends BaseFragment
      *
      * @param oldMessageId if set oldMessageId=0 messages will be get from latest message that exist in server
      */
-    private void getOnlineMessage(final long oldMessageId, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+    private void getOnlineMessage(final long oldMessageId,
+                                  final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
         if ((direction == UP && !isWaitingForHistoryUp && allowGetHistoryUp) || (direction == DOWN && !isWaitingForHistoryDown && allowGetHistoryDown)) {
             /**
              * show progress when start for get history from server
@@ -7924,7 +7978,8 @@ public class FragmentChat extends BaseFragment
         }
     }
 
-    private void getOnlineMessageAfterTimeOut(final long messageIdGetHistory, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+    private void getOnlineMessageAfterTimeOut(final long messageIdGetHistory,
+                                              final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
         if (G.userLogin) {
             getOnlineMessage(messageIdGetHistory, direction);
         } else {
@@ -7942,7 +7997,9 @@ public class FragmentChat extends BaseFragment
      * (hint : if gapMessageId==0 means that gap not exist)
      * if gapMessageIdUp exist, not compute again
      */
-    private long gapDetection(RealmResults<RealmRoomMessage> results, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+    private long gapDetection
+    (RealmResults<RealmRoomMessage> results, ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction
+            direction) {
         if (((direction == UP && gapMessageIdUp == 0) || (direction == DOWN && gapMessageIdDown == 0)) && results.size() > 0) {
             Object[] objects = MessageLoader.gapExist(getRealmChat(), mRoomId, results.first().getMessageId(), direction);
             if (direction == UP) {
@@ -8021,7 +8078,8 @@ public class FragmentChat extends BaseFragment
      * @param progressState SHOW or HIDE state detect with enum
      * @param direction     define direction for show progress in UP or DOWN
      */
-    private void progressItem(final ProgressState progressState, final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
+    private void progressItem(final ProgressState progressState,
+                              final ProtoClientGetRoomHistory.ClientGetRoomHistory.Direction direction) {
         G.handler.post(new Runnable() {
             @Override
             public void run() {

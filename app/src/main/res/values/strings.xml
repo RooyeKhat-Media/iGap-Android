@@ -1188,6 +1188,7 @@
   <string name="other_files">Other Files</string>
   <string name="title_import_contact_limit">Import contact list</string>
   <string name="content_import_contact_limit">Your contact list is very large and can not import to server</string>
+  <string name="am_money">money</string>
 
   <string name="filter_cancel_content">Are you discarding changes?</string>
   <string name="lbl_brightness">Brightness</string>
@@ -1210,5 +1211,9 @@
   <string name="automatic_description_theme">The night mode was activated from 19 to 8 with automatic mode selection</string>
   <string name="setting_dark_theme">Setting Dark Theme</string>
   <string name="Select_Time">Select Time</string>
+  <string name="transfer_amount_hint">Enter the transfer amount below :</string>
+  <string name="amount_in_rial">Amount in Rial :</string>
+  <string name="pay">pay</string>
+  <string name="transfer_to_dialog">Transfer to :</string>
 
 </resources>

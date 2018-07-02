@@ -1,595 +1,613 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/rootMenu"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="@color/white"
-  android:clickable="true"
-  android:fitsSystemWindows="true"
-  android:orientation="vertical"
-  tools:ignore="MissingPrefix">
-
-
-  <ScrollView
-    android:id="@+id/scrollView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootMenu"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="none">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:descendantFocusability="blocksDescendants"
-      android:orientation="vertical">
 
-      <LinearLayout
-        android:id="@+id/lm_layout_header"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp180"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <LinearLayout
-          android:id="@+id/lm_layout_user_picture"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
-
-
-          <net.iGap.module.CircleImageView
-            android:id="@+id/lm_imv_user_picture"
-            android:layout_width="@dimen/dp80"
-            android:layout_height="@dimen/dp80"
-            android:layout_margin="@dimen/dp16"
-            android:src="@mipmap/empty" />
-
-          <net.iGap.module.EmojiTextViewE
-            android:id="@+id/lm_txt_user_name"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp16"
-            android:layout_marginStart="@dimen/dp16"
-            android:lineSpacingMultiplier=".8"
-            android:singleLine="true"
-            android:text="iGap User"
-            android:textColor="#fff"
-            android:textSize="@dimen/dp22"
-            app:emojiSize="@dimen/dp14" />
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
 
-          <TextView
-            android:id="@+id/lm_txt_phone_number"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp16"
-            android:layout_marginStart="@dimen/dp16"
-            android:singleLine="true"
-            android:text="+98 9123456789"
-            android:textColor="#f8f4df"
-            android:textSize="@dimen/dp12" />
+            <LinearLayout
+                android:id="@+id/lm_layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp220"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/lm_layout_user_picture"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <net.iGap.module.CircleImageView
+                        android:id="@+id/lm_imv_user_picture"
+                        android:layout_width="@dimen/dp80"
+                        android:layout_height="@dimen/dp80"
+                        android:layout_margin="@dimen/dp16"
+                        android:src="@mipmap/empty" />
+
+                    <net.iGap.module.EmojiTextViewE
+                        android:id="@+id/lm_txt_user_name"
+                        fontPath="fonts/IRANSansMobile_Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:lineSpacingMultiplier=".8"
+                        android:singleLine="true"
+                        android:text="iGap User"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/dp22"
+                        app:emojiSize="@dimen/dp14" />
+
+                    <TextView
+                        android:id="@+id/lm_txt_phone_number"
+                        fontPath="fonts/IRANSansMobile_Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:singleLine="true"
+                        android:text="+98 9123456789"
+                        android:textColor="#f8f4df"
+                        android:textSize="@dimen/dp12" />
+
+
+                    <TextView
+                        android:id="@+id/lm_txt_wallet_credit"
+                        fontPath="fonts/IRANSansMobile_Bold.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:singleLine="true"
+                        android:text="موجودی کیف پول شما : 0 ریال"
+                        android:textColor="#f8f4df"
+                        android:textSize="12sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <net.iGap.module.MaterialDesignTextView
+                    android:id="@+id/lm_txt_cloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/dp8"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:padding="4dp"
+                    android:singleLine="true"
+                    android:text="@string/md_cloud"
+                    android:textAppearance="@style/TextIconAppearance_toolbar"
+                    android:textColor="#adffffff"
+                    android:textSize="28sp" />
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:id="@+id/lm_layout_main"
+                style="?backgroundColorSettingTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/dp8"
+                    android:paddingLeft="@dimen/dp8"
+                    android:paddingRight="@dimen/dp8"
+                    android:paddingStart="@dimen/dp8">
+
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_new_chat"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp16">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_new_chat"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_user_account_box"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20"
+                            android:textStyle="bold"
+
+                            />
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/New_Chat"
+                            android:textSize="@dimen/dp14"
+
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_new_group"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_group"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_users_social_symbol"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/New_Group"
+                            android:textSize="@dimen/dp14"
+
+                            />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_new_channle"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lm_txt_icon_channel"
+                            style="?iconColorMenuTheme"
+                            fontPath="fonts/iGap-Fontico.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_channel_icon"
+                            android:textSize="@dimen/dp20"
+
+                            />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/New_Chanel"
+                            android:textSize="@dimen/dp14"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_igap_search"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/amr_btn_search"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_searching_magnifying_glass"
+                            android:textAppearance="@style/TextIconAppearance_toolbar"
+                            android:textSize="@dimen/dp20" />
+
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/igap_search"
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_margin="@dimen/dp8"
+                        android:background="@color/gray" />
+
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_contacts"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_contacts"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_igap_contacts"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20"
+
+                            />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/contacts"
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_setting"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_setting"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_settings_cogwheel_button"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/chi_title_setting"
+
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_map"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_nearby"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20"
+
+                            />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp12"
+                            android:text="@string/igap_nearby"
+                            android:textSize="@dimen/dp14"
+
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_call"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_phone"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20"
+
+                            />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp12"
+                            android:text="@string/calls"
+                            android:textSize="@dimen/dp14"
+
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_qrCode"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_qrCode"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_qrCode"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/QrCode_Scan"
+
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_invite_friends"
+                        style="@style/NavigationDrawer.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_invite_friends"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:paddingRight="@dimen/dp4"
+                            android:text="@string/md_add_user_button"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/Invite_Friends"
+
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lt_txt_st_theme_dark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:paddingRight="@dimen/dp4"
+                            android:text="@string/md_brush"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            android:id="@+id/st_txt_st_theme_dark"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp4"
+                            android:text="@string/Theme_Dark"
+                            android:textSize="@dimen/dp15"
+                            android:textStyle="normal" />
+
+
+                        <ToggleButton
+                            android:id="@+id/st_txt_st_toggle_theme_dark"
+                            android:layout_width="@dimen/dp44"
+                            android:layout_height="@dimen/dp40"
+                            android:background="@drawable/st_switch_button"
+                            android:textOff=""
+                            android:textOn="" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lm_ll_igap_faq"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:layout_marginTop="@dimen/dp4"
+                        android:orientation="horizontal">
+
+                        <net.iGap.module.MaterialDesignTextView
+                            android:id="@+id/lm_txt_icon_igap_faq"
+                            style="?iconColorMenuTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dp32"
+                            android:text="@string/md_exit_app"
+                            android:textAppearance="@style/TextIconAppearance.menu"
+                            android:textSize="@dimen/dp20" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="?textColorMenuTheme"
+                            fontPath="fonts/IRANSansMobile_Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp4"
+                            android:layout_marginStart="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp8"
+                            android:paddingLeft="@dimen/dp8"
+                            android:paddingRight="@dimen/dp8"
+                            android:paddingTop="@dimen/dp8"
+                            android:text="@string/log_out"
+                            android:textSize="@dimen/dp14" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
-
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/lm_txt_cloud"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="bottom"
-          android:layout_marginBottom="@dimen/dp8"
-          android:layout_marginEnd="@dimen/dp16"
-          android:layout_marginRight="@dimen/dp16"
-          android:padding="4dp"
-          android:singleLine="true"
-          android:text="@string/md_cloud"
-          android:textAppearance="@style/TextIconAppearance_toolbar"
-          android:textColor="#adffffff"
-          android:textSize="28sp" />
-      </LinearLayout>
-
-
-      <FrameLayout
-        android:id="@+id/lm_layout_main"
-        style="?backgroundColorSettingTheme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:paddingEnd="@dimen/dp8"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:paddingStart="@dimen/dp8">
-
-
-          <LinearLayout
-            android:id="@+id/lm_ll_new_chat"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp16">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_new_chat"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_user_account_box"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20"
-              android:textStyle="bold"
-
-              />
-
-            <TextView
-              android:id="@+id/textView6"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/New_Chat"
-              android:textSize="@dimen/dp14"
-
-              />
-
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_new_group"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_group"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_users_social_symbol"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              android:id="@+id/textView9"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/New_Group"
-              android:textSize="@dimen/dp14"
-
-              />
-
-          </LinearLayout>
-
-
-          <LinearLayout
-            android:id="@+id/lm_ll_new_channle"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <TextView
-              android:id="@+id/lm_txt_icon_channel"
-              style="?iconColorMenuTheme"
-              fontPath="fonts/iGap-Fontico.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_channel_icon"
-              android:textSize="@dimen/dp20"
-
-              />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/New_Chanel"
-              android:textSize="@dimen/dp14"
-
-              />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_igap_search"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/amr_btn_search"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_searching_magnifying_glass"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textSize="@dimen/dp20" />
-
-
-            <TextView
-              android:id="@+id/textView4"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/igap_search"
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-
-          <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_margin="@dimen/dp8"
-            android:background="@color/gray" />
-
-
-          <LinearLayout
-            android:id="@+id/lm_ll_contacts"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_contacts"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_igap_contacts"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20"
-
-              />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/contacts"
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_setting"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_setting"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_settings_cogwheel_button"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/chi_title_setting"
-
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_map"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <net.iGap.module.MaterialDesignTextView
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_nearby"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20"
-
-              />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp12"
-              android:text="@string/igap_nearby"
-              android:textSize="@dimen/dp14"
-
-              />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_call"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <net.iGap.module.MaterialDesignTextView
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_phone"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20"
-
-              />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp12"
-              android:text="@string/calls"
-              android:textSize="@dimen/dp14"
-
-              />
-
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_qrCode"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_qrCode"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_qrCode"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/QrCode_Scan"
-
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_invite_friends"
-            style="@style/NavigationDrawer.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_invite_friends"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:paddingRight="@dimen/dp4"
-              android:text="@string/md_add_user_button"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              android:id="@+id/textView2"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/Invite_Friends"
-
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-
-
-          <LinearLayout
-            android:id="@+id/lt_txt_st_theme_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:paddingRight="@dimen/dp4"
-              android:text="@string/md_brush"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              android:id="@+id/st_txt_st_theme_dark"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:layout_weight="1"
-              android:gravity="center_vertical"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp4"
-              android:text="@string/Theme_Dark"
-              android:textSize="@dimen/dp15"
-              android:textStyle="normal" />
-
-
-            <ToggleButton
-              android:id="@+id/st_txt_st_toggle_theme_dark"
-              android:layout_width="@dimen/dp44"
-              android:layout_height="@dimen/dp40"
-              android:background="@drawable/st_switch_button"
-              android:textOff=""
-              android:textOn="" />
-
-          </LinearLayout>
-
-          <LinearLayout
-            android:id="@+id/lm_ll_igap_faq"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6"
-            android:layout_marginTop="@dimen/dp4"
-            android:orientation="horizontal">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/lm_txt_icon_igap_faq"
-              style="?iconColorMenuTheme"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:minWidth="@dimen/dp32"
-              android:text="@string/md_exit_app"
-              android:textAppearance="@style/TextIconAppearance.menu"
-              android:textSize="@dimen/dp20" />
-
-            <TextView
-              android:id="@+id/textView3"
-              style="?textColorMenuTheme"
-              fontPath="fonts/IRANSansMobile_Bold.ttf"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dp4"
-              android:layout_marginStart="@dimen/dp4"
-              android:paddingBottom="@dimen/dp8"
-              android:paddingLeft="@dimen/dp8"
-              android:paddingRight="@dimen/dp8"
-              android:paddingTop="@dimen/dp8"
-              android:text="@string/log_out"
-              android:textSize="@dimen/dp14" />
-
-          </LinearLayout>
-        </LinearLayout>
-      </FrameLayout>
-    </LinearLayout>
-  </ScrollView>
+    </ScrollView>
 
 
 </LinearLayout>

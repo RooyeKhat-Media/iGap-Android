@@ -25,6 +25,7 @@
   <string name="md_igap_contacts">\uf6ca</string>  <!-- igap_apps  -->
   <string name="md_nearby">\uf352</string>  <!-- igap_map-marker-radius -->
   <string name="md_chat_box">\uf366</string>  <!-- igap_message-processing -->
+  <string name="md_igap_wallet">\ue90d</string>
 
   <string name="md_users_social_symbol">\uf00e</string>  <!-- igap_account-multiple  -->
   <string name="md_settings_cogwheel_button">\uf493</string>  <!-- igap_settings  -->

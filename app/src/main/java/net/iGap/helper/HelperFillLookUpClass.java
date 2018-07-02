@@ -241,6 +241,10 @@ public class HelperFillLookUpClass {
         lookupMap.put(60002, "ProtoPushUserInfoExpired.PushUserInfoExpiredResponse");
         lookupMap.put(60003, "ProtoPushRateSignaling.PushRateSignalingResponse");
 
+        //Wallet 90xx
+        lookupMap.put(39000, "ProtoWalletGetAccessToken.WalletGetAccessTokenResponse");
+        lookupMap.put(39001, "ProtoWalletPaymentInit.WalletPaymentInitResponse");
+
     }
 
     /**

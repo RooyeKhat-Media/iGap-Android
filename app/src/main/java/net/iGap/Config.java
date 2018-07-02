@@ -53,7 +53,7 @@ public class Config {
     public static final int FETCH_CONTACT_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
     public static final int LAST_SEEN_TIME_OUT = (int) (60 * DateUtils.MINUTE_IN_MILLIS); // after this time show exactly time instead of minutes
     public static final int DEFAULT_BOTH_CHAT_DELETE_TIME = (int) (2 * DateUtils.HOUR_IN_MILLIS);
-    public static final String URL_WEBSOCKET = "wss://secure.igap.net/hybrid/";
+    public static final String URL_WEBSOCKET = "wss://secure.igap.net/test/";
     public static final String URL_MAP = "https://c.tile.openstreetmap.org/";
     public static final String IGAP_LINK_PREFIX = "https://iGap.net/";
     public static final String PUBLIC_KEY_CLIENT = "-----BEGIN PUBLIC KEY-----\n"

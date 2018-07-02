@@ -1163,7 +1163,7 @@
   <string name="title_import_contact_limit">در حال وارد کردن لیست تماس</string>
   <string name="content_import_contact_limit">متاسفانه تعداد مخاطبین شما بیش از حد مجاز میباشد. نمیتوانیم با سرور بررسی کنیم ، لطفا مخاطبین را در حد معقول ذخیره کنید</string>
   <string name="another_room">اتاق دیگر</string>
-
+  <string name="am_money">پول</string>
   <string name="filter_cancel_content">آیا از تغییرات انجام داده منصرف شدید ؟</string>
   <string name="lbl_brightness">روشنایی</string>
   <string name="lbl_contrast">کنتراست</string>
@@ -1186,5 +1186,9 @@
   <string name="automatic_description_theme">حالت شب از 19 تا 8 با انتخاب حالت خودکار فعال شد</string>
   <string name="setting_dark_theme">تنظیمات پوسته تاریک</string>
   <string name="Select_Time">انتخاب زمان</string>
+  <string name="transfer_amount_hint">مبلغ انتقال را در قسمت پایین وارد نمایید. </string>
+  <string name="amount_in_rial">مبلغ به ریال : </string>
+  <string name="pay">پرداخت</string>
+  <string name="transfer_to_dialog">انتقال به :</string>
 
 </resources>

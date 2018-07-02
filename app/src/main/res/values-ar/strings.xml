@@ -2117,7 +2117,7 @@
   <string name="other_files">ملفات اخرى</string>
   <string name="title_import_contact_limit">دخول قائمة الاتصال</string>
   <string name="content_import_contact_limit">عذرًا ، عدد جهات الاتصال لديك كبير جدًا لا يمكننا التحقق من الخادم ، يرجى حفظ جهات الاتصال على مستوى معقول</string>
-
+  <string name="am_money">پول</string>
   <string name="filter_cancel_content">هل تخليت عن التغييرات؟</string>
   <string name="lbl_brightness">سطوع</string>
   <string name="lbl_contrast">تباين</string>
@@ -2140,5 +2140,9 @@
   <string name="automatic_description_theme">تم تنشيط الوضع الليلي من 19 إلى 8 عن طريق تحديد الوضع التلقائي</string>
   <string name="setting_dark_theme">إعدادات قذيفة الظلام</string>
   <string name="Select_Time">اختر الوقت</string>
+  <string name="transfer_amount_hint">Enter the transfer amount below :</string>
+  <string name="amount_in_rial">Amount in Rial :</string>
+  <string name="pay">pay</string>
+  <string name="transfer_to_dialog">Transfer to :</string>
 
 </resources>
