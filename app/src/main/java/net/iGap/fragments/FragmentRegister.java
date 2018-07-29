@@ -135,22 +135,21 @@ public class FragmentRegister extends BaseFragment {
 
         txtTitleToolbar.setTypeface(titleTypeface);
 
-        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
-
-            TextView rg_txt_verify_connect = fragmentRegisterBinding.rgTxtVerifyConnect;
-            rg_txt_verify_connect.setTypeface(titleTypeface);
-
-
-            TextView rg_txt_verify_sms = fragmentRegisterBinding.rgTxtVerifySms;
-            rg_txt_verify_sms.setTypeface(titleTypeface);
-
-            TextView rg_txt_verify_generate = fragmentRegisterBinding.rgTxtVerifyKey;
-            rg_txt_verify_generate.setTypeface(titleTypeface);
-
-            TextView rg_txt_verify_register = fragmentRegisterBinding.rgTxtVerifyServer;
-            rg_txt_verify_register.setTypeface(titleTypeface);
-
-        }
+//        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
+//
+//            TextView rg_txt_verify_connect = fragmentRegisterBinding.rgTxtVerifyConnect;
+//            rg_txt_verify_connect.setTypeface(G.typeface_IRANSansMobile);
+//
+//            TextView rg_txt_verify_sms = fragmentRegisterBinding.rgTxtVerifySms;
+//            rg_txt_verify_sms.setTypeface(G.typeface_IRANSansMobile);
+//
+//            TextView rg_txt_verify_generate = fragmentRegisterBinding.rgTxtVerifyKey;
+//            rg_txt_verify_generate.setTypeface(G.typeface_IRANSansMobile);
+//
+//            TextView rg_txt_verify_register = fragmentRegisterBinding.rgTxtVerifyServer;
+//            rg_txt_verify_register.setTypeface(G.typeface_IRANSansMobile);
+//
+//        }
 
 
         ProgressBar rg_prg_verify_connect = fragmentRegisterBinding.rgPrgVerifyConnect;

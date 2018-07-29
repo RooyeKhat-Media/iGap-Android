@@ -135,6 +135,7 @@
               android:textColor="@color/toolbar_title_register">
 
               <TextView
+                fontPath="fonts/IRANSansMobile.ttf"
                 android:id="@+id/rg_txt_title_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,6 +156,7 @@
                 android:background="@color/rg_line2_background" />
 
               <TextView
+                fontPath="fonts/IRANSansMobile.ttf"
                 android:id="@+id/rg_txt_text_descRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,6 +286,7 @@
 
               <!--1-->
 
+
               <LinearLayout
                 android:id="@+id/rg_layout_verify_and_agreement"
                 android:layout_width="match_parent"
@@ -329,12 +332,12 @@
 
 
                   <TextView
+                    fontPath="fonts/IRANSansMobile.ttf"
                     android:id="@+id/rg_txt_verify_connect"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{fragmentRegisterViewModel.CallBackTxtVerifyConnect , default = @string/rg_verify_register1}"
-                    android:textAppearance="@{fragmentRegisterViewModel.txtVerifyConnectAppearance}"
                     android:textColor="@{fragmentRegisterViewModel.txtVerifyConnectColor}"
                     android:textSize="@dimen/dp13" />
 
@@ -366,6 +369,7 @@
                     android:visibility="@{fragmentRegisterViewModel.imgVerifySmsVisibility}" />
 
                   <TextView
+                    fontPath="fonts/IRANSansMobile.ttf"
                     android:id="@+id/rg_txt_verify_sms"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -373,11 +377,11 @@
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="@{fragmentRegisterViewModel.callBackTxtVerifySms}"
-                    android:textAppearance="@{fragmentRegisterViewModel.txtVerifySmsAppearance}"
                     android:textColor="@{fragmentRegisterViewModel.txtVerifySmsColor}"
                     android:textSize="@dimen/dp13" />
 
                   <TextView
+                    fontPath="fonts/IRANSansMobile.ttf"
                     android:id="@+id/rg_txt_verify_timer"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -419,12 +423,12 @@
                     android:visibility="@{fragmentRegisterViewModel.imgVerifyKeyVisibility}" />
 
                   <TextView
+                    fontPath="fonts/IRANSansMobile.ttf"
                     android:id="@+id/rg_txt_verify_key"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{fragmentRegisterViewModel.callBackTxtVerifyKey}"
-                    android:textAppearance="@{fragmentRegisterViewModel.txtVerifyKeyAppearance}"
                     android:textColor="@{fragmentRegisterViewModel.txtVerifyKeColor}"
                     android:textSize="@dimen/dp13" />
 
@@ -458,12 +462,12 @@
                     android:visibility="@{fragmentRegisterViewModel.imgVerifyServerVisibility}" />
 
                   <TextView
+                    fontPath="fonts/IRANSansMobile.ttf"
                     android:id="@+id/rg_txt_verify_server"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/rg_verify_register4"
-                    android:textAppearance="@{fragmentRegisterViewModel.txtVerifyServerAppearance}"
                     android:textColor="@{fragmentRegisterViewModel.txtVerifyServerColor}"
                     android:textSize="@dimen/dp13" />
 
@@ -471,6 +475,7 @@
               </LinearLayout>
 
               <TextView
+                fontPath="fonts/IRANSansMobile.ttf"
                 android:id="@+id/txtAgreement_register"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -503,6 +508,7 @@
             android:visibility="@{fragmentRegisterViewModel.rootCheckPasswordVisibility ,default = gone}">
 
             <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/dp32"
@@ -525,6 +531,7 @@
 
 
             <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
               android:id="@+id/rg_txtForgotPassword"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"

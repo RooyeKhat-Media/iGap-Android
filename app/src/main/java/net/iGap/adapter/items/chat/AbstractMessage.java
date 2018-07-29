@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.adapter.items.chat;
 
@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.CallSuper;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
@@ -203,7 +204,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
     public void bindView(final VH holder, List<Object> payloads) {
         super.bindView(holder, payloads);
 
-        if (holder instanceof ProgressWaiting.ViewHolder || holder instanceof UnreadMessage.ViewHolder || holder instanceof LogItem.ViewHolder || holder instanceof TimeItem.ViewHolder) {
+        if (holder instanceof ProgressWaiting.ViewHolder || holder instanceof UnreadMessage.ViewHolder || holder instanceof LogWallet.ViewHolder || holder instanceof LogItem.ViewHolder || holder instanceof TimeItem.ViewHolder) {
             return;
         }
 
@@ -349,7 +350,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
         TextView txtTime = (TextView) holder.itemView.findViewById(R.id.cslr_txt_time);
         if (txtTime != null) {
-            txtTime.setTextColor(Color.parseColor(G.textTitleTheme));
+            txtTime.setTextColor(Color.parseColor(G.textBubble));
             txtTime.setText(HelperCalander.getClocktime(mMessage.time, false));
 
             if (HelperCalander.isPersianUnicode) {
@@ -655,11 +656,13 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         ViewGroup frameLayout = (ViewGroup) holder.itemView.findViewById(R.id.mainContainer);
         ImageView imgTick = (ImageView) holder.itemView.findViewById(R.id.cslr_txt_tic);
         TextView messageText = (TextView) holder.itemView.findViewById(R.id.messageSenderTextMessage);
-        LinearLayout timeLayout = (LinearLayout) holder.itemView.findViewById(R.id.contentContainer).getParent();
+
+        LinearLayout root = (LinearLayout) holder.itemView.findViewById(R.id.contentContainer);
+        LinearLayout timeLayout = (LinearLayout) root.getParent();
         timeLayout.setGravity(Gravity.LEFT);
 
         if (messageText != null) {
-            messageText.setTextColor(Color.parseColor(G.textTitleTheme));
+            messageText.setTextColor(Color.parseColor(G.textBubble));
         }
         //   ProtoGlobal.RoomMessageType messageType = mMessage.forwardedFrom == null ? mMessage.messageType : mMessage.forwardedFrom.getMessageType();
 
@@ -672,7 +675,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
         ((FrameLayout.LayoutParams) frameLayout.getLayoutParams()).gravity = Gravity.LEFT;
 
-        ((LinearLayout.LayoutParams) holder.itemView.findViewById(R.id.contentContainer).getLayoutParams()).gravity = Gravity.LEFT;
+        ((LinearLayout.LayoutParams) root.getLayoutParams()).gravity = Gravity.LEFT;
 
         if (G.isDarkTheme) {
             ((View) (holder.itemView.findViewById(R.id.contentContainer)).getParent()).setBackgroundResource(R.drawable.rectangel_white_round_dark);
@@ -684,6 +687,10 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
          * add main layout margin to prevent getting match parent completely
          * set to mainContainer not itemView because of selecting item foreground
          */
+
+        GradientDrawable circleDarkColor = (GradientDrawable) ((View) root.getParent()).getBackground();
+        circleDarkColor.setColor(Color.parseColor(G.bubbleChatReceive));
+
         ((FrameLayout.LayoutParams) frameLayout.getLayoutParams()).leftMargin = (int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp10);
         ((FrameLayout.LayoutParams) frameLayout.getLayoutParams()).rightMargin = (int) holder.itemView.getContext().getResources().getDimension(R.dimen.dp28);
     }
@@ -706,10 +713,11 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
         ViewGroup frameLayout = (ViewGroup) holder.itemView.findViewById(R.id.mainContainer);
         ((FrameLayout.LayoutParams) frameLayout.getLayoutParams()).gravity = Gravity.RIGHT;
+        LinearLayout root = (LinearLayout) holder.itemView.findViewById(R.id.contentContainer);
 
-        ((LinearLayout.LayoutParams) holder.itemView.findViewById(R.id.contentContainer).getLayoutParams()).gravity = Gravity.RIGHT;
+        ((LinearLayout.LayoutParams) root.getLayoutParams()).gravity = Gravity.RIGHT;
 
-        LinearLayout timeLayout = (LinearLayout) holder.itemView.findViewById(R.id.contentContainer).getParent();
+        LinearLayout timeLayout = (LinearLayout) root.getParent();
         timeLayout.setGravity(Gravity.RIGHT);
 
         ImageView imgTick = (ImageView) holder.itemView.findViewById(R.id.cslr_txt_tic);
@@ -717,14 +725,14 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         //  TextView iconHearing = (TextView) holder.itemView.findViewById(R.id.cslr_txt_hearing);
 
         if (messageText != null) {
-            messageText.setTextColor(Color.parseColor(G.textTitleTheme));
+            messageText.setTextColor(Color.parseColor(G.textBubble));
         }
         //   ProtoGlobal.RoomMessageType messageType = mMessage.forwardedFrom == null ? mMessage.messageType : mMessage.forwardedFrom.getMessageType();
 
         if (ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.SEEN) {
             if (G.isDarkTheme) {
                 setTextColor(imgTick, R.color.iGapColor);
-            }else {
+            } else {
                 setTextColor(imgTick, R.color.backgroundColorCall2);
             }
 
@@ -732,24 +740,24 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             // iconHearing.setVisibility(View.VISIBLE);
             if (G.isDarkTheme) {
                 setTextColor(imgTick, R.color.iGapColor);
-            }else {
+            } else {
                 setTextColor(imgTick, R.color.backgroundColorCall2);
             }
 
             imgTick.setVisibility(View.VISIBLE);
         } else {
-
-            if (G.isDarkTheme) {
-                setTextColor(imgTick, R.color.white);
-            } else {
-                setTextColor(imgTick, R.color.colorOldBlack);
-            }
+//            setTextColor(imgTick, Color.parseColor(G.txtIconCheck));
+            imgTick.setColorFilter(Color.parseColor(G.txtIconCheck));
         }
+
+
         if (G.isDarkTheme) {
             ((View) (holder.itemView.findViewById(R.id.contentContainer)).getParent()).setBackgroundResource(R.drawable.rectangle_send_round_color_dark);
         } else {
             ((View) (holder.itemView.findViewById(R.id.contentContainer)).getParent()).setBackgroundResource(R.drawable.rectangle_send_round_color);
         }
+        GradientDrawable circleDarkColor = (GradientDrawable) ((View) root.getParent()).getBackground();
+        circleDarkColor.setColor(Color.parseColor(G.bubbleChatSend));
 
         /**
          * add main layout margin to prevent getting match parent completely
@@ -818,32 +826,24 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 ((EmojiTextViewE) replayView.findViewById(R.id.chslr_txt_replay_message)).setText(forwardMessage);
 
                 if (mMessage.isSenderMe() && type != ProtoGlobal.Room.Type.CHANNEL) {
-                    if (G.isDarkTheme) {
-                        replayView.setBackgroundResource(R.drawable.rectangle_reply_sender_round_color_dark);
-                        replyFrom.setTextColor(Color.parseColor(G.textTitleTheme));
-                        replayMessage.setTextColor(Color.parseColor(G.textTitleTheme));
-                    } else {
-                        replayView.setBackgroundResource(R.drawable.rectangle_reply_sender_round_color);
-                        replyFrom.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
-                        replayMessage.setTextColor(holder.itemView.getResources().getColor(R.color.replay_message_text));
-                    }
 
-                    //holder.itemView.findViewById(R.id.verticalLine).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.messageBox_sendColor));
+                    replayView.setBackgroundResource(R.drawable.rectangle_reply_sender_round_color);
+//
+                    GradientDrawable circleDarkColor = (GradientDrawable) replayView.getBackground();
+                    circleDarkColor.setColor(Color.parseColor(G.backgroundTheme_2));
+
+                    replyFrom.setTextColor(Color.parseColor(G.textBubble));
+                    replayMessage.setTextColor(Color.parseColor(G.textBubble));
 
                 } else {
 
-                    if (G.isDarkTheme) {
-                        replayView.setBackgroundResource(R.drawable.rectangle_reply_recive_round_color_dark);
-                        // holder.itemView.findViewById(R.id.verticalLine).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.messageBox_receiveColor));
-                        replyFrom.setTextColor(Color.parseColor(G.textTitleTheme));
-                        replayMessage.setTextColor(Color.parseColor(G.textTitleTheme));
-                    } else {
-                        replayView.setBackgroundResource(R.drawable.rectangle_reply_recive_round_color);
-                        // holder.itemView.findViewById(R.id.verticalLine).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.messageBox_receiveColor));
-                        replyFrom.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
-                        replayMessage.setTextColor(holder.itemView.getResources().getColor(R.color.replay_message_text));
-                    }
+                    replayView.setBackgroundResource(R.drawable.rectangle_reply_recive_round_color);
 
+                    GradientDrawable circleDarkColor = (GradientDrawable) replayView.getBackground();
+                    circleDarkColor.setColor(Color.parseColor(G.backgroundTheme_2));
+
+                    replyFrom.setTextColor(Color.parseColor(G.textBubble));
+                    replayMessage.setTextColor(Color.parseColor(G.textBubble));
 
                 }
 
@@ -894,7 +894,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 public void onClick(View v) {
 
                     if (mMessage.username.length() > 0) {
-                        HelperUrl.checkUsernameAndGoToRoom(mMessage.username, HelperUrl.ChatEntry.profile);
+                        HelperUrl.checkUsernameAndGoToRoomWithMessageId(mMessage.username, HelperUrl.ChatEntry.profile, (mMessage.forwardedFrom.getMessageId() * (-1)));
                     }
                 }
             });
@@ -936,7 +936,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                 if (realmRoom != null) {
                     txtForwardFrom.setText(realmRoom.getTitle());
                     if (mMessage.isSenderMe()) {
-                        txtForwardFrom.setTextColor(Color.parseColor(G.textTitleTheme));
+                        txtForwardFrom.setTextColor(Color.parseColor(G.textBubble));
                     } else {
                         txtForwardFrom.setTextColor(G.context.getResources().getColor(R.color.iGapColor));
                     }
@@ -975,7 +975,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
                         txtForwardFrom.setText(realmRoom1.getTitle());
                         if (mMessage.isSenderMe()) {
-                            txtForwardFrom.setTextColor(Color.parseColor(G.textTitleTheme));
+                            txtForwardFrom.setTextColor(Color.parseColor(G.textBubble));
                         } else {
                             txtForwardFrom.setTextColor(G.context.getResources().getColor(R.color.iGapColor));
                         }
@@ -1043,7 +1043,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
     private void checkAutoDownload(final VH holder, final RealmAttachment attachment, Context context, HelperCheckInternetConnection.ConnectivityType connectionMode) {
 
-        if (HelperDownloadFile.manuallyStoppedDownload.contains(attachment.getCacheId())) { // for avoid from reDownload in autoDownload state , after that user manually stopped download.
+        if (HelperDownloadFile.getInstance().manuallyStoppedDownload.contains(attachment.getCacheId())) { // for avoid from reDownload in autoDownload state , after that user manually stopped download.
             return;
         }
 
@@ -1358,8 +1358,8 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             } else {
                 messageClickListener.onUploadOrCompressCancel(progress, mMessage, holder.getAdapterPosition(), SendingStep.UPLOADING);
             }
-        } else if (HelperDownloadFile.isDownLoading(attachment.getCacheId())) {
-            HelperDownloadFile.stopDownLoad(attachment.getCacheId());
+        } else if (HelperDownloadFile.getInstance().isDownLoading(attachment.getCacheId())) {
+            HelperDownloadFile.getInstance().stopDownLoad(attachment.getCacheId());
         } else {
             if (thumbnail != null) {
                 thumbnail.setVisibility(View.VISIBLE);
@@ -1424,7 +1424,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
 
         if (token != null && token.length() > 0 && size > 0) {
 
-            HelperDownloadFile.startDownload(mMessage.messageID, token, url, attachment.getCacheId(), name, size, selector, "", 4, new HelperDownloadFile.UpdateListener() {
+            HelperDownloadFile.getInstance().startDownload(mMessage.messageID, token, url, attachment.getCacheId(), name, size, selector, "", 4, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, int progress) {
 
@@ -1461,7 +1461,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             return;
         }
 
-        boolean _isDownloading = HelperDownloadFile.isDownLoading(attachment.getCacheId());
+        boolean _isDownloading = HelperDownloadFile.getInstance().isDownLoading(attachment.getCacheId());
 
         final MessageProgress progressBar = (MessageProgress) holder.itemView.findViewById(R.id.progress);
         AppUtils.setProgresColor(progressBar.progressBar);
@@ -1483,7 +1483,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
             progressBar.withDrawable(R.drawable.ic_cancel, false);
 
 
-            HelperDownloadFile.startDownload(mMessage.messageID, token, url, attachment.getCacheId(), name, size, selector, _path, priority, new HelperDownloadFile.UpdateListener() {
+            HelperDownloadFile.getInstance().startDownload(mMessage.messageID, token, url, attachment.getCacheId(), name, size, selector, _path, priority, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, final int progress) {
 
@@ -1661,7 +1661,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
         AppUtils.setProgresColor(progress.progressBar);
 
-        if (HelperDownloadFile.isDownLoading(attachment.getCacheId())) {
+        if (HelperDownloadFile.getInstance().isDownLoading(attachment.getCacheId())) {
             hideThumbnailIf(holder);
 
             downLoadFile(holder, attachment, 0);

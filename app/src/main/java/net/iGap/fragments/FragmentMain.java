@@ -116,6 +116,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     private RecyclerView mRecyclerView;
     private long tagId;
     private Realm realmFragmentMain;
+    private RecyclerView.OnScrollListener onScrollListener;
 
     public static FragmentMain newInstance(MainType mainType) {
         Bundle bundle = new Bundle();
@@ -209,6 +210,34 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
 
         final RoomAdapter roomsAdapter = new RoomAdapter(results, this);
+
+        if (!G.multiTab) {
+            onScrollListener = new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (isThereAnyMoreItemToLoad) {
+                        if (!isSendRequestForLoading && mOffset > 0) {
+                            int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                            if (lastVisiblePosition + 10 >= mOffset) {
+                                isSendRequestForLoading = true;
+                                new RequestClientGetRoomList().clientGetRoomList(mOffset, Config.LIMIT_LOAD_ROOM, tagId + "");
+                                G.handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBar.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        mRecyclerView.removeOnScrollListener(onScrollListener);
+                    }
+                }
+            };
+            mRecyclerView.addOnScrollListener(onScrollListener);
+        }
+
         mRecyclerView.setAdapter(roomsAdapter);
 
         if (roomAdapterHashMap == null) {
@@ -322,6 +351,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                     @Override
                     public void onError(int majorCode, int minorCode) {
 
+                        isSendRequestForLoading = false;
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -349,6 +379,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                                 progressBar.setVisibility(View.GONE);
                                 firstTimeEnterToApp = false;
                                 getChatsList();
+                                isSendRequestForLoading = false;
                                 swipeRefreshLayout.setRefreshing(false);// swipe refresh is complete and gone
                             }
                         });
@@ -450,7 +481,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         /**
          * to first enter to app , client first compute clientCondition then
          * getRoomList and finally send condition that before get clientCondition;
-         * in else state compute new client condition with latest messaging state
+         * in else changeState compute new client condition with latest messaging changeState
          */
         if (firstTimeEnterToApp) {
             firstTimeEnterToApp = false;
@@ -484,7 +515,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
         isSendRequestForLoading = false;
 
-        if (isThereAnyMoreItemToLoad) {
+        if (isThereAnyMoreItemToLoad && G.multiTab) {
             isSendRequestForLoading = true;
             new RequestClientGetRoomList().clientGetRoomList(mOffset, Config.LIMIT_LOAD_ROOM, tagId + "");
 
@@ -1194,7 +1225,12 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
                 holder.lastMessageSender.setVisibility(View.VISIBLE);
                 holder.lastMessageSender.setText(R.string.txt_draft);
-                holder.lastMessageSender.setTextColor(context.getResources().getColor(R.color.toolbar_background));
+                if (G.isDarkTheme) {
+                    holder.lastMessageSender.setTextColor(Color.parseColor(G.textSubTheme));
+                } else {
+                    holder.lastMessageSender.setTextColor(Color.parseColor(G.appBarColor));
+                }
+
                 holder.lastMessageSender.setTypeface(G.typeface_IRANSansMobile);
             } else {
 
@@ -1255,7 +1291,12 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                             holder.lastMessageSender.setVisibility(View.VISIBLE);
 
                             holder.lastMessageSender.setText(lastMessageSender);
-                            holder.lastMessageSender.setTextColor(Color.parseColor("#2bbfbd"));
+                            if (G.isDarkTheme) {
+                                holder.lastMessageSender.setTextColor(Color.parseColor(G.textSubTheme));
+                            } else {
+                                holder.lastMessageSender.setTextColor(Color.parseColor(G.appBarColor));
+                            }
+
                         } else {
                             holder.lastMessageSender.setVisibility(View.GONE);
                         }
@@ -1343,7 +1384,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             HelperAvatar.getAvatar(idForGetAvatar, avatarType, false, new OnAvatarGet() {
                 @Override
                 public void onAvatarGet(String avatarPath, long idForGetAvatar) {
-                    if (hashMapAvatar.get(idForGetAvatar) != null) {
+                    if (hashMapAvatar.get(idForGetAvatar) != null && avatarPath != null) {
                         G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), hashMapAvatar.get(idForGetAvatar));
                     }
                 }

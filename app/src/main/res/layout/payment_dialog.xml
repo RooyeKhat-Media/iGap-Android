@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <data>
+
+    <import type="android.graphics.Color" />
+
+    <import type="net.iGap.G" />
+  </data>
+
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/outside"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_payment"
+    android:clickable="true">
+
+    <android.support.v7.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:background="@color/whit_background"
+      android:clickable="true"
+      android:layout_margin="@dimen/dp12"
+      app:cardElevation="4dp">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+          android:id="@+id/dialog_header"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          android:padding="@dimen/dp8">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <net.iGap.module.CircleImageView
+              android:id="@+id/imageView"
+              android:layout_width="@dimen/dp48"
+              android:layout_height="@dimen/dp48" />
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="@dimen/dp8"
+              android:layout_marginStart="@dimen/dp8"
+              android:orientation="vertical">
+
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <net.iGap.module.CustomTextViewMedium
+                  android:id="@+id/title"
+                  fontPath="fonts/IRANSansMobile.ttf"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical|start"
+                  android:singleLine="true"
+                  android:text="@string/transfer_to_dialog"
+                  android:textColor="#fff"
+                  android:textSize="@dimen/dp16"
+                  android:textStyle="bold" />
+
+
+
+
+                <net.iGap.module.CustomTextViewMedium
+                  android:id="@+id/subtitle"
+                  fontPath="fonts/IRANSansMobile.ttf"
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:singleLine="true"
+                  android:text="@string/user_name"
+                  android:gravity="center_vertical"
+                  android:textColor="#fff"
+                  android:textSize="@dimen/dp13"
+                  android:paddingLeft="@dimen/dp4"
+                  android:paddingRight="@dimen/dp4"
+                  android:textStyle="normal" />
+
+                <View
+                  android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="1" />
+
+              </LinearLayout>
+
+              <net.iGap.module.CustomTextViewMedium
+                android:id="@+id/amountCard"
+                style="?textTitleColorSettingTheme"
+                fontPath="fonts/IRANSansMobile.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:singleLine="true"
+                android:text="@string/user_name"
+                android:textColor="#fff"
+                android:textSize="@dimen/dp13"
+                android:textStyle="normal" />
+
+              <View
+                android:id="@+id/bottomLine"
+                style="?lineColorSettingTheme"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:visibility="gone" />
+            </LinearLayout>
+          </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+          <TextView
+            android:id="@+id/pu_txt_title_desc"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginRight="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp8"
+            android:gravity="center"
+            android:text="@string/transfer_amount_hint"
+            android:textColor="@color/confirm_country"
+            android:textSize="@dimen/dp14" />
+
+          <net.iGap.module.EditTextAdjustPan
+            android:id="@+id/amount"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp32"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp32"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:hint="@string/amount_in_rial"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/black_register"
+            android:textColorHint="@color/pu_edtHintText"
+            android:textSize="@dimen/dp14"
+            app:errorTextAppearance="@style/remove_error_appearance" />
+
+          <TextView
+            android:id="@+id/txtDescriptionMap"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp52"
+            android:layout_marginRight="@dimen/dp52"
+            android:layout_marginTop="@dimen/dp24"
+            android:gravity="center"
+            android:text="@string/desc"
+            android:textColor="@color/confirm_country"
+            android:textSize="@dimen/dp14" />
+
+          <net.iGap.module.EditTextAdjustPan
+            android:id="@+id/edtDescription"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp32"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:hint="@string/desc"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/black_register"
+            android:textColorHint="@color/pu_edtHintText"
+            android:textSize="@dimen/dp14"
+            app:errorTextAppearance="@style/remove_error_appearance" />
+
+        </LinearLayout>
+
+        <Button
+          android:id="@+id/pay_button"
+          fontPath="fonts/IRANSansMobile.ttf"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/dp10"
+          android:layout_marginTop="@dimen/dp32"
+          android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+          android:paddingBottom="@dimen/dp12"
+          android:paddingLeft="@dimen/dp36"
+          android:paddingRight="@dimen/dp36"
+          android:paddingTop="@dimen/dp12"
+          android:text="@string/pay"
+          android:textColor="@color/white"
+          android:textSize="@dimen/dp16" />
+
+
+      </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+  </RelativeLayout>
+</layout>

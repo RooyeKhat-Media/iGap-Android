@@ -1,202 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/ac_ll_parent"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@color/black_register"
-  android:id="@+id/ac_ll_parent"
   android:clickable="true"
   android:layoutDirection="ltr">
 
+  <android.support.v4.view.ViewPager
+    android:id="@+id/viewPagerEditText"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+
+  <android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp60"
+    android:layout_alignParentTop="true"
+    android:background="@color/colorEditImageBlack"
+    android:layoutDirection="ltr"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
+
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:id="@+id/stfaq_allLayout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <net.iGap.libs.rippleeffect.RippleView
+          android:id="@+id/pu_ripple_back"
+          rv_centered="true"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:rv_alpha="200"
+          app:rv_centered="true"
+          app:rv_rippleDuration="0"
+          app:rv_ripplePadding="5dp">
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/pu_txt_agreeImage"
+            android:layout_width="@dimen/dp48"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_close_button"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@color/whit_background" />
+        </net.iGap.libs.rippleeffect.RippleView>
+
+        <TextView
+          android:id="@+id/stfaq_txt_titleToolbar"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:gravity="left|center_vertical"
+          android:text="@string/photo"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp16"
+          android:textStyle="bold"
+          android:visibility="visible" />
+
+        <net.iGap.module.MaterialDesignTextView
+          android:id="@+id/txtSet"
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:layout_gravity="right"
+          android:gravity="center"
+          android:text="@string/md_igap_check"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp22"
+          android:visibility="gone" />
+
+        <TextView
+          android:id="@+id/stfaq_txt_countImageEditText"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginRight="@dimen/dp1"
+          android:gravity="right|center_vertical"
+          android:text="@string/photo"
+          android:textColor="@color/whit_background"
+          android:textSize="@dimen/dp22"
+          android:textStyle="bold"
+          android:visibility="visible" />
+
+        <com.hanks.library.AnimateCheckBox
+          android:id="@+id/checkBox_editImage"
+          android:layout_width="@dimen/dp32"
+          android:layout_height="@dimen/dp32"
+          android:layout_gravity="center|end|right"
+          android:layout_margin="@dimen/dp10"
+          android:background="@drawable/background_check"
+          android:visibility="visible"
+          app:animDuration="100"
+          app:checkedColor="@color/green"
+          app:lineColor="#fff"
+          app:lineWidth="1.2dp"
+          app:unCheckColor="@color/background_checkbox_bottomSheet" />
+
+      </LinearLayout>
+
+
+    </RelativeLayout>
+  </android.support.v7.widget.Toolbar>
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/colorEditImageBlack"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-      android:layout_width="match_parent"
-      android:layout_height="@dimen/dp60"
-      android:layout_alignParentTop="true"
-      android:background="@color/toolbar_transparent"
-      android:layoutDirection="ltr"
-      app:contentInsetLeft="0dp"
-      app:contentInsetStart="0dp">
-
-
-      <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-          android:id="@+id/stfaq_allLayout_toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="horizontal">
-
-          <net.iGap.libs.rippleeffect.RippleView
-            android:id="@+id/pu_ripple_back"
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:rv_alpha="200"
-            app:rv_centered="true"
-            app:rv_rippleDuration="0"
-            app:rv_ripplePadding="5dp">
-
-            <net.iGap.module.MaterialDesignTextView
-              android:id="@+id/pu_txt_agreeImage"
-              android:layout_width="@dimen/dp48"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:text="@string/md_close_button"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
-              android:textColor="@color/whit_background" />
-          </net.iGap.libs.rippleeffect.RippleView>
-
-          <TextView
-            android:id="@+id/stfaq_txt_titleToolbar"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/photo"
-            android:textColor="@color/whit_background"
-            android:textSize="@dimen/dp16"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-          <net.iGap.module.MaterialDesignTextView
-            android:id="@+id/txtSet"
-            android:layout_width="@dimen/dp52"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:gravity="center"
-            android:text="@string/md_igap_check"
-            android:textAppearance="@style/TextIconAppearance_toolbar"
-            android:textColor="@color/whit_background"
-            android:visibility="gone"
-            android:textSize="@dimen/dp22" />
-        </LinearLayout>
-
-      </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
-
-    <ImageView
-      android:id="@+id/imgEditImage"
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:layout_weight="1"
-      android:layout_above="@+id/pu_layout_cancel_crop"
-      android:adjustViewBounds="true"
-      android:cropToPadding="false"
-      android:scaleType="fitCenter"
-      android:src="@mipmap/pu_gallary" />
-
-
     <LinearLayout
+      android:id="@+id/layout_caption"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@color/am_iconFab_black"
-      android:orientation="vertical">
+      android:gravity="center"
+      android:minHeight="@dimen/dp48"
+      android:paddingLeft="@dimen/dp4"
+      android:paddingRight="@dimen/dp4"
+      android:orientation="horizontal">
 
-      <LinearLayout
-        android:id="@+id/layout_caption"
-        android:layout_width="match_parent"
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/chl_imv_smile_button"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:text="@string/md_emoticon_with_happy_face"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp20" />
+
+
+      <net.iGap.module.EmojiEditTextE
+        android:id="@+id/chl_edt_chat"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:minHeight="@dimen/dp48"
-        android:orientation="horizontal">
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="bottom"
+        android:hint="@string/type_message"
+        android:imeOptions="flagNoExtractUi"
+        android:maxLines="4"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_gray"
+        android:textSize="@dimen/dp16"
+        app:emojiSize="@dimen/dp22" />
 
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/chl_imv_smile_button"
-          style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_gravity="bottom"
-          android:gravity="bottom"
-          android:paddingBottom="@dimen/dp8"
-          android:paddingLeft="@dimen/dp8"
-          android:paddingRight="@dimen/dp8"
-          android:text="@string/md_emoticon_with_happy_face"
-          android:textAppearance="@style/TextIconAppearance.all"
-          android:textColor="@color/colorEmojiPopupCategoryBottomBorder"
-          android:textSize="@dimen/dp20" />
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/chl_imv_ok_message"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/dp8"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:text="@string/md_check_symbol"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp20"
+        android:visibility="gone" />
 
-
-        <net.iGap.module.EmojiEditTextE
-          android:id="@+id/chl_edt_chat"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_vertical"
-          android:layout_weight="1"
-          android:background="@null"
-          android:gravity="bottom"
-          android:hint="@string/type_message"
-          android:imeOptions="flagNoExtractUi"
-          android:maxLines="4"
-          android:textColorHint="@color/light_gray"
-          android:textSize="@dimen/dp16"
-          android:textColor="@color/light_gray"
-          app:emojiSize="@dimen/dp22" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:id="@+id/pu_layout_cancel_crop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/am_iconFab_black"
-        android:orientation="horizontal">
-
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/pu_txt_crop"
-          android:layout_width="@dimen/dp52"
-          android:layout_height="match_parent"
-          android:layout_gravity="right"
-          android:gravity="center"
-          android:text="@string/md_crop_button"
-          android:textAppearance="@style/TextIconAppearance_toolbar"
-          android:textColor="@color/whit_background"
-          android:textSize="@dimen/dp22" />
-
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/txtEditImage"
-          android:layout_width="@dimen/dp52"
-          android:layout_height="@dimen/dp52"
-          android:layout_gravity="right"
-          android:gravity="center"
-          android:text="@string/md_igap_tune"
-          android:textAppearance="@style/TextIconAppearance_toolbar"
-          android:textColor="@color/whit_background"
-          android:textSize="@dimen/dp22" />
-
-        <View
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1" />
-
-
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/pu_txt_sendImage"
-          android:layout_width="@dimen/dp52"
-          android:layout_height="@dimen/dp52"
-          android:layout_gravity="right"
-          android:gravity="center"
-          android:text="@string/md_send_button"
-          android:textAppearance="@style/TextIconAppearance_toolbar"
-          android:textColor="@color/whit_background"
-          android:visibility="gone"
-          android:textSize="@dimen/dp22" />
-      </LinearLayout>
 
     </LinearLayout>
 
-  </LinearLayout>
+    <LinearLayout
+      android:id="@+id/pu_layout_cancel_crop"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:orientation="horizontal">
 
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/pu_txt_crop"
+        android:layout_width="@dimen/dp52"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="@string/md_crop_button"
+        android:textAppearance="@style/TextIconAppearance_toolbar"
+        android:textColor="@color/whit_background"
+        android:textSize="@dimen/dp22" />
+
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/txtEditImage"
+        android:layout_width="@dimen/dp52"
+        android:layout_height="@dimen/dp52"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="@string/md_igap_tune"
+        android:textAppearance="@style/TextIconAppearance_toolbar"
+        android:textColor="@color/whit_background"
+        android:textSize="@dimen/dp22" />
+
+      <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/pu_txt_sendImage"
+        android:layout_width="@dimen/dp52"
+        android:layout_height="@dimen/dp52"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="@string/md_send_button"
+        android:textAppearance="@style/TextIconAppearance_toolbar"
+        android:textColor="@color/whit_background"
+        android:textSize="@dimen/dp22"
+        android:visibility="gone" />
+    </LinearLayout>
+
+  </LinearLayout>
 </RelativeLayout>

@@ -1,0 +1,1446 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <import type="android.graphics.Color" />
+
+    <import type="net.iGap.G" />
+
+    <variable
+      name="fragmentThemColorViewModel"
+      type="net.iGap.viewmodel.FragmentThemColorViewModel" />
+  </data>
+
+  <LinearLayout
+    android:id="@+id/rootFragmentLanguage"
+    style="?backgroundColorSettingTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context="net.iGap.fragments.FragmentLanguage"
+    android:layoutDirection="ltr"
+    tools:ignore="MissingPrefix">
+
+    <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/asn_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+        android:layoutDirection="ltr"
+        android:padding="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+          <net.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/stns_ripple_back"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/stns_txt_back"
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/stns_ripple_back"
+            android:layout_toRightOf="@+id/stns_ripple_back"
+            android:gravity="center"
+            android:text="@string/app_theme"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:textStyle="normal"
+            android:visibility="visible" />
+
+        </RelativeLayout>
+      </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layoutDirection="ltr">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layoutDirection="ltr">
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemCustom}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Custom"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconCustom"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <net.iGap.module.MaterialDesignTextView
+            style="?iconColorMenuTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/dp32"
+            android:text="@string/md_settings_cogwheel_button"
+            android:textAppearance="@style/TextIconAppearance.menu"
+            android:textSize="@dimen/dp16" />
+
+          <ImageView
+            android:id="@+id/theme_custom_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeDefault}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Default"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconDefault"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_default_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeDark}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Dark"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconDark"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <net.iGap.module.MaterialDesignTextView
+            style="?iconColorMenuTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/dp32"
+            android:text="@string/md_settings_cogwheel_button"
+            android:textAppearance="@style/TextIconAppearance.menu"
+            android:textSize="@dimen/dp16" />
+
+          <ImageView
+            android:id="@+id/theme_dark_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeBlueGreyComplete}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Blue Grey (Full Set)"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconBlueGreyComplete"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_BlueGreyComplete"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeIndigoComplete}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Indigo (Full Set)"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconIndigoComplete"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_indigoComplete"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeBrownComplete}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Brown (Full Set)"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconBrownComplete"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_BrownComplete"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeTealComplete}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Teal (Full Set)"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconTealComplete"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_TealComplete"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeGreyComplete}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Grey (Full Set)"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconGreyComplete"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_GreyComplete"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeRed}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Red"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconRed"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_red_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemePink}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Pink"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconPink"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_pink_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemePurple}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Purple"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconPurple"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_Purple_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeDeepPurple}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Deep Purple"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconDeepPurple"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_deep_purple_1"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeIndigo}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Indigo"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconIndigo"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_Indigo"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeBlue}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Blue"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconBlue"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_blue"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeLightBlue}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Light Blue"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconLightBlue"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_light_blue"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeCyan}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Cyan"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconCyan"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_cyan"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeTeal}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Teal"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconTeal"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_teal"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeGreen}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Green"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconGreen"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_green"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeLightGreen}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Light Green"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconLightGreen"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_light_green"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeLime}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Lime"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconLime"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_lime"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeYellow}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Yellow"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconYellow"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_yellow"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeAmber}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Amber"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconAmber"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_amber"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeOrange}"
+          android:orientation="horizontal">
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Orange"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconOrange"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_orange"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeDeepOrange}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Deep Orange"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconDeepOrange"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_deep_orange"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeBrown}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Brown"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconBrown"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_brown"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeGrey}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Grey"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconGrey"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_grey"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:onClick="@{fragmentThemColorViewModel::onClickThemeBlueGrey}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp4"
+            android:text="Blue Grey"
+            android:textSize="@dimen/dp15"
+            android:textStyle="normal" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/iconBlueGrey"
+            android:layout_width="@dimen/dp52"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/md_check_symbol"
+            android:visibility="gone"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}" />
+
+          <ImageView
+            android:id="@+id/theme_blue_grey"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginRight="@dimen/dp4"
+            android:background="@drawable/circle_color_notificatin_setting"
+            android:gravity="center" />
+
+
+        </LinearLayout>
+
+        <View
+          style="?lineColorSettingTheme"
+          android:layout_width="match_parent"
+          android:layout_height="1dp" />
+
+
+      </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+  </LinearLayout>
+</layout>

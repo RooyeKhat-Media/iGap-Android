@@ -29,6 +29,7 @@ import android.webkit.MimeTypeMap;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.helper.HelperCalander;
+import net.iGap.helper.HelperLog;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -314,6 +315,20 @@ public class FileUtils {
 
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
+                } else {
+                    String strPath;
+                    if (Environment.isExternalStorageRemovable()) {
+                        strPath = System.getenv("EXTERNAL_STORAGE");
+                    } else {
+                        strPath = System.getenv("SECONDARY_STORAGE");
+                        if (strPath == null || strPath.length() == 0) {
+                            strPath = System.getenv("EXTERNAL_SDCARD_STORAGE");
+                        }
+                    }
+                    if (strPath != null && strPath.length() > 0) {
+                        return strPath + "/" + split[1];
+                    }
+                    HelperLog.setErrorLog("FileUtils   getPath   :  " + uri);
                 }
 
             }

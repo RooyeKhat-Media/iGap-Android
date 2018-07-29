@@ -114,7 +114,7 @@
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp12"
             android:text="@string/privacy"
-            android:textColor="@color/green"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
             android:textSize="@dimen/dp18"
             android:textStyle="normal"
 
@@ -168,7 +168,7 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
+              android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
           </LinearLayout>
@@ -205,7 +205,7 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/everybody"
-              android:textColor="@color/toolbar_background"
+              android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
           </LinearLayout>
@@ -223,12 +223,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp12"
             android:text="@string/privacy"
-            android:textColor="@color/green"
             android:textSize="@dimen/dp18"
             android:textStyle="normal" />
 
@@ -279,7 +277,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSeeMyAvatar , default=@string/everybody}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
 
@@ -320,7 +318,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackInviteChannel , default=@string/everybody}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
 
@@ -359,7 +357,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackInviteGroup , default=@string/everybody}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
 
@@ -397,7 +395,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackVoiceCall , default=@string/everybody}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
 
@@ -435,7 +433,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSeeLastSeen , default=@string/everybody}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal" />
           </LinearLayout>
@@ -474,7 +472,6 @@
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp12"
             android:text="@string/Security"
-            android:textColor="@color/green"
             android:textSize="@dimen/dp18"
             android:textStyle="normal" />
 
@@ -578,7 +575,6 @@
             android:paddingRight="@dimen/dp16"
             android:paddingTop="@dimen/dp12"
             android:text="@string/Account_Self_destruction"
-            android:textColor="@color/green"
             android:textSize="@dimen/dp18"
             android:textStyle="normal" />
 
@@ -613,7 +609,7 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackSelfDestruction , default=@string/year_1}"
-              android:textColor="@color/toolbar_background"
+              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"
 

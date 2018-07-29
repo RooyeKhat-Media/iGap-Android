@@ -50,6 +50,7 @@ import net.iGap.R;
 import net.iGap.activities.ActivityMain;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentMediaPlayer;
+import net.iGap.fragments.FragmentShowImage;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperLog;
@@ -311,8 +312,8 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
     }
 
     public static void pauseSound() {
-
-
+        if (FragmentShowImage.focusAudioListener != null)
+            FragmentShowImage.focusAudioListener.audioPlay(false);
         if (!isVoice) {
             try {
                 remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
@@ -367,6 +368,9 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
         if (mp.isPlaying()) {
             return;
         }
+
+        if (FragmentShowImage.focusAudioListener != null)
+            FragmentShowImage.focusAudioListener.audioPlay(true);
 
         if (G.onAudioFocusChangeListener != null) {
             G.onAudioFocusChangeListener.onAudioFocusChangeListener(AudioManager.AUDIOFOCUS_GAIN);
@@ -474,6 +478,15 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
             String beforeMessageId = MusicPlayer.messageId;
             selectedMedia--;
             if (selectedMedia < 0) {
+
+                if (isVoice) { // avoid from return to first voice
+                    if (btnPlayMusic != null) {
+                        btnPlayMusic.setText(context.getString(R.string.md_play_arrow));
+                    }
+                    stopSound();
+                    return;
+                }
+
                 selectedMedia = mediaList.size() - 1;
             }
             RealmRoomMessage roomMessage = RealmRoomMessage.getFinalMessage(mediaList.get(selectedMedia));
@@ -539,13 +552,6 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
             selectedMedia++;
 
             if (selectedMedia >= mediaList.size()) {
-                if (isVoice) { // avoid from return to first voice
-                    if (btnPlayMusic != null) {
-                        btnPlayMusic.setText(context.getString(R.string.md_play_arrow));
-                    }
-                    stopSound();
-                    return;
-                }
                 selectedMedia = 0;
             }
             RealmRoomMessage roomMessage = null;
@@ -1214,7 +1220,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
                         result = true;
 
-                        HelperDownloadFile.startDownload(rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
+                        HelperDownloadFile.getInstance().startDownload(rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
                             @Override
                             public void OnProgress(String path, int progress) {
                                 if (progress == 100) {

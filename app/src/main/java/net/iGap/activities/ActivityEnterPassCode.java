@@ -9,18 +9,13 @@ package net.iGap.activities;
  * All rights reserved.
 */
 
-import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 
-import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.ActivityEnterPassCodeBinding;
-import net.iGap.module.SHP_SETTING;
 import net.iGap.viewmodel.ActivityEnterPassCodeViewModel;
-
-import static net.iGap.G.context;
 
 public class ActivityEnterPassCode extends ActivityEnhanced {
 
@@ -28,13 +23,6 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-        if (G.isDarkTheme) {
-            this.setTheme(R.style.Material_blackCustom);
-        } else {
-            this.setTheme(R.style.Material_lightCustom);
-        }
 
         super.onCreate(savedInstanceState);
         ActivityEnterPassCodeBinding activityEnterPassCodeBinding = DataBindingUtil.setContentView(this, R.layout.activity_enter_pass_code);

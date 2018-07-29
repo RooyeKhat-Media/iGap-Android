@@ -24,6 +24,7 @@ import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 import net.iGap.R;
 import net.iGap.adapter.items.chat.AbstractMessage;
 import net.iGap.adapter.items.chat.LogItem;
+import net.iGap.adapter.items.chat.LogWallet;
 import net.iGap.adapter.items.chat.TimeItem;
 import net.iGap.helper.HelperUrl;
 import net.iGap.interfaces.IMessageItem;
@@ -50,7 +51,7 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         @Override
         public boolean onLongClick(View v, IAdapter<Item> adapter, Item item, int position) {
 
-            if (item instanceof TimeItem || item instanceof LogItem) {
+            if (item instanceof TimeItem || item instanceof LogItem || item instanceof LogWallet) {
                 if (item.isSelected()) v.performLongClick();
             } else {
                 if (iMessageItem != null && item.mMessage != null && item.mMessage.senderID != null && !item.mMessage.senderID.equalsIgnoreCase("-1")) {
@@ -87,6 +88,11 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         withOnClickListener(new OnClickListener<Item>() {
             @Override
             public boolean onClick(View v, IAdapter<Item> adapter, Item item, int position) {
+
+                if ((item instanceof LogWallet)) {
+                    return false;
+                }
+
                 if (getSelectedItems().size() == 0) {
                     if (iMessageItem != null && item.mMessage != null && item.mMessage.senderID != null && !item.mMessage.senderID.equalsIgnoreCase("-1")) {
                         if (item.mMessage.status.equalsIgnoreCase(ProtoGlobal.RoomMessageStatus.SENDING.toString())) {

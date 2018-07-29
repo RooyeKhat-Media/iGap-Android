@@ -3,7 +3,9 @@ package net.iGap.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +49,7 @@ import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
 import net.iGap.module.SUID;
 import net.iGap.module.enums.GroupChatRole;
+import net.iGap.module.structs.StructBottomSheet;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestGroupAvatarAdd;
 import net.iGap.request.RequestGroupKickAdmin;
@@ -55,6 +58,7 @@ import net.iGap.request.RequestGroupKickModerator;
 import net.iGap.viewmodel.FragmentGroupProfileViewModel;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /*
 * This is the source code of iGap for Android
@@ -120,7 +124,7 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
 
         FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
             @Override
-            public void result(String path, String message) {
+            public void result(String path, String message, HashMap<String, StructBottomSheet> textImageList) {
                 pathSaveImage = null;
                 pathSaveImage = path;
                 long avatarId = SUID.id().get();
@@ -166,14 +170,21 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         if (resultCode == Activity.RESULT_OK) {
             String filePath = null;
             long avatarId = SUID.id().get();
+
+            if (FragmentEditImage.textImageList != null) FragmentEditImage.textImageList.clear();
+            if (FragmentEditImage.itemGalleryList != null)
+                FragmentEditImage.itemGalleryList.clear();
+
             switch (requestCode) {
                 case AttachFile.request_code_TAKE_PICTURE:
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, false)).setReplace(false).load();
+                        FragmentEditImage.insertItemList(AttachFile.mCurrentPhotoPath, false);
+                        new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
 
                     } else {
-                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false)).setReplace(false).load();
+                        FragmentEditImage.insertItemList(AttachFile.imagePath, false);
+                        new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false, 0)).setReplace(false).load();
                     }
 
                     break;
@@ -181,7 +192,8 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
                     if (data.getData() == null) {
                         return;
                     }
-                    new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, false)).setReplace(false).load();
+                    FragmentEditImage.insertItemList(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false);
+                    new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
 
                     break;
             }
@@ -231,6 +243,9 @@ public class FragmentGroupProfile extends BaseFragment implements OnGroupAvatarR
         });
 
         FloatingActionButton fab = fragmentGroupProfileBinding.agpFabSetPic;
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.fabBottom)));
+        fab.setColorFilter(Color.WHITE);
+
         if (fragmentGroupProfileViewModel.role == GroupChatRole.OWNER || fragmentGroupProfileViewModel.role == GroupChatRole.ADMIN) {
             fab.setVisibility(View.VISIBLE);
             //

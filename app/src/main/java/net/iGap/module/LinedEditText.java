@@ -13,13 +13,13 @@ package net.iGap.module;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
 
 import net.iGap.G;
-import net.iGap.R;
 
 public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
 
@@ -60,7 +60,7 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
 
         // instantiate the paint
         dashedLinePaint = new Paint();
-        dashedLinePaint.setColor(G.context.getResources().getColor(R.color.line_edit_text));
+        dashedLinePaint.setColor(Color.parseColor(G.lineBorder));
         dashedLinePaint.setStyle(Paint.Style.STROKE);
         initialCount = 4;
         setLines(initialCount);
@@ -101,9 +101,9 @@ public class LinedEditText extends android.support.v7.widget.AppCompatEditText {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
 
         if (focused) {
-            dashedLinePaint.setColor(G.context.getResources().getColor(R.color.toolbar_background));
+            dashedLinePaint.setColor(Color.parseColor(G.appBarColor));
         } else {
-            dashedLinePaint.setColor(G.context.getResources().getColor(R.color.line_edit_text));
+            dashedLinePaint.setColor(Color.parseColor(G.lineBorder));
         }
     }
 

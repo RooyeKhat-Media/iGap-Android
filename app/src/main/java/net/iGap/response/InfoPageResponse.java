@@ -33,8 +33,17 @@ public class InfoPageResponse extends MessageHandler {
         ProtoInfoPage.InfoPageResponse.Builder infoPageResponse = (ProtoInfoPage.InfoPageResponse.Builder) message;
         String body = infoPageResponse.getBody();
 
-        if (G.onReceivePageInfoTOS != null) {
-            G.onReceivePageInfoTOS.onReceivePageInfo(body);
+        switch (identity) {
+            case "TOS":
+                if (G.onReceivePageInfoTOS != null) {
+                    G.onReceivePageInfoTOS.onReceivePageInfo(body);
+                }
+                break;
+            case "WALLET_AGREEMENT":
+                if (G.onReceivePageInfoWalletAgreement != null) {
+                    G.onReceivePageInfoWalletAgreement.onReceivePageInfo(body);
+                }
+                break;
         }
     }
 

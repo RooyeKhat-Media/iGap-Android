@@ -1,20 +1,31 @@
 {
   "project_info": {
-    "project_number": "132364457498",
-    "project_id": "igap-messenger"
+    "project_number": "780057141561",
+    "firebase_url": "https://igap-im.firebaseio.com",
+    "project_id": "igap-im",
+    "storage_bucket": "igap-im.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:132364457498:android:69c59b7595e50096",
+        "mobilesdk_app_id": "1:780057141561:android:69c59b7595e50096",
         "android_client_info": {
           "package_name": "net.iGap"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "780057141561-etdtrh2c8au993nmrigoj0jfjoplu3t8.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "780057141561-etdtrh2c8au993nmrigoj0jfjoplu3t8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCCC20H7heNcUEgRD3nsdOOq1hojHI-tSs"
+          "current_key": "AIzaSyDJlUADMuvqi9xv4KiGkPqY69ULf8FMmxA"
         }
       ],
       "services": {
@@ -29,7 +40,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

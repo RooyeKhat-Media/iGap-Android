@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.module;
 
@@ -50,9 +50,11 @@ import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -204,6 +206,9 @@ public final class AppUtils {
             case LOCATION:
                 result = G.fragmentActivity.getResources().getString(R.string.location_message);
                 break;
+            case WALLET:
+                result = G.fragmentActivity.getResources().getString(R.string.wallet_message);
+                break;
             default:
                 break;
         }
@@ -218,8 +223,11 @@ public final class AppUtils {
 
 
     private static void getAndSetPositionPicture(final RealmRoomMessage message, final ImageView view) {
-        if (message.getLocation().getImagePath() != null) {
-            G.imageLoader.displayImage(AndroidUtils.suitablePath(message.getLocation().getImagePath()), view);
+
+        String path = AppUtils.getLocationPath(message.getLocation().getLocationLat(), message.getLocation().getLocationLong());
+
+        if (new File(path).exists()) {
+            G.imageLoader.displayImage(AndroidUtils.suitablePath(AppUtils.getLocationPath(message.getLocation().getLocationLat(), message.getLocation().getLocationLong())), view);
         } else {
 
             FragmentMap.loadImageFromPosition(message.getLocation().getLocationLat(), message.getLocation().getLocationLong(), new FragmentMap.OnGetPicture() {
@@ -227,8 +235,7 @@ public final class AppUtils {
                 public void getBitmap(Bitmap bitmap) {
 
                     view.setImageBitmap(bitmap);
-
-                    final String savedPath = FragmentMap.saveBitmapToFile(bitmap);
+                    final String savedPath = AppUtils.saveMapToFile(bitmap, message.getLocation().getLocationLat(), message.getLocation().getLocationLong());
 
                     Realm realm = Realm.getDefaultInstance();
                     realm.executeTransaction(new Realm.Transaction() {
@@ -243,6 +250,36 @@ public final class AppUtils {
                 }
             });
         }
+    }
+
+    /**
+     * make location path with latitude & longitude in temp file
+     *
+     * @return location path in temp file
+     */
+    public static String getLocationPath(double locationLat, double locationLong) {
+        return G.DIR_TEMP + "/location_" + String.valueOf(locationLat).replace(".", "") + "_" + String.valueOf(locationLong).replace(".", "") + ".png";
+    }
+
+    public static String saveMapToFile(Bitmap bitmap, Double latitude, Double longitude) {
+
+        String result = "";
+
+        try {
+            if (bitmap == null) return result;
+
+            String fileName = "/location_" + latitude.toString().replace(".", "") + "_" + longitude.toString().replace(".", "") + ".png";
+            File file = new File(G.DIR_TEMP, fileName);
+
+            OutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+
+            result = file.getPath();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     /**
@@ -269,7 +306,7 @@ public final class AppUtils {
                 view.setColorFilter(Color.parseColor(G.tintImage), PorterDuff.Mode.SRC_IN);
                 break;
             case FAILED:
-                setImageDrawable(view, R.drawable.ic_error);
+                setImageDrawable(view, R.drawable.ic_error_igap);
                 view.setColorFilter(view.getContext().getResources().getColor(R.color.red));
                 break;
             case SEEN:
@@ -313,7 +350,7 @@ public final class AppUtils {
                 //DrawableCompat.setTint(view.getDrawable().mutate(), Color.BLACK);
                 break;
             case FAILED:
-                setImageDrawable(view, R.drawable.ic_error);
+                setImageDrawable(view, R.drawable.ic_error_igap);
                 if (messageType == ProtoGlobal.RoomMessageType.IMAGE || messageType == ProtoGlobal.RoomMessageType.VIDEO || messageType == ProtoGlobal.RoomMessageType.GIF) {
                     DrawableCompat.setTint(view.getDrawable().mutate(), Color.WHITE);
                 } else {
@@ -384,7 +421,7 @@ public final class AppUtils {
                     messageText = G.fragmentActivity.getString(R.string.last_msg_format_chat, attachment.getName());
                     break;
                 case CONTACT:
-                    messageText = "contact"; // need to fill messageText with a String because in return check null
+                    messageText = "contact"; // need to fill messageText with a String because in return check null. this string isn't important.
                     break;
                 case FILE_TEXT:
                 case FILE:
@@ -425,6 +462,9 @@ public final class AppUtils {
                         return null;
                     }
                     messageText = G.fragmentActivity.getString(R.string.last_msg_format_chat, attachment.getName());
+                    break;
+                case WALLET:
+                    messageText = "wallet"; // need to fill messageText with a String because in return check null. this string isn't important.
                     break;
                 default:
                     messageText = null;
@@ -657,7 +697,8 @@ public final class AppUtils {
     }
 
     public static long makeRandomId() {
-        return Math.abs(UUID.randomUUID().getLeastSignificantBits());
+        return SUID.id().get();
+        // return Math.abs(UUID.randomUUID().getLeastSignificantBits());
     }
 
 }

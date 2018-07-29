@@ -64,6 +64,11 @@ public class FragmentNotificationAndSoundViewModel {
     private int modeGroup;
     private int poRbDialogSoundMessageGroup;
     private String soundMessageGroup;
+    private String soundMessageSelected = "";
+    private String soundMessageGroupSelected = "";
+    private int soundMessageWhich = 0;
+    private int soundMessageGroupWhich = 0;
+
 
 
     public FragmentNotificationAndSoundViewModel(FragmentNotificationAndSoundBinding fragmentNotificationAndSoundBinding) {
@@ -437,61 +442,25 @@ public class FragmentNotificationAndSoundViewModel {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
-                switch (which) {
-                    case 0:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.igap).start();
-                        break;
-                    case 1:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.aooow).start();
-                        break;
-                    case 2:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.bbalert).start();
-                        break;
-                    case 3:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.boom).start();
-                        break;
-                    case 4:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.bounce).start();
-                        break;
-                    case 5:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.doodoo).start();
-                        break;
+                playSound(which);
 
-                    case 6:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.jing).start();
-                        break;
-                    case 7:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.lili).start();
-                        break;
-                    case 8:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.msg).start();
-                        break;
-                    case 9:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.newa).start();
-                        break;
-                    case 10:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.none).start();
-                        break;
-                    case 11:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.onelime).start();
-                        break;
-                    case 12:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.tone).start();
-                        break;
-                    case 13:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.woow).start();
-                        break;
-                }
-
-                callbackSoundMessage.set(text.toString());
-                poRbDialogSoundMessage = which;
-                editor.putInt(SHP_SETTING.KEY_STNS_SOUND_MESSAGE_POSITION, which);
-                editor.putString(SHP_SETTING.KEY_STNS_SOUND_MESSAGE, text.toString());
-                editor.apply();
+                soundMessageSelected = text.toString();
+                soundMessageWhich = which;
 
                 return true;
             }
-        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                callbackSoundMessage.set(soundMessageSelected);
+                poRbDialogSoundMessage = soundMessageWhich;
+                editor.putInt(SHP_SETTING.KEY_STNS_SOUND_MESSAGE_POSITION, soundMessageWhich);
+                editor.putString(SHP_SETTING.KEY_STNS_SOUND_MESSAGE, soundMessageSelected);
+                editor.apply();
+
+            }
+        }).show();
 
 
     }
@@ -616,61 +585,27 @@ public class FragmentNotificationAndSoundViewModel {
         new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.Ringtone)).titleGravity(GravityEnum.START).titleColor(G.context.getResources().getColor(android.R.color.black)).items(R.array.sound_message).alwaysCallSingleChoiceCallback().itemsCallbackSingleChoice(poRbDialogSoundMessageGroup, new MaterialDialog.ListCallbackSingleChoice() {
             @Override
             public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                switch (which) {
-                    case 0:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.igap).start();
-                        break;
-                    case 1:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.aooow).start();
-                        break;
-                    case 2:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.bbalert).start();
-                        break;
-                    case 3:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.boom).start();
-                        break;
-                    case 4:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.bounce).start();
-                        break;
-                    case 5:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.doodoo).start();
-                        break;
 
-                    case 6:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.jing).start();
-                        break;
-                    case 7:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.lili).start();
-                        break;
-                    case 8:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.msg).start();
-                        break;
-                    case 9:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.newa).start();
-                        break;
-                    case 10:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.none).start();
-                        break;
-                    case 11:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.onelime).start();
-                        break;
-                    case 12:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.tone).start();
-                        break;
-                    case 13:
-                        MediaPlayer.create(G.fragmentActivity, R.raw.woow).start();
-                        break;
-                }
+                playSound(which);
 
-                callBackSoundGroup.set(text.toString());
-                poRbDialogSoundMessageGroup = which;
+                soundMessageGroupSelected = text.toString();
+                soundMessageGroupWhich = which;
 
-                editor.putString(SHP_SETTING.KEY_STNS_SOUND_GROUP, text.toString());
-                editor.putInt(SHP_SETTING.KEY_STNS_SOUND_GROUP_POSITION, which);
-                editor.apply();
                 return true;
             }
-        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).show();
+        }).positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                callBackSoundGroup.set(soundMessageGroupSelected);
+                poRbDialogSoundMessageGroup = soundMessageGroupWhich;
+
+                editor.putString(SHP_SETTING.KEY_STNS_SOUND_GROUP, soundMessageGroupSelected);
+                editor.putInt(SHP_SETTING.KEY_STNS_SOUND_GROUP_POSITION, soundMessageGroupWhich);
+                editor.apply();
+
+            }
+        }).show();
     }
 
     public void onClickInAppSound(View view) {
@@ -755,6 +690,69 @@ public class FragmentNotificationAndSoundViewModel {
 
         isSoundInChat.set(getBoolean(sharedPreferences.getInt(SHP_SETTING.KEY_STNS_CHAT_SOUND, 0)));
         isKeepService.set(getBoolean(sharedPreferences.getInt(SHP_SETTING.KEY_STNS_KEEP_ALIVE_SERVICE, 1)));
+
+    }
+
+    private void playSound(int which) {
+
+        int musicId = R.raw.igap;
+
+        switch (which) {
+            case 0:
+                musicId = R.raw.igap;
+                break;
+            case 1:
+                musicId = R.raw.aooow;
+                break;
+            case 2:
+                musicId = R.raw.bbalert;
+                break;
+            case 3:
+                musicId = R.raw.boom;
+                break;
+            case 4:
+                musicId = R.raw.bounce;
+                break;
+            case 5:
+                musicId = R.raw.doodoo;
+                break;
+            case 6:
+                musicId = R.raw.jing;
+                break;
+            case 7:
+                musicId = R.raw.lili;
+                break;
+            case 8:
+                musicId = R.raw.msg;
+                break;
+            case 9:
+                musicId = R.raw.newa;
+                break;
+            case 10:
+                musicId = R.raw.none;
+                break;
+            case 11:
+                musicId = R.raw.onelime;
+                break;
+            case 12:
+                musicId = R.raw.tone;
+                break;
+            case 13:
+                musicId = R.raw.woow;
+                break;
+        }
+
+
+        MediaPlayer mediaPlayer = MediaPlayer.create(G.fragmentActivity, musicId);
+        mediaPlayer.start();
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+
+            ;
+        });
 
     }
 

@@ -1,0 +1,87 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+    <import type="android.view.View" />
+
+    <import type="android.graphics.Color" />
+
+    <import type="org.paygear.wallet.WalletActivity" />
+
+    <import type="org.paygear.wallet.RaadApp" />
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@{Color.parseColor(WalletActivity.backgroundTheme),default=@color/fragment_back}"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+
+      <ir.radsense.raadcore.app.RaadToolBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <android.support.v7.widget.AppCompatImageButton
+          android:id="@+id/back_button"
+          android:layout_width="56dp"
+          android:layout_height="56dp"
+          android:layout_alignParentLeft="true"
+          android:background="#00ffffff"
+          android:padding="8dp"
+          android:scaleType="centerInside"
+          android:src="@drawable/ic_action_back_white" />
+      </ir.radsense.raadcore.app.RaadToolBar>
+
+    <LinearLayout
+      android:id="@+id/btnSetNewPassword"
+      android:layout_width="match_parent"
+      android:layout_height="52dp"
+      android:layout_marginTop="52dp"
+      android:layout_marginLeft="36dp"
+      android:layout_marginRight="36dp"
+      android:orientation="horizontal"
+      android:gravity="center">
+
+
+      <TextView
+        android:id="@+id/txtSetPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/dp4"
+        android:text="@{RaadApp.paygearCard.isProtected ? @string/change_password : @string/set_password}"
+        android:textColor="@color/whit_background"
+        android:textSize="@dimen/dp16" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/btnForgotPassword"
+      android:layout_width="match_parent"
+      android:layout_height="52dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginLeft="36dp"
+      android:layout_marginRight="36dp"
+      android:gravity="center"
+      android:visibility="@{RaadApp.paygearCard.isProtected ? View.VISIBLE : View.GONE}">
+
+      <TextView
+        android:id="@+id/txtForgotPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/dp4"
+        android:text="@string/Forgot_Passwords"
+        android:textColor="@color/whit_background"
+        android:textSize="@dimen/dp16" />
+    </LinearLayout>
+
+
+  </LinearLayout>
+</layout>

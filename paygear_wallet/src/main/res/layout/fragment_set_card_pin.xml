@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/rootView"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_back"
+    android:clickable="true"
+    tools:context=".fragment.SetCardPinFragment">
+
+  <!--<android.support.v7.widget.CardView-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="wrap_content"-->
+  <!--app:cardCornerRadius="1dp"-->
+  <!--app:cardPreventCornerOverlap="false"-->
+  <!--app:cardMaxElevation="0dp"-->
+  <!--app:cardElevation="@dimen/app_bar_card_view_elevation"-->
+  <!--android:layout_marginTop="-8dp">-->
+
+        <ir.radsense.raadcore.app.RaadToolBar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+          android:layout_height="?actionBarSize" />
+
+  <!--</android.support.v7.widget.CardView>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+          android:id="@+id/root_current"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/current_pass_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:text="@string/current_pass"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="-8dp"/>
+
+            <EditText
+                android:id="@+id/current_pass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_edit_text_back"
+                android:inputType="numberPassword"
+                android:hint="@string/current_pass"
+                android:textColor="#212121"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/new_pass_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:text="@string/new_pass"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="-8dp"/>
+
+            <EditText
+                android:id="@+id/new_pass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_edit_text_back"
+                android:inputType="numberPassword"
+                android:hint="@string/new_pass"
+                android:textColor="#212121"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:id="@+id/confirm_pass_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:text="@string/confirm_pass"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="-8dp"/>
+
+            <EditText
+                android:id="@+id/confirm_pass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_edit_text_back"
+                android:inputType="numberPassword"
+                android:hint="@string/confirm_pass"
+                android:textColor="#212121"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_margin="16dp"/>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:background="@drawable/button_green_selector_24dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:text="@string/ok"/>
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

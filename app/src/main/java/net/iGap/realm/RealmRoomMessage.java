@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.realm;
 
@@ -80,6 +80,7 @@ public class RealmRoomMessage extends RealmObject {
     private long userId;
     private RealmRoomMessageLocation location;
     private RealmRoomMessageContact roomMessageContact;
+    private RealmRoomMessageWallet roomMessageWallet;
     private boolean edited;
     private long createTime;
     private long updateTime;
@@ -420,6 +421,12 @@ public class RealmRoomMessage extends RealmObject {
         if (input.hasContact()) {
             message.setRoomMessageContact(RealmRoomMessageContact.put(input.getContact()));
         }
+
+        if (input.hasWallet()) {
+            //wallet put
+            message.setRoomMessageWallet(RealmRoomMessageWallet.put(input.getWallet()));
+        }
+
         message.setMessageType(input.getMessageType());
         message.setMessageVersion(input.getMessageVersion());
         message.setStatusVersion(input.getStatusVersion());
@@ -728,7 +735,7 @@ public class RealmRoomMessage extends RealmObject {
 
                         // stop download
                         if (roomMessage.getAttachment() != null) {
-                            HelperDownloadFile.stopDownLoad(roomMessage.getAttachment().getCacheId());
+                            HelperDownloadFile.getInstance().stopDownLoad(roomMessage.getAttachment().getCacheId());
                         }
                     }
 
@@ -901,7 +908,25 @@ public class RealmRoomMessage extends RealmObject {
         return roomMessage;
     }
 
-
+    /**
+     * set new gap state for UP and DOWN for {@param messageId} (BothDirections)
+     *
+     * @param messageId message that want set gapMessageId to that
+     */
+    public static void setGap(final long messageId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmRoomMessage realmRoomMessage = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, messageId).findFirst();
+                if (realmRoomMessage != null) {
+                    realmRoomMessage.setPreviousMessageId(messageId);
+                    realmRoomMessage.setFutureMessageId(messageId);
+                }
+            }
+        });
+        realm.close();
+    }
 
     /*public int getVoteUp() {
         return voteUp;
@@ -1209,6 +1234,14 @@ public class RealmRoomMessage extends RealmObject {
 
     public void setRoomMessageContact(RealmRoomMessageContact roomMessageContact) {
         this.roomMessageContact = roomMessageContact;
+    }
+
+    public RealmRoomMessageWallet getRoomMessageWallet() {
+        return roomMessageWallet;
+    }
+
+    private void setRoomMessageWallet(RealmRoomMessageWallet roomMessageWallet) {
+        this.roomMessageWallet = roomMessageWallet;
     }
 
     public boolean isEdited() {

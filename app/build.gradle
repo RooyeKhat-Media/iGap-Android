@@ -1,5 +1,7 @@
 buildscript {
     repositories {
+
+        mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
     }
 
@@ -17,15 +19,15 @@ repositories {
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "net.iGap"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 64
-        versionName "0.6.4"
+        targetSdkVersion 27
+        versionCode 76
+        versionName "0.9.2"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -33,10 +35,16 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
         javaCompileOptions {
+
             annotationProcessorOptions {
                 includeCompileClasspath true
             }
         }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 
     dataBinding {
@@ -51,6 +59,8 @@ android {
     }
 
     lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
         disable 'MissingTranslation'
     }
 
@@ -60,74 +70,83 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':messageprogress')
-    compile project(':proto')
-    compile project(':websocket')
-    compile project(':libwebrtc')
-    compile('com.afollestad.material-dialogs:core:0.9.4.5') {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':libwebrtc')
+    implementation('com.afollestad.material-dialogs:core:0.9.6.0') {
         transitive = true
     }
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
         transitive = true
     }
-
-    compile project(path: ':lvl')
-    compile(project(':compress')) {
-        exclude group: 'com.googlecode.mp4parser', module: 'isoparser'
-    }
-    compile(project(':k4l-video-trimmer')) {
-        exclude group: 'com.googlecode.mp4parser', module: 'isoparser'
-    }
-
+    implementation project(path: ':lvl')
     implementation 'com.mikepenz:fastadapter:3.2.5'
     implementation 'com.mikepenz:fastadapter-commons:3.2.5'
     implementation 'com.mikepenz:fastadapter-extensions-expandable:3.2.5'
     implementation 'com.mikepenz:fastadapter-extensions:3.2.5'
-
-    compile 'com.android.support:multidex:1.0.3'
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.android.support:recyclerview-v7:26.0.2'
-    compile 'com.android.support:design:26.0.2'
-    compile 'com.vicmikhailau:MaskedEditText:1.1.1'
-    compile 'com.uncopt:android.justified:1.0'
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
-    compile 'com.android.support:percent:26.0.2'
-    compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
-    compile 'com.android.support:cardview-v7:26.0.2'
-    compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
-    compile 'me.leolin:ShortcutBadger:1.1.18@aar'
-    compile 'com.android.support:support-v4:26.0.2'
-    compile 'com.makeramen:roundedimageview:2.3.0'
-    compile 'dk.ilios:realmfieldnameshelper:1.1.1'
-    compile 'com.hanks.animatecheckbox:library:0.1'
-    compile 'org.parceler:parceler-api:1.1.9'
-    compile 'com.android.support:gridlayout-v7:26.0.2'
-    compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
-    compile 'com.google.zxing:core:3.3.0'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
-    compile 'com.google.android.gms:play-services-analytics:15.0.0'
-    compile 'com.google.android.gms:play-services-maps:15.0.0'
-    compile 'me.zhanghai.android.customtabshelper:library:1.0.3'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    compile 'cat.ereza:customactivityoncrash:2.1.0'
-    compile 'com.github.RooyeKhat-Media.Emoji:emoji-one:0.5.1.Fix6'
-    compile 'io.realm:android-adapters:3.0.0'
-    compile 'org.osmdroid:osmdroid-android:5.6.5'
-    compile 'io.fotoapparat.fotoapparat:library:1.3.0'
-    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
-    compile 'com.github.pchmn:MaterialChipsInput:1.0.8'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.vicmikhailau:MaskedEditText:1.1.1'
+    implementation 'com.uncopt:android.justified:1.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.android.support:percent:27.1.1'
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'me.leolin:ShortcutBadger:1.1.18@aar'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'dk.ilios:realmfieldnameshelper:1.1.1'
+    implementation 'com.hanks.animatecheckbox:library:0.1'
+    implementation 'org.parceler:parceler-api:1.1.9'
+    implementation 'com.android.support:gridlayout-v7:27.1.1'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'me.zhanghai.android.customtabshelper:library:1.0.3'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    implementation 'cat.ereza:customactivityoncrash:2.1.0'
+    implementation 'com.github.RooyeKhat-Media.Emoji:emoji-one:0.5.1.Fix2b'
+    implementation 'io.realm:android-adapters:3.0.0'
+    implementation 'org.osmdroid:osmdroid-android:5.6.5'
+    implementation 'io.fotoapparat.fotoapparat:library:1.3.0'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    implementation 'com.github.pchmn:MaterialChipsInput:1.0.8'
+    testImplementation 'junit:junit:4.12'
     annotationProcessor 'org.parceler:parceler:1.1.6'
-    provided 'com.android.support:support-annotations:26.0.2'
-    compile group: 'com.github.msarhan', name: 'ummalqura-calendar', version: '1.1.7'
-    compile 'com.sothree.slidinguppanel:library:3.4.0'
-    compile 'com.github.krokyze:ucropnedit:2.2.2'
+    compileOnly 'com.android.support:support-annotations:27.1.1'
+    implementation group: 'com.github.msarhan', name: 'ummalqura-calendar', version: '1.1.7'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.github.krokyze:ucropnedit:2.2.2'
     implementation 'info.androidhive:imagefilters:1.0.7'
-    compile 'com.mindorks.android:prdownloader:0.3.0'
+    implementation 'com.mindorks.android:prdownloader:0.4.0'
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation('com.github.RooyeKhat-Media:Compress:1.0.0') {
+        exclude group: 'com.googlecode.mp4parser', module: 'isoparser'
+    }
+    implementation('com.github.RooyeKhat-Media:VideoTrimmer:1.1.0') {
+        exclude group: 'com.googlecode.mp4parser', module: 'isoparser'
+    }
+    implementation 'com.github.RooyeKhat-Media:Websocket:1.0.0'
+    implementation 'com.github.RooyeKhat-Media:MessageProgress:1.0.0'
+    implementation 'com.github.RooyeKhat-Media:Proto:Build91'
+    implementation project(':pecpayment-release')
+    implementation project(':raadcore')
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation project(':paygear_wallet')
 }
 
 configurations.all {
@@ -135,8 +154,10 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '26.0.2'
+                details.useVersion '27.1.1'
             }
         }
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -43,12 +43,12 @@ public class HelperFragment {
         this.fragment = fragment;
     }
 
-    public static Fragment isFragmentVisible(String fragmentTag) {
+    public static boolean isFragmentVisible(String fragmentTag) {
         Fragment fragment = G.fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
-        if (fragment != null && fragment.isVisible()) {
-            return fragment;
+        if (fragment != null) {
+            return fragment.isVisible();
         }
-        return null;
+        return false;
     }
 
     public static Fragment isFragmentVisible(ArrayList<String> fragmentTags) {

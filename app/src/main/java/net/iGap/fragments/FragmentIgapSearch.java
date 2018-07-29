@@ -12,6 +12,7 @@ package net.iGap.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -49,6 +50,8 @@ import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.request.RequestClientSearchUsername;
+
+import org.paygear.wallet.WalletActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +113,7 @@ public class FragmentIgapSearch extends BaseFragment {
         }, 150);
 
         loadingProgressBar = (ContentLoadingProgressBar) view.findViewById(R.id.sfl_progress_loading);
-        loadingProgressBar.getIndeterminateDrawable().setColorFilter(G.context.getResources().getColor(R.color.toolbar_background), android.graphics.PorterDuff.Mode.MULTIPLY);
+        loadingProgressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor(G.progressColor), PorterDuff.Mode.SRC_IN);
 
         edtSearch = (EditText) view.findViewById(R.id.sfl_edt_search);
 

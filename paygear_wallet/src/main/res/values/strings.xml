@@ -1,0 +1,296 @@
+<resources>
+  <string name="app_name">PayGear Wallet</string>
+
+  <string name="rial">Rials</string>
+  <string name="toman">Toman</string>
+
+  <string name="verify_fragment_hint">We sent an activation code to your phone. If you didn\'t receive any code, request again after 1 minute.</string>
+  <string name="new_user_pass_fragment_hint">Specify a passcode for your card. You can change it later in Settings.</string>
+  <string name="code_resend_text">* seconds to resend code</string>
+  <string name="resend_code">Resend code</string>
+  <string name="new_otp_requested">New code sent to your phone</string>
+  <string name="request_again">Request again</string>
+  <string name="sending_code_to_x">Code sent to your phone \n*</string>
+  <string name="select_your_city">Select your city</string>
+  <string name="enter_username">Enter your username</string>
+  <string name="enter_code_correctly">Enter the activation code correctly</string>
+  <string name="enter_mobile_correctly">Enter your phone number correctly</string>
+  <string name="enter_your_mobile">Enter your phone number</string>
+  <string name="enter_your_mobile_without_zero">Enter your phone number without zero</string>
+  <string name="enter_your_activation_code">Enter the activation code</string>
+  <string name="country_code_not_valid">The country code is not valid</string>
+  <string name="four_digits_activation_code">4 digits activation code</string>
+  <string name="password">Password</string>
+  <string name="confirm_password">Repeat Password</string>
+  <string name="enter_your_confirm_password">Reenter your password</string>
+  <string name="enter_your_password">Enter your password</string>
+  <string name="select_your_password">Select your password</string>
+  <string name="enter_your_referral_code">Enter your Referral code</string>
+  <string name="select_your_province">Select your province</string>
+  <string name="referral_code">Referral code</string>
+  <string name="province_name">Province Name</string>
+  <string name="account_password">Account Password</string>
+
+  <string name="full_name">Full Name</string>
+  <string name="user_name">Username</string>
+  <string name="birth_date">Birth Date</string>
+  <string name="email">Email</string>
+  <string name="province">Province</string>
+  <string name="edit_profile_hint"> </string>
+  <string name="username">Username</string>
+  <string name="select_city">Select City</string>
+  <string name="select_province">Select Province</string>
+  <string name="mobile_number">Mobile Number</string>
+  <string name="paygear_user">Wallet User</string>
+  <string name="authorization_not_valid">User authentication is not valid</string>
+  <string name="already_read">I already read</string>
+  <string name="login">Login</string>
+  <string name="next">Next</string>
+  <string name="back">Back</string>
+  <string name="code">Code</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
+  <string name="ok">OK</string>
+  <string name="cancel">Cancel</string>
+  <string name="never_mind">Never Mind</string>
+  <string name="not_now">Not Now!</string>
+
+  <string name="no_item">No Item</string>
+  <string name="retry">Retry</string>
+  <string name="network_error">Network Error</string>
+  <string name="server_error">Server Error</string>
+  <string name="error">Error</string>
+
+  <string name="default_card">Default Card</string>
+  <string name="delete_card">Delete Card</string>
+  <string name="add_new_card">Add New Card</string>
+  <string name="delete_card_confirm">Are you sure you want to delete this card?</string>
+  <string name="save">Save</string>
+  <string name="card_number">Card Number</string>
+  <string name="month">Month</string>
+  <string name="year">Year</string>
+  <string name="edit">Edit</string>
+  <string name="camera">Camera</string>
+  <string name="gallery">Gallery</string>
+  <string name="delete_image">Delete Picture</string>
+
+  <string name="charge_wallet">Wallet Charge</string>
+  <string name="charge_paygear">Charge Wallet</string>
+  <string name="immediate_cash_out">Immediate</string>
+  <string name="normal_cash_out">Normal</string>
+
+  <string name="enter_info_completely">Enter info correctly</string>
+  <string name="source_card">Source Card</string>
+  <string name="destination_card">Destination Card</string>
+  <string name="destination_card_number">Destination Card Number</string>
+  <string name="destination_sheba_number">Destination IBAN Number</string>
+  <string name="trace_no">Trace No</string>
+  <string name="reference_code">Reference No</string>
+  <string name="has">دارد</string>
+  <string name="not_has">ندارد</string>
+  <string name="see_details">See Details</string>
+  <string name="request_time">Request Time</string>
+  <string name="settlement_time">Settlement Time</string>
+  <string name="requested_amount">Requested Price</string>
+  <string name="requested_amount_rial">Requested Price (Rial)</string>
+  <string name="settlement_wage">کارمزد تسویه</string>
+  <string name="deposits">Deposited</string>
+  <string name="wage">Wage</string>
+  <string name="bank">Bank</string>
+  <string name="destination_bank">Destination Bank</string>
+  <string name="card_owner">Card Owner</string>
+  <string name="total_price">Total Price</string>
+  <string name="discount">Discount</string>
+  <string name="service_price">Service</string>
+  <string name="tax">Tax</string>
+  <string name="delivery_price">Delivery</string>
+  <string name="payable_price_rial">Payable Price (Rial)</string>
+  <string name="final_price_rial">Final Price (Rial)</string>
+  <string name="payable_price">Payment Price</string>
+  <string name="withdraw_price">مبلغ برداشت</string>
+  <string name="qr_not_detected">QR not recognized</string>
+  <string name="payment_price_rial">Payment Price (Rial)</string>
+  <string name="price_rial">Amount (Rial)</string>
+  <string name="amount_must_be_greater_1000">Amount must be greter than 1000 rials</string>
+  <string name="amount_not_valid">Amount is not valid</string>
+  <string name="payment_history">Payment History</string>
+  <string name="set_card_pin">Set Passcode</string>
+  <string name="credit_card_set_pin_confirm">For paying, you must specify a passcode for your Wallet card.\nDo you want to set?</string>
+
+  <string name="order_info">Transaction Info</string>
+  <string name="pay_to">Paid To</string>
+  <string name="pay_with_raad_card_to">Paid with Wallet card to</string>
+  <string name="pay_charge_for_raad_card_to">پرداخت شارژ پیگیرکارت به</string>
+  <string name="charge_paygear_card">Wallet Charge</string>
+  <string name="purchase_club_plan_from">خرید طرح باشگاه از</string>
+  <string name="receive_from">Received From</string>
+  <string name="receive_sale_share_from">دریافت سهم فروش از</string>
+  <string name="receive_charge_for_raad_card_from">دریافت شارژ پیگیرکارت از</string>
+  <string name="settled">Cashout</string>
+  <string name="settled_pending">Cashout Pending</string>
+  <string name="settlement">تسویه</string>
+  <string name="pending">Pending</string>
+  <string name="payment_pending">Payment pending</string>
+
+  <string name="taxi">Taxi</string>
+
+  <string name="successful_payment">Successful Payment</string>
+  <string name="unsuccessful_payment">Unsuccessful Payment</string>
+  <string name="save_receipt">Save Receipt</string>
+  <string name="receipt_saved">Receipt Saved</string>
+
+  <string name="scan">SCAN</string>
+
+  <string name="cash_in_hint">Enter your charging amount and charge your card.</string>
+  <string name="cash_out_normal_hint"> </string>
+  <string name="cash_out_immediate_hint"></string>
+  <string name="how_to_get_sheba">How to get IBAN</string>
+  <string name="my_qr_hint">Show this QR to others so they scan and pay money to you.</string>
+  <string name="my_qr">My QR</string>
+  <string name="credit">Credit</string>
+
+  <string name="card_16_digits">16 digits card number</string>
+  <string name="sheba_20_digits">24 digits IBAN number</string>
+
+  <string name="no_camera_found">No camera Found</string>
+
+  <string name="connecting">Connecting...</string>
+  <string name="disconnected">Disconnected</string>
+
+
+  <string name="paygear_balance">Wallet Balance</string>
+  <string name="paygear_card_balance">Wallet Card Balance</string>
+  <string name="paygear_account_balance">Wallet Account Balance</string>
+  <string name="cashable_balance">Cashable Balance</string>
+  <string name="cashable_price">Cashable Price</string>
+  <string name="cash_in_paygear">Charge</string>
+  <string name="cash_out_paygear">Cashout</string>
+  <string name="cashable">Cashable</string>
+  <string name="not_cashable">Non Cashable</string>
+  <string name="gift">Gift</string>
+  <string name="withdraw">Cashout</string>
+  <string name="payment">Payment</string>
+  <string name="pay">Pay</string>
+  <string name="cards">Cards</string>
+  <string name="my_cards">My Cards</string>
+  <string name="cashout_today_limit">Today Cashout Limit</string>
+  <string name="cash_out_request_done">Cahsout Request done</string>
+  <string name="cashout_request">Cashout Request</string>
+  <string name="paygear_card_pin">Wallet Passcode</string>
+  <string name="qr">QR</string>
+  <string name="scanner">Scanner</string>
+  <string name="wallet">Wallet</string>
+
+  <string name="x_people">* People</string>
+  <string name="enter_receiver_code">Enter the merchant code</string>
+  <string name="receiver_code">Merchant Code</string>
+  <string name="pay_with_price_x">Payment Price\n*</string>
+
+  <string name="internet_pin_2">Pin</string>
+  <string name="cvv2">CVV2</string>
+  <string name="select_card">Select Card</string>
+  <string name="click_here_for_adding_card">To add card click here.</string>
+
+
+  <string name="new_pass">New Passcode</string>
+  <string name="confirm_pass">Repeat Passcode</string>
+  <string name="current_pass">Current Passcode</string>
+  <string name="passwords_not_match">Passcodes are not match</string>
+  <string name="card_pin_saved">Passcode saved</string>
+  <string name="card_pin_changed">Passcode changed</string>
+
+  <string name="flash_light">Flashlight</string>
+  <string name="entering_driver_code">Entering the driver or store code</string>
+  <string name="scan_driver_or_store_qr">For paying, scan the driver or store QR</string>
+  <string name="data_unknown">QR data is unknown</string>
+
+  <string name="enter_card_number">Enter card number correctly</string>
+  <string name="enter_cvv2">Enter your card CVV2 number</string>
+  <string name="enter_your_second_pin">Enter your card second pin</string>
+  <string name="enter_expire_date">Enter your card exp date</string>
+  <string name="enter_expire_date_year">Enter your card exp year</string>
+  <string name="enter_expire_date_month">Enter your card exp month</string>
+  <string name="enter_expire_date_month_correctly">Enter your card exp month correctly</string>
+
+  <string name="enter_cash_in_price">Enter charge price</string>
+  <string name="enter_cash_out_price">Enter cashout price</string>
+  <string name="enter_your_card_number">Enter your card number</string>
+  <string name="enter_your_sheba_number">Enter your IBAN number</string>
+
+
+  <string name="settings">Settings</string>
+  <string name="language">Language</string>
+  <string name="privacy_policy">Privacy Policy</string>
+  <string name="security_privacy_policy">Security and Privacy Policy</string>
+  <string name="app_version">App Version</string>
+  <string name="about_app">About App</string>
+  <string name="terms_and_conditions">Terms and Conditions</string>
+  <string name="terms_condition">Terms and Conditions</string>
+  <string name="contact_us">Contact Us</string>
+  <string name="faq">FAQ</string>
+  <string name="logout_from_account">Logout from Account</string>
+  <string name="logout_prompt">Are you sure you want to logout from your account?</string>
+  <string name="logout">Logout</string>
+
+  <array name="onboard_titles">
+    <item>Mobile Wallet</item>
+    <item>Pay with QR</item>
+  </array>
+
+  <array name="onboard_descriptions">
+    <item>
+      With Wallet you dont need to carry cash or physical card anymore.
+    </item>
+    <item>
+      In stores or taxis or everywhere else that has Wallet, you can scan their QR and pay
+      them easily.
+    </item>
+  </array>
+
+  <string name="top_company">Tejarat Electronic Parsian</string>
+
+  <string name="bank_parsian">Parsian Bank</string>
+  <string name="bank_saman">Saman Bank</string>
+  <string name="bank_mellat">Mellat Bank</string>
+  <string name="bank_pasargad">Pasargad Bank</string>
+  <string name="bank_eghtesad_novin">EN Bank</string>
+  <string name="bank_karafarin">Karafarin Bank</string>
+  <string name="bank_sarmayeh">Sarmayeh Bank</string>
+  <string name="bank_melli">Bank Melli Iran</string>
+  <string name="bank_sepah">Bank Sepah</string>
+  <string name="bank_dey">Bank Day</string>
+  <string name="bank_tejarat">Tejarat Bank</string>
+  <string name="bank_refah">Refah Bank</string>
+  <string name="bank_saderat">Bank Saderat Iran</string>
+  <string name="bank_maskan">Bank Maskan</string>
+  <string name="bank_shahr">Shahr Bank</string>
+  <string name="bank_sina">Sina Bank</string>
+  <string name="bank_keshavarzi">Keshavarzi Bank</string>
+  <string name="bank_markazi">Central Bank of Iran</string>
+  <string name="bank_gardeshgari">Tourism Bank</string>
+  <string name="bank_post_bank">Post Bank of Iran</string>
+  <string name="bank_ansar">Ansar Bank</string>
+  <string name="bank_iran_zamin">Iran Zamin Bank</string>
+  <string name="bank_ayandeh">Ayandeh Bank</string>
+  <string name="bank_resalat">RQ Bank</string>
+  <string name="bank_tosee_taavon">Tose\'e Ta\'avon Bank</string>
+  <string name="bank_tosee_saderat">Export Development Bank of Iran</string>
+  <string name="bank_hekmat_iranian">Bank Hekmat Iranian</string>
+  <string name="bank_sanato_madan">Bank of Industry &amp; Mine</string>
+  <string name="bank_ghavamin">Ghavamin Bank</string>
+  <string name="bank_mehr_iran">Mehr Iran Bank</string>
+  <string name="bank_mehr_eghtesad">Mehr Eqtesad Bank</string>
+  <string name="bank_etebari_kosar">Kosar Credit Institute</string>
+  <string name="bank_etebari_tosee">Tosse\'e Credit Institute</string>
+  <string name="bank_etebari_asgarieh">Melal Credit Institution</string>
+  <string name="card_bank">Bank Card</string>
+  <string name="paygear_card">Wallet Card</string>
+  <string name="please_wait">Please Wait</string>
+  <string name="set_password">Set Password</string>
+  <string name="change_password">Change Password</string>
+  <string name="text_forgot">Wallet password sent to you.
+(The password will expire after 2 minutes, please change it after retrieving it)</string>
+  <string name="text_forgot_title">Resend Password</string>
+  <string name="Forgot_Passwords">Password recovery</string>
+
+</resources>

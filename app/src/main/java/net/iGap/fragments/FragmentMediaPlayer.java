@@ -349,7 +349,7 @@ public class FragmentMediaPlayer extends BaseFragment {
                     holder.messageProgress.withDrawable(R.drawable.ic_download, true);
                     holder.iconPlay.setVisibility(View.GONE);
 
-                    if (HelperDownloadFile.isDownLoading(MusicPlayer.mediaList.get(holder.getAdapterPosition()).getAttachment().getCacheId())) {
+                    if (HelperDownloadFile.getInstance().isDownLoading(MusicPlayer.mediaList.get(holder.getAdapterPosition()).getAttachment().getCacheId())) {
                         startDownload(holder.getAdapterPosition(), holder.messageProgress);
                     }
                 }
@@ -505,7 +505,7 @@ public class FragmentMediaPlayer extends BaseFragment {
 
     private void downloadFile(int position, MessageProgress messageProgress) {
 
-        if (HelperDownloadFile.isDownLoading(MusicPlayer.mediaList.get(position).getAttachment().getCacheId())) {
+        if (HelperDownloadFile.getInstance().isDownLoading(MusicPlayer.mediaList.get(position).getAttachment().getCacheId())) {
             stopDownload(position, messageProgress);
         } else {
             startDownload(position, messageProgress);
@@ -514,7 +514,7 @@ public class FragmentMediaPlayer extends BaseFragment {
 
     private void stopDownload(int position, final MessageProgress messageProgress) {
 
-        HelperDownloadFile.stopDownLoad(MusicPlayer.mediaList.get(position).getAttachment().getCacheId());
+        HelperDownloadFile.getInstance().stopDownLoad(MusicPlayer.mediaList.get(position).getAttachment().getCacheId());
     }
 
     private void startDownload(final int position, final MessageProgress messageProgress) {
@@ -547,7 +547,7 @@ public class FragmentMediaPlayer extends BaseFragment {
         });
 
 
-        HelperDownloadFile.startDownload(MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getUrl(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.getInstance().startDownload(MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getUrl(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String path, final int progress) {
 

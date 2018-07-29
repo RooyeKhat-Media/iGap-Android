@@ -162,7 +162,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         if (list.containsKey(identity)) {
 
             StructUpload _sp = list.remove(identity);
-            HelperDownloadFile.removeRequestQueue(identity);
+            HelperDownloadFile.getInstance().removeRequestQueue(identity);
 
             if (myQueue.contains(_sp)) {
                 myQueue.remove(_sp);

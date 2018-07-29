@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#2196f3</color>-->
+    <!--<color name="colorPrimaryDark">#164791</color>-->
+    <!--<color name="colorAccent">#3873e1</color>-->
+
+    <color name="colorPrimary">#3dbcb3</color>
+    <color name="colorPrimaryDark">#37a9a1</color>
+    <color name="colorAccent">#00B0Bf</color>
+
+    <color name="login_button_normal">#00e676</color>
+    <color name="login_button_selected">#2ecc71</color>
+    <color name="edit_text_border">#b2bec4</color>
+
+    <color name="add_card_plus_back">#1e96ff</color>
+
+    <color name="fragment_back">#e3f2fd</color>
+
+
+    <color name="remove_card_button_normal">#ff365d</color>
+    <color name="remove_card_button_selected">#c72847</color>
+    <color name="toolbar_background">#00B0BF</color>
+
+    <color name="iGapColor">#3dbcb3</color>
+    <color name="iGapColorDarker">#37a9a1</color>
+
+</resources>

@@ -112,7 +112,7 @@
           android:paddingBottom="@dimen/dp16"
           android:paddingTop="@dimen/dp12"
           android:text="@string/st_Info"
-          android:textColor="@color/green"
+          android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
           android:textSize="@dimen/dp18"
           android:textStyle="bold" />
 
@@ -248,7 +248,7 @@
             android:layout_marginRight="@dimen/dp20"
             android:onClick="@{fragmentCreateChannelViewModel::onClickCancel}"
             android:text="@string/B_cancel"
-            android:textColor="@color/toolbar_background"
+            android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
             android:textSize="@dimen/dp15"
             android:textStyle="bold" />
 

@@ -47,9 +47,11 @@ public class GeoGetNearbyDistanceResponse extends MessageHandler {
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
-                                RealmGeoNearbyDistance geoNearbyDistance = realm.createObject(RealmGeoNearbyDistance.class, result.getUserId());
+                                RealmGeoNearbyDistance geoNearbyDistance = new RealmGeoNearbyDistance();
+                                geoNearbyDistance.setUserId(result.getUserId());
                                 geoNearbyDistance.setHasComment(result.getHasComment());
                                 geoNearbyDistance.setDistance(result.getDistance());
+                                realm.copyToRealmOrUpdate(geoNearbyDistance);
                             }
                         });
                         realm.close();

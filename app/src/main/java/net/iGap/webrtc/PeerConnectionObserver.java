@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 
 //public static ISignalingOffer iSignalingOffer;
@@ -31,8 +31,6 @@ import org.webrtc.IceCandidate;
 import org.webrtc.MediaStream;
 import org.webrtc.PeerConnection;
 import org.webrtc.RtpReceiver;
-import org.webrtc.VideoRenderer;
-import org.webrtc.VideoTrack;
 
 import static org.webrtc.PeerConnection.IceConnectionState.CHECKING;
 import static org.webrtc.PeerConnection.IceConnectionState.CLOSED;
@@ -41,8 +39,7 @@ import static org.webrtc.PeerConnection.IceConnectionState.CONNECTED;
 import static org.webrtc.PeerConnection.IceConnectionState.DISCONNECTED;
 import static org.webrtc.PeerConnection.IceConnectionState.FAILED;
 
-public class PeerConnectionObserver implements PeerConnection.Observer, VideoRenderer.Callbacks {
-
+public class PeerConnectionObserver implements PeerConnection.Observer {
 
     @Override
     public void onSignalingChange(PeerConnection.SignalingState signalingState) {
@@ -94,11 +91,11 @@ public class PeerConnectionObserver implements PeerConnection.Observer, VideoRen
             audioTrack.setEnabled(true);
         }
 
-        if (stream.videoTracks != null && stream.videoTracks.size() == 1) {
-            VideoTrack videoTrack = stream.videoTracks.getFirst();
+        /*if (stream.videoTracks != null && stream.videoTracks.size() == 1) {
+            VideoTrack videoTrack = stream.videoTracks.get(0);
             videoTrack.setEnabled(true);
             videoTrack.addRenderer(new VideoRenderer(this));
-        }
+        }*/
     }
 
     @Override
@@ -121,9 +118,9 @@ public class PeerConnectionObserver implements PeerConnection.Observer, VideoRen
 
     }
 
-    @Override
+    /*@Override
     public void renderFrame(VideoRenderer.I420Frame i420Frame) {
         Log.i("WWW", "renderFrame : " + i420Frame);
-    }
+    }*/
 
 }

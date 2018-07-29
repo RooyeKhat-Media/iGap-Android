@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.activities;
 
@@ -30,6 +30,8 @@ import android.view.WindowManager;
 
 import net.iGap.Config;
 import net.iGap.G;
+import net.iGap.R;
+import net.iGap.Theme;
 import net.iGap.WebSocketClient;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperPermission;
@@ -84,6 +86,9 @@ public class ActivityEnhanced extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
 
+        setThemeSetting();
+
+
         checkFont();
 
         IntentFilter screenStateFilter = new IntentFilter();
@@ -125,6 +130,103 @@ public class ActivityEnhanced extends AppCompatActivity {
         }
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
+    private void setThemeSetting() {
+        switch (G.themeColor) {
+            case Theme.CUSTOM:
+                this.setTheme(R.style.Material_lightCustom);
+                break;
+            case Theme.DEFAULT:
+                this.setTheme(R.style.Material_lightCustom);
+                break;
+            case Theme.DARK:
+                this.setTheme(R.style.Material_blackCustom);
+                break;
+            case Theme.RED:
+                this.setTheme(R.style.Material_red);
+                break;
+            case Theme.PINK:
+                this.setTheme(R.style.Material_pink);
+                break;
+            case Theme.PURPLE:
+                this.setTheme(R.style.Material_purple);
+                break;
+            case Theme.DEEPPURPLE:
+                this.setTheme(R.style.Material_deepPurple);
+                break;
+            case Theme.INDIGO:
+                this.setTheme(R.style.Material_indigo);
+                break;
+            case Theme.BLUE:
+                this.setTheme(R.style.Material_blue);
+                break;
+
+            case Theme.LIGHT_BLUE:
+                this.setTheme(R.style.Material_lightBlue);
+                break;
+
+            case Theme.CYAN:
+                this.setTheme(R.style.Material_cyan);
+                break;
+
+            case Theme.TEAL:
+                this.setTheme(R.style.Material_teal);
+                break;
+
+            case Theme.GREEN:
+                this.setTheme(R.style.Material_green);
+                break;
+
+            case Theme.LIGHT_GREEN:
+                this.setTheme(R.style.Material_lightGreen);
+                break;
+
+            case Theme.LIME:
+                this.setTheme(R.style.Material_lime);
+                break;
+
+            case Theme.YELLLOW:
+                this.setTheme(R.style.Material_yellow);
+                break;
+            case Theme.AMBER:
+                this.setTheme(R.style.Material_amber);
+                break;
+
+            case Theme.ORANGE:
+                this.setTheme(R.style.Material_orange);
+                break;
+
+            case Theme.DEEP_ORANGE:
+                this.setTheme(R.style.Material_deepOrange);
+                break;
+            case Theme.BROWN:
+                this.setTheme(R.style.Material_brown);
+                break;
+            case Theme.GREY:
+                this.setTheme(R.style.Material_grey);
+                break;
+            case Theme.BLUE_GREY:
+                this.setTheme(R.style.Material_blueGrey);
+                break;
+            case Theme.BLUE_GREY_COMPLETE:
+                this.setTheme(R.style.Material_blueGreyComplete);
+                break;
+            case Theme.INDIGO_COMPLETE:
+                this.setTheme(R.style.Material_indigoComplete);
+                break;
+            case Theme.BROWN_COMPLETE:
+                this.setTheme(R.style.Material_BrownComplete);
+                break;
+            case Theme.TEAL_COMPLETE:
+                this.setTheme(R.style.Material_TealComplete);
+                break;
+            case Theme.GREY_COMPLETE:
+                this.setTheme(R.style.Material_GreyComplete);
+                break;
+
+        }
+
     }
 
     @Override

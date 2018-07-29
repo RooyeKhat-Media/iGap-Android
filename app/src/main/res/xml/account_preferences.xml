@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <PreferenceCategory android:title="@string/settings" />
+  <PreferenceCategory android:title="@string/iGap_settings" />
   <PreferenceScreen
-    android:key="key1"
+    android:key="account_settings"
     android:summary=""
     android:title="Account Settings">
     <intent
-      android:action="net.iGap.OPEN_ACCOUNT"
-      android:targetClass="net.iGap.activities.ActivitySetting"
+      android:action="net.iGap.activities.OPEN_ACCOUNT"
+      android:targetClass="net.iGap.activities.ActivityMain"
       android:targetPackage="net.iGap" />
   </PreferenceScreen>
 </PreferenceScreen>

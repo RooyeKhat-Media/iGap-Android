@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.realm;
 
@@ -210,7 +210,7 @@ public class RealmMigration implements io.realm.RealmMigration {
             oldVersion++;
         }
 
-        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 17
+        if (oldVersion == 17) {
             RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
             if (realmRoom != null) {
                 realmRoom.addField(RealmRoomFields.PIN_MESSAGE_ID, long.class, FieldAttribute.REQUIRED);
@@ -244,6 +244,37 @@ public class RealmMigration implements io.realm.RealmMigration {
 
             if (schema.contains("RealmRoomMessageLog")) {
                 schema.remove("RealmRoomMessageLog");
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == 18) {
+            RealmObjectSchema realmUserInfo = schema.get(RealmUserInfo.class.getSimpleName());
+            if (realmUserInfo != null) {
+                realmUserInfo.addField(RealmUserInfoFields.PUSH_NOTIFICATION_TOKEN, String.class);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 19
+
+            RealmObjectSchema realmRoomMessageWallet = schema.create(RealmRoomMessageWallet.class.getSimpleName())
+                    .addField(RealmRoomMessageWalletFields.ID, long.class, FieldAttribute.REQUIRED)
+                    .addPrimaryKey(RealmRoomMessageWalletFields.ID)
+                    .addField(RealmRoomMessageWalletFields.FROM_USER_ID, long.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.TO_USER_ID, long.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.AMOUNT, long.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.TRACE_NUMBER, long.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.INVOICE_NUMBER, long.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.PAY_TIME, int.class, FieldAttribute.REQUIRED)
+                    .addField(RealmRoomMessageWalletFields.TYPE, String.class)
+                    .addField(RealmRoomMessageWalletFields.DESCRIPTION, String.class);
+
+            RealmObjectSchema realmRoomMessage = schema.get(RealmRoomMessage.class.getSimpleName());
+            if (realmRoomMessage != null) {
+                realmRoomMessage.addRealmObjectField("roomMessageWallet", realmRoomMessageWallet);
             }
 
             oldVersion++;

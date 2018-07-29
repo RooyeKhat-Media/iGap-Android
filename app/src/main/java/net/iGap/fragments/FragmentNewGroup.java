@@ -53,6 +53,7 @@ import net.iGap.module.AttachFile;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.FileUploadStructure;
 import net.iGap.module.LinedEditText;
+import net.iGap.module.structs.StructBottomSheet;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmUserInfo;
 import net.iGap.viewmodel.FragmentNewGroupViewModel;
@@ -61,6 +62,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import io.realm.Realm;
 
@@ -104,7 +106,7 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
 
         FragmentEditImage.completeEditImage = new FragmentEditImage.CompleteEditImage() {
             @Override
-            public void result(String path, String message) {
+            public void result(String path, String message, HashMap<String, StructBottomSheet> textImageList) {
 
                 pathSaveImage = path;
                 avatarId = System.nanoTime();
@@ -317,9 +319,9 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
             public void onFocusChange(View view, boolean b) {
 
                 if (b) {
-                    ViewGroupName.setBackgroundColor(G.context.getResources().getColor(R.color.toolbar_background));
+                    ViewGroupName.setBackgroundColor(Color.parseColor(G.appBarColor));
                 } else {
-                    ViewGroupName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+                    ViewGroupName.setBackgroundColor(Color.parseColor(G.lineBorder));
                 }
             }
         });
@@ -445,20 +447,27 @@ public class FragmentNewGroup extends BaseFragment implements OnGroupAvatarRespo
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (FragmentEditImage.textImageList != null) FragmentEditImage.textImageList.clear();
+        if (FragmentEditImage.itemGalleryList != null) FragmentEditImage.itemGalleryList.clear();
+
         if (requestCode == AttachFile.request_code_TAKE_PICTURE && resultCode == Activity.RESULT_OK) {// result for camera
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 ImageHelper.correctRotateImage(AttachFile.mCurrentPhotoPath, true); //rotate image
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.mCurrentPhotoPath, false, false)).setReplace(false).load();
+
+                FragmentEditImage.insertItemList(AttachFile.mCurrentPhotoPath, false);
+                new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
 
 
             } else {
                 ImageHelper.correctRotateImage(AttachFile.imagePath, true); //rotate image
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.imagePath, false, false)).setReplace(false).load();
+                FragmentEditImage.insertItemList(AttachFile.imagePath, false);
+                new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
             }
         } else if (requestCode == request_code_image_from_gallery_single_select && resultCode == Activity.RESULT_OK) {// result for gallery
             if (data != null) {
-                new HelperFragment(FragmentEditImage.newInstance(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false, false)).setReplace(false).load();
+                FragmentEditImage.insertItemList(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false);
+                new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
             }
         }
     }

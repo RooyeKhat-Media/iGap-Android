@@ -12,6 +12,7 @@ package net.iGap.adapter.items.chat;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -271,6 +272,8 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
         }
 
+        GradientDrawable circleDarkColor = (GradientDrawable) audioBoxView.getBackground();
+        circleDarkColor.setColor(Color.parseColor(G.bubbleChatMusic));
 
         //if ((mMessage.forwardedFrom != null && mMessage.forwardedFrom.getForwardMessage() != null && mMessage.forwardedFrom.getForwardMessage().getMessage() != null && !TextUtils.isEmpty(mMessage.forwardedFrom.getForwardMessage().getMessage())) || !TextUtils.isEmpty(mMessage.messageText)) {
         //    audioBoxView.setBackgroundResource(R.drawable.green_bg_rounded_corner);
@@ -286,7 +289,9 @@ public class AudioItem extends AbstractMessage<AudioItem, AudioItem.ViewHolder> 
             MusicPlayer.onCompleteChat = holder.complete;
 
             holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
-            holder.txt_Timer.setText(MusicPlayer.strTimer + "/" + MusicPlayer.musicTime);
+            if (MusicPlayer.musicProgress > 0) {
+                holder.txt_Timer.setText(MusicPlayer.strTimer + "/" + MusicPlayer.musicTime);
+            }
 
             holder.mTimeMusic = MusicPlayer.musicTime;
 

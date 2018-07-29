@@ -218,7 +218,11 @@ public class VoiceItem extends AbstractMessage<VoiceItem, VoiceItem.ViewHolder> 
             MusicPlayer.onCompleteChat = holder.complete;
 
             holder.musicSeekbar.setProgress(MusicPlayer.musicProgress);
-            holder.txt_Timer.setText(MusicPlayer.strTimer + "/" + MusicPlayer.musicTime);
+
+            if (MusicPlayer.musicProgress > 0) {
+                holder.txt_Timer.setText(MusicPlayer.strTimer + "/" + MusicPlayer.musicTime);
+            }
+
 
             holder.mTimeMusic = MusicPlayer.musicTime;
 

@@ -603,7 +603,7 @@ public class FragmentShowAvatars extends BaseFragment {
 
             final RealmAttachment ra = avatarList.get(position).getFile();
 
-            if (HelperDownloadFile.isDownLoading(ra.getCacheId())) {
+            if (HelperDownloadFile.getInstance().isDownLoading(ra.getCacheId())) {
                 progress.withDrawable(R.drawable.ic_cancel, true);
                 startDownload(position, progress, touchImageView);
             } else {
@@ -638,7 +638,7 @@ public class FragmentShowAvatars extends BaseFragment {
                         final String filePathTumpnail = AndroidUtils.getFilePathWithCashId(ra.getCacheId(), ra.getName(), G.DIR_TEMP, true);
 
                         if (selector != null && fileSize > 0) {
-                            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
+                            HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
                                 @Override
                                 public void OnProgress(final String path, int progress) {
 
@@ -672,8 +672,8 @@ public class FragmentShowAvatars extends BaseFragment {
 
                     String _cashId = avatarList.get(position).getFile().getCacheId();
 
-                    if (HelperDownloadFile.isDownLoading(_cashId)) {
-                        HelperDownloadFile.stopDownLoad(_cashId);
+                    if (HelperDownloadFile.getInstance().isDownLoading(_cashId)) {
+                        HelperDownloadFile.getInstance().stopDownLoad(_cashId);
                     } else {
                         progress.withDrawable(R.drawable.ic_cancel, true);
                         startDownload(position, progress, touchImageView);
@@ -722,7 +722,7 @@ public class FragmentShowAvatars extends BaseFragment {
             });
 
 
-            HelperDownloadFile.startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), ra.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
+            HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), ra.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, final int progres) {
                     G.currentActivity.runOnUiThread(new Runnable() {

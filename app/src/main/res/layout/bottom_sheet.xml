@@ -22,7 +22,7 @@
       android:id="@+id/rcvContent"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/dp100"
-      style="?backgroundColorSettingTheme"
+      style="?textColorMenuTheme"
       android:layout_marginLeft="@dimen/dp6" />
 
   </LinearLayout>
@@ -68,15 +68,15 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/icon_folder"
-          android:textColor="@color/green"
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtDocument2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_document"
-          style="?textSecurityColor"
+
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -100,16 +100,17 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/icon_music"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtMusic2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_music"
-          style="?textSecurityColor"
+
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -133,15 +134,15 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_videocam"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtVideo2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_video"
-          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -164,16 +165,17 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_igap_folder_image"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/textPicture2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_picture"
-          style="?textSecurityColor"
+
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -197,17 +199,17 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_camera_alt"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
-          android:id="@+id/textView5"
+          android:id="@+id/txtCamera2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_camera"
-          style="?textSecurityColor"
+
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -240,15 +242,15 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_user_account_box"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtContact2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_contact"
-          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -272,16 +274,17 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_room"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtLocation2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_location"
-          style="?textSecurityColor"
+
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -304,16 +307,16 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_brush"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtPaint2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:singleLine="true"
           android:text="@string/am_paint"
-          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -336,15 +339,15 @@
           android:layout_gravity="center_horizontal"
           android:gravity="center"
           android:text="@string/md_igap_file"
-          android:textColor="@color/green"
+
           android:textSize="@dimen/dp20" />
 
         <TextView
+          android:id="@+id/txtFile2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/am_file"
-          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 
@@ -368,7 +371,6 @@
           android:gravity="center"
           android:paddingTop="2dp"
           android:text="@string/igap_chevron_double_down"
-          android:textColor="@color/green"
           android:textSize="@dimen/dp20" />
 
         <TextView
@@ -377,7 +379,6 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal"
           android:text="@string/navigation_drawer_close"
-          style="?textSecurityColor"
           android:textSize="@dimen/dp10" />
       </LinearLayout>
 

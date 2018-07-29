@@ -90,9 +90,9 @@ public class HelperMessageResponse {
                         room.setUnreadCount(room.getUnreadCount() + 1);
 
                         if (!room.getMute()) {
-                            if (G.isAppInFg || AttachFile.isInAttach) {
-                                //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
-                            } else {
+//                            if (G.isAppInFg || AttachFile.isInAttach) {
+//                                //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
+//                            } else {
 
                                 if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
                                     G.handler.postDelayed(new Runnable() {
@@ -110,7 +110,7 @@ public class HelperMessageResponse {
                                     }, 200);
                                 }
 
-                            }
+//                            }
                         }
 
 

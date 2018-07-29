@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+      android:id="@+id/status_view"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_gravity="bottom"
+      android:background="@color/A20" />
+
+    <TextView
+      android:id="@+id/status_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:drawablePadding="8dp"
+      android:drawableTop="@drawable/ic_receipt_success"
+      android:gravity="center_horizontal"
+      android:paddingBottom="8dp"
+      android:text="@string/successful_payment"
+      android:textColor="@android:color/white"
+      android:textSize="14sp" />
+
+  </FrameLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_payment_result_back"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:id="@+id/receipt"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/white"
+      android:orientation="vertical">
+
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/shaparak_receipt_logo" />
+
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#484848"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="4dp">
+
+        <TextView
+          android:id="@+id/price_value"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@android:color/white"
+          android:textSize="12sp" />
+
+        <Space
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_weight="1" />
+
+        <TextView
+          android:id="@+id/price_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/payable_price"
+          android:textColor="@android:color/white"
+          android:textSize="12sp" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:orientation="horizontal"
+      android:padding="5dp">
+
+      <TextView
+        android:id="@+id/save_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/save_receipt"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+      <TextView
+        android:id="@+id/close_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</LinearLayout>

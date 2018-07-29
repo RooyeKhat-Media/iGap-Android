@@ -94,6 +94,16 @@
           android:textAppearance="@style/TextIconAppearance.all"
           android:textSize="@dimen/dp20" />
 
+        <net.iGap.module.MaterialDesignTextView
+          android:id="@+id/chl_imv_sendMoney_button"
+          style="?emojiChat"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:padding="@dimen/dp8"
+          android:text="@string/md_payment"
+          android:textAppearance="@style/TextIconAppearance.all"
+          android:textSize="@dimen/dp20" />
 
         <net.iGap.module.MaterialDesignTextView
           android:id="@+id/chl_imv_mic_button"

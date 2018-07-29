@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.adapter.items.chat;
 
@@ -23,8 +23,10 @@ import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.IMessageItem;
 import net.iGap.interfaces.OnGetPermission;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AppUtils;
 import net.iGap.module.ReserveSpaceRoundedImageView;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomMessageLocation;
 
 import java.io.File;
@@ -76,33 +78,17 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
         }
 
         if (item != null) {
-            if (item.getImagePath() != null && new File(item.getImagePath()).exists()) {
-                G.imageLoader.displayImage(AndroidUtils.suitablePath(item.getImagePath()), holder.imgMapPosition);
+            String path = AppUtils.getLocationPath(item.getLocationLat(), item.getLocationLong());
+
+            if (new File(path).exists()) {
+                G.imageLoader.displayImage(AndroidUtils.suitablePath(path), holder.imgMapPosition);
             } else {
+                RealmRoomMessageLocation finalItem1 = item;
                 FragmentMap.loadImageFromPosition(item.getLocationLat(), item.getLocationLong(), new FragmentMap.OnGetPicture() {
                     @Override
                     public void getBitmap(Bitmap bitmap) {
                         holder.imgMapPosition.setImageBitmap(bitmap);
-
-                        final String savedPath = FragmentMap.saveBitmapToFile(bitmap);
-
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-
-                                if (mMessage.forwardedFrom != null) {
-                                    if (mMessage.forwardedFrom.getLocation() != null) {
-                                        mMessage.forwardedFrom.getLocation().setImagePath(savedPath);
-                                    }
-                                } else {
-                                    if (mMessage.location != null) {
-                                        mMessage.location.setImagePath(savedPath);
-                                    }
-                                }
-                            }
-                        });
-                        realm.close();
+                        AppUtils.saveMapToFile(bitmap, finalItem1.getLocationLat(), finalItem1.getLocationLong());
                     }
                 });
             }
@@ -113,13 +99,17 @@ public class LocationItem extends AbstractMessage<LocationItem, LocationItem.Vie
                 public void onClick(View v) {
                     try {
                         HelperPermission.getLocationPermission(G.currentActivity, new OnGetPermission() {
+
                             @Override
                             public void Allow() {
                                 G.handler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        FragmentMap fragment = FragmentMap.getInctance(finalItem.getLocationLat(), finalItem.getLocationLong(), FragmentMap.Mode.seePosition);
+
+                                        FragmentMap fragment = FragmentMap.getInctance(finalItem.getLocationLat(), finalItem.getLocationLong(), FragmentMap.Mode.seePosition,
+                                                RealmRoom.detectType(mMessage.roomId).getNumber(), mMessage.roomId, mMessage.senderID);
                                         new HelperFragment(fragment).setReplace(false).load();
+
                                     }
                                 });
                             }

@@ -290,6 +290,26 @@
 
             />
 
+          <android.support.design.widget.FloatingActionButton
+            android:id="@+id/st_fab_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp24"
+
+            android:layout_marginBottom="102dp"
+            android:background="@android:color/holo_blue_bright"
+            android:clickable="true"
+            app:backgroundTint="@color/white"
+            app:fabSize="mini"
+            app:layout_anchor="@+id/replace"
+
+            app:layout_anchorGravity="top|right|end"
+            app:srcCompat="@drawable/ic_gps_layer"
+            app:tint="@color/white" />
+
+
         </RelativeLayout>
       </LinearLayout>
 
@@ -335,7 +355,6 @@
         android:gravity="center"
         android:text="@string/md_igap_chevron_double_up"
         android:textAppearance="@style/TextIconAppearance.all"
-        android:textColor="@color/green"
         android:textSize="@dimen/dp26"
         android:visibility="visible" />
     </RelativeLayout>
@@ -352,7 +371,7 @@
         android:fadeScrollbars="false"
         android:overScrollMode="never"
         android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@color/toolbar_background"
+        android:scrollbarThumbVertical="@color/gray_6c"
         android:scrollbars="vertical" />
 
       <ProgressBar

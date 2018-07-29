@@ -68,6 +68,7 @@ import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.CircleImageView;
+import net.iGap.module.ContactUtils;
 import net.iGap.module.Contacts;
 import net.iGap.module.CustomTextViewMedium;
 import net.iGap.module.LastSeenTimeUtil;
@@ -222,6 +223,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         final RippleView txtClose = (RippleView) view.findViewById(R.id.menu_ripple_close);
         edtSearch = (EditText) view.findViewById(R.id.menu_edt_search);
         final TextView txtSearch = (TextView) view.findViewById(R.id.menu_btn_search);
+        final TextView txtSync = (TextView) view.findViewById(R.id.menu_btn_sync);
         txtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,6 +232,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 edtSearch.setFocusable(true);
                 menu_txt_titleToolbar.setVisibility(View.GONE);
                 txtSearch.setVisibility(View.GONE);
+                txtSync.setVisibility(View.GONE);
             }
         });
 
@@ -243,6 +246,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                     edtSearch.setVisibility(View.GONE);
                     menu_txt_titleToolbar.setVisibility(View.VISIBLE);
                     txtSearch.setVisibility(View.VISIBLE);
+                    txtSync.setVisibility(View.VISIBLE);
                     InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
@@ -306,6 +310,14 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 G.fragmentActivity.onBackPressed();
                 InputMethodManager imm = (InputMethodManager) G.fragmentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(rippleView.getWindowToken(), 0);
+            }
+        });
+
+        RippleView rippleSync = (RippleView) view.findViewById(R.id.menu_sync);
+        rippleSync.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                ContactUtils.syncContacts();
             }
         });
 
@@ -496,7 +508,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         });
 
     }
-
 
     private void hideProgress() {
 
@@ -996,10 +1007,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                                     @Override
                                     public void complete() {
                                         hideProgress();
-                                        //  G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(RegisteredContactsFragment.this).commit();
-
                                         popBackStackFragment();
-
                                     }
                                 }, new HelperPublicMethod.OnError() {
                                     @Override
@@ -1104,17 +1112,17 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                             .content(G.fragmentActivity.getResources().getString(R.string.invite_friend))
                             .positiveText(G.fragmentActivity.getResources().getString(R.string.ok)).negativeText(G.fragmentActivity.getResources().getString(R.string.cancel))
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                            Intent sendIntent = new Intent();
-                            sendIntent.setAction(Intent.ACTION_SEND);
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you!");
-                            sendIntent.setType("text/plain");
-                            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            G.context.startActivity(sendIntent);
-                        }
-                    }).show();
+                                    Intent sendIntent = new Intent();
+                                    sendIntent.setAction(Intent.ACTION_SEND);
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you!");
+                                    sendIntent.setType("text/plain");
+                                    sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    G.context.startActivity(sendIntent);
+                                }
+                            }).show();
 
 
                 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="?backgroundColorSettingTheme"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:clickable="true"
+  android:orientation="vertical"
+  tools:ignore="MissingPrefix">
+
+
+  <android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:id="@+id/fc_layot_title"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp60"
+      android:background="@color/green"
+      android:layoutDirection="ltr"
+      android:orientation="horizontal">
+
+      <net.iGap.libs.rippleeffect.RippleView
+        android:id="@+id/fc_call_ripple_txtBack"
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:rv_alpha="200"
+        app:rv_centered="true"
+        app:rv_rippleDuration="0"
+        app:rv_ripplePadding="5dp">
+
+        <net.iGap.module.MaterialDesignTextView
+          android:layout_width="@dimen/dp52"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:text="@string/md_back_arrow"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/whit_background" />
+      </net.iGap.libs.rippleeffect.RippleView>
+
+      <TextView
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="@string/financial_services"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/dp18"
+        android:visibility="visible" />
+
+    </LinearLayout>
+
+  </android.support.design.widget.AppBarLayout>
+
+
+  <android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <ImageView
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="@dimen/dp36"
+        android:adjustViewBounds="true"
+        android:foregroundGravity="center"
+        android:src="@mipmap/top"
+        android:visibility="visible" />
+
+      <TextView
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp36"
+        android:text="@string/text_top"
+        android:textAlignment="center" />
+
+
+      <TextView
+        android:id="@+id/top"
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="@string/install_app"
+        android:textAlignment="center"
+        android:textColor="@color/verify_color" />
+
+
+      <ImageView
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp100"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="@dimen/dp36"
+        android:adjustViewBounds="true"
+        android:foregroundGravity="center"
+        android:src="@mipmap/paygear"
+        android:visibility="visible" />
+
+      <TextView
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp36"
+        android:text="@string/text_paygear"
+        android:textAlignment="center" />
+
+      <TextView
+        android:id="@+id/paygear"
+        fontPath="fonts/IRANSansMobile_Bold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp32"
+        android:layout_marginRight="@dimen/dp32"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp20"
+        android:text="@string/install_app"
+        android:textAlignment="center"
+        android:textColor="@color/verify_color" />
+    </LinearLayout>
+  </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap;
 
@@ -16,7 +16,7 @@ public class Config {
 
     public static final int ACCEPT = 1;
     public static final int REJECT = 0;
-    public static final int REALM_SCHEMA_VERSION = 18;
+    public static final int REALM_SCHEMA_VERSION = 20;
     public static final int REALM_LATEST_MIGRATION_VERSION = REALM_SCHEMA_VERSION - 1;
     public static final int LOOKUP_MAP_RESPONSE_OFFSET = 30000;
     public static final int MAX_TEXT_ATTACHMENT_LENGTH = 200;
@@ -53,6 +53,7 @@ public class Config {
     public static final int FETCH_CONTACT_TIME_OUT = (int) (5 * DateUtils.SECOND_IN_MILLIS);
     public static final int LAST_SEEN_TIME_OUT = (int) (60 * DateUtils.MINUTE_IN_MILLIS); // after this time show exactly time instead of minutes
     public static final int DEFAULT_BOTH_CHAT_DELETE_TIME = (int) (2 * DateUtils.HOUR_IN_MILLIS);
+    public static final String iGapAccount = "iGap";
     public static final String URL_WEBSOCKET = "wss://secure.igap.net/hybrid/";
     public static final String URL_MAP = "https://c.tile.openstreetmap.org/";
     public static final String IGAP_LINK_PREFIX = "https://iGap.net/";
@@ -71,40 +72,6 @@ public class Config {
     public static final String BASE64_PUBLIC_KEY =
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsm4sNLgDVqPf0ZxLWH3vkB1mPzHIkGWIJtNelibcTtzhipRv0iHeS3Z0wzeQpwYcMbkWQ81+WtgJwxUujitPOZnHvBex8qQLJ2JH33DvevWOgLDWPKEnKlfdi3Qg09pfO/Bx7eoWznWhRR6ZNjRgzY+P/2AaW77/f3wq3XHbHldM3jUrqwValwrWrkigIR0MFTkaGkg11T9JCFvO/L/FaZCAybuutje+H1nmNav3r8Xv6eBYS0nSVEm0dm5h46ECQi9PIxOCSMJ1McZMRkb8UaCScCAxh6lkD9fgZrOT5XQa8EOSWOwHx"
                     + "+uQWdR0efHyYbdC3A8zoJZjxBVtvVnDYwIDAQAB";
-    public static String default_appBarColor = "#00B0BF";
-    public static String default_notificationColor = "#e51c23";
-    public static String default_toggleButtonColor = "#00B0BF";
-    public static String default_attachmentColor = "#00B0BF";
-    public static String default_headerTextColor = "#00B0BF";
-    public static String default_progressColor = "#00B0BF";
 
-    public static String default_dark_appBarColor = "#000000";
-    public static String default_dark_notificationColor = "#000000";
-    public static String default_dark_toggleButtonColor = "#000000";
-    public static String default_dark_attachmentColor = "#000000";
-    public static String default_dark_menuBackgroundColor = "#000000";
-    public static String default_dark_headerTextColor = "#ffffff";
-    public static String default_dark_progressColor = "#ffffff";
-
-    public static void darkThemeColor() {
-        G.backgroundTheme = "#151515";
-        G.textTitleTheme = "#ffffff";
-        G.textSubTheme = "#ffffff";
-        G.tintImage = "#ffffff";
-        G.backgroundTheme_2 = "#000000";
-        G.logLineTheme = "#4b4b4b";
-        G.voteIconTheme = "#cacaca";
-    }
-
-    public static void lightThemeColor() {
-        G.backgroundTheme = "#FFFFFF";
-        G.textTitleTheme = "#000000";
-        G.textSubTheme = "#bbbbbb";
-        G.tintImage = "#000000";
-        G.backgroundTheme_2 = "#f9f9f9";
-        G.logLineTheme = "#e9e9e9";
-        G.voteIconTheme = "#696969";
-
-    }
 
 }

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/chatSubLayoutLogWallet"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/rectangle_wallet_bable"
+  android:clickable="true"
+  android:paddingBottom="@dimen/dp4"
+  android:layout_marginTop="@dimen/dp4"
+  android:layout_marginBottom="@dimen/dp4"
+  android:layout_marginLeft="@dimen/dp32"
+  android:layout_marginEnd="@dimen/dp32"
+  android:layout_marginStart="@dimen/dp32"
+  android:layout_marginRight="@dimen/dp32"
+  tools:ignore="MissingPrefix">
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp10"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/fromUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="093312***12"
+        android:textSize="@dimen/dp13" />
+
+      <View
+
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/fromUserId_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/wallet_from"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/toUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="093312***12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+      <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/toUserId_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_to"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1000 تومان"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+      <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/amount_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_amount"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/traceNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="13256447"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+      <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/traceNumber_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_trace"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/invoiceNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="56464654"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+      <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/invoiceNumber_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_invoice"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp4"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/payTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1397/4/28"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+      <View
+
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp10"
+        android:layout_weight="1"
+        android:background="@color/black90" />
+
+      <TextView
+        android:id="@+id/payTime_2"
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_data"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/rootDescription"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="end"
+      android:orientation="vertical"
+      android:paddingTop="@dimen/dp4"
+      android:paddingBottom="@dimen/dp10"
+      android:paddingLeft="@dimen/dp10"
+      android:paddingRight="@dimen/dp10">
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_desc"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/dp14" />
+
+      <TextView
+        fontPath="fonts/IRANSansMobile.ttf"
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/desc"
+        android:gravity="start"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dp13"
+        android:layout_marginTop="@dimen/dp10" />
+
+    </LinearLayout>
+  </LinearLayout>
+
+
+</FrameLayout>

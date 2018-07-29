@@ -1,32 +1,28 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.activities;
 
-import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -52,20 +48,29 @@ import android.widget.ToggleButton;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.Theme;
 import net.iGap.adapter.items.chat.ViewMaker;
+import net.iGap.eventbus.EventListener;
+import net.iGap.eventbus.EventManager;
+import net.iGap.eventbus.socketMessages;
 import net.iGap.fragments.FragmentCall;
 import net.iGap.fragments.FragmentIgapSearch;
 import net.iGap.fragments.FragmentLanguage;
 import net.iGap.fragments.FragmentMain;
 import net.iGap.fragments.FragmentMediaPlayer;
 import net.iGap.fragments.FragmentNewGroup;
-import net.iGap.fragments.FragmentQrCodeNewDevice;
+import net.iGap.fragments.FragmentPayment;
+import net.iGap.fragments.FragmentPaymentInquiry;
 import net.iGap.fragments.FragmentSetting;
+import net.iGap.fragments.FragmentWalletAgrement;
 import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.fragments.RegisteredContactsFragment;
 import net.iGap.fragments.SearchFragment;
@@ -81,6 +86,7 @@ import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperLogout;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperPermission;
+import net.iGap.helper.HelperPublicMethod;
 import net.iGap.helper.HelperUrl;
 import net.iGap.helper.ServiceContact;
 import net.iGap.interfaces.FinishActivity;
@@ -99,6 +105,7 @@ import net.iGap.interfaces.OnGetPermission;
 import net.iGap.interfaces.OnGroupAvatarResponse;
 import net.iGap.interfaces.OnMapRegisterState;
 import net.iGap.interfaces.OnMapRegisterStateMain;
+import net.iGap.interfaces.OnPayment;
 import net.iGap.interfaces.OnRefreshActivity;
 import net.iGap.interfaces.OnUnreadChange;
 import net.iGap.interfaces.OnUpdating;
@@ -113,6 +120,7 @@ import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.libs.tabBar.NavigationTabStrip;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.ContactUtils;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.FileUtils;
 import net.iGap.module.LoginActions;
@@ -134,8 +142,19 @@ import net.iGap.request.RequestGeoGetConfiguration;
 import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserInfo;
 import net.iGap.request.RequestUserSessionLogout;
+import net.iGap.request.RequestUserVerifyNewDevice;
+import net.iGap.request.RequestWalletGetAccessToken;
+import net.iGap.request.RequestWalletIdMapping;
 import net.iGap.viewmodel.ActivityCallViewModel;
-import net.iGap.viewmodel.FragmentSettingViewModel;
+import net.iGap.viewmodel.FragmentPaymentInquiryViewModel;
+import net.iGap.viewmodel.FragmentThemColorViewModel;
+
+import org.paygear.wallet.OnLanguageWallet;
+import org.paygear.wallet.RaadApp;
+import org.paygear.wallet.WalletActivity;
+import org.paygear.wallet.fragment.PaymentHistoryFragment;
+import org.paygear.wallet.model.Card;
+import org.paygear.wallet.web.Web;
 
 import java.io.File;
 import java.io.IOException;
@@ -143,6 +162,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import ir.pec.mpl.pecpayment.view.PaymentInitiator;
+import ir.radsense.raadcore.model.Auth;
+import ir.radsense.raadcore.web.WebBase;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static net.iGap.G.context;
 import static net.iGap.G.isSendContact;
@@ -150,11 +175,14 @@ import static net.iGap.G.userId;
 import static net.iGap.R.string.updating;
 import static net.iGap.fragments.FragmentiGapMap.mapUrls;
 
-public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnUnreadChange, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, DrawerLayout.DrawerListener, OnMapRegisterStateMain {
+public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient, OnPayment, OnUnreadChange, OnClientGetRoomListResponse, OnChatClearMessageResponse, OnChatSendMessageResponse, OnClientCondition, OnGroupAvatarResponse, DrawerLayout.DrawerListener, OnMapRegisterStateMain, EventListener {
 
     public static final String openChat = "openChat";
     public static final String openMediaPlyer = "openMediaPlyer";
-
+    public static final int requestCodePaymentCharge = 198;
+    public static final int requestCodePaymentBill = 199;
+    public static final int requestCodeQrCode = 200;
+    public static final int requestCodeBarcode = 201;
 
     public static boolean isMenuButtonAddShown = false;
     public static boolean isOpenChatBeforeSheare = false;
@@ -196,6 +224,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     private ViewPager mViewPager;
     private ArrayList<Fragment> pages = new ArrayList<Fragment>();
     private String phoneNumber;
+    private TextView itemCash;
+    private ViewGroup itemNavWallet;
 
     public static void setWeight(View view, int value) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
@@ -318,6 +348,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         if (G.onAudioFocusChangeListener != null) {
             G.onAudioFocusChangeListener.onAudioFocusChangeListener(AudioManager.AUDIOFOCUS_LOSS);
         }
+        EventManager.getInstance().removeEventListener(EventManager.ON_ACCESS_TOKEN_RECIVE, this);
 
     }
 
@@ -343,6 +374,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
 
         new HelperGetDataFromOtherApp(intent);
+
+        if (intent.getAction() != null && intent.getAction().equals("net.iGap.activities.OPEN_ACCOUNT")) {
+            new HelperFragment(new FragmentSetting()).load();
+        }
 
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -371,6 +406,15 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+
+        RaadApp.onLanguageWallet = new OnLanguageWallet() {
+            @Override
+            public String detectLanguage() {
+                return G.selectedLanguage;
+            }
+        };
+
+
 //        setTheme(R.style.AppThemeTranslucent);
 
         if (G.isFirstPassCode) {
@@ -382,8 +426,17 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         //}
         super.onCreate(savedInstanceState);
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        RaadApp.paygearHistoryOpenChat = new PaymentHistoryFragment.PaygearHistoryOpenChat() {
+            @Override
+            public void paygearId(String id) {
 
+                new RequestWalletIdMapping().walletIdMapping(id);
+            }
+        };
+
+        EventManager.getInstance().addEventListener(EventManager.ON_ACCESS_TOKEN_RECIVE, this);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         finishActivity = new FinishActivity() {
             @Override
             public void finishActivity() {
@@ -391,7 +444,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 finish();
             }
         };
-
 
         if (isNeedToRegister) {
 
@@ -416,7 +468,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         RealmUserInfo userInfo = getRealm().where(RealmUserInfo.class).findFirst();
 
-        if (userInfo == null) { // user registered before
+        if (userInfo == null || !userInfo.getUserRegistrationState()) { // user registered before
             isNeedToRegister = true;
             Intent intent = new Intent(this, ActivityRegisteration.class);
             startActivity(intent);
@@ -447,12 +499,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 editor.putBoolean(SHP_SETTING.DELETE_FOLDER_BACKGROUND, false);
                 editor.apply();
             }
-        }
-        SharedPreferences preferences = context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
-        if (G.isDarkTheme) {
-            this.setTheme(R.style.Material_blackCustom);
-        } else {
-            this.setTheme(R.style.Material_lightCustom);
         }
         setContentView(R.layout.activity_main);
 
@@ -505,7 +551,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             lp.height = size;
 
 
-            desighnLayout(chatLayoutMode.none);
+            designLayout(chatLayoutMode.none);
 
             frameFragmentBack.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -518,7 +564,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             G.iTowPanModDesinLayout = new ITowPanModDesinLayout() {
                 @Override
                 public void onLayout(chatLayoutMode mode) {
-                    desighnLayout(mode);
+                    designLayout(mode);
                 }
 
                 @Override
@@ -595,6 +641,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         initComponent();
 
+        G.onPayment = this;
         sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
         boolean isGetContactList = sharedPreferences.getBoolean(SHP_SETTING.KEY_GET_CONTACT, false);
         /**
@@ -666,8 +713,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         initDrawerMenu();
 
-        verifyAccount();
-
         checkKeepMedia();
 
 
@@ -701,6 +746,25 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         };
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case requestCodePaymentCharge:
+            case requestCodePaymentBill:
+                getPaymentResultCode(resultCode, data);
+                break;
+            case requestCodeQrCode:
+                IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+                if (result.getContents() != null) {
+                    new RequestUserVerifyNewDevice().verifyNewDevice(result.getContents());
+                }
+                break;
+        }
+    }
+
     private void checkKeepMedia() {
 
         final int keepMedia = sharedPreferences.getInt(SHP_SETTING.KEY_KEEP_MEDIA_NEW, 0);
@@ -730,6 +794,87 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     }
 
 
+    private void getPaymentResultCode(int resultCode, Intent data) {
+
+        if (G.onMplResult != null) {
+            G.onMplResult.onResult(false);
+        }
+
+        String enData = "", message = "", status = "0";
+        int errorType = 0, orderId = 0;
+
+        switch (resultCode) {
+            case 1:// payment ok
+                enData = data.getStringExtra("enData");
+                message = data.getStringExtra("message");
+                status = String.valueOf(data.getIntExtra("status", 0));
+                break;
+            case 2://payment error
+                errorType = data.getIntExtra("errorType", 0);
+                orderId = data.getIntExtra("OrderID", 0);
+                break;
+            case 3://bill payment ok
+                enData = data.getStringExtra("enData");
+                message = data.getStringExtra("message");
+                status = String.valueOf(data.getIntExtra("status", 0));
+                break;
+            case 4://bill payment error
+                errorType = data.getIntExtra("errorType", 0);
+                break;
+            case 5://internal error payment
+                errorType = data.getIntExtra("errorType", 0);
+                orderId = data.getIntExtra("OrderID", 0);
+                break;
+            case 6://internal error bill
+                errorType = data.getIntExtra("errorType", 0);
+                break;
+            case 7:// charge payment ok
+                enData = data.getStringExtra("enData");
+                message = data.getStringExtra("message");
+                status = String.valueOf(data.getIntExtra("status", 0));
+                break;
+            case 8: // charge payment error
+                errorType = data.getIntExtra("errorType", 0);
+                break;
+            case 9:// internal error charge
+                errorType = data.getIntExtra("errorType", 0);
+                break;
+        }
+
+        if (errorType != 0) {
+            showErrorTypeMpl(errorType);
+        }
+    }
+
+    private void showErrorTypeMpl(int errorType) {
+        String message = "";
+        switch (errorType) {
+            case 2:
+                message = getString(R.string.time_out_error);
+                break;
+            case 1000:
+                message = getString(R.string.connection_error);
+                break;
+            case 1001:
+                message = getString(R.string.server_error);
+                break;
+            case 1002:
+                message = getString(R.string.network_error);
+                break;
+            case 201:
+                message = getString(R.string.dialog_canceled);
+                break;
+            case 2334:
+                message = getString(R.string.device_root);
+                break;
+        }
+
+        if (message.length() > 0) {
+            HelperError.showSnackMessage(message, false);
+        }
+    }
+
+
     //*******************************************************************************************************************************************
 
     @Override
@@ -746,13 +891,14 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
 
             if (beforeState != G.isLandscape) {
-                desighnLayout(chatLayoutMode.none);
+                designLayout(chatLayoutMode.none);
             }
 
 
         }
 
         super.onConfigurationChanged(newConfig);
+        G.rotationState = newConfig.orientation;
     }
 
     //*******************************************************************************************************************************************
@@ -886,12 +1032,14 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
             findViewById(R.id.amr_ripple_search).setVisibility(View.VISIBLE);
             findViewById(R.id.am_btn_menu).setVisibility(View.GONE);
+            arcMenu.setVisibility(View.VISIBLE);
             setFabIcon(R.mipmap.plus);
         } else if (adapter.getItem(position) instanceof FragmentCall) {
 
             findViewById(R.id.amr_ripple_search).setVisibility(View.GONE);
             findViewById(R.id.am_btn_menu).setVisibility(View.VISIBLE);
             setFabIcon(R.drawable.ic_call_black_24dp);
+            arcMenu.setVisibility(View.VISIBLE);
         }
 
         if (arcMenu.isMenuOpened()) {
@@ -1295,6 +1443,58 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
 
+
+        itemNavWallet = (ViewGroup) findViewById(R.id.lm_ll_wallet);
+        itemNavWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!G.isWalletRegister) {
+                    new HelperFragment(FragmentWalletAgrement.newInstance(phoneNumber.substring(2))).load();
+                    lockNavigation();
+                } else {
+                    Intent intent = new Intent(ActivityMain.this, WalletActivity.class);
+                    intent.putExtra("Language", "fa");
+                    intent.putExtra("Mobile", "0" + phoneNumber.substring(2));
+                    intent.putExtra("PrimaryColor", G.appBarColor);
+                    intent.putExtra("DarkPrimaryColor", G.appBarColor);
+                    intent.putExtra("AccentColor", G.appBarColor);
+                    intent.putExtra("IS_DARK_THEME", G.isDarkTheme);
+                    intent.putExtra(WalletActivity.LANGUAGE, G.selectedLanguage);
+                    intent.putExtra(WalletActivity.PROGRESSBAR, G.progressColor);
+                    intent.putExtra(WalletActivity.LINE_BORDER, G.lineBorder);
+                    intent.putExtra(WalletActivity.BACKGROUND, G.backgroundTheme);
+                    intent.putExtra(WalletActivity.BACKGROUND_2, G.backgroundTheme_2);
+                    intent.putExtra(WalletActivity.TEXT_TITLE, G.textTitleTheme);
+                    intent.putExtra(WalletActivity.TEXT_SUB_TITLE, G.textSubTheme);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        itemCash = (TextView) findViewById(R.id.cash);
+        if (G.isDarkTheme) {
+            itemCash.setTextColor(Color.parseColor(G.textTitleTheme));
+        } else {
+            itemCash.setTextColor(Color.parseColor(G.appBarColor));
+        }
+
+        if (G.selectedCard != null) {
+            itemCash.setVisibility(View.VISIBLE);
+            itemCash.setText("" + getResources().getString(R.string.wallet_Your_credit) + " " + String.valueOf(G.selectedCard.cashOutBalance) + " " + getResources().getString(R.string.wallet_Reial));
+        } else {
+            itemCash.setVisibility(View.GONE);
+        }
+
+        ViewGroup itemNavPayment = (ViewGroup) findViewById(R.id.lm_ll_payment);
+        itemNavPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new HelperFragment(FragmentPayment.newInstance()).load();
+                lockNavigation();
+            }
+        });
+
+
         ViewGroup itemNavCall = (ViewGroup) findViewById(R.id.lm_ll_call);
 
         // gone or visible view call
@@ -1364,7 +1564,12 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                     HelperPermission.getCameraPermission(ActivityMain.this, new OnGetPermission() {
                         @Override
                         public void Allow() throws IOException, IllegalStateException {
-                            new HelperFragment(FragmentQrCodeNewDevice.newInstance()).setStateLoss(true).load();
+                            IntentIntegrator integrator = new IntentIntegrator(ActivityMain.this);
+                            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                            integrator.setRequestCode(requestCodeQrCode);
+                            integrator.setBeepEnabled(false);
+                            integrator.setPrompt("");
+                            integrator.initiateScan();
                         }
 
                         @Override
@@ -1379,6 +1584,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 closeDrawer();
             }
         });
+
         final ToggleButton toggleButton = findViewById(R.id.st_txt_st_toggle_theme_dark);
         ViewGroup rootDarkTheme = (ViewGroup) findViewById(R.id.lt_txt_st_theme_dark);
         rootDarkTheme.setOnClickListener(new View.OnClickListener() {
@@ -1389,17 +1595,28 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         });
         boolean checkedThemeDark = sharedPreferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
 
-        toggleButton.setChecked(checkedThemeDark);
+        toggleButton.setChecked(G.isDarkTheme);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-
                 if (toggleButton.isChecked()) {
-                    FragmentSettingViewModel.setDarkTheme(editor);
+
+                    int themeColor = sharedPreferences.getInt(SHP_SETTING.KEY_THEME_COLOR, Theme.CUSTOM);
+                    editor.putInt(SHP_SETTING.KEY_THEME_COLOR, Theme.DARK);
+                    editor.putInt(SHP_SETTING.KEY_OLD_THEME_COLOR, themeColor);
+                    editor.apply();
+                    Theme.setThemeColor();
+                    FragmentThemColorViewModel.resetApp();
                 } else {
-                    FragmentSettingViewModel.setLightTheme(editor);
+                    int themeColor = sharedPreferences.getInt(SHP_SETTING.KEY_OLD_THEME_COLOR, Theme.CUSTOM);
+
+                    editor.putInt(SHP_SETTING.KEY_THEME_COLOR, themeColor);
+                    editor.apply();
+                    Theme.setThemeColor();
+                    FragmentThemColorViewModel.resetApp();
+
                 }
             }
         });
@@ -1424,6 +1641,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
+                                                G.selectedCard = null;
                                                 HelperLogout.logout();
                                             }
                                         });
@@ -1439,7 +1657,6 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-
                                                 HelperError.showSnackMessage(getResources().getString(R.string.error), false);
 
                                             }
@@ -1973,6 +2190,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             TextView txtNavPhone = (TextView) findViewById(R.id.lm_txt_phone_number);
             txtNavName.setText(username);
             txtNavPhone.setText(phoneNumber);
+            setPhoneInquiry(phoneNumber);
 
             if (HelperCalander.isPersianUnicode) {
                 txtNavPhone.setText(HelperCalander.convertToUnicodeFarsiNumber(txtNavPhone.getText().toString()));
@@ -1982,6 +2200,46 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 //getUserInfo(realmUserInfo);
             }
             setImage();
+        }
+    }
+
+    private void setPhoneInquiry(String phone) {
+
+        if (phone == null || phone.length() == 0) {
+            return;
+        }
+
+        if (phone.startsWith("+98")) {
+            phone = phone.replace("+98", "0");
+        }
+
+        if (phone.startsWith("98")) {
+            phone = phone.replace("98", "0");
+        }
+
+        if (!phone.startsWith("0")) {
+            phone = "0" + phone;
+        }
+
+        if (phone.length() < 5) {
+            return;
+        }
+
+        FragmentPaymentInquiryViewModel.OperatorType operatorType = FragmentPaymentInquiryViewModel.MCI.get(phone.substring(0, 4));
+
+        if (operatorType != null) {
+
+            TextView txtPhoneInquiry = findViewById(R.id.lm_txt_icon_phone_number_inquiry);
+            txtPhoneInquiry.setVisibility(View.VISIBLE);
+
+            final String finalPhone = phone;
+            txtPhoneInquiry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new HelperFragment(FragmentPaymentInquiry.newInstance(FragmentPaymentInquiryViewModel.OperatorType.mci, finalPhone)).setReplace(false).load();
+                    lockNavigation();
+                }
+            });
         }
     }
 
@@ -2055,7 +2313,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 }
             }
 
-            desighnLayout(chatLayoutMode.none);
+            designLayout(chatLayoutMode.none);
         }
     }
 
@@ -2088,7 +2346,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         };
 
-        desighnLayout(chatLayoutMode.none);
+        designLayout(chatLayoutMode.none);
 
 
         if (contentLoading != null) {
@@ -2139,10 +2397,35 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         G.onUserInfoMyClient = this;
         G.onMapRegisterStateMain = this;
         G.onUnreadChange = this;
+        G.onPayment = this;
 
         startService(new Intent(this, ServiceContact.class));
 
-        HelperUrl.getLinkinfo(getIntent(), ActivityMain.this);
+        Intent intent = getIntent();
+        String appLinkAction = intent.getAction();
+        Uri appLinkData = intent.getData();
+        if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null && appLinkData.getHost() != null && appLinkData.getHost().equals("com.android.contacts")) {
+            ContactUtils contactUtils = new ContactUtils(G.context, appLinkData);
+            String userId = contactUtils.retrieveNumber(); // we set retrieveNumber as userId
+
+            if (intent.getType().equalsIgnoreCase("vnd.android.cursor.item/vnd.net.iGap.call")) {
+
+                try {
+                    check(Long.parseLong(userId));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    HelperPublicMethod.goToChatRoom(Long.parseLong(userId), null, null);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } else {
+            HelperUrl.getLinkinfo(intent, ActivityMain.this);
+        }
         getIntent().setData(null);
         setDrawerInfo(false);
         if (drawer != null) {
@@ -2162,6 +2445,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         } else {
             iconLock.setVisibility(View.GONE);
         }
+
+        onFinance(G.isMplActive, G.isWalletActive);
 
     }
 
@@ -2203,6 +2488,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         }
     }
+
 
     @Override
     public void onChatClearMessage(final long roomId, long clearId) {
@@ -2255,16 +2541,32 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     //******* GroupAvatar and ChannelAvatar
 
+    private void check(final long userId) {
+        if (G.userLogin) {
+            FragmentCall.call(userId, false);
+        } else {
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    check(userId);
+                }
+            }, 1000);
+        }
+
+    }
+
     public void setImage() {
         HelperAvatar.getAvatar(G.userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
             @Override
             public void onAvatarGet(final String avatarPath, long ownerId) {
-                G.handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), imgNavImage);
-                    }
-                });
+                if (avatarPath != null) {
+                    G.handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), imgNavImage);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -2490,36 +2792,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     //*************************************************************
 
-    public void verifyAccount() {
-        boolean bereitsAngelegt = false;
-        String accountType;
-        accountType = this.getPackageName();
-
-        AccountManager accountManager = AccountManager.get(getApplicationContext());
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Account[] accounts = accountManager.getAccounts();
-        for (int i = 0; i < accounts.length; i++) {
-            if ((accounts[i].type != null) && (accounts[i].type.contentEquals(accountType))) {
-                bereitsAngelegt = true;
-            }
-        }
-
-        if (!bereitsAngelegt) {
-            AccountManager accMgr = AccountManager.get(this);
-            String password = "";
-
-            final Account account = new Account("" + phoneNumber, accountType);
-            try {
-                accMgr.addAccountExplicitly(account, password, null);
-            } catch (Exception e1) {
-                e1.getMessage();
-            }
-        }
-    } // end of
-
-    public void desighnLayout(final chatLayoutMode mode) {
+    public void designLayout(final chatLayoutMode mode) {
 
         G.handler.post(new Runnable() {
             @Override
@@ -2576,6 +2849,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     protected void onStop() {
         super.onStop();
         oldTime = System.currentTimeMillis();
+        G.onPayment = null;
     }
 
     @Override
@@ -2586,6 +2860,64 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 if (navigationTabStrip != null && navigationTabStrip.getVisibility() == View.VISIBLE) {
                     navigationTabStrip.setTitleBadge(RealmRoom.getUnreadCountPages());
                 }
+            }
+        });
+    }
+
+    @Override
+    public void onChargeToken(int status, String token, int expireTime, String message) {
+        if (status == 0) {
+            Intent intent = new Intent(ActivityMain.this, PaymentInitiator.class);
+            intent.putExtra("Type", "3");
+            intent.putExtra("Token", token);
+            startActivityForResult(intent, requestCodePaymentCharge);
+        } else {
+            if (G.onMplResult != null) {
+                G.onMplResult.onResult(true);
+            }
+            HelperError.showSnackMessage(message, false);
+        }
+    }
+
+    @Override
+    public void onBillToken(int status, String token, int expireTime, String message) {
+        if (status == 0) {
+            Intent intent = new Intent(ActivityMain.this, PaymentInitiator.class);
+            intent.putExtra("Type", "2");
+            intent.putExtra("Token", token);
+            startActivityForResult(intent, requestCodePaymentBill);
+        } else {
+            if (G.onMplResult != null) {
+                G.onMplResult.onResult(true);
+            }
+            HelperError.showSnackMessage(message, false);
+        }
+    }
+
+    @Override
+    public void onFinance(final boolean mplActive, final boolean walletActive) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mplActive) {
+                    findViewById(R.id.lm_ll_payment).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.lm_ll_payment).setVisibility(View.GONE);
+                }
+
+                if (walletActive) {
+                    findViewById(R.id.lm_ll_wallet).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.lm_ll_wallet).setVisibility(View.GONE);
+                }
+
+                if (!G.isMplActive && !G.isWalletActive) {
+                    findViewById(R.id.lm_view_Line).setVisibility(View.GONE);
+                } else {
+                    findViewById(R.id.lm_view_Line).setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }
@@ -2629,6 +2961,74 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         @Override
         public int getCount() {
             return pages.size();
+        }
+    }
+
+
+    private int retryConnectToWallet = 0;
+
+    public void getUserCredit() {
+
+        WebBase.apiKey = "5aa7e856ae7fbc00016ac5a01c65909797d94a16a279f46a4abb5faa";
+        if (Auth.getCurrentAuth() != null) {
+            Web.getInstance().getWebService().getCredit(Auth.getCurrentAuth().getId()).enqueue(new Callback<ArrayList<Card>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Card>> call, Response<ArrayList<Card>> response) {
+                    if (response.body() != null) {
+                        retryConnectToWallet = 0;
+                        if (response.body().size() > 0)
+                            G.selectedCard = response.body().get(0);
+
+                        G.cardamount = G.selectedCard.cashOutBalance;
+
+                        if (G.selectedCard != null) {
+                            itemCash.setVisibility(View.VISIBLE);
+                            itemCash.setText("" + getResources().getString(R.string.wallet_Your_credit) + " " + String.valueOf(G.cardamount) + " " + getResources().getString(R.string.wallet_Reial));
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Card>> call, Throwable t) {
+
+                    if (retryConnectToWallet < 3) {
+                        Crashlytics.logException(new Exception(t.getMessage()));
+                        getUserCredit();
+                        retryConnectToWallet++;
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void receivedMessage(int id, Object... message) {
+
+        switch (id) {
+            case EventManager.ON_ACCESS_TOKEN_RECIVE:
+                int response = (int) message[0];
+                switch (response) {
+                    case socketMessages.SUCCESS:
+                        new android.os.Handler(getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                getUserCredit();
+                                retryConnectToWallet = 0;
+                            }
+                        });
+
+                        break;
+
+                    case socketMessages.FAILED:
+                        if (retryConnectToWallet < 3) {
+                            new RequestWalletGetAccessToken().walletGetAccessToken();
+                            retryConnectToWallet++;
+                        }
+
+                        break;
+                }
+                // backthread
+
         }
     }
 

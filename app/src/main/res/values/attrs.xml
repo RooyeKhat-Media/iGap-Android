@@ -97,6 +97,7 @@
 
   <!--Menu-->
   <attr name="textColorMenuTheme" format="reference" />
+  <attr name="textColorBottomSheet" format="reference" />
   <attr name="iconColorMenuTheme" format="reference" />
   <attr name="backgroundColorMenuTheme" format="reference" />
 

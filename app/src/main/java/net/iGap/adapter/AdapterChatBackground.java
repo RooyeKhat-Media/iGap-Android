@@ -81,7 +81,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
                 final String path = G.DIR_CHAT_BACKGROUND + "/" + "thumb_" + pf.getCacheId() + "_" + pf.getName();
 
                 if (!new File(path).exists()) {
-                    HelperDownloadFile.startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
+                    HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
                         @Override
                         public void OnProgress(String mPath, int progress) {
                             if (progress == 100) {
@@ -166,7 +166,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
 
-        HelperDownloadFile.startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String mPath, final int progress) {
                 messageProgress.post(new Runnable() {

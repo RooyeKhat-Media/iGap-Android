@@ -1,2 +1,2 @@
-include ':app', ':messageprogress', ':proto', ':websocket', ':compress', ':k4l-video-trimmer', ':libwebrtc'
+include ':app', ':libwebrtc', ':pecpayment-release', ':raadcore', ':paygear_wallet'
 include ':lvl'

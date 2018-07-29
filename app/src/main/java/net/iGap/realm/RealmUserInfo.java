@@ -12,6 +12,7 @@ package net.iGap.realm;
 
 import net.iGap.helper.HelperString;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.request.RequestClientRegisterDevice;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -30,6 +31,7 @@ public class RealmUserInfo extends RealmObject {
     private String token;
     private String authorHash;
     private boolean importContactLimit;
+    private String pushNotificationToken;
 
     public static RealmUserInfo getRealmUserInfo(Realm realm) {
         return realm.where(RealmUserInfo.class).findFirst();
@@ -39,6 +41,8 @@ public class RealmUserInfo extends RealmObject {
         RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
         if (userInfo == null) {
             userInfo = realm.createObject(RealmUserInfo.class);
+        }
+        if (userInfo.getUserInfo() == null) {
             RealmRegisteredInfo registeredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
             if (registeredInfo == null) {
                 registeredInfo = realm.createObject(RealmRegisteredInfo.class, userId);
@@ -63,6 +67,33 @@ public class RealmUserInfo extends RealmObject {
             realmUserInfo.setUserRegistrationState(true);
         }
         return realmUserInfo;
+    }
+
+    public static void setPushNotification(final String pushToken) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+                if (realmUserInfo != null) {
+                    realmUserInfo.setPushNotificationToken(pushToken);
+                } else {
+                    realmUserInfo = realm.createObject(RealmUserInfo.class);
+                    realmUserInfo.setPushNotificationToken(pushToken);
+                }
+            }
+        });
+    }
+
+    public static void sendPushNotificationToServer() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmUserInfo realmUserInfo = realm.where(RealmUserInfo.class).findFirst();
+        if (realmUserInfo != null) {
+            String token = realmUserInfo.getPushNotificationToken();
+            if (token != null && token.length() > 0) {
+                new RequestClientRegisterDevice().clientRegisterDevice(token);
+            }
+        }
     }
 
     public static void updateGender(final ProtoGlobal.Gender gender) {
@@ -281,6 +312,14 @@ public class RealmUserInfo extends RealmObject {
 
     public void setImportContactLimit(boolean value) {
         importContactLimit = value;
+    }
+
+    public String getPushNotificationToken() {
+        return pushNotificationToken;
+    }
+
+    public void setPushNotificationToken(String pushNotificationToken) {
+        this.pushNotificationToken = pushNotificationToken;
     }
 
 }

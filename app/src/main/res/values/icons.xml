@@ -25,6 +25,8 @@
   <string name="md_igap_contacts">\uf6ca</string>  <!-- igap_apps  -->
   <string name="md_nearby">\uf352</string>  <!-- igap_map-marker-radius -->
   <string name="md_chat_box">\uf366</string>  <!-- igap_message-processing -->
+  <string name="md_satellite_variant">\uf471</string>  <!--igap_satellite-variant-->
+
 
   <string name="md_users_social_symbol">\uf00e</string>  <!-- igap_account-multiple  -->
   <string name="md_settings_cogwheel_button">\uf493</string>  <!-- igap_settings  -->
@@ -133,6 +135,17 @@
   <string name="md_igap_alert_box">\uf027</string>
   <string name="md_igap_chevron_double_up">\uf13f</string>
   <string name="md_igap_tune">\uf62e</string>
-
-
+  <string name="md_igap_credit_card">\uf19b</string>
+  <string name="md_payment">\uf72c</string>
+  <string name="md_barcode_scan">\uf072</string>
+  <string name="md_newspaper">\uf395</string>
+  <string name="md_deskphone">\uf1c3</string>
+  <string name="md_beaker">\uf68f</string>
+  <string name="md_cell_phone">\uf121</string>
+  <string name="md_currency_usd">\uf1b3</string>
+  <string name="md_format_list_bulleted">\uf279</string>
+  <string name="md_dialpad">\uf61c</string>
+  <string name="md_twitch">\uf543</string>
+  <string name="md_igap_sync">\uf4e6</string>
+  <string name="igap_cash_usd">\uf115</string>
 </resources>

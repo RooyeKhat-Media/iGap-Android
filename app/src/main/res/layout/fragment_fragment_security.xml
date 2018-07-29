@@ -182,8 +182,7 @@
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
           android:visibility="visible"
-          style="?textTitleColorSettingTheme"
-          />
+          style="?textTitleColorSettingTheme" />
 
         <View
           android:layout_width="match_parent"
@@ -227,8 +226,7 @@
           style="?textTitleColorSettingTheme"
           android:textSize="@dimen/dp14"
           android:textStyle="normal"
-          android:visibility="visible"
-          />
+          android:visibility="visible" />
 
         <View
           android:layout_width="match_parent"
@@ -343,7 +341,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_enter_your_password"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
 
@@ -374,7 +372,7 @@
         android:gravity="left|start"
         android:onClick="@{fragmentSecurityViewModel::onClickForgotPassword}"
         android:text="@string/forgot_password"
-        android:textColor="@color/green"
+        android:textColor="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
         android:textSize="@dimen/dp14"
 
         />
@@ -395,7 +393,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_create_hint_for_your_password"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
       <EditText
@@ -426,7 +424,7 @@
         android:layout_marginTop="@dimen/dp24"
         android:gravity="center"
         android:text="@string/password_Question_title_one"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp18" />
 
       <EditText
@@ -461,7 +459,7 @@
         android:layout_marginTop="@dimen/dp24"
         android:gravity="center"
         android:text="@string/password_Question_title_two"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp18"
 
         />
@@ -504,7 +502,7 @@
         android:layout_marginTop="@dimen/dp8"
         android:gravity="center"
         android:text="@string/confirm_email_text"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp14"
 
         />
@@ -525,7 +523,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/your_email"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
 
@@ -555,7 +553,7 @@
         android:layout_marginTop="@dimen/dp18"
         android:gravity="left|start"
         android:text="@string/your_email_desc"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp14" />
     </LinearLayout>
 
@@ -573,7 +571,7 @@
         android:layout_marginTop="@dimen/dp32"
         android:gravity="center"
         android:text="@string/please_enter_confirm_code"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
 
@@ -604,7 +602,7 @@
         android:layout_marginTop="@dimen/dp8"
         android:gravity="center"
         android:text="@string/confirm_email_text"
-        style="?textSecurityColor"
+        style="?textTitleColorSettingTheme"
         android:textSize="@dimen/dp14"
 
         />

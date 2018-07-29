@@ -1,14 +1,17 @@
 package net.iGap.adapter.items.chat;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -165,7 +168,7 @@ public class ViewMaker {
         TextView cslv_txt_author = new TextView(G.context);
         cslv_txt_author.setId(R.id.cslv_txt_author);
         cslv_txt_author.setText("recorded voice");
-        cslv_txt_author.setTextColor(Color.parseColor(G.textTitleTheme));
+        cslv_txt_author.setTextColor(Color.parseColor(G.textBubble));
         cslv_txt_author.setSingleLine(true);
         setTextSize(cslv_txt_author, R.dimen.dp14);
         cslv_txt_author.setMaxLines(2);
@@ -383,7 +386,7 @@ public class ViewMaker {
         text.setGravity(CENTER);
         text.setText("Log");
         if (isDarkTheme) {
-            text.setTextColor(Color.parseColor(G.textTitleTheme));
+            text.setTextColor(Color.parseColor(G.textBubble));
             text.setBackgroundResource(R.drawable.recangle_gray_tranceparent_dark);
         } else {
             text.setTextColor(Color.parseColor("#4a5d5c"));
@@ -506,11 +509,12 @@ public class ViewMaker {
         txtEditedIndicator.setSingleLine(true);
         txtEditedIndicator.setText(context.getResources().getString(R.string.edited));
         setTextSize(txtEditedIndicator, R.dimen.dp8);
-        if (G.isDarkTheme) {
-            txtEditedIndicator.setTextAppearance(context, R.style.text_sub_style_setting_dark);
-        } else {
-            txtEditedIndicator.setTextAppearance(context, R.style.ChatMessages_Time);
-        }
+//        if (G.isDarkTheme) {
+//            txtEditedIndicator.setTextAppearance(context, R.style.text_sub_style_setting_dark);
+//        } else {
+//            txtEditedIndicator.setTextAppearance(context, R.style.ChatMessages_Time);
+//        }
+        txtEditedIndicator.setTextColor(Color.parseColor(G.textBubble));
 
         setTypeFace(txtEditedIndicator);
         LinearLayout.LayoutParams layout_927 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -534,7 +538,7 @@ public class ViewMaker {
         ImageView cslr_txt_tic = new ImageView(context);
         cslr_txt_tic.setId(R.id.cslr_txt_tic);
 //        cslr_txt_tic.setColorFilter(context.getResources().getColor(R.color.colorOldBlack));
-        cslr_txt_tic.setColorFilter(Color.parseColor(G.tintImage), PorterDuff.Mode.SRC_IN);
+        cslr_txt_tic.setColorFilter(Color.parseColor(G.textBubble), PorterDuff.Mode.SRC_IN);
         //AppUtils.setImageDrawable(cslr_txt_tic, R.drawable.ic_double_check);
         LinearLayout.LayoutParams layout_311 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp16), ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_311.leftMargin = i_Dp(dp4);
@@ -580,7 +584,7 @@ public class ViewMaker {
         txt_signature.setText("");
         txt_signature.setSingleLine(true);
         //  txt_signature.setFilters();
-        txt_signature.setTextColor(context.getResources().getColor(R.color.room_message_gray));
+        txt_signature.setTextColor(Color.parseColor(G.textBubble));
         txt_signature.setTextAppearance(context, R.style.ChatMessages_Time);
         LinearLayout.LayoutParams layout_266 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, i_Dp(R.dimen.dp18));
         txt_signature.setLayoutParams(layout_266);
@@ -596,7 +600,7 @@ public class ViewMaker {
         setTypeFace(txt_views_label);
 
         txt_views_label.setPadding(0, dpToPixel(2), 0, 0);
-        txt_views_label.setTextColor(context.getResources().getColor(R.color.room_message_gray));
+        txt_views_label.setTextColor(Color.parseColor(G.textBubble));
         LinearLayout.LayoutParams layout_959 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, i_Dp(R.dimen.dp16));
         txt_views_label.setLayoutParams(layout_959);
         lyt_see.addView(txt_views_label);
@@ -604,7 +608,7 @@ public class ViewMaker {
         MaterialDesignTextView img_eye = new MaterialDesignTextView(context);
         img_eye.setId(R.id.img_eye);
         img_eye.setText(context.getResources().getString(R.string.md_visibility));
-        img_eye.setTextColor(context.getResources().getColor(R.color.gray_6c));
+        img_eye.setTextColor(Color.parseColor(G.textBubble));
         setTextSize(img_eye, R.dimen.dp12);
         // img_eye.setPadding(0, dpToPixel(2), 0, 0);
         img_eye.setSingleLine(true);
@@ -729,7 +733,7 @@ public class ViewMaker {
         cslr_ll_forward.setLayoutParams(layout_687);
 
         View View_997 = new View(context);
-        View_997.setBackgroundColor(Color.parseColor(G.textTitleTheme));
+        View_997.setBackgroundColor(Color.parseColor(G.textBubble));
         LinearLayout.LayoutParams layout_547 = new LinearLayout.LayoutParams(dpToPixel(2), ViewGroup.LayoutParams.MATCH_PARENT);
         layout_547.rightMargin = dpToPixel(3);
         View_997.setLayoutParams(layout_547);
@@ -739,7 +743,7 @@ public class ViewMaker {
         TextView cslr_txt_prefix_forward = new TextView(context);
         cslr_txt_prefix_forward.setId(R.id.cslr_txt_prefix_forward);
         cslr_txt_prefix_forward.setText(context.getResources().getString(R.string.forwarded_from));
-        cslr_txt_prefix_forward.setTextColor(Color.parseColor(G.textTitleTheme));
+        cslr_txt_prefix_forward.setTextColor(Color.parseColor(G.textBubble));
         setTextSize(cslr_txt_prefix_forward, R.dimen.dp12);
         cslr_txt_prefix_forward.setSingleLine(true);
         cslr_txt_prefix_forward.setTypeface(G.typeface_IRANSansMobile_Bold);
@@ -753,7 +757,7 @@ public class ViewMaker {
         cslr_txt_forward_from.setId(R.id.cslr_txt_forward_from);
         cslr_txt_forward_from.setMinimumWidth(i_Dp(R.dimen.dp100));
         cslr_txt_forward_from.setMaxWidth(i_Dp(R.dimen.dp140));
-        cslr_txt_forward_from.setTextColor(Color.parseColor(G.textTitleTheme));
+        cslr_txt_forward_from.setTextColor(Color.parseColor(G.textBubble));
         setTextSize(cslr_txt_forward_from, R.dimen.dp12);
         cslr_txt_forward_from.setSingleLine(true);
         cslr_txt_forward_from.setTypeface(G.typeface_IRANSansMobile_Bold);
@@ -779,11 +783,12 @@ public class ViewMaker {
         LinearLayout lyt_vote_sub = new LinearLayout(context);
         lyt_vote_sub.setOrientation(VERTICAL);
         lyt_vote_sub.setId(R.id.lyt_vote_sub);
-        if (G.isDarkTheme) {
-            lyt_vote_sub.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round_vote_dark));
-        } else {
-            lyt_vote_sub.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
-        }
+
+        lyt_vote_sub.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
+
+
+        GradientDrawable circleDarkColor = (GradientDrawable) lyt_vote_sub.getBackground();
+        circleDarkColor.setColor(Color.parseColor(G.appBarColor));
 
         LinearLayout.LayoutParams layout_35644 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_35644.leftMargin = i_Dp(R.dimen.dp2);
@@ -821,11 +826,12 @@ public class ViewMaker {
         lyt_vote_sub.addView(lyt_vote_up);
 
         LinearLayout lyt_vote_down = new LinearLayout(context);
-        if (G.isDarkTheme) {
-            lyt_vote_down.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round_vote_dark));
-        } else {
-            lyt_vote_down.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
-        }
+
+        lyt_vote_down.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.rectangel_white_round));
+
+        GradientDrawable circleDarkColor_2 = (GradientDrawable) lyt_vote_down.getBackground();
+        circleDarkColor_2.setColor(Color.parseColor(G.appBarColor));
+
         lyt_vote_down.setId(R.id.lyt_vote_down);
         lyt_vote_down.setPadding(0, i_Dp(R.dimen.dp6), 0, 0);
         lyt_vote_down.setGravity(CENTER);
@@ -865,11 +871,12 @@ public class ViewMaker {
         lyt_vote_forward.setGravity(CENTER);
         lyt_vote_forward.setOrientation(VERTICAL);
 
-        if (G.isDarkTheme) {
-            lyt_vote_forward.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.circle_white_dark));
-        } else {
-            lyt_vote_forward.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.circle_white));
-        }
+
+        lyt_vote_forward.setBackgroundDrawable(G.context.getResources().getDrawable(R.drawable.circle_white));
+
+        GradientDrawable circleDarkColor = (GradientDrawable) lyt_vote_forward.getBackground();
+        circleDarkColor.setColor(Color.parseColor(G.appBarColor));
+
         LinearLayout.LayoutParams layout_799_f = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp32), i_Dp(R.dimen.dp32));
         layout_799_f.topMargin = i_Dp(R.dimen.dp8);
         layout_799_f.bottomMargin = i_Dp(R.dimen.dp16);
@@ -959,7 +966,7 @@ public class ViewMaker {
         fileSize.setSingleLine(true);
         fileSize.setText("3.2 mb");
         fileSize.setAllCaps(TRUE);
-        fileSize.setTextColor(Color.parseColor(G.textTitleTheme));
+        fileSize.setTextColor(Color.parseColor(G.textChatMusic));
         setTextSize(fileSize, R.dimen.dp12);
         setTypeFace(fileSize);
         LinearLayout.LayoutParams layout_996 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -980,7 +987,7 @@ public class ViewMaker {
         fileName.setTextAppearance(context, android.R.style.TextAppearance_Medium);
         fileName.setMaxWidth((int) G.context.getResources().getDimension(R.dimen.dp160));
         fileName.setText("file_name.ext");
-        fileName.setTextColor(Color.parseColor(G.textTitleTheme));
+        fileName.setTextColor(Color.parseColor(G.textChatMusic));
         setTextSize(fileName, R.dimen.dp14);
         fileName.setTypeface(G.typeface_IRANSansMobile_Bold);
         LinearLayout.LayoutParams layout_298 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -993,7 +1000,7 @@ public class ViewMaker {
         songArtist.setSingleLine(true);
         songArtist.setText("Artist");
         setTypeFace(songArtist);
-        songArtist.setTextColor(Color.parseColor(G.textTitleTheme));
+        songArtist.setTextColor(Color.parseColor(G.textChatMusic));
         LinearLayout.LayoutParams layout_757 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         songArtist.setLayoutParams(layout_757);
         linearLayout_222.addView(songArtist);
@@ -1116,7 +1123,7 @@ public class ViewMaker {
         LinearLayout.LayoutParams layoutParamsName = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         name.setId(R.id.name);
         name.setTextAppearance(context, android.R.style.TextAppearance_Medium);
-        name.setTextColor(Color.parseColor(G.textTitleTheme));
+        name.setTextColor(Color.parseColor(G.textBubble));
         name.setText("Contact Name");
         setTextSize(name, R.dimen.dp14);
         setTypeFace(name);
@@ -1129,7 +1136,7 @@ public class ViewMaker {
         number.setTextAppearance(context, android.R.style.TextAppearance_Small);
         setTypeFace(number);
 
-        number.setTextColor(Color.parseColor(G.textTitleTheme));
+        number.setTextColor(Color.parseColor(G.textBubble));
         number.setText("Contact Number");
         number.setLayoutParams(layoutParamsNumber);
 
@@ -1207,7 +1214,7 @@ public class ViewMaker {
 
         songArtist.setMaxWidth((int) G.context.getResources().getDimension(R.dimen.dp180));
         songArtist.setText("file_name.ext");
-        songArtist.setTextColor(Color.parseColor(G.textTitleTheme));
+        songArtist.setTextColor(Color.parseColor(G.textBubble));
         setTextSize(songArtist, R.dimen.dp14);
         songArtist.setTypeface(G.typeface_IRANSansMobile_Bold, BOLD);
         LinearLayout.LayoutParams layout_1000 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1219,7 +1226,7 @@ public class ViewMaker {
         fileSize.setSingleLine(true);
         fileSize.setText("3.2 mb");
         fileSize.setAllCaps(TRUE);
-        fileSize.setTextColor(Color.parseColor(G.textTitleTheme));
+        fileSize.setTextColor(Color.parseColor(G.textBubble));
         setTextSize(fileSize, R.dimen.dp10);
         setTypeFace(fileSize);
         LinearLayout.LayoutParams layout_958 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1298,11 +1305,11 @@ public class ViewMaker {
         if (hasEmoji) {
             EmojiTextViewE emojiTextViewE = new EmojiTextViewE(context);
             emojiTextViewE.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            if (G.isDarkTheme) {
-                emojiTextViewE.setTextColor(Color.parseColor(G.textTitleTheme));
-            } else {
-                emojiTextViewE.setTextColor(Color.parseColor("#333333"));
-            }
+//            if (G.isDarkTheme) {
+            emojiTextViewE.setTextColor(Color.parseColor(G.textBubble));
+//            } else {
+//                emojiTextViewE.setTextColor(Color.parseColor("#333333"));
+//            }
 
             emojiTextViewE.setId(R.id.messageSenderTextMessage);
             emojiTextViewE.setPadding(10, 4, 10, 4);
@@ -1325,11 +1332,11 @@ public class ViewMaker {
         } else {
             TextView textView = new TextView(context);
             textView.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            if (G.isDarkTheme) {
-                textView.setTextColor(Color.parseColor(G.textTitleTheme));
-            } else {
-                textView.setTextColor(Color.parseColor("#333333"));
-            }
+//            if (G.isDarkTheme) {
+            textView.setTextColor(Color.parseColor(G.textBubble));
+//            } else {
+//                textView.setTextColor(Color.parseColor("#333333"));
+//            }
 
             textView.setId(R.id.messageSenderTextMessage);
             textView.setPadding(10, 0, 10, 0);
@@ -1354,11 +1361,11 @@ public class ViewMaker {
 
         EmojiTextViewE textView = new EmojiTextViewE(context);
 
-        if (G.isDarkTheme) {
-            textView.setTextColor(Color.BLACK);
-        } else {
-            textView.setTextColor(Color.parseColor(G.textTitleTheme));
-        }
+//        if (G.isDarkTheme) {
+//            textView.setTextColor(Color.BLACK);
+//        } else {
+        textView.setTextColor(Color.parseColor(G.textBubble));
+//        }
 
         textView.setBackgroundResource(R.drawable.rect_radios_top_gray);
         textView.setId(R.id.messageSenderName);
@@ -1420,12 +1427,20 @@ public class ViewMaker {
     /**
      * ***************** Common Methods *****************
      */
-    private static int dpToPixel(int dp) {
+    public static int dpToPixel(int dp) {
         Resources r = context.getResources();
         int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
         return px;
 
         //  (2/getApplicationContext().getResources().getDisplayMetrics().density)
+    }
+
+
+    public static float pixelsToDp(float px, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
     }
 
     public static int i_Dp(int dpSrc) {
@@ -1701,7 +1716,7 @@ public class ViewMaker {
         MaterialDesignTextView cs_txt_mute = new MaterialDesignTextView(G.context);
         cs_txt_mute.setId(R.id.cs_txt_mute);
         cs_txt_mute.setText(G.fragmentActivity.getResources().getString(R.string.md_muted));
-        cs_txt_mute.setTextColor(G.context.getResources().getColor(R.color.grayNew));
+        cs_txt_mute.setTextColor(Color.parseColor(G.textTitleTheme));
         setTextSize(cs_txt_mute, R.dimen.dp13);
         LinearLayout.LayoutParams layout_152s = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_152s.leftMargin = i_Dp(R.dimen.dp4);
@@ -1728,7 +1743,7 @@ public class ViewMaker {
         cs_txt_contact_time.setId(R.id.cs_txt_contact_time);
         cs_txt_contact_time.setSingleLine(true);
         cs_txt_contact_time.setText("time");
-        cs_txt_contact_time.setTextColor(G.context.getResources().getColor(R.color.gray));
+        cs_txt_contact_time.setTextColor(Color.parseColor(G.textTitleTheme));
         setTextSize(cs_txt_contact_time, R.dimen.dp12);
         LinearLayout.LayoutParams layout_574 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layout_574.gravity = Gravity.CENTER;
@@ -1758,7 +1773,7 @@ public class ViewMaker {
         cs_txt_pinned_message.setId(R.id.cs_txt_pinned_message);
         cs_txt_pinned_message.setGravity(CENTER);
         cs_txt_pinned_message.setText(G.fragmentActivity.getResources().getString(R.string.md_circlePin));
-        cs_txt_pinned_message.setTextColor(Color.parseColor(G.textSubTheme));
+        cs_txt_pinned_message.setTextColor(Color.parseColor(G.textTitleTheme));
         cs_txt_pinned_message.setTextSize(i_Dp(R.dimen.dp20));
         setTextSize(cs_txt_pinned_message, R.dimen.dp20);
         LinearLayout.LayoutParams layout_175 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1774,7 +1789,7 @@ public class ViewMaker {
         linearLayout_849.addView(linearLayout_938);
 
         View textView_186 = new View(G.context);
-        textView_186.setBackgroundColor(Color.parseColor("#52afafaf"));
+        textView_186.setBackgroundColor(Color.parseColor(G.lineBorder));
         LinearLayout.LayoutParams layout_552 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
         textView_186.setLayoutParams(layout_552);
         linearLayout_849.addView(textView_186);

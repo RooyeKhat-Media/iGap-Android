@@ -10,7 +10,9 @@
 
 package net.iGap.interfaces;
 
+import net.iGap.module.structs.StructBottomSheet;
+
 public interface OnPathAdapterBottomSheet {
 
-    void path(String path, boolean isCheck, boolean isEdit);
+    void path(String path, boolean isCheck, boolean isEdit, StructBottomSheet mList, int id);
 }

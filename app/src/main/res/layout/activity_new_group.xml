@@ -157,7 +157,7 @@
               android:id="@+id/ng_view_newGroup"
               android:layout_width="match_parent"
               android:layout_height="0.5dp"
-              android:background="@color/line_edit_text" />
+              android:background="@{Color.parseColor(G.lineBorder),default=@color/toolbar_background}" />
 
           </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
@@ -211,7 +211,7 @@
           android:padding="@dimen/dp12"
           android:singleLine="false"
           android:text="@string/chi_NEXT_STEP"
-          android:textColor="@color/toolbar_background"
+          android:textColor="@{Color.parseColor(G.textTitleTheme),default=@color/toolbar_background}"
           android:textSize="@dimen/dp15"
           android:textStyle="normal"
 
@@ -230,7 +230,7 @@
           android:onClick="@{fragmentNewGroupVieModel::onClickCancel}"
           android:padding="@dimen/dp12"
           android:text="@string/B_cancel"
-          android:textColor="@color/toolbar_background"
+          android:textColor="@{Color.parseColor(G.textTitleTheme),default=@color/toolbar_background}"
           android:textSize="@dimen/dp15"
           android:textStyle="normal" />
       </RelativeLayout>

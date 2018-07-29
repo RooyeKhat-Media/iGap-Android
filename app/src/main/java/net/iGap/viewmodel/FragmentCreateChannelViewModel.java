@@ -12,6 +12,7 @@ package net.iGap.viewmodel;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.databinding.ObservableField;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.PopupMenu;
@@ -50,7 +51,7 @@ public class FragmentCreateChannelViewModel implements OnChannelCheckUsername {
     public Spannable wordtoSpan;
     public ObservableField<String> edtSetLink = new ObservableField<>(Config.IGAP_LINK_PREFIX);
     public ObservableField<Integer> prgWaiting = new ObservableField<>(View.GONE);
-    public ObservableField<Integer> txtFinishColor = new ObservableField<>(G.context.getResources().getColor(R.color.toolbar_background));
+    public ObservableField<Integer> txtFinishColor = new ObservableField<>(Color.parseColor(G.appBarColor));
     public ObservableField<Boolean> txtInputLinkEnable = new ObservableField<>(false);
     public ObservableField<Boolean> txtFinishEnable = new ObservableField<>(true);
     public ObservableField<Boolean> edtSetLinkEnable = new ObservableField<>(true);
@@ -262,7 +263,7 @@ public class FragmentCreateChannelViewModel implements OnChannelCheckUsername {
             edtSetLink.set(inviteLink);
             edtSetLinkEnable.set(false);
             txtFinishEnable.set(true);
-            txtFinishColor.set(G.context.getResources().getColor(R.color.toolbar_background));
+            txtFinishColor.set(Color.parseColor(G.appBarColor));
             txtInputLinkEnable.set(true);
             fragmentCreateChannelBinding.fchTxtInputNikeName.setError("");
         } else if (isRadioButtonPublic.get()) {
@@ -282,7 +283,7 @@ public class FragmentCreateChannelViewModel implements OnChannelCheckUsername {
                     if (status == ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.AVAILABLE) {
 
                         txtFinishEnable.set(true);
-                        txtFinishColor.set(G.context.getResources().getColor(R.color.toolbar_background));
+                        txtFinishColor.set(Color.parseColor(G.appBarColor));
                         txtInputLinkEnable.set(true);
                         fragmentCreateChannelBinding.fchTxtInputNikeName.setError("");
                     } else if (status == ProtoChannelCheckUsername.ChannelCheckUsernameResponse.Status.INVALID) {

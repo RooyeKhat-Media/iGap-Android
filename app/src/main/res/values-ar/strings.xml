@@ -851,11 +851,7 @@
 
   <string name="E_301">"خطأ من مزود خدمة الانترنت"</string>
 
-  <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
-
-  <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
-
-  <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
+  <string name="E_468">توقيع تحديث القناة ممنوع</string>
 
   <string name="E_610">"خطأ من الزبون"</string>
 
@@ -894,6 +890,14 @@
   <string name="E_658">قد تم ارسال الابلاغ سابقاً.</string>
 
   <string name="E_659">لايجوز لك ارسال الابلاغ في الوقت الحالي .</string>
+
+  <string name="E_9002">غير قادر على الحصول على معرف</string>
+  <string name="E_9006">التواصل مع الخادم غير ممكن</string>
+  <string name="E_9007">التواصل مع الخادم غير ممكن</string>
+  <string name="E_9008">فشل الاتصال مع المستلم</string>
+  <string name="E_9009">التواصل مع الخادم غير ممكن</string>
+  <string name="E_9010">لم يتم تسجيل المستلم</string>
+  <string name="E_9013">التسجيل ممنوع عليك</string>
 
   <string name="E_10165">Bad payload: User report</string>
 
@@ -935,7 +939,7 @@
 
   <string name="time_out">عدم امكان الاتصال بمزود خدمة الانترنت</string>
 
-  <string name="resend_all_messages">"‫إعادة ارسال الرسالة</string>
+  <string name="resend_all_messages">"‫إعادة ارسال %d الرسالة</string>
   ‬‬‬‬‬‬
   <string name="resend_chat_message">"‫ارسال دوباإعادة ارسال الرسالة</string>
   ‬‬‬‬‬‬
@@ -1014,6 +1018,8 @@
   <string name="crop_selected_for_send">الصورة المختارة </string>
 
   <string name="location_message">رسالة الموقع </string>
+
+  <string name="wallet_message">معاملة المحفظة</string>
 
   <string name="chat_to_group">نقل المحادثة إلى المجموعة </string>
 
@@ -1184,6 +1190,8 @@
   <string name="skip">التخطي</string>
 
   <string name="settings">الإعدادات</string>
+
+  <string name="iGap_settings">إعدادات حساب آی کب</string>
 
   <string name="please_write_your_message">من فضلك اكتب الرسالة </string>
 
@@ -2073,7 +2081,7 @@
 
   <string name="st_checkbox_delete">الحذف لــ</string>
 
-  <string name="st_desc_delete">هل أنت متأكد من حذف هذه الرسالة؟</string>
+  <string name="st_desc_delete">هل أنت متأكد من حذف هذه %1$s الرسالة؟</string>
 
   <string name="st_send_report">تمّ تسجيل ابلاغ اساءة الاستخدام بنجاح</string>
 
@@ -2140,5 +2148,116 @@
   <string name="automatic_description_theme">تم تنشيط الوضع الليلي من 19 إلى 8 عن طريق تحديد الوضع التلقائي</string>
   <string name="setting_dark_theme">إعدادات قذيفة الظلام</string>
   <string name="Select_Time">اختر الوقت</string>
+  <string name="financial_services">الخدمات المالية</string>
+  <string name="install_app">ثبّت التطبيق</string>
+  <string name="text_top">لاستخدام الخدمة: لتثبيت التطبيق للبطاقة ، وشراء تذكرة الحافلة ، وشراء تهمة ، ودفع الفواتير ، وشراء مجموعة وخدمات الدفع الأخرى.</string>
+  <string name="text_paygear">لاستخدام الخدمة: لتثبيت التطبيق للبطاقة ، وشراء تذكرة الحافلة ، وشراء تهمة ، ودفع الفواتير ، وشراء مجموعة وخدمات الدفع الأخرى.</string>
+  <string name="customization">التخصيص</string>
+  <string name="Apply_colors_to_customize">تطبيق الألوان لتخصيصها</string>
+
+  <string name="payment">دفع</string>
+  <string name="buy_charge">شراء رسوم المحمول</string>
+  <string name="pay_bills">ادفع الفواتير</string>
+  <string name="pay_bills_crime">دفع فواتير مخالفات المرور</string>
+  <string name="barcode_reader">قارئ الباركود</string>
+  <string name="billing_id">معرف الفواتير</string>
+  <string name="enter">أدخل</string>
+  <string name="payment_code">رمز الدفع</string>
+  <string name="amount">قدر</string>
+  <string name="buy">يشترى</string>
+  <string name="select">انتخب</string>
+  <string name="hamrahe_aval">همراه اول</string>
+  <string name="irancell">ایرانسل</string>
+  <string name="ritel">رایتل</string>
+  <string name="normal_charge">شحنة عادية</string>
+  <string name="amazing">تهمة مذهلة</string>
+  <string name="wimax_charging">شحن وایمکس</string>
+  <string name="permanently_charge">قم بشحن بطاقة  بشكل دائم</string>
+
+  <string name="charge_1"> 10.000 ریالی</string>
+  <string name="charge_2"> 20.000 ریالی</string>
+  <string name="charge_5"> 50.000 ریالی</string>
+  <string name="charge_10"> 100.000 ریالی</string>
+  <string name="charge_20"> 200.000 ریالی</string>
+
+  <string name="charge_1_ir">10.000 ریالی +  9%  القيمة المضافة = 10.900 ریال</string>
+  <string name="charge_2_ir">20.000 ریالی +  9%  القيمة المضافة = 21.180 ریال</string>
+  <string name="charge_5_ir">50.000 ریالی +  9%  القيمة المضافة = 54.500 ریال</string>
+  <string name="charge_10_ir">100.000 ریالی +  9%  القيمة المضافة = 109.000 ریال</string>
+  <string name="charge_20_ir">200.000 ریالی +  9%  القيمة المضافة = 218.000 ریال</string>
+
+  <string name="biling_id_not_valid">معرف الفوترة غير صالح</string>
+  <string name="pay_id_is_not_valid">معرف الدفع غير صالح</string>
+  <string name="charge_type">نوع التهمة</string>
+  <string name="operator">عامل</string>
+  <string name="trabord">ترابرد</string>
+  <string name="time_out_error">مهلة خطأ</string>
+  <string name="connection_error">لا يوجد خطأ اتصال</string>
+  <string name="server_error">خطأ في الخادم</string>
+  <string name="network_error">خطأ في الشبكة</string>
+  <string name="dialog_canceled">الحوار الملغى</string>
+  <string name="device_root">جذر الجهاز</string>
+  <string name="phone_number_is_not_valid">رقم الهاتف غير صالح</string>
+  <string name="please_select_operator">يرجى اختيار المشغل</string>
+  <string name="wallet">محفظة</string>
+  <string name="loading_wallet_agreement">تحميل اتفاقية المحفظة</string>
+  <string name="i_agree_with_the_terms">أنا أتفق مع الشروط</string>
+  <string name="accept_the_terms">اقبل الشروط</string>
+  <string name="wallet_agrement">اتفاقية المحفظة</string>
+  <string name="SendMoney">إرسال الأموال</string>
+  <string name="transfer_amount_hint">أدخل مبلغ الإيداع:</string>
+  <string name="amount_in_rial">المبلغ بالريال:</string>
+  <string name="pay">دفع</string>
+  <string name="transfer_to_dialog">الانتقال إلى:</string>
+  <string name="am_money">نقود</string>
+  <string name="trace_number">رمز التتبع</string>
+  <string name="amount_2">مبشر:</string>
+  <string name="payment_canceled">تم إلغاء الدفعة</string>
+  <string name="PayGear_unavailable">المحفظة غير متاحة</string>
+  <string name="bills_inquiry_mci">فواتير استفسار همراه اول </string>
+  <string name="bills_inquiry_telecom">فواتير استفسار ثائق الهاتف </string>
+  <string name="bills_inquiry_title">فواتير التحقيق</string>
+  <string name="bill_type">نوع الفاتورة</string>
+  <string name="telecom">ثائق الهاتف</string>
+  <string name="phone">هاتف</string>
+  <string name="area_code">رمز المنطقة</string>
+  <string name="inquiry">استعلام</string>
+  <string name="mci_opreator_check">هذا الرقم ليس في مشغل همراه اول</string>
+  <string name="mid_term">منتصف المدة</string>
+  <string name="intermediate_payment">الدفعة المتوسطة</string>
+  <string name="last_term">الفصل الأخير</string>
+  <string name="last_term_payment">دفعة الاخيرة</string>
+  <string name="responsible_for_all_financial_services">مسؤول عن جميع الخدمات المالية</string>
+  <string name="parsian_e_commerce_company_top">شركة پارسیان للتجارة الإلكترونية (تاپ)</string>
+  <string name="is_empty">is</string>
+  <string name="customer_response_center_021_2318">مركز استجابة العملاء: 021-2318</string>
+  <string name="ex_mobile_phone">مثال : 09123456789</string>
+  <string name="ex_area">مثال : 021</string>
+  <string name="ex_phone">مثال : 44567899</string>
+  <string name="sync_contact">اتصالات المزامنة</string>
+  <string name="satellite_view">عرض القمر الصناعي</string>
+  <string name="default_view">العرض الافتراضي</string>
+  <string name="send_location_text">إرسال الموقع المحدد</string>
+  <string name="map_distance">متر بعيدا</string>
+  <string name="calculation">حساب ...</string>
+  <string name="get_location_data">الحصول على البيانات</string>
+
+  <string name="not_success">غير ناجح</string>
+  <string name="not_success_2">"كان الدفع غير ناجح"</string>
+  <string name="result_3">لا تعرف نتيجة الدفع فترة المحفظة للمراجع أو الاتصال بالدعم.</string>
+  <string name="result_4">تم الدفع بنجاح. تحقق أكثر في قسم محفوظات المحفظة.</string>
+
+  <string name="wallet_from">من عند:</string>
+  <string name="wallet_to">إلى:</string>
+  <string name="wallet_amount">كمية:</string>
+  <string name="wallet_trace">تتبع عدد:</string>
+  <string name="wallet_invoice">رقم الفاتورة:</string>
+  <string name="wallet_data">وقت الدفع:</string>
+  <string name="wallet_desc">---وصف---</string>
+  <string name="wallet_toman">تومان</string>
+  <string name="wallet_Your_credit">رصيدك: </string>
+  <string name="wallet_Reial"> ریال </string>
+  <string name="wallet_error_server">حدث خطأ في الاتصال بالخادم
+</string>
 
 </resources>

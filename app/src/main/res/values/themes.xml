@@ -7,7 +7,6 @@
     <item name="textColorMenuTheme">@style/text_style_menu_dark</item>
     <item name="iconColorMenuTheme">@style/icon_style_menu_dark</item>
     <item name="backgroundColorMenuTheme">@style/background_menu_dark</item>
-
     <item name="backgroundColorSettingTheme">@style/background_setting_dark</item>
     <item name="backgroundColorSettingTheme_2">@style/background_2_setting_dark</item>
     <item name="textTitleColorSettingTheme">@style/text_title_style_setting_dark</item>
@@ -20,13 +19,14 @@
     <item name="emojiChat">@style/emojiColorChat_dark</item>
     <item name="backgroundColorCall">@style/backgroundColorCallDark</item>
     <item name="backgroundSubChatTheme">@style/backgroundSubChat_dark</item>
-    <item name="fabButtoniGap">@style/FabButtonDark</item>
+    <item name="fabButtoniGap">@style/FabButton_dark</item>
     <item name="md_dark_theme">true</item>
     <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textColorBottomSheet">@style/FabButton_dark</item>
     <!--<item name="colorAccent">@color/colorOldBlack</item>-->
-
   </style>
-
 
   <style name="Material_lightCustom" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="pageBackgroundTheme">@style/page_background_light</item>
@@ -34,8 +34,6 @@
     <item name="textColorMenuTheme">@style/text_style_menu_light</item>
     <item name="iconColorMenuTheme">@style/icon_style_menu_light</item>
     <item name="backgroundColorMenuTheme">@style/background_menu_light</item>
-
-
     <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
     <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
     <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
@@ -48,10 +46,418 @@
     <item name="backgroundColorCall">@style/backgroundColorCallLight</item>
     <item name="emojiChat">@style/emojiColorChat_light</item>
     <item name="backgroundSubChatTheme">@style/backgroundSubChat_light</item>
-    <item name="fabButtoniGap">@style/FabButton</item>
-    <item name="md_dark_theme">false</item>
+    <item name="fabButtoniGap">@style/FabButton_light</item>
+    <item name="md_dark_theme">false</item>C
     <item name="backgroundPassCode">@style/backgroundPassCodeLight</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
     <!--<item name="colorAccent">@color/white</item>-->
   </style>
+
+  <style name="Material_blueGreyComplete" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#455A64</item>
+    <item name="colorPrimary">#455A64</item>
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+
+    <item name="textColorMenuTheme">@style/text_style_menu_BlueGreyComplete</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_BlueGreyComplete</item>
+    <item name="backgroundColorMenuTheme">@style/background_settingBlueGreyComplete</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_settingBlueGreyComplete</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_BlueGreyComplete</item>
+
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_BlueGreyComplete</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_BlueGreyComplete</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_BlueGreyComplete</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_BlueGreyComplete</item>
+
+    <item name="textBackgroundColor_2">@style/line_style_setting_BlueGreyComplete</item>
+    <item name="textBackgroundColor">@style/line_style_setting_BlueGreyComplete</item>
+
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_BlueGreyComplete</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallBlueGreyComplete</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_BlueGreyComplete</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_background_color">#CFD8DC</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+
+  <style name="Material_indigoComplete" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#303F9F</item>
+    <item name="colorPrimary">#303F9F</item>
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+
+    <item name="textColorMenuTheme">@style/text_style_menu_indigoComplete</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_indigoComplete</item>
+    <item name="backgroundColorMenuTheme">@style/background_settingindigoComplete</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_settingindigoComplete</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_indigoComplete</item>
+
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_indigoComplete</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_indigoComplete</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_indigoComplete</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_indigoComplete</item>
+
+    <item name="textBackgroundColor_2">@style/line_style_setting_indigoComplete</item>
+    <item name="textBackgroundColor">@style/line_style_setting_indigoComplete</item>
+
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_indigoComplete</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallindigoComplete</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_indigoComplete</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_background_color">#c5cae9</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+  <style name="Material_BrownComplete" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#5D4037</item>
+    <item name="colorPrimary">#5D4037</item>
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+
+    <item name="textColorMenuTheme">@style/text_style_menu_BrownComplete</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_BrownComplete</item>
+    <item name="backgroundColorMenuTheme">@style/background_settingBrownComplete</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_settingBrownComplete</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_BrownComplete</item>
+
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_BrownComplete</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_BrownComplete</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_BrownComplete</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_BrownComplete</item>
+
+    <item name="textBackgroundColor_2">@style/line_style_setting_BrownComplete</item>
+    <item name="textBackgroundColor">@style/line_style_setting_BrownComplete</item>
+
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_BrownComplete</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallBrownComplete</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_BrownComplete</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_background_color">#d7ccc8</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+  <style name="Material_TealComplete" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#00796b</item>
+    <item name="colorPrimary">#00796b</item>
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+
+    <item name="textColorMenuTheme">@style/text_style_menu_TealComplete</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_TealComplete</item>
+    <item name="backgroundColorMenuTheme">@style/background_settingTealComplete</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_settingTealComplete</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_TealComplete</item>
+
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_TealComplete</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_TealComplete</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_TealComplete</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_TealComplete</item>
+
+    <item name="textBackgroundColor_2">@style/line_style_setting_TealComplete</item>
+    <item name="textBackgroundColor">@style/line_style_setting_TealComplete</item>
+
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_TealComplete</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallTealComplete</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_TealComplete</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_background_color">#b2dfdb</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+  <style name="Material_GreyComplete" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#616161</item>
+    <item name="colorPrimary">#616161</item>
+    <item name="pageBackgroundTheme">@style/page_background_black</item>
+    <item name="textColorTheme">@style/text_style_black</item>
+
+    <item name="textColorMenuTheme">@style/text_style_menu_GreyComplete</item>
+    <item name="iconColorMenuTheme">@style/icon_style_menu_GreyComplete</item>
+    <item name="backgroundColorMenuTheme">@style/background_settingGreyComplete</item>
+
+    <item name="backgroundColorSettingTheme">@style/background_settingGreyComplete</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_GreyComplete</item>
+
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_GreyComplete</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_GreyComplete</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_GreyComplete</item>
+    <item name="hintColorSettingTheme">@style/hint_style_setting_GreyComplete</item>
+
+    <item name="textBackgroundColor_2">@style/line_style_setting_GreyComplete</item>
+    <item name="textBackgroundColor">@style/line_style_setting_GreyComplete</item>
+
+    <item name="textSecurityColor">@style/text_title_security_dark</item>
+    <item name="emojiChat">@style/emojiColorChat_GreyComplete</item>
+    <item name="backgroundColorCall">@style/backgroundColorCallGreyComplete</item>
+    <item name="backgroundSubChatTheme">@style/backgroundSubChat_GreyComplete</item>
+    <item name="backgroundPassCode">@style/backgroundPassCodeDark</item>
+    <item name="md_background_color">#f5f5f5</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <!--<item name="colorAccent">@color/white</item>-->
+  </style>
+
+
+  <style name="Material_red" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <item name="colorAccent">#F44336</item>
+    <item name="colorPrimary">#F44336</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_pink" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#E91E63</item>
+    <item name="colorPrimary">#E91E63</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+  </style>
+
+  <style name="Material_purple" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#9C27B0</item>
+    <item name="colorPrimary">#9C27B0</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_deepPurple" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#673AB7</item>
+    <item name="colorPrimary">#673AB7</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_indigo" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#3F51B5</item>
+    <item name="colorPrimary">#3F51B5</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_blue" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#2196F3</item>
+    <item name="colorPrimary">#2196F3</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_lightBlue" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#03A9F4</item>
+    <item name="colorPrimary">#03A9F4</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_cyan" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#00BCD4</item>
+    <item name="colorPrimary">#00BCD4</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_teal" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#009688</item>
+    <item name="colorPrimary">#009688</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_green" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#388E3C</item>
+    <item name="colorPrimary">#388E3C</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_lightGreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#689F38</item>
+    <item name="colorPrimary">#689F38</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_lime" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#AFB42B</item>
+    <item name="colorPrimary">#AFB42B</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_yellow" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#FBC02D</item>
+    <item name="colorPrimary">#FBC02D</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_amber" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#FFA000</item>
+    <item name="colorPrimary">#FFA000</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_orange" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#F57C00</item>
+    <item name="colorPrimary">#F57C00</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+
+  </style>
+
+  <style name="Material_deepOrange" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#E64A19</item>
+    <item name="colorPrimary">#E64A19</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+  </style>
+
+  <style name="Material_brown" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#5D4037</item>
+    <item name="colorPrimary">#5D4037</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+  </style>
+
+  <style name="Material_grey" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#616161</item>
+    <item name="colorPrimary">#616161</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+  </style>
+
+  <style name="Material_blueGrey" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorAccent">#455A64</item>
+    <item name="colorPrimary">#455A64</item>
+    <item name="backgroundColorSettingTheme">@style/background_setting_light</item>
+    <item name="backgroundColorSettingTheme_2">@style/background_2_setting_light</item>
+    <item name="lineColorSettingTheme">@style/line_style_setting_light</item>
+    <item name="md_medium_font">IRANSansMobile.ttf</item>
+    <item name="md_regular_font">IRANSansMobile.ttf</item>
+    <item name="textTitleColorSettingTheme">@style/text_title_style_setting_light</item>
+    <item name="textSubColorSettingTheme">@style/text_sub_style_setting_light</item>
+  </style>
+
 
 </resources>

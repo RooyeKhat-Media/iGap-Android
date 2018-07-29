@@ -98,20 +98,25 @@ public class HelperImageBackColor {
         p.setDither(true);
         p.setAntiAlias(true);
         p.setColor(Color.parseColor(color));
-        Canvas c = new Canvas(bitmap);
-        c.drawCircle(with / 2, with / 2, with / 2, p);
 
-        int fontSize = with / 3;
-        Canvas cs = new Canvas(bitmap);
+        try {
+            Canvas c = new Canvas(bitmap);
+            c.drawCircle(with / 2, with / 2, with / 2, p);
 
-        Paint textPaint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        textPaint.setMaskFilter(new BlurMaskFilter(1, BlurMaskFilter.Blur.SOLID));
-        textPaint.setColor(Color.parseColor(mColor));
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(fontSize);
-        textPaint.setTypeface(G.typeface_IRANSansMobile_Bold);
-        textPaint.setStyle(Paint.Style.FILL);
-        cs.drawText(alphabetName, with / 2, with / 2 + fontSize / 4, textPaint);
+            int fontSize = with / 3;
+            Canvas cs = new Canvas(bitmap);
+
+            Paint textPaint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+            textPaint.setMaskFilter(new BlurMaskFilter(1, BlurMaskFilter.Blur.SOLID));
+            textPaint.setColor(Color.parseColor(mColor));
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            textPaint.setTextSize(fontSize);
+            textPaint.setTypeface(G.typeface_IRANSansMobile_Bold);
+            textPaint.setStyle(Paint.Style.FILL);
+            cs.drawText(alphabetName, with / 2, with / 2 + fontSize / 4, textPaint);
+        } catch (NullPointerException e) {
+            HelperLog.setErrorLog("HelperImageBackColor  drawAlphabetOnPicture  " + e);
+        }
 
         return bitmap;
     }

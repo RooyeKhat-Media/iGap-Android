@@ -76,12 +76,12 @@ public class AdapterBottomSheet extends AbstractItem<AdapterBottomSheet, Adapter
                 if (holder.checkBoxSelect.isChecked()) {
                     holder.checkBoxSelect.setChecked(false);
                     holder.checkBoxSelect.setUnCheckColor(G.context.getResources().getColor(R.color.transparent));
-                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), false, false);
+                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), false, false, mList, mList.getId());
                     mList.setSelected(true);
                 } else {
                     holder.checkBoxSelect.setChecked(true);
                     holder.checkBoxSelect.setUnCheckColor(G.context.getResources().getColor(R.color.green));
-                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), true, false);
+                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), true, false, mList, mList.getId());
                     mList.setSelected(false);
                 }
             }
@@ -93,12 +93,12 @@ public class AdapterBottomSheet extends AbstractItem<AdapterBottomSheet, Adapter
                 if (holder.checkBoxSelect.isChecked()) {
                     holder.checkBoxSelect.setChecked(false);
                     holder.checkBoxSelect.setUnCheckColor(G.context.getResources().getColor(R.color.transparent));
-                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), false, true);
+                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), false, true, mList, mList.getId());
                     mList.setSelected(false);
                 } else {
                     holder.checkBoxSelect.setChecked(true);
                     holder.checkBoxSelect.setUnCheckColor(G.context.getResources().getColor(R.color.green));
-                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), true, true);
+                    FragmentChat.onPathAdapterBottomSheet.path(mList.getPath(), true, true, mList, mList.getId());
                     mList.setSelected(true);
                 }
 

@@ -74,7 +74,6 @@
   </style>
 
 
-
   <style name="dialog_item_style">
     <item name="android:paddingBottom">@dimen/dp8</item>
     <item name="android:paddingLeft">@dimen/dp24</item>
@@ -279,7 +278,7 @@
   </style>
 
   <style name="text_sub_style_setting_dark">
-    <item name="android:textColor">@color/white</item>
+    <item name="android:textColor">@color/gray_9d</item>
   </style>
 
   <style name="line_style_setting_dark">
@@ -327,7 +326,7 @@
     <item name="android:background">@color/line</item>
   </style>
 
-  <style name="FabButtonDark">
+  <style name="FabButton_dark">
     <item name="backgroundTint">@color/colorOldBlack</item>
     <item name="android:tint">@color/white</item>
     <item name="android:theme">@color/colorOldBlack</item>
@@ -418,13 +417,278 @@
     <item name="android:background">@color/pin_color</item>
   </style>
 
-  <style name="FabButton">
-    <item name="android:backgroundTint">@android:color/white</item>
+  <style name="FabButton_light">
+    <item name="backgroundTint">@color/white</item>
     <item name="android:tint">@color/gray</item>
+    <item name="android:theme">@color/white</item>
   </style>
 
   <style name="backgroundPassCodeLight">
     <item name="android:background">@color/green</item>
+  </style>
+
+
+  <!--==================================Blue grey complete==================================-->
+  <style name="background_settingBlueGreyComplete">
+    <item name="android:background">#CFD8DC</item>
+  </style>
+
+  <style name="background_2_setting_BlueGreyComplete">
+    <item name="android:background">#CFD8DC</item>
+  </style>
+
+  <style name="page_background_BlueGreyComplete">
+    <item name="android:background">#CFD8DC</item>
+  </style>
+
+  <style name="backgroundSubChat_BlueGreyComplete">
+    <item name="android:background">#CFD8DC</item>
+  </style>
+
+  <style name="text_style_menu_BlueGreyComplete">
+    <item name="android:textColor">#455A64</item>
+  </style>
+
+  <style name="icon_style_menu_BlueGreyComplete">
+    <item name="android:textColor">#455A64</item>
+  </style>
+
+  <style name="text_title_style_setting_BlueGreyComplete">
+    <item name="android:textColor">#0d0d0d</item>
+  </style>
+
+  <style name="text_sub_style_setting_BlueGreyComplete">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_BlueGreyComplete">
+    <item name="android:background">#b0bec5</item>
+  </style>
+
+  <style name="hint_style_setting_BlueGreyComplete">
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textColor">#212121</item>
+  </style>
+
+  <style name="backgroundColorCallBlueGreyComplete">
+    <item name="android:background">@drawable/background_call_fragment_blue_grey</item>
+  </style>
+
+  <style name="emojiColorChat_BlueGreyComplete">
+    <item name="android:textColor">#212121</item>
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+
+  <!--==================================indigo complete==================================-->
+  <style name="background_settingindigoComplete">
+    <item name="android:background">#C5CAE9</item>
+  </style>
+
+  <style name="background_2_setting_indigoComplete">
+    <item name="android:background">#C5CAE9</item>
+  </style>
+
+  <style name="page_background_indigoComplete">
+    <item name="android:background">#C5CAE9</item>
+  </style>
+
+  <style name="backgroundSubChat_indigoComplete">
+    <item name="android:background">#C5CAE9</item>
+  </style>
+
+  <style name="text_style_menu_indigoComplete">
+    <item name="android:textColor">#303F9F</item>
+  </style>
+
+  <style name="icon_style_menu_indigoComplete">
+    <item name="android:textColor">#1a237e</item>
+  </style>
+
+  <style name="text_title_style_setting_indigoComplete">
+    <item name="android:textColor">#0d0d0d</item>
+  </style>
+
+  <style name="text_sub_style_setting_indigoComplete">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_indigoComplete">
+    <item name="android:background">#9fa8da</item>
+  </style>
+
+  <style name="hint_style_setting_indigoComplete">
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textColor">#212121</item>
+  </style>
+
+  <style name="backgroundColorCallindigoComplete">
+    <item name="android:background">@drawable/background_call_fragment_indigo</item>
+  </style>
+
+  <style name="emojiColorChat_indigoComplete">
+    <item name="android:textColor">#212121</item>
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+
+  <!--==================================Brown complete==================================-->
+  <style name="background_settingBrownComplete">
+    <item name="android:background">#D7CCC8</item>
+  </style>
+
+  <style name="background_2_setting_BrownComplete">
+    <item name="android:background">#D7CCC8</item>
+  </style>
+
+  <style name="page_background_BrownComplete">
+    <item name="android:background">#D7CCC8</item>
+  </style>
+
+  <style name="backgroundSubChat_BrownComplete">
+    <item name="android:background">#D7CCC8</item>
+  </style>
+
+  <style name="text_style_menu_BrownComplete">
+    <item name="android:textColor">#5D4037</item>
+  </style>
+
+  <style name="icon_style_menu_BrownComplete">
+    <item name="android:textColor">#5D4037</item>
+  </style>
+
+  <style name="text_title_style_setting_BrownComplete">
+    <item name="android:textColor">#0d0d0d</item>
+  </style>
+
+  <style name="text_sub_style_setting_BrownComplete">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_BrownComplete">
+    <item name="android:background">#bcaaa4</item>
+  </style>
+
+  <style name="hint_style_setting_BrownComplete">
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textColor">#212121</item>
+  </style>
+
+  <style name="backgroundColorCallBrownComplete">
+    <item name="android:background">@drawable/background_call_fragment_brown</item>
+  </style>
+
+  <style name="emojiColorChat_BrownComplete">
+    <item name="android:textColor">#212121</item>
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+  <!--==================================Teal complete==================================-->
+  <style name="background_settingTealComplete">
+    <item name="android:background">#B2DFDB</item>
+  </style>
+
+  <style name="background_2_setting_TealComplete">
+    <item name="android:background">#B2DFDB</item>
+  </style>
+
+  <style name="page_background_TealComplete">
+    <item name="android:background">#B2DFDB</item>
+  </style>
+
+  <style name="backgroundSubChat_TealComplete">
+    <item name="android:background">#B2DFDB</item>
+  </style>
+
+  <style name="text_style_menu_TealComplete">
+    <item name="android:textColor">#004d40</item>
+  </style>
+
+  <style name="icon_style_menu_TealComplete">
+    <item name="android:textColor">#004d40</item>
+  </style>
+
+  <style name="text_title_style_setting_TealComplete">
+    <item name="android:textColor">#0d0d0d</item>
+  </style>
+
+  <style name="text_sub_style_setting_TealComplete">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_TealComplete">
+    <item name="android:background">#80cbc4</item>
+  </style>
+
+  <style name="hint_style_setting_TealComplete">
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textColor">#212121</item>
+  </style>
+
+  <style name="backgroundColorCallTealComplete">
+    <item name="android:background">@drawable/background_call_fragment_teal</item>
+  </style>
+
+  <style name="emojiColorChat_TealComplete">
+    <item name="android:textColor">#212121</item>
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textSize">@dimen/dp22</item>
+  </style>
+
+
+  <!--==================================Grey complete==================================-->
+  <style name="background_settingGreyComplete">
+    <item name="android:background">#f5f5f5</item>
+  </style>
+
+  <style name="background_2_setting_GreyComplete">
+    <item name="android:background">#f5f5f5</item>
+  </style>
+
+  <style name="page_background_GreyComplete">
+    <item name="android:background">#f5f5f5</item>
+  </style>
+
+  <style name="backgroundSubChat_GreyComplete">
+    <item name="android:background">#f5f5f5</item>
+  </style>
+
+  <style name="text_style_menu_GreyComplete">
+    <item name="android:textColor">#616161</item>
+  </style>
+
+  <style name="icon_style_menu_GreyComplete">
+    <item name="android:textColor">#616161</item>
+  </style>
+
+  <style name="text_title_style_setting_GreyComplete">
+    <item name="android:textColor">#0d0d0d</item>
+  </style>
+
+  <style name="text_sub_style_setting_GreyComplete">
+    <item name="android:textColor">@color/gray_5c</item>
+  </style>
+
+  <style name="line_style_setting_GreyComplete">
+    <item name="android:background">#e0e0e0</item>
+  </style>
+
+  <style name="hint_style_setting_GreyComplete">
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textColor">#212121</item>
+  </style>
+
+  <style name="backgroundColorCallGreyComplete">
+    <item name="android:background">@drawable/background_call_fragment_grey</item>
+  </style>
+
+  <style name="emojiColorChat_GreyComplete">
+    <item name="android:textColor">#212121</item>
+    <item name="android:textColorHint">#757575</item>
+    <item name="android:textSize">@dimen/dp22</item>
   </style>
 
 </resources>

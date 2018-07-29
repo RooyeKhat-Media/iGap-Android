@@ -22,11 +22,12 @@ import io.realm.net_iGap_realm_RealmRoomMessageLocationRealmProxy;
 
 @Parcel(implementations = {net_iGap_realm_RealmRoomMessageLocationRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {RealmRoomMessageLocation.class})
 public class RealmRoomMessageLocation extends RealmObject {
-    private double locationLat;
-    private double locationLong;
-    private String imagePath;
+
     @PrimaryKey
     private long id;
+    private double locationLat;
+    private double locationLong;
+    private String imagePath; // this field not important now, because we use from 'locationLat' and 'locationLat' params for detect location path
 
     public static RealmRoomMessageLocation put(final ProtoGlobal.RoomMessageLocation input, Long id) {
         Realm realm = Realm.getDefaultInstance();

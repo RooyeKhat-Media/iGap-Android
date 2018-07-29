@@ -69,8 +69,10 @@ public abstract class MessageHandler {
 
         HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode), false);
 
-        HelperLog.setErrorLog("MessageHandler  error   majorCode : " + errorResponse.getMajorCode() +
-                "  minorCode : " + errorResponse.getMinorCode() + "           " + G.lookupMap.get(actionId));
+        if (majorCode != 5) {
+            HelperLog.setErrorLog("MessageHandler  error   majorCode : " + errorResponse.getMajorCode() +
+                    "  minorCode : " + errorResponse.getMinorCode() + "           " + G.lookupMap.get(actionId));
+        }
 
 
         if (BuildConfig.DEBUG) {

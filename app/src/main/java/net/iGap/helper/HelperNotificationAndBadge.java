@@ -12,6 +12,7 @@ package net.iGap.helper;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -98,6 +99,7 @@ public class HelperNotificationAndBadge {
     private String mHeader = "";
     private String mContent = "";
     private Bitmap mBitmapIcon = null;
+    String CHANNEL_ID = "iGap_channel_01";
 
     public HelperNotificationAndBadge() {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -108,6 +110,14 @@ public class HelperNotificationAndBadge {
         intentClose.putExtra("Action", "strClose");
         PendingIntent pendingIntentClose = PendingIntent.getBroadcast(context, 1, intentClose, 0);
         remoteViewsLarge.setOnClickPendingIntent(R.id.mln_btn_close, pendingIntentClose);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // The id of the channel.
+            CharSequence name = G.context.getString(R.string.channel_name_notification);// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
     }
 
     //private void setOnTextClick(int resLayot, int indexItem) {
@@ -273,7 +283,13 @@ public class HelperNotificationAndBadge {
             messageToShow = messageToShow.substring(0, 40);
         }
 
-        notification = new NotificationCompat.Builder(context).setSmallIcon(getNotificationIcon()).setLargeIcon(mBitmapIcon).setContentTitle(mHeader).setContentText(mContent).setCategory(NotificationCompat.CATEGORY_MESSAGE).setStyle(getBigStyle()).setContentIntent(pi).build();
+        notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(getNotificationIcon())
+                .setLargeIcon(mBitmapIcon)
+                .setContentTitle(mHeader)
+                .setContentText(mContent).setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setStyle(getBigStyle())
+                .setContentIntent(pi).build();
 
         if (currentAlarm + delayAlarm < System.currentTimeMillis()) {
             if (isMute) {
@@ -323,9 +339,9 @@ public class HelperNotificationAndBadge {
 
     public void checkAlert(boolean updateNotification, ProtoGlobal.Room.Type type, long roomId) {
 
-        if (G.isAppInFg || AttachFile.isInAttach) {
-            return;
-        }
+//        if (G.isAppInFg || AttachFile.isInAttach) {
+//            return;
+//        }
 
         idRoom = roomId;
         int vipCheck = checkSpecialNotification(updateNotification, type, roomId);

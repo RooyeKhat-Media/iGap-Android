@@ -9,6 +9,9 @@
   <uses-feature android:name="android.hardware.camera" />
   <uses-feature android:name="android.hardware.camera.autofocus" />
 
+
+  <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
+
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -38,6 +41,8 @@
   <uses-permission android:name="android.permission.BLUETOOTH" />
   <uses-permission android:name="android.permission.USE_FINGERPRINT" />
   <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
 
   <uses-feature
     android:glEsVersion="0x00020000"
@@ -50,11 +55,12 @@
     android:configChanges="locale"
     android:icon="@mipmap/icon"
     android:largeHeap="true"
+
     android:launchMode="singleTask"
     android:manageSpaceActivity=".activities.ActivityManageSpace"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
-    tools:replace="allowBackup">
+    tools:replace="allowBackup,supportsRtl">
     <receiver
       android:name=".module.CustomButtonListener"
       android:exported="false" />
@@ -99,6 +105,16 @@
       android:excludeFromRecents="true"
       android:launchMode="singleInstance">
 
+
+
+
+
+<!--      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.net.iGap.profile" />
+      </intent-filter>-->
+
       <!--
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
@@ -110,6 +126,10 @@
 
     </activity>
 
+    <activity
+      android:name="com.journeyapps.barcodescanner.CaptureActivity"
+      android:screenOrientation="fullSensor"
+      tools:replace="screenOrientation" />
 
     <activity
       android:name=".activities.ActivityMain"
@@ -189,6 +209,23 @@
 
         <data android:mimeType="*/*" />
       </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.net.iGap.call" />
+        <data android:mimeType="vnd.android.cursor.item/vnd.net.iGap.profile" />
+
+
+      </intent-filter>
+
+
+      <intent-filter>
+        <action android:name="android.intent.action.CALL_PRIVILEGED" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="tel" />
+      </intent-filter>
       <!-- this part add app logo to list of share -->
     </activity>
 
@@ -222,13 +259,26 @@
 
     <service
       android:name="net.iGap.module.AuthenticatorService"
-      android:label="@string/app_name">
+      android:exported="true"
+      android:process=":auth">
       <intent-filter>
         <action android:name="android.accounts.AccountAuthenticator" />
       </intent-filter>
       <meta-data
         android:name="android.accounts.AccountAuthenticator"
         android:resource="@xml/authenticator" />
+    </service>
+
+    <service android:name=".libs.notification.GettingDeviceTokenService">
+      <intent-filter>
+        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+      </intent-filter>
+    </service>
+
+    <service android:name=".libs.notification.NotificationService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
     </service>
 
     <provider
@@ -242,8 +292,9 @@
     </provider>
 
     <meta-data
+      tools:replace="android:value"
       android:name="io.fabric.ApiKey"
-      android:value="Your_Fabric_key" />
+      android:value="Your_Fabric_Key" />
 
     <!--
       The API key for Google Maps-based APIs is defined as a string resource.
@@ -273,6 +324,31 @@
       android:name="com.yalantis.ucrop.UCropActivity"
       android:screenOrientation="portrait"
       android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+
+    <service
+      android:name=".helper.contact.ContactsSyncAdapterService"
+      android:exported="true"
+      android:process=":contacts">
+
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter" />
+      </intent-filter>
+
+      <meta-data
+        android:name="android.content.SyncAdapter"
+        android:resource="@xml/sync_contacts" />
+  <!--    <meta-data
+        android:name="android.provider.CONTACTS_STRUCTURE"
+        android:resource="@xml/contacts" />-->
+
+      <meta-data
+        android:name="android.provider.CONTACTS_STRUCTURE"
+        android:resource="@xml/contacts" />
+
+
+    </service>
+
 
   </application>
 

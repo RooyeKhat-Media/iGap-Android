@@ -106,6 +106,10 @@ public class SHP_SETTING {
     public static final String KEY_KEEP_MEDIA_NEW = "KEY_KEEP_MEDIA_NEW";
 
     // default color
+
+
+    public static final String KEY_THEME_COLOR = "KEY_THEME_COLOR";
+
     public static final String KEY_APP_BAR_COLOR = "KEY_APP_BAR_COLOR";
     public static final String KEY_NOTIFICATION_COLOR = "KEY_NOTIFICATION_COLOR";
     public static final String KEY_TOGGLE_BOTTON_COLOR = "KEY_TOGGLE_BOTTON_COLOR";
@@ -113,6 +117,15 @@ public class SHP_SETTING {
     public static final String KEY_FONT_HEADER_COLOR = "KEY_FONT_HEADER_COLOR";
     public static final String KEY_MENU_BACKGROUND_COLOR = "KEY_MENU_BACKGROUND_COLOR";
     public static final String KEY_PROGRES_COLOR = "KEY_PROGRES_COLOR";
+
+    public static final String KEY_OLD_THEME_COLOR = "KEY_OLD_THEME_COLOR";
+    public static final String KEY_APP_BAR_COLOR_DARK = "KEY_APP_BAR_COLOR_DARK";
+    public static final String KEY_NOTIFICATION_COLOR_DARK = "KEY_NOTIFICATION_COLOR_DARK";
+    public static final String KEY_TOGGLE_BOTTON_COLOR_DARK = "KEY_TOGGLE_BOTTON_COLOR_DARK";
+    public static final String KEY_SEND_AND_ATTACH_ICON_COLOR_DARK = "KEY_SEND_AND_ATTACH_ICON_COLOR_DARK";
+    public static final String KEY_FONT_HEADER_COLOR_DARK = "KEY_FONT_HEADER_COLOR_DARK";
+    public static final String KEY_MENU_BACKGROUND_COLOR_DARK = "KEY_MENU_BACKGROUND_COLOR_DARK";
+    public static final String KEY_PROGRES_COLOR_DARK = "KEY_PROGRES_COLOR_DARK";
 
     // ========================================================================================== chat background
 
@@ -156,6 +169,9 @@ public class SHP_SETTING {
     public static final String KEY_SELECTED_HOUR_TO = "KEY_SELECTED_HOUR_TO";
     public static final String KEY_SELECTED_MINUTE_TO = "KEY_SELECTED_MINUTE_TO";
     public static final String KEY_SELECTED_MILISECOND_TO = "KEY_SELECTED_MILISECOND_TO";
+
+    public static final String KEY_SWITCH_MAP_STATE = "KEY_SWITCH_MAP_STATE";
+
 
     public static class Defaults {
         public static final int KEY_AUTOPLAY_GIFS = 1;

@@ -27,6 +27,7 @@ import org.parceler.Parcels;
 
 import io.realm.Realm;
 
+import static net.iGap.G.themeColor;
 import static net.iGap.G.userId;
 
 /**
@@ -76,6 +77,7 @@ public class StructMessageInfo implements Parcelable {
     public byte[] fileHash;
     public int uploadProgress;
     public StructMessageAttachment attachment;
+    public StructWallet structWallet;
     public StructRegisteredInfo userInfo;
     public StructMessageAttachment senderAvatar;
     public long time;
@@ -105,6 +107,7 @@ public class StructMessageInfo implements Parcelable {
         if (this.attachment == null) {
             this.attachment = new StructMessageAttachment();
         }
+
         this.attachment.setLocalThumbnailPath(Long.parseLong(messageID), localThumbnailPath);
         this.attachment.setLocalFilePath(Long.parseLong(messageID), localFilePath);
         this.fileHash = fileHash;
@@ -342,6 +345,10 @@ public class StructMessageInfo implements Parcelable {
         if (roomMessage.getLogs() != null) {
             messageInfo.senderID = "-1";
             messageInfo.logs = roomMessage.getLogs();
+        }
+
+        if (roomMessage.getRoomMessageWallet() != null) {
+            messageInfo.structWallet = StructWallet.convert(roomMessage.getRoomMessageWallet());
         }
 
         messageInfo.replayTo = roomMessage.getReplyTo();

@@ -1,27 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  style="?backgroundColorSettingTheme"
-  android:clickable="true"
-  android:orientation="vertical">
-
-
-  <FrameLayout
-    android:id="@+id/mf_fragment_map_view"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?backgroundColorSettingTheme"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"></FrameLayout>
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <FrameLayout
+                android:id="@+id/mf_fragment_map_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></FrameLayout>
 
 
-  <Button
-    android:id="@+id/mf_btn_send_position"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/iGapColor"
-    android:text="@string/send_position"
-    android:textColor="@color/white"
-    android:textSize="@dimen/dp18" />
+            <RelativeLayout
+                android:id="@+id/mf_rv_send_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#FAFAFA"
+                android:gravity="bottom"
+                android:text="@string/send_position"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp18"
+                android:visibility="visible"
+                tools:ignore="MissingPrefix">
+
+                <RelativeLayout
+                    android:id="@+id/rv_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/dp4"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:background="@drawable/ic_circle_shape"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:srcCompat="@drawable/ic_location" />
 
 
-</LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/mf_txt_message"
+                    fontPath="fonts/IRANSansMobile.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp52"
+                    android:layout_marginRight="@dimen/dp52"
+                    android:layout_marginTop="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+                    android:text="@string/send_location_text"
+                    android:textSize="@dimen/dp16" />
+
+                <TextView
+                    android:id="@+id/mf_txt_accuracy"
+                    fontPath="fonts/IRANSansMobile.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mf_txt_message"
+                    android:layout_marginBottom="@dimen/dp8"
+                    android:layout_marginLeft="@dimen/dp52"
+                    android:layout_marginRight="@dimen/dp52"
+                    android:gravity="top"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+
+                    android:text="sfsaasdfasdf"
+                    android:textSize="@dimen/dp12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mf_rv_see_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#FAFAFA"
+                android:gravity="bottom"
+                android:text="@string/send_position"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp18"
+                android:visibility="invisible"
+                tools:ignore="MissingPrefix">
+
+                <net.iGap.module.CircleImageView
+                    android:id="@+id/mf_imgProfile"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:gravity="center"
+                    android:text="@string/md_igap_crosshairs_gps"
+                    android:textAppearance="@style/TextIconAppearance_toolbar"
+                    android:textColor="@color/md_green_700"
+
+                    />
+
+
+                <TextView
+                    android:id="@+id/mf_txt_userName"
+                    fontPath="fonts/IRANSansMobile.ttf"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginLeft="@dimen/dp52"
+                    android:layout_marginRight="@dimen/dp52"
+                    android:layout_marginTop="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+                    android:textSize="@dimen/dp16" />
+
+                <TextView
+                    android:id="@+id/mf_txt_distance"
+                    fontPath="fonts/IRANSansMobile.ttf"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mf_txt_userName"
+                    android:layout_marginBottom="@dimen/dp4"
+
+
+                    android:layout_marginLeft="@dimen/dp52"
+                    android:layout_marginRight="@dimen/dp52"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+
+
+                    android:textSize="@dimen/dp12" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/mf_fab_openMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+
+            android:layout_marginBottom="@dimen/dp22"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+
+            android:background="@android:color/white"
+            android:clickable="true"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            app:layout_anchor="@id/mf_rv_see_position"
+            app:srcCompat="@drawable/ic_direction"
+            app:tint="@color/white" />
+
+    </android.support.design.widget.CoordinatorLayout>
+    <!--</LinearLayout>-->
+
+
+</RelativeLayout>

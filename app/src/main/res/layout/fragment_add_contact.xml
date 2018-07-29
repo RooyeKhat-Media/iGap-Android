@@ -214,8 +214,7 @@
           android:singleLine="true"
           android:text="+98"
           android:textSize="@dimen/dp15"
-          style="?textTitleColorSettingTheme"
-          />
+          style="?textTitleColorSettingTheme" />
 
         <View
           android:layout_width="match_parent"

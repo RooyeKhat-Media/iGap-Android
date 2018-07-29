@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.helper;
 
@@ -39,6 +39,7 @@ import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentContactsProfile;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnClientCheckInviteLink;
+import net.iGap.interfaces.OnClientGetRoomMessage;
 import net.iGap.interfaces.OnClientJoinByInviteLink;
 import net.iGap.interfaces.OnClientResolveUsername;
 import net.iGap.module.AndroidUtils;
@@ -49,7 +50,10 @@ import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
+import net.iGap.realm.RealmRoomMessage;
+import net.iGap.realm.RealmRoomMessageFields;
 import net.iGap.request.RequestClientCheckInviteLink;
+import net.iGap.request.RequestClientGetRoomMessage;
 import net.iGap.request.RequestClientJoinByInviteLink;
 import net.iGap.request.RequestClientResolveUsername;
 
@@ -181,11 +185,12 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = LinkColorDark;
-                } else {
-                    ds.linkColor = LinkColor;
-                }
+//                if (G.isDarkTheme) {
+//                    ds.linkColor = LinkColorDark;
+//                } else {
+//                    ds.linkColor = LinkColor;
+//                }
+                ds.linkColor = Color.parseColor(G.linkColor);
 
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
@@ -249,11 +254,14 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = LinkColorDark;
-                } else {
-                    ds.linkColor = LinkColor;
-                }
+//                if (G.isDarkTheme) {
+//                    ds.linkColor = LinkColorDark;
+//                } else {
+//                    ds.linkColor = LinkColor;
+//                }
+
+                ds.linkColor = Color.parseColor(G.linkColor);
+
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -285,12 +293,12 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = LinkColorDark;
-                } else {
-                    ds.linkColor = LinkColor;
-                }
-
+//                if (G.isDarkTheme) {
+//                    ds.linkColor = LinkColorDark;
+//                } else {
+//                    ds.linkColor = LinkColor;
+//                }
+                ds.linkColor = Color.parseColor(G.linkColor);
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -358,11 +366,13 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = LinkColorDark;
-                } else {
-                    ds.linkColor = LinkColor;
-                }
+//                if (G.isDarkTheme) {
+//                    ds.linkColor = LinkColorDark;
+//                } else {
+//                    ds.linkColor = LinkColor;
+//                }
+                ds.linkColor = Color.parseColor(G.linkColor);
+
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -434,11 +444,13 @@ public class HelperUrl {
 
             @Override
             public void updateDrawState(TextPaint ds) {
-                if (G.isDarkTheme) {
-                    ds.linkColor = LinkColorDark;
-                } else {
-                    ds.linkColor = LinkColor;
-                }
+//                if (G.isDarkTheme) {
+//                    ds.linkColor = LinkColorDark;
+//                } else {
+//                    ds.linkColor = LinkColor;
+//                }
+                ds.linkColor = Color.parseColor(G.linkColor);
+
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
@@ -752,15 +764,31 @@ public class HelperUrl {
     }
 
     public static void checkUsernameAndGoToRoom(final String userName, final ChatEntry chatEntery) {
+        checkUsernameAndGoToRoomWithMessageId(userName, chatEntery, 0);
+    }
 
-        if (userName == null || userName.length() < 1 || isInCurrentChat(userName)) return;
+
+    /**
+     * @param username
+     * @param chatEntry
+     * @param messageId // use for detect message position
+     */
+
+    public static void checkUsernameAndGoToRoomWithMessageId(final String username, final ChatEntry chatEntry, final long messageId) {
+
+        if (username == null || username.length() < 1 || isInCurrentChat(username)) return;
 
         if (G.userLogin) {
+
             // this methode check user name and if it is ok go to room
             G.onClientResolveUsername = new OnClientResolveUsername() {
                 @Override
                 public void onClientResolveUsername(ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room) {
-                    openChat(userName, type, user, room, chatEntery);
+                    if (messageId == 0 || type == ProtoClientResolveUsername.ClientResolveUsernameResponse.Type.USER) {
+                        openChat(username, type, user, room, chatEntry, messageId);
+                    } else {
+                        resolveMessageAndOpenChat(messageId, username, chatEntry, type, user, room);
+                    }
                 }
 
                 @Override
@@ -771,11 +799,40 @@ public class HelperUrl {
 
             showIndeterminateProgressDialog();
 
-            new RequestClientResolveUsername().clientResolveUsername(userName);
+            new RequestClientResolveUsername().clientResolveUsername(username);
         } else {
             closeDialogWaiting();
             HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
         }
+    }
+
+    /**
+     * if message isn't exist in Realm resolve from server and then open chat
+     */
+    private static void resolveMessageAndOpenChat(final long messageId, final String username, final ChatEntry chatEntry, final ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, final ProtoGlobal.RegisteredUser user, final ProtoGlobal.Room room) {
+
+        Realm realm = Realm.getDefaultInstance();
+        RealmRoomMessage rm = realm.where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, room.getId()).equalTo(RealmRoomMessageFields.MESSAGE_ID, messageId).findFirst();
+        if (rm != null) {
+            openChat(username, type, user, room, chatEntry, messageId);
+        } else {
+
+            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, room.getId()).findFirst();
+            if (realmRoom == null || realmRoom.isDeleted()) {
+                openChat(username, type, user, room, chatEntry, messageId);
+            } else {
+                new RequestClientGetRoomMessage().clientGetRoomMessage(room.getId(), messageId);
+                G.onClientGetRoomMessage = new OnClientGetRoomMessage() {
+                    @Override
+                    public void onClientGetRoomMessageResponse(final long messageId) {
+                        RealmRoomMessage.setGap(messageId);
+                        G.onClientGetRoomMessage = null;
+                        openChat(username, type, user, room, chatEntry, messageId);
+                    }
+                };
+            }
+        }
+        realm.close();
     }
 
     public static void closeDialogWaiting() {
@@ -792,25 +849,25 @@ public class HelperUrl {
 
     //************************************  go to room by userName   *********************************************************************
 
-    private static void openChat(String username, ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room, ChatEntry chatEntery) {
+    private static void openChat(String username, ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room, ChatEntry chatEntery, long messageId) {
 
         switch (type) {
             case USER:
-                goToChat(user, chatEntery);
+                goToChat(user, chatEntery, messageId);
                 break;
             case ROOM:
-                goToRoom(username, room);
+                goToRoom(username, room, messageId);
                 break;
         }
     }
 
-    private static void goToActivity(final long roomId, final long peerId, ChatEntry chatEntry) {
+    private static void goToActivity(final long roomId, final long peerId, ChatEntry chatEntry, final long messageId) {
 
         switch (chatEntry) {
             case chat:
 
                 if (roomId != FragmentChat.lastChatRoomId) {
-                    new GoToChatActivity(roomId).setPeerID(peerId).startActivity();
+                    new GoToChatActivity(roomId).setMessageID(messageId).setPeerID(peerId).startActivity();
                 }
 
                 break;
@@ -831,7 +888,7 @@ public class HelperUrl {
         }
     }
 
-    private static void goToChat(final ProtoGlobal.RegisteredUser user, final ChatEntry chatEntery) {
+    private static void goToChat(final ProtoGlobal.RegisteredUser user, final ChatEntry chatEntery, long messageId) {
 
         Long id = user.getId();
 
@@ -841,7 +898,7 @@ public class HelperUrl {
         if (realmRoom != null) {
             closeDialogWaiting();
 
-            goToActivity(realmRoom.getId(), id, chatEntery);
+            goToActivity(realmRoom.getId(), id, chatEntery, messageId);
 
             realm.close();
         } else {
@@ -894,7 +951,7 @@ public class HelperUrl {
                     @Override
                     public void onSuccess() {
 
-                        goToActivity(roomId, user.getId(), chatEntery);
+                        goToActivity(roomId, user.getId(), chatEntery, 0);
 
                         realm.close();
                     }
@@ -908,7 +965,7 @@ public class HelperUrl {
         });
     }
 
-    private static void goToRoom(String username, final ProtoGlobal.Room room) {
+    private static void goToRoom(String username, final ProtoGlobal.Room room, long messageId) {
 
         final Realm realm = Realm.getDefaultInstance();
 
@@ -922,7 +979,7 @@ public class HelperUrl {
                 closeDialogWaiting();
 
                 if (room.getId() != FragmentChat.lastChatRoomId) {
-                    new GoToChatActivity(room.getId()).startActivity();
+                    new GoToChatActivity(room.getId()).setMessageID(messageId).startActivity();
                 }
 
             }

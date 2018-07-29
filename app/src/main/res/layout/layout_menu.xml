@@ -3,14 +3,13 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/rootMenu"
+  style="?backgroundColorSettingTheme"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/white"
   android:clickable="true"
   android:fitsSystemWindows="true"
   android:orientation="vertical"
   tools:ignore="MissingPrefix">
-
 
   <ScrollView
     android:id="@+id/scrollView"
@@ -59,33 +58,72 @@
             android:textSize="@dimen/dp22"
             app:emojiSize="@dimen/dp14" />
 
-          <TextView
-            android:id="@+id/lm_txt_phone_number"
-            fontPath="fonts/IRANSansMobile_Bold.ttf"
-            android:layout_width="wrap_content"
+          <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp16"
-            android:layout_marginStart="@dimen/dp16"
-            android:singleLine="true"
-            android:text="+98 9123456789"
-            android:textColor="#f8f4df"
-            android:textSize="@dimen/dp12" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+              android:id="@+id/lm_txt_phone_number"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp16"
+              android:layout_marginStart="@dimen/dp16"
+              android:singleLine="true"
+              android:text="+98 9123456789"
+              android:textColor="#f8f4df"
+              android:textSize="@dimen/dp12" />
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:orientation="horizontal" />
+
+          </LinearLayout>
         </LinearLayout>
 
-        <net.iGap.module.MaterialDesignTextView
-          android:id="@+id/lm_txt_cloud"
+        <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="bottom"
-          android:layout_marginBottom="@dimen/dp8"
           android:layout_marginEnd="@dimen/dp16"
           android:layout_marginRight="@dimen/dp16"
-          android:padding="4dp"
-          android:singleLine="true"
-          android:text="@string/md_cloud"
-          android:textAppearance="@style/TextIconAppearance_toolbar"
-          android:textColor="#adffffff"
-          android:textSize="28sp" />
+          android:gravity="center"
+          android:orientation="vertical"
+          android:padding="4dp">
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/lm_txt_cloud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="@string/md_cloud"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:textColor="#adffffff"
+            android:textSize="28sp" />
+
+          <net.iGap.module.MaterialDesignTextView
+            android:id="@+id/lm_txt_icon_phone_number_inquiry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="@string/md_twitch"
+            android:textColor="#f8f4df"
+            android:textSize="@dimen/dp18"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextIconAppearance_toolbar"
+            android:visibility="invisible" />
+        </LinearLayout>
+
+
       </LinearLayout>
 
 
@@ -195,7 +233,7 @@
             android:layout_marginTop="@dimen/dp4"
             android:orientation="horizontal">
 
-            <TextView
+            <net.iGap.module.MaterialDesignTextView
               android:id="@+id/lm_txt_icon_channel"
               style="?iconColorMenuTheme"
               fontPath="fonts/iGap-Fontico.ttf"
@@ -204,6 +242,7 @@
               android:gravity="center"
               android:minWidth="@dimen/dp32"
               android:text="@string/md_channel_icon"
+              android:textAppearance="@style/TextIconAppearance.menu"
               android:textSize="@dimen/dp20"
 
               />
@@ -242,7 +281,7 @@
               android:gravity="center"
               android:minWidth="@dimen/dp32"
               android:text="@string/md_searching_magnifying_glass"
-              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textAppearance="@style/TextIconAppearance.menu"
               android:textSize="@dimen/dp20" />
 
 
@@ -264,6 +303,109 @@
           </LinearLayout>
 
           <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="@dimen/dp8"
+            android:background="@color/gray" />
+
+
+          <LinearLayout
+            android:id="@+id/lm_ll_wallet"
+            style="@style/NavigationDrawer.Item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp6"
+            android:layout_marginTop="@dimen/dp4"
+            android:orientation="horizontal">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:id="@+id/lm_txt_icon_FinancialServices"
+              style="?iconColorMenuTheme"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:minWidth="@dimen/dp32"
+              android:text="@string/md_payment"
+              android:textAppearance="@style/TextIconAppearance.menu"
+              android:textSize="@dimen/dp20" />
+
+            <TextView
+              style="?textColorMenuTheme"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp4"
+              android:layout_marginStart="@dimen/dp4"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp8"
+              android:text="@string/wallet"
+              android:textSize="@dimen/dp14" />
+
+            <View
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1" />
+
+            <TextView
+              android:id="@+id/cash"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              android:layout_width="wrap_content"
+              android:layout_weight="1"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp10"
+              android:layout_marginStart="@dimen/dp10"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingLeft="@dimen/dp4"
+              android:paddingRight="@dimen/dp4"
+              android:paddingTop="@dimen/dp8"
+              android:layout_gravity="center|end"
+              android:gravity="end"
+              android:text="$100"
+              android:layout_marginEnd="@dimen/dp10"
+              android:layout_marginRight="@dimen/dp10"
+              android:textSize="@dimen/dp10" />
+
+          </LinearLayout>
+
+          <LinearLayout
+            android:id="@+id/lm_ll_payment"
+            style="@style/NavigationDrawer.Item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp6"
+            android:layout_marginTop="@dimen/dp4"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <net.iGap.module.MaterialDesignTextView
+              style="?iconColorMenuTheme"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:minWidth="@dimen/dp32"
+              android:text="@string/md_igap_credit_card"
+              android:textAppearance="@style/TextIconAppearance.menu"
+              android:textSize="@dimen/dp20" />
+
+            <TextView
+              style="?textColorMenuTheme"
+              fontPath="fonts/IRANSansMobile_Bold.ttf"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dp4"
+              android:layout_marginStart="@dimen/dp4"
+              android:paddingBottom="@dimen/dp8"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp12"
+              android:text="@string/financial_services"
+              android:textSize="@dimen/dp14" />
+          </LinearLayout>
+
+          <View
+            android:id="@+id/lm_view_Line"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_margin="@dimen/dp8"

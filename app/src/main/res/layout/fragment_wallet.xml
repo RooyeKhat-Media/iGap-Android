@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.graphics.Color" />
+
+    <import type="net.iGap.G" />
+
+    <variable
+      name="fragmentWalletViewModel"
+      type="net.iGap.viewmodel.FragmentWalletViewModel" />
+
+    <variable
+      name="backHandler"
+      type="net.iGap.interfaces.IBackHandler" />
+
+
+  </data>
+
+  <LinearLayout
+    style="?backgroundColorSettingTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+        android:layoutDirection="ltr"
+        android:padding="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <net.iGap.libs.rippleeffect.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> backHandler.onBack()}"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/wallet"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:textStyle="normal"
+            android:visibility="visible" />
+        </LinearLayout>
+      </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+  </LinearLayout>
+</layout>

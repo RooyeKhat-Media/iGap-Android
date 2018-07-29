@@ -304,10 +304,9 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
             }
 
             viewHolder.title.setText(registeredInfo.getDisplayName());
-            if (G.isDarkTheme) {
-                viewHolder.title.setTextColor(Color.parseColor(G.textTitleTheme));
-                viewHolder.subtitle.setTextColor(Color.parseColor(G.textSubTheme));
-            }
+
+            viewHolder.title.setTextColor(Color.parseColor(G.textTitleTheme));
+            viewHolder.subtitle.setTextColor(Color.parseColor(G.textSubTheme));
             viewHolder.subtitle.setText(LastSeenTimeUtil.computeTime(registeredInfo.getId(), registeredInfo.getLastSeen(), false));
             if (HelperCalander.isPersianUnicode) {
                 viewHolder.subtitle.setText(viewHolder.subtitle.getText().toString());

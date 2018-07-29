@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -63,7 +64,6 @@ import net.iGap.interfaces.OnChannelCheckUsername;
 import net.iGap.interfaces.OnChannelDelete;
 import net.iGap.interfaces.OnChannelEdit;
 import net.iGap.interfaces.OnChannelKickAdmin;
-import net.iGap.interfaces.OnChannelKickMember;
 import net.iGap.interfaces.OnChannelKickModerator;
 import net.iGap.interfaces.OnChannelLeft;
 import net.iGap.interfaces.OnChannelRemoveUsername;
@@ -525,7 +525,7 @@ public class FragmentChannelProfileViewModel
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link_title_revoke))
                 .positiveText(G.fragmentActivity.getResources().getString(R.string.revoke))
                 .customView(layoutRevoke, true)
-                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .widgetColor(Color.parseColor(G.appBarColor))
                 .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                 .neutralText(R.string.array_Copy)
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
@@ -593,7 +593,7 @@ public class FragmentChannelProfileViewModel
         final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_link))
                 .positiveText(G.fragmentActivity.getResources().getString(R.string.array_Copy))
                 .customView(layoutChannelLink, true)
-                .widgetColor(G.context.getResources().getColor(R.color.toolbar_background))
+                .widgetColor(Color.parseColor(G.appBarColor))
                 .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
@@ -701,7 +701,7 @@ public class FragmentChannelProfileViewModel
     //********** dialog for edit channel
 
     private void ChangeGroupDescription(final View v) {
-        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.channel_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).onPositive(new MaterialDialog.SingleButtonCallback() {
+        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.channel_description).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).alwaysCallInputCallback().widgetColor(Color.parseColor(G.appBarColor)).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 editChannelRequest(callbackChannelName.get(), dialogDesc);
@@ -764,7 +764,7 @@ public class FragmentChannelProfileViewModel
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.channel_name)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(Color.parseColor(G.appBarColor)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
 
@@ -839,7 +839,7 @@ public class FragmentChannelProfileViewModel
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.toolbar_background));
+                    viewUserName.setBackgroundColor(Color.parseColor(G.appBarColor));
                 } else {
                     viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
                 }
@@ -1128,7 +1128,7 @@ public class FragmentChannelProfileViewModel
         layoutUserName.addView(inputUserName, layoutParams);
 
         final MaterialDialog dialog =
-                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(G.context.getResources().getColor(R.color.toolbar_background)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
+                new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.st_username)).positiveText(G.fragmentActivity.getResources().getString(R.string.save)).customView(layoutUserName, true).widgetColor(Color.parseColor(G.appBarColor)).negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel)).build();
 
         final View positive = dialog.getActionButton(DialogAction.POSITIVE);
         positive.setEnabled(false);
@@ -1268,7 +1268,7 @@ public class FragmentChannelProfileViewModel
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.toolbar_background));
+                    viewUserName.setBackgroundColor(Color.parseColor(G.appBarColor));
                 } else {
                     viewUserName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
                 }

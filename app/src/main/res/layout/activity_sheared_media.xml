@@ -171,7 +171,7 @@
         android:textSize="@dimen/dp20" />
 
       <net.iGap.module.MaterialDesignTextView
-        android:id="@+id/asm_btn_forward_selected"
+        android:id="@+id/asm_btn_goToPage"
         android:layout_width="@dimen/dp60"
         android:layout_height="match_parent"
         android:background="@null"
@@ -183,6 +183,18 @@
 
 
         />
+
+      <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/asm_btn_forward_selected"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/md_forward"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textColor="@color/gray"
+        android:paddingTop="@dimen/dp6"
+        android:textSize="@dimen/dp26" />
 
       <net.iGap.libs.rippleeffect.RippleView
         android:id="@+id/asm_riple_delete_selected"

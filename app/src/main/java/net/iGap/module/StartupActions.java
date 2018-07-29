@@ -1,8 +1,11 @@
 package net.iGap.module;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -12,17 +15,15 @@ import com.downloader.PRDownloaderConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.vanniktech.emoji.EmojiManager;
-import com.vanniktech.emoji.one.EmojiOneProvider;
 
 import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.Theme;
 import net.iGap.WebSocketClient;
 import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.helper.HelperCalander;
-import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperFillLookUpClass;
 import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperPermission;
@@ -81,7 +82,7 @@ public final class StartupActions {
     public StartupActions() {
 
         detectDeviceType();
-        EmojiManager.install(new EmojiOneProvider()); // This line needs to be executed before any usage of EmojiTextView or EmojiEditText.
+        //  EmojiManager.install(new EmojiOneProvider()); // This line needs to be executed before any usage of EmojiTextView or EmojiEditText.
         initializeGlobalVariables();
         realmConfiguration();
         mainUserInfo();
@@ -91,13 +92,12 @@ public final class StartupActions {
         ConnectionManager.manageConnection();
         configDownloadManager();
         manageTime();
-
+        getiGapAccountInstance();
 
         new CallObserver();
         /**
          * initialize download and upload listeners
          */
-        new HelperDownloadFile();
         new HelperUploadFile();
     }
 
@@ -192,7 +192,7 @@ public final class StartupActions {
             DIR_AUDIOS = rootPath + G.AUDIOS;
             DIR_DOCUMENT = rootPath + G.DOCUMENT;
         } else {
-            String selectedStorage = getSelectedStoragePath();
+            String selectedStorage = getSelectedStoragePath(rootPath);
             DIR_IMAGES = selectedStorage + G.IMAGES;
             DIR_VIDEOS = selectedStorage + G.VIDEOS;
             DIR_AUDIOS = selectedStorage + G.AUDIOS;
@@ -204,24 +204,48 @@ public final class StartupActions {
         DIR_IMAGE_USER = rootPath + G.IMAGE_USER;
     }
 
-    private static String getSelectedStoragePath() {
-        String selectedStorage = G.DIR_APP;
+    private static String getSelectedStoragePath(String cashPath) {
+
         SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        boolean canWrite = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+        String selectedStorage = "";
+
+        if (canWrite) {
+            selectedStorage = G.DIR_APP;
+        } else {
+            selectedStorage = cashPath;
+        }
 
         if (sharedPreferences.getInt(SHP_SETTING.KEY_SDK_ENABLE, 0) == 1) {
             if (G.DIR_SDCARD_EXTERNAL.equals("")) {
                 List<String> storageList = FileUtils.getSdCardPathList();
                 if (storageList.size() > 0) {
-                    G.DIR_SDCARD_EXTERNAL = storageList.get(0);
-                    selectedStorage = G.DIR_SDCARD_EXTERNAL + IGAP;
+                    String sdPath = "";
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                        sdPath = storageList.get(0) + IGAP;
+                    } else {
+                        File exFile = G.context.getExternalFilesDir(null);
+                        if (exFile != null) {
+                            sdPath = storageList.get(0) + exFile.getAbsolutePath().substring(exFile.getAbsolutePath().indexOf("/Android"));
+                        }
+                    }
+                    File sdFile = new File(sdPath);
+                    if ((sdFile.exists() && sdFile.canWrite()) || sdFile.mkdirs()) {
+                        G.DIR_SDCARD_EXTERNAL = selectedStorage = sdPath;
+                    } else {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt(SHP_SETTING.KEY_SDK_ENABLE, 0);
+                        editor.apply();
+                    }
                 } else {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(SHP_SETTING.KEY_SDK_ENABLE, 0);
                     editor.apply();
                 }
             } else {
-                if (new File(G.DIR_SDCARD_EXTERNAL).exists()) {
-                    selectedStorage = G.DIR_SDCARD_EXTERNAL + IGAP;
+                File sdFile = new File(G.DIR_SDCARD_EXTERNAL);
+                if ((sdFile.exists() && sdFile.canWrite()) || sdFile.mkdirs()) {
+                    selectedStorage = G.DIR_SDCARD_EXTERNAL;
                 } else {
                     G.DIR_SDCARD_EXTERNAL = "";
                 }
@@ -229,6 +253,36 @@ public final class StartupActions {
         }
         new File(selectedStorage).mkdirs();
         return selectedStorage;
+    }
+
+    /**
+     * if iGap Account not created yet, create otherwise just detect and return
+     */
+    public static Account getiGapAccountInstance() {
+
+        if (G.iGapAccount != null) {
+            return G.iGapAccount;
+        }
+
+        AccountManager accountManager = AccountManager.get(G.context);
+        if (accountManager.getAccounts().length != 0) {
+            for (Account account : accountManager.getAccounts()) {
+                if (account.type.equals(G.context.getPackageName())) {
+                    G.iGapAccount = account;
+                    return G.iGapAccount;
+                }
+            }
+        }
+
+        G.iGapAccount = new Account(Config.iGapAccount, G.context.getPackageName());
+        String password = "net.iGap";
+        try {
+            accountManager.addAccountExplicitly(G.iGapAccount, password, null);
+        } catch (Exception e1) {
+            e1.getMessage();
+        }
+
+        return G.iGapAccount;
     }
 
     public static File getCacheDir() {
@@ -306,27 +360,15 @@ public final class StartupActions {
             editor.apply();
         }
 
-        G.isDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
-
-        appBarColor = preferences.getString(SHP_SETTING.KEY_APP_BAR_COLOR, Config.default_appBarColor);
-        notificationColor = preferences.getString(SHP_SETTING.KEY_NOTIFICATION_COLOR, Config.default_notificationColor);
-        toggleButtonColor = preferences.getString(SHP_SETTING.KEY_TOGGLE_BOTTON_COLOR, Config.default_toggleButtonColor);
-        attachmentColor = preferences.getString(SHP_SETTING.KEY_SEND_AND_ATTACH_ICON_COLOR, Config.default_attachmentColor);
-        headerTextColor = preferences.getString(SHP_SETTING.KEY_FONT_HEADER_COLOR, Config.default_headerTextColor);
-        G.progressColor = preferences.getString(SHP_SETTING.KEY_PROGRES_COLOR, Config.default_progressColor);
-
+//        G.isDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);
 
         boolean isDisableAutoDarkTheme = preferences.getBoolean(SHP_SETTING.KEY_DISABLE_TIME_DARK_THEME, true);
         if (!isDisableAutoDarkTheme) {
             checkTimeForAutoTheme(preferences);
         }
 
-        if (G.isDarkTheme) {
-            Config.darkThemeColor();
+        Theme.setThemeColor();
 
-        } else {
-            Config.lightThemeColor();
-        }
         G.multiTab = preferences.getBoolean(SHP_SETTING.KEY_MULTI_TAB, false);
 
         // setting for show layout vote in channel
@@ -375,20 +417,20 @@ public final class StartupActions {
 
                 //checkes whether the current time is between 14:49:00 and 20:11:13.
                 G.isDarkTheme = true;
-                appBarColor = Config.default_dark_appBarColor;
-                notificationColor = Config.default_dark_notificationColor;
-                toggleButtonColor = Config.default_dark_toggleButtonColor;
-                attachmentColor = Config.default_dark_attachmentColor;
-                headerTextColor = Config.default_dark_headerTextColor;
-                G.progressColor = Config.default_dark_progressColor;
+                appBarColor = Theme.default_dark_appBarColor;
+                notificationColor = Theme.default_dark_notificationColor;
+                toggleButtonColor = Theme.default_dark_toggleButtonColor;
+                attachmentColor = Theme.default_dark_attachmentColor;
+                headerTextColor = Theme.default_dark_headerTextColor;
+                G.progressColor = Theme.default_dark_progressColor;
             } else {
                 G.isDarkTheme = false;
-                appBarColor = Config.default_appBarColor;
-                notificationColor = Config.default_notificationColor;
-                toggleButtonColor = Config.default_toggleButtonColor;
-                attachmentColor = Config.default_attachmentColor;
-                headerTextColor = Config.default_headerTextColor;
-                G.progressColor = Config.default_progressColor;
+                appBarColor = Theme.default_appBarColor;
+                notificationColor = Theme.default_notificationColor;
+                toggleButtonColor = Theme.default_toggleButtonColor;
+                attachmentColor = Theme.default_attachmentColor;
+                headerTextColor = Theme.default_headerTextColor;
+                G.progressColor = Theme.default_progressColor;
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -457,7 +499,7 @@ public final class StartupActions {
 
         RealmUserInfo userInfo = realm.where(RealmUserInfo.class).findFirst();
 
-        if (userInfo != null) {
+        if (userInfo != null && userInfo.getUserRegistrationState()) {
 
             userId = userInfo.getUserId();
             G.isPassCode = userInfo.isPassCode();

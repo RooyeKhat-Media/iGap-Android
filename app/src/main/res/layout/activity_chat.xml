@@ -680,7 +680,7 @@
         android:gravity="center"
         android:text="@string/md_expand_arrow"
         android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/green"
+        style="?backgroundColorSettingTheme"
         android:textSize="@dimen/dp20" />
 
       <TextView
@@ -692,7 +692,7 @@
         android:padding="@dimen/dp8"
         android:singleLine="true"
         android:text="0 of 0"
-        android:textColor="@color/green"
+        style="?backgroundColorSettingTheme"
         android:textSize="@dimen/dp16" />
 
 
@@ -704,7 +704,7 @@
         android:gravity="center"
         android:text="@string/md_downwards_arrow"
         android:textAppearance="@style/TextIconAppearance_toolbar"
-        android:textColor="@color/green"
+        style="?backgroundColorSettingTheme"
         android:textSize="@dimen/dp20" />
 
       <LinearLayout
@@ -749,7 +749,7 @@
       android:id="@+id/ac_ll_join"
       android:layout_width="match_parent"
       android:layout_height="@dimen/dp48"
-      android:background="@color/green"
+      style="?backgroundColorSettingTheme"
       android:clickable="true"
       android:gravity="center"
       android:orientation="horizontal"
@@ -790,7 +790,7 @@
           android:layout_weight="1"
           android:gravity="center"
           android:text="Mute"
-          android:textColor="@color/green"
+          style="colorAccent"
           android:textSize="@dimen/dp16"
 
           />

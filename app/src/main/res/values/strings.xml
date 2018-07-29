@@ -449,7 +449,6 @@
   <string name="E_374">GROUP_REVOKE_LINK_INTERNAL_SERVER_ERROR</string>
   <string name="E_375">GROUP_REVOKE_LINK_FORBIDDEN</string>
 
-  <string name="E_405">You are forbidden to do the action for request</string>
   <string name="E_453">CHANNEL_CHECK_USERNAME_BAD_PAYLOAD</string>
   <string name="E_454">CHANNEL_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
 
@@ -458,9 +457,7 @@
   <string name="E_457">CHANNEL_UPDATE_USERNAME_UPDATE_LOCK</string>
   <string name="E_458">CHANNEL_UPDATE_USERNAME_FORBIDDEN</string>
 
-  <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
-  <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
-  <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
+  <string name="E_468">channel update signature forbidden</string>
   <string name="E_478">You cannot invite this user to groups because of the protected privacy for the request</string>
 
   <string name="E_610">Bad payload</string>
@@ -483,6 +480,14 @@
 
   <string name="E_658">You have already sent report.</string>
   <string name="E_659">You are forbidden to send a report.</string>
+
+  <string name="E_9002">Unable to get initialize id</string>
+  <string name="E_9006">Communication with the server is not possible</string>
+  <string name="E_9007">Communication with the server is not possible</string>
+  <string name="E_9008">Connection with recipient failed</string>
+  <string name="E_9009">Communication with the server is not possible</string>
+  <string name="E_9010">The recipient has not registered</string>
+  <string name="E_9013">Your registration is forbidden</string>
 
   <string name="E_10108">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_BAD_PAYLOAD</string>
   <string name="E_10109">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_INTERNAL_SERVER_ERROR</string>
@@ -561,6 +566,7 @@
   <string name="phone_selected_for_send">selected phone</string>
   <string name="crop_selected_for_send">selected Image</string>
   <string name="location_message">Location Message</string>
+  <string name="wallet_message">Wallet Transaction</string>
   <string name="chat_to_group">Convert to Group</string>
   <string name="last_seen_at">last seen at</string>
   <string name="long_time_ago">long time ago</string>
@@ -642,6 +648,7 @@
   <string name="members">Members</string>
   <string name="skip">Skip</string>
   <string name="settings">Settings</string>
+  <string name="iGap_settings">iGap Account Settings</string>
   <string name="please_write_your_message">Please type your message!</string>
   <string name="share_audio_file">Shared Audios</string>
   <string name="share_image">Shared Images</string>
@@ -1210,5 +1217,115 @@
   <string name="automatic_description_theme">The night mode was activated from 19 to 8 with automatic mode selection</string>
   <string name="setting_dark_theme">Setting Dark Theme</string>
   <string name="Select_Time">Select Time</string>
+  <string name="financial_services">Financial Services</string>
+  <string name="install_app">Install App</string>
+  <string name="text_top">To use the service: to install the application for the card, buy a bus ticket, purchase a charge, pay bills, buy a package and other payment services.</string>
+  <string name="text_paygear">Follow up, pick up your wallet and instant cash deposit, pay your gifts, buy from stores and pay tax limousines.</string>
+  <string name="customization">customization</string>
+  <string name="Apply_colors_to_customize">Apply colors to customize</string>
+  <string name="channel_name_notification">iGap Notification</string>
+  <string name="payment">Payment</string>
+  <string name="buy_charge">Top up SIM card</string>
+  <string name="pay_bills">Pay bills</string>
+  <string name="pay_bills_crime">Pay traffic tickets</string>
+  <string name="barcode_reader">Barcode reader</string>
+  <string name="billing_id">Billing ID</string>
+  <string name="enter">enter</string>
+  <string name="payment_code">Payment code</string>
+  <string name="amount">Amount(Rial)</string>
+  <string name="buy">pay</string>
+  <string name="select">Select</string>
+  <string name="hamrahe_aval">Hamrahe Aval</string>
+  <string name="irancell">IranCell</string>
+  <string name="ritel">Ritel</string>
+  <string name="normal_charge">Normal charge</string>
+  <string name="amazing">Amazing charge</string>
+  <string name="wimax_charging">WiMAX charge</string>
+  <string name="permanently_charge">Charge permanent SIM cards</string>
+
+  <string name="charge_1"> 10,000 Rials</string>
+  <string name="charge_2"> 20,000 Rials</string>
+  <string name="charge_5"> 50,000 Rials</string>
+  <string name="charge_10"> 100,000 Rials</string>
+  <string name="charge_20"> 200,000 Rials</string>
+
+  <string name="charge_1_ir">10,000 Rials + 9% Value Added = 10,900 Rials</string>
+  <string name="charge_2_ir">20,000 Rials + 9% Value Added = 21,180 Rials</string>
+  <string name="charge_5_ir">50,000 Rials + 9% Value Added = 54,500 Rials</string>
+  <string name="charge_10_ir">100,000 Rials + 9% Value Added = 109,000 Rials</string>
+  <string name="charge_20_ir">200,000 Rials + 9% Value Added = 218,000 Rials</string>
+  <string name="biling_id_not_valid">Billing id is not valid</string>
+  <string name="pay_id_is_not_valid">Payment Id is not valid</string>
+  <string name="charge_type">Charge type</string>
+  <string name="operator">operator</string>
+  <string name="trabord">Ported subscriber</string>
+  <string name="time_out_error">time out error</string>
+  <string name="connection_error">no connection error</string>
+  <string name="server_error">server error</string>
+  <string name="network_error">network error</string>
+  <string name="dialog_canceled">Request canceled</string>
+  <string name="device_root">device root</string>
+  <string name="phone_number_is_not_valid">phone number is not valid</string>
+  <string name="please_select_operator">please select operator</string>
+  <string name="wallet">Wallet</string>
+  <string name="loading_wallet_agreement">Loading wallet agreement …</string>
+  <string name="i_agree_with_the_terms">I agree with the terms</string>
+  <string name="accept_the_terms">Accept the terms</string>
+  <string name="wallet_agrement">Wallet agreement</string>
+  <string name="SendMoney">Send Money</string>
+  <string name="transfer_amount_hint">Enter the transfer amount below :</string>
+  <string name="amount_in_rial">Amount in Rial :</string>
+  <string name="pay">pay</string>
+  <string name="transfer_to_dialog">Transfer to :</string>
+  <string name="am_money">money</string>
+  <string name="trace_number">Trace Number</string>
+  <string name="amount_2">amount :</string>
+  <string name="payment_canceled">payment is canceled</string>
+  <string name="PayGear_unavailable">PayGear is unavailable</string>
+  <string name="bills_inquiry_mci">MCI subscribers bill enquiry </string>
+  <string name="bills_inquiry_telecom">Home phones bill enquiry</string>
+  <string name="bills_inquiry">Bills inquiry mci and telecom</string>
+  <string name="bills_inquiry_title">Bills inquiry</string>
+  <string name="bill_type">Bill Type</string>
+  <string name="telecom">Home phone</string>
+  <string name="phone">Phone number</string>
+  <string name="area_code">Area code</string>
+  <string name="inquiry">Inquiry</string>
+  <string name="mci_opreator_check">This number is not an mci subscriber</string>
+  <string name="mid_term">mid term</string>
+  <string name="intermediate_payment">mid-term payment</string>
+  <string name="last_term">last term</string>
+  <string name="last_term_payment">last-term payment</string>
+  <string name="responsible_for_all_financial_services">Responsible for all financial services</string>
+  <string name="parsian_e_commerce_company_top">Parsian e-commerce company (top)</string>
+  <string name="is_empty"></string>
+  <string name="customer_response_center_021_2318">Customer Support Center: 021-2318</string>
+  <string name="ex_mobile_phone">Ex : 09123456789</string>
+  <string name="ex_area">Ex : 021</string>
+  <string name="ex_phone">Ex : 44567899</string>
+  <string name="sync_contact">Sync Contact</string>
+  <string name="satellite_view">Satellite View</string>
+  <string name="default_view">Default View</string>
+  <string name="send_location_text">Send selected location</string>
+  <string name="map_distance">m away</string>
+  <string name="calculation">Calculating...</string>
+  <string name="get_location_data">Getting data</string>
+
+  <string name="not_success">Unsuccessful</string>
+  <string name="not_success_2">"Payment was unsuccessful"</string>
+  <string name="result_3">The result of the payment is not known to the wallet period of the references or with the support contact.</string>
+  <string name="result_4">Payment was successful. Check more in the wallet history section.</string>
+
+  <string name="wallet_from">From:</string>
+  <string name="wallet_to">To:</string>
+  <string name="wallet_amount">Amount:</string>
+  <string name="wallet_trace">Trace Number:</string>
+  <string name="wallet_invoice">Invoice Number:</string>
+  <string name="wallet_data">Pay Time:</string>
+  <string name="wallet_desc">---Description---</string>
+  <string name="wallet_toman">Toman</string>
+  <string name="wallet_Your_credit">Your credit: </string>
+  <string name="wallet_Reial"> Rial </string>
+  <string name="wallet_error_server">Error communicating with server</string>
 
 </resources>

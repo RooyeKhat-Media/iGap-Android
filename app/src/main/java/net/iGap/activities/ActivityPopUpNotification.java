@@ -46,6 +46,7 @@ import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.Theme;
 import net.iGap.interfaces.IPopUpListener;
 import net.iGap.interfaces.OnVoiceRecord;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -213,8 +214,30 @@ public class ActivityPopUpNotification extends AppCompatActivity {
         btnSmileButton.setText(drawableResourceId);
     }
 
+
+
     private void setUpEmojiPopup() {
-        emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.ac_ll_parent_notification)).setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
+        switch (G.themeColor) {
+            case Theme.BLUE_GREY_COMPLETE:
+            case Theme.INDIGO_COMPLETE:
+            case Theme.BROWN_COMPLETE:
+            case Theme.GREY_COMPLETE:
+            case Theme.TEAL_COMPLETE:
+            case Theme.DARK:
+
+                setEmojiColor(G.backgroundTheme_2, G.textTitleTheme, G.textTitleTheme);
+                break;
+            default:
+                setEmojiColor("#eceff1", "#61000000", "#61000000");
+
+
+        }
+
+    }
+
+    private void setEmojiColor(String BackgroundColor, String iconColor, String dividerColor) {
+
+        emojiPopup =   emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.ac_ll_parent_notification)).setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
 
             @Override
             public void onEmojiBackspaceClick(View v) {
@@ -240,8 +263,15 @@ public class ActivityPopUpNotification extends AppCompatActivity {
             public void onKeyboardClose() {
                 emojiPopup.dismiss();
             }
-        }).build(edtChat);
+        })
+                .setBackgroundColor(Color.parseColor(BackgroundColor))
+                .setIconColor(Color.parseColor(iconColor))
+                .setDividerColor(Color.parseColor(dividerColor))
+                .build(edtChat);
+
     }
+
+
 
     private void setImageAndTextAppBar(int position) {
         if (mList.isEmpty() || position > mList.size() - 1 || position < 0) {

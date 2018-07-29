@@ -10,7 +10,6 @@ package net.iGap.viewmodel;
 */
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.view.View;
 
 import net.iGap.G;
@@ -46,19 +45,17 @@ public class FragmentLanguageViewModel {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(SHP_SETTING.KEY_LANGUAGE, "English");
             editor.apply();
-            setLocale("en");
+            G.selectedLanguage = "en";
+            G.updateResources(G.currentActivity);
             HelperCalander.isPersianUnicode = false;
             HelperCalander.isLanguagePersian = false;
             HelperCalander.isLanguageArabic = false;
             G.isAppRtl = false;
-
             if (onRefreshActivity != null) {
                 FragmentLanguage.languageChanged = true;
                 G.isRestartActivity = true;
                 onRefreshActivity.refresh("en");
             }
-
-            G.selectedLanguage = "en";
         }
 
         if (MusicPlayer.updateName != null) {
@@ -75,7 +72,7 @@ public class FragmentLanguageViewModel {
             editor.putString(SHP_SETTING.KEY_LANGUAGE, "فارسی");
             editor.apply();
             G.selectedLanguage = "fa";
-            setLocale("fa");
+            G.updateResources(G.currentActivity);
             HelperCalander.isPersianUnicode = true;
             HelperCalander.isLanguagePersian = true;
             HelperCalander.isLanguageArabic = false;
@@ -102,7 +99,7 @@ public class FragmentLanguageViewModel {
             editor.putString(SHP_SETTING.KEY_LANGUAGE, "العربی");
             editor.apply();
             G.selectedLanguage = "ar";
-            setLocale("ar");
+            G.updateResources(G.currentActivity);
             HelperCalander.isPersianUnicode = true;
             HelperCalander.isLanguagePersian = false;
             HelperCalander.isLanguageArabic = true;
@@ -142,14 +139,6 @@ public class FragmentLanguageViewModel {
     private void getInfo() {
         sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
         textLanguage = sharedPreferences.getString(SHP_SETTING.KEY_LANGUAGE, Locale.getDefault().getDisplayLanguage());
-    }
-
-    public void setLocale(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        G.fragmentActivity.getBaseContext().getResources().updateConfiguration(config, G.fragmentActivity.getBaseContext().getResources().getDisplayMetrics());
     }
 
 

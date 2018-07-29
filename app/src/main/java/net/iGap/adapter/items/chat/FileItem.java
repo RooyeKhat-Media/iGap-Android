@@ -116,13 +116,16 @@ public class FileItem extends AbstractMessage<FileItem, FileItem.ViewHolder> {
     @Override
     protected void updateLayoutForReceive(ViewHolder holder) {
         super.updateLayoutForReceive(holder);
-        if (G.isDarkTheme) {
-            holder.cslf_txt_file_name.setTextColor(Color.parseColor(G.textTitleTheme));
-            holder.cslf_txt_file_size.setTextColor(Color.parseColor(G.textSubTheme));
-        } else {
-            holder.cslf_txt_file_name.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
-            holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
-        }
+//        if (G.isDarkTheme) {
+//            holder.cslf_txt_file_name.setTextColor(Color.parseColor(G.textTitleTheme));
+//            holder.cslf_txt_file_size.setTextColor(Color.parseColor(G.textSubTheme));
+//        } else {
+//            holder.cslf_txt_file_name.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+//            holder.cslf_txt_file_size.setTextColor(holder.itemView.getResources().getColor(R.color.colorOldBlack));
+//        }
+//
+        holder.cslf_txt_file_name.setTextColor(Color.parseColor(G.textBubble));
+        holder.cslf_txt_file_size.setTextColor(Color.parseColor(G.textBubble));
 
     }
 

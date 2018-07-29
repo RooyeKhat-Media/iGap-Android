@@ -289,4 +289,48 @@
     <item>@string/password</item>
   </string-array>
 
+
+  <string-array name="phone_operator">
+    <item>@string/select</item>
+    <item> @string/hamrahe_aval</item>
+    <item> @string/irancell</item>
+    <item> @string/ritel</item>
+  </string-array>
+
+  <string-array name="bill_type">
+    <item> @string/hamrahe_aval</item>
+    <item> @string/telecom</item>
+  </string-array>
+
+  <string-array name="charge_type_irancell">
+    <item>@string/normal_charge</item>
+    <item>@string/amazing</item>
+    <item>@string/wimax_charging</item>
+    <item>@string/permanently_charge</item>
+  </string-array>
+
+  <string-array name="charge_type_hamrahe_aval">
+    <item>@string/normal_charge</item>
+  </string-array>
+
+  <string-array name="charge_type_ritel">
+    <item>@string/normal_charge</item>
+  </string-array>
+
+  <string-array name="charge_price">
+    <item> @string/charge_1</item>
+    <item> @string/charge_2</item>
+    <item> @string/charge_5</item>
+    <item> @string/charge_10</item>
+    <item> @string/charge_20</item>
+  </string-array>
+
+  <string-array name="charge_price_irancell">
+    <item> @string/charge_1_ir</item>
+    <item> @string/charge_2_ir</item>
+    <item> @string/charge_5_ir</item>
+    <item> @string/charge_10_ir</item>
+    <item> @string/charge_20_ir</item>
+  </string-array>
+
 </resources>

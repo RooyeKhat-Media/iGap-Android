@@ -18,8 +18,11 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import net.iGap.G;
 import net.iGap.R;
 
 import java.io.File;
@@ -33,11 +36,11 @@ public class ActivityTrimVideo extends ActivityEnhanced implements OnTrimVideoLi
     int videoWidth = 641;
     int videoHeight = 481;
     private String path;
-    private long originalSize;
-    private long duration;
+    private int duration;
     private TextView txtDetail;
     private TextView txtTime;
     private TextView txtSize;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,43 +61,64 @@ public class ActivityTrimVideo extends ActivityEnhanced implements OnTrimVideoLi
             }
         }
 
-        getResolutionVideo(path);
-        durationVideo(path);
+        setInfo(path);
 
         K4LVideoTrimmer videoTrimmer = (K4LVideoTrimmer) findViewById(R.id.timeLine);
+        progressBar = (ProgressBar) findViewById(R.id.fvt_progress);
         if (videoTrimmer != null) {
             videoTrimmer.setVideoURI(Uri.parse(path));
-            videoTrimmer.setMaxDuration((int) duration);
+            videoTrimmer.setMaxDuration(duration);
             videoTrimmer.setOnTrimVideoListener(this);
-            videoTrimmer.setDestinationPath(path);
+            videoTrimmer.setDestinationPath(G.DIR_VIDEOS + "/");
             videoTrimmer.setVideoInformationVisibility(true);
         }
     }
 
-    private void durationVideo(String path) {
+    private void setInfo(String path) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         try {
-            if (path != null) {
-                File file = new File(path);
-                originalSize = file.length();
+            retriever.setDataSource(path);
 
-                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                retriever.setDataSource(file.toString()); // Enter Full File Path Here
-                String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                duration = Long.parseLong(time);
-                int seconds = (int) ((duration) / 1000);
-                int minutes = seconds / 60;
-                seconds = seconds % 60;
+            File file = new File(path);
+            if (file.exists()) {
+                txtSize.setText("," + net.iGap.module.FileUtils.formatFileSize((long) file.length()));
+            }
+
+            String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+            if (time != null && time.length() > 0) {
+                duration = ((Integer.parseInt(time)) / 1000) + 1;
+                int minutes = duration / 60;
+                int seconds = duration % 60;
                 txtTime.setText("," + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+            }
 
-                txtSize.setText("," + net.iGap.module.FileUtils.formatFileSize((long) originalSize));
+            Bitmap bmp = retriever.getFrameAtTime();
+
+            if (bmp != null) {
+                videoHeight = bmp.getHeight();
+                videoWidth = bmp.getWidth();
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            retriever.release();
         }
+        txtDetail.setText(videoWidth + "X" + videoHeight);
     }
 
     @Override
     public void onTrimStarted() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -140,22 +164,5 @@ public class ActivityTrimVideo extends ActivityEnhanced implements OnTrimVideoLi
 
     }
 
-    private void getResolutionVideo(String path) {
-        try {
-            MediaMetadataRetriever re = new MediaMetadataRetriever();
-            Bitmap bmp = null;
-            re.setDataSource(path);
-            bmp = re.getFrameAtTime();
-            videoHeight = bmp.getHeight();
-            videoWidth = bmp.getWidth();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        txtDetail.setText(videoWidth + "X" + videoHeight);
-    }
 }

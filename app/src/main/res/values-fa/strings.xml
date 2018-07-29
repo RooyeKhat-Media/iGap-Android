@@ -14,7 +14,7 @@
 
   <!-- Page 3 introduce app -->
   <string name="text_line_1_introduce_page3">"گفتگو در آی گپ"</string>
-  <string name="text_line_2_introduce_page3">"شما میتوانید در آی گپ بصورت دونفره و یا گروهی به گفتگو بپردازید و خیالتان راحت باشد که همیشه به گفتگو های خود دسترسی دارید، همچنین میتوانید کانال بسازید و در آن عضو بگیرید و اطلاعات خود را بین میلیون ها کاربر دیگر نیز به اشتراک بگذارید."</string>
+  <string name="text_line_2_introduce_page3">متابعة ، والتقاط المحفظة الخاصة بك والودائع النقدية الفورية ، ودفع الهدايا الخاصة بك ، وشراء من المتاجر ودفع ليموزين الضرائب .</string>
 
   <!-- Page 4 introduce app -->
   <string name="text_line_1_introduce_page4">"انتقال فایل در آی گپ"</string>
@@ -443,17 +443,13 @@
   <string name="E_218">"خطایی از کلاینت: شناسهٔ روم اشتباه است."</string>
   <string name="E_219">"خطای درونی سرور"</string>
   <string name="E_220">"این کار مجاز نیست."</string>
-  <string name="E_300_1">Bad payload: Invalid description</string>
+  <string name="E_300_1">توضیح نامعتبر است</string>
   <string name="E_300_2">"خطایی از سمت کلاینت: توضیحات اشتباه است."</string>
   <string name="E_301">"خطای درونی سرور"</string>
-  <string name="E_379">You cannot invite this user to groups because of the protected privacy for the request</string>
+  <string name="E_379">شما نمی توانید این کاربر را به گروه دعوت کنید.</string>
 
-
-  <string name="E_405">You are forbidden to do the action for request</string>
-  <string name="E_467">CHANNEL_UPDATE_SIGNATURE_INTERNAL_SERVER_ERROR</string>
-  <string name="E_468">CHANNEL_UPDATE_SIGNATURE_FORBIDDEN</string>
-  <string name="E_469">CHANNEL_GET_MESSAGES_STATS_BAD_PAYLOAD</string>
-  <string name="E_478">You cannot invite this user to groups because of the protected privacy for the request</string>
+  <string name="E_468">تغییر وضعیت امضاء کانال ممنوع است</string>
+  <string name="E_478">شما نمی توانید این کاربر را به کانال دعوت کنید.</string>
 
   <string name="E_610">"خطایی از سمت کلاینت"</string>
   <string name="E_611">"خطای درونی سرور"</string>
@@ -476,6 +472,14 @@
 
   <string name="E_658">گزارش تخلف قبلاً ارسال شده است.</string>
   <string name="E_659">در حال حاضر مجاز به ارسال گزارش تخلف نیستید.</string>
+
+  <string name="E_9002">دریافت شناسه امکان پذیر نیست</string>
+  <string name="E_9006">ارتباط با سرور امکان پذیر نیست</string>
+  <string name="E_9007">ارتباط با سرور امکان پذیر نیست</string>
+  <string name="E_9008">ارتباط با دریافت کننده برقرار نشد</string>
+  <string name="E_9009">ارتباط با سرور امکان پذیر نیست</string>
+  <string name="E_9010">دریافت کننده ثبت نام نکرده است</string>
+  <string name="E_9013">ثبت نام برای شما ممنوع است</string>
 
   <string name="E_10165">Bad payload: User report</string>
   <string name="E_10166">ServerError: User report internal</string>
@@ -538,6 +542,7 @@
   <string name="phone_selected_for_send">شماره تلفن انتخاب شده</string>
   <string name="crop_selected_for_send">تصویر انتخاب شده</string>
   <string name="location_message">پیام مکانی</string>
+  <string name="wallet_message">تراکنش کیف پول</string>
   <string name="chat_to_group">انتقال گفتگو به گروه</string>
   <string name="last_seen_at">آخرین بار دیده شده در</string>
   <string name="long_time_ago">خیلی وقت پیش</string>
@@ -626,6 +631,7 @@
   <string name="members">اعضا</string>
   <string name="skip">رد کردن</string>
   <string name="settings">تنظیمات</string>
+  <string name="iGap_settings">تنظیمات حساب آی گپ</string>
   <string name="please_write_your_message">لطفاْ پیام خود را بنویسید!</string>
   <string name="share_audio_file">به اشتراک گذاشتن فایل صوتی</string>
   <string name="share_image">به اشتراک گذاشتن تصویر</string>
@@ -1186,5 +1192,116 @@
   <string name="automatic_description_theme">حالت شب از 19 تا 8 با انتخاب حالت خودکار فعال شد</string>
   <string name="setting_dark_theme">تنظیمات پوسته تاریک</string>
   <string name="Select_Time">انتخاب زمان</string>
+  <string name="financial_services">خدمات مالی</string>
+  <string name="install_app">نصب برنامه</string>
+  <string name="text_top">برای استفاده از خدمات :کارت به کارت، خرید بلیط اتوبوس ، خرید شارژ، پرداخت قبوض، خرید بسته اینترنتی و سایر خدمات پرداخت، اپلیکیشن تاپ را نصب نمایید.</string>
+  <string name="text_paygear">پیگیر ، کیف پول همراه شما برداشت و واریز آنی وجه ، پرداخت هدیه ، خرید از فروشگاه ها و پرداخت کرایه تاکسی.</string>
+  <string name="customization">سفارشی سازی</string>
+  <string name="Apply_colors_to_customize">اعمال رنگ ها برای سفارشی سازی</string>
+  <string name="payment">پرداخت</string>
+  <string name="buy_charge">خرید شارژ تلفن همراه</string>
+  <string name="pay_bills">پرداخت قبوض</string>
+  <string name="pay_bills_crime">پرداخت قبوض  راهنمایی و رانندگی</string>
+  <string name="barcode_reader">بار کد خوان</string>
+  <string name="billing_id">شناسه قبض</string>
+  <string name="enter">وارد کنید</string>
+  <string name="payment_code">شناسه پرداخت</string>
+  <string name="amount">مبلغ(ریال)</string>
+  <string name="buy">خرید</string>
+  <string name="select">انتخاب کنید</string>
+  <string name="hamrahe_aval">همراه اول</string>
+  <string name="irancell">ایرانسل</string>
+  <string name="ritel">رایتل</string>
+  <string name="normal_charge">شارژ معمولی</string>
+  <string name="amazing">شگفت انگیز</string>
+  <string name="wimax_charging">شارژ وایمکس</string>
+  <string name="permanently_charge">شارژ سیم کارت دائمی</string>
+
+  <string name="charge_1"> 10.000 ریالی</string>
+  <string name="charge_2"> 20.000 ریالی</string>
+  <string name="charge_5"> 50.000 ریالی</string>
+  <string name="charge_10"> 100.000 ریالی</string>
+  <string name="charge_20"> 200.000 ریالی</string>
+
+  <string name="charge_1_ir">10.000 ریالی +  9%  ارزش افزوده = 10.900 ریال</string>
+  <string name="charge_2_ir">20.000 ریالی +  9%  ارزش افزوده = 21.180 ریال</string>
+  <string name="charge_5_ir">50.000 ریالی +  9%  ارزش افزوده = 54.500 ریال</string>
+  <string name="charge_10_ir">100.000 ریالی +  9%  ارزش افزوده = 109.000 ریال</string>
+  <string name="charge_20_ir">200.000 ریالی +  9%  ارزش افزوده = 218.000 ریال</string>
+
+  <string name="biling_id_not_valid">شناسه قبض نامعتبر است</string>
+  <string name="pay_id_is_not_valid">شناسه پرداخت نامعتبر است</string>
+  <string name="charge_type">نوع شارژ</string>
+  <string name="operator">اپراتور</string>
+  <string name="trabord">ترابرد</string>
+  <string name="time_out_error">خطای زمان پردازش</string>
+  <string name="connection_error">خطای اتصال</string>
+  <string name="server_error">خطای سرور</string>
+  <string name="network_error">خطای شبکه</string>
+  <string name="dialog_canceled">لغو درخواست</string>
+  <string name="device_root">دستگاه روت شده است</string>
+  <string name="phone_number_is_not_valid">شماره تلفن معتبر نیست</string>
+  <string name="please_select_operator">اپراتور را انتخاب کنید</string>
+  <string name="wallet">کیف پول</string>
+  <string name="loading_wallet_agreement"> در حال دریافت اطلاعات …</string>
+  <string name="i_agree_with_the_terms">با شرایط موافقم</string>
+  <string name="accept_the_terms">پذیرش شرایط</string>
+  <string name="wallet_agrement">توافق کیف پول</string>
+  <string name="SendMoney">ارسال پول</string>
+  <string name="transfer_amount_hint">مبلغ واریزی را وارد کنید:</string>
+  <string name="amount_in_rial">مبلغ به ریال:</string>
+  <string name="pay">پرداخت</string>
+  <string name="transfer_to_dialog">انتقال به:</string>
+  <string name="am_money">پول</string>
+  <string name="trace_number">کد پیگیری</string>
+  <string name="amount_2">مبلغ:</string>
+  <string name="payment_canceled">پرداخت لغو شد</string>
+  <string name="PayGear_unavailable">کیف پول در دسترس نیست</string>
+  <string name="bills_inquiry">استعلام قبوض همراه اول و تلفن ثابت</string>
+  <string name="bills_inquiry_mci">استعلام قبوض همراه اول</string>
+  <string name="bills_inquiry_telecom">استعلام قبوض تلفن ثابت</string>
+  <string name="bills_inquiry_title">استعلام قبوض</string>
+  <string name="bill_type">نوع قبض</string>
+  <string name="telecom">تلفن ثابت</string>
+  <string name="phone">شماره تلفن</string>
+  <string name="area_code">پیش شماره</string>
+  <string name="inquiry">استعلام</string>
+  <string name="mci_opreator_check">این شماره از اپراتور همراه اول نیست</string>
+  <string name="mid_term">میان دوره</string>
+  <string name="intermediate_payment">پرداخت میان دوره</string>
+  <string name="last_term">پایان دوره</string>
+  <string name="last_term_payment">پرداخت پایان دوره</string>
+  <string name="responsible_for_all_financial_services">مسئولیت کلیه خدمات مالی بر عهده</string>
+  <string name="parsian_e_commerce_company_top">شرکت تجارت الکترونیک پارسیان ( تاپ )</string>
+  <string name="is_empty">می باشد</string>
+  <string name="customer_response_center_021_2318">مرکز پاسخگویی مشتریان  :  2318-021 </string>
+  <string name="ex_mobile_phone">مثال : 09123456789</string>
+  <string name="ex_area">مثال : 021</string>
+  <string name="ex_phone">مثال : 44567899</string>
+  <string name="sync_contact">همگام سازی مخاطبین</string>
+  <string name="satellite_view">حالت ماهواره</string>
+  <string name="default_view">حالت پیش فرض</string>
+  <string name="send_location_text">ارسال موقعیت </string>
+  <string name="map_distance">فاصله به متر</string>
+  <string name="get_location_data">در حال دریافت اطلاعات</string>
+  <string name="calculation">در حال محاسبه.. </string>
+
+  <string name="not_success">ناموفق</string>
+  <string name="not_success_2">"پرداخت ناموفق بود"</string>
+  <string name="result_3">نتیجه پرداخت مشخص نیست به تاریخجه کیف پول مراجع یا با پشتیبانی تماس بگیرید</string>
+  <string name="result_4">پرداخت موفقیت آمیز بود اطلاعات بیشتر در قسمت تاریخچه کیف پول</string>
+
+  <string name="wallet_from">از:</string>
+  <string name="wallet_to">به:</string>
+  <string name="wallet_amount">مبلغ:</string>
+  <string name="wallet_trace">کد پیگیری:</string>
+  <string name="wallet_invoice">فاکتور:</string>
+  <string name="wallet_data">تاریخ:</string>
+  <string name="wallet_desc">---توضیحات پرداخت---</string>
+  <string name="wallet_toman">تومان</string>
+  <string name="wallet_Your_credit">اعتبار شما: </string>
+  <string name="wallet_Reial"> ریال </string>
+  <string name="wallet_error_server">خطا در برقراری ارتباط با سرور</string>
+
 
 </resources>

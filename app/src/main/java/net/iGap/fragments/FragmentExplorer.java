@@ -37,8 +37,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.iGap.G.IGAP;
-
 public class FragmentExplorer extends BaseFragment {
 
     String nextnode;
@@ -189,14 +187,13 @@ public class FragmentExplorer extends BaseFragment {
         }
 
         if (!G.DIR_SDCARD_EXTERNAL.equals("")) {
-            String sdPath = G.DIR_SDCARD_EXTERNAL + IGAP;
-            if (new File(sdPath).exists()) {
+            if (new File(G.DIR_SDCARD_EXTERNAL).exists()) {
                 x = new StructExplorerItem();
                 x.name = "iGap SdCard";
                 x.image = R.mipmap.actionbar_icon_myfiles;
-                x.path = sdPath + "/";
+                x.path = G.DIR_SDCARD_EXTERNAL + "/";
                 item.add(x);
-                node.add(sdPath + "/");
+                node.add(G.DIR_SDCARD_EXTERNAL + "/");
                 rootcount++;
             }
         }

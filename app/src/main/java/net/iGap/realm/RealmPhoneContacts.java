@@ -11,6 +11,7 @@
 package net.iGap.realm;
 
 import net.iGap.G;
+import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperString;
 import net.iGap.interfaces.OnQueueSendContact;
 import net.iGap.module.Contacts;
@@ -163,9 +164,14 @@ public class RealmPhoneContacts extends RealmObject {
                         continue;
                     }
 
-                    if (realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, checkString(_item)).findFirst() == null) {
-                        notImportedList.add(_item);
+                    try {
+                        if (realm.where(RealmPhoneContacts.class).equalTo(RealmPhoneContactsFields.PHONE, checkString(_item)).findFirst() == null) {
+                            notImportedList.add(_item);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        HelperLog.setErrorLog("RealmPhoneContacts    addContactToDB      phone : " + _item.getPhone() + "   firstName : " + _item.getFirstName() + "   lastname : " + _item.getLastName());
                     }
+
                 }
             }
         });

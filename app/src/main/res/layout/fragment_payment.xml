@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+    <import type="android.graphics.Color" />
+
+    <import type="net.iGap.G" />
+
+    <variable
+      name="fragmentPaymentViewModel"
+      type="net.iGap.viewmodel.FragmentPaymentViewModel" />
+
+    <variable
+      name="backHandler"
+      type="net.iGap.interfaces.IBackHandler" />
+  </data>
+
+  <LinearLayout
+    style="?backgroundColorSettingTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@{Color.parseColor(G.appBarColor),default=@color/toolbar_background}"
+        android:layoutDirection="ltr"
+        android:padding="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <net.iGap.libs.rippleeffect.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()-> backHandler.onBack()}"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="0"
+            app:rv_ripplePadding="5dp">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:layout_width="@dimen/dp52"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_back_arrow"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background" />
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <TextView
+            fontPath="fonts/IRANSansMobile_Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/financial_services"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp18"
+            android:textStyle="normal"
+            android:visibility="visible" />
+        </LinearLayout>
+      </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:scrollbars="none"
+      android:layout_height="match_parent">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/dp14"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp6"
+          android:background="@{fragmentPaymentViewModel.observeBackGround}"
+          android:onClick="@{fragmentPaymentViewModel::onClickCharge}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:text="@string/buy_charge"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp6"
+          android:background="@{fragmentPaymentViewModel.observeBackGround}"
+          android:onClick="@{fragmentPaymentViewModel::onClickBill}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:text="@string/pay_bills"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp6"
+          android:background="@{fragmentPaymentViewModel.observeBackGround}"
+          android:onClick="@{fragmentPaymentViewModel::onClickBillTraffic}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:text="@string/pay_bills_crime"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp6"
+          android:background="@{fragmentPaymentViewModel.observeBackGround}"
+          android:onClick="@{fragmentPaymentViewModel::onClickInquiryMci}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:text="@string/bills_inquiry_mci"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="@dimen/dp6"
+          android:background="@{fragmentPaymentViewModel.observeBackGround}"
+          android:onClick="@{fragmentPaymentViewModel::onClickInquiryTelecom}"
+          android:orientation="horizontal">
+
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp4"
+            android:text="@string/bills_inquiry_telecom"
+            android:textColor="@color/whit_background"
+            android:textSize="@dimen/dp16" />
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:padding="@dimen/dp12"
+          android:layout_marginBottom="@dimen/dp20"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:layout_height="wrap_content">
+
+          <ImageView
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp70"
+            android:layout_margin="@dimen/dp8"
+            app:srcCompat="@mipmap/parsian" />
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/dp14"
+            android:text="@string/responsible_for_all_financial_services" />
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/dp14"
+            android:text="@string/parsian_e_commerce_company_top" />
+
+          <TextView
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/dp14"
+            android:text="@string/is_empty" />
+
+          <TextView
+            style="?textTitleColorSettingTheme"
+            fontPath="fonts/IRANSansMobile.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/dp14"
+            android:text="@string/customer_response_center_021_2318" />
+
+        </LinearLayout>
+
+      </LinearLayout>
+    </ScrollView>
+  </LinearLayout>
+</layout>

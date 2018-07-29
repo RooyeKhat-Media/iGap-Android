@@ -206,3 +206,29 @@
 -dontwarn com.yalantis.ucrop**
 -keep class com.yalantis.ucrop** { *; }
 -keep interface com.yalantis.ucrop** { *; }
+
+### Wallet
+
+-keepclassmembers class * {
+    native <methods>;
+}
+
+-dontwarn okhttp3.**
+-dontwarn com.android.volley.toolbox.**
+
+-keepattributes Annotation,SourceFile,LineNumberTable
+
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn com.squareup.okhttp.**
+-dontnote retrofit2.Platform
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+-dontwarn retrofit2.Platform$Java8
+### -keepattributes Signature // used this line before
+-keepattributes Exceptions
+-keepattributes EnclosingMethod
+
+-keep class org.paygear.** { *; }
+-keep class ir.radsense.** { *; }
+
+-dontwarn com.alexvasilkov.gestures**

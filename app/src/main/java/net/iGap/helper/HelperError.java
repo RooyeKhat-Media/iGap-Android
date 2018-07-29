@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.helper;
 
@@ -487,6 +487,47 @@ public class HelperError {
             case 715:
                 error = G.fragmentActivity.getResources().getString(R.string.E_715);
                 break;
+
+            case 9001:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9001);
+                break;
+            case 9002:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9002);
+                break;
+            case 9003:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9003);
+                break;
+            case 9004:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9004);
+                break;
+            case 9005:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9005);
+                break;
+            case 9006:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9006);
+                break;
+            case 9007:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9007);
+                break;
+            case 9008:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9008);
+                break;
+            case 9009:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9009);
+                break;
+            case 9010:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9010);
+                break;
+            case 9011:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9011);
+                break;
+            case 9012:
+                //error = G.fragmentActivity.getResources().getString(R.string.E_9012);
+                break;
+            case 9013:
+                error = G.fragmentActivity.getResources().getString(R.string.E_9013);
+                break;
+
 
             case 10105:
                 if (minorCode == 101) {
