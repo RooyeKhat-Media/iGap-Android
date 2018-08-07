@@ -121,7 +121,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="12dp"
-          android:onCheckedChanged="@{fragmentCreateChannelViewModel.isRadioGroup}"
+          android:onCheckedChanged="@{fragmentCreateChannelViewModel::isRadioGroup}"
           android:paddingEnd="@dimen/dp12"
           android:paddingLeft="@dimen/dp12"
           android:paddingRight="@dimen/dp12"
@@ -132,7 +132,7 @@
             android:id="@+id/fch_radioButton_Public"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPublic}"
+            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPublic , default=false}"
             android:gravity="start|center"
             android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPublic}"
             android:text="@string/public_channel"
@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp8"
-            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPrivate}"
+            android:checked="@={fragmentCreateChannelViewModel.isRadioButtonPrivate , default=false}"
             android:gravity="start|center"
             android:onClick="@{fragmentCreateChannelViewModel::onClickRadioButtonPrivate}"
             android:text="@string/private_channel"
@@ -206,7 +206,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:onClick="@{fragmentCreateChannelViewModel::onClickTxtInputLink}"
-              app:errorEnabled="@{fragmentCreateChannelViewModel.txtInputLinkEnable}"
+              app:errorEnabled="@{safeUnbox(fragmentCreateChannelViewModel.txtInputLinkEnable)}"
               app:errorTextAppearance="@style/error_appearance"
               app:hintTextAppearance="@style/Hint_appearance"
               style="?hintColorSettingTheme">
@@ -216,8 +216,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:afterTextChanged="@{fragmentCreateChannelViewModel.afterTextChanged}"
-                android:enabled="@{fragmentCreateChannelViewModel.edtSetLinkEnable}"
+                android:afterTextChanged="@{fragmentCreateChannelViewModel::afterTextChanged}"
+                android:enabled="@{safeUnbox(fragmentCreateChannelViewModel.edtSetLinkEnable)}"
                 android:hint="@string/your_link"
                 android:layoutDirection="ltr"
                 android:singleLine="true"
@@ -258,14 +258,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp20"
             android:layout_marginRight="@dimen/dp20"
-            android:enabled="@{fragmentCreateChannelViewModel.txtFinishEnable}"
+            android:enabled="@{safeUnbox(fragmentCreateChannelViewModel.txtFinishEnable)}"
             android:onClick="@{fragmentCreateChannelViewModel::onClickFinish}"
             android:text="@string/chi_NEXT_STEP"
-            android:textColor="@{fragmentCreateChannelViewModel.txtFinishColor , default=@color/toolbar_background}"
+            android:textColor="@{safeUnbox(fragmentCreateChannelViewModel.txtFinishColor) , default=@color/toolbar_background}"
             android:textSize="@dimen/dp15"
-            android:textStyle="bold"
-
-            />
+            android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -279,7 +277,7 @@
       android:layout_centerInParent="true"
       android:layout_gravity="center"
       android:indeterminate="true"
-      android:visibility="@{fragmentCreateChannelViewModel.prgWaiting}" />
+      android:visibility="@{safeUnbox(fragmentCreateChannelViewModel.prgWaiting)}" />
 
   </RelativeLayout>
 </layout>

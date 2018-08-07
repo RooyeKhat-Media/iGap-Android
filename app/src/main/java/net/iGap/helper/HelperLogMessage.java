@@ -18,6 +18,8 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.fragments.FragmentChat;
@@ -49,8 +51,8 @@ public class HelperLogMessage {
 
     static class StructMyLog implements Serializable {
         long roomId;
-        ProtoGlobal.RoomMessage.Author author;
-        ProtoGlobal.RoomMessageLog messageLog;
+        byte[] author;
+        byte[] messageLog;
         long messageID;
         String message;
     }
@@ -59,8 +61,8 @@ public class HelperLogMessage {
 
         StructMyLog log = new StructMyLog();
         log.roomId = roomId;
-        log.author = author;
-        log.messageLog = messageLog;
+        log.author = author.toByteArray();
+        log.messageLog = messageLog.toByteArray();
         log.messageID = messageID;
 
         if (messageLog.getType() == PINNED_MESSAGE) {
@@ -93,50 +95,50 @@ public class HelperLogMessage {
         return new SpannableStringBuilder("");
     }
 
-    private static SpannableStringBuilder extractLog(StructMyLog log, boolean withLink) {
+    private static SpannableStringBuilder extractLog(StructMyLog log, boolean withLink) throws InvalidProtocolBufferException {
         Realm realm = Realm.getDefaultInstance();
         String authorName = getAuthorName(log, realm);
         String targetName = getTargetName(log, realm);
         String finalTypeRoom = getRoomTypeString(log, realm);
-        String LogMessageTypeString = getLogTypeString(log.messageLog.getType(), log.author);
+        String LogMessageTypeString = getLogTypeString(ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).getType(), ProtoGlobal.RoomMessage.Author.parseFrom(log.author));
         realm.close();
         return getLogMessage(authorName, targetName, finalTypeRoom, LogMessageTypeString, log, withLink);
     }
 
-    private static String getAuthorName(StructMyLog log, Realm realm) {
+    private static String getAuthorName(StructMyLog log, Realm realm) throws InvalidProtocolBufferException {
         String result = "";
 
-        if (log.author.hasUser()) {
-            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, log.author.getUser().getUserId());
+        if (ProtoGlobal.RoomMessage.Author.parseFrom(log.author).hasUser()) {
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getUser().getUserId());
             if (realmRegisteredInfo != null) {
                 result = " " + realmRegisteredInfo.getDisplayName() + " ";
             } else {
-                logMessageUpdateList.put(log.author.getUser().getUserId(), log);
-                new RequestUserInfo().userInfoAvoidDuplicate(log.author.getUser().getUserId());
+                logMessageUpdateList.put(ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getUser().getUserId(), log);
+                new RequestUserInfo().userInfoAvoidDuplicate(ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getUser().getUserId());
             }
-        } else if (log.author.hasRoom()) {
-            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, log.author.getRoom().getRoomId()).findFirst();
+        } else if (ProtoGlobal.RoomMessage.Author.parseFrom(log.author).hasRoom()) {
+            RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getRoom().getRoomId()).findFirst();
             if (realmRoom != null) {
                 result = " " + realmRoom.getTitle() + " ";
             } else {
-                logMessageUpdateList.put(log.author.getRoom().getRoomId(), log);
-                RealmRoom.needUpdateRoomInfo(log.author.getRoom().getRoomId());
-                new RequestClientGetRoom().clientGetRoom(log.author.getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
+                logMessageUpdateList.put(ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getRoom().getRoomId(), log);
+                RealmRoom.needUpdateRoomInfo(ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getRoom().getRoomId());
+                new RequestClientGetRoom().clientGetRoom(ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getRoom().getRoomId(), RequestClientGetRoom.CreateRoomMode.justInfo);
             }
         }
 
         return result;
     }
 
-    private static String getTargetName(StructMyLog log, Realm realm) {
+    private static String getTargetName(StructMyLog log, Realm realm) throws InvalidProtocolBufferException {
         String result = "";
-        if (log.messageLog.hasTargetUser()) {
-            long userId = log.messageLog.getTargetUser().getId();
+        if (ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).hasTargetUser()) {
+            long userId = ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).getTargetUser().getId();
             RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
             if (realmRegisteredInfo != null) {
                 result = " " + realmRegisteredInfo.getDisplayName() + " ";
             } else {
-                logMessageUpdateList.put(log.messageLog.getTargetUser().getId(), log);
+                logMessageUpdateList.put(ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).getTargetUser().getId(), log);
                 new RequestUserInfo().userInfo(userId);
             }
         }
@@ -222,7 +224,7 @@ public class HelperLogMessage {
         return "";
     }
 
-    private static SpannableStringBuilder getLogMessage(String authorName, String targetName, String finalTypeRoom, String LogMessageTypeString, StructMyLog log, boolean withLink) {
+    private static SpannableStringBuilder getLogMessage(String authorName, String targetName, String finalTypeRoom, String LogMessageTypeString, StructMyLog log, boolean withLink) throws InvalidProtocolBufferException {
 
 //        if (authorName == null || authorName.length() == 0) {
 //            return "";
@@ -233,16 +235,16 @@ public class HelperLogMessage {
         long targetId = 0;
 
         if (withLink) {
-            if (log.author.hasUser()) {
-                authorId = log.author.getUser().getUserId();
+            if (ProtoGlobal.RoomMessage.Author.parseFrom(log.author).hasUser()) {
+                authorId = ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getUser().getUserId();
                 isAuthorUser = true;
-            } else if (log.author.hasRoom()) {
-                authorId = log.author.getRoom().getRoomId();
+            } else if (ProtoGlobal.RoomMessage.Author.parseFrom(log.author).hasRoom()) {
+                authorId = ProtoGlobal.RoomMessage.Author.parseFrom(log.author).getRoom().getRoomId();
                 isAuthorUser = false;
             }
 
-            if (log.messageLog.hasTargetUser()) {
-                targetId = log.messageLog.getTargetUser().getId();
+            if (ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).hasTargetUser()) {
+                targetId = ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).getTargetUser().getId();
             }
         }
 
@@ -254,7 +256,7 @@ public class HelperLogMessage {
         strBuilder.append(LogMessageTypeString);
         insertClickSpanLink(strBuilder, targetName, true, targetId);
 
-        switch (log.messageLog.getType()) {
+        switch (ProtoGlobal.RoomMessageLog.parseFrom(log.messageLog).getType()) {
 
             case ROOM_CREATED:
                 strBuilder.clear();

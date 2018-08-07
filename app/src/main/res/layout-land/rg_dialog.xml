@@ -4,7 +4,8 @@
   android:layout_height="match_parent"
   android:background="@color/rg_whit_background"
   android:clickable="true"
-  android:orientation="vertical">
+  style="?backgroundColorSettingTheme_2"
+    android:orientation="vertical">
 
   <!-- Pretty hint text, and maxLines -->
 
@@ -13,7 +14,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp52"
     android:layoutDirection="ltr"
-    android:orientation="horizontal">
+    style="?backgroundColorSettingTheme_2"
+      android:orientation="horizontal">
 
     <android.support.v7.widget.SearchView
       android:id="@+id/rg_edtSearch_toolbar"
@@ -29,15 +31,14 @@
       app:queryHint=""
       app:searchHintIcon="@null" />
 
-    <TextView
-
+    <net.iGap.module.HeaderTextview
       android:id="@+id/rg_txt_titleToolbar"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:gravity="left|center_vertical"
       android:paddingLeft="@dimen/dp24"
       android:text="@string/rg_Select_Country"
-      android:textColor="@color/black_register"
+      style="?textSubColorSettingTheme"
       android:textSize="@dimen/dp20"
       android:textStyle="bold" />
 
@@ -47,7 +48,7 @@
     android:id="@+id/rg_borderButton"
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/background_editText"
+    style="?lineColorSettingTheme"
     android:visibility="gone" />
 
   <ListView
@@ -55,7 +56,6 @@
     android:layout_width="fill_parent"
     android:layout_height="0dip"
     android:layout_weight="1"
-    android:background="@color/structCountry"
     android:choiceMode="singleChoice"
     android:divider="@color/rg_background_editText"
     android:dividerHeight="1dp"
@@ -66,7 +66,7 @@
   <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/rg_whit_background" />
+    style="?lineColorSettingTheme" />
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -87,7 +87,7 @@
     <!--android:textSize="@dimen/sp14"-->
     <!--android:textStyle="bold" />-->
 
-    <TextView
+    <net.iGap.module.HeaderTextview
       android:id="@+id/rg_txt_okDialog"
       android:layout_width="@dimen/dp60"
       android:layout_height="@dimen/dp36"

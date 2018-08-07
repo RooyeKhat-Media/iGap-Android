@@ -22,6 +22,7 @@ import net.iGap.interfaces.OnClientGetRoomMessage;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.module.enums.RoomType;
+import net.iGap.module.structs.StructMessageOption;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.request.RequestClientGetRoom;
 import net.iGap.request.RequestClientGetRoomMessage;
@@ -183,7 +184,7 @@ public class RealmRoom extends RealmObject {
          * set setFirstUnreadMessage
          */
         if (room.hasFirstUnreadMessage()) {
-            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(room.getFirstUnreadMessage(), room.getId(), false, false, realm);
+            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(realm, room.getId(), room.getFirstUnreadMessage(), new StructMessageOption());
             realmRoomMessage.setFutureMessageId(room.getFirstUnreadMessage().getMessageId());
             realmRoom.setFirstUnreadMessage(realmRoomMessage);
         }
@@ -196,7 +197,7 @@ public class RealmRoom extends RealmObject {
             if (!RealmRoomMessage.existMessage(room.getLastMessage().getMessageId())) {
                 setGap = true;
             }
-            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(room.getLastMessage(), room.getId(), false, false, realm);
+            RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(realm, room.getId(), room.getLastMessage(), new StructMessageOption());
             if (setGap) {
                 realmRoomMessage.setPreviousMessageId(room.getLastMessage().getMessageId());
                 realmRoomMessage.setFutureMessageId(room.getLastMessage().getMessageId());

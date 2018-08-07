@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +149,7 @@ public class FragmentIgapSearch extends BaseFragment {
 
                 itemAdapter.clear();
 
-                int strSize = edtSearch.getText().toString().trim().length();
+                int strSize = edtSearch.getText().toString().length();
 
                 // filter some character
                 if (strSize > 1) {

@@ -15,6 +15,7 @@
       android:id="@+id/imgFilter"
       android:layout_width="@dimen/dp80"
       android:layout_height="@dimen/dp80"
+        android:src="@mipmap/difaultimage"
       android:layout_gravity="center" />
 
     <TextView

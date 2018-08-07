@@ -59,11 +59,14 @@ public class ActivityEnhanced extends AppCompatActivity {
             Log.i("[BroadcastReceiver]", "MyReceiver");
 
             if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                if (G.isPassCode && !ActivityMain.isActivityEnterPassCode) {
-                    G.isFirstPassCode = true;
-                    Intent i = new Intent(ActivityEnhanced.this, ActivityEnterPassCode.class);
-                    startActivity(i);
-                }
+//                if (G.isPassCode && !ActivityMain.isActivityEnterPassCode ) {
+//                    G.isFirstPassCode = true;
+//                    Intent i = new Intent(ActivityEnhanced.this, ActivityEnterPassCode.class);
+//                    startActivity(i);
+//                } else {
+                if (G.isPassCode) ActivityMain.isLock = true;
+//                }
+
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             }
 

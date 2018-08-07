@@ -7,6 +7,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -15,10 +17,12 @@ import android.text.InputType;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,6 +34,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.paygear.wallet.R;
 import org.paygear.wallet.RaadApp;
@@ -48,7 +55,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import ir.radsense.raadcore.app.AlertDialog;
 import ir.radsense.raadcore.app.NavigationBarActivity;
 import ir.radsense.raadcore.model.Account;
 import ir.radsense.raadcore.model.Auth;
@@ -66,7 +72,7 @@ public class CashOutRequestFragment extends Fragment {
     public static final int REQUEST_CASH_IN = 0;
     public static final int REQUEST_CASH_OUT_NORMAL = 1;
     public static final int REQUEST_CASH_OUT_IMMEDIATE = 2;
-    public static final int REQUEST_P2P_PAYMENT=3;
+    public static final int REQUEST_P2P_PAYMENT = 3;
 
 
     ProgressLayout progress;
@@ -118,13 +124,13 @@ public class CashOutRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_cash_out_request, container, false);
+        View view = inflater.inflate(R.layout.fragment_cash_out_request, container, false);
 
         ViewGroup rootView = view.findViewById(R.id.rootView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             rootView.setBackgroundColor(Color.parseColor(WalletActivity.backgroundTheme_2));
         }
-        
+
         progress = view.findViewById(R.id.progress);
         progress.setOnRetryButtonListener(new View.OnClickListener() {
             @Override
@@ -167,7 +173,7 @@ public class CashOutRequestFragment extends Fragment {
                         if (!mCard.isProtected) {
                             showSetPinConfirm();
                         } else {
-                            if (TextUtils.isEmpty(priceText.getText()) || (mRequestType != REQUEST_CASH_IN && TextUtils.isEmpty(numberText.getText())) ) {
+                            if (TextUtils.isEmpty(priceText.getText()) || (mRequestType != REQUEST_CASH_IN && TextUtils.isEmpty(numberText.getText()))) {
                                 Toast.makeText(getContext(), R.string.enter_info_completely, Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -220,8 +226,10 @@ public class CashOutRequestFragment extends Fragment {
 
         priceText.addTextChangedListener(new TextWatcher() {
             boolean isSettingText;
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -234,7 +242,7 @@ public class CashOutRequestFragment extends Fragment {
                 isSettingText = true;
                 String s = null;
                 try {
-                    s = String.format(Locale.US,"%,d", Long.parseLong(mPrice));
+                    s = String.format(Locale.US, "%,d", Long.parseLong(mPrice));
                 } catch (NumberFormatException e) {
                 }
                 priceText.setText(s);
@@ -246,8 +254,10 @@ public class CashOutRequestFragment extends Fragment {
 
         numberText.addTextChangedListener(new TextWatcher() {
             boolean isSettingText;
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -260,7 +270,7 @@ public class CashOutRequestFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 switch (mRequestType) {
                     case REQUEST_CASH_OUT_NORMAL:
-                        if (!s.toString().startsWith("IR")){
+                        if (!s.toString().startsWith("IR")) {
                             numberText.setText("IR" + (!s.toString().equals("I") ? s : ""));
                             Selection.setSelection(numberText.getText(), numberText.getText().length());
                         }
@@ -301,7 +311,7 @@ public class CashOutRequestFragment extends Fragment {
                 numberTitle.setVisibility(View.GONE);
                 numberText.setVisibility(View.GONE);
                 numberText.setHint(R.string.card_16_digits);
-                numberText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(25) });
+                numberText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
                 hintText.setText(R.string.cash_in_hint);
                 break;
             case REQUEST_CASH_OUT_NORMAL:
@@ -309,14 +319,14 @@ public class CashOutRequestFragment extends Fragment {
                 numberTitle.setText(R.string.enter_your_sheba_number);
                 hintText.setText(R.string.cash_out_normal_hint);
                 numberText.setHint(R.string.sheba_20_digits);
-                numberText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(26) });
+                numberText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(26)});
                 break;
             case REQUEST_CASH_OUT_IMMEDIATE:
                 priceTitle.setText(R.string.enter_cash_out_price);
                 numberTitle.setText(R.string.enter_your_card_number);
                 hintText.setText(R.string.cash_out_immediate_hint);
                 numberText.setHint(R.string.card_16_digits);
-                numberText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(25) });
+                numberText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
                 break;
         }
     }
@@ -397,7 +407,7 @@ public class CashOutRequestFragment extends Fragment {
     }
 
     private void startUserConfirm() {
-        if (TextUtils.isEmpty(priceText.getText()) || (mRequestType != REQUEST_CASH_IN && TextUtils.isEmpty(numberText.getText())) ) {
+        if (TextUtils.isEmpty(priceText.getText()) || (mRequestType != REQUEST_CASH_IN && TextUtils.isEmpty(numberText.getText()))) {
             Toast.makeText(getContext(), R.string.enter_info_completely, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -476,61 +486,45 @@ public class CashOutRequestFragment extends Fragment {
         sb.append(" ");
         sb.append(info.owner.lastName);
 
-        new AlertDialog()
-                .setTitle(getString(R.string.cashout_request))
-                .setMessage(sb.toString())
-                .setPositiveAction(getString(R.string.ok))
-                .setNegativeAction(getString(R.string.cancel))
-                .setOnActionListener(new AlertDialog.OnAlertActionListener() {
+
+        new MaterialDialog.Builder(getActivity())
+                .title(getString(R.string.cashout_request))
+                .content(sb.toString())
+                .positiveText(getString(R.string.ok))
+                .negativeText(getString(R.string.cancel))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public boolean onAction(int i, Object o) {
-                        if (i == 1) {
-                            showPinConfirm();
-                        }
-                        return true;
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        showPinConfirm();
                     }
-                }).show(getActivity().getSupportFragmentManager());
+                })
+                .show();
 
     }
 
     private void showPinConfirm() {
-        new AlertDialog()
-                .setMode(AlertDialog.MODE_INPUT)
-                .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-                .setTitle(getString(R.string.paygear_card_pin))
-                .setPositiveAction(getString(R.string.ok))
-                .setNegativeAction(getString(R.string.cancel))
-                .setOnActionListener(new AlertDialog.OnAlertActionListener() {
-                    @Override
-                    public boolean onAction(int i, Object o) {
-                        if (i == 1) {
-                            String pin = (String) o;
-                            if (!TextUtils.isEmpty(pin.trim())) {
-                                startRequest(pin);
-                            }
-                        }
-                        return true;
-                    }
-                }).show(getActivity().getSupportFragmentManager());
+
+
+        setConfirmPassword();
+
     }
 
     private void showSetPinConfirm() {
-        new AlertDialog()
-                .setTitle(getString(R.string.set_card_pin))
-                .setMessage(getString(R.string.credit_card_set_pin_confirm))
-                .setPositiveAction(getString(R.string.yes))
-                .setNegativeAction(getString(R.string.no))
-                .setOnActionListener(new AlertDialog.OnAlertActionListener() {
+
+        new MaterialDialog.Builder(getActivity())
+                .title(getString(R.string.set_card_pin))
+                .content(getString(R.string.credit_card_set_pin_confirm))
+                .positiveText(getString(R.string.yes))
+                .negativeText(getString(R.string.no))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public boolean onAction(int i, Object o) {
-                        if (i == 1) {
-                            ((NavigationBarActivity) getActivity()).pushFullFragment(
-                                    new SetCardPinFragment(), "SetCardPinFragment");
-                        }
-                        return true;
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        ((NavigationBarActivity) getActivity()).pushFullFragment(
+                                new SetCardPinFragment(), "SetCardPinFragment");
+
                     }
                 })
-                .show(getActivity().getSupportFragmentManager());
+                .show();
     }
 
     private void startRequest(String pin) {
@@ -686,7 +680,7 @@ public class CashOutRequestFragment extends Fragment {
                 int count = mCards.size();
                 final ArrayList<String> nlist = new ArrayList<String>(count);
 
-                String filterableString ;
+                String filterableString;
 
                 for (int i = 0; i < count; i++) {
                     filterableString = mCards.get(i).cardNumber;
@@ -709,6 +703,76 @@ public class CashOutRequestFragment extends Fragment {
             }
 
         }
+    }
+
+    public void setConfirmPassword() {
+        final LinearLayout layoutNickname = new LinearLayout(getActivity());
+        layoutNickname.setOrientation(LinearLayout.VERTICAL);
+
+        final View viewFirstName = new View(getActivity());
+        viewFirstName.setBackgroundColor(getActivity().getResources().getColor(R.color.line_edit_text));
+        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+
+        TextInputLayout inputNewPassWord = new TextInputLayout(getActivity());
+        final EditText newPassWord = new EditText(getActivity());
+        newPassWord.setHint(getActivity().getResources().getString(R.string.please_enter_your_password));
+        newPassWord.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+//        newPassWord.setTypeface(G.typeface_IRANSansMobile);
+        Typefaces.setTypeface(getContext(), Typefaces.IRAN_LIGHT, newPassWord);
+        newPassWord.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.dp14));
+        newPassWord.setTextColor(getActivity().getResources().getColor(R.color.text_edit_text));
+        newPassWord.setHintTextColor(getActivity().getResources().getColor(R.color.hint_edit_text));
+        newPassWord.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        newPassWord.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        newPassWord.setPadding(0, 8, 0, 8);
+        newPassWord.setMaxLines(1);
+        inputNewPassWord.addView(newPassWord);
+        inputNewPassWord.addView(viewFirstName, viewParams);
+        final View viewLastName = new View(getActivity());
+        viewLastName.setBackgroundColor(getActivity().getResources().getColor(R.color.line_edit_text));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            newPassWord.setBackground(getActivity().getResources().getDrawable(android.R.color.transparent));
+        }
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 15);
+        LinearLayout.LayoutParams lastNameLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lastNameLayoutParams.setMargins(0, 15, 0, 10);
+
+        layoutNickname.addView(inputNewPassWord, layoutParams);
+
+        final MaterialDialog dialog =
+                new MaterialDialog.Builder(getActivity())
+                        .title(getActivity().getResources().getString(R.string.your_password))
+                        .inputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        .positiveText(getActivity().getResources().getString(R.string.ok)).customView(layoutNickname, true)
+                        .widgetColor(Color.parseColor(WalletActivity.primaryColor)).negativeText(getActivity().getResources().getString(R.string.cancel)).build();
+
+        final View positive = dialog.getActionButton(DialogAction.POSITIVE);
+
+        newPassWord.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    viewFirstName.setBackgroundColor(Color.parseColor(WalletActivity.primaryColor));
+                } else {
+                    viewFirstName.setBackgroundColor(getActivity().getResources().getColor(R.color.line_edit_text));
+                }
+            }
+        });
+
+
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pin = newPassWord.getText().toString();
+                if (!TextUtils.isEmpty(pin.trim())) {
+                    startRequest(pin);
+                }
+            }
+        });
+
+        dialog.show();
     }
 
 

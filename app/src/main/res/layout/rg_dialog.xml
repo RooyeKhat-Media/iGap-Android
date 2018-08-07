@@ -2,7 +2,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/rg_whit_background"
+  style="?backgroundColorSettingTheme_2"
   android:clickable="true"
   android:layoutDirection="ltr"
   android:orientation="vertical">
@@ -12,6 +12,7 @@
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp60"
+    style="?backgroundColorSettingTheme_2"
     android:layoutDirection="ltr">
 
     <android.support.v7.widget.SearchView
@@ -20,9 +21,10 @@
       android:layout_height="match_parent"
       android:clickable="true"
       android:theme="@style/MySearch"
+      style="?textSubColorSettingTheme"
       app:submitBackground="@color/red" />
 
-    <TextView
+    <net.iGap.module.HeaderTextview
       android:id="@+id/rg_txt_titleToolbar"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -45,16 +47,15 @@
     android:id="@+id/rg_borderButton"
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/background_editText"
-    android:visibility="gone" />
+    style="?lineColorSettingTheme"
+    android:visibility="visible" />
 
   <ListView
-
+   style="?backgroundColorSettingTheme_2"
     android:id="@+id/lstContent"
     android:layout_width="fill_parent"
     android:layout_height="0dip"
     android:layout_weight="1"
-    android:background="@color/structCountry"
     android:choiceMode="singleChoice"
     android:divider="@color/rg_background_editText"
     android:fadeScrollbars="false"
@@ -65,7 +66,7 @@
   <View
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="@color/background_editText" />
+    style="?lineColorSettingTheme"/>
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -76,7 +77,7 @@
     android:padding="@dimen/dp8">
 
 
-    <TextView
+    <net.iGap.module.HeaderTextview
       android:id="@+id/rg_txt_okDialog"
       android:layout_width="@dimen/dp60"
       android:layout_height="@dimen/dp36"

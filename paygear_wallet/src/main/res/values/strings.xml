@@ -292,5 +292,7 @@
 (The password will expire after 2 minutes, please change it after retrieving it)</string>
   <string name="text_forgot_title">Resend Password</string>
   <string name="Forgot_Passwords">Password recovery</string>
-
+  <string name="enter_your_province">select your province</string>
+  <string name="please_enter_your_password">Please enter your Password</string>
+  <string name="your_password">Your Password</string>
 </resources>

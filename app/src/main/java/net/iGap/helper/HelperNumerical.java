@@ -118,4 +118,9 @@ public class HelperNumerical {
 
         return Integer.parseInt(random);
     }
+
+
+    public static Long getNanoTimeStamp() {
+        return System.nanoTime();
+    }
 }

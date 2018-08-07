@@ -46,7 +46,7 @@ public class FragmentContactsProfileViewModel implements OnUserContactEdit, OnUs
     public String firstName;
     public String lastName;
     public boolean isBlockUser = false;
-    public boolean disableDeleteContact = true;
+    public boolean disableDeleteContact = false;
     public boolean isVerified = false;
     public ObservableInt callVisibility = new ObservableInt(View.GONE);
     public ObservableInt toolbarVisibility = new ObservableInt(View.GONE);

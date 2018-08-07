@@ -716,7 +716,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isTime}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isTime)}"
               android:onClick="@{fragmentSettingViewModel::onClickTime}"
               android:textOff=""
               android:textOn="" />
@@ -758,7 +758,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isAutoRotate}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isAutoRotate)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedAutoRotate(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -802,7 +802,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isMultiTab}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isMultiTab)}"
               android:onClick="@{fragmentSettingViewModel::onClickMultiTab}"
               android:textOff=""
               android:textOn="" />
@@ -922,7 +922,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isShowVote}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isShowVote)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedShowVote(checked)}"
               android:textOff=""
               android:textOn=""
@@ -962,7 +962,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isSenderNameGroup}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isSenderNameGroup)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedSenderNameGroup(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1007,7 +1007,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isSendEnter}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isSendEnter)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedSendEnter(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1232,7 +1232,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isAutoGif}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isAutoGif)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangeAutoGif(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1273,7 +1273,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isSaveGallery}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isSaveGallery)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedSaveGallery(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1317,7 +1317,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isCompress}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isCompress)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedCompress(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1362,7 +1362,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isTrim}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isTrim)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedTrim(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1403,7 +1403,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isDefaultPlayer}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isDefaultPlayer)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedDefaultVideo(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1440,7 +1440,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isCrop}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isCrop)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedCrop(checked)}"
               android:textOff=""
               android:textOn="" />
@@ -1479,7 +1479,7 @@
               android:layout_width="@dimen/dp44"
               android:layout_height="@dimen/dp40"
               android:background="@drawable/st_switch_button"
-              android:checked="@{fragmentSettingViewModel.isCameraButtonSheet}"
+              android:checked="@{safeUnbox(fragmentSettingViewModel.isCameraButtonSheet)}"
               android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedChangedCameraButtonSheet(checked)}"
               android:textOff=""
               android:textOn="" />

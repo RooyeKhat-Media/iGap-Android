@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.activities.ActivityMain;
 import net.iGap.databinding.ActivityProfileChannelBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperError;
@@ -449,6 +450,12 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAva
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        /**
+         * If it's in the app and the screen lock is activated after receiving the result of the camera and .... The page code is displayed.
+         * The wizard will  be set ActivityMain.isUseCamera = true to prevent the page from being opened....
+         */
+        if (G.isPassCode) ActivityMain.isUseCamera = true;
+
         if (resultCode == Activity.RESULT_OK) {
             String filePath = null;
             long avatarId = SUID.id().get();
@@ -476,6 +483,7 @@ public class FragmentChannelProfile extends BaseFragment implements OnChannelAva
                     if (data.getData() == null) {
                         return;
                     }
+                    ImageHelper.correctRotateImage(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), true); //rotate image
                     FragmentEditImage.insertItemList(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false);
                     new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
                     break;

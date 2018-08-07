@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.fragments;
 
@@ -36,6 +36,7 @@ import net.iGap.module.SHP_SETTING;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmWallpaper;
+import net.iGap.realm.RealmWallpaperProto;
 import net.iGap.request.RequestInfoWallpaper;
 
 import java.io.File;
@@ -257,7 +258,7 @@ public class FragmentChatBackground extends BaseFragment {
                 for (String localPath : realmWallpaper.getLocalList()) {
                     if (new File(localPath).exists()) {
                         StructWallpaper _swl = new StructWallpaper();
-                        _swl.setWallpaperType(WallpaperType.lockal);
+                        _swl.setWallpaperType(WallpaperType.local);
                         _swl.setPath(localPath);
                         wList.add(_swl);
                     }
@@ -265,7 +266,7 @@ public class FragmentChatBackground extends BaseFragment {
             }
 
             if (realmWallpaper.getWallPaperList() != null) {
-                for (ProtoGlobal.Wallpaper wallpaper : realmWallpaper.getWallPaperList()) {
+                for (RealmWallpaperProto wallpaper : realmWallpaper.getWallPaperList()) {
                     StructWallpaper _swp = new StructWallpaper();
                     _swp.setWallpaperType(WallpaperType.proto);
                     _swp.setProtoWallpaper(wallpaper);
@@ -295,7 +296,7 @@ public class FragmentChatBackground extends BaseFragment {
     }
 
     public enum WallpaperType {
-        addNew, lockal, proto
+        addNew, local, proto
     }
 
     public interface OnImageClick {
@@ -306,7 +307,7 @@ public class FragmentChatBackground extends BaseFragment {
 
         private WallpaperType wallpaperType;
         private String path;
-        private ProtoGlobal.Wallpaper protoWallpaper;
+        private RealmWallpaperProto protoWallpaper;
 
         public WallpaperType getWallpaperType() {
             return wallpaperType;
@@ -324,12 +325,14 @@ public class FragmentChatBackground extends BaseFragment {
             this.path = path;
         }
 
-        public ProtoGlobal.Wallpaper getProtoWallpaper() {
+        public RealmWallpaperProto getProtoWallpaper() {
             return protoWallpaper;
         }
 
-        public void setProtoWallpaper(ProtoGlobal.Wallpaper protoWallpaper) {
-            this.protoWallpaper = protoWallpaper;
+        public void setProtoWallpaper(RealmWallpaperProto mProtoWallpaper) {
+
+            this.protoWallpaper = mProtoWallpaper;
+
         }
     }
 }

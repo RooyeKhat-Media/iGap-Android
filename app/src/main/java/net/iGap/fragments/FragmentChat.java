@@ -955,6 +955,12 @@ public class FragmentChat extends BaseFragment
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        /**
+         * If it's in the app and the screen lock is activated after receiving the result of the camera and .... The page code is displayed.
+         * The wizard will  be set ActivityMain.isUseCamera = true to prevent the page from being opened....
+         */
+        if (G.isPassCode) ActivityMain.isUseCamera = true;
+
         if (resultCode == RESULT_CANCELED) {
             HelperSetAction.sendCancel(messageId);
 
@@ -3786,6 +3792,7 @@ public class FragmentChat extends BaseFragment
             rootReport.setVisibility(View.GONE);
         }
 
+
         @ArrayRes int itemsRes = 0;
         switch (roomMessageType) {
             case TEXT:
@@ -3955,6 +3962,10 @@ public class FragmentChat extends BaseFragment
                 });
             }
 
+        }
+
+        if (isChatReadOnly) {
+            rootEdit.setVisibility(View.GONE);
         }
 
         String _savedFolderName = "";
@@ -6510,6 +6521,7 @@ public class FragmentChat extends BaseFragment
         });
         if (txtChannelMute == null)
             txtChannelMute = (TextView) rootView.findViewById(R.id.chl_txt_mute_channel);
+        if (G.isDarkTheme) txtChannelMute.setTextColor(Color.WHITE);
         if (isMuteNotification) {
             txtChannelMute.setText(R.string.unmute);
         } else {
@@ -7964,15 +7976,16 @@ public class FragmentChat extends BaseFragment
                 visibleItemCount = linearLayoutManager.getChildCount();
                 totalItemCount = linearLayoutManager.getItemCount();
 
-                if (firstVisiblePosition < scrollEnd) {
-                    /**
-                     * scroll to top
-                     */
+                if (firstVisiblePosition < scrollEnd) {  /** scroll to top */
                     loadMessage(UP);
-                } else if (firstVisiblePosition + visibleItemCount >= (totalItemCount - scrollEnd)) {
-                    /**
-                     * scroll to bottom
+
+                    /** if totalItemCount is lower than scrollEnd so (firstVisiblePosition < scrollEnd) is always true and we can't load DOWN,
+                     * finally for solve this problem we to check following state and load DOWN even totalItemCount is lower than scrollEnd count
                      */
+                    if (totalItemCount <= scrollEnd) {
+                        loadMessage(DOWN);
+                    }
+                } else if (firstVisiblePosition + visibleItemCount >= (totalItemCount - scrollEnd)) { /** scroll to bottom */
                     loadMessage(DOWN);
                 }
             }

@@ -37,6 +37,7 @@ import net.iGap.module.enums.ClientConditionOffline;
 import net.iGap.module.enums.ClientConditionVersion;
 import net.iGap.module.enums.EnumCustomMessageId;
 import net.iGap.module.enums.LocalFileType;
+import net.iGap.module.structs.StructMessageOption;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.request.RequestChannelDeleteMessage;
@@ -330,16 +331,11 @@ public class RealmRoomMessage extends RealmObject {
         });
     }
 
-    private static RealmRoomMessage putOrUpdateForwardOrReply(ProtoGlobal.RoomMessage input, long roomId, Realm realm) {
-        return putOrUpdate(input, roomId, true, true, realm);
-    }
-
-    public static RealmRoomMessage putOrUpdate(ProtoGlobal.RoomMessage input, long roomId, boolean forwardOrReply, boolean setGap, Realm realm) {
+    public static RealmRoomMessage putOrUpdate(Realm realm, long roomId, ProtoGlobal.RoomMessage input, StructMessageOption messageOption) {
         long messageId;
-        if (forwardOrReply) {
+        if (messageOption.isForwardOrReply()) {
             /**
-             * for forward and reply set new messageId
-             * for create new message if before not exist
+             * for forward and reply set new messageId for create new message if before not exist
              */
             messageId = input.getMessageId() * (-1);
         } else {
@@ -352,12 +348,17 @@ public class RealmRoomMessage extends RealmObject {
             message.setRoomId(roomId);
 
             if (input.hasForwardFrom()) {
-                message.setForwardMessage(RealmRoomMessage.putOrUpdateForwardOrReply(input.getForwardFrom(), -1, realm));
+                message.setForwardMessage(putOrUpdate(realm, -1, input.getForwardFrom(), new StructMessageOption().setGap().setForwardOrReply()));
             }
             if (input.hasReplyTo()) {
-                message.setReplyTo(RealmRoomMessage.putOrUpdateForwardOrReply(input.getReplyTo(), -1, realm));
+                message.setReplyTo(putOrUpdate(realm, -1, input.getReplyTo(), new StructMessageOption().setGap().setForwardOrReply()));
             }
             message.setShowMessage(true);
+
+            if (messageOption.isFromShareMedia()) {
+                message.setPreviousMessageId(input.getMessageId());
+                message.setFutureMessageId(input.getMessageId());
+            }
         }
 
         message.setMessage(input.getMessage());
@@ -375,13 +376,13 @@ public class RealmRoomMessage extends RealmObject {
              * if this message isn't forward client before got this info and now don't
              * need to get it again
              */
-            if (forwardOrReply) {
+            if (messageOption.isForwardOrReply()) {
                 RealmRoom.needGetRoom(input.getAuthor().getRoom().getRoomId());
             }
         }
         message.setAuthorHash(input.getAuthor().getHash());
 
-        if (!forwardOrReply) {
+        if (!messageOption.isForwardOrReply()) {
             message.setDeleted(input.getDeleted());
         }
 
@@ -423,7 +424,6 @@ public class RealmRoomMessage extends RealmObject {
         }
 
         if (input.hasWallet()) {
-            //wallet put
             message.setRoomMessageWallet(RealmRoomMessageWallet.put(input.getWallet()));
         }
 
@@ -437,7 +437,7 @@ public class RealmRoomMessage extends RealmObject {
         }
         message.setCreateTime(input.getCreateTime() * DateUtils.SECOND_IN_MILLIS);
 
-        if (setGap) {
+        if (messageOption.isGap()) {
             message.setPreviousMessageId(input.getPreviousMessageId());
         }
 

@@ -181,12 +181,12 @@
             android:background="@android:color/transparent"
             android:ems="4"
             android:gravity="top"
-            android:imeOptions="@{fragmentNewGroupVieModel.edtDescriptionImeOptions}"
-            android:inputType="@{fragmentNewGroupVieModel.edtDescriptionInputType }"
+            android:imeOptions="@{safeUnbox(fragmentNewGroupVieModel.edtDescriptionImeOptions)}"
+            android:inputType="@{safeUnbox(fragmentNewGroupVieModel.edtDescriptionInputType)}"
             android:lineSpacingMultiplier="1.2"
-            android:lines="@{fragmentNewGroupVieModel.edtDescriptionLines , default = 4}"
+            android:lines="@{safeUnbox(fragmentNewGroupVieModel.edtDescriptionLines) , default = 4}"
             android:maxLength="500"
-            android:maxLines="@{fragmentNewGroupVieModel.edtDescriptionMaxLines , default =4}"
+            android:maxLines="@{safeUnbox(fragmentNewGroupVieModel.edtDescriptionMaxLines) , default =4}"
             android:paddingBottom="@dimen/dp8"
             android:paddingTop="@dimen/dp8"
             android:singleLine="false"
@@ -206,7 +206,7 @@
           android:layout_below="@+id/ng_txtInput_description"
           android:layout_marginRight="@dimen/dp20"
           android:layout_marginTop="@dimen/dp12"
-          android:enabled="@{fragmentNewGroupVieModel.nextStepEnable }"
+          android:enabled="@{safeUnbox(fragmentNewGroupVieModel.nextStepEnable)}"
           android:onClick="@{fragmentNewGroupVieModel::onClickNextStep}"
           android:padding="@dimen/dp12"
           android:singleLine="false"
@@ -243,6 +243,6 @@
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
       android:indeterminate="true"
-      android:visibility="@{fragmentNewGroupVieModel.prgWaiting}" />
+      android:visibility="@{safeUnbox(fragmentNewGroupVieModel.prgWaiting)}" />
   </RelativeLayout>
 </layout>

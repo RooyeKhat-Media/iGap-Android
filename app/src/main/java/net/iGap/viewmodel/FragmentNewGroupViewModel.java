@@ -7,7 +7,7 @@ package net.iGap.viewmodel;
  * iGap Messenger | Free, Fast and Secure instant messaging application
  * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
  * All rights reserved.
-*/
+ */
 
 import android.content.Context;
 import android.databinding.ObservableField;
@@ -106,9 +106,9 @@ public class FragmentNewGroupViewModel {
 
     public void onClickCancel(View view) {
         AppUtils.closeKeyboard(view);
-        if (G.IMAGE_NEW_GROUP.exists()) {
+        if (G.IMAGE_NEW_GROUP != null && G.IMAGE_NEW_GROUP.exists()) {
             G.IMAGE_NEW_GROUP.delete();
-        } else {
+        } else if (G.IMAGE_NEW_CHANEL != null) {
             G.IMAGE_NEW_CHANEL.delete();
         }
         try {

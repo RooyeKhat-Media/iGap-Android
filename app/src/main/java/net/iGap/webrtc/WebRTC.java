@@ -15,9 +15,9 @@ import android.os.Build;
 import android.util.Log;
 
 import net.iGap.G;
-import net.iGap.proto.ProtoSignalingGetConfiguration;
 import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmCallConfig;
+import net.iGap.realm.RealmIceServer;
 import net.iGap.request.RequestSignalingAccept;
 import net.iGap.request.RequestSignalingLeave;
 import net.iGap.request.RequestSignalingOffer;
@@ -136,7 +136,7 @@ public class WebRTC {
             List<PeerConnection.IceServer> iceServers = new ArrayList<>();
             Realm realm = Realm.getDefaultInstance();
             RealmCallConfig realmCallConfig = realm.where(RealmCallConfig.class).findFirst();
-            for (ProtoSignalingGetConfiguration.SignalingGetConfigurationResponse.IceServer ice : realmCallConfig.getIceServer()) {
+            for (RealmIceServer ice : realmCallConfig.getIceServer()) {
                 iceServers.add(new PeerConnection.IceServer(ice.getUrl(), ice.getUsername(), ice.getCredential()));
             }
             realm.close();

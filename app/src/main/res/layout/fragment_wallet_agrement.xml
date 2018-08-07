@@ -116,7 +116,7 @@
           android:layout_gravity="start"
           android:textSize="@dimen/dp14"
           android:layout_marginBottom="@dimen/dp32"
-          android:onCheckedChanged="@{fragmentWalletAgreementViewModel.checkBoxAgreement}"
+          android:onCheckedChanged="@{fragmentWalletAgreementViewModel::checkBoxAgreement}"
           android:text="@string/i_agree_with_the_terms" />
 
       </LinearLayout>

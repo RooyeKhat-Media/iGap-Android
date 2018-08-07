@@ -23,5 +23,7 @@
 
     <color name="iGapColor">#3dbcb3</color>
     <color name="iGapColorDarker">#37a9a1</color>
-
+    <color name="line_edit_text">#d2d2d2</color>
+    <color name="hint_edit_text">#9b9b9b</color>
+    <color name="text_edit_text">#000000</color>
 </resources>

@@ -33,6 +33,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -194,6 +195,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     private static long oldTime;
     private static long currentTime;
     public TextView iconLock;
+    public static boolean isUseCamera = false;
     public MainInterface mainActionApp;
     public MainInterface mainActionChat;
     public MainInterface mainActionGroup;
@@ -1270,7 +1272,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     }
 
     public void openActivityPassCode() {
-        if (!isActivityEnterPassCode && G.isPassCode && isLock && !G.isRestartActivity) {
+        if (!isActivityEnterPassCode && G.isPassCode && isLock && !G.isRestartActivity && !isUseCamera) {
             enterPassword();
         } else if (!isActivityEnterPassCode && !G.isRestartActivity) {
             currentTime = System.currentTimeMillis();
@@ -1282,6 +1284,11 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 enterPassword();
             }
         }
+        /**
+         * If it's in the app and the screen lock is activated after receiving the result of the camera and .... The page code is displayed.
+         * The wizard will  be set ActivityMain.isUseCamera = true to prevent the page from being opened....
+         */
+        isUseCamera = false;
 
         G.isRestartActivity = false;
     }

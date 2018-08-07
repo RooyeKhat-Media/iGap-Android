@@ -296,7 +296,7 @@
           android:layout_width="match_parent"
           android:layout_height="1dp"
           style="?lineColorSettingTheme"
-          android:visibility="@{activityManageSpaceViewModel.showLayoutSdk}" />
+          android:visibility="@{safeUnbox(activityManageSpaceViewModel.showLayoutSdk)}" />
 
         <LinearLayout
           style="?backgroundColorSettingTheme_2"
@@ -309,7 +309,7 @@
           android:paddingRight="@dimen/dp16"
           android:paddingStart="@dimen/dp16"
           android:paddingBottom="@dimen/dp16"
-          android:visibility="@{activityManageSpaceViewModel.showLayoutSdk}">
+          android:visibility="@{safeUnbox(activityManageSpaceViewModel.showLayoutSdk)}">
 
           <TextView
             android:id="@+id/stsp_txt_use_sdk"
@@ -329,7 +329,7 @@
             android:layout_width="@dimen/dp44"
             android:layout_height="@dimen/dp40"
             android:background="@drawable/st_switch_button"
-            android:checked="@{activityManageSpaceViewModel.isSdkEnable}"
+            android:checked="@{safeUnbox(activityManageSpaceViewModel.isSdkEnable)}"
             android:onCheckedChanged="@{(switch, checked) -> activityManageSpaceViewModel.onCheckedSdkEnable(checked)}"
             android:textOff=""
             android:textOn=""

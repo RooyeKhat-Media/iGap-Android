@@ -291,4 +291,6 @@
 ( رمز ارسال شده بعد از ۲ دقیقه منقضی می شود لطفاً بعد از دریافت مجدد آن را تغییر دهید )</string>
   <string name="text_forgot_title">ارسال مجدد رمز</string>
   <string name="Forgot_Passwords">بازیابی رمز</string>
+  <string name="please_enter_your_password"> من فضلك أدخل رمز المرور</string>
+  <string name="your_password">رمز المرور  </string>
 </resources>

@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,15 +40,17 @@ import com.zomato.photofilters.imageprocessors.subfilters.SaturationSubfilter;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.fragments.BaseFragment;
 import net.iGap.fragments.FragmentEditImage;
 import net.iGap.helper.HelperFragment;
+import net.iGap.helper.ImageHelper;
 import net.iGap.module.AttachFile;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentFilterImage extends Fragment implements FiltersListFragment.FiltersListFragmentListener, EditImageFragment.EditImageFragmentListener, ThumbnailsAdapter.ThumbnailsAdapterListener {
+public class FragmentFilterImage extends BaseFragment implements FiltersListFragment.FiltersListFragmentListener, EditImageFragment.EditImageFragmentListener, ThumbnailsAdapter.ThumbnailsAdapterListener {
 
     //    private RecyclerView rcvEditImage;
     private ImageView imageFilter;
@@ -102,7 +105,8 @@ public class FragmentFilterImage extends Fragment implements FiltersListFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (getActivity() != null)
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -134,18 +138,18 @@ public class FragmentFilterImage extends Fragment implements FiltersListFragment
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     final String path = BitmapUtils.insertImage(getActivity().getContentResolver(), finalImage, System.currentTimeMillis() + "_profile.jpg", null);
                                     FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
-                                    new HelperFragment(FragmentFilterImage.this).remove();
+                                    popBackStackFragment();
                                 }
                             }).onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            new HelperFragment(FragmentFilterImage.this).remove();
+                            popBackStackFragment();
                         }
                     })
                             .negativeText(R.string.close)
                             .show();
                 } else {
-                    new HelperFragment(FragmentFilterImage.this).remove();
+                    popBackStackFragment();
                 }
 
             }
@@ -156,7 +160,7 @@ public class FragmentFilterImage extends Fragment implements FiltersListFragment
             public void onClick(View v) {
                 final String path = BitmapUtils.insertImage(getActivity().getContentResolver(), finalImage, System.currentTimeMillis() + "_profile.jpg", null);
                 FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
-                new HelperFragment(FragmentFilterImage.this).remove();
+                popBackStackFragment();
             }
         });
 
@@ -267,11 +271,8 @@ public class FragmentFilterImage extends Fragment implements FiltersListFragment
     }
 
     public static Bitmap getBitmapFile(Context context, String fileName, int width, int height) {
-
         File image = new File(fileName);
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        //        bitmap = Bitmap.createScaledBitmap(bitmap,width,height,true);
-        return BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
+        return ImageHelper.decodeFile(image);
     }
 
     private class FilterImageTask extends AsyncTask<Filter, Integer, Bitmap> {
@@ -344,5 +345,26 @@ public class FragmentFilterImage extends Fragment implements FiltersListFragment
             super.onPostExecute(myFilter);
             imageFilter.setImageBitmap(myFilter);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getView() == null) {
+            return;
+        }
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    popBackStackFragment();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

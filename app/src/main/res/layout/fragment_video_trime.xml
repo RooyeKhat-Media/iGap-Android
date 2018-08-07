@@ -68,7 +68,7 @@
             android:layout_height="0dp"
             android:layout_weight=".5"
             android:gravity="left|center_vertical"
-            android:text="@string/photo"
+            android:text="@string/array_Video"
             android:textColor="@color/whit_background"
             android:textSize="@dimen/dp16"
             android:textStyle="bold"

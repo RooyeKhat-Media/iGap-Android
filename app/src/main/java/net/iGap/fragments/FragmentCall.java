@@ -690,6 +690,9 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
 
             final ProtoSignalingGetLog.SignalingGetLogResponse.SignalingLog item = viewHolder.callLog = getItem(i).getLogProto();
 
+            if (item == null) {
+                return;
+            }
             // set icon and icon color
             switch (item.getStatus()) {
                 case OUTGOING:

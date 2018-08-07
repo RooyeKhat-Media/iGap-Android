@@ -2,6 +2,7 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:clickable="true"
+  style="?backgroundColorSettingTheme_2"
   android:orientation="vertical">
 
   <!-- Pretty hint text, and maxLines -->
@@ -38,7 +39,7 @@
         android:gravity="start"
         android:lineSpacingExtra="0dp"
         android:text="@string/verify_time_out_message"
-        android:textColor="@color/rg_border_editText"
+        style="?textSubColorSettingTheme"
         android:textSize="@dimen/dp14" />
 
 
@@ -46,19 +47,30 @@
         android:id="@+id/rg_edt_dialog_verifyCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp6"
         android:layout_marginLeft="@dimen/dp24"
         android:layout_marginRight="@dimen/dp24"
         android:layout_marginTop="@dimen/dp20"
+        android:layout_marginBottom="0dp"
         android:gravity="start"
         android:hint="@string/Re_Enter_Verify_Code_Please"
         android:inputType="number"
         android:maxLength="6"
-        android:paddingBottom="@dimen/dp20"
+        android:paddingBottom="@dimen/dp6"
+        style="?hintColorSettingTheme"
         android:textSize="@dimen/dp14"
-        android:theme="@style/Setting_editText" />
+        android:theme="@style/Setting_editText"
+        android:background="@android:color/transparent" />
 
+      <View
+          android:id="@+id/rg_borderButton"
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginBottom="@dimen/dp6"
+          android:layout_marginLeft="@dimen/dp24"
+          android:layout_marginRight="@dimen/dp24"
 
+          style="?lineColorSettingTheme"
+          android:visibility="visible" />
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp52"
@@ -66,7 +78,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/dp8">
 
-        <TextView
+        <net.iGap.module.HeaderTextview
           android:id="@+id/rg_btn_dialog_okVerifyCode"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -79,7 +91,7 @@
           android:textSize="@dimen/dp14"
           android:textStyle="bold" />
 
-        <TextView
+        <net.iGap.module.HeaderTextview
           android:id="@+id/rg_btn_cancelVerifyCode"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

@@ -1,17 +1,17 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.helper;
 
 import net.iGap.G;
-import net.iGap.module.AttachFile;
+import net.iGap.module.structs.StructMessageOption;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
 import net.iGap.realm.RealmRegisteredInfo;
@@ -42,7 +42,7 @@ public class HelperMessageResponse {
                 /**
                  * put message to realm
                  */
-                RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, true, realm);
+                RealmRoomMessage realmRoomMessage = RealmRoomMessage.putOrUpdate(realm, roomId, roomMessage, new StructMessageOption().setGap());
                 final RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
                 /**
                  * because user may have more than one device, his another device should not
@@ -94,21 +94,21 @@ public class HelperMessageResponse {
 //                                //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
 //                            } else {
 
-                                if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
-                                    G.handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
-                                        }
-                                    }, 200);
-                                } else {
-                                    G.handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            new HelperNotificationChannel().initSetting(roomId);
-                                        }
-                                    }, 200);
-                                }
+                            if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
+                                    }
+                                }, 200);
+                            } else {
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new HelperNotificationChannel().initSetting(roomId);
+                                    }
+                                }, 200);
+                            }
 
 //                            }
                         }

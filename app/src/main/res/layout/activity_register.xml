@@ -19,8 +19,7 @@
   <FrameLayout
     android:id="@+id/rg_rootActivityRegister"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/rg_agreement_background"
+    android:layout_height="match_parent" android:background="@{Color.parseColor(G.backgroundTheme),default=@color/toolbar_background}"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -28,8 +27,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/rg_agreement_background"
+      android:layout_height="match_parent" android:background="@{Color.parseColor(G.backgroundTheme),default=@color/toolbar_background}"
       android:orientation="vertical"
       tools:ignore="MissingPrefix">
 
@@ -143,7 +141,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="@string/rg_title_register"
-                android:textColor="@color/rg_black_register"
+                android:textColor="@{Color.parseColor(G.textTitleTheme),default=@color/toolbar_background}"
                 android:textSize="@dimen/dp18" />
 
               <View
@@ -153,7 +151,8 @@
                 android:layout_marginLeft="@dimen/dp32"
                 android:layout_marginRight="@dimen/dp32"
                 android:layout_marginTop="@dimen/dp8"
-                android:background="@color/rg_line2_background" />
+                android:background="@{Color.parseColor(G.lineBorder),default=@color/toolbar_background}"
+                  />
 
               <TextView
                 fontPath="fonts/IRANSansMobile.ttf"
@@ -167,7 +166,7 @@
                 android:layout_marginTop="@dimen/dp12"
                 android:gravity="center"
                 android:text="@string/rg_confirm_text_register"
-                android:textColor="@color/rg_confirm_country"
+                android:textColor="@{Color.parseColor(G.textTitleTheme),default=@color/toolbar_background}"
                 android:textSize="@dimen/dp14"
 
                 />
@@ -240,7 +239,7 @@
                   android:gravity="left|center_vertical"
                   android:imeOptions="flagNoExtractUi"
                   android:inputType="phone"
-                  android:onTextChanged="@{fragmentRegisterViewModel.onTextChanged}"
+                  android:onTextChanged="@{fragmentRegisterViewModel::onTextChanged}"
                   android:padding="@dimen/dp4"
                   android:text="@={fragmentRegisterViewModel.callBackEdtPhoneNumber}"
                   android:textAlignment="gravity"

@@ -304,7 +304,7 @@
                     android:text="@string/verify_user"
                     android:textColor="@color/verify_color"
                     android:textSize="@dimen/dp16"
-                    android:visibility="@{viewModel.verifyTextVisibility}" />
+                    android:visibility="@{safeUnbox(viewModel.verifyTextVisibility)}" />
 
                 </LinearLayout>
               </LinearLayout>

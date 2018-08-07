@@ -294,7 +294,7 @@
     <meta-data
       tools:replace="android:value"
       android:name="io.fabric.ApiKey"
-      android:value="Your_Fabric_Key" />
+      android:value="Your_Fabric_key" />
 
     <!--
       The API key for Google Maps-based APIs is defined as a string resource.

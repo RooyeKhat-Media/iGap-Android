@@ -50,7 +50,7 @@ public class RealmMigration implements io.realm.RealmMigration {
         }
 
         if (oldVersion == 3) {
-            schema.create(RealmWallpaper.class.getSimpleName()).addField(RealmWallpaperFields.LAST_TIME_GET_LIST, long.class, FieldAttribute.REQUIRED).addField(RealmWallpaperFields.WALL_PAPER_LIST, byte[].class).addField(RealmWallpaperFields.LOCAL_LIST, byte[].class);
+            schema.create(RealmWallpaper.class.getSimpleName()).addField(RealmWallpaperFields.LAST_TIME_GET_LIST, long.class, FieldAttribute.REQUIRED).addField("wallPaperList", byte[].class).addField(RealmWallpaperFields.LOCAL_LIST, byte[].class);
             oldVersion++;
         }
 
@@ -98,7 +98,7 @@ public class RealmMigration implements io.realm.RealmMigration {
         }
 
         if (oldVersion == 9) {
-            schema.create(RealmCallConfig.class.getSimpleName()).addField(RealmCallConfigFields.VOICE_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.VIDEO_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.SCREEN_SHARING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.ICE_SERVER, byte[].class);
+            schema.create(RealmCallConfig.class.getSimpleName()).addField(RealmCallConfigFields.VOICE_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.VIDEO_CALLING, boolean.class, FieldAttribute.REQUIRED).addField(RealmCallConfigFields.SCREEN_SHARING, boolean.class, FieldAttribute.REQUIRED).addField("IceServer", byte[].class);
 
             RealmObjectSchema realmCallLog = schema.create(RealmCallLog.class.getSimpleName()).addField(RealmCallLogFields.ID, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.NAME, String.class).addField(RealmCallLogFields.TIME, long.class, FieldAttribute.REQUIRED).addField(RealmCallLogFields.LOG_PROTO, byte[].class);
             realmCallLog.addPrimaryKey(RealmCallLogFields.ID);
@@ -258,7 +258,7 @@ public class RealmMigration implements io.realm.RealmMigration {
             oldVersion++;
         }
 
-        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 19
+        if (oldVersion == 19) {
 
             RealmObjectSchema realmRoomMessageWallet = schema.create(RealmRoomMessageWallet.class.getSimpleName())
                     .addField(RealmRoomMessageWalletFields.ID, long.class, FieldAttribute.REQUIRED)
@@ -275,6 +275,33 @@ public class RealmMigration implements io.realm.RealmMigration {
             RealmObjectSchema realmRoomMessage = schema.get(RealmRoomMessage.class.getSimpleName());
             if (realmRoomMessage != null) {
                 realmRoomMessage.addRealmObjectField("roomMessageWallet", realmRoomMessageWallet);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 20
+
+            RealmObjectSchema realmIceServer = schema.create(RealmIceServer.class.getSimpleName()).addField("url", String.class).addField("username", String.class).addField("credential", String.class);
+
+            RealmObjectSchema realmWallpaperProto = schema.create(RealmWallpaperProto.class.getSimpleName()).addRealmObjectField("file", schema.get(RealmAttachment.class.getSimpleName())).addField("color", String.class);
+
+            RealmObjectSchema realmCallConfig = schema.get(RealmCallConfig.class.getSimpleName());
+            if (realmCallConfig != null) {
+                realmCallConfig.addRealmListField("realmIceServer", realmIceServer);
+
+                if (realmCallConfig.hasField("IceServer")) {
+                    realmCallConfig.removeField("IceServer");
+                }
+            }
+
+            RealmObjectSchema realmWallpaper = schema.get(RealmWallpaper.class.getSimpleName());
+            if (realmWallpaper != null) {
+                realmWallpaper.addRealmListField("realmWallpaperProto", realmWallpaperProto);
+
+                if (realmWallpaper.hasField("wallPaperList")) {
+                    realmWallpaper.removeField("wallPaperList");
+                }
             }
 
             oldVersion++;

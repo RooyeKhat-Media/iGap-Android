@@ -257,7 +257,7 @@
                 android:gravity="center"
                 android:text="@string/md_close_button"
                 android:textAppearance="@style/TextIconAppearance.all"
-                style="?textSubColorSettingTheme"
+                style="?textTitleColorSettingTheme"
                 android:textSize="@dimen/dp20" />
             </net.iGap.libs.rippleeffect.RippleView>
 
@@ -302,7 +302,7 @@
                   android:gravity="center"
                   android:text="@string/md_back_arrow_reply"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  style="?textSubColorSettingTheme"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -325,7 +325,7 @@
                   android:gravity="center"
                   android:text="@string/md_copy"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  style="?textSubColorSettingTheme"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -348,7 +348,7 @@
                   android:gravity="center"
                   android:text="@string/md_forward"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  style="?textSubColorSettingTheme"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
 
@@ -374,7 +374,7 @@
                   android:gravity="center"
                   android:text="@string/md_rubbish_delete_file"
                   android:textAppearance="@style/TextIconAppearance.all"
-                  style="?textSubColorSettingTheme"
+                  style="?textTitleColorSettingTheme"
                   android:textSize="@dimen/dp20" />
               </net.iGap.libs.rippleeffect.RippleView>
             </LinearLayout>

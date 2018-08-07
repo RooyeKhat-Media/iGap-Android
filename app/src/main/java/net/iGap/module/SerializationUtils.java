@@ -10,6 +10,8 @@
 
 package net.iGap.module;
 
+import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,8 +34,11 @@ public class SerializationUtils {
             fos = new ByteArrayOutputStream();
             ObjectOutputStream o = new ObjectOutputStream(fos);
             o.writeObject(obj);
+            Log.i("#peyman o",o.toString());
             result = fos.toByteArray();
+            Log.i("#peyman R",result.toString());
         } catch (IOException e) {
+            Log.i("#peyman err",e.getMessage());
             System.err.println(e);
         } finally {
             try {

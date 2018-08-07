@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.crashlytics.android.Crashlytics;
@@ -112,7 +113,7 @@ public class G extends MultiDexApplication {
     public static String DIR_CHAT_BACKGROUND = DIR_APP + CHAT_BACKGROUND;
     public static String DIR_IMAGE_USER = DIR_APP + IMAGE_USER;
     public static String CHAT_MESSAGE_TIME = "H:mm";
-    public static String selectedLanguage = "en";
+    public static String selectedLanguage = null;
     public static String symmetricMethod;
     public static String appBarColor; // default color
     public static String bubbleChatSend; // default color
@@ -422,7 +423,7 @@ public class G extends MultiDexApplication {
     public static Context updateResources(Context baseContext) {
         String selectedLanguage = G.selectedLanguage;
         if (selectedLanguage == null) {
-            selectedLanguage = "en";
+            selectedLanguage = Locale.getDefault().getLanguage();
         }
 
         Locale locale = new Locale(selectedLanguage);

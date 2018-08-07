@@ -35,7 +35,7 @@
       android:layout_centerInParent="true"
       android:layout_gravity="center"
       android:indeterminate="true"
-      android:visibility="@{fragmentGroupProfileViewModel.prgWaitingVisibility}" />
+      android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.prgWaitingVisibility)}" />
 
     <android.support.design.widget.CoordinatorLayout
       android:layout_width="match_parent"
@@ -362,7 +362,7 @@
               android:orientation="vertical"
               android:paddingLeft="@dimen/dp12"
               android:paddingRight="@dimen/dp12"
-              android:visibility="@{fragmentGroupProfileViewModel.groupDescriptionVisibility}">
+              android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.groupDescriptionVisibility)}">
 
               <TextView
                 android:layout_width="match_parent"
@@ -437,7 +437,7 @@
             style="?backgroundColorSettingTheme_2"
             android:gravity="left"
             android:orientation="vertical"
-            android:visibility="@{fragmentGroupProfileViewModel.callbackAddMemberVisibility}"
+            android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.callbackAddMemberVisibility)}"
 
             >
 
@@ -546,7 +546,7 @@
             android:gravity="left"
             android:orientation="vertical"
             style="?backgroundColorSettingTheme"
-            android:visibility="@{fragmentGroupProfileViewModel.settingVisibility}">
+            android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.settingVisibility)}">
 
             <net.iGap.module.HeaderTextview
               fontPath="fonts/IRANSansMobile_Bold.ttf"
@@ -569,7 +569,7 @@
               android:layout_height="@dimen/dp48"
               android:onClick="@{fragmentGroupProfileViewModel::onClickGroupSetAdmin}"
               android:orientation="vertical"
-              android:visibility="@{fragmentGroupProfileViewModel.groupSetAdminVisibility}">
+              android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.groupSetAdminVisibility)}">
 
               <TextView
                 android:id="@+id/agp_txt_set_admin"
@@ -594,7 +594,7 @@
               android:layout_width="match_parent"
               android:layout_height="1px"
               style="?lineColorSettingTheme"
-              android:visibility="@{fragmentGroupProfileViewModel.lineAdminVisibility}" />
+              android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.lineAdminVisibility)}" />
 
             <LinearLayout
               android:id="@+id/agp_ll_set_modereator"
@@ -602,7 +602,7 @@
               android:layout_height="@dimen/dp48"
               android:onClick="@{fragmentGroupProfileViewModel::onClickGroupModereator}"
               android:orientation="vertical"
-              android:visibility="@{fragmentGroupProfileViewModel.setModereatorVisibility}">
+              android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.setModereatorVisibility)}">
 
               <TextView
                 android:id="@+id/agp_txt_add_modereator"
@@ -632,7 +632,7 @@
               android:layout_height="wrap_content"
               android:gravity="left"
               android:orientation="vertical"
-              android:visibility="@{fragmentGroupProfileViewModel.layoutMemberCanAddMember}">
+              android:visibility="@{safeUnbox(fragmentGroupProfileViewModel.layoutMemberCanAddMember)}">
 
               <RelativeLayout
                 android:layout_width="match_parent"

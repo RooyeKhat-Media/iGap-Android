@@ -11,7 +11,7 @@
     android:gravity="center_vertical"
     android:paddingTop="@dimen/dp8"
     android:text="@string/Re_dialog_verify_number_part1"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp14" />
 
   <TextView
@@ -21,7 +21,7 @@
     android:gravity="center_vertical"
     android:layoutDirection="ltr"
     android:text="@string/number"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp15"
     android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
     android:gravity="center_vertical"
     android:paddingTop="@dimen/dp8"
     android:text="@string/Re_dialog_verify_number_part2"
-    android:textColor="@android:color/black"
+    style="?textTitleColorSettingTheme"
     android:textSize="@dimen/dp14" />
 
 </LinearLayout>

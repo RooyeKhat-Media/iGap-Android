@@ -144,7 +144,7 @@
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/toolbar_background"
         android:textSize="@dimen/dp15"
-        android:visibility="@{fragmentDarkThemeViewModel.isDisableDarkTheme }" />
+        android:visibility="@{safeUnbox(fragmentDarkThemeViewModel.isDisableDarkTheme) ,default = visible}" />
 
       <!--android:visibility="@{fragmentDarkThemeViewModel.farsiVisibility, default=invisible}"-->
 
@@ -195,7 +195,7 @@
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/toolbar_background"
         android:textSize="@dimen/dp15"
-        android:visibility="@{fragmentDarkThemeViewModel.isScheduledDarkTheme }" />
+        android:visibility="@{safeUnbox(fragmentDarkThemeViewModel.isScheduledDarkTheme) , default=gone}" />
 
       <!--android:visibility="@{fragmentDarkThemeViewModel.englishVisibility, default=invisible}"-->
 
@@ -246,7 +246,7 @@
         android:textAppearance="@style/TextIconAppearance_toolbar"
         android:textColor="@color/toolbar_background"
         android:textSize="@dimen/dp15"
-        android:visibility="@{fragmentDarkThemeViewModel.isAutoDarkTheme }"
+        android:visibility="@{safeUnbox(fragmentDarkThemeViewModel.isAutoDarkTheme) , default=gone}"
 
         />
       <!--android:visibility="@{fragmentDarkThemeViewModel.arabiVisibility, default=invisible}"-->
@@ -258,7 +258,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:visibility="@{fragmentDarkThemeViewModel.isScheduledDarkTheme, default=gone}">
+      android:visibility="@{safeUnbox(fragmentDarkThemeViewModel.isScheduledDarkTheme), default=gone}">
 
       <TextView
         style="?textTitleColorSettingTheme"
@@ -367,7 +367,7 @@
         android:text="@string/automatic_description_theme"
         android:textSize="@dimen/dp15"
         android:textStyle="normal"
-        android:visibility="@{fragmentDarkThemeViewModel.isAutoDarkTheme  , default=gone}" />
+        android:visibility="@{safeUnbox(fragmentDarkThemeViewModel.isAutoDarkTheme)  , default=gone}" />
     </LinearLayout>
   </LinearLayout>
 

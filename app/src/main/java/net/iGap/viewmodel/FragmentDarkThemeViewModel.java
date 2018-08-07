@@ -2,6 +2,7 @@ package net.iGap.viewmodel;
 
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.databinding.InverseMethod;
 import android.databinding.ObservableField;
 import android.view.View;
 import android.widget.TimePicker;
@@ -34,9 +35,9 @@ public class FragmentDarkThemeViewModel {
 
     public ObservableField<String> callbackFromTime = new ObservableField<>("");
     public ObservableField<String> callbackToTime = new ObservableField<>("");
-    public ObservableField<Integer> isScheduledDarkTheme = new ObservableField<>(View.GONE);
-    public ObservableField<Integer> isAutoDarkTheme = new ObservableField<>(View.GONE);
-    public ObservableField<Integer> isDisableDarkTheme = new ObservableField<>(View.VISIBLE);
+    public ObservableField<Integer> isScheduledDarkTheme = new ObservableField<>();
+    public ObservableField<Integer> isAutoDarkTheme = new ObservableField<>();
+    public ObservableField<Integer> isDisableDarkTheme = new ObservableField<>();
 
     public FragmentDarkThemeViewModel(FragmentDarkTheme fragmentDarkTheme) {
         this.fragmentDarkTheme = fragmentDarkTheme;

@@ -69,6 +69,7 @@ import net.iGap.module.MusicPlayer;
 import net.iGap.module.PreCachingLayoutManager;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.structs.StructMessageInfo;
+import net.iGap.module.structs.StructMessageOption;
 import net.iGap.proto.ProtoClientCountRoomHistory;
 import net.iGap.proto.ProtoClientSearchRoomHistory;
 import net.iGap.proto.ProtoFileDownload;
@@ -931,7 +932,7 @@ public class FragmentShearedMedia extends BaseFragment {
                     @Override
                     public void execute(Realm realm) {
                         for (final ProtoGlobal.RoomMessage roomMessage : RoomMessages) {
-                            RealmRoomMessage.putOrUpdate(roomMessage, roomId, false, false, realm);
+                            RealmRoomMessage.putOrUpdate(realm, roomId, roomMessage, new StructMessageOption().setFromShareMedia());
                         }
                     }
                     //}, new Realm.Transaction.OnSuccess() {
@@ -992,16 +993,14 @@ public class FragmentShearedMedia extends BaseFragment {
             }
         };
 
-        if (changeListener != null) {
-            mRealmList.addChangeListener(changeListener);
-        }
+        mRealmList.addChangeListener(changeListener);
     }
 
     /**
      * Simple Class to serialize object to byte arrays
      *
      * @author Nick Russler
-     *         http://www.whitebyte.info
+     * http://www.whitebyte.info
      */
     public static class SerializationUtils {
 

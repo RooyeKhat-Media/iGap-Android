@@ -197,7 +197,7 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:minHeight="@dimen/dp44"
-              android:onItemSelected="@{fragmentPaymentChargeViewModel.onItemSelecteSpinerOperator}" />
+              android:onItemSelected="@{fragmentPaymentChargeViewModel::onItemSelecteSpinerOperator}" />
 
           </LinearLayout>
 

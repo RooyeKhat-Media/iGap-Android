@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.activities.ActivityMain;
 import net.iGap.databinding.FragmentSettingBinding;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperFragment;
@@ -284,6 +286,12 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        /**
+         * If it's in the app and the screen lock is activated after receiving the result of the camera and .... The page code is displayed.
+         * The wizard will  be set ActivityMain.isUseCamera = true to prevent the page from being opened....
+         */
+        if (G.isPassCode) ActivityMain.isUseCamera = true;
+
         if (FragmentEditImage.textImageList != null) FragmentEditImage.textImageList.clear();
         if (FragmentEditImage.itemGalleryList != null) FragmentEditImage.itemGalleryList.clear();
 
@@ -307,6 +315,8 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                 if (data.getData() == null) {
                     return;
                 }
+                ImageHelper.correctRotateImage(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), true);
+
                 FragmentEditImage.insertItemList(AttachFile.getFilePathFromUriAndCheckForAndroid7(data.getData(), HelperGetDataFromOtherApp.FileType.image), false);
                 new HelperFragment(FragmentEditImage.newInstance(null, false, false, 0)).setReplace(false).load();
             }
@@ -421,6 +431,8 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
         return mRealm;
     }
 
+    private int counterCheckAvatar = 0;
+
     private void setAvatar() {
         HelperAvatar.getAvatar(fragmentSettingViewModel.userId, HelperAvatar.AvatarType.USER, true, new OnAvatarGet() {
             @Override
@@ -428,7 +440,13 @@ public class FragmentSetting extends BaseFragment implements OnUserAvatarRespons
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), fragmentSettingBinding.stImgCircleImage);
+
+                        if (avatarPath != null) {
+                            G.imageLoader.displayImage(AndroidUtils.suitablePath(avatarPath), fragmentSettingBinding.stImgCircleImage);
+                        } else if (counterCheckAvatar < 4) {
+                            setAvatar();
+                            counterCheckAvatar++;
+                        }
                     }
                 });
             }

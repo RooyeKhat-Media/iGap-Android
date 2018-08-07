@@ -128,7 +128,7 @@
                   android:text="@string/md_show_more_button"
                   android:textAppearance="@style/TextIconAppearance_toolbar"
                   android:textColor="@color/whit_background"
-                  android:visibility="@{fragmentChannelProfileViewModel.menuPopupVisibility}" />
+                  android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.menuPopupVisibility)}" />
               </net.iGap.libs.rippleeffect.RippleView>
             </LinearLayout>
           </android.support.v7.widget.Toolbar>
@@ -272,7 +272,7 @@
                       android:text="@string/verify_channel"
                       android:textColor="@color/verify_color"
                       android:textSize="@dimen/dp16"
-                      android:visibility="@{fragmentChannelProfileViewModel.verifyTextVisibility}" />
+                      android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.verifyTextVisibility)}" />
 
                   </LinearLayout>
                 </LinearLayout>
@@ -341,7 +341,7 @@
               android:orientation="vertical"
               android:paddingLeft="@dimen/dp12"
               android:paddingRight="@dimen/dp12"
-              android:visibility="@{fragmentChannelProfileViewModel.descriptionVisibility}">
+              android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.descriptionVisibility)}">
 
               <TextView
                 style="?textTitleColorSettingTheme"
@@ -415,7 +415,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:orientation="vertical"
-            android:visibility="@{fragmentChannelProfileViewModel.addMemberVisibility}">
+            android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.addMemberVisibility)}">
 
             <net.iGap.module.HeaderTextview
               fontPath="fonts/IRANSansMobile_Bold.ttf"
@@ -522,7 +522,7 @@
             android:layout_height="wrap_content"
             android:gravity="left"
             android:orientation="vertical"
-            android:visibility="@{fragmentChannelProfileViewModel.settingVisibility}">
+            android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.settingVisibility)}">
 
             <net.iGap.module.HeaderTextview
               fontPath="fonts/IRANSansMobile_Bold.ttf"
@@ -547,7 +547,7 @@
               android:layout_height="@dimen/dp48"
               android:onClick="@{fragmentChannelProfileViewModel::onClickChannelListAdmin}"
               android:orientation="vertical"
-              android:visibility="@{fragmentChannelProfileViewModel.listAdminVisibility}">
+              android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.listAdminVisibility)}">
 
               <TextView
                 android:id="@+id/txt_list_admin"
@@ -578,7 +578,7 @@
               android:layout_height="@dimen/dp48"
               android:onClick="@{fragmentChannelProfileViewModel::onClickChannelListModerator}"
               android:orientation="vertical"
-              android:visibility="@{fragmentChannelProfileViewModel.moderatorVisibility}">
+              android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.moderatorVisibility)}">
 
               <TextView
                 android:id="@+id/txt_list_moderator"
@@ -712,7 +712,7 @@
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:paddingStart="@dimen/dp16"
-              android:visibility="@{fragmentChannelProfileViewModel.signatureVisibility}">
+              android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.signatureVisibility)}">
 
               <TextView
                 android:id="@+id/agp_txt_signature"
@@ -754,7 +754,7 @@
               android:paddingLeft="@dimen/dp16"
               android:paddingRight="@dimen/dp16"
               android:paddingStart="@dimen/dp16"
-              android:visibility="@{fragmentChannelProfileViewModel.showLayoutReactStatus}">
+              android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.showLayoutReactStatus)}">
 
               <TextView
                 style="?textTitleColorSettingTheme"
@@ -792,7 +792,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:visibility="@{fragmentChannelProfileViewModel.prgWaitingVisibility}" />
+        android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.prgWaitingVisibility)}" />
 
       <android.support.design.widget.FloatingActionButton
         android:id="@+id/pch_fab_addToChannel"
@@ -803,7 +803,7 @@
         android:src="@mipmap/pu_camera"
         android:background="@android:color/white"
         app:backgroundTint="@android:color/white"
-        android:visibility="@{fragmentChannelProfileViewModel.fabVisibility}"
+        android:visibility="@{safeUnbox(fragmentChannelProfileViewModel.fabVisibility)}"
         app:fabSize="normal"
         app:layout_anchor="@+id/pch_appbar"
         app:tint="@color/gray"

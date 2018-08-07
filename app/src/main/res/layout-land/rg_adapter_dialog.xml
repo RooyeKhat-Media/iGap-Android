@@ -4,6 +4,7 @@
   android:layout_height="match_parent"
   android:clickable="true"
   android:layoutDirection="ltr"
+  style="?backgroundColorSettingTheme_2"
   android:orientation="vertical">
 
   <RadioButton
@@ -16,6 +17,6 @@
     android:paddingLeft="@dimen/dp20"
     android:text="New RadioButton"
     android:textSize="@dimen/dp14"
-
+    style="?textTitleColorSettingTheme"
     />
 </LinearLayout>

@@ -21,6 +21,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
 
+import net.iGap.G;
+import net.iGap.interfaces.OnRotateImage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -55,7 +58,67 @@ public class ImageHelper {
      * @param filepath picture file address
      * @return return correct rotate bitmap or return null if file path not exist
      */
-    public static Bitmap correctRotateImage(String filepath, boolean compress) {
+    public static void correctRotateImage(String filepath, boolean compress , OnRotateImage onRotateImage) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                onRotateImage.startProcess();
+                if (!isRotateNeed(filepath)){
+                    onRotateImage.success(filepath);
+                    return;
+                }
+
+
+                Bitmap bitmap = null;
+                boolean saveChange = compress;
+
+                try {
+
+                    if (filepath.length() > 0) {
+                        File file = new File(filepath);
+
+                        try {
+                            if (compress) {
+                                bitmap = decodeFile(file);
+                            } else {
+                                bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                    }
+
+                    ExifInterface ei = new ExifInterface(filepath);
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+                    switch (orientation) {
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            bitmap = rotateImage(bitmap, 90);
+                            saveChange = true;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            bitmap = rotateImage(bitmap, 180);
+                            saveChange = true;
+                            break;
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            bitmap = rotateImage(bitmap, 270);
+                            saveChange = true;
+                            break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (filepath.length() > 0 && saveChange) SaveBitmapToFile(filepath, bitmap);
+
+                onRotateImage.success(filepath);
+            }
+        }).start();
+    }
+
+    public static Bitmap correctRotateImage(String filepath, boolean compress ) {
 
         Bitmap bitmap = null;
         boolean saveChange = compress;

@@ -122,7 +122,7 @@
               android:layout_weight="1"
               android:entries="@array/bill_type"
               android:minHeight="@dimen/dp44"
-              android:onItemSelected="@{fragmentPaymentInquiryViewModel.onItemSelectBillType}" />
+              android:onItemSelected="@{fragmentPaymentInquiryViewModel::onItemSelectBillType}" />
 
 
           </LinearLayout>

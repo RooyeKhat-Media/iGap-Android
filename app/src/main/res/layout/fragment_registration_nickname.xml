@@ -173,7 +173,7 @@
                 android:id="@+id/pu_edt_nikeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:afterTextChanged="@{fragmentRegistrationNicknameViewModel.watcher}"
+                android:afterTextChanged="@{fragmentRegistrationNicknameViewModel::watcher}"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:hint="@{fragmentRegistrationNicknameViewModel.edtNikeNameHint , default = @string/pu_nikname_profileUser}"

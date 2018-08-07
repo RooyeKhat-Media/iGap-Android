@@ -30,6 +30,8 @@ import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
 import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmAttachment;
+import net.iGap.realm.RealmWallpaperProto;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,12 +78,12 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             FragmentChatBackground.StructWallpaper wallpaper = mList.get(position);
 
             if (wallpaper.getWallpaperType() == FragmentChatBackground.WallpaperType.proto) {
-                ProtoGlobal.File pf = wallpaper.getProtoWallpaper().getFile();
+                RealmAttachment pf = wallpaper.getProtoWallpaper().getFile();
 
                 final String path = G.DIR_CHAT_BACKGROUND + "/" + "thumb_" + pf.getCacheId() + "_" + pf.getName();
 
                 if (!new File(path).exists()) {
-                    HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
+                    HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
                         @Override
                         public void OnProgress(String mPath, int progress) {
                             if (progress == 100) {
@@ -109,7 +111,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
 
             String bigImagePath;
             if (wallpaper.getWallpaperType() == FragmentChatBackground.WallpaperType.proto) {
-                ProtoGlobal.File pf = wallpaper.getProtoWallpaper().getFile();
+                RealmAttachment pf = wallpaper.getProtoWallpaper().getFile();
                 bigImagePath = G.DIR_CHAT_BACKGROUND + "/" + pf.getCacheId() + "_" + pf.getName();
             } else {
                 bigImagePath = wallpaper.getPath();
@@ -144,7 +146,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
     private void startDownload(final int position, final MessageProgress messageProgress) {
         messageProgress.withDrawable(R.drawable.ic_cancel, true);
 
-        ProtoGlobal.File pf = mList.get(position).getProtoWallpaper().getFile();
+        RealmAttachment pf = mList.get(position).getProtoWallpaper().getFile();
 
         String path = G.DIR_CHAT_BACKGROUND + "/" + pf.getCacheId() + "_" + pf.getName();
 
@@ -166,7 +168,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
 
-        HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getPublicUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String mPath, final int progress) {
                 messageProgress.post(new Runnable() {
