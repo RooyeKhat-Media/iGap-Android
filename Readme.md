@@ -1,4 +1,4 @@
-![Release 0.9.2](https://img.shields.io/badge/release-v0.9.2-blue.svg)
+![Release 0.9.3](https://img.shields.io/badge/release-v0.9.3-blue.svg)
 ![Build: Passing](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![Android LibVersion 25](https://img.shields.io/badge/AndroidLib-25-orange.svg)
 ![Platform Android](https://img.shields.io/badge/Platform-Android-lightgrey.svg)
