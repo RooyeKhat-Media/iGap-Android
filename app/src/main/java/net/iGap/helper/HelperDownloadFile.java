@@ -29,6 +29,7 @@ import net.iGap.G;
 import net.iGap.interfaces.OnFileDownloadResponse;
 import net.iGap.module.AndroidUtils;
 import net.iGap.proto.ProtoFileDownload;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmAttachmentFields;
 import net.iGap.request.RequestFileDownload;
@@ -77,13 +78,14 @@ public class HelperDownloadFile {
         return helperDownloadFile;
     }
 
-    public void startDownload(String messageID, String token, String url, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority, UpdateListener update) {
+    public void startDownload(ProtoGlobal.RoomMessageType type, String messageID, String token, String url, String cashId, String name, long size, ProtoFileDownload.FileDownload.Selector selector, String moveToDirectoryPAth, int periority, UpdateListener update) {
         StructDownLoad item;
         String primaryKey = cashId + selector;
 
         if (!list.containsKey(primaryKey)) {
 
             item = new StructDownLoad();
+            item.type=type;
             item.Token = token;
             item.url = url;
             item.cashId = cashId;
@@ -396,15 +398,28 @@ public class HelperDownloadFile {
                 .setOnCancelListener(new OnCancelListener() {
                     @Override
                     public void onCancel() {
+
                         stopDownLoad(item.cashId);
                     }
                 })
                 .setOnProgressListener(new OnProgressListener() {
                     @Override
                     public void onProgress(Progress progress) {
+
                         item.progress = (int) ((progress.currentBytes * 100) / progress.totalBytes);
+                        long downloadByte = progress.currentBytes - item.downloadedByte;
+                        item.downloadedByte = progress.currentBytes;
                         if (item.progress < 100 && !item.isPause) {
                             updateView(item);
+                            boolean connectivityType;
+                            if (HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI"))
+                                connectivityType = true;
+                            else
+                                connectivityType = false;
+
+                            if (item.selector == ProtoFileDownload.FileDownload.Selector.FILE) {
+                                HelperDataUsage.progressDownload(connectivityType, downloadByte, item.type);
+                            }
                         }
                     }
                 })
@@ -417,6 +432,9 @@ public class HelperDownloadFile {
                                 @Override
                                 public void run() {
                                     finishDownload(item.cashId, item.offset, item.selector, item.progress);
+                                    if (item.selector.toString().toLowerCase().contains("file")) {
+                                        HelperDataUsage.insertDataUsage(HelperDataUsage.convetredDownloadType, HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI") ? true : false, true);
+                                    }
                                 }
                             });
                         } catch (NullPointerException e) {
@@ -459,7 +477,7 @@ public class HelperDownloadFile {
         if (item.url != null && !item.url.isEmpty()) {
             startDownloadManager(item);
         } else {
-            new RequestFileDownload().download(item.Token, item.offset, (int) item.size, item.selector, new RequestFileDownload.IdentityFileDownload(item.cashId, item.path, item.selector, item.size, item.offset, true));
+            new RequestFileDownload().download(item.Token, item.offset, (int) item.size, item.selector, new RequestFileDownload.IdentityFileDownload(item.type,item.cashId, item.path, item.selector, item.size, item.offset, true));
         }
     }
 
@@ -542,6 +560,7 @@ public class HelperDownloadFile {
 
     private class StructDownLoad {
 
+        ProtoGlobal.RoomMessageType type;
         String Token = "";
         public String url = "";
         int idDownload = 0;
@@ -558,6 +577,8 @@ public class HelperDownloadFile {
         public String path = "";
         int priority = 0;
         boolean isPause = false;
+        long downloadedByte = 0; // this field just used for CDN download
+
     }
 
     private class StructQueue {

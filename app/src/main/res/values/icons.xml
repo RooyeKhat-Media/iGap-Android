@@ -148,4 +148,5 @@
   <string name="md_twitch">\uf543</string>
   <string name="md_igap_sync">\uf4e6</string>
   <string name="igap_cash_usd">\uf115</string>
+  <string name="md_igap_export">\uf207</string>
 </resources>

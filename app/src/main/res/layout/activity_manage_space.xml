@@ -14,7 +14,10 @@
       name="activityManageSpaceViewModel"
       type="net.iGap.viewmodel.ActivityManageSpaceViewModel" />
   </data>
-
+<FrameLayout
+    android:id="@+id/dataUsageContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -98,6 +101,65 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/vgMobileDataUsage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp52"
+            style="?backgroundColorSettingTheme"
+            android:orientation="horizontal">
+
+
+          <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="0dp"
+              android:layout_height="@dimen/dp48"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:singleLine="true"
+              android:text="@string/wifi_data_usage"
+              style="?textTitleColorSettingTheme"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              android:visibility="visible" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            style="?lineColorSettingTheme" />
+        <LinearLayout android:id="@+id/vgWifiDataUsage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp52"
+            style="?backgroundColorSettingTheme"
+            android:orientation="horizontal">
+
+
+          <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="0dp"
+              android:layout_height="@dimen/dp48"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingLeft="@dimen/dp16"
+              android:paddingRight="@dimen/dp16"
+              android:paddingTop="@dimen/dp4"
+              android:singleLine="true"
+              android:text="@string/mobile_data_usage"
+              style="?textTitleColorSettingTheme"
+              android:textSize="@dimen/dp15"
+              android:textStyle="normal"
+              android:visibility="visible" />
+
+
+        </LinearLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          style="?lineColorSettingTheme" />
+        <LinearLayout
           android:id="@+id/st_layout_keepMedia"
           android:layout_width="match_parent"
           android:layout_height="@dimen/dp52"
@@ -136,6 +198,7 @@
             android:textSize="@dimen/dp15"
             android:textStyle="normal" />
         </LinearLayout>
+
 
 
         <View
@@ -340,4 +403,5 @@
       </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
   </LinearLayout>
+</FrameLayout>
 </layout>

@@ -91,6 +91,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 
@@ -922,6 +923,13 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                             requestRegister();
                             sendRequestRegister++;
                         }
+                    } else if (majorCode == 10) {
+                        G.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialogWaitTime(R.string.IP_blocked, time, majorCode);
+                            }
+                        });
                     }
                 } catch (RuntimeException e) {
                     e.printStackTrace();
@@ -966,10 +974,11 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
         CountDownTimer countWaitTimer = new CountDownTimer(time * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                int seconds = (int) ((millisUntilFinished) / 1000);
-                int minutes = seconds / 60;
-                seconds = seconds % 60;
-                remindTime.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+                long seconds =  millisUntilFinished/1000 % 60;
+                long minutes = millisUntilFinished/(60*1000) % 60;
+                long hour = millisUntilFinished/(3600*1000);
+
+                remindTime.setText(String.format("%02d:%02d:%02d",hour, minutes, seconds));
                 dialogWait.getActionButton(DialogAction.POSITIVE).setEnabled(false);
             }
 
@@ -1087,8 +1096,6 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                         });
                     } else if (majorCode == 102 && minorCode == 2) {
                         //empty
-                    } else if (majorCode == 10) {
-                        if (time != 0) dialogWaitTimeVerifyPassword(time);
                     } else if (majorCode == 103) {
                         //empty
                     } else if (majorCode == 104) {

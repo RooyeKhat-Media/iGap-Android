@@ -13,12 +13,14 @@ package net.iGap.request;
 import com.google.protobuf.ByteString;
 
 import net.iGap.helper.HelperString;
+import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoFileUpload;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoRequest;
 
 public class RequestFileUpload {
 
-    public void fileUpload(String token, long offset, byte[] bytes, String identity) {
+    public void fileUpload(String token, long offset, byte[] bytes, IdentityFileUpload identity) {
 
         ProtoFileUpload.FileUpload.Builder fileUploadInit = ProtoFileUpload.FileUpload.newBuilder();
         fileUploadInit.setRequest(ProtoRequest.Request.newBuilder().setId(HelperString.generateKey()));
@@ -31,6 +33,16 @@ public class RequestFileUpload {
             RequestQueue.sendRequest(requestWrapper);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static class IdentityFileUpload {
+        public String identify;
+        public ProtoGlobal.RoomMessageType type;
+
+        public IdentityFileUpload(ProtoGlobal.RoomMessageType type, String identify) {
+            this.identify = identify;
+            this.type = type;
         }
     }
 }

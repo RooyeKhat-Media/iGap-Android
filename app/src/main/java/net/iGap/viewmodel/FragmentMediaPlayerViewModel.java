@@ -7,7 +7,7 @@ package net.iGap.viewmodel;
  * iGap Messenger | Free, Fast and Secure instant messaging application
  * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
  * All rights reserved.
-*/
+ */
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -33,6 +33,7 @@ import net.iGap.interfaces.OnGetPermission;
 import net.iGap.libs.ripplesoundplayer.RippleVisualizerView;
 import net.iGap.libs.ripplesoundplayer.renderer.LineRenderer;
 import net.iGap.libs.ripplesoundplayer.util.PaintUtil;
+import net.iGap.module.AppUtils;
 import net.iGap.module.DialogAnimation;
 import net.iGap.module.MusicPlayer;
 
@@ -210,13 +211,11 @@ public class FragmentMediaPlayerViewModel {
 
     private void shareMusic() {
 
-        String sharePath = MusicPlayer.musicPath;
-
-        Uri uri = Uri.fromFile(new File(sharePath));
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("audio/*");
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        G.fragmentActivity.startActivity(Intent.createChooser(share, G.fragmentActivity.getResources().getString(R.string.shate_audio_file)));
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("audio/*");
+        AppUtils.shareItem(intent, MusicPlayer.musicPath);
+        String chooserDialogText = G.fragmentActivity.getResources().getString(R.string.share_audio_file);
+        G.fragmentActivity.startActivity(Intent.createChooser(intent, chooserDialogText));
     }
 
     private void initVisualizer(final View view) {

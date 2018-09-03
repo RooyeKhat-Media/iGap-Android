@@ -19,6 +19,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -71,6 +72,7 @@ public class G extends MultiDexApplication {
     public static final String IMAGES = "/iGap Images";
     public static final String VIDEOS = "/iGap Videos";
     public static final String AUDIOS = "/iGap Audios";
+    public static final String MESSAGES = "/iGap Messages";
     //public static Realm mRealm;
     public static final String DOCUMENT = "/iGap Document";
     public static final String TEMP = "/.temp";
@@ -79,6 +81,7 @@ public class G extends MultiDexApplication {
     public static final String DIR_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
     public static Context context;
     public static Handler handler;
+    public static long mLastClickTime = SystemClock.elapsedRealtime();
     public static LayoutInflater inflater;
     public static HelperNotificationAndBadge helperNotificationAndBadge;
     public static ConcurrentHashMap<String, RequestWrapper> requestQueueMap = new ConcurrentHashMap<>();
@@ -109,6 +112,7 @@ public class G extends MultiDexApplication {
     public static String DIR_VIDEOS = DIR_APP + VIDEOS;
     public static String DIR_AUDIOS = DIR_APP + AUDIOS;
     public static String DIR_DOCUMENT = DIR_APP + DOCUMENT;
+    public static String DIR_MESSAGES = DIR_APP + MESSAGES;
     public static String DIR_TEMP = DIR_APP + TEMP;
     public static String DIR_CHAT_BACKGROUND = DIR_APP + CHAT_BACKGROUND;
     public static String DIR_IMAGE_USER = DIR_APP + IMAGE_USER;
@@ -392,7 +396,6 @@ public class G extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-
         G.firstTimeEnterToApp = true;
 
         new Thread(new Runnable() {
@@ -421,12 +424,10 @@ public class G extends MultiDexApplication {
     }
 
     public static Context updateResources(Context baseContext) {
-        String selectedLanguage = G.selectedLanguage;
-        if (selectedLanguage == null) {
-            selectedLanguage = Locale.getDefault().getLanguage();
+        if (G.selectedLanguage == null) {
+            G.selectedLanguage = Locale.getDefault().getLanguage();
         }
-
-        Locale locale = new Locale(selectedLanguage);
+        Locale locale = new Locale(G.selectedLanguage);
         Locale.setDefault(locale);
 
         Resources res = baseContext.getResources();

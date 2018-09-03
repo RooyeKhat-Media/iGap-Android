@@ -635,6 +635,8 @@
   <string name="please_write_your_message">لطفاْ پیام خود را بنویسید!</string>
   <string name="share_audio_file">به اشتراک گذاشتن فایل صوتی</string>
   <string name="share_image">به اشتراک گذاشتن تصویر</string>
+  <string name="share_image_2">به اشتراک گذاشتن تصویر</string>
+  <string name="share_video_file_2">به اشتراک گذاشتن فایل ویدئویی</string>
   <string name="share_video_file">به اشتراک گذاشتن فایل ویدئویی</string>
   <string name="share_file">به اشتراک گذاشتن فایل</string>
   <string name="text_copied">متن کپی شده</string>
@@ -796,13 +798,7 @@
   <string name="st_privacy_create_ticket">درخواست پشتیبانی</string>
   <string name="st_privacy_iGap_home">صفحه رسمی آی گپ</string>
 
-  <string name="USER_VERIFY_MAX_TRY_LOCK">USER VERIFY MAX TRY</string>
-  <string name="USER_GET_DELETE_TOKEN_MAX_TRY_LOCK">USER GET DELETE TOKEN MAX TRY</string>
-  <string name="USER_GET_DELETE_TOKEN_MAX_SEND">USER GET DELETE TOKEN MAX SEND</string>
-  <string name="USER_DELETE_MAX_TRY_LOCK">USER DELETE MAX TRY </string>
-  <string name="USER_PROFILE_UPDATE_USERNAME_UPDATE_LOCK">USER PROFILE UPDATE USERNAME UPDATE</string>
-  <string name="GROUP_UPDATE_USERNAME_UPDATE_LOCK">GROUP UPDATE USERNAME UPDATE LOCK</string>
-  <string name="CHANNEL_UPDATE_USERNAME_UPDATE_LOCK">CHANNEL UPDATE USERNAME UPDATE</string>
+
   <string name="channel_public_hint_revoke">لینک عمومی کانال</string>
   <string name="channel_link_title_revoke">لینک دعوت</string>
   <string name="channel_link_hint_revoke">لینک دعوت به کانال</string>
@@ -1285,7 +1281,7 @@
   <string name="map_distance">فاصله به متر</string>
   <string name="get_location_data">در حال دریافت اطلاعات</string>
   <string name="calculation">در حال محاسبه.. </string>
-
+  <string name="send">ارسال شده</string>
   <string name="not_success">ناموفق</string>
   <string name="not_success_2">"پرداخت ناموفق بود"</string>
   <string name="result_3">نتیجه پرداخت مشخص نیست به تاریخجه کیف پول مراجع یا با پشتیبانی تماس بگیرید</string>
@@ -1303,5 +1299,53 @@
   <string name="wallet_Reial"> ریال </string>
   <string name="wallet_error_server">خطا در برقراری ارتباط با سرور</string>
 
+  <string name="USER_VERIFY_MAX_TRY_LOCK">USER VERIFY MAX TRY</string>
+  <string name="USER_GET_DELETE_TOKEN_MAX_TRY_LOCK">USER GET DELETE TOKEN MAX TRY</string>
+  <string name="USER_GET_DELETE_TOKEN_MAX_SEND">USER GET DELETE TOKEN MAX SEND</string>
+  <string name="USER_DELETE_MAX_TRY_LOCK">USER DELETE MAX TRY </string>
+  <string name="USER_PROFILE_UPDATE_USERNAME_UPDATE_LOCK">USER PROFILE UPDATE USERNAME UPDATE</string>
+  <string name="GROUP_UPDATE_USERNAME_UPDATE_LOCK">GROUP UPDATE USERNAME UPDATE LOCK</string>
+  <string name="CHANNEL_UPDATE_USERNAME_UPDATE_LOCK">CHANNEL UPDATE USERNAME UPDATE</string>
+  <string name="E_373">GROUP_REVOKE_LINK_BAD_PAYLOAD</string>
+  <string name="E_374">GROUP_REVOKE_LINK_INTERNAL_SERVER_ERROR</string>
+  <string name="E_375">GROUP_REVOKE_LINK_FORBIDDEN</string>
+  <string name="E_453">CHANNEL_CHECK_USERNAME_BAD_PAYLOAD</string>
+  <string name="E_454">CHANNEL_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
+  <string name="E_455">CHANNEL_UPDATE_USERNAME_BAD_PAYLOAD</string>
+  <string name="E_456">CHANNEL_UPDATE_USERNAME_INTERNAL_SERVER_ERROR</string>
+  <string name="E_457">CHANNEL_UPDATE_USERNAME_UPDATE_LOCK</string>
+  <string name="E_458">CHANNEL_UPDATE_USERNAME_FORBIDDEN</string>
+  <string name="E_10108">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_BAD_PAYLOAD</string>
+  <string name="E_10109">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_INTERNAL_SERVER_ERROR</string>
+  <string name="E_10110">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_MAX_TRY_LOCK</string>
+  <string name="E_10111">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_EXPIRED_TOKEN</string>
+  <string name="E_10112">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_NO_PASSWORD</string>
+  <string name="E_10113">USER_TWO_STEP_VERIFICATION_VERIFY_RECOVERY_EMAIL_INVALID_TOKEN</string>
+  <string name="E_10114">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_BAD_PAYLOAD</string>
+  <string name="E_10115">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_INTERNAL_SERVER_ERROR</string>
+  <string name="E_10116">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_MAX_TRY_LOCK</string>
+  <string name="E_10117">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_NO_PASSWORD</string>
+  <string name="E_10118"> USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_INVALID_PASSWORD</string>
+  <string name="E_10119">USER_TWO_STEP_VERIFICATION_CHANGE_RECOVERY_EMAIL_CONFIRMED_BEFORE</string>
+  <string name="E_163">USER_PROFILE_CHECK_USERNAME_INTERNAL_SERVER_ERROR</string>
+  <string name="channel_name_notification">iGap Notification</string>
+  <string name="keep_media_6month">6 Month</string>
+  <string name="minutes_ago">minutes ago</string>
+
+  <string name="IP_blocked">به دلیل تلاش بیش از حد، IP شما برای مدتی مسدود شده است.</string>
+  <string name="export_chat">استخراج پیام ها</string>
+  <string name="export_message">قادر به استخراج پیام ها نیست</string>
+
+  <string name="wifi_data_usage">استفاده از داده بیسیم</string>
+  <string name="mobile_data_usage">استفاده از داده سیم کارت</string>
+  <string name="sent">ارسال شده</string>
+  <string name="received">دریافت شده</string>
+  <string name="bytes_sent">حجم ارسال شده</string>
+  <string name="bytes_received">حجم دریافت شده</string>
+  <string name="total">جمع</string>
+  <string name="total_sent">مجموع حجم ارسال شده</string>
+  <string name="total_received">مجموع حجم دریافت شده</string>
+  <string name="clear_data_usage">پاک کردن تاریخچه مصرف داده</string>
+  <string name="clearDataUsage">آیا مایل به پاک کردن تاریخچه مصرف داده هستید؟</string>
 
 </resources>

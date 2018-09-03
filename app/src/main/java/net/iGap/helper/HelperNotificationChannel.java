@@ -116,7 +116,8 @@ public class HelperNotificationChannel {
 
     private void soundAct(int which) {
 
-        MediaPlayer.create(G.context, setSound(which)).start();
+        MediaPlayer mediaPlayer = MediaPlayer.create(G.context, setSound(which));
+        if (mediaPlayer != null)mediaPlayer.start();
     }
 
     public int setSound(int which) {

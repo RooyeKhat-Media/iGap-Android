@@ -2077,10 +2077,8 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     private void connectionState() {
         final TextView txtIgap = (TextView) findViewById(R.id.cl_txt_igap);
 
-        Typeface typeface = null;
-        if (G.selectedLanguage.equals("fa") || G.selectedLanguage.equals("ar")) {
-            typeface = titleTypeface;
-        }
+        Typeface typeface =  G.typeface_IRANSansMobile;
+
         if (G.connectionState == ConnectionState.WAITING_FOR_NETWORK) {
             txtIgap.setText(R.string.waiting_for_network);
             txtIgap.setTypeface(typeface, Typeface.BOLD);

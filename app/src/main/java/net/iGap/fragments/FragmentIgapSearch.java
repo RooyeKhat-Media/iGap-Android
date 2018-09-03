@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.fragments;
 
@@ -73,6 +73,7 @@ public class FragmentIgapSearch extends BaseFragment {
     private ContentLoadingProgressBar loadingProgressBar;
     private ImageView imvNothingFound;
     private long index = 2000;
+    private String preventRepeatSearch = "";
 
     public static FragmentIgapSearch newInstance() {
         return new FragmentIgapSearch();
@@ -147,8 +148,6 @@ public class FragmentIgapSearch extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                itemAdapter.clear();
-
                 int strSize = edtSearch.getText().toString().length();
 
                 // filter some character
@@ -161,10 +160,13 @@ public class FragmentIgapSearch extends BaseFragment {
                 }
 
                 if (strSize > 5) {
-
-                    if (G.userLogin) {
-                        new RequestClientSearchUsername().clientSearchUsername(edtSearch.getText().toString().substring(1));
-                        loadingProgressBar.setVisibility(View.VISIBLE);
+                    if (G.userLogin ) {
+                        if ((!edtSearch.getText().toString().equals(preventRepeatSearch))){
+                            itemAdapter.clear();
+                            new RequestClientSearchUsername().clientSearchUsername(edtSearch.getText().toString().substring(1));
+                            loadingProgressBar.setVisibility(View.VISIBLE);
+                            preventRepeatSearch = edtSearch.getText().toString();
+                        }
                     } else {
                         HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
                     }

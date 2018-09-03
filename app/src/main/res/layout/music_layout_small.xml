@@ -44,7 +44,7 @@
       android:layout_marginLeft="5dp"
       android:minWidth="@dimen/dp28"
       android:text=""
-      android:textColor="#888"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp12" />
 
     <TextView
@@ -61,7 +61,7 @@
       android:layout_height="wrap_content"
       android:layout_marginRight="@dimen/dp4"
       android:text="time"
-      style="?backgroundSubChatTheme"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp12" />
 
     <net.iGap.module.MaterialDesignTextView
@@ -73,7 +73,7 @@
       android:gravity="center"
       android:text="@string/md_close_button"
       android:textAppearance="@style/TextIconAppearance_toolbar"
-      style="?backgroundSubChatTheme"
+      style="?textTitleColorSettingTheme"
       android:textSize="@dimen/dp20" />
 
   </LinearLayout>

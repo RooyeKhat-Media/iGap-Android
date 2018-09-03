@@ -45,6 +45,7 @@ import net.iGap.module.TouchImageView;
 import net.iGap.module.enums.ChannelChatRole;
 import net.iGap.module.enums.GroupChatRole;
 import net.iGap.proto.ProtoFileDownload;
+import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmAvatar;
 import net.iGap.realm.RealmAvatarFields;
@@ -66,6 +67,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 import static net.iGap.R.string.array_Delete_photo;
+import static net.iGap.R.string.message;
 import static net.iGap.module.AndroidUtils.suitablePath;
 
 public class FragmentShowAvatars extends BaseFragment {
@@ -603,6 +605,8 @@ public class FragmentShowAvatars extends BaseFragment {
 
             final RealmAttachment ra = avatarList.get(position).getFile();
 
+
+
             if (HelperDownloadFile.getInstance().isDownLoading(ra.getCacheId())) {
                 progress.withDrawable(R.drawable.ic_cancel, true);
                 startDownload(position, progress, touchImageView);
@@ -638,7 +642,7 @@ public class FragmentShowAvatars extends BaseFragment {
                         final String filePathTumpnail = AndroidUtils.getFilePathWithCashId(ra.getCacheId(), ra.getName(), G.DIR_TEMP, true);
 
                         if (selector != null && fileSize > 0) {
-                            HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
+                            HelperDownloadFile.getInstance().startDownload(  ProtoGlobal.RoomMessageType.IMAGE,System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), fileSize, selector, "", 4, new HelperDownloadFile.UpdateListener() {
                                 @Override
                                 public void OnProgress(final String path, int progress) {
 
@@ -722,7 +726,7 @@ public class FragmentShowAvatars extends BaseFragment {
             });
 
 
-            HelperDownloadFile.getInstance().startDownload(System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), ra.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
+            HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE,System.currentTimeMillis() + "", ra.getToken(), ra.getUrl(), ra.getCacheId(), ra.getName(), ra.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 4, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, final int progres) {
                     G.currentActivity.runOnUiThread(new Runnable() {

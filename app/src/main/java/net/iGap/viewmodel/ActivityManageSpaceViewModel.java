@@ -9,10 +9,15 @@ package net.iGap.viewmodel;
  * All rights reserved.
 */
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.databinding.ObservableField;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -23,7 +28,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.databinding.ActivityManageSpaceBinding;
+import net.iGap.fragments.FragmentDataUsage;
 import net.iGap.fragments.FragmentiGapMap;
+import net.iGap.helper.HelperFragment;
 import net.iGap.module.FileUtils;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.SHP_SETTING;
@@ -53,15 +61,43 @@ public class ActivityManageSpaceViewModel {
     private int isForever;
     private File fileMap;
 
+
     public ActivityManageSpaceViewModel(Context context) {
 
         this.context = context;
+
         getInfo();
     }
 
     //===============================================================================
     //================================Event Listeners================================
     //===============================================================================
+
+/*    public void onClickMobileDataUsage(View view){
+       // new HelperFragment(FragmentDataUsage.newInstance(false)).setReplace(false).load();
+
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("TYPE",true);
+        FragmentDataUsage fragmentDataUsage=new FragmentDataUsage();
+        fragmentDataUsage.setArguments(bundle);
+        android.support.v4.app.FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.add(binding.dataUsageContainer.getId(),fragmentDataUsage);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+     //   new FragmentDataUsage().setArguments(new Bundle().putBoolean("TYPE",true));
+    }
+    public void onClickWifiDataUsage(View view){
+        Bundle bundle=new Bundle();
+        bundle.putBoolean("TYPE",false);
+        FragmentDataUsage fragmentDataUsage=new FragmentDataUsage();
+        fragmentDataUsage.setArguments(bundle);
+        android.support.v4.app.FragmentManager fragmentManager=((FragmentActivity)context).getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.add(binding.dataUsageContainer.getId(),fragmentDataUsage);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }*/
 
     public void onClickKeepMedia(View view) {
 

@@ -19,6 +19,7 @@ import android.telephony.TelephonyManager;
 import net.iGap.G;
 import net.iGap.helper.HelperCheckInternetConnection;
 import net.iGap.proto.ProtoFileDownload;
+import net.iGap.proto.ProtoGlobal;
 
 public class RequestFileDownload {
 
@@ -34,6 +35,7 @@ public class RequestFileDownload {
         if (token == null) {
             return;
         }
+
 
         builder.setToken(token);
         builder.setOffset(offset);
@@ -137,14 +139,16 @@ public class RequestFileDownload {
         public long size;
         public long offset;
         public boolean isFromHelperDownload;
+        public ProtoGlobal.RoomMessageType type;
 
-        public IdentityFileDownload(String cacheId, String filepath, ProtoFileDownload.FileDownload.Selector selector, long size, long offset, boolean isFromHelperDownload) {
+        public IdentityFileDownload(ProtoGlobal.RoomMessageType type, String cacheId, String filepath, ProtoFileDownload.FileDownload.Selector selector, long size, long offset, boolean isFromHelperDownload) {
             this.cacheId = cacheId;
             this.filepath = filepath;
             this.selector = selector;
             this.size = size;
             this.offset = offset;
             this.isFromHelperDownload = isFromHelperDownload;
+            this.type=type;
         }
     }
 }

@@ -652,6 +652,8 @@
   <string name="please_write_your_message">Please type your message!</string>
   <string name="share_audio_file">Shared Audios</string>
   <string name="share_image">Shared Images</string>
+  <string name="share_image_2">Share Image</string>
+  <string name="share_video_file_2">Share Video</string>
   <string name="share_video_file">Shared Videos</string>
   <string name="share_file">Shared Files</string>
   <string name="text_copied">Text Copied</string>
@@ -1327,5 +1329,21 @@
   <string name="wallet_Your_credit">Your credit: </string>
   <string name="wallet_Reial"> Rial </string>
   <string name="wallet_error_server">Error communicating with server</string>
+
+  <string name="IP_blocked">Due to overuse, your IP has been blocked for a while.</string>
+  <string name="export_chat">Export Chat</string>
+  <string name="export_message">Not able to extract messages</string>
+
+  <string name="wifi_data_usage">Wi-Fi Data Usage</string>
+  <string name="mobile_data_usage">Mobile Data Usage</string>
+  <string name="sent">Sent</string>
+  <string name="received">Received</string>
+  <string name="bytes_sent">Bytes sent</string>
+  <string name="bytes_received">Bytes received</string>
+  <string name="total">Total</string>
+  <string name="total_sent">Total sent</string>
+  <string name="total_received">Total received</string>
+  <string name="clear_data_usage">Clear data usage</string>
+  <string name="clearDataUsage">Are you sure you want to clear data usage?</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package net.iGap.helper;
 
 import android.content.res.Configuration;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,12 +30,14 @@ public class HelperFragment {
     private boolean replace = true;
     private boolean stateLoss;
     private boolean hasCustomAnimation;
+    private boolean immediateRemove;
     private String tag;
     private int resourceContainer = 0;
     private int enter;
     private int exit;
     private int popEnter;
     private int popExit;
+
 
     public HelperFragment() {
     }
@@ -86,6 +89,11 @@ public class HelperFragment {
         return this;
     }
 
+    public HelperFragment setImmediateRemove(boolean immediateRemove) {
+        this.immediateRemove = immediateRemove;
+        return this;
+    }
+
     public HelperFragment setTag(String tag) {
         this.tag = tag;
         return this;
@@ -106,9 +114,29 @@ public class HelperFragment {
     }
 
     public void load() {
+
         if (fragment == null) {
             return;
         }
+
+        try {
+
+            if (fragment.getClass().getName().equalsIgnoreCase(FragmentChat.class.getName())) {
+                if (SystemClock.elapsedRealtime() - G.mLastClickTime > 1000) {
+                    G.mLastClickTime = SystemClock.elapsedRealtime();
+                } else {
+                    return;
+                }
+            }
+
+           else if ((G.fragmentActivity.getSupportFragmentManager().getBackStackEntryAt(G.fragmentActivity.getSupportFragmentManager().getBackStackEntryCount() - 1).getName().equalsIgnoreCase(fragment.getClass().getName()))){
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (G.fragmentManager == null) {
             HelperLog.setErrorLog("helper fragment loadFragment -> " + fragment.getClass().getName());
             return;
@@ -163,7 +191,12 @@ public class HelperFragment {
                 return;
             }
             G.fragmentActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-            G.fragmentActivity.getSupportFragmentManager().popBackStack();
+
+            if (immediateRemove){
+                G.fragmentActivity.getSupportFragmentManager().popBackStackImmediate();
+            } else {
+                G.fragmentActivity.getSupportFragmentManager().popBackStack();
+            }
 
             if (G.iTowPanModDesinLayout != null) {
                 G.iTowPanModDesinLayout.onLayout(ActivityMain.chatLayoutMode.none);

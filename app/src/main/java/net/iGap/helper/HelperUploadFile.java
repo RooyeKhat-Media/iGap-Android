@@ -66,7 +66,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
         onFileUpload = this;
     }
 
-    private static void startUpload(FileUploadStructure uploadStructure, String identity, UpdateListener listener, ProtoGlobal.Room.Type chatType, boolean FromChat) {
+    private static void startUpload(ProtoGlobal.RoomMessageType type,FileUploadStructure uploadStructure, String identity, UpdateListener listener, ProtoGlobal.Room.Type chatType, boolean FromChat) {
 
         StructUpload structUpload = null;
 
@@ -81,6 +81,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
                 structUpload.listener1 = listener;
             }
 
+            structUpload.type=type;
             structUpload.fileUploadStructure = uploadStructure;
             structUpload.chatType = chatType;
             structUpload.identity = identity;
@@ -287,7 +288,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             try {
                 byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) offset, limit);
                 // make third request for first time
-                new RequestFileUpload().fileUpload(token, offset, bytes, identity);
+                new RequestFileUpload().fileUpload(token, offset, bytes, new RequestFileUpload.IdentityFileUpload(fileUploadStructure.messageType,identity));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -324,7 +325,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
                 byte[] bytes = AndroidUtils.getNBytesFromOffset(fileUploadStructure, (int) nextOffset, nextLimit);
 
                 // make request till uploading has finished
-                new RequestFileUpload().fileUpload(fileUploadStructure.token, nextOffset, bytes, identity);
+                new RequestFileUpload().fileUpload(fileUploadStructure.token, nextOffset, bytes, new RequestFileUpload.IdentityFileUpload(fileUploadStructure.messageType,identity));
             } else {
                 onFileUploadComplete(identity, response);
             }
@@ -403,7 +404,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             if (list.containsKey(identity)) {
                 StructUpload spl = list.get(identity);
                 list.remove(identity);
-                startUpload(spl.fileUploadStructure, spl.identity, null, spl.chatType, false);
+                startUpload(spl.type,spl.fileUploadStructure, spl.identity, null, spl.chatType, false);
             }
         }
     }
@@ -445,7 +446,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
     }
 
     public static class StructUpload {
-
+        ProtoGlobal.RoomMessageType type;
         public UpdateListener listener1;
         public UpdateListener listener2;
 
@@ -500,7 +501,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
 
             if (result != null) {
                 if (!list.containsKey(result.messageId)) {
-                    startUpload(result, Long.toString(result.messageId), listener, chatType, true);
+                    startUpload(result.messageType,result, Long.toString(result.messageId), listener, chatType, true);
                     HelperSetAction.setActionFiles(roomID, result.messageId, getAction(result.messageType), chatType);
                 }
             }
@@ -546,7 +547,7 @@ public class HelperUploadFile implements OnFileUpload, OnFileUploadStatusRespons
             super.onPostExecute(result);
 
             if (result != null) {
-                startUpload(result, result.messageId + "", listener, null, false);
+                startUpload(result.messageType,result, result.messageId + "", listener, null, false);
             }
         }
     }

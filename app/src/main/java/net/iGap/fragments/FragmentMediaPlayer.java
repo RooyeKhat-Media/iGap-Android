@@ -267,20 +267,6 @@ public class FragmentMediaPlayer extends BaseFragment {
                 fastItemAdapter.add(new AdapterListMusicPlayer().setItem(r).withIdentifier(r.getMessageId()));
             }
         }
-        fastItemAdapter.withSelectable(true);
-        fastItemAdapter.withOnClickListener(new OnClickListener() {
-            @Override
-            public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
-
-                if (MusicPlayer.musicName.equals(MusicPlayer.mediaList.get(position).getAttachment().getName())) {
-                    MusicPlayer.playAndPause();
-                } else {
-                    MusicPlayer.startPlayer(MusicPlayer.mediaList.get(position).getAttachment().getName(), MusicPlayer.mediaList.get(position).getAttachment().getLocalFilePath(), FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, false, MusicPlayer.mediaList.get(position).getMessageId() + "");
-                }
-
-                return false;
-            }
-        });
         rcvListMusicPlayer.scrollToPosition(fastItemAdapter.getPosition(Long.parseLong(MusicPlayer.messageId)));
     }
 
@@ -355,6 +341,28 @@ public class FragmentMediaPlayer extends BaseFragment {
                     }
                 }
             }
+
+            holder.messageProgress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.itemView.performClick();
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!realmRoomMessagesList.getAttachment().fileExistsOnLocal()) {
+                        downloadFile(holder.getAdapterPosition(), holder.messageProgress);
+                    } else {
+                        if (MusicPlayer.musicName.equals(MusicPlayer.mediaList.get(holder.getAdapterPosition()).getAttachment().getName())) {
+                            MusicPlayer.playAndPause();
+                        } else {
+                            MusicPlayer.startPlayer(MusicPlayer.mediaList.get(holder.getAdapterPosition()).getAttachment().getName(), MusicPlayer.mediaList.get(holder.getAdapterPosition()).getAttachment().getLocalFilePath(), FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, false, MusicPlayer.mediaList.get(holder.getAdapterPosition()).getMessageId() + "");
+                        }
+                    }
+
+                }
+            });
         }
 
         @Override
@@ -367,35 +375,17 @@ public class FragmentMediaPlayer extends BaseFragment {
 
             private TextView txtNameMusic, txtMusicplace, iconPlay;
             public MessageProgress messageProgress;
+            private ViewGroup root;
 
             public ViewHolder(View view) {
                 super(view);
                 txtNameMusic = itemView.findViewById(R.id.txtListMusicPlayer);
                 txtMusicplace = itemView.findViewById(R.id.ml_txt_music_place);
                 iconPlay = itemView.findViewById(R.id.ml_btn_play_music);
+                root = itemView.findViewById(R.id.rootViewMuciPlayer);
 
                 messageProgress = (MessageProgress) itemView.findViewById(R.id.progress);
                 AppUtils.setProgresColor(messageProgress.progressBar);
-
-
-                messageProgress.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        downloadFile(getAdapterPosition(), messageProgress);
-
-                    }
-                });
-
-                iconPlay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (MusicPlayer.musicName.equals(MusicPlayer.mediaList.get(getAdapterPosition()).getAttachment().getName())) {
-                            MusicPlayer.playAndPause();
-                        } else {
-                            MusicPlayer.startPlayer(MusicPlayer.mediaList.get(getAdapterPosition()).getAttachment().getName(), MusicPlayer.mediaList.get(getAdapterPosition()).getAttachment().getLocalFilePath(), FragmentChat.titleStatic, FragmentChat.mRoomIdStatic, false, MusicPlayer.mediaList.get(getAdapterPosition()).getMessageId() + "");
-                        }
-                    }
-                });
             }
         }
 
@@ -548,7 +538,7 @@ public class FragmentMediaPlayer extends BaseFragment {
         });
 
 
-        HelperDownloadFile.getInstance().startDownload(MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getUrl(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.getInstance().startDownload(messageType,MusicPlayer.mediaList.get(position).getMessageId() + "", at.getToken(), at.getUrl(), at.getCacheId(), at.getName(), at.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, dirPath, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String path, final int progress) {
 

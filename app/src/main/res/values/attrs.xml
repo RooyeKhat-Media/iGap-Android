@@ -33,6 +33,7 @@
     </attr>
     <attr name="menu_animation_time" format="integer" />
     <attr name="menu_elevation" format="dimension" />
+    <attr name="menu_config" format="boolean" />
   </declare-styleable>
 
 

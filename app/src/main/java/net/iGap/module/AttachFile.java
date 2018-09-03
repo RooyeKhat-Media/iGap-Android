@@ -206,8 +206,6 @@ public class AttachFile {
             return null;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
             try {
                 String name = AttachFile.getFileName(uri.getPath());
                 if (name == null || name.length() == 0) {
@@ -244,7 +242,7 @@ public class AttachFile {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+
 
         return null;
     }

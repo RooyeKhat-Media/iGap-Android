@@ -36,6 +36,10 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -72,6 +76,7 @@ import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperImageBackColor;
+import net.iGap.helper.HelperLog;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnGeoCommentResponse;
 import net.iGap.interfaces.OnGeoGetComment;
@@ -81,6 +86,9 @@ import net.iGap.interfaces.OnLocationChanged;
 import net.iGap.interfaces.OnMapClose;
 import net.iGap.interfaces.OnMapRegisterState;
 import net.iGap.interfaces.OnMapUsersGet;
+import net.iGap.libs.floatingAddButton.ArcMenu;
+import net.iGap.libs.floatingAddButton.MenuSideEnum;
+import net.iGap.libs.floatingAddButton.StateChangeListener;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.CircleImageView;
@@ -153,9 +161,11 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
     public static RippleView btnBack;
     public static RippleView rippleMoreMap;
     public static boolean isBackPress = false;
-    public static FloatingActionButton fabGps, fabStateSwitcher;
+    public static FloatingActionButton fabGps, btnSatelliteView, btnOrginView;
+    public static ArcMenu fabStateSwitcher;
     public static Location mineStaticLocation;
     public static boolean mapRegistrationStatus;
+    private ViewPager mViewPager;
     public static int page;
     private final double LONGITUDE_LIMIT = 0.011;
     private final double LATITUDE_LIMIT = 0.009;
@@ -165,6 +175,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
     private final int ZOOM_LEVEL_MAX = 19;
     private final int BOUND_LIMIT_METERS = 5000;
     private final int GET_NEARBY_DELAY = (int) (DateUtils.SECOND_IN_MILLIS);
+    public static boolean isMenuButtonAddShown = false;
     long firstTap = 0;
     private MapView map;
     private ItemizedOverlay<OverlayItem> latestLocation;
@@ -458,18 +469,106 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
         //clickDrawMarkActive();
 
 
-        fabStateSwitcher = (FloatingActionButton) view.findViewById(R.id.st_fab_state);
+        fabStateSwitcher = (ArcMenu) view.findViewById(R.id.st_fab_state);
 
-        fabStateSwitcher.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.fabBottom)));
-        fabStateSwitcher.setColorFilter(Color.WHITE);
 
-        fabStateSwitcher.setOnClickListener(new View.OnClickListener() {
+      /*  fabStateSwitcher.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.fabBottom)));
+        fabStateSwitcher.setColorFilter(Color.WHITE);*/
+        fabStateSwitcher.setBackgroundTintColor();
+        fabStateSwitcher.setFabSize();
+
+        fabStateSwitcher.setStateChangeListener(new StateChangeListener() {
+            @Override
+            public void onMenuOpened() {
+
+            }
+
+            @Override
+            public void onMenuClosed() {
+                isMenuButtonAddShown = false;
+            }
+        });
+
+
+        btnOrginView = (FloatingActionButton) view.findViewById(R.id.ac_fab_orgin);
+        btnOrginView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
+
+        btnOrginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                deleteMapFileCash();
+                if (isAdded()) {
+                    changeState = getActivity().getSharedPreferences("KEY_SWITCH_MAP_STATE", Context.MODE_PRIVATE)
+                            .getBoolean("state", false);
+
+
+                    if (!changeState) {
+                        deleteMapFileCash();
+                        getActivity().getSharedPreferences("KEY_SWITCH_MAP_STATE", Context.MODE_PRIVATE).edit().putBoolean("state", true).apply();
+
+                        new HelperFragment(FragmentiGapMap.getInstance()).setImmediateRemove(true).remove();
+
+                        new HelperFragment(FragmentiGapMap.getInstance()).load();
+                    }
+
+                }
+
+                if (fabStateSwitcher.isMenuOpened()) {
+                    fabStateSwitcher.toggleMenu();
+                }
+            }
+        });
+
+        btnSatelliteView = (FloatingActionButton) view.findViewById(R.id.ac_fab_satellite);
+        btnSatelliteView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(G.appBarColor)));
+        btnSatelliteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isAdded()) {
+                    changeState = getActivity().getSharedPreferences("KEY_SWITCH_MAP_STATE", Context.MODE_PRIVATE)
+                            .getBoolean("state", false);
+
+
+                    if (changeState) {
+                        deleteMapFileCash();
+                        getActivity().getSharedPreferences("KEY_SWITCH_MAP_STATE", Context.MODE_PRIVATE).edit().putBoolean("state", false).apply();
+
+                        new HelperFragment(FragmentiGapMap.getInstance()).setImmediateRemove(true).remove();
+
+                        new HelperFragment(FragmentiGapMap.getInstance()).load();
+                    }
+
+                }
+                if (fabStateSwitcher.isMenuOpened()) {
+                    fabStateSwitcher.toggleMenu();
+                }
+
+            }
+
+        });
+
+        fabStateSwitcher.fabMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                fabStateSwitcher.toggleMenu();
+            }
+        });
+
+       /* if (HelperCalander.isPersianUnicode)
+            fabStateSwitcher.chanegMenuItem(false);
+        else
+            fabStateSwitcher.chanegMenuItem(true);*/
+
+       /* fabStateSwitcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
                 dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
                 View v = dialog.getCustomView();
-                /* DialogAnimation.animationUp(dialog);*/
+                *//* DialogAnimation.animationUp(dialog);*//*
                 dialog.getWindow().setLayout(ViewMaker.dpToPixel(220), WindowManager.LayoutParams.WRAP_CONTENT);
                 DisplayMetrics displayMetrics = new DisplayMetrics();
                 getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -492,13 +591,13 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                 int s = getActivity().getChangingConfigurations();
 
 
-              /*  if (orientation==0){
+              *//*  if (orientation==0){
                    if (G.isLandscape)
                        wmlp.y = ViewMaker.dpToPixel(160);
                        else
                        wmlp.y = ViewMaker.dpToPixel(400);
 
-                }else */
+                }else *//*
                 if (orientation == 1 || orientation == 0) {
                     //Do some stuff
                     wmlp.y = ViewMaker.dpToPixel(400);   //y
@@ -608,13 +707,13 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
 
 
 
-               /* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+               *//* SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
                 //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-                Configuration.getInstance().load(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));*/
+                Configuration.getInstance().load(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));*//*
 
                 //   map.onDetach();
 
-          /*      if (changeState)
+          *//*      if (changeState)
                     changeState = false;
                 else
                     changeState = true;
@@ -622,13 +721,13 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
 
                 map.invalidate();
 
-                startMap(view);*/
+                startMap(view);*//*
 
 
                 // setTile(false);
 
             }
-        });
+        });*/
 
 
         page = 1;
@@ -1817,6 +1916,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
             });
 
             if (HelperCalander.isPersianUnicode) {
+
                 holder.username.setGravity(Gravity.RIGHT);
             } else {
                 holder.username.setGravity(Gravity.LEFT);

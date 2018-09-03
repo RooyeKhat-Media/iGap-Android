@@ -39,6 +39,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -320,14 +321,14 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback, Vie
 
             if (HelperCalander.isPersianUnicode) {
                 //  params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                params.anchorGravity = Gravity.LEFT| Gravity.BOTTOM;
+                params.anchorGravity = Gravity.LEFT | Gravity.BOTTOM;
 
                 txtUserName.setGravity(Gravity.RIGHT);
                 ((RelativeLayout.LayoutParams) txtUserName.getLayoutParams()).addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 
             } else {
                 //    params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                params.anchorGravity = Gravity.RIGHT| Gravity.BOTTOM;
+                params.anchorGravity = Gravity.RIGHT | Gravity.BOTTOM;
 
 
                 txtUserName.setGravity(Gravity.LEFT);
@@ -416,9 +417,15 @@ public class FragmentMap extends BaseFragment implements OnMapReadyCallback, Vie
         }
         if (mode == Mode.seePosition) {
             mMap.setMyLocationEnabled(true);
+
+            mMap.getUiSettings().setZoomGesturesEnabled(true);
         } else {
+
+            mMap.getUiSettings().setZoomGesturesEnabled(false);
             mMap.setMyLocationEnabled(false);
         }
+
+
 
 
         LatLng latLng = new LatLng(latitude, longitude);

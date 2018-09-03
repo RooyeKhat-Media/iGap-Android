@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.helper;
 
@@ -103,7 +103,10 @@ public class HelperGetDataFromOtherApp {
 
             if (type.equals("text/plain")) {
 
-                handleSendText(intent);
+                if ((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM)!=null)
+                    SetOutPutSingleFile(FileType.file);
+                else
+                    handleSendText(intent);
             } else if (type.startsWith("image/")) {
 
                 SetOutPutSingleFile(FileType.image);
@@ -162,7 +165,7 @@ public class HelperGetDataFromOtherApp {
             String _path = null;
             _path = getFilePathFromUri(fileAddressUri);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && fileAddressUri.getScheme() != null && fileAddressUri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            if (fileAddressUri.getScheme() != null && fileAddressUri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
                 if (_path == null) {
                     _path = getPathN(fileAddressUri, messageType);
                 } else {

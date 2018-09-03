@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.vanniktech.emoji.listeners.OnSoftKeyboardCloseListener;
 import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
 import com.yalantis.ucrop.UCrop;
 
+import net.iGap.Config;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.Theme;
@@ -649,6 +651,7 @@ public class FragmentEditImage extends BaseFragment {
         rootSend = (ViewGroup) view.findViewById(R.id.pu_layout_cancel_crop);
         txtEditImage = (TextView) view.findViewById(R.id.txtEditImage);
         edtChat = (EmojiEditTextE) view.findViewById(R.id.chl_edt_chat);
+        edtChat.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Config.MAX_TEXT_ATTACHMENT_LENGTH)});
         txtCountImage = view.findViewById(R.id.stfaq_txt_countImageEditText);
         viewPager = view.findViewById(R.id.viewPagerEditText);
         checkBox = (AnimateCheckBox) view.findViewById(R.id.checkBox_editImage);

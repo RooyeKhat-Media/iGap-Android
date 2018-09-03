@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -663,6 +664,25 @@ public final class AppUtils {
                 }
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void shareItem(Intent intent, String path) {
+        try {
+            if (path != null) {
+                Uri uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    uri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(path));
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } else {
+                    uri = Uri.fromFile(new File(path));
+                }
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

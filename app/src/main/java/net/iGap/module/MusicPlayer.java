@@ -431,7 +431,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
         if (!isVoice) {
             try {
-                if (remoteViews != null) {
+                if (remoteViews != null && mp !=null) {
                     remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
                     notificationManager.notify(notificationId, notification);
                 }
@@ -1220,7 +1220,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
                         result = true;
 
-                        HelperDownloadFile.getInstance().startDownload(rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
+                        HelperDownloadFile.getInstance().startDownload(rm.getMessageType(),rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
                             @Override
                             public void OnProgress(String path, int progress) {
                                 if (progress == 100) {
@@ -1528,7 +1528,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
         latestAudioFocusState = focusChange;
         if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
             pauseOnAudioFocusChange = true;
-            pauseSound();
+            if (mp != null && mp.isPlaying()) pauseSound();
         } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
             if (pauseOnAudioFocusChange) {
                 pauseOnAudioFocusChange = false;

@@ -455,7 +455,7 @@ public class HelperAvatar {
                     fileSize = realmAttachment.getSmallThumbnail().getSize();
                 }
                 new RequestFileDownload().download(realmAttachment.getToken(), 0, (int) fileSize, selector,
-                        new RequestFileDownload.IdentityFileDownload(realmAttachment.getToken(), filePath, selector, fileSize, 0, false));
+                        new RequestFileDownload.IdentityFileDownload(ProtoGlobal.RoomMessageType.IMAGE,realmAttachment.getToken(), filePath, selector, fileSize, 0, false));
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -477,7 +477,7 @@ public class HelperAvatar {
                  * don't use offset in getting thumbnail
                  */
                 try {
-                    new RequestFileDownload().download(token, offset, (int) fileSize, selector, new RequestFileDownload.IdentityFileDownload(token, filePath, selector, fileSize, 0, false));
+                    new RequestFileDownload().download(token, offset, (int) fileSize, selector, new RequestFileDownload.IdentityFileDownload(ProtoGlobal.RoomMessageType.IMAGE,token, filePath, selector, fileSize, 0, false));
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                 }
