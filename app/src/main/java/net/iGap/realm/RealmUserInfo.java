@@ -24,6 +24,7 @@ public class RealmUserInfo extends RealmObject {
     private String email;
     private int gender;
     private boolean isPassCode;
+    private boolean isPattern;
     private boolean isFingerPrint;
     private String passCode;
     private int kindPassCode;
@@ -257,6 +258,14 @@ public class RealmUserInfo extends RealmObject {
 
     public boolean isPassCode() {
         return isPassCode;
+    }
+
+    public boolean isPattern() {
+        return isPattern;
+    }
+
+    public void setPattern(boolean pattern) {
+        isPattern = pattern;
     }
 
     public void setPassCode(boolean passCode) {

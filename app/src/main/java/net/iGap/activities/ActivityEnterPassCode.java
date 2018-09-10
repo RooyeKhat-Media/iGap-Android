@@ -9,12 +9,22 @@ package net.iGap.activities;
  * All rights reserved.
 */
 
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableField;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.utils.ResourceUtils;
+
+import net.iGap.G;
 import net.iGap.R;
 import net.iGap.databinding.ActivityEnterPassCodeBinding;
+import net.iGap.module.SHP_SETTING;
 import net.iGap.viewmodel.ActivityEnterPassCodeViewModel;
 
 public class ActivityEnterPassCode extends ActivityEnhanced {
@@ -26,8 +36,29 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
 
         super.onCreate(savedInstanceState);
         ActivityEnterPassCodeBinding activityEnterPassCodeBinding = DataBindingUtil.setContentView(this, R.layout.activity_enter_pass_code);
-        activityManageSpaceViewModel = new ActivityEnterPassCodeViewModel(this, activityEnterPassCodeBinding.getRoot());
+        activityManageSpaceViewModel = new ActivityEnterPassCodeViewModel(this, activityEnterPassCodeBinding);
+
         activityEnterPassCodeBinding.setActivityEnterPassCodeViewModel(activityManageSpaceViewModel);
+        SharedPreferences sharedPreferences = G.currentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
+        boolean isLinePattern = sharedPreferences.getBoolean(SHP_SETTING.KEY_PATTERN_TACTILE_DRAWN, true);
+
+        activityEnterPassCodeBinding.patternLockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);       // Set the current viee more
+        activityEnterPassCodeBinding.patternLockView.setInStealthMode(!isLinePattern);                                     // Set the pattern in stealth mode (pattern drawing is hidden)
+        activityEnterPassCodeBinding.patternLockView.setTactileFeedbackEnabled(true);                            // Enables vibration feedback when the pattern is drawn
+        activityEnterPassCodeBinding.patternLockView.setInputEnabled(true);                                     // Disables any input from the pattern lock view completely
+
+        activityEnterPassCodeBinding.patternLockView.setDotCount(4);
+        activityEnterPassCodeBinding.patternLockView.setDotNormalSize((int) ResourceUtils.getDimensionInPx(G.currentActivity, R.dimen.dp22));
+        activityEnterPassCodeBinding.patternLockView.setDotSelectedSize((int) ResourceUtils.getDimensionInPx(G.currentActivity, R.dimen.dp32));
+        activityEnterPassCodeBinding.patternLockView.setPathWidth((int) ResourceUtils.getDimensionInPx(G.currentActivity, R.dimen.pattern_lock_path_width));
+        activityEnterPassCodeBinding.patternLockView.setAspectRatioEnabled(true);
+        activityEnterPassCodeBinding.patternLockView.setAspectRatio(PatternLockView.AspectRatio.ASPECT_RATIO_HEIGHT_BIAS);
+        activityEnterPassCodeBinding.patternLockView.setNormalStateColor(ResourceUtils.getColor(G.currentActivity, R.color.white));
+        activityEnterPassCodeBinding.patternLockView.setCorrectStateColor(ResourceUtils.getColor(G.currentActivity, R.color.white));
+        activityEnterPassCodeBinding.patternLockView.setWrongStateColor(ResourceUtils.getColor(G.currentActivity, R.color.red));
+        activityEnterPassCodeBinding.patternLockView.setDotAnimationDuration(150);
+        activityEnterPassCodeBinding.patternLockView.setPathEndAnimationDuration(100);
+
     }
 
     @Override

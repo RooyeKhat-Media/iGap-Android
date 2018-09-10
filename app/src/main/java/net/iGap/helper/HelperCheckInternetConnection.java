@@ -27,7 +27,6 @@ public class HelperCheckInternetConnection {
     public static int connectivitySubType;
 
     public static boolean hasNetwork() {
-
         try {
             ConnectivityManager cm = (ConnectivityManager) G.context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();

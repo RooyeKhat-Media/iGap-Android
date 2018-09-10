@@ -7,7 +7,7 @@ package net.iGap.viewmodel;
  * iGap Messenger | Free, Fast and Secure instant messaging application
  * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
  * All rights reserved.
-*/
+ */
 
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
@@ -26,10 +26,14 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
 
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
+import net.iGap.databinding.ActivityEnterPassCodeBinding;
 import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperLogout;
 import net.iGap.interfaces.FingerPrint;
@@ -45,6 +49,7 @@ import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.cert.CertificateException;
+import java.util.List;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -66,6 +71,9 @@ public class ActivityEnterPassCodeViewModel {
     private final int PASSWORD = 1;
     public ObservableField<String> edtSetPassword = new ObservableField<>("");
     public ObservableField<Integer> rippleOkVisibility = new ObservableField<>(View.VISIBLE);
+    public ObservableField<Integer> vsRootIsPassCode = new ObservableField<>(View.VISIBLE);
+    public ObservableField<Integer> vsRootIsEditText = new ObservableField<>(View.VISIBLE);
+    public ObservableField<Integer> vsRootIsPattern = new ObservableField<>(View.GONE);
     public ObservableField<Integer> edtSetPasswordInput = new ObservableField<>(TYPE_TEXT_VARIATION_PASSWORD);
     public ObservableField<Integer> onTextChangedMaxLine = new ObservableField<>(4);
     private Realm realm;
@@ -83,9 +91,36 @@ public class ActivityEnterPassCodeViewModel {
     private Context context;
     private TextView iconFingerPrint;
     private TextView textFingerPrint;
-    private View view;
-    public ActivityEnterPassCodeViewModel(Context context, View view) {
-        this.view = view;
+    private boolean isPattern;
+    private boolean isPassCode;
+    private ActivityEnterPassCodeBinding binding;
+    private String passCodePattern = null;
+
+    private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
+        @Override
+        public void onStarted() {
+        }
+
+        @Override
+        public void onProgress(List<PatternLockView.Dot> progressPattern) {
+        }
+
+        @Override
+        public void onComplete(List<PatternLockView.Dot> pattern) {
+
+            passCodePattern = PatternLockUtils.patternToString(binding.patternLockView, pattern);
+            rippleOk(binding.getRoot());
+            binding.patternLockView.clearPattern();
+
+        }
+
+        @Override
+        public void onCleared() {
+        }
+    };
+
+    public ActivityEnterPassCodeViewModel(Context context, ActivityEnterPassCodeBinding binding) {
+        this.binding = binding;
         this.context = context;
         getInfo();
     }
@@ -104,15 +139,22 @@ public class ActivityEnterPassCodeViewModel {
     public void afterTextChanged(Editable s) {
         if (kindPassCode == PIN) {
             if (s.length() == 4) {
-                rippleOk(view);
+                rippleOk(binding.getRoot());
             }
         }
     }
 
     public void rippleOk(View v) {
 
-        String enterPassword = edtSetPassword.get();
-        if (enterPassword.length() > 0) {
+        String enterPassword = null;
+
+        if (edtSetPassword.get().length() > 0) {
+            enterPassword = edtSetPassword.get();
+        } else {
+            enterPassword = passCodePattern;
+        }
+
+        if (enterPassword != null && enterPassword.length() > 0) {
 
             if (enterPassword.equals(password)) {
                 ActivityMain.isLock = false;
@@ -161,6 +203,7 @@ public class ActivityEnterPassCodeViewModel {
     }
 
     private void getInfo() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             fingerprintManager = (FingerprintManager) G.context.getSystemService(FINGERPRINT_SERVICE);
             keyguardManager = (KeyguardManager) G.context.getSystemService(KEYGUARD_SERVICE);
@@ -171,24 +214,35 @@ public class ActivityEnterPassCodeViewModel {
 
         if (realmUserInfo != null) {
             password = realmUserInfo.getPassCode();
+            isPassCode = realmUserInfo.isPassCode();
+            isPattern = realmUserInfo.isPattern();
             isFingerPrint = realmUserInfo.isFingerPrint();
             kindPassCode = realmUserInfo.getKindPassCode();
         }
+        binding.patternLockView.addPatternLockListener(mPatternLockViewListener);
 
-        if (kindPassCode == PIN) {
-            edtSetPasswordInput.set((InputType.TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_PASSWORD));
-            maxLengthEditText(4);
-            rippleOkVisibility.set(View.VISIBLE);
-        } else {
-            edtSetPasswordInput.set(InputType.TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
-            maxLengthEditText(20);
-            rippleOkVisibility.set(View.VISIBLE);
+        if (isPassCode) {
+            if (isPattern){
+                vsRootIsPassCode.set(View.GONE);
+                vsRootIsPattern.set(View.VISIBLE);
+            }else {
+                vsRootIsPassCode.set(View.VISIBLE);
+                vsRootIsPattern.set(View.GONE);
+                if (kindPassCode == PIN) {
+                    edtSetPasswordInput.set((InputType.TYPE_CLASS_NUMBER | TYPE_NUMBER_VARIATION_PASSWORD));
+                    maxLengthEditText(4);
+                    rippleOkVisibility.set(View.VISIBLE);
+                } else {
+                    edtSetPasswordInput.set(InputType.TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                    maxLengthEditText(20);
+                    rippleOkVisibility.set(View.VISIBLE);
+                }
+
+                if (dialogForgot != null && dialogForgot.isShowing() && !(G.currentActivity).isFinishing()) {
+                    dialogForgot.dismiss();
+                }
+            }
         }
-
-        if (dialogForgot != null && dialogForgot.isShowing() && !(G.currentActivity).isFinishing()) {
-            dialogForgot.dismiss();
-        }
-
 
         if (isFingerPrint) {
 
@@ -234,7 +288,7 @@ public class ActivityEnterPassCodeViewModel {
 
                             ActivityMain.isLock = false;
                             G.currentActivity.finish();
-                            closeKeyboard(view);
+                            closeKeyboard(binding.getRoot());
                         }
                     });
                 }
@@ -344,7 +398,7 @@ public class ActivityEnterPassCodeViewModel {
         }
         realm.close();
         ActivityMain.isActivityEnterPassCode = false;
-        closeKeyboard(view);
+        closeKeyboard(binding.getRoot());
     }
 
     public void onResume() {

@@ -2302,6 +2302,9 @@
   <string name="total_sent">مجموع حجم المرسلة</string>
   <string name="total_received">مجموع حجم الواردة</string>
   <string name="clear_data_usage">محو سجل استخدام البيانات</string>
-  <string name="clearDataUsage">هل أنت متأكد من أنك تريد مسح استخدام البيانات?</string>
+    <string name="new_pattern_passCode">قم بإنشاء قالب جديد</string>
+    <string name="repeat_pattern_passCode">كرر النمط</string>
+    <string name="repeat_pattern_pattern">نمط رمز المرور</string>
+    <string name="clearDataUsage">هل أنت متأكد من أنك تريد مسح استخدام البيانات?</string>
 
 </resources>

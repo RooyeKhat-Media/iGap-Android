@@ -293,4 +293,7 @@
   <string name="Forgot_Passwords">بازیابی رمز</string>
   <string name="please_enter_your_password"> من فضلك أدخل رمز المرور</string>
   <string name="your_password">رمز المرور  </string>
+
+  <string name="Toast_time_wait">من فضلك انتظر حتى  :</string>
+
 </resources>

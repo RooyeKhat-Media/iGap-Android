@@ -311,7 +311,7 @@
     <activity
       android:name=".activities.ActivityCustomError"
       android:configChanges="keyboard|keyboardHidden|screenSize|locale"
-      android:process=":error_activity">
+    >
       <intent-filter>
         <action android:name="cat.ereza.customactivityoncrash.ERROR" />
       </intent-filter>

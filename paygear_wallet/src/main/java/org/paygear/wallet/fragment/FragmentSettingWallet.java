@@ -1,6 +1,6 @@
 package org.paygear.wallet.fragment;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -9,18 +9,14 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -36,9 +32,7 @@ import org.paygear.wallet.web.Web;
 
 import ir.radsense.raadcore.app.NavigationBarActivity;
 import ir.radsense.raadcore.app.RaadToolBar;
-import ir.radsense.raadcore.model.Account;
 import ir.radsense.raadcore.model.Auth;
-import ir.radsense.raadcore.utils.RaadCommonUtils;
 import ir.radsense.raadcore.utils.Typefaces;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,6 +53,9 @@ public class FragmentSettingWallet extends Fragment {
 
     private Payment mPayment;
     private Card mCard;
+    private static long expireTime = 0;
+    private static final int TIME = 1000 * 60;
+    private long mPressed = 0;
 
     private FragmentSettingWalletBinding fragmentSettingWalletBinding;
 
@@ -134,38 +131,86 @@ public class FragmentSettingWallet extends Fragment {
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialDialog.Builder(getContext())
-                        .title(R.string.text_forgot_title)
-                        .content(R.string.text_forgot)
-                        .positiveText(R.string.ok)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                String id = Auth.getCurrentAuth().getId();
-                                String token = RaadApp.paygearCard.token;
+                expireTime = ( mPressed + TIME - System.currentTimeMillis());
 
-                                Web.getInstance().getWebService().getForgotPassword(token, id).enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        if (getActivity() != null) {
-                                            SharedPreferences.Editor editor = getActivity().getSharedPreferences(WalletActivity.SH_SETTING, MODE_PRIVATE).edit();
-                                            editor.putBoolean(WalletActivity.RESET_PASSWORD, true);
-                                            editor.apply();
+                if (mPressed + TIME < System.currentTimeMillis()){
+                    mPressed = System.currentTimeMillis();
+
+                    new MaterialDialog.Builder(getContext())
+                            .title(R.string.text_forgot_title)
+                            .content(R.string.text_forgot)
+                            .positiveText(R.string.ok)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    String id = Auth.getCurrentAuth().getId();
+                                    String token = RaadApp.paygearCard.token;
+
+                                    Web.getInstance().getWebService().getForgotPassword(token, id).enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            if (getActivity() != null) {
+                                                SharedPreferences.Editor editor = getActivity().getSharedPreferences(WalletActivity.SH_SETTING, MODE_PRIVATE).edit();
+                                                editor.putBoolean(WalletActivity.RESET_PASSWORD, true);
+                                                editor.apply();
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                    }
-                                });
-                            }
-                        })
-                        .show();
-
-
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                        }
+                                    });
+                                }
+                            })
+                            .show();
+                }else {
+                    CountDownExpireTimer();
+                }
 
             }
         });
+    }
+
+    private void CountDownExpireTimer(){
+
+
+        final MaterialDialog dialogWait = new MaterialDialog.Builder(getContext()).title(R.string.please_wait).customView(R.layout.dialog_remind_time, true).positiveText(R.string.ok).autoDismiss(true).canceledOnTouchOutside(true).cancelable(true).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                dialog.dismiss();
+            }
+        }).show();
+        View v = dialogWait.getCustomView();
+        if (v != null) {
+             final TextView remindTime = (TextView) v.findViewById(R.id.remindTime);
+            remindTime.setTextColor(Color.BLACK);
+            final CountDownTimer countDownTimer = new CountDownTimer(expireTime,1000) { // wait for verify sms
+                public void onTick(long millisUntilFinished) {
+
+                    long seconds =  millisUntilFinished/1000 % 60;
+                    remindTime.setText(""+ seconds);
+                    expireTime= millisUntilFinished;
+                }
+
+                public void onFinish() {
+
+                    expireTime= 0;
+                    dialogWait.dismiss();
+                }
+            };
+            countDownTimer.start();
+            dialogWait.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    countDownTimer.cancel();
+                }
+            });
+        }
+
+
+
+
     }
 
 }

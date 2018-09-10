@@ -23,7 +23,6 @@ import android.os.SystemClock;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.crashlytics.android.Crashlytics;
@@ -97,6 +96,7 @@ public class G extends MultiDexApplication {
     public static ArrayList<String> waitingActionIds = new ArrayList<>();
     public static ArrayList<String> generalImmovableClasses = new ArrayList<>();
     public static ArrayList<Integer> forcePriorityActionId = new ArrayList<>();
+    public static ArrayList<Integer> ignoreErrorCodes = new ArrayList<>();
     public static HashMap<Integer, String> lookupMap = new HashMap<>();
     public static HashMap<String, ArrayList<Object>> requestQueueRelationMap = new HashMap<>();
     public static HashMap<Integer, Integer> priorityActionId = new HashMap<>();

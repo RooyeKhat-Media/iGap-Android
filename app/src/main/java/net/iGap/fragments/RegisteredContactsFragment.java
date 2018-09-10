@@ -16,10 +16,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.widget.NestedScrollView;
@@ -28,6 +30,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,11 +39,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -71,8 +76,10 @@ import net.iGap.module.CircleImageView;
 import net.iGap.module.ContactUtils;
 import net.iGap.module.Contacts;
 import net.iGap.module.CustomTextViewMedium;
+import net.iGap.module.EmojiEditTextE;
 import net.iGap.module.LastSeenTimeUtil;
 import net.iGap.module.LoginActions;
+import net.iGap.module.MEditText;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoGlobal;
@@ -80,6 +87,7 @@ import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestUserContactsDelete;
+import net.iGap.request.RequestUserContactsEdit;
 import net.iGap.request.RequestUserContactsGetList;
 
 import java.io.IOException;
@@ -813,7 +821,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
             }
 
             String header = contact.getDisplay_name();
-
             if (!isMultiSelect) {
                 if (lastHeader.isEmpty() || (!lastHeader.isEmpty() && !header.isEmpty() && lastHeader.toLowerCase().charAt(0) != header.toLowerCase().charAt(0))) {
                     viewHolder.topLine.setVisibility(View.VISIBLE);
@@ -851,58 +858,38 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 viewHolder.swipeLayout.setSwipeEnabled(true);
             }
 
-            viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
-            viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-                @Override
-                public void onStartOpen(SwipeLayout layout) {
-                    isSwipe = true;
-                }
 
-                @Override
-                public void onOpen(SwipeLayout layout) {
-                    MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            viewHolder.txtDelete.setOnClickListener((View v) -> {
+                MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-                            new RequestUserContactsDelete().contactsDelete(realmRegisteredInfo.getPhoneNumber());
-                        }
-                    }).negativeText(R.string.B_cancel).onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            viewHolder.swipeLayout.close();
-                        }
-                    }).build();
+                        new RequestUserContactsDelete().contactsDelete(realmRegisteredInfo.getPhoneNumber());
+                    }
+                }).negativeText(R.string.B_cancel).onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        viewHolder.swipeLayout.close();
+                    }
+                }).build();
 
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            viewHolder.swipeLayout.close();
-                        }
-                    });
-                    dialog.show();
-                }
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        viewHolder.swipeLayout.close();
+                    }
+                });
+                dialog.show();
 
-                @Override
-                public void onStartClose(SwipeLayout layout) {
-
-
-                }
-
-                @Override
-                public void onClose(SwipeLayout layout) {
-                    isSwipe = false;
-                }
-
-                @Override
-                public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-                }
-
-                @Override
-                public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-                }
             });
+
+            viewHolder.txtEdit.setOnClickListener(v->{
+
+                dialogEditContact(header,contact.getPhone(),contact.getId());
+
+
+            });
+
 
             if (selectedList.containsKey(usersList.get(i).getPhone())) {
                 viewHolder.animateCheckBox.setVisibility(View.VISIBLE);
@@ -917,22 +904,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 viewHolder.animateCheckBox.setVisibility(View.INVISIBLE);
 //                viewHolder.root.setBackgroundColor(ContextCompat.getColor(G.context, R.color.white));
             }
-
-            //viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            //    @Override
-            //    public boolean onLongClick(View v) {
-            //
-            //        new MaterialDialog.Builder(G.fragmentActivity).title(R.string.to_delete_contact).content(R.string.delete_text).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
-            //            @Override
-            //            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            //
-            //                new RequestUserContactsDelete().contactsDelete(realmRegisteredInfo.getPhoneNumber());
-            //            }
-            //        }).negativeText(R.string.B_cancel).show();
-            //
-            //        return false;
-            //    }
-            //});
 
             hashMapAvatar.put(contact.getId(), viewHolder.image);
             setAvatar(viewHolder, contact.getId());
@@ -955,9 +926,11 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            protected CircleImageView image;
-            protected TextView title;
-            protected TextView subtitle;
+            private CircleImageView image;
+            private TextView title;
+            private TextView subtitle;
+            private ViewGroup txtDelete;
+            private ViewGroup txtEdit;
             protected View topLine;
             private RealmContacts realmContacts;
             private SwipeLayout swipeLayout;
@@ -971,6 +944,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 animateCheckBox = (AnimateCheckBox) view.findViewById(R.id.animateCheckBoxContact);
                 image = (CircleImageView) view.findViewById(R.id.imageView);
                 title = (TextView) view.findViewById(R.id.title);
+                txtDelete = (ViewGroup) view.findViewById(R.id.swipeDelete);
+                txtEdit = (ViewGroup) view.findViewById(R.id.swipeEdit);
                 subtitle = (TextView) view.findViewById(R.id.subtitle);
                 topLine = (View) view.findViewById(R.id.topLine);
                 swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeRevealLayout);
@@ -983,6 +958,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                         return false;
                     }
                 });
+
+
 
                 swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1024,6 +1001,166 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 });
             }
         }
+    }
+
+    private void dialogEditContact(String header, long phone,final long userId) {
+
+        final LinearLayout layoutNickname = new LinearLayout(G.fragmentActivity);
+        layoutNickname.setOrientation(LinearLayout.VERTICAL);
+
+        String splitNickname[] = header.split(" ");
+        String firsName = "";
+        String lastName = "";
+        StringBuilder stringBuilder = null;
+        if (splitNickname.length > 1) {
+
+            lastName = splitNickname[splitNickname.length - 1];
+            stringBuilder = new StringBuilder();
+            for (int i = 0; i < splitNickname.length - 1; i++) {
+
+                stringBuilder.append(splitNickname[i]).append(" ");
+            }
+            firsName = stringBuilder.toString();
+        } else {
+            firsName = splitNickname[0];
+        }
+        final View viewFirstName = new View(G.fragmentActivity);
+        viewFirstName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+
+        LinearLayout.LayoutParams viewParams = new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
+
+        TextInputLayout inputFirstName = new TextInputLayout(G.fragmentActivity);
+        final EmojiEditTextE edtFirstName = new EmojiEditTextE(G.fragmentActivity);
+        edtFirstName.setHint(R.string.first_name);
+        edtFirstName.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        edtFirstName.setTypeface(G.typeface_IRANSansMobile);
+        edtFirstName.setText(firsName);
+        edtFirstName.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
+        edtFirstName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
+        edtFirstName.setHintTextColor(G.context.getResources().getColor(R.color.hint_edit_text));
+        edtFirstName.setPadding(0, 8, 0, 8);
+        edtFirstName.setSingleLine(true);
+        inputFirstName.addView(edtFirstName);
+        inputFirstName.addView(viewFirstName, viewParams);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            edtFirstName.setBackground(G.context.getResources().getDrawable(android.R.color.transparent));
+        }
+
+        final View viewLastName = new View(G.fragmentActivity);
+        viewLastName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+
+        TextInputLayout inputLastName = new TextInputLayout(G.fragmentActivity);
+        final MEditText edtLastName = new MEditText(G.fragmentActivity);
+        edtLastName.setHint(R.string.last_name);
+        edtLastName.setTypeface(G.typeface_IRANSansMobile);
+        edtLastName.setText(lastName);
+        edtLastName.setTextSize(TypedValue.COMPLEX_UNIT_PX, G.context.getResources().getDimension(R.dimen.dp14));
+        edtLastName.setTextColor(G.context.getResources().getColor(R.color.text_edit_text));
+        edtLastName.setHintTextColor(G.context.getResources().getColor(R.color.hint_edit_text));
+        edtLastName.setPadding(0, 8, 0, 8);
+        edtLastName.setSingleLine(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            edtLastName.setBackground(G.context.getResources().getDrawable(android.R.color.transparent));
+        }
+        inputLastName.addView(edtLastName);
+        inputLastName.addView(viewLastName, viewParams);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 0, 15);
+        LinearLayout.LayoutParams lastNameLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lastNameLayoutParams.setMargins(0, 15, 0, 10);
+
+        layoutNickname.addView(inputFirstName, layoutParams);
+        layoutNickname.addView(inputLastName, lastNameLayoutParams);
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.pu_nikname_profileUser))
+                .positiveText(G.fragmentActivity.getResources().getString(R.string.B_ok))
+                .customView(layoutNickname, true)
+                .widgetColor(Color.parseColor(G.appBarColor))
+                .negativeText(G.fragmentActivity.getResources().getString(R.string.B_cancel))
+                .build();
+
+        final View positive = dialog.getActionButton(DialogAction.POSITIVE);
+        positive.setEnabled(false);
+
+        edtFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    viewFirstName.setBackgroundColor(Color.parseColor(G.appBarColor));
+                } else {
+                    viewFirstName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+                }
+            }
+        });
+
+        edtLastName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    viewLastName.setBackgroundColor(Color.parseColor(G.appBarColor));
+                } else {
+                    viewLastName.setBackgroundColor(G.context.getResources().getColor(R.color.line_edit_text));
+                }
+            }
+        });
+
+        final String finalFirsName = firsName;
+        edtFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if (!edtFirstName.getText().toString().equals(finalFirsName)) {
+                    positive.setEnabled(true);
+                } else {
+                    positive.setEnabled(false);
+                }
+            }
+        });
+
+        final String finalLastName = lastName;
+        edtLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!edtLastName.getText().toString().equals(finalLastName)) {
+                    positive.setEnabled(true);
+                } else {
+                    positive.setEnabled(false);
+                }
+            }
+        });
+
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String firstName = edtFirstName.getText().toString().trim();
+                String lastName = edtLastName.getText().toString().trim();
+                new RequestUserContactsEdit().contactsEdit(userId, phone, firstName, lastName);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     /**

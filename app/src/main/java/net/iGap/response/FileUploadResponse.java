@@ -49,18 +49,27 @@ public class FileUploadResponse extends MessageHandler {
         ProtoFileUpload.FileUploadResponse.Builder fileUploadResponse = (ProtoFileUpload.FileUploadResponse.Builder) message;
 
         HelperUploadFile.onFileUpload.onFileUpload(fileUploadResponse.getProgress(), fileUploadResponse.getNextOffset(), fileUploadResponse.getNextLimit(), identityFileUpload.identify, fileUploadResponse.getResponse());
-        boolean connectivityType;
+        boolean connectivityType = true;
+        try {
 
-        if (HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI"))
-            connectivityType = true;
-        else
-            connectivityType = false;
+            if (HelperCheckInternetConnection.currentConnectivityType != null) {
 
 
-            HelperDataUsage.progressUpload(connectivityType, fileUploadResponse.getNextLimit(), identityFileUpload.type);
+                if (HelperCheckInternetConnection.currentConnectivityType == HelperCheckInternetConnection.ConnectivityType.WIFI)
+                    connectivityType = true;
+                else
+                    connectivityType = false;
+            }
 
-            if (fileUploadResponse.getProgress()==100)
-                HelperDataUsage.insertDataUsage(HelperDataUsage.convetredUploadType, connectivityType,false);
+        } catch (Exception e) {
+        }
+        ;
+
+
+        HelperDataUsage.progressUpload(connectivityType, fileUploadResponse.getNextLimit(), identityFileUpload.type);
+
+        if (fileUploadResponse.getProgress() == 100)
+            HelperDataUsage.insertDataUsage(HelperDataUsage.convetredUploadType, connectivityType, false);
 
 
     }

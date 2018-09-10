@@ -10,6 +10,7 @@
 
 package net.iGap.realm;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.format.DateUtils;
@@ -840,7 +841,7 @@ public class RealmRoom extends RealmObject {
 
     public static void setLastScrollPosition(final long roomId, final long messageId, final int offset) {
         Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
+        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
@@ -849,8 +850,17 @@ public class RealmRoom extends RealmObject {
                     realmRoom.setLastScrollPositionOffset(offset);
                 }
             }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                realm.close();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                realm.close();
+            }
         });
-        realm.close();
     }
 
     public static void clearAllScrollPositions() {
@@ -906,7 +916,7 @@ public class RealmRoom extends RealmObject {
 
     public static void clearDraft(final long roomId) {
         Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(new Realm.Transaction() {
+        realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
@@ -915,8 +925,17 @@ public class RealmRoom extends RealmObject {
                     realmRoom.setDraftFile(null);
                 }
             }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                realm.close();
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                realm.close();
+            }
         });
-        realm.close();
     }
 
     /**

@@ -171,6 +171,7 @@ public class SHP_SETTING {
     public static final String KEY_SELECTED_MILISECOND_TO = "KEY_SELECTED_MILISECOND_TO";
 
     public static final String KEY_SWITCH_MAP_STATE = "KEY_SWITCH_MAP_STATE";
+    public static final String KEY_PATTERN_TACTILE_DRAWN = "KEY_PATTERN_TACTILE_DRAWN";
 
 
     public static class Defaults {

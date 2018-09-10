@@ -294,4 +294,7 @@
   <string name="please_enter_your_password"> لطفاً رمز عبور خود را وارد نمایید</string>
   <string name="your_password">رمزعبور </string>
 
+
+  <string name="Toast_time_wait">لطفاً منتظر بمانید تا :</string>
+
 </resources>

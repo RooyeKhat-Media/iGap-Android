@@ -295,4 +295,8 @@
   <string name="enter_your_province">select your province</string>
   <string name="please_enter_your_password">Please enter your Password</string>
   <string name="your_password">Your Password</string>
+
+
+  <string name="Toast_time_wait">please wait until:</string>
+
 </resources>

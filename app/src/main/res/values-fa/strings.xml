@@ -1348,4 +1348,9 @@
   <string name="clear_data_usage">پاک کردن تاریخچه مصرف داده</string>
   <string name="clearDataUsage">آیا مایل به پاک کردن تاریخچه مصرف داده هستید؟</string>
 
+  <string name="new_pattern_passCode">ایجاد الگوی جدید</string>
+  <string name="repeat_pattern_passCode">تکرار الگو</string>
+  <string name="repeat_pattern_pattern">رمز عبور با الگو</string>
+
+
 </resources>

@@ -1931,36 +1931,82 @@ public class ViewMaker {
         ViewGroup.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         swipeRevealLayout.setLayoutParams(layoutParams);
 
-        RelativeLayout LinearLayout = new RelativeLayout(G.context);
-        LinearLayout.setBackgroundColor(G.context.getResources().getColor(R.color.red_swipe));
+        LinearLayout swipeLayout = new LinearLayout(G.context);
+        swipeLayout.setOrientation(HORIZONTAL);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            LinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+            swipeLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
-        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        LinearLayout.setLayoutParams(layoutParams1);
+        LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        swipeLayout.setLayoutParams(layoutParams1);
 
-        TextView textView = new TextView(G.context);
-        textView.setText(G.context.getResources().getString(R.string.to_delete_contact));
-        textView.setGravity(Gravity.CENTER);
-        setTypeFace(textView);
-        textView.setTextColor(G.context.getResources().getColor(R.color.white));
 
-        ViewGroup.LayoutParams layoutParams2 = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        textView.setLayoutParams(layoutParams2);
 
-        MaterialDesignTextView fcsl_txt_icon = new MaterialDesignTextView(G.context);
-        fcsl_txt_icon.setGravity(CENTER_VERTICAL);
-        fcsl_txt_icon.setText(G.fragmentActivity.getResources().getString(R.string.md_rubbish_delete_file));
-        fcsl_txt_icon.setTextColor(G.context.getResources().getColor(R.color.white));
-        setTextSize(fcsl_txt_icon, R.dimen.dp22);
-        LinearLayout.LayoutParams layout_178 = new LinearLayout.LayoutParams(i_Dp(R.dimen.dp52), ViewGroup.LayoutParams.MATCH_PARENT);
-        layout_178.gravity = Gravity.LEFT;
-        layout_178.leftMargin = i_Dp(R.dimen.dp32);
-        fcsl_txt_icon.setLayoutParams(layout_178);
+        LinearLayout layoutDelete = new LinearLayout(G.context);
+        layoutDelete.setId(R.id.swipeDelete);
+        layoutDelete.setBackgroundColor(G.context.getResources().getColor(R.color.red_swipe));
+        layoutDelete.setOrientation(HORIZONTAL);
+        LinearLayout.LayoutParams layoutDeleteParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutDelete.setLayoutParams(layoutDeleteParams);
 
-        LinearLayout.addView(fcsl_txt_icon);
-        LinearLayout.addView(textView);
-        swipeRevealLayout.addView(LinearLayout);
+        TextView txtDelete = new TextView(G.context);
+        txtDelete.setText(G.context.getResources().getString(R.string.delete_item_dialog));
+        txtDelete.setGravity(Gravity.CENTER);
+        setTypeFace(txtDelete);
+
+        txtDelete.setPadding(20,0,20,0);
+        txtDelete.setTextColor(G.context.getResources().getColor(R.color.white));
+        LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        txtDelete.setLayoutParams(layoutParams2);
+
+        MaterialDesignTextView iconDelete = new MaterialDesignTextView(G.context);
+        iconDelete.setGravity(CENTER_VERTICAL);
+        iconDelete.setText(G.fragmentActivity.getResources().getString(R.string.md_rubbish_delete_file));
+        iconDelete.setTextColor(G.context.getResources().getColor(R.color.white));
+        iconDelete.setPadding(10,0,10,0);
+        setTextSize(iconDelete, R.dimen.dp22);
+        LinearLayout.LayoutParams layout_178 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        layout_178.gravity = Gravity.LEFT;
+//        layout_178.leftMargin = i_Dp(R.dimen.dp32);
+        iconDelete.setLayoutParams(layout_178);
+
+        layoutDelete.addView(iconDelete);
+        layoutDelete.addView(txtDelete);
+
+        LinearLayout layoutEdit = new LinearLayout(G.context);
+        layoutEdit.setId(R.id.swipeEdit);
+        layoutEdit.setBackgroundColor(G.context.getResources().getColor(R.color.green));
+        layoutEdit.setOrientation(HORIZONTAL);
+        LinearLayout.LayoutParams layoutEditParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutEdit.setLayoutParams(layoutEditParams);
+
+
+        TextView txtEdit = new TextView(G.context);
+        txtEdit.setText(G.context.getResources().getString(R.string.edit));
+        txtEdit.setGravity(Gravity.CENTER);
+        setTypeFace(txtEdit);
+        txtEdit.setPadding(20,0,20,0);
+
+        txtEdit.setTextColor(G.context.getResources().getColor(R.color.white));
+        ViewGroup.LayoutParams layoutParamsEdit = new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        txtEdit.setLayoutParams(layoutParamsEdit);
+
+        MaterialDesignTextView iconEdit = new MaterialDesignTextView(G.context);
+        iconEdit.setGravity(CENTER_VERTICAL);
+        iconEdit.setText(G.fragmentActivity.getResources().getString(R.string.md_edit));
+        iconEdit.setTextColor(G.context.getResources().getColor(R.color.white));
+        iconEdit.setPadding(10,0,10,0);
+        setTextSize(iconEdit, R.dimen.dp22);
+        LinearLayout.LayoutParams iconEditParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        iconEditParams.gravity = Gravity.LEFT;
+        iconEdit.setLayoutParams(iconEditParams);
+
+        layoutEdit.addView(iconEdit);
+        layoutEdit.addView(txtEdit);
+
+
+        swipeLayout.addView(layoutDelete);
+        swipeLayout.addView(layoutEdit);
+        swipeRevealLayout.addView(swipeLayout);
 
         LinearLayout linearLayout_578 = new LinearLayout(G.context);
 //        linearLayout_578.setId(R.id.rootRegisterContact);

@@ -14,7 +14,6 @@
       type="net.iGap.viewmodel.ActivityEnterPassCodeViewModel" />
   </data>
 
-
   <RelativeLayout
     android:id="@+id/mainRootEnterPassword"
     android:layout_width="match_parent"
@@ -31,13 +30,8 @@
 
       <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
           android:layout_width="@dimen/dp140"
@@ -49,7 +43,8 @@
         <TextView
           android:id="@+id/setPassword_txtSetPassword"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/dp48"
+          android:layout_weight="1"
           android:layout_marginTop="@dimen/dp8"
           android:gravity="center"
           android:text="@string/Unlock_with_your_passcode"
@@ -58,7 +53,9 @@
 
         <RelativeLayout
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsPassCode)}"
+            >
 
           <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/enterPassword_rippleOk"
@@ -106,15 +103,30 @@
             android:text="@={activityEnterPassCodeViewModel.edtSetPassword}"
             android:textColor="@color/white"
             android:textCursorDrawable="@drawable/white_cursor_color"
+              android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsEditText)}"
             android:textSize="@dimen/dp15" />
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:layout_marginLeft="@dimen/dp24"
+              android:layout_marginRight="@dimen/dp24"
+              android:layout_below="@+id/enterPassword_edtSetPassword"
+              android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsEditText)}"
+              android:background="@color/white" />
         </RelativeLayout>
 
-        <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginLeft="@dimen/dp24"
-          android:layout_marginRight="@dimen/dp24"
-          android:background="@color/white" />
+
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/pattern_lock_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp300"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp24"
+            android:layout_marginRight="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp4"
+            android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsPattern)}"
+            />
 
         <TextView
           android:id="@+id/setPassword_forgotPassword"

@@ -82,6 +82,8 @@
   <item name="title" type="id" />
   <item name="subtitle" type="id" />
   <item name="swipeRevealLayout" type="id" />
+  <item name="swipeDelete" type="id" />
+  <item name="swipeEdit" type="id" />
   <item name="rootRegisterContact" type="id" />
   <item name="animateCheckBoxContact" type="id" />
 

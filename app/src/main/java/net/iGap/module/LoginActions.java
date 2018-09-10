@@ -55,11 +55,22 @@ public class LoginActions {
         G.onUserLogin = new OnUserLogin() {
             @Override
             public void onLogin() {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        G.clientConditionGlobal = RealmClientCondition.computeClientCondition(null);
 
+                        if (!firstTimeEnterToApp || !isAppInFg) {
+                            new RequestClientGetRoomList().clientGetRoomList(0, Config.LIMIT_LOAD_ROOM, "0");
+                        }
+                        return null;
+                    }
+
+                }.execute();
                 G.handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        G.clientConditionGlobal = RealmClientCondition.computeClientCondition(null);
+
                         /**
                          * in first enter to app client send clientCondition after get room list
                          * but, in another login when user not closed app after login client send
@@ -70,9 +81,6 @@ public class LoginActions {
                          * client condition!!! for avoid from this problem we checked isAppInFg state
                          * app is background send clientCondition (: .
                          */
-                        if (!firstTimeEnterToApp || !isAppInFg) {
-                            new RequestClientGetRoomList().clientGetRoomList(0, Config.LIMIT_LOAD_ROOM, "0");
-                        }
 
                         if (firstEnter) {
                             firstEnter = false;

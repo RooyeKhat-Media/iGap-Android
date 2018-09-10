@@ -1346,4 +1346,12 @@
   <string name="clear_data_usage">Clear data usage</string>
   <string name="clearDataUsage">Are you sure you want to clear data usage?</string>
 
+
+  <string name="new_pattern_passCode">Create new pattern</string>
+  <string name="repeat_pattern_passCode">Repeat pattern</string>
+  <string name="repeat_pattern_pattern">Pattern PassCode</string>
+  <string name="show_line_pattern">Show line pattern</string>
+
+
+
 </resources>

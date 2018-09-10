@@ -53,20 +53,25 @@ public class FileDownloadResponse extends MessageHandler {
 
         nextOffset = previousOffset + builder.getBytes().size();
 
-        boolean connectivityType;
 
-        if (HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI"))
-            connectivityType = true;
-        else
-            connectivityType = false;
-
+        boolean connectivityType = true;
+        try {
+            if (HelperCheckInternetConnection.currentConnectivityType!=null){
+                if (HelperCheckInternetConnection.currentConnectivityType == HelperCheckInternetConnection.ConnectivityType.WIFI)
+                    connectivityType = true;
+                else
+                    connectivityType = false;
+            }
+        } catch (Exception e) {
+        }
+        ;
         if (identityFileDownload.selector == ProtoFileDownload.FileDownload.Selector.FILE) {
             HelperDataUsage.progressDownload(connectivityType, builder.getBytes().size(), identityFileDownload.type);
         }
         long progress = (nextOffset * 100) / fileSize;
 
         if (progress == 100 && (identityFileDownload.selector == ProtoFileDownload.FileDownload.Selector.FILE)) {
-            HelperDataUsage.insertDataUsage(HelperDataUsage.convetredDownloadType, connectivityType,true);
+            HelperDataUsage.insertDataUsage(HelperDataUsage.convetredDownloadType, connectivityType, true);
         }
 
         AndroidUtils.writeBytesToFile(filePath, builder.getBytes().toByteArray());

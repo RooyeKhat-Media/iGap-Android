@@ -26,8 +26,8 @@ android {
         applicationId "net.iGap"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 79
-        versionName "0.9.5"
+        versionCode 80
+        versionName "0.9.6"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -147,6 +147,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
 }
 
 configurations.all {

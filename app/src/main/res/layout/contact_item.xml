@@ -22,18 +22,28 @@
     <!-- Bottom View Start-->
     <LinearLayout
       android:id="@+id/bottom_wrapper"
-      android:layout_width="match_parent"
+      android:layout_width="@dimen/dp100"
       android:layout_height="match_parent"
       android:background="@color/red_swipe"
       android:orientation="vertical"
       android:weightSum="1">
 
       <TextView
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dp48"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/edit"
+        android:textColor="@color/white"
+        android:background="@color/red_swipe"
+        android:textSize="@dimen/dp20" />
+
+      <TextView
+        android:layout_width="@dimen/dp48"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/un_block_user"
         android:textColor="@color/white"
+        android:background="@color/green"
         android:textSize="@dimen/dp20" />
 
       <!--What you want to show-->

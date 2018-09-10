@@ -85,7 +85,7 @@ public class HelperDownloadFile {
         if (!list.containsKey(primaryKey)) {
 
             item = new StructDownLoad();
-            item.type=type;
+            item.type = type;
             item.Token = token;
             item.url = url;
             item.cashId = cashId;
@@ -411,15 +411,21 @@ public class HelperDownloadFile {
                         item.downloadedByte = progress.currentBytes;
                         if (item.progress < 100 && !item.isPause) {
                             updateView(item);
-                            boolean connectivityType;
-                            if (HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI"))
-                                connectivityType = true;
-                            else
-                                connectivityType = false;
+                            try {
+                                boolean connectivityType = true;
+                                if (HelperCheckInternetConnection.currentConnectivityType != null) {
 
-                            if (item.selector == ProtoFileDownload.FileDownload.Selector.FILE) {
-                                HelperDataUsage.progressDownload(connectivityType, downloadByte, item.type);
+                                    if (HelperCheckInternetConnection.currentConnectivityType == HelperCheckInternetConnection.ConnectivityType.WIFI)
+                                        connectivityType = true;
+                                    else
+                                        connectivityType = false;
+                                }
+                                if (item.selector == ProtoFileDownload.FileDownload.Selector.FILE) {
+                                    HelperDataUsage.progressDownload(connectivityType, downloadByte, item.type);
+                                }
+                            } catch (Exception e) {
                             }
+                            ;
                         }
                     }
                 })
@@ -432,8 +438,8 @@ public class HelperDownloadFile {
                                 @Override
                                 public void run() {
                                     finishDownload(item.cashId, item.offset, item.selector, item.progress);
-                                    if (item.selector.toString().toLowerCase().contains("file")) {
-                                        HelperDataUsage.insertDataUsage(HelperDataUsage.convetredDownloadType, HelperCheckInternetConnection.currentConnectivityType.toString().contains("WIFI") ? true : false, true);
+                                    if (item.selector.toString().toLowerCase().contains("file") && HelperCheckInternetConnection.currentConnectivityType != null) {
+                                        HelperDataUsage.insertDataUsage(HelperDataUsage.convetredDownloadType, HelperCheckInternetConnection.currentConnectivityType == HelperCheckInternetConnection.ConnectivityType.WIFI, true);
                                     }
                                 }
                             });
@@ -477,7 +483,7 @@ public class HelperDownloadFile {
         if (item.url != null && !item.url.isEmpty()) {
             startDownloadManager(item);
         } else {
-            new RequestFileDownload().download(item.Token, item.offset, (int) item.size, item.selector, new RequestFileDownload.IdentityFileDownload(item.type,item.cashId, item.path, item.selector, item.size, item.offset, true));
+            new RequestFileDownload().download(item.Token, item.offset, (int) item.size, item.selector, new RequestFileDownload.IdentityFileDownload(item.type, item.cashId, item.path, item.selector, item.size, item.offset, true));
         }
     }
 

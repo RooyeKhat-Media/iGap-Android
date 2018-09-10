@@ -176,7 +176,7 @@ public final class MessageLoader {
                 final boolean gapReachedFinal = gapReached;
                 final boolean jumpOverLocalFinal = jumpOverLocal;
                 //+Realm realm = Realm.getDefaultInstance();
-                getRealmChat().executeTransaction(new Realm.Transaction() {
+                getRealmChat().executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         long finalMessageId;
@@ -199,11 +199,14 @@ public final class MessageLoader {
                             setGap(finalMessageId, historyDirection, realm);
                         }
                     }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        onMessageReceive.onMessage(roomId, startMessageId, endMessageId, gapReachedFinal, jumpOverLocalFinal, historyDirection);
+                    }
                 });
                 //realm.close();
                 //realmResponse.close();
-
-                onMessageReceive.onMessage(roomId, startMessageId, endMessageId, gapReached, jumpOverLocal, historyDirection);
             }
 
             @Override
