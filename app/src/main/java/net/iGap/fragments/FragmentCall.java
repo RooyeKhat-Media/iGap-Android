@@ -48,6 +48,7 @@ import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.PreCachingLayoutManager;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoSignalingGetLog;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmCallConfig;
 import net.iGap.realm.RealmCallLog;
 import net.iGap.realm.RealmCallLogFields;
@@ -62,6 +63,8 @@ import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import static net.iGap.proto.ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class FragmentCall extends BaseFragment implements OnCallLogClear {
@@ -95,7 +98,7 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
         return fragmentCall;
     }
 
-    public static void call(long userID, boolean isIncomingCall) {
+    public static void call(long userID, boolean isIncomingCall, ProtoSignalingOffer.SignalingOffer.Type callTYpe) {
 
         if (G.userLogin) {
 
@@ -113,14 +116,15 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                         Intent intent = new Intent(G.currentActivity, ActivityCall.class);
                         intent.putExtra(ActivityCall.USER_ID_STR, userID);
                         intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
+                        intent.putExtra(ActivityCall.CALL_TYPE, callTYpe);
                         ActivityCall.isGoingfromApp = true;
                         G.currentActivity.startActivity(intent);
                     } else {
                         Intent intent = new Intent(G.context, ActivityCall.class);
                         intent.putExtra(ActivityCall.USER_ID_STR, userID);
                         intent.putExtra(ActivityCall.INCOMING_CALL_STR, isIncomingCall);
+                        intent.putExtra(ActivityCall.CALL_TYPE, callTYpe);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                         ActivityCall.isGoingfromApp = true;
                         G.context.startActivity(intent);
                     }
@@ -719,18 +723,10 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                     break;
             }
 
-            //switch (item.getType()) {
-            //
-            //    case SCREEN_SHARING:
-            //        viewHolder.call_type_icon.setText(R.string.md_stay_current_portrait);
-            //        break;
-            //    case VIDEO_CALLING:
-            //        viewHolder.call_type_icon.setText(R.string.md_video_cam);
-            //        break;
-            //    case VOICE_CALLING:
-            //        viewHolder.call_type_icon.setText(R.string.md_phone);
-            //        break;
-            //}
+            if (item.getType() == VIDEO_CALLING) {
+                viewHolder.icon.setText(R.string.md_file_video);
+            }
+
 
             if (HelperCalander.isPersianUnicode) {
                 viewHolder.timeAndInfo.setText(HelperCalander.checkHijriAndReturnTime(item.getOfferTime()) + " " + TimeUtils.toLocal(item.getOfferTime() * DateUtils.SECOND_IN_MILLIS, G.CHAT_MESSAGE_TIME)); //+ " " + HelperCalander.checkHijriAndReturnTime(item.getOfferTime())
@@ -795,7 +791,7 @@ public class FragmentCall extends BaseFragment implements OnCallLogClear {
                             long userId = callLog.getPeer().getId();
 
                             if (userId != 134 && G.userId != userId) {
-                                call(userId, false);
+                                call(userId, false, callLog.getType());
                             }
                         }
                     }

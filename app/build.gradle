@@ -24,11 +24,12 @@ android {
 
     defaultConfig {
         applicationId "net.iGap"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
-        versionCode 80
-        versionName "0.9.6"
+        versionCode 84
+        versionName "1.0.0"
         multiDexEnabled true
+        useLibrary 'org.apache.http.legacy'
         vectorDrawables.useSupportLibrary = true
 
         ndk {
@@ -71,11 +72,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':libwebrtc')
+    implementation 'org.webrtc:google-webrtc:1.0.23995'
     implementation('com.afollestad.material-dialogs:core:0.9.6.0') {
         transitive = true
     }
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true
     }
     implementation project(path: ':lvl')
@@ -136,7 +137,7 @@ dependencies {
     }
     implementation 'com.github.RooyeKhat-Media:Websocket:1.0.0'
     implementation 'com.github.RooyeKhat-Media:MessageProgress:1.0.0'
-    implementation 'com.github.RooyeKhat-Media:Proto:Build91_Lite'
+    implementation 'com.github.RooyeKhat-Media:Proto:Build96'
     implementation project(':pecpayment-release')
     implementation project(':raadcore')
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -148,6 +149,8 @@ dependencies {
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 configurations.all {

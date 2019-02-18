@@ -1,74 +1,69 @@
 package net.iGap.libs.notification;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import net.iGap.R;
-import net.iGap.activities.ActivityMain;
+import net.iGap.G;
+import net.iGap.helper.HelperNotification;
+import net.iGap.interfaces.OnClientGetRoomMessage;
+import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmRoom;
+import net.iGap.realm.RealmRoomFields;
+import net.iGap.request.RequestClientGetRoomMessage;
+
+import java.util.Map;
+
+import io.realm.Realm;
 
 
 public class NotificationService extends FirebaseMessagingService {
 
     private final static String ROOM_ID = "roomId";
     private final static String MESSAGE_ID = "messageId";
-    private final static String MESSAGE_TYPE = "type";
-    private final static String PAYLOAD = "payload";
-    public static int NOTIFICATION_ID = 1000;
+    private final static String MESSAGE_TYPE = "loc_key";
+    private static boolean isFirstMessage = true;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-//            if (remoteMessage.getData().size() > 0) {
-//                Map<String , String> date = remoteMessage.getData();
-//                if (date.containsKey(MESSAGE_TYPE)) {
-//                    switch (date.get(MESSAGE_TYPE)){
-//                        case "ROOM_SEND_MESSAGE":
-//                            if (date.containsKey(PAYLOAD)) {
-//                                try {
-//                                    JSONObject payload = new JSONObject(date.get(PAYLOAD));
-//                                    String  roomId = payload.getString(ROOM_ID);
-//                                    String messageId = payload.getString(MESSAGE_ID);
-//                                    Log.e("ddd","romid : "+roomId+"       messageId :  "+messageId);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                generateNotification("ROOM_SEND_MESSAGE");
-//                            }
-//                            break;
-//                        case "SIGNALING_OFFER":
-//                            Log.e("ddd"," push SIGNALING_OFFER ");
-//                            break;
-//                    }
-//                }
-//            }
+        if (isFirstMessage) {
+            if (remoteMessage.getData().size() > 0) {
+                Map<String, String> date = remoteMessage.getData();
+                if (date.containsKey(ROOM_ID) && date.containsKey(MESSAGE_ID)) {
+                    //   type of dataMap is     messageId roomId type loc_key loc_args
+                    Long roomId = Long.parseLong(date.get(ROOM_ID));
+                    Long messageId = Long.parseLong(date.get(MESSAGE_ID));
+
+                    G.handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            new RequestClientGetRoomMessage().clientGetRoomMessage(roomId, messageId);
+                        }
+                    }, 2000);
+
+                    G.onClientGetRoomMessage = new OnClientGetRoomMessage() {
+                        @Override
+                        public void onClientGetRoomMessageResponse(ProtoGlobal.RoomMessage message) {
+                            G.onClientGetRoomMessage = null;
+                            if (date.containsKey(MESSAGE_TYPE)) {
+                                final Realm realm = Realm.getDefaultInstance();
+                                RealmRoom room = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, roomId).findFirst();
+                                if (room != null) {
+                                    HelperNotification.getInstance().addMessage(roomId, message, room.getType(), room, realm);
+                                }
+                                realm.close();
+                            }
+                        }
+                    };
+                }
+            }
+
+            isFirstMessage = false;
+        }
+
+
     }
 
-
-    private void generateNotification(String messageBody) {
-
-        Intent intent = new Intent(this, ActivityMain.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.icon)
-                .setContentTitle("IGap")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(NOTIFICATION_ID, mNotifyBuilder.build());
-    }
 
 }

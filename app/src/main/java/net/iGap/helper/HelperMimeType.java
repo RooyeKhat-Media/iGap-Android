@@ -32,7 +32,7 @@ import static net.iGap.G.context;
 public class HelperMimeType {
 
     public static boolean isFileImage(String path) {
-        return path.endsWith(".jpg") || path.endsWith(".bmp") || path.endsWith(".png") || path.endsWith(".gif") || path.endsWith(".jpeg") || path.endsWith(".tiff") || path.endsWith(".tif");
+        return path.endsWith(".jpg") || path.endsWith(".bmp") || path.endsWith(".webp") || path.endsWith(".png") || path.endsWith(".gif") || path.endsWith(".jpeg") || path.endsWith(".tiff") || path.endsWith(".tif") || path.endsWith(".ai");
     }
 
     public static boolean isFileVideo(String path) {
@@ -57,11 +57,12 @@ public class HelperMimeType {
     }
 
     private static boolean isFileText(String path) {
-        return path.endsWith(".txt") || path.endsWith(".csv") || path.endsWith(".xml") || path.endsWith(".html");
+        return path.endsWith(".txt") || path.endsWith(".csv") || path.endsWith(".xml") || path.endsWith(".html") || path.endsWith(".docx") || path.endsWith(".doc")
+      || path.endsWith(".docs");
     }
 
     private static boolean isFilePakage(String path) {
-        return path.endsWith(".gz") || path.endsWith(".gz") || path.endsWith(".zip");
+        return path.endsWith(".gz") || path.endsWith(".gz") || path.endsWith(".zip") || path.endsWith(".rar");
     }
 
     /**

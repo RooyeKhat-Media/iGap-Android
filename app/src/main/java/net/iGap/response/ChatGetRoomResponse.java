@@ -12,6 +12,7 @@ package net.iGap.response;
 
 import net.iGap.G;
 import net.iGap.proto.ProtoChatGetRoom;
+import net.iGap.proto.ProtoClientGetPromote;
 import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
@@ -46,6 +47,7 @@ public class ChatGetRoomResponse extends MessageHandler {
 
         if ((chatGetRoomResponse.getRoom().getType() == ProtoGlobal.Room.Type.CHANNEL) || identity != null) {
             RealmRoom.putOrUpdate(chatGetRoomResponse.getRoom());
+
         } else {
             if (G.onChatGetRoom != null) {
                 G.onChatGetRoom.onChatGetRoom(chatGetRoomResponse.getRoom());

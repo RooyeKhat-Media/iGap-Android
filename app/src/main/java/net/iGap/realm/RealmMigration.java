@@ -319,11 +319,47 @@ public class RealmMigration implements io.realm.RealmMigration {
             oldVersion++;
         }
 
-        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 22
+        if (oldVersion == 22) {
 
             RealmObjectSchema realmUserInfo = schema.get(RealmUserInfo.class.getSimpleName());
             if (realmUserInfo != null) {
                 realmUserInfo.addField("isPattern", boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == 23) {
+
+            RealmObjectSchema realmRegisteredInfo = schema.get(RealmRegisteredInfo.class.getSimpleName());
+            if (realmRegisteredInfo != null) {
+                realmRegisteredInfo.addField("isBot", boolean.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == 24) {
+
+            RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
+            if (realmRoom != null) {
+                realmRoom.addField("priority", int.class, FieldAttribute.REQUIRED);
+            }
+
+            oldVersion++;
+        }
+
+        if (oldVersion == REALM_LATEST_MIGRATION_VERSION) { // REALM_LATEST_MIGRATION_VERSION = 25
+
+            RealmObjectSchema realmRoom = schema.get(RealmRoom.class.getSimpleName());
+            if (realmRoom != null) {
+                realmRoom.addField("isFromPromote", boolean.class, FieldAttribute.REQUIRED);
+                realmRoom.addField("promoteId", long.class, FieldAttribute.REQUIRED);
+            }
+
+            RealmObjectSchema realmPrivacy = schema.get(RealmPrivacy.class.getSimpleName());
+            if (realmPrivacy != null) {
+                realmPrivacy.addField("whoCanVideoCallToMe", String.class);
             }
 
             oldVersion++;

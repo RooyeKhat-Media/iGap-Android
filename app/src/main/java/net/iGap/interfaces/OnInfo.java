@@ -10,11 +10,9 @@
 
 package net.iGap.interfaces;
 
-import net.iGap.realm.RealmRegisteredInfo;
-
 /**
  * a callback for getting registered info from server
  */
 public interface OnInfo {
-    void onInfo(RealmRegisteredInfo registeredInfo);
+    void onInfo(Long registeredId);
 }

@@ -37,7 +37,6 @@ import net.iGap.fragments.FragmentChat;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperCheckInternetConnection;
-import net.iGap.helper.HelperDataUsage;
 import net.iGap.helper.HelperDownloadFile;
 import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperGetMessageState;
@@ -730,14 +729,24 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
         }
         //   ProtoGlobal.RoomMessageType messageType = mMessage.forwardedFrom == null ? mMessage.messageType : mMessage.forwardedFrom.getMessageType();
 
-        if (ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.SEEN) {
+
+        ProtoGlobal.RoomMessageStatus status = ProtoGlobal.RoomMessageStatus.UNRECOGNIZED;
+        if (mMessage.status != null) {
+            try {
+                status = ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status);
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (status == ProtoGlobal.RoomMessageStatus.SEEN) {
             if (G.isDarkTheme) {
                 setTextColor(imgTick, R.color.iGapColor);
             } else {
                 setTextColor(imgTick, R.color.backgroundColorCall2);
             }
 
-        } else if (ProtoGlobal.RoomMessageStatus.valueOf(mMessage.status) == ProtoGlobal.RoomMessageStatus.LISTENED) {
+        } else if (status == ProtoGlobal.RoomMessageStatus.LISTENED) {
             // iconHearing.setVisibility(View.VISIBLE);
             if (G.isDarkTheme) {
                 setTextColor(imgTick, R.color.iGapColor);
@@ -1294,7 +1303,7 @@ public abstract class AbstractMessage<Item extends AbstractMessage<?, ?>, VH ext
                                 SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
                                 if (sharedPreferences.getInt(SHP_SETTING.KEY_AUTOPLAY_GIFS, SHP_SETTING.Defaults.KEY_AUTOPLAY_GIFS) == 0) {
                                     holder.itemView.findViewById(R.id.progress).setVisibility(View.VISIBLE);
-                                    _Progress.withDrawable(R.drawable.photogif, true);
+                                    _Progress.withDrawable(R.mipmap.photogif, true);
                                 } else {
                                     holder.itemView.findViewById(R.id.progress).setVisibility(View.INVISIBLE);
                                 }

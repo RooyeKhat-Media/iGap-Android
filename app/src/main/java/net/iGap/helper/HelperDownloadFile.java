@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -64,7 +65,7 @@ public class HelperDownloadFile {
 
     private static HelperDownloadFile helperDownloadFile;
     public ArrayList<String> manuallyStoppedDownload = new ArrayList<>();
-    private ArrayMap<String, StructDownLoad> list = new ArrayMap<>();
+    private ConcurrentHashMap<String, StructDownLoad> list = new ConcurrentHashMap<>();
     private ArrayList<StructQueue> mQueue = new ArrayList<>();
     private Handler handler;
     private final static int maxDownloadSize = 4;

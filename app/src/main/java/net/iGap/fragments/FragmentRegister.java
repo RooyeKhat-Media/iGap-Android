@@ -270,7 +270,9 @@ public class FragmentRegister extends BaseFragment {
 
         try {
             if (smsPermission) {
-                G.fragmentActivity.unregisterReceiver(smsReceiver);
+                if (G.fragmentActivity.isRestricted()) {
+                    G.fragmentActivity.unregisterReceiver(smsReceiver);
+                }
             }
 
         } catch (Exception e) {

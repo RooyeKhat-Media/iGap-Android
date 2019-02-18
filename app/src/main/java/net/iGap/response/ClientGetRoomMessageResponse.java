@@ -46,7 +46,7 @@ public class ClientGetRoomMessageResponse extends MessageHandler {
         realm.close();
 
         if (G.onClientGetRoomMessage != null) {
-            G.onClientGetRoomMessage.onClientGetRoomMessageResponse(builder.getMessage().getMessageId());
+            G.onClientGetRoomMessage.onClientGetRoomMessageResponse(builder.getMessage());
         }
     }
 

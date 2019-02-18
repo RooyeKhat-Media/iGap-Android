@@ -27,7 +27,7 @@ public class RequestClientGetRoom {
     }
 
     public enum CreateRoomMode {
-        requestFromServer, requestFromOwner, justInfo
+        requestFromServer, requestFromOwner, justInfo, getPromote
     }
 
     public static class IdentityClientGetRoom {

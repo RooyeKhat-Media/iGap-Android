@@ -10,6 +10,7 @@ package net.iGap.activities;
 */
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.graphics.Color;
@@ -35,6 +36,8 @@ public class ActivityEnterPassCode extends ActivityEnhanced {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActivityEnterPassCodeBinding activityEnterPassCodeBinding = DataBindingUtil.setContentView(this, R.layout.activity_enter_pass_code);
         activityManageSpaceViewModel = new ActivityEnterPassCodeViewModel(this, activityEnterPassCodeBinding);
 

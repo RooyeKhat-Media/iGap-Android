@@ -1,14 +1,17 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.response;
+
+import android.os.Looper;
+import android.util.Log;
 
 import net.iGap.G;
 import net.iGap.WebSocketClient;
@@ -22,6 +25,8 @@ import net.iGap.request.RequestSignalingGetConfiguration;
 import net.iGap.request.RequestUserLogin;
 import net.iGap.request.RequestWalletGetAccessToken;
 
+import java.util.logging.Handler;
+
 import io.realm.Realm;
 
 public class UserLoginResponse extends MessageHandler {
@@ -29,6 +34,8 @@ public class UserLoginResponse extends MessageHandler {
     public int actionId;
     public Object message;
     public String identity;
+    private boolean isDeprecated = false;
+    private boolean isUpdateAvailable = false;
 
     public UserLoginResponse(int actionId, Object protoClass, String identity) {
         super(actionId, protoClass, identity);
@@ -38,6 +45,7 @@ public class UserLoginResponse extends MessageHandler {
         this.actionId = actionId;
     }
 
+
     @Override
     public void handler() {
         super.handler();
@@ -46,6 +54,37 @@ public class UserLoginResponse extends MessageHandler {
       /*builder.getDeprecatedClient();
         builder.getSecondaryNodeName();
         builder.getUpdateAvailable();*/
+
+
+        if (builder.getUpdateAvailable() && !isUpdateAvailable) {
+            new android.os.Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (G.onVersionCallBack != null) {
+                        G.onVersionCallBack.isUpdateAvailable();
+                        isUpdateAvailable = true;
+                    }
+                }
+            }, 1000);
+
+
+        }
+
+        if (builder.getDeprecatedClient() && !isDeprecated) {
+            new android.os.Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (G.onVersionCallBack != null) {
+                        G.onVersionCallBack.isDeprecated();
+                        isDeprecated = true;
+                    }
+                }
+            }, 1000);
+
+        }
+
+
+
         G.currentServerTime = builder.getResponse().getTimestamp();
         G.bothChatDeleteTime = builder.getChatDeleteMessageForBothPeriod() * 1000;
         G.userLogin = true;
@@ -76,6 +115,7 @@ public class UserLoginResponse extends MessageHandler {
             new RequestWalletGetAccessToken().walletGetAccessToken();
         }
 
+
     }
 
     @Override
@@ -102,6 +142,8 @@ public class UserLoginResponse extends MessageHandler {
         int minorCode = errorResponse.getMinorCode();
         G.onUserLogin.onLoginError(majorCode, minorCode);
     }
+
+
 }
 
 

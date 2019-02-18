@@ -12,6 +12,8 @@ package net.iGap.response;
 
 import net.iGap.G;
 import net.iGap.proto.ProtoError;
+import net.iGap.realm.RealmRoom;
+import net.iGap.request.RequestClientPinRoom;
 
 public class ClientJoinByUsernameResponse extends MessageHandler {
 
@@ -30,6 +32,12 @@ public class ClientJoinByUsernameResponse extends MessageHandler {
     @Override
     public void handler() {
         super.handler();
+
+        if (identity != null) {
+            long roomId = Long.parseLong(identity);
+            RealmRoom.joinRoom(roomId);
+            new RequestClientPinRoom().pinRoom(roomId, true);
+        }
 
         if (G.onClientJoinByUsername != null) {
             G.onClientJoinByUsername.onClientJoinByUsernameResponse();

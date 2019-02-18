@@ -94,9 +94,9 @@
         android:orientation="vertical">
 
         <LinearLayout
+          style="?backgroundColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -127,6 +127,7 @@
 
             <TextView
               android:id="@+id/stns_txt_alert"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -134,7 +135,6 @@
               android:gravity="center_vertical|start"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_alert"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -156,9 +156,9 @@
 
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -173,6 +173,7 @@
 
             <TextView
               android:id="@+id/stns_txt_messagePreview"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -180,7 +181,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_messagePreview"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -200,9 +200,9 @@
 
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_ledColorMessage"
@@ -212,6 +212,7 @@
             android:orientation="horizontal">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -222,7 +223,6 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_led_color"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -240,9 +240,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_vibrate_message"
@@ -254,34 +254,34 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_vibrate"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_vibrate_message_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateMessage , default=@string/array_Default}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_popupNotification_message"
@@ -293,34 +293,34 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_popupNotification"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_popupNotification_message_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationMessage , default=@string/st_sound}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_sound_message"
@@ -332,25 +332,25 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_sound"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_sound_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackSoundMessage , default = @string/st_sound}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -361,9 +361,9 @@
 
         <!--group-->
         <LinearLayout
+          style="?backgroundColorSettingTheme_2"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme_2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -394,6 +394,7 @@
 
             <TextView
               android:id="@+id/stns_txt_alert_group"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -401,7 +402,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_alert"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -419,9 +419,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -436,6 +436,7 @@
 
             <TextView
               android:id="@+id/stns_txt_messagePreview_group"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -443,7 +444,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_messagePreview"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -460,9 +460,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_ledColor_group"
@@ -473,6 +473,7 @@
             android:orientation="horizontal">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -482,7 +483,6 @@
               android:paddingRight="@dimen/dp16"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_led_color"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -499,9 +499,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_vibrate_group"
@@ -513,34 +513,34 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_vibrate"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_vibrate_group_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackVibrateGroup , default=@string/array_Default}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_popupNotification_group"
@@ -552,34 +552,34 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_popupNotification"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_popupNotification_group_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callbackPopUpNotificationGroup,default = @string/st_sound}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:id="@+id/stns_layout_sound_group"
@@ -591,26 +591,26 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_sound"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_sound_group_text"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
-              android:gravity="center_vertical|top"
 
+              android:gravity="center_vertical|top"
               android:text="@{FragmentNotificationAndSoundViewModel.callBackSoundGroup , default =@string/st_sound}"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal"
 
@@ -622,9 +622,9 @@
 
         <!--in app notification-->
         <LinearLayout
+          style="?backgroundColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -656,6 +656,7 @@
 
             <TextView
               android:id="@+id/stns_txt_app_sound"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -663,7 +664,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_sound"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -683,9 +683,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -702,6 +702,7 @@
 
             <TextView
               android:id="@+id/stns_txt_app_vibrate"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -709,7 +710,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_vibrate"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -729,9 +729,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
 
@@ -747,15 +747,15 @@
 
             <TextView
               android:id="@+id/stns_txt_app_preview"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
-              android:layout_weight="1"
 
+              android:layout_weight="1"
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_app_preview"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -775,9 +775,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <LinearLayout
             android:layout_width="match_parent"
@@ -792,6 +792,7 @@
 
             <TextView
               android:id="@+id/stns_txt_chat_sound"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
@@ -799,7 +800,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_in_chat_sound"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -821,9 +821,9 @@
 
         <!--this part is Gone-->
         <LinearLayout
+          style="?backgroundColorSettingTheme_2"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme_2"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
           android:paddingTop="@dimen/dp8"
@@ -853,15 +853,15 @@
 
             <TextView
               android:id="@+id/stns_txt_Contact_joined"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="match_parent"
-              android:layout_weight="1"
 
+              android:layout_weight="1"
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_Contact_joined_igap"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -877,9 +877,9 @@
           </LinearLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            style="?lineColorSettingTheme" />
+            android:layout_height="1dp" />
 
           <RelativeLayout
             android:layout_width="match_parent"
@@ -908,6 +908,7 @@
 
             <TextView
               android:id="@+id/stns_txt_pinned_message"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -915,7 +916,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_pinned_message"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -924,9 +924,9 @@
         </LinearLayout>
 
         <LinearLayout
+          style="?backgroundColorSettingTheme_2"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme_2"
           android:onClick="@{FragmentNotificationAndSoundViewModel::onClickKeepService}"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp4"
@@ -938,16 +938,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="@dimen/dp16"
             android:paddingTop="@dimen/dp12"
             android:text="@string/st_title_other"
             android:textColor="@color/green"
             android:textSize="@dimen/dp18"
             android:textStyle="normal" />
 
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:onClick="@{FragmentNotificationAndSoundViewModel::onClickSeparateNotification}"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingStart="@dimen/dp16">
+
+            <TextView
+              android:id="@+id/stns_txt_separate_notifications"
+              style="?textTitleColorSettingTheme"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center_vertical"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/separate_notifications"
+              android:textSize="@dimen/dp16"
+              android:textStyle="normal" />
+
+            <ToggleButton
+              android:id="@+id/stns_toggle_separate_notifications"
+              android:layout_width="@dimen/dp40"
+              android:layout_height="@dimen/dp40"
+              android:background="@drawable/st_switch_button"
+              android:checked="@{safeUnbox(FragmentNotificationAndSoundViewModel.isSeparateNotification)}"
+              android:onCheckedChanged="@{(switch, checked) -> FragmentNotificationAndSoundViewModel.setSeparateNotification(checked)}"
+              android:textOff=""
+              android:textOn="" />
+
+          </LinearLayout>
 
           <TextView
             android:id="@+id/stns_txt_title_keep_alive_service"
+            style="?textTitleColorSettingTheme"
             fontPath="fonts/IRANSansMobile.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -956,7 +991,6 @@
             android:paddingRight="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
             android:text="@string/st_keep_alive_service"
-            style="?textTitleColorSettingTheme"
             android:textSize="@dimen/dp16"
             android:textStyle="normal" />
 
@@ -974,13 +1008,13 @@
 
             <com.uncopt.android.widget.text.justify.JustifiedTextView
               android:id="@+id/stns_txt_keep_alive_service"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_text_keep_alive_service"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -999,9 +1033,9 @@
 
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
           <!--this part is Gone-->
@@ -1035,16 +1069,17 @@
 
             <TextView
               android:id="@+id/stns_txt_title_background_connection"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="@string/st_background_connection"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/stns_txt_background_connection"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -1053,7 +1088,6 @@
               android:paddingRight="@dimen/dp52"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_text_background_connection"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1061,9 +1095,9 @@
           </RelativeLayout>
 
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
           <!--this part is Gone-->
@@ -1095,6 +1129,7 @@
 
             <TextView
               android:id="@+id/stns_txt_badge_countent"
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -1102,7 +1137,6 @@
               android:gravity="center_vertical"
               android:paddingTop="@dimen/dp4"
               android:text="@string/st_badge_counter"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
@@ -1110,9 +1144,9 @@
 
           <!--this part is Gone-->
           <View
+            style="?lineColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            style="?lineColorSettingTheme"
             android:visibility="gone" />
 
 
@@ -1127,25 +1161,25 @@
             android:visibility="gone">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".6"
               android:gravity="center_vertical"
               android:text="@string/st_Repeat_Notifications"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
               android:id="@+id/st_txt_Repeat_Notifications"
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="0dp"
               android:layout_weight=".4"
               android:gravity="center_vertical|top"
               android:text="@string/st_sound"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 
@@ -1153,9 +1187,9 @@
         </LinearLayout>
 
         <LinearLayout
+          style="?backgroundColorSettingTheme"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          style="?backgroundColorSettingTheme"
           android:orientation="vertical"
           android:paddingBottom="@dimen/dp16"
           android:paddingTop="@dimen/dp8"
@@ -1182,22 +1216,22 @@
             android:paddingRight="@dimen/dp16">
 
             <TextView
+              style="?textTitleColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:text="@string/st_reset_all_notification"
-              style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp16"
               android:textStyle="normal" />
 
             <TextView
+              style="?textSubColorSettingTheme"
               fontPath="fonts/IRANSansMobile.ttf"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical|top"
               android:text="@string/st_text_reset_all_notification"
-              style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp13"
               android:textStyle="normal" />
 

@@ -18,7 +18,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,6 +26,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.SearchView;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -91,7 +91,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 
@@ -114,6 +113,8 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
     //Array List for Store List of StructCountry Object
     public String regex;
     public boolean isVerify = false;
+    private boolean isCallMethodSupported;
+    ProtoUserRegister.UserRegisterResponse.Method methodForReceiveCode = ProtoUserRegister.UserRegisterResponse.Method.VERIFY_CODE_SMS;
     public ObservableField<String> callbackTxtAgreement = new ObservableField<>(G.context.getResources().getString(R.string.rg_agreement_text_register));
     public ObservableField<String> callbackBtnChoseCountry = new ObservableField<>("Iran");
     public ObservableField<String> callbackEdtCodeNumber = new ObservableField<>("+98");
@@ -190,8 +191,11 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
     private FragmentRegister fragmentRegister;
     private View view;
     private int sendRequestRegister = 0;
-
-
+    private EditText edtEnterCodeVerify;
+    private TextView btnEnterManuallyCode;
+    private TextView txtTimer;
+    private TextView btnResondCode = null;
+    private TextView txtShowReason;
     public FragmentRegisterViewModel(FragmentRegister fragmentRegister, View root, FragmentActivity mActivity) {
         this.fragmentRegister = fragmentRegister;
         view = root;
@@ -210,9 +214,26 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                     callBackEdtPhoneNumber.set("");
                 }
             }, 30);
-
         }
+    }
 
+    private void shareQr() {
+        if (_resultQrCode == null) {
+            return;
+        }
+        try {
+            File file = new File(_resultQrCode);
+            if (file.exists()) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                G.fragmentActivity.startActivity(Intent.createChooser(intent, G.fragmentActivity.getResources().getString(R.string.share_image_from_igap)));
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 
     public void onClickQrCode(View v) {
@@ -220,20 +241,7 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
         dialogQrCode = new MaterialDialog.Builder(G.fragmentActivity).title(G.fragmentActivity.getResources().getString(R.string.Login_with_QrCode)).customView(R.layout.dialog_qrcode, true).positiveText(R.string.share_item_dialog).onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                if (_resultQrCode == null) {
-                    return;
-                }
-                File file = new File(_resultQrCode);
-                if (file.exists()) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("image/*");
-                    try {
-                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    G.fragmentActivity.startActivity(Intent.createChooser(intent, G.fragmentActivity.getResources().getString(R.string.share_image_from_igap)));
-                }
+                shareQr();
             }
         }).negativeText(R.string.save).onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
@@ -702,38 +710,8 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
                     G.handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            userRegister();
                             btnStartEnable.set(false);
-                            long time = 0;
-                            if (BuildConfig.DEBUG) {
-                                time = 2 * DateUtils.SECOND_IN_MILLIS;
-                            } else if (FragmentRegister.smsPermission) {
-                                time = Config.COUNTER_TIMER;
-                            } else {
-                                time = 5 * DateUtils.SECOND_IN_MILLIS;
-                            }
-
-                            countDownTimer = new CountDownTimer(time, Config.COUNTER_TIMER_DELAY) { // wait for verify sms
-                                public void onTick(long millisUntilFinished) {
-
-                                    int seconds = (int) ((millisUntilFinished) / 1000);
-                                    int minutes = seconds / 60;
-                                    seconds = seconds % 60;
-
-                                    txtVerifyTimerVisibility.set(View.VISIBLE);
-                                    callBackTxtVerifyTimer.set("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-
-                                }
-
-                                public void onFinish() {
-
-                                    if (callBackTxtVerifyTimer != null) {
-                                        callBackTxtVerifyTimer.set("00:00");
-                                        txtVerifyTimerVisibility.set(View.INVISIBLE);
-                                    }
-                                    errorVerifySms(FragmentRegister.Reason.TIME_OUT); // open rg_dialog for enter sms code
-                                }
-                            };
+                            userRegister();
                         }
                     });
                 } else { // connection error
@@ -762,6 +740,7 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
             return;
         }
 
+        boolean isNeedTimer = true;
         prgVerifySmsVisibility.set(View.GONE);
         //imgVerifySmsColor.set(R.mipmap.alert);
         imgVerifySmsVisibility.set(View.VISIBLE);
@@ -769,33 +748,29 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
         callBackTxtVerifySms.set(G.context.getResources().getString(R.string.errore_verification_sms));
         txtVerifySmsColor.set(G.context.getResources().getColor(R.color.rg_error_red));
 
-        dialog = new Dialog(G.fragmentActivity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.rg_dialog_verify_code);
-        dialog.setCanceledOnTouchOutside(false);
-
-        final EditText edtEnterCodeVerify = (EditText) dialog.findViewById(R.id.rg_edt_dialog_verifyCode); //EditText For Enter sms cod
-
-        TextView txtShowReason = (TextView) dialog.findViewById(R.id.txt_show_reason);
-
-        if (reason == FragmentRegister.Reason.SOCKET) {
-            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_socket_message));
-        } else if (reason == FragmentRegister.Reason.TIME_OUT) {
-            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_time_out_message));
-        } else if (reason == FragmentRegister.Reason.INVALID_CODE) {
-            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_invalid_code_message));
+        if (dialog ==null){
+            dialog = new Dialog(G.fragmentActivity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.rg_dialog_verify_code);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            edtEnterCodeVerify = (EditText) dialog.findViewById(R.id.rg_edt_dialog_verifyCode); //EditText For Enter sms cod
+            txtShowReason = (TextView) dialog.findViewById(R.id.txt_show_reason);
+            btnEnterManuallyCode = (TextView) dialog.findViewById(R.id.rg_btn_cancelVerifyCode);
+            txtTimer      = (TextView) dialog.findViewById(R.id.remindTime);
+            btnResondCode = (TextView) dialog.findViewById(R.id.rg_btn_dialog_okVerifyCode);// resend code
         }
 
-        TextView btnCancel = (TextView) dialog.findViewById(R.id.rg_btn_cancelVerifyCode);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        edtEnterCodeVerify.setText("");
+
+        btnEnterManuallyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
                     txtVerifyTimerVisibility.set(View.INVISIBLE);
-
-                    if (!edtEnterCodeVerify.getText().toString().equals("")) {
-                        verifyCode = edtEnterCodeVerify.getText().toString();
+                    verifyCode = edtEnterCodeVerify.getText().toString();
+                    if (verifyCode.length() > 0) {
                         userVerify(userName, verifyCode);
                         dialog.dismiss();
                     } else {
@@ -807,30 +782,102 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
             }
         });
 
-        TextView btnOk = (TextView) dialog.findViewById(R.id.rg_btn_dialog_okVerifyCode);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+
+        btnResondCode.setEnabled(false);
+        btnResondCode.setTextColor(G.context.getResources().getColor(R.color.gray_9d));
+        btnResondCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                methodForReceiveCode = ProtoUserRegister.UserRegisterResponse.Method.VERIFY_CODE_SMS;
+                btnResondCode.setTextColor(G.context.getResources().getColor(R.color.gray_9d));
+                btnResondCode.setEnabled(false);
+                txtTimer.setVisibility(View.VISIBLE);
                 userRegister();
-                dialog.dismiss();
-                InputMethodManager imm = (InputMethodManager) G.context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
+                counterTimer(txtTimer, btnResondCode);
+//                startRegister(v);
             }
+
+
         });
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+
+        if (reason == FragmentRegister.Reason.SOCKET) {
+            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_socket_message));
+            isNeedTimer = false;
+            btnResondCode.setVisibility(View.GONE);
+        } else if (reason == FragmentRegister.Reason.TIME_OUT) {
+            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_time_out_message));
+            isNeedTimer = true;
+            btnResondCode.setEnabled(false);
+            btnResondCode.setTextColor(G.context.getResources().getColor(R.color.gray_9d));
+        } else if (reason == FragmentRegister.Reason.INVALID_CODE) {
+            txtShowReason.setText(G.fragmentActivity.getResources().getString(R.string.verify_invalid_code_message));
+            isNeedTimer = false;
+            btnResondCode.setEnabled(true);
+            btnResondCode.setTextColor(G.context.getResources().getColor(R.color.green));
+        }
+
+
+        if (isNeedTimer) {
+            txtTimer.setVisibility(View.VISIBLE);
+            counterTimer(txtTimer, btnResondCode);
+
+        } else {
+            txtTimer.setVisibility(View.INVISIBLE);
+        }
 
         try {
             if (!(G.fragmentActivity).isFinishing()) {
                 dialog.show();
-                if (dialog.isShowing()) {
-                    countDownTimer.cancel();
-                }
+//                if (dialog.isShowing()) {
+//                    countDownTimer.cancel();
+//                }
             }
         } catch (WindowManager.BadTokenException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void counterTimer(TextView txtTimer, TextView btnResondCode) {
+
+        long time = 0;
+        if (BuildConfig.DEBUG) {
+            time = 2 * DateUtils.SECOND_IN_MILLIS;
+        } else if (FragmentRegister.smsPermission) {
+            time = Config.COUNTER_TIMER;
+        } else {
+            time = 5 * DateUtils.SECOND_IN_MILLIS;
+        }
+
+        CountDownTimer countDownTimer = new CountDownTimer(time, Config.COUNTER_TIMER_DELAY) { // wait for verify sms
+            public void onTick(long millisUntilFinished) {
+
+                int seconds = (int) ((millisUntilFinished) / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
+
+                txtTimer.setText("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+
+            }
+
+            public void onFinish() {
+
+                txtTimer.setVisibility(View.INVISIBLE);
+                btnResondCode.setEnabled(true);
+                btnResondCode.setTextColor(G.context.getResources().getColor(R.color.green));
+
+            }
+        };
+
+        countDownTimer.start();
+    }
+
+    private void startRegister(View v) {
+        userRegister();
+        dialog.dismiss();
+        InputMethodManager imm = (InputMethodManager) G.context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
     }
 
@@ -839,10 +886,11 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
         G.onUserRegistration = new OnUserRegistration() {
 
             @Override
-            public void onRegister(final String userNameR, final long userIdR, final ProtoUserRegister.UserRegisterResponse.Method methodValue, final List<Long> smsNumbersR, String regex, int verifyCodeDigitCount, final String authorHashR) {
+            public void onRegister(final String userNameR, final long userIdR, final ProtoUserRegister.UserRegisterResponse.Method methodValue, final List<Long> smsNumbersR, String regex, int verifyCodeDigitCount, final String authorHashR, boolean callMethodSupported) {
                 G.onUserRegistration = null;
+                isCallMethodSupported = callMethodSupported;
                 digitCount = verifyCodeDigitCount;
-                countDownTimer.start();
+//                countDownTimer.start();
                 regexFetchCodeVerification = regex;
                 G.handler.post(new Runnable() {
                     @Override
@@ -857,9 +905,10 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
 
                         if (methodValue == ProtoUserRegister.UserRegisterResponse.Method.VERIFY_CODE_SOCKET) {
                             errorVerifySms(FragmentRegister.Reason.SOCKET);
-                            countDownTimer.cancel();
+//                            countDownTimer.cancel();
+                        } else {
+                            errorVerifySms(FragmentRegister.Reason.TIME_OUT); // open rg_dialog for enter sms code
                         }
-
                         prgVerifyConnectVisibility.set(View.GONE);
                         txtIconVerifyConnectVisibility.set(View.VISIBLE);
                         imgVerifySmsVisibility.set(View.GONE);
@@ -944,7 +993,9 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
 
     private void dialogWaitTime(int title, long time, int majorCode) {
 
-        if (!G.fragmentActivity.hasWindowFocus() || G.fragmentActivity.isFinishing()) {
+        if (dialog != null && dialog.isShowing()) dialog.dismiss();
+
+        if (G.fragmentActivity.isFinishing()) {
             return;
         }
 
@@ -974,11 +1025,11 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
         CountDownTimer countWaitTimer = new CountDownTimer(time * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                long seconds =  millisUntilFinished/1000 % 60;
-                long minutes = millisUntilFinished/(60*1000) % 60;
-                long hour = millisUntilFinished/(3600*1000);
+                long seconds = millisUntilFinished / 1000 % 60;
+                long minutes = millisUntilFinished / (60 * 1000) % 60;
+                long hour = millisUntilFinished / (3600 * 1000);
 
-                remindTime.setText(String.format("%02d:%02d:%02d",hour, minutes, seconds));
+                remindTime.setText(String.format("%02d:%02d:%02d", hour, minutes, seconds));
                 dialogWait.getActionButton(DialogAction.POSITIVE).setEnabled(false);
             }
 
@@ -998,6 +1049,7 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
             ProtoUserRegister.UserRegister.Builder builder = ProtoUserRegister.UserRegister.newBuilder();
             builder.setCountryCode(isoCode);
             builder.setPhoneNumber(Long.parseLong(phoneNumber));
+            builder.setPreferenceMethodValue(methodForReceiveCode.getNumber());
             builder.setRequest(ProtoRequest.Request.newBuilder().setId(HelperString.generateKey()));
             RequestWrapper requestWrapper = new RequestWrapper(100, builder);
 
@@ -1358,19 +1410,31 @@ public class FragmentRegisterViewModel implements OnSecurityCheckPassword, OnRec
 
     public void receiveVerifySms(String message) {
 
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
 
-        String verificationCode = HelperString.regexExtractValue(message, regexFetchCodeVerification);
-        verifyCode = verificationCode;
-        countDownTimer.cancel(); //cancel method CountDown and continue process verify
+        G.handler.post(new Runnable() {
+            @Override
+            public void run() {
 
-        prgVerifySmsVisibility.set(View.GONE);
-        imgVerifySmsVisibility.set(View.VISIBLE);
-        txtVerifySmsColor.set(G.context.getResources().getColor(R.color.rg_text_verify));
 
-        userVerify(userName, verificationCode);
+                verifyCode = HelperString.regexExtractValue(message, regexFetchCodeVerification);
+//        countDownTimer.cancel(); //cancel method CountDown and continue process verify
+
+                prgVerifySmsVisibility.set(View.GONE);
+                imgVerifySmsVisibility.set(View.VISIBLE);
+                txtVerifySmsColor.set(G.context.getResources().getColor(R.color.rg_text_verify));
+
+                if (dialog != null && dialog.isShowing()) {
+                    if (edtEnterCodeVerify != null) {
+                        edtEnterCodeVerify.setText(verifyCode);
+                    }
+                    if (btnEnterManuallyCode != null) {
+                        btnEnterManuallyCode.performClick();
+                    }
+                    dialog.dismiss();
+                }
+//        userVerify(userName, verificationCode);
+            }
+        });
     }
 
     private void closeKeyboard(final View v) {

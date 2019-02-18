@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
@@ -29,6 +30,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
@@ -46,12 +49,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewStubCompat;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,6 +77,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.lalongooo.videocompressor.video.MediaController;
 import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -94,15 +98,14 @@ import net.iGap.activities.ActivityCall;
 import net.iGap.activities.ActivityMain;
 import net.iGap.activities.ActivityTrimVideo;
 import net.iGap.adapter.AdapterBottomSheet;
+import net.iGap.adapter.AdapterDrBot;
 import net.iGap.adapter.MessagesAdapter;
 import net.iGap.adapter.items.AdapterBottomSheetForward;
 import net.iGap.adapter.items.chat.AbstractMessage;
 import net.iGap.adapter.items.chat.AudioItem;
 import net.iGap.adapter.items.chat.ContactItem;
 import net.iGap.adapter.items.chat.FileItem;
-import net.iGap.adapter.items.chat.GifItem;
 import net.iGap.adapter.items.chat.GifWithTextItem;
-import net.iGap.adapter.items.chat.ImageItem;
 import net.iGap.adapter.items.chat.ImageWithTextItem;
 import net.iGap.adapter.items.chat.LocationItem;
 import net.iGap.adapter.items.chat.LogItem;
@@ -111,7 +114,6 @@ import net.iGap.adapter.items.chat.ProgressWaiting;
 import net.iGap.adapter.items.chat.TextItem;
 import net.iGap.adapter.items.chat.TimeItem;
 import net.iGap.adapter.items.chat.UnreadMessage;
-import net.iGap.adapter.items.chat.VideoItem;
 import net.iGap.adapter.items.chat.VideoWithTextItem;
 import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.adapter.items.chat.VoiceItem;
@@ -127,12 +129,11 @@ import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperGetMessageState;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperMimeType;
-import net.iGap.helper.HelperNotificationAndBadge;
+import net.iGap.helper.HelperNotification;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperSaveFile;
 import net.iGap.helper.HelperSetAction;
 import net.iGap.helper.HelperString;
-import net.iGap.helper.HelperTimeOut;
 import net.iGap.helper.HelperUploadFile;
 import net.iGap.helper.HelperUrl;
 import net.iGap.helper.ImageHelper;
@@ -148,6 +149,7 @@ import net.iGap.interfaces.IUpdateLogItem;
 import net.iGap.interfaces.OnActivityChatStart;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnBackgroundChanged;
+import net.iGap.interfaces.OnBotClick;
 import net.iGap.interfaces.OnChannelAddMessageReaction;
 import net.iGap.interfaces.OnChannelGetMessagesStats;
 import net.iGap.interfaces.OnChannelUpdateReactionStatus;
@@ -190,6 +192,7 @@ import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
 import net.iGap.module.AttachFile;
+import net.iGap.module.BotInit;
 import net.iGap.module.ChatSendMessageUtil;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.ContactUtils;
@@ -225,12 +228,16 @@ import net.iGap.module.structs.StructCompress;
 import net.iGap.module.structs.StructMessageAttachment;
 import net.iGap.module.structs.StructMessageInfo;
 import net.iGap.module.structs.StructUploadVideo;
+import net.iGap.module.webserviceDrBot.Favorite;
+import net.iGap.module.webserviceDrBot.StructBot;
+import net.iGap.module.webserviceDrBot.WebService;
 import net.iGap.proto.ProtoChannelGetMessagesStats;
 import net.iGap.proto.ProtoClientGetRoomHistory;
 import net.iGap.proto.ProtoClientRoomReport;
 import net.iGap.proto.ProtoFileDownload;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmAttachment;
 import net.iGap.realm.RealmAttachmentFields;
 import net.iGap.realm.RealmCallConfig;
@@ -273,10 +280,8 @@ import net.iGap.viewmodel.ActivityCallViewModel;
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -302,6 +307,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_SWIPE;
 import static io.fotoapparat.parameter.selector.LensPositionSelectors.back;
 import static io.fotoapparat.parameter.selector.SizeSelectors.biggestSize;
 import static java.lang.Long.parseLong;
@@ -310,7 +316,6 @@ import static net.iGap.G.context;
 import static net.iGap.R.id.ac_ll_parent;
 import static net.iGap.R.string.item;
 import static net.iGap.helper.HelperCalander.convertToUnicodeFarsiNumber;
-import static net.iGap.helper.HelperGetDataFromOtherApp.messageType;
 import static net.iGap.module.AttachFile.getFilePathFromUri;
 import static net.iGap.module.AttachFile.request_code_VIDEO_CAPTURED;
 import static net.iGap.module.AttachFile.request_code_open_document;
@@ -336,7 +341,7 @@ import static net.iGap.realm.RealmRoomMessage.makeUnreadMessage;
 public class FragmentChat extends BaseFragment
         implements IMessageItem, OnChatClearMessageResponse, OnPinedMessage, OnChatSendMessageResponse, OnChatUpdateStatusResponse, OnChatMessageSelectionChanged<AbstractMessage>, OnChatMessageRemove, OnVoiceRecord,
         OnUserInfoResponse, OnSetAction, OnUserUpdateStatus, OnLastSeenUpdateTiming, OnGroupAvatarResponse, OnChannelAddMessageReaction, OnChannelGetMessagesStats, OnChatDelete, OnBackgroundChanged,
-        OnConnectionChangeStateChat, OnChannelUpdateReactionStatus {
+        OnConnectionChangeStateChat, OnChannelUpdateReactionStatus, OnBotClick {
 
     public static FinishActivity finishActivity;
     public static OnComplete onMusicListener;
@@ -361,6 +366,13 @@ public class FragmentChat extends BaseFragment
     private static List<StructBottomSheet> contacts;
     private static ArrayMap<String, Boolean> compressedPath = new ArrayMap<>(); // keep compressedPath and also keep video path that never be won't compressed
     private static ArrayList<StructUploadVideo> structUploadVideos = new ArrayList<>();
+    private boolean isShareOk = true;
+    private boolean isDrBot = true;
+    public static OnHandleDrBot onHandleDrBot;
+
+    private Bitmap icon;
+    private boolean isRepley = false;
+    private boolean swipeBack = false;
 
     /**
      * *************************** common method ***************************
@@ -429,6 +441,7 @@ public class FragmentChat extends BaseFragment
     private ViewGroup vgSpamUser;
     private RecyclerView.OnScrollListener scrollListener;
     private RecyclerView rcvBottomSheet;
+    private RecyclerView rcvDrBot;
     private FrameLayout llScrollNavigate;
     private FastItemAdapter fastItemAdapter;
     private FastItemAdapter fastItemAdapterForward;
@@ -488,10 +501,12 @@ public class FragmentChat extends BaseFragment
     private boolean isShowLayoutUnreadMessage = false;
     private boolean isCloudRoom;
     private boolean isEditMessage = false;
+    private boolean isBot = false;
     private long biggestMessageId = 0;
     private long lastMessageId = 0;
     private long replyToMessageId = 0;
     private long userId;
+    private boolean isShowStartButton = false;
     private long lastSeen;
     private long chatPeerId;
     private long userTime;
@@ -507,6 +522,7 @@ public class FragmentChat extends BaseFragment
     private boolean isEmojiSHow = false;
     private boolean isCameraStart = false;
     private boolean isCameraAttached = false;
+    BotInit botInit;
     private boolean isPermissionCamera = false;
     private boolean isPublicGroup = false;
     private ArrayList<Long> bothDeleteMessageId;
@@ -520,6 +536,9 @@ public class FragmentChat extends BaseFragment
     private boolean isNewBottomSheet = true;
     PaymentDialogBinding paymentDialogBinding;
     PaymentFragment paymentDialog;
+    List<Favorite> items = new ArrayList<>();
+    boolean isAnimateStart = false;
+    boolean isScrollEnd = false;
 
     public static Realm getRealmChat() {
         if (realmChat == null || realmChat.isClosed()) {
@@ -725,8 +744,6 @@ public class FragmentChat extends BaseFragment
                 });
 
 
-                HelperNotificationAndBadge.updateBadgeOnly(getRealmChat(), mRoomId);
-
             }
         }, 500);
     }
@@ -864,9 +881,10 @@ public class FragmentChat extends BaseFragment
         G.onChatDelete = this;
         G.onBackgroundChanged = this;
         G.onConnectionChangeStateChat = this;
-        G.helperNotificationAndBadge.cancelNotification();
+        HelperNotification.getInstance().cancelNotification();
         G.onChannelUpdateReactionStatusChat = this;
         G.onPinedMessage = this;
+        G.onBotClick = this;
 
         finishActivity = new FinishActivity() {
             @Override
@@ -877,7 +895,7 @@ public class FragmentChat extends BaseFragment
         };
 
         initCallbacks();
-        HelperNotificationAndBadge.isChatRoomNow = true;
+        HelperNotification.getInstance().isChatRoomNow = true;
 
         onUpdateUserOrRoomInfo = new OnUpdateUserOrRoomInfo() {
             @Override
@@ -976,7 +994,7 @@ public class FragmentChat extends BaseFragment
         canUpdateAfterDownload = false;
 
         setDraft();
-        HelperNotificationAndBadge.isChatRoomNow = false;
+        HelperNotification.getInstance().isChatRoomNow = false;
 
         //if (isNotJoin) { // hint : commented this code, because when going to profile and return can't load message
         //
@@ -1156,12 +1174,13 @@ public class FragmentChat extends BaseFragment
                  */
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     if (requestCode == AttachFile.requestOpenGalleryForVideoMultipleSelect) {
-                        if (sharedPreferences.getInt(SHP_SETTING.KEY_TRIM, 1) == 1) {
+                        boolean isGif = listPathString.get(0).toLowerCase().endsWith(".gif");
+                        if (sharedPreferences.getInt(SHP_SETTING.KEY_TRIM, 1) == 1 && !isGif) {
                             Intent intent = new Intent(G.fragmentActivity, ActivityTrimVideo.class);
                             intent.putExtra("PATH", listPathString.get(0));
                             startActivityForResult(intent, AttachFile.request_code_trim_video);
                             return;
-                        } else if ((sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1)) {
+                        } else if ((sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1 && !isGif)) {
 
                             mainVideoPath = listPathString.get(0);
 
@@ -1264,11 +1283,20 @@ public class FragmentChat extends BaseFragment
                                 });
                             }
                         } else {
+                            //# get gif there
+
                             G.handler.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (prgWaiting != null) {
-                                        prgWaiting.setVisibility(View.GONE);
+                                        try {
+
+                                            sendMessage(requestCode, listPathString.get(0));
+                                            prgWaiting.setVisibility(View.GONE);
+
+                                        } catch (Exception e) {
+                                        }
+
                                     }
                                 }
                             });
@@ -1388,6 +1416,31 @@ public class FragmentChat extends BaseFragment
                         title = realmRegisteredInfo.getDisplayName();
                         lastSeen = realmRegisteredInfo.getLastSeen();
                         userStatus = realmRegisteredInfo.getStatus();
+                        isBot = realmRegisteredInfo.isBot();
+
+                        if (isBot) {
+
+                            if (getMessagesCount() == 0) {
+                                layoutMute = (RelativeLayout) rootView.findViewById(R.id.chl_ll_channel_footer);
+                                layoutMute.setVisibility(View.VISIBLE);
+                                ((TextView) rootView.findViewById(R.id.chl_txt_mute_channel)).setText(R.string.start);
+                                LinearLayout layoutAttach = (LinearLayout) rootView.findViewById(R.id.layout_attach_file);
+                                layoutAttach.setVisibility(View.GONE);
+
+                                layoutMute.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (!isChatReadOnly) {
+                                            edtChat.setText("/Start");
+                                            imvSendButton.performClick();
+                                        }
+                                    }
+                                });
+                                isShowStartButton = true;
+                            }
+
+                        }
+
                         if (realmRegisteredInfo.isVerified()) {
                             txtVerifyRoomIcon.setVisibility(View.VISIBLE);
                         }
@@ -1461,12 +1514,86 @@ public class FragmentChat extends BaseFragment
         if (chatPeerId == G.userId) {
             isCloudRoom = true;
         }
-
         //+realm.close();
     }
 
+    private long getMessagesCount() {
+        return getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).findAll().size();
+    }
+
+    private void initDrBot() {
+        rcvDrBot = rootView.findViewById(R.id.rcvDrBot);
+        rcvDrBot.setLayoutManager(new LinearLayoutManager(G.context, LinearLayoutManager.HORIZONTAL, false));
+        AdapterDrBot adapterDrBot = new AdapterDrBot(items);
+        rcvDrBot.setAdapter(adapterDrBot);
+
+        List nameValuePairs = new ArrayList(1);
+        WebService.AsyncCaller caller = new WebService.AsyncCaller(context, nameValuePairs, new WebService.AsyncTaskCompleteListener<String>() {
+            @Override
+            public void onTaskComplete(String result) {
+                Gson gson = new Gson();
+                StructBot item = null;
+                try {
+                    item = gson.fromJson(result, StructBot.class);
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                } catch (JsonSyntaxException e1) {
+                    e1.printStackTrace();
+                }
+
+
+                if (item != null && item.getResult() == 1) {
+
+                    items = item.getFavorite();
+                    if (items.size() == 0) {
+                        return;
+                    }
+
+                    rcvDrBot.setVisibility(View.VISIBLE);
+                    adapterDrBot.update(items);
+
+                    onHandleDrBot = new OnHandleDrBot() {
+                        @Override
+                        public void goToRoomBot(Favorite item) {
+
+                            G.handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+
+
+                                    HelperUrl.checkUsernameAndGoToRoom(item.getFavoriteValue().replace("@", ""), HelperUrl.ChatEntry.chat);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void sendMessageBOt(Favorite item) {
+
+                            G.handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!isChatReadOnly) {
+                                        edtChat.setText(item.getFavoriteValue());
+                                        imvSendButton.performClick();
+                                    }
+                                }
+                            });
+
+
+                        }
+                    };
+
+                }
+
+            }
+        }, true);
+        caller.execute("igap/getData");
+
+
+    }
+
     private void checkConnection(String action) {
-        if (action != null) {
+        if (action != null && !isBot) {
             ViewMaker.setLayoutDirection(viewGroupLastSeen, View.LAYOUT_DIRECTION_LOCALE);
             txtLastSeen.setText(action);
         } else {
@@ -1474,6 +1601,8 @@ public class FragmentChat extends BaseFragment
             if (chatType == CHAT) {
                 if (isCloudRoom) {
                     txtLastSeen.setText(G.fragmentActivity.getResources().getString(R.string.chat_with_yourself));
+                } else if (isBot) {
+                    txtLastSeen.setText(G.fragmentActivity.getResources().getString(R.string.bot));
                 } else {
                     if (userStatus != null) {
                         if (userStatus.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
@@ -1547,6 +1676,10 @@ public class FragmentChat extends BaseFragment
         prgWaiting.setVisibility(View.VISIBLE);
 
         txtEmptyMessages = (TextView) rootView.findViewById(R.id.empty_messages);
+
+        if (isBot) {
+            txtEmptyMessages.setText(G.fragmentActivity.getResources().getString(R.string.empty_text_dr_bot));
+        }
 
         lastDateCalendar.clear();
 
@@ -1661,6 +1794,12 @@ public class FragmentChat extends BaseFragment
                         initialize = realmRegisteredInfo.getInitials();
                         color = realmRegisteredInfo.getColor();
                         phoneNumber = realmRegisteredInfo.getPhoneNumber();
+
+                        if (realmRegisteredInfo.getId() == Config.drIgapPeerId) {
+                            // if (realmRegisteredInfo.getUsername().equalsIgnoreCase("")) {
+                            initDrBot();
+                        }
+
                     } else {
                         title = realmRoom.getTitle();
                         initialize = realmRoom.getInitials();
@@ -1696,7 +1835,7 @@ public class FragmentChat extends BaseFragment
         initAppbarSelected();
         getDraft();
         getUserInfo();
-        insertShearedData(HelperGetDataFromOtherApp.messageFileAddress);
+        insertShearedData();
 
 
         FragmentShearedMedia.goToPositionFromShardMedia = new FragmentShearedMedia.GoToPositionFromShardMedia() {
@@ -1707,17 +1846,14 @@ public class FragmentChat extends BaseFragment
                     savedScrollMessageId = messageId;
                     firstVisiblePositionOffset = 0;
 
-                    int position = mAdapter.findPositionByMessageId(savedScrollMessageId);
-                    if (position > 0) {
-                        LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
-                        linearLayout.scrollToPositionWithOffset(position, firstVisiblePositionOffset);
+                    if (goToPositionWithAnimation(savedScrollMessageId, 2000)) {
                         savedScrollMessageId = 0;
                     } else {
                         RealmRoomMessage rm = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, messageId).findFirst();
                         rm = RealmRoomMessage.getFinalMessage(rm);
                         if (rm != null) {
                             resetMessagingValue();
-                            savedScrollMessageId = messageId;
+                            savedScrollMessageId = FragmentChat.messageId = messageId;
                             firstVisiblePositionOffset = 0;
                             getMessages();
                         }
@@ -1758,11 +1894,7 @@ public class FragmentChat extends BaseFragment
                 pinedMessageLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int position = mAdapter.findPositionByMessageId(pinMessageId);
-                        if (position != -1) {
-                            LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
-                            linearLayout.scrollToPositionWithOffset(position, 0);
-                        } else {
+                        if (!goToPositionWithAnimation(pinMessageId, 1000)) {
 
                             RealmRoomMessage rm = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.MESSAGE_ID, pinMessageId).findFirst();
                             rm = RealmRoomMessage.getFinalMessage(rm);
@@ -1775,7 +1907,7 @@ public class FragmentChat extends BaseFragment
                                 new RequestClientGetRoomMessage().clientGetRoomMessage(mRoomId, pinMessageId);
                                 G.onClientGetRoomMessage = new OnClientGetRoomMessage() {
                                     @Override
-                                    public void onClientGetRoomMessageResponse(long messageId) {
+                                    public void onClientGetRoomMessageResponse(ProtoGlobal.RoomMessage message) {
                                         G.onClientGetRoomMessage = null;
                                         G.handler.post(new Runnable() {
                                             @Override
@@ -1843,6 +1975,36 @@ public class FragmentChat extends BaseFragment
                     }).negativeText(R.string.cancel).show();
         }
 
+    }
+
+    private boolean goToPositionWithAnimation(long messageId, int time) {
+
+        int position = mAdapter.findPositionByMessageId(messageId);
+        if (position != -1) {
+            LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
+            linearLayout.scrollToPositionWithOffset(position, 0);
+
+            mAdapter.getItem(position).mMessage.isSelected = true;
+            mAdapter.notifyItemChanged(position);
+
+            G.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        int position = mAdapter.findPositionByMessageId(messageId);
+                        if (position != -1) {
+                            mAdapter.getItem(position).mMessage.isSelected = false;
+                            mAdapter.notifyItemChanged(position);
+                        }
+                    } catch (RuntimeException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, time);
+
+            return true;
+        }
+        return false;
     }
 
     private void registerListener() {
@@ -1917,6 +2079,7 @@ public class FragmentChat extends BaseFragment
         if (backGroundPath.length() > 0) {
             imgBackGround = (ImageView) rootView.findViewById(R.id.chl_img_view_chat);
 
+
             File f = new File(backGroundPath);
             if (f.exists()) {
                 try {
@@ -1928,6 +2091,12 @@ public class FragmentChat extends BaseFragment
                     activityManager.getMemoryInfo(memoryInfo);
                     Crashlytics.logException(new Exception("FragmentChat -> Device Name : " + Build.BRAND + " || memoryInfo.availMem : " + memoryInfo.availMem + " || memoryInfo.totalMem : " + memoryInfo.totalMem + " || memoryInfo.lowMemory : " + memoryInfo.lowMemory));
                 }
+            } else {
+                try {
+                    imgBackGround.setBackgroundColor(Color.parseColor(backGroundPath));
+                } catch (Exception e) {
+                }
+
             }
         }
 
@@ -2145,9 +2314,11 @@ public class FragmentChat extends BaseFragment
 
         if (chatType == CHAT && !isChatReadOnly) {
 
-            if (G.userId != chatPeerId) {
+            if (G.userId != chatPeerId && !isBot) {
 
                 RippleView rippleCall = (RippleView) rootView.findViewById(R.id.acp_ripple_call);
+                RippleView rippleVideoCall = (RippleView) rootView.findViewById(R.id.acp_ripple_video_call);
+
                 // gone or visible view call
                 RealmCallConfig callConfig = getRealmChat().where(RealmCallConfig.class).findFirst();
                 if (callConfig != null) {
@@ -2156,12 +2327,26 @@ public class FragmentChat extends BaseFragment
                         rippleCall.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
-                                FragmentCall.call(chatPeerId, false);
+                                FragmentCall.call(chatPeerId, false, ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING);
                             }
                         });
                     } else {
                         rippleCall.setVisibility(View.GONE);
                     }
+
+                    if (callConfig.isVideo_calling()) {
+                        rippleVideoCall.setVisibility(View.VISIBLE);
+                        rippleVideoCall.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                            @Override
+                            public void onComplete(RippleView rippleView) throws IOException {
+                                FragmentCall.call(chatPeerId, false, ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING);
+                            }
+                        });
+
+                    } else {
+                        rippleVideoCall.setVisibility(View.GONE);
+                    }
+
                 } else {
                     new RequestSignalingGetConfiguration().signalingGetConfiguration();
                 }
@@ -2180,27 +2365,7 @@ public class FragmentChat extends BaseFragment
                 edtChat.setSelection(edtChat.getText().length());
 
                 if (edtChat.getText().length() == 0) {
-
-                    layoutAttachBottom.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            layoutAttachBottom.setVisibility(View.VISIBLE);
-                        }
-                    }).start();
-                    imvSendButton.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            G.handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    imvSendButton.clearAnimation();
-                                    imvSendButton.setVisibility(View.GONE);
-                                }
-                            });
-                        }
-                    }).start();
+                    sendButtonVisibility(false);
                 }
             }
         });
@@ -2287,10 +2452,12 @@ public class FragmentChat extends BaseFragment
                 if (chatType == CHAT) {
                     root3.setVisibility(View.VISIBLE);
 
-                    if (!isChatReadOnly && !blockUser) {
+                    if (!isChatReadOnly && !blockUser && !isBot) {
                         root5.setVisibility(View.VISIBLE);
+                        root9.setVisibility(View.VISIBLE);
                     } else {
                         root5.setVisibility(View.GONE);
+                        root9.setVisibility(View.GONE);
                     }
                 } else {
                     root3.setVisibility(View.GONE);
@@ -2341,7 +2508,7 @@ public class FragmentChat extends BaseFragment
                 }
 
 
-                if (G.isWalletActive && G.isWalletRegister && (chatType == CHAT) && !isCloudRoom) {
+                if (G.isWalletActive && G.isWalletRegister && (chatType == CHAT) && !isCloudRoom && !isBot) {
                     root8.setVisibility(View.VISIBLE);
                 } else {
                     root8.setVisibility(View.GONE);
@@ -2458,7 +2625,7 @@ public class FragmentChat extends BaseFragment
                         dialog.dismiss();
                         if (HelperPermission.grantedUseStorage()) {
                             exportChat();
-                        }else{
+                        } else {
                             try {
                                 HelperPermission.getStoragePermision(G.fragmentActivity, new OnGetPermission() {
                                     @Override
@@ -2468,7 +2635,7 @@ public class FragmentChat extends BaseFragment
 
                                     @Override
                                     public void deny() {
-                                     Toast.makeText(G.currentActivity,R.string.export_message,Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(G.currentActivity, R.string.export_message, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } catch (IOException e) {
@@ -2490,6 +2657,10 @@ public class FragmentChat extends BaseFragment
 
                     }
                 });
+
+                if (RealmRoom.isBot(chatPeerId)) {
+                    root3.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -2506,6 +2677,8 @@ public class FragmentChat extends BaseFragment
 
                     imvSmileButton.performClick();
                 }
+
+                if (botInit != null) botInit.close();
             }
         });
 
@@ -2523,6 +2696,41 @@ public class FragmentChat extends BaseFragment
         imvMicButton = (MaterialDesignTextView) rootView.findViewById(R.id.chl_imv_mic_button);
 
         sendMoney = (MaterialDesignTextView) rootView.findViewById(R.id.chl_imv_sendMoney_button);
+
+        if (isBot) {
+            botInit = new BotInit(rootView, false);
+            sendButtonVisibility(false);
+
+
+            RealmResults<RealmRoomMessage> result;
+            RealmRoomMessage rm = null;
+            String lastMessage = "";
+            boolean backToMenu = true;
+
+            result = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).notEqualTo(RealmRoomMessageFields.AUTHOR_HASH, G.authorHash).findAll();
+            if (result.size() > 0) {
+                rm = result.last();
+                if (rm.getMessage() != null) {
+                    lastMessage = rm.getMessage();
+                }
+            }
+
+            result = getRealmChat().where(RealmRoomMessage.class).equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).equalTo(RealmRoomMessageFields.AUTHOR_HASH, G.authorHash).findAll();
+            if (result.size() > 0) {
+                rm = result.last();
+                if (rm.getMessage() != null) {
+                    if (rm.getMessage().toLowerCase().equals("/start") || rm.getMessage().equals("/back")) {
+                        backToMenu = false;
+                    }
+                }
+
+            } else {
+                backToMenu = false;
+            }
+
+            botInit.updateCommandList(false, lastMessage, getActivity(), backToMenu);
+        }
+
         if (G.isWalletActive && G.isWalletRegister && (chatType == CHAT) && !isCloudRoom) {
             sendMoney.setVisibility(View.VISIBLE);
         } else {
@@ -2550,36 +2758,106 @@ public class FragmentChat extends BaseFragment
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
 
+      /*  icon = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.ic_launcher_foreground);*/
+
+        if (realmRoom != null && !realmRoom.getReadOnly()) {
+            ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    //awesome code when user grabs recycler card to reorder
+
+                    return true;
+                }
+
+                @Override
+                public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                    super.clearView(recyclerView, viewHolder);
+
+                    //  recyclerView.getAdapter().notifyItemChanged(viewHolder.getAdapterPosition());
+                    //    recyclerView.getAdapter().notifyDataSetChanged();
+
+                    //   if (!((AbstractMessage) mAdapter.getItem(viewHolder.getAdapterPosition())).mMessage.isTimeOrLogMessage())
+                    replay(((AbstractMessage) mAdapter.getItem(viewHolder.getAdapterPosition())).mMessage);
+
+                    isRepley = false;
+                    //awesome code to run when user drops card and completes reorder
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    //awesome code when swiping right to remove recycler card and delete SQLite data
+
+                    Log.i("#peyman", "swipe triggered");
+                }
+
+                @Override
+                public void onChildDraw(Canvas c,
+                                        RecyclerView recyclerView,
+                                        RecyclerView.ViewHolder viewHolder,
+                                        float dX, float dY,
+                                        int actionState, boolean isCurrentlyActive) {
+
+                    if (actionState == ACTION_STATE_SWIPE) {
+
+                        setTouchListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+                    }
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+
+                }
+
+                @Override
+                public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+                    return super.getSwipeThreshold(viewHolder);
+                }
+
+                @Override
+                public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                    if (!((AbstractMessage) mAdapter.getItem(viewHolder.getAdapterPosition())).mMessage.isTimeOrLogMessage()) {
+                        return makeMovementFlags(0, ItemTouchHelper.LEFT);
+                    } else {
+
+                        return makeMovementFlags(0, 0);
+                    }
+                }
+
+                @Override
+                public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+                    if (swipeBack) {
+                        swipeBack = false;
+                        return 0;
+                    }
+                    return super.convertToAbsoluteDirection(flags, layoutDirection);
+                }
+
+                @Override
+                public boolean isItemViewSwipeEnabled() {
+                    return true;
+                }
+            };
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+        }
         /**
          * load message , use handler for load async
          */
 
-        if (mAdapter.getItemCount() > 0) {
-            txtEmptyMessages.setVisibility(View.GONE);
-        } else {
-            txtEmptyMessages.setVisibility(View.VISIBLE);
-        }
+        visibilityTextEmptyMessages();
 
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
 
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                if (mAdapter.getItemCount() > 0) {
-                    txtEmptyMessages.setVisibility(View.GONE);
-                } else {
-                    txtEmptyMessages.setVisibility(View.VISIBLE);
-                }
+                visibilityTextEmptyMessages();
             }
 
             @Override
             public void onItemRangeRemoved(int positionStart, int itemCount) {
                 super.onItemRangeRemoved(positionStart, itemCount);
-                if (mAdapter.getItemCount() > 0) {
-                    txtEmptyMessages.setVisibility(View.GONE);
-                } else {
-                    txtEmptyMessages.setVisibility(View.VISIBLE);
-                }
+                visibilityTextEmptyMessages();
             }
         });
 
@@ -2669,63 +2947,53 @@ public class FragmentChat extends BaseFragment
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int visibleItemCount = ((LinearLayoutManager) recyclerView.getLayoutManager()).getChildCount();
+                int totalItemCount = ((LinearLayoutManager) recyclerView.getLayoutManager()).getItemCount();
+                int pastVisibleItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
-                if (!firsInitScrollPosition) {
-                    lastPosition = lastVisiblePosition;
-                    firsInitScrollPosition = true;
-                }
 
-                int state = lastPosition - lastVisiblePosition;
-                if (state > 0) {   // up
+                if (pastVisibleItems + visibleItemCount >= totalItemCount && !isAnimateStart) {
+                    isScrollEnd = false;
+                    isAnimateStart = true;
+                    llScrollNavigate.animate()
+                            .alpha(0.0f)
+                            .translationY(llScrollNavigate.getHeight() / 2)
+                            .setDuration(200)
+                            .setListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    isAnimateStart = false;
+                                    llScrollNavigate.setVisibility(View.GONE);
+                                }
+                            });
 
+                } else if (!isScrollEnd && !isAnimateStart) {
+                    isScrollEnd = true;
+                    isAnimateStart = true;
+                    llScrollNavigate.setVisibility(View.VISIBLE);
+                    llScrollNavigate.animate()
+                            .alpha(1.0f)
+                            .translationY(0)
+                            .setDuration(200)
+                            .setListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    isAnimateStart = false;
+                                }
+                            });
+
+                    txtNewUnreadMessage.setText(countNewMessage + "");
                     if (countNewMessage == 0) {
-                        llScrollNavigate.setVisibility(View.GONE);
+                        txtNewUnreadMessage.setVisibility(View.GONE);
                     } else {
-                        llScrollNavigate.setVisibility(View.VISIBLE);
-
-                        txtNewUnreadMessage.setText(countNewMessage + "");
                         txtNewUnreadMessage.setVisibility(View.VISIBLE);
                     }
 
-                    lastPosition = lastVisiblePosition;
-                } else if (state < 0) { //down
-
-                    if (mAdapter.getItemCount() - lastVisiblePosition > 10) {
-                        /**
-                         * show llScrollNavigate if timeout from latest click
-                         */
-                        if (HelperTimeOut.timeoutChecking(0, latestButtonClickTime, (int) (2 * DateUtils.SECOND_IN_MILLIS))) {
-                            llScrollNavigate.setVisibility(View.VISIBLE);
-                        }
-                        if (countNewMessage > 0) {
-                            txtNewUnreadMessage.setText(countNewMessage + "");
-                            txtNewUnreadMessage.setVisibility(View.VISIBLE);
-                        } else {
-                            txtNewUnreadMessage.setVisibility(View.GONE);
-                        }
-                    } else {
-                        /**
-                         * if addToView is true means that
-                         */
-                        if (addToView) {
-
-                            /**
-                             * if countNewMessage is bigger than zero in onItemShowingMessageId
-                             * callback txtNewUnreadMessage visibility will be managed
-                             */
-                            if (countNewMessage == 0) {
-                                if (mAdapter.getItemCount() - lastVisiblePosition < 10) {
-                                    llScrollNavigate.setVisibility(View.GONE);
-                                }
-                            }
-                        }
-                    }
-
-                    lastPosition = lastVisiblePosition;
                 }
             }
         });
@@ -3003,49 +3271,10 @@ public class FragmentChat extends BaseFragment
                 if (ll_attach_text.getVisibility() == View.GONE && hasForward == false) {
 
                     if (edtChat.getText().length() > 0) {
-                        layoutAttachBottom.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                layoutAttachBottom.setVisibility(View.GONE);
-                            }
-                        }).start();
-                        imvSendButton.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                G.handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        imvSendButton.clearAnimation();
-                                        imvSendButton.setVisibility(View.VISIBLE);
-                                    }
-                                });
-                            }
-                        }).start();
+                        sendButtonVisibility(true);
                     } else {
                         if (!isEditMessage) {
-                            layoutAttachBottom.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-
-                                    layoutAttachBottom.setVisibility(View.VISIBLE);
-                                }
-                            }).start();
-                            imvSendButton.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    G.handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            imvSendButton.clearAnimation();
-                                            imvSendButton.setVisibility(View.GONE);
-                                        }
-                                    });
-                                }
-                            }).start();
+                            sendButtonVisibility(false);
                         } else {
                             imvSendButton.setText(G.fragmentActivity.getResources().getString(R.string.md_close_button));
                         }
@@ -3055,6 +3284,69 @@ public class FragmentChat extends BaseFragment
         });
 
         //realm.close();
+    }
+
+    private void setTouchListener(Canvas c,
+                                  RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder,
+                                  float dX, float dY,
+                                  int actionState, boolean isCurrentlyActive) {
+
+
+        if (dX < -150 && !isRepley) {
+            Log.i("#peyman", "swipe triggered");
+            isRepley = true;
+
+            Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.PARCELABLE_WRITE_RETURN_VALUE));
+            } else {
+                //deprecated in API 26
+                v.vibrate(50);
+            }
+
+            // replay(message);
+           /* if (!goToPositionWithAnimation(replyMessage.getMessageId(), 1000)) {
+                goToPositionWithAnimation(replyMessage.getMessageId() * (-1), 1000);
+            }*/
+
+        }
+
+       /* icon.setBounds(viewHolder.itemView.getRight() - 0, 0, viewHolder.itemView.getRight() - 0, 0 + icon.getIntrinsicHeight());
+        icon.draw(c);*/
+
+
+        View itemView = viewHolder.itemView;
+
+
+   /*     DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        Drawable drawable = ContextCompat.getDrawable(G.fragmentActivity, R.mipmap.ic_launcher_round);
+        Bitmap icon = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        //  Canvas canvas = new Canvas(icon);
+        drawable.setBounds(displayMetrics.widthPixels - 109, itemView.getTop() + 9, itemView.getRight() - 22, itemView.getBottom() - 9);
+        drawable.draw(c);*/
+
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                swipeBack = event.getAction() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_UP;
+                return false;
+            }
+        });
+
+    }
+
+    private void visibilityTextEmptyMessages() {
+        if (mAdapter.getItemCount() > 0) {
+            txtEmptyMessages.setVisibility(View.GONE);
+        } else {
+            txtEmptyMessages.setVisibility(View.VISIBLE);
+        }
     }
 
     private void dialogReport(final boolean isMessage, final long messageId) {
@@ -3466,6 +3758,60 @@ public class FragmentChat extends BaseFragment
             return;
         }
 
+        if (isBot) {
+
+            try {
+
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        RealmRoomMessage rm = null;
+                        boolean backToMenu = true;
+
+                        RealmResults<RealmRoomMessage> result = getRealmChat().where(RealmRoomMessage.class).
+                                equalTo(RealmRoomMessageFields.ROOM_ID, mRoomId).equalTo(RealmRoomMessageFields.AUTHOR_HASH, G.authorHash).findAll();
+                        if (result.size() > 0) {
+                            rm = result.last();
+                            if (rm.getMessage() != null) {
+                                if (rm.getMessage().toLowerCase().equals("/start") || rm.getMessage().equals("/back")) {
+                                    backToMenu = false;
+                                }
+                            }
+                        } else {
+                            backToMenu = false;
+                        }
+
+                        if (getActivity() != null) {
+                            botInit.updateCommandList(false, message, getActivity(), backToMenu);
+                        }
+                    }
+                });
+
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+
+            try {
+                if (isShowStartButton) {
+                    if (rootView != null) {
+                        rootView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                rootView.findViewById(R.id.chl_ll_channel_footer).setVisibility(View.GONE);
+                                rootView.findViewById(R.id.layout_attach_file).setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                    isShowStartButton = false;
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+
+        }
+
         G.handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -3821,6 +4167,7 @@ public class FragmentChat extends BaseFragment
     @Override
     public void onContainerClick(View view, final StructMessageInfo message, int pos) {
 
+
         if (message == null) {
             return;
         }
@@ -3953,12 +4300,14 @@ public class FragmentChat extends BaseFragment
                 txtItemShare.setText(R.string.share_item_dialog);
                 txtItemForward.setText(R.string.forward_item_dialog);
                 txtItemDelete.setText(R.string.delete_item_dialog);
+                txtItemEdit.setText(R.string.edit_item_dialog);
 
                 rootReplay.setVisibility(View.VISIBLE);
                 rootShare.setVisibility(View.VISIBLE);
                 rootForward.setVisibility(View.VISIBLE);
                 rootDelete.setVisibility(View.VISIBLE);
                 rootSaveToDownload.setVisibility(View.VISIBLE);
+                rootEdit.setVisibility(View.VISIBLE);
 
                 //itemsRes = R.array.fileMessageDialogItems;
                 break;
@@ -4190,17 +4539,19 @@ public class FragmentChat extends BaseFragment
                 dialog.dismiss();
                 // edit message
                 // put message text to EditText
+                messageEdit = "";
                 if (message.messageText != null && !message.messageText.isEmpty()) {
                     edtChat.setText(message.messageText);
                     edtChat.setSelection(0, edtChat.getText().length());
                     // put message object to edtChat's tag to obtain it later and
                     // found is user trying to edit a message
-
-                    imvSendButton.setText(G.fragmentActivity.getResources().getString(R.string.md_close_button));
-                    isEditMessage = true;
                     messageEdit = message.messageText;
-                    edtChat.setTag(message);
                 }
+                edtChat.setTag(message);
+                isEditMessage = true;
+                imvSendButton.setText(G.fragmentActivity.getResources().getString(R.string.md_close_button));
+                sendButtonVisibility(true);
+
             }
         });
         rootSaveToDownload.setOnClickListener(new View.OnClickListener() {
@@ -4253,7 +4604,7 @@ public class FragmentChat extends BaseFragment
 
                     final String _path = AndroidUtils.getFilePathWithCashId(cacheId, name, _messageType);
                     if (fileToken != null && fileToken.length() > 0 && size > 0) {
-                        HelperDownloadFile.getInstance().startDownload(message.messageType,message.messageID, fileToken, fileUrl, cacheId, name, size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
+                        HelperDownloadFile.getInstance().startDownload(message.messageType, message.messageID, fileToken, fileUrl, cacheId, name, size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
                             @Override
                             public void OnProgress(String path, int progress) {
 
@@ -4306,6 +4657,8 @@ public class FragmentChat extends BaseFragment
                 dialogReport(true, messageId);
             }
         });
+
+
     }
 
     private void deleteMassage(Realm realm, final StructMessageInfo message, final ArrayList<Long> list, final ArrayList<Long> bothDeleteMessageId, final ProtoGlobal.Room.Type chatType) {
@@ -4378,17 +4731,10 @@ public class FragmentChat extends BaseFragment
     @Override
     public void onReplyClick(RealmRoomMessage replyMessage) {
 
-        long replyMessageId = replyMessage.getMessageId();
-        /**
-         * when i add message to RealmRoomMessage(putOrUpdate) set (replyMessageId * (-1))
-         * so i need to (replyMessageId * (-1)) again for use this messageId
-         */
-        int position = mAdapter.findPositionByMessageId((replyMessageId * (-1)));
-        if (position == -1) {
-            position = mAdapter.findPositionByMessageId(replyMessageId);
+        if (!goToPositionWithAnimation(replyMessage.getMessageId(), 1000)) {
+            goToPositionWithAnimation(replyMessage.getMessageId() * (-1), 1000);
         }
 
-        recyclerView.scrollToPosition(position);
     }
 
     @Override
@@ -4422,12 +4768,14 @@ public class FragmentChat extends BaseFragment
             G.handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (action != null) {
+                    if (action != null && !isBot) {
                         ViewMaker.setLayoutDirection(viewGroupLastSeen, View.LAYOUT_DIRECTION_LOCALE);
                         txtLastSeen.setText(action);
                     } else if (chatType == CHAT) {
                         if (isCloudRoom) {
                             txtLastSeen.setText(G.fragmentActivity.getResources().getString(R.string.chat_with_yourself));
+                        } else if (isBot) {
+                            txtLastSeen.setText(G.fragmentActivity.getResources().getString(R.string.bot));
                         } else {
                             if (userStatus != null) {
                                 if (userStatus.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
@@ -4583,7 +4931,8 @@ public class FragmentChat extends BaseFragment
                     File f = new File(backgroundPath);
                     if (f.exists()) {
                         Drawable d = Drawable.createFromPath(f.getAbsolutePath());
-                        imgBackGround.setImageDrawable(d);
+                        //imgBackGround.setImageDrawable(d);
+                        imgBackGround.setBackgroundColor(Color.parseColor(backgroundPath));
                     }
                 }
             }
@@ -4777,6 +5126,8 @@ public class FragmentChat extends BaseFragment
                         //    //txtLastSeen.setTextDirection(View.TEXT_DIRECTION_LTR);
                         //}
                         ViewMaker.setLayoutDirection(viewGroupLastSeen, View.LAYOUT_DIRECTION_LTR);
+                    } else if (isBot) {
+                        txtLastSeen.setText(G.fragmentActivity.getResources().getString(R.string.bot));
                     } else {
                         if (status != null && txtLastSeen != null) {
                             if (status.equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
@@ -5302,11 +5653,12 @@ public class FragmentChat extends BaseFragment
                     public void onEmojiPopupShown() {
                         changeEmojiButtonImageResource(R.string.md_black_keyboard_with_white_keys);
                         isEmojiSHow = true;
+                        if (botInit != null) botInit.close();
                     }
                 }).setOnSoftKeyboardOpenListener(new OnSoftKeyboardOpenListener() {
                     @Override
                     public void onKeyboardOpen(final int keyBoardHeight) {
-
+                        if (botInit != null) botInit.close();
                     }
                 }).setOnEmojiPopupDismissListener(new OnEmojiPopupDismissListener() {
                     @Override
@@ -5428,28 +5780,33 @@ public class FragmentChat extends BaseFragment
                 // set maxLength  when layout attachment is visible
                 edtChat.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Config.MAX_TEXT_ATTACHMENT_LENGTH)});
 
-                layoutAttachBottom.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        layoutAttachBottom.setVisibility(View.GONE);
-                    }
-                }).start();
-                imvSendButton.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                imvSendButton.clearAnimation();
-                                imvSendButton.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }).start();
+                sendButtonVisibility(true);
             }
         }, 100);
+    }
+
+
+    private void sendButtonVisibility(boolean visibility) {
+        layoutAttachBottom.animate().alpha(visibility ? 0F : 1F).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                layoutAttachBottom.setVisibility(visibility || isBot ? View.GONE : View.VISIBLE);
+            }
+        }).start();
+        imvSendButton.animate().alpha(visibility ? 1F : 0F).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                G.handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imvSendButton.clearAnimation();
+                        imvSendButton.setVisibility(visibility ? View.VISIBLE : View.GONE);
+                    }
+                });
+            }
+        }).start();
     }
 
     /**
@@ -5530,7 +5887,7 @@ public class FragmentChat extends BaseFragment
      */
 
 
-    private void insertShearedData(final ArrayList<String> pathList) {
+    private void insertShearedData() {
         /**
          * run this method with delay , because client get local message with delay
          * for show messages with async changeState and before run getLocalMessage this shared
@@ -5543,60 +5900,21 @@ public class FragmentChat extends BaseFragment
                 if (HelperGetDataFromOtherApp.hasSharedData) {
                     HelperGetDataFromOtherApp.hasSharedData = false;
 
-                    if (messageType == HelperGetDataFromOtherApp.FileType.message) {
-                        String message = HelperGetDataFromOtherApp.message;
-                        edtChat.setText(message);
-                        imvSendButton.performClick();
-                    } else if (messageType == HelperGetDataFromOtherApp.FileType.image) {
+                    for (HelperGetDataFromOtherApp.SharedData sharedData : HelperGetDataFromOtherApp.sharedList) {
 
-                        for (int i = 0; i < pathList.size(); i++) {
-                            sendMessage(AttachFile.request_code_TAKE_PICTURE, pathList.get(i));
-                        }
-                    } else if (messageType == HelperGetDataFromOtherApp.FileType.video) {
-                        if (pathList.size() == 1 && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
-//                            final String savePathVideoCompress = Environment.getExternalStorageDirectory() + File.separator + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR + "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
-                            final String savePathVideoCompress = G.DIR_TEMP + "/VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
-                            mainVideoPath = pathList.get(0);
+                        edtChat.setText(sharedData.message);
 
-                            if (mainVideoPath == null) {
-                                return;
-                            }
-
-                            G.handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    new VideoCompressor().execute(mainVideoPath, savePathVideoCompress);
-                                }
-                            }, 200);
-                            sendMessage(request_code_VIDEO_CAPTURED, savePathVideoCompress);
-                        } else {
-                            for (int i = 0; i < pathList.size(); i++) {
-                                compressedPath.put(pathList.get(i), true);
-                                sendMessage(request_code_VIDEO_CAPTURED, pathList.get(i));
-                            }
-                        }
-                    } else if (messageType == HelperGetDataFromOtherApp.FileType.audio) {
-
-                        for (int i = 0; i < pathList.size(); i++) {
-                            sendMessage(AttachFile.request_code_pic_audi, pathList.get(i));
-                        }
-                    } else if (messageType == HelperGetDataFromOtherApp.FileType.file) {
-
-                        for (int i = 0; i < pathList.size(); i++) {
-                            HelperGetDataFromOtherApp.FileType fileType = messageType = HelperGetDataFromOtherApp.FileType.file;
-                            if (HelperGetDataFromOtherApp.fileTypeArray.size() > 0) {
-                                fileType = HelperGetDataFromOtherApp.fileTypeArray.get(i);
-                            }
-
-                            if (fileType == HelperGetDataFromOtherApp.FileType.image) {
-                                sendMessage(AttachFile.request_code_TAKE_PICTURE, pathList.get(i));
-                            } else if (fileType == HelperGetDataFromOtherApp.FileType.video) {
-                                if (pathList.size() == 1 && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
-                                    //                                    final String savePathVideoCompress = Environment.getExternalStorageDirectory() + File.separator + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_APPLICATION_DIR_NAME + com.lalongooo.videocompressor.Config.VIDEO_COMPRESSOR_COMPRESSED_VIDEOS_DIR + "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format
-                                    // (new Date()) + ".mp4";
+                        switch (sharedData.fileType) {
+                            case message:
+                                imvSendButton.performClick();
+                                break;
+                            case video:
+                                if (HelperGetDataFromOtherApp.sharedList.size() == 1 && (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && (sharedPreferences.getInt(SHP_SETTING.KEY_COMPRESS, 1) == 1))) {
                                     final String savePathVideoCompress = G.DIR_TEMP + "/VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
-                                    mainVideoPath = pathList.get(0);
-
+                                    mainVideoPath = sharedData.address;
+                                    if (mainVideoPath == null) {
+                                        return;
+                                    }
                                     G.handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -5605,16 +5923,26 @@ public class FragmentChat extends BaseFragment
                                     }, 200);
                                     sendMessage(request_code_VIDEO_CAPTURED, savePathVideoCompress);
                                 } else {
-                                    compressedPath.put(pathList.get(i), true);
-                                    sendMessage(request_code_VIDEO_CAPTURED, pathList.get(i));
+                                    compressedPath.put(sharedData.address, true);
+                                    sendMessage(request_code_VIDEO_CAPTURED, sharedData.address);
                                 }
-                            } else if (fileType == HelperGetDataFromOtherApp.FileType.audio) {
-                                sendMessage(AttachFile.request_code_pic_audi, pathList.get(i));
-                            } else if (fileType == HelperGetDataFromOtherApp.FileType.file) {
-                                sendMessage(AttachFile.request_code_open_document, pathList.get(i));
-                            }
+                                break;
+                            case file:
+                                sendMessage(AttachFile.request_code_open_document, sharedData.address);
+                                break;
+                            case audio:
+                                sendMessage(AttachFile.request_code_pic_audi, sharedData.address);
+                                break;
+                            case image:
+                                sendMessage(AttachFile.request_code_TAKE_PICTURE, sharedData.address);
+                                break;
                         }
+
+                        edtChat.setText("");
                     }
+
+                    HelperGetDataFromOtherApp.sharedList.clear();
+
                 }
             }
         }, 300);
@@ -5625,6 +5953,7 @@ public class FragmentChat extends BaseFragment
         if (messageInfo == null) return;
 
         try {
+            isShareOk = true;
             Intent intent = new Intent(Intent.ACTION_SEND);
             String chooserDialogText = "";
 
@@ -5694,6 +6023,8 @@ public class FragmentChat extends BaseFragment
                         intent.putExtra(Intent.EXTRA_STREAM, uri);
                         chooserDialogText = G.fragmentActivity.getResources().getString(R.string.share_file);
                     } else {
+
+                        isShareOk = false;
                         G.handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -5701,9 +6032,10 @@ public class FragmentChat extends BaseFragment
                             }
                         });
                     }
-
                     break;
             }
+
+            if (!isShareOk) return;
 
             startActivity(Intent.createChooser(intent, chooserDialogText));
         } catch (Exception e) {
@@ -6740,15 +7072,16 @@ public class FragmentChat extends BaseFragment
                             }).checkBoxPrompt(textCheckBox, false, null).show();
 
                         } else {
-
-                            new MaterialDialog.Builder(G.fragmentActivity).title(R.string.message).content(G.context.getResources().getString(R.string.st_desc_delete, count)).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    bothDeleteMessageId = null;
-                                    RealmRoomMessage.deleteSelectedMessages(getRealmChat(), mRoomId, list, bothDeleteMessageId, chatType);
-                                    deleteSelectedMessageFromAdapter(list);
-                                }
-                            }).show();
+                            if (!G.fragmentActivity.isFinishing()) {
+                                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.message).content(G.context.getResources().getString(R.string.st_desc_delete, count)).positiveText(R.string.ok).negativeText(R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        bothDeleteMessageId = null;
+                                        RealmRoomMessage.deleteSelectedMessages(getRealmChat(), mRoomId, list, bothDeleteMessageId, chatType);
+                                        deleteSelectedMessageFromAdapter(list);
+                                    }
+                                }).show();
+                            }
                         }
                     }
                 });
@@ -7150,6 +7483,10 @@ public class FragmentChat extends BaseFragment
         }
 
         StructMessageInfo messageInfo = null;
+
+        if (requestCode == AttachFile.requestOpenGalleryForVideoMultipleSelect && filePath.toLowerCase().endsWith(".gif")) {
+            requestCode = AttachFile.requestOpenGalleryForImageMultipleSelect;
+        }
 
         switch (requestCode) {
             case IntentRequests.REQ_CROP:
@@ -7564,51 +7901,12 @@ public class FragmentChat extends BaseFragment
 
                         if (edtChat.getText().length() == 0) {
 
-                            layoutAttachBottom.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    layoutAttachBottom.setVisibility(View.VISIBLE);
-                                }
-                            }).start();
-                            imvSendButton.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    G.handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            imvSendButton.clearAnimation();
-                                            imvSendButton.setVisibility(View.GONE);
-                                        }
-                                    });
-                                }
-                            }).start();
+                            sendButtonVisibility(false);
                         }
                     }
                 });
 
-                layoutAttachBottom.animate().alpha(0F).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        layoutAttachBottom.setVisibility(View.GONE);
-                    }
-                }).start();
-
-                imvSendButton.animate().alpha(1F).setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        G.handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                imvSendButton.clearAnimation();
-                                imvSendButton.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }).start();
+                sendButtonVisibility(true);
 
                 int _count = mForwardMessages.size();
                 String str = _count > 1 ? G.fragmentActivity.getResources().getString(R.string.messages_selected) : G.fragmentActivity.getResources().getString(R.string.message_selected);
@@ -7778,12 +8076,6 @@ public class FragmentChat extends BaseFragment
                         }
                         break;
                     case IMAGE:
-                        if (!addTop) {
-                            mAdapter.add(new ImageItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        } else {
-                            mAdapter.add(index, new ImageItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        }
-                        break;
                     case IMAGE_TEXT:
                         if (!addTop) {
                             mAdapter.add(new ImageWithTextItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
@@ -7792,12 +8084,6 @@ public class FragmentChat extends BaseFragment
                         }
                         break;
                     case VIDEO:
-                        if (!addTop) {
-                            mAdapter.add(new VideoItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        } else {
-                            mAdapter.add(index, new VideoItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        }
-                        break;
                     case VIDEO_TEXT:
                         if (!addTop) {
                             mAdapter.add(new VideoWithTextItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
@@ -7843,12 +8129,6 @@ public class FragmentChat extends BaseFragment
                         }
                         break;
                     case GIF:
-                        if (!addTop) {
-                            mAdapter.add(new GifItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        } else {
-                            mAdapter.add(index, new GifItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
-                        }
-                        break;
                     case GIF_TEXT:
                         if (!addTop) {
                             mAdapter.add(new GifWithTextItem(getRealmChat(), chatType, this).setMessage(messageInfo).withIdentifier(identifier));
@@ -8059,10 +8339,18 @@ public class FragmentChat extends BaseFragment
         } else {
             switchAddItem(messageInfos, false);
             if (hasSavedState()) {
-                int position = mAdapter.findPositionByMessageId(savedScrollMessageId);
-                LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
-                linearLayout.scrollToPositionWithOffset(position, firstVisiblePositionOffset);
-                savedScrollMessageId = 0;
+
+                if (messageId != 0) {
+                    if (goToPositionWithAnimation(savedScrollMessageId, 1000)) {
+                        savedScrollMessageId = 0;
+                    }
+                } else {
+                    int position = mAdapter.findPositionByMessageId(savedScrollMessageId);
+                    LinearLayoutManager linearLayout = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    linearLayout.scrollToPositionWithOffset(position, firstVisiblePositionOffset);
+                    savedScrollMessageId = 0;
+                }
+
             }
         }
 
@@ -8100,6 +8388,10 @@ public class FragmentChat extends BaseFragment
         };
 
         recyclerView.addOnScrollListener(scrollListener);
+        if (unreadCount > 0)
+            recyclerView.scrollToPosition(0);
+
+
         //realm.close();
     }
 
@@ -8417,6 +8709,7 @@ public class FragmentChat extends BaseFragment
             RealmRoomMessage unreadMessage = RealmRoomMessage.makeUnreadMessage(unreadMessageCount);
             mAdapter.add(0, new UnreadMessage(getRealmChat(), FragmentChat.this).setMessage(StructMessageInfo.convert(getRealmChat(), unreadMessage)).withIdentifier(SUID.id().get()));
             isShowLayoutUnreadMessage = true;
+
         }
     }
 
@@ -8605,7 +8898,17 @@ public class FragmentChat extends BaseFragment
 
     @Override
     public void onPinMessage() {
+
         initPinedMessage();
+
+    }
+
+    @Override
+    public void onBotCommandText(String text) {
+        if (!isChatReadOnly) {
+            edtChat.setText(text);
+            imvSendButton.performClick();
+        }
     }
 
     /**
@@ -8925,5 +9228,26 @@ public class FragmentChat extends BaseFragment
         }
 
     }
+
+
+    public interface OnHandleDrBot {
+
+        void goToRoomBot(Favorite favorite);
+
+        void sendMessageBOt(Favorite favorite);
+
+    }
+
+/*    private boolean isBot(long userId) {
+        Realm realm=Realm.getDefaultInstance();
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+        if (realmRegisteredInfo != null) {
+            if (realmRegisteredInfo.isBot()) {
+                return true;
+            } else
+                return false;
+        } else
+            return false;
+    }*/
 
 }

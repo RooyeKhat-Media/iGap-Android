@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.fragments;
 
@@ -466,105 +466,109 @@ public class FragmentContactsProfile extends BaseFragment {
      */
     private void showPopupPhoneNumber(View v, String number) {
 
-        boolean isExist = false;
-        Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        String[] mPhoneNumberProjection = {ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME};
-        Cursor cur = context.getContentResolver().query(lookupUri, mPhoneNumberProjection, null, null, null);
         try {
-            if (cur != null) {
-                isExist = cur.moveToFirst();
+            boolean isExist = false;
+            Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+            String[] mPhoneNumberProjection = {ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME};
+            Cursor cur = context.getContentResolver().query(lookupUri, mPhoneNumberProjection, null, null, null);
+            try {
+                if (cur != null) {
+                    isExist = cur.moveToFirst();
+                }
+            } finally {
+                if (cur != null) cur.close();
             }
-        } finally {
-            if (cur != null) cur.close();
-        }
 
-        if (isExist) {
-            new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).items(R.array.phone_number2).itemsCallback(new MaterialDialog.ListCallback() {
-                @Override
-                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                    switch (which) {
-                        case 0:
-                            String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
-                            try {
-                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
-                                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(callIntent);
-                            } catch (Exception ex) {
-                                ex.getStackTrace();
-                            }
-                            break;
-                        case 1:
-                            String copy;
-                            copy = fragmentContactsProfileViewModel.phone.get();
-                            ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                            ClipData clip = ClipData.newPlainText("PHONE_NUMBER", copy);
-                            clipboard.setPrimaryClip(clip);
-                            break;
+            if (isExist) {
+                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).items(R.array.phone_number2).itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        switch (which) {
+                            case 0:
+                                String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
+                                try {
+                                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                                    callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
+                                    callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(callIntent);
+                                } catch (Exception ex) {
+                                    ex.getStackTrace();
+                                }
+                                break;
+                            case 1:
+                                String copy;
+                                copy = fragmentContactsProfileViewModel.phone.get();
+                                ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText("PHONE_NUMBER", copy);
+                                clipboard.setPrimaryClip(clip);
+                                break;
+                        }
                     }
-                }
-            }).show();
-        } else {
-            new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).items(R.array.phone_number).itemsCallback(new MaterialDialog.ListCallback() {
-                @Override
-                public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                    switch (which) {
-                        case 0:
+                }).show();
+            } else {
+                new MaterialDialog.Builder(G.fragmentActivity).title(R.string.phone_number).items(R.array.phone_number).itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        switch (which) {
+                            case 0:
 
-                            String name = fragmentContactsProfileViewModel.contactName.get();
-                            String phone = "+" + fragmentContactsProfileViewModel.phone.get();
+                                String name = fragmentContactsProfileViewModel.contactName.get();
+                                String phone = "+" + fragmentContactsProfileViewModel.phone.get();
 
-                            ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+                                ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
 
-                            ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
+                                ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null).build());
 
-                            //------------------------------------------------------ Names
+                                //------------------------------------------------------ Names
 
-                            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name).build());
+                                ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name).build());
 
-                            //------------------------------------------------------ Mobile Number
+                                //------------------------------------------------------ Mobile Number
 
-                            ops.add(ContentProviderOperation.
-                                    newInsert(ContactsContract.Data.CONTENT_URI)
-                                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
-                                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
-                                    .build());
+                                ops.add(ContentProviderOperation.
+                                        newInsert(ContactsContract.Data.CONTENT_URI)
+                                        .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                                        .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                                        .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                                        .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
+                                        .build());
 
-                            try {
-                                G.context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-                                addContactToServer();
-                                Toast.makeText(G.context, R.string.save_ok, Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(G.context, G.fragmentActivity.getResources().getString(R.string.exception) + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                                try {
+                                    G.context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+                                    addContactToServer();
+                                    Toast.makeText(G.context, R.string.save_ok, Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(G.context, G.fragmentActivity.getResources().getString(R.string.exception) + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
 
-                            break;
-                        case 1:
+                                break;
+                            case 1:
 
-                            String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
-                            try {
-                                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                                callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
-                                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(callIntent);
-                            } catch (Exception ex) {
+                                String call = "+" + Long.parseLong(fragmentContactsProfileViewModel.phone.get());
+                                try {
+                                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                                    callIntent.setData(Uri.parse("tel:" + Uri.encode(call.trim())));
+                                    callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(callIntent);
+                                } catch (Exception ex) {
 
-                                ex.getStackTrace();
-                            }
-                            break;
-                        case 2:
+                                    ex.getStackTrace();
+                                }
+                                break;
+                            case 2:
 
-                            ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
-                            ClipData clip = ClipData.newPlainText("PHONE_NUMBER", fragmentContactsProfileViewModel.phone.get());
-                            clipboard.setPrimaryClip(clip);
+                                ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText("PHONE_NUMBER", fragmentContactsProfileViewModel.phone.get());
+                                clipboard.setPrimaryClip(clip);
 
-                            break;
+                                break;
+                        }
                     }
-                }
-            }).show();
+                }).show();
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
     }
 

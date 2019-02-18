@@ -105,10 +105,12 @@ public class Contacts {
                 G.currentActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new MaterialDialog.Builder(G.currentActivity)
-                                .title(R.string.title_import_contact_limit)
-                                .content(R.string.content_import_contact_limit)
-                                .positiveText(G.context.getResources().getString(R.string.B_ok)).show();
+                        if (!G.currentActivity.isFinishing()) {
+                            new MaterialDialog.Builder(G.currentActivity)
+                                    .title(R.string.title_import_contact_limit)
+                                    .content(R.string.content_import_contact_limit)
+                                    .positiveText(G.context.getResources().getString(R.string.B_ok)).show();
+                        }
                     }
                 });
             }

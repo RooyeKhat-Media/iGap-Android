@@ -70,6 +70,7 @@ public abstract class MessageHandler {
         HelperError.showSnackMessage(HelperError.getErrorFromCode(majorCode, minorCode), false);
 
         if (!G.ignoreErrorCodes.contains(majorCode)) {
+            Log.i("#peymanERR",majorCode+"");
             HelperLog.setErrorLog("majorCode : " + errorResponse.getMajorCode() + " * minorCode : " + errorResponse.getMinorCode() + " * " + G.lookupMap.get(actionId));
         }
 

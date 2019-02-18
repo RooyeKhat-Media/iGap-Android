@@ -145,6 +145,7 @@ public class FragmentSettingViewModel {
     public ObservableField<Boolean> isShowVote = new ObservableField<>();
     public ObservableField<Boolean> isSenderNameGroup = new ObservableField<>();
     public ObservableField<Boolean> isSendEnter = new ObservableField<>();
+    public ObservableField<Boolean> isInAppBrowser = new ObservableField<>();
     public ObservableField<Boolean> isThemeDark = new ObservableField<>();
     public ObservableField<Boolean> isSaveGallery = new ObservableField<>();
     public ObservableField<Boolean> isAutoGif = new ObservableField<>();
@@ -1097,17 +1098,38 @@ public class FragmentSettingViewModel {
         isSendEnter.set(!isSendEnter.get());
     }
 
+
+
     public void onCheckedChangedSendEnter(boolean isChecked) {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         isSendEnter.set(isChecked);
         if (isChecked) {
             editor.putInt(SHP_SETTING.KEY_SEND_BT_ENTER, 1);
-            editor.apply();
         } else {
             editor.putInt(SHP_SETTING.KEY_SEND_BT_ENTER, 0);
-            editor.apply();
         }
+        editor.apply();
+    }
+
+    public void onClickAppBrowser(View view) {
+
+        isInAppBrowser.set(!isInAppBrowser.get());
+    }
+
+
+    public void onCheckedAppBrowser(boolean isChecked) {
+
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        isInAppBrowser.set(isChecked);
+        if (isChecked) {
+            editor.putInt(SHP_SETTING.KEY_IN_APP_BROWSER, 1);
+        } else {
+            editor.putInt(SHP_SETTING.KEY_IN_APP_BROWSER, 0);
+        }
+        editor.apply();
+
     }
 
 
@@ -1443,7 +1465,7 @@ public class FragmentSettingViewModel {
 
 
         if (realmPrivacy == null) {
-            RealmPrivacy.updatePrivacy("", "", "", "", "");
+            RealmPrivacy.updatePrivacy("", "", "", "", "", "");
         }
         sharedPreferences = G.fragmentActivity.getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
 
@@ -1504,6 +1526,9 @@ public class FragmentSettingViewModel {
 
         int checkedSendByEnter = sharedPreferences.getInt(SHP_SETTING.KEY_SEND_BT_ENTER, 0);
         isSendEnter.set(getBoolean(checkedSendByEnter));
+
+        int checkedInAppBrowser = sharedPreferences.getInt(SHP_SETTING.KEY_IN_APP_BROWSER, 1);
+        isInAppBrowser.set(getBoolean(checkedInAppBrowser));
 
 
         boolean checkedThemeDark = sharedPreferences.getBoolean(SHP_SETTING.KEY_THEME_DARK, false);

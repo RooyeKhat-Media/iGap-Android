@@ -45,10 +45,12 @@ public class FragmentPrivacyAndSecurityViewModel {
     private final int INVITE_GROUP = 2;
     private final int LAST_SEEN = 3;
     private final int VOICE_CALL = 4;
+    private final int VIDEO_CALL = 5;
     public ObservableField<String> callbackSeeMyAvatar = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     public ObservableField<String> callbackInviteChannel = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     public ObservableField<String> callbackInviteGroup = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     public ObservableField<String> callbackVoiceCall = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
+    public ObservableField<String> callbackVideoCall = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     public ObservableField<String> callbackSeeLastSeen = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     public ObservableField<String> callbackSelfDestruction = new ObservableField<>(G.fragmentActivity.getResources().getString(R.string.everybody));
     int poSelfRemove;
@@ -63,6 +65,7 @@ public class FragmentPrivacyAndSecurityViewModel {
     private int poInviteGroup;
     private int poSeeLastSeen;
     private int poVoiceCall;
+    private int poVideoCall;
     private SharedPreferences sharedPreferences;
     private int poRbDialogSelfDestruction = 0;
     private int selfRemove;
@@ -93,6 +96,10 @@ public class FragmentPrivacyAndSecurityViewModel {
 
     public void onClickVoiceCall(View view) {
         openDialogWhoCan(ProtoGlobal.PrivacyType.VOICE_CALLING, poVoiceCall, R.string.title_who_is_allowed_to_call, VOICE_CALL);
+    }
+
+    public void onClickVideoCall(View view) {
+        openDialogWhoCan(ProtoGlobal.PrivacyType.VIDEO_CALLING, poVideoCall, R.string.title_who_is_allowed_to_call, VIDEO_CALL);
     }
 
     public void onClickSeeLastSeen(View view) {
@@ -215,6 +222,9 @@ public class FragmentPrivacyAndSecurityViewModel {
             case 4:
                 poVoiceCall = poWhoCan;
                 break;
+            case 5:
+                poVideoCall = poWhoCan;
+                break;
         }
     }
 
@@ -226,6 +236,7 @@ public class FragmentPrivacyAndSecurityViewModel {
             callbackInviteGroup.set(getStringFromEnumString(realmPrivacy.getWhoCanInviteMeToGroup(), INVITE_GROUP));
             callbackSeeLastSeen.set(getStringFromEnumString(realmPrivacy.getWhoCanSeeMyLastSeen(), LAST_SEEN));
             callbackVoiceCall.set(getStringFromEnumString(realmPrivacy.getWhoCanVoiceCallToMe(), VOICE_CALL));
+            callbackVideoCall.set(getStringFromEnumString(realmPrivacy.getWhoCanVideoCallToMe(), VIDEO_CALL));
         }
     }
 

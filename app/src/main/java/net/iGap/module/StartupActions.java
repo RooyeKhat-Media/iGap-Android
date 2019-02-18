@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.downloader.PRDownloader;
@@ -29,7 +28,6 @@ import net.iGap.fragments.FragmentiGapMap;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDataUsage;
 import net.iGap.helper.HelperFillLookUpClass;
-import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperUploadFile;
 import net.iGap.realm.RealmDataUsage;
@@ -72,7 +70,6 @@ import static net.iGap.G.authorHash;
 import static net.iGap.G.context;
 import static net.iGap.G.displayName;
 import static net.iGap.G.headerTextColor;
-import static net.iGap.G.helperNotificationAndBadge;
 import static net.iGap.G.imageFile;
 import static net.iGap.G.imageLoader;
 import static net.iGap.G.isSaveToGallery;
@@ -113,8 +110,8 @@ public final class StartupActions {
 
     private void checkDataUsage() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<RealmDataUsage> realmDataUsage=realm.where(RealmDataUsage.class).findAll();
-        if (realmDataUsage.size()==0)
+        RealmResults<RealmDataUsage> realmDataUsage = realm.where(RealmDataUsage.class).findAll();
+        if (realmDataUsage.size() == 0)
             HelperDataUsage.initializeRealmDataUsage();
     }
 
@@ -504,7 +501,6 @@ public final class StartupActions {
                 DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(false).build();
                 ImageLoader.getInstance().init(new ImageLoaderConfiguration.Builder(context).defaultDisplayImageOptions(defaultOptions).build());
                 imageLoader = ImageLoader.getInstance();
-                helperNotificationAndBadge = new HelperNotificationAndBadge();
 
                 HelperFillLookUpClass.fillArrays();
             }
@@ -589,6 +585,11 @@ public final class StartupActions {
         }
     }
 
+    public Realm getPlainInstance() {
+        RealmConfiguration configuration = new RealmConfiguration.Builder().name(context.getResources().getString(R.string.planDB)).schemaVersion(REALM_SCHEMA_VERSION).migration(new RealmMigration()).build();
+        return Realm.getInstance(configuration);
+    }
+
     public Realm getInstance() {
         SharedPreferences sharedPreferences = G.context.getSharedPreferences("AES-256", Context.MODE_PRIVATE);
 
@@ -604,7 +605,7 @@ public final class StartupActions {
 
         byte[] mKey = Base64.decode(sharedPreferences.getString("myByteArray", null), Base64.DEFAULT);
         RealmConfiguration newConfig = new RealmConfiguration.Builder()
-                .name("iGapLocalDatabaseEncrypted.realm")
+                .name(context.getResources().getString(R.string.encriptedDB))
                 .encryptionKey(mKey)
                 .schemaVersion(REALM_SCHEMA_VERSION)
                 .migration(new RealmMigration())
@@ -614,13 +615,25 @@ public final class StartupActions {
         if (newRealmFile.exists()) {
             return Realm.getInstance(newConfig);
         } else {
-            configuration = new RealmConfiguration.Builder().name("iGapLocalDatabase.realm")
-                    .schemaVersion(REALM_SCHEMA_VERSION).migration(new RealmMigration()).build();
-            Realm realm = Realm.getInstance(configuration);
-            realm.writeEncryptedCopyTo(newRealmFile, mKey);
-            realm.close();
-            Realm.deleteRealm(configuration);
-            return Realm.getInstance(newConfig);
+            Realm realm = null;
+            try {
+                configuration = new RealmConfiguration.Builder().name(context.getResources().getString(R.string.planDB))
+                        .schemaVersion(REALM_SCHEMA_VERSION)
+                        .compactOnLaunch()
+                        .migration(new RealmMigration()).build();
+                realm = Realm.getInstance(configuration);
+                realm.writeEncryptedCopyTo(newRealmFile, mKey);
+                realm.close();
+                Realm.deleteRealm(configuration);
+                return Realm.getInstance(newConfig);
+            } catch (OutOfMemoryError oom) {
+                realm.close();
+                return getPlainInstance();
+            } catch (Exception e) {
+                realm.close();
+                return getPlainInstance();
+
+            }
         }
     }
 }

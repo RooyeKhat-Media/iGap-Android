@@ -64,7 +64,7 @@ public class FragmentPassCodeViewModel {
     public ObservableField<String> txtModePassCode = new ObservableField<>(G.context.getResources().getString(R.string.PIN));
     public ObservableField<Boolean> isTogglePassCode = new ObservableField<>(false);
     public ObservableField<Boolean> isTogglePatternPassCode = new ObservableField<>(false);
-    public ObservableField<Boolean> isToggleTactileFeedback = new ObservableField<>(false);
+    public ObservableField<Boolean> isToggleTactileFeedback = new ObservableField<>(true);
     public ObservableField<Boolean> isFingerPrint = new ObservableField<>(false);
     public ObservableField<Boolean> isAllowScreenCapture = new ObservableField<>(false);
     public ObservableField<Integer> edtSetPasswordInput = new ObservableField<>(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -74,7 +74,7 @@ public class FragmentPassCodeViewModel {
     public ObservableField<Integer> visibilityPatternSetting = new ObservableField<>(View.GONE);
     public ObservableField<Integer> visibilityTactileFeedback = new ObservableField<>(View.GONE);
     public ObservableField<Integer> vgTogglePassCodeVisibility = new ObservableField<>(View.VISIBLE);
-    public ObservableField<Integer> visibilityPatternLock = new ObservableField<>(View.GONE);
+    public ObservableField<Integer> visibilityPatternLock = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> visibilityDescription = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> visibilityPassCode = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> visibilityCreateNewPattern = new ObservableField<>(View.VISIBLE);
@@ -169,6 +169,7 @@ public class FragmentPassCodeViewModel {
         rootPatternPassword.set(View.GONE);
         visibilityPassCode.set(View.GONE);
         isTogglePatternPassCode.set(true);
+        isToggleTactileFeedback.set(true);
     }
 
 
@@ -226,7 +227,7 @@ public class FragmentPassCodeViewModel {
         isTogglePassCode.set(false);
         vgTogglePassCodeVisibility.set(View.VISIBLE);
         visibilityDescription.set(View.VISIBLE);
-        visibilityPatternLock.set(View.GONE);
+        visibilityPatternLock.set(View.VISIBLE);
         visibilityChangePass.set(View.GONE);
         rootEnterPassword.set(View.GONE);
         rootSettingPassword.set(View.GONE);

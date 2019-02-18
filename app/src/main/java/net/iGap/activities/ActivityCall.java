@@ -38,16 +38,22 @@ import net.iGap.databinding.ActivityCallBinding;
 import net.iGap.helper.HelperPermission;
 import net.iGap.interfaces.OnCallLeaveView;
 import net.iGap.interfaces.OnGetPermission;
+import net.iGap.interfaces.OnVideoCallFrame;
 import net.iGap.module.MaterialDesignTextView;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.viewmodel.ActivityCallViewModel;
 import net.iGap.webrtc.WebRTC;
 
+import org.webrtc.EglBase;
+import org.webrtc.VideoFrame;
+
 import java.io.IOException;
 
-public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
+public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView, OnVideoCallFrame {
 
     public static final String USER_ID_STR = "USER_ID";
     public static final String INCOMING_CALL_STR = "INCOMING_CALL_STR";
+    public static final String CALL_TYPE = "CALL_TYPE";
     private static final int SENSOR_SENSITIVITY = 4;
 
     //public static TextView txtTimeChat, txtTimerMain;
@@ -75,6 +81,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     private Sensor mProximity;
     private ActivityCallViewModel activityCallViewModel;
     private ActivityCallBinding activityCallBinding;
+    private ProtoSignalingOffer.SignalingOffer.Type callTYpe;
 
     /**
      * Enables/Disables all child views in a view group.
@@ -137,29 +144,36 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
         G.isInCall = true;
 
+        userId = getIntent().getExtras().getLong(USER_ID_STR);
+        isIncomingCall = getIntent().getExtras().getBoolean(INCOMING_CALL_STR);
+        callTYpe = (ProtoSignalingOffer.SignalingOffer.Type) getIntent().getExtras().getSerializable(CALL_TYPE);
+
 
         try {
             HelperPermission.getMicroPhonePermission(this, new OnGetPermission() {
                 @Override
                 public void Allow() throws IOException {
 
+                    if (callTYpe == ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING) {
 
-                    userId = getIntent().getExtras().getLong(USER_ID_STR);
-                    isIncomingCall = getIntent().getExtras().getBoolean(INCOMING_CALL_STR);
+                        HelperPermission.getCameraPermission(ActivityCall.this, new OnGetPermission() {
+                            @Override
+                            public void Allow() throws IOException {
+                                init();
+                            }
 
-                    //setContentView(R.layout.activity_call);
-                    activityCallBinding = DataBindingUtil.setContentView(ActivityCall.this, R.layout.activity_call);
-                    activityCallViewModel = new ActivityCallViewModel(ActivityCall.this, userId, isIncomingCall, activityCallBinding);
-                    activityCallBinding.setActivityCallViewModel(activityCallViewModel);
+                            @Override
+                            public void deny() {
+                                G.isInCall = false;
+                                finish();
+                                if (isIncomingCall) {
+                                    WebRTC.getInstance().leaveCall();
+                                }
+                            }
+                        });
 
-
-                    initComponent();
-                    //initCallBack();
-
-                    G.onCallLeaveView = ActivityCall.this;
-
-                    if (!isIncomingCall) {
-                        new WebRTC().createOffer(userId);
+                    } else {
+                        init();
                     }
                 }
 
@@ -167,7 +181,9 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
                 public void deny() {
                     G.isInCall = false;
                     finish();
-                    new WebRTC().leaveCall();
+                    if (isIncomingCall) {
+                        WebRTC.getInstance().leaveCall();
+                    }
                 }
             });
         } catch (IOException e) {
@@ -181,9 +197,34 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
         onFinishActivity = new OnFinishActivity() {
             @Override
             public void finishActivity() {
+
+                try {
+                    if (callTYpe == ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING) {
+                        activityCallBinding.fcrSurfacePeer.release();
+                        activityCallBinding.fcrSurfaceRemote.release();
+                    }
+                } catch (RuntimeException e) {
+
+                }
+
+
                 finish();
             }
         };
+    }
+
+    private void init() {
+        WebRTC.getInstance().setCallType(callTYpe);
+        //setContentView(R.layout.activity_call);
+        activityCallBinding = DataBindingUtil.setContentView(ActivityCall.this, R.layout.activity_call);
+        activityCallViewModel = new ActivityCallViewModel(ActivityCall.this, userId, isIncomingCall, activityCallBinding);
+        activityCallBinding.setActivityCallViewModel(activityCallViewModel);
+        initComponent();
+        //initCallBack();
+        G.onCallLeaveView = ActivityCall.this;
+        if (!isIncomingCall) {
+            WebRTC.getInstance().createOffer(userId);
+        }
     }
 
     //***************************************************************************************
@@ -206,6 +247,28 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     }
 
     private void initComponent() {
+
+        if (callTYpe == ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING) {
+
+            EglBase rootEglBase = EglBase.create();
+            activityCallBinding.fcrSurfacePeer.init(rootEglBase.getEglBaseContext(), null);
+            activityCallBinding.fcrSurfacePeer.setEnableHardwareScaler(true);
+            activityCallBinding.fcrSurfacePeer.setMirror(true);
+            activityCallBinding.fcrSurfacePeer.setVisibility(View.VISIBLE);
+
+            activityCallBinding.fcrSurfaceRemote.init(rootEglBase.getEglBaseContext(), null);
+            activityCallBinding.fcrSurfaceRemote.setEnableHardwareScaler(true);
+            activityCallBinding.fcrSurfaceRemote.setMirror(true);
+            activityCallBinding.fcrSurfaceRemote.setVisibility(View.VISIBLE);
+
+            activityCallBinding.fcrImvBackground.setVisibility(View.GONE);
+            activityCallBinding.fcrTxtCallType.setText(getResources().getString(R.string.video_calls));
+
+            activityCallBinding.fcrBtnSwichCamera.setVisibility(View.VISIBLE);
+        } else {
+            activityCallBinding.fcrBtnSwichCamera.setVisibility(View.GONE);
+        }
+
         verticalSwipe = new VerticalSwipe();
         layoutCaller = activityCallBinding.fcrLayoutCaller;
 
@@ -316,7 +379,7 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
             layoutAnswer.setVisibility(View.GONE);
             layoutChat.setVisibility(View.GONE);
 
-            new WebRTC().createAnswer();
+            WebRTC.getInstance().createAnswer();
             cancelRingtone();
 
             btnEndCall.setOnTouchListener(null);
@@ -453,8 +516,13 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     @Override
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(sensorEventListener, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
 
+        if (callTYpe == ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING) {
+            G.onVideoCallFrame = ActivityCall.this;
+            WebRTC.getInstance().startVideoCapture();
+        }
+
+        mSensorManager.registerListener(sensorEventListener, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(headsetPluginReciver, filter);
     }
@@ -462,8 +530,11 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
     @Override
     protected void onPause() {
         super.onPause();
+        if (callTYpe == ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING) {
+            WebRTC.getInstance().pauseVideoCapture();
+        }
+        G.onVideoCallFrame = null;
         mSensorManager.unregisterListener(sensorEventListener);
-
         unregisterReceiver(headsetPluginReciver);
     }
 
@@ -477,6 +548,16 @@ public class ActivityCall extends ActivityEnhanced implements OnCallLeaveView {
 
             stopRingAnimation();
         }
+    }
+
+    @Override
+    public void onRemoteFrame(VideoFrame videoFrame) {
+        activityCallBinding.fcrSurfaceRemote.onFrame(videoFrame);
+    }
+
+    @Override
+    public void onPeerFrame(VideoFrame videoFrame) {
+        activityCallBinding.fcrSurfacePeer.onFrame(videoFrame);
     }
 
     //***************************************************************************************

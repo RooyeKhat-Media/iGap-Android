@@ -137,7 +137,9 @@ public class FragmentFilterImage extends BaseFragment implements FiltersListFrag
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                     final String path = BitmapUtils.insertImage(getActivity().getContentResolver(), finalImage, System.currentTimeMillis() + "_profile.jpg", null);
-                                    FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
+                                    if (FragmentEditImage.updateImage != null && path != null) {
+                                        FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
+                                    }
                                     popBackStackFragment();
                                 }
                             }).onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -159,7 +161,10 @@ public class FragmentFilterImage extends BaseFragment implements FiltersListFrag
             @Override
             public void onClick(View v) {
                 final String path = BitmapUtils.insertImage(getActivity().getContentResolver(), finalImage, System.currentTimeMillis() + "_profile.jpg", null);
-                FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
+                if (FragmentEditImage.updateImage != null && path != null) {
+                    FragmentEditImage.updateImage.result(AttachFile.getFilePathFromUri(Uri.parse(path)));
+                }
+
                 popBackStackFragment();
             }
         });

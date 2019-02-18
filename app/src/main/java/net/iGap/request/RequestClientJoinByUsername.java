@@ -26,4 +26,17 @@ public class RequestClientJoinByUsername {
             e.printStackTrace();
         }
     }
+
+    public void clientJoinByUsername(String username, long roomId) {
+
+        ProtoClientJoinByUsername.ClientJoinByUsername.Builder builder = ProtoClientJoinByUsername.ClientJoinByUsername.newBuilder();
+        builder.setUsername(username);
+
+        RequestWrapper requestWrapper = new RequestWrapper(609, builder, roomId+"");
+        try {
+            RequestQueue.sendRequest(requestWrapper);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

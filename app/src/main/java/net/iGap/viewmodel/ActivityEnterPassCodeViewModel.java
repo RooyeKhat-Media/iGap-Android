@@ -73,7 +73,7 @@ public class ActivityEnterPassCodeViewModel {
     public ObservableField<Integer> rippleOkVisibility = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> vsRootIsPassCode = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> vsRootIsEditText = new ObservableField<>(View.VISIBLE);
-    public ObservableField<Integer> vsRootIsPattern = new ObservableField<>(View.GONE);
+    public ObservableField<Integer> vsRootIsPattern = new ObservableField<>(View.VISIBLE);
     public ObservableField<Integer> edtSetPasswordInput = new ObservableField<>(TYPE_TEXT_VARIATION_PASSWORD);
     public ObservableField<Integer> onTextChangedMaxLine = new ObservableField<>(4);
     private Realm realm;

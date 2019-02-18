@@ -5,6 +5,7 @@
   <string name="md_black_keyboard_with_white_keys">\uf30c</string> <!-- igap_keyboard  -->
   <string name="md_send_button">\uf48a</string>  <!-- igap_send  -->
   <string name="md_attachment_clip">\uf066</string>  <!-- igap_attachment  -->
+  <string name="md_bot">\uf757</string>
   <string name="md_voice_message_microphone_button">\uf36c</string> <!-- igap_microphone  -->
   <string name="md_flaticon_volume_off_indicator">\uf581</string> <!-- igap_volume-off  -->
   <string name="md_share_button">\uf497</string>  <!-- igap_share-variant  -->
@@ -113,7 +114,7 @@
   <string name="icon_photo">\uf2ef</string> <!--  igap_image-filter  -->
   <string name="md_eraser">\uf1fe</string> <!-- igap_eraser  -->
   <string name="md_qrCode">\uf433</string> <!-- igap_qrCode  -->
-  <string name="md_file_video">\ue92a</string> <!-- igap_eraser  -->
+  <string name="md_file_video">\uf567</string> <!-- igap_eraser  -->
   <string name="md_file_music">\ue928</string> <!-- igap_eraser  -->
   <string name="igap_file_text2">\ue926</string> <!-- igap_eraser  -->
   <string name="md_igap_file">\uf24b</string> <!-- igap_eraser  -->
@@ -149,4 +150,8 @@
   <string name="md_igap_sync">\uf4e6</string>
   <string name="igap_cash_usd">\uf115</string>
   <string name="md_igap_export">\uf207</string>
+  <string name="md_solid_colors">\uf266</string>  <!-- igap_magnify  -->
+  <string name="md_wallpapers">\ue927</string>  <!-- igap_magnify  -->
+  <string name="md_email">\uf1f0</string>
+  <string name="md_swich_video">\uf569</string>
 </resources>

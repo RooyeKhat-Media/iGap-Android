@@ -68,6 +68,7 @@ public class SHP_SETTING {
     public static final String KEY_AD_ROAMING_MUSIC = "ROAMING_MUSIC";
     public static final String KEY_AD_ROAMING_GIF = "ROAMING_GIF";
 
+
     // ========================================================================================== notification and sound
 
     public static final String KEY_STNS_ALERT_MESSAGE = "STNS_ALERT_MESSAGE";
@@ -75,10 +76,11 @@ public class SHP_SETTING {
     public static final String KEY_STNS_ALERT_GROUP = "STNS_ALERT_GROUP";
     public static final String KEY_STNS_MESSAGE_PREVIEW_GROUP = "STNS_MESSAGE_PREVIEW_GROUP";
 
-    public static final String KEY_STNS_APP_SOUND = "STNS_APP_SOUND";
-    public static final String KEY_STNS_APP_VIBRATE = "STNS_APP_VIBRATE";
-    public static final String KEY_STNS_APP_PREVIEW = "STNS_APP_PREVIEW";
-    public static final String KEY_STNS_CHAT_SOUND = "STNS_CHAT_SOUND";
+    public static final String KEY_STNS_APP_SOUND_NEW = "KEY_STNS_APP_SOUND_NEW";
+    public static final String KEY_STNS_APP_VIBRATE_NEW = "KEY_STNS_APP_VIBRATE_NEW";
+    public static final String KEY_STNS_APP_PREVIEW_NEW = "KEY_STNS_APP_PREVIEW_NEW";
+    public static final String KEY_STNS_CHAT_SOUND_NEW = "KEY_STNS_CHAT_SOUND_NEW";
+    public static final String KEY_STNS_SEPARATE_NOTIFICATION = "KEY_STNS_SEPARATE_NOTIFICATION";
 
     public static final String KEY_STNS_CONTACT_JOINED = "STNS_CONTACT_JOINED";
     public static final String KEY_STNS_PINNED_MESSAGE = "STNS_PINNED_MESSAGE";

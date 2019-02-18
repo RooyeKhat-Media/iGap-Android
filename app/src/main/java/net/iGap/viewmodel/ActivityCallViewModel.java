@@ -33,9 +33,11 @@ import net.iGap.activities.ActivityCall;
 import net.iGap.databinding.ActivityCallBinding;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperDownloadFile;
+import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperPublicMethod;
 import net.iGap.interfaces.ISignalingCallBack;
 import net.iGap.module.AndroidUtils;
+import net.iGap.module.AttachFile;
 import net.iGap.module.MusicPlayer;
 import net.iGap.module.enums.CallState;
 import net.iGap.proto.ProtoFileDownload;
@@ -107,10 +109,10 @@ public class ActivityCallViewModel {
 
         if (cllBackBtnMic.get().toString().equals(G.fragmentActivity.getResources().getString(R.string.md_mic))) {
             cllBackBtnMic.set(G.fragmentActivity.getResources().getString(R.string.md_mic_off));
-            WebRTC.muteSound();
+            WebRTC.getInstance().muteSound();
         } else {
             cllBackBtnMic.set(G.fragmentActivity.getResources().getString(R.string.md_mic));
-            WebRTC.unMuteSound();
+            WebRTC.getInstance().unMuteSound();
         }
     }
 
@@ -124,6 +126,10 @@ public class ActivityCallViewModel {
                 setSpeakerphoneOn(false);
             }
         }
+    }
+
+    public void onClickBtnSwitchCamera(View v) {
+        WebRTC.getInstance().switchCamera();
     }
 
 
@@ -329,7 +335,7 @@ public class ActivityCallViewModel {
 
         G.isInCall = false;
 
-        new WebRTC().leaveCall();
+        WebRTC.getInstance().leaveCall();
         isSendLeave = true;
 
 
@@ -479,7 +485,7 @@ public class ActivityCallViewModel {
             ProtoFileDownload.FileDownload.Selector se = ProtoFileDownload.FileDownload.Selector.FILE;
             String dirPath = AndroidUtils.getFilePathWithCashId(av.getCacheId(), av.getName(), G.DIR_IMAGE_USER, false);
 
-            HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE,System.currentTimeMillis() + "", av.getToken(), av.getUrl(), av.getCacheId(), av.getName(), av.getSize(), se, dirPath, 4, new HelperDownloadFile.UpdateListener() {
+            HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE, System.currentTimeMillis() + "", av.getToken(), av.getUrl(), av.getCacheId(), av.getName(), av.getSize(), se, dirPath, 4, new HelperDownloadFile.UpdateListener() {
                 @Override
                 public void OnProgress(final String path, int progress) {
                     if (progress == 100) {
@@ -567,8 +573,15 @@ public class ActivityCallViewModel {
 
             try {
                 Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                String path = AttachFile.getFilePathFromUri(alert);
+
                 ringtonePlayer = new MediaPlayer();
-                ringtonePlayer.setDataSource(G.context, alert);
+
+                if (path == null) {
+                    ringtonePlayer.setDataSource(context, Uri.parse("android.resource://" + G.context.getPackageName() + "/" + R.raw.tone));
+                } else {
+                    ringtonePlayer.setDataSource(G.context, alert);
+                }
 
                 if (am.isWiredHeadsetOn()) {
                     ringtonePlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
@@ -580,6 +593,7 @@ public class ActivityCallViewModel {
                 ringtonePlayer.prepare();
                 ringtonePlayer.start();
             } catch (Exception e) {
+                HelperLog.setErrorLog("activity call view model   set ringtone uri  " + e);
             }
         }
 
@@ -756,7 +770,7 @@ public class ActivityCallViewModel {
         unMuteMusic();
         new RequestSignalingGetLog().signalingGetLog(0, 1);
         if (!isSendLeave) {
-            new WebRTC().leaveCall();
+            WebRTC.getInstance().leaveCall();
         }
     }
 

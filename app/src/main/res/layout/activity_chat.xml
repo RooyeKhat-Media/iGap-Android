@@ -177,6 +177,28 @@
           </LinearLayout>
 
           <net.iGap.libs.rippleeffect.RippleView
+            android:id="@+id/acp_ripple_video_call"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:rv_alpha="200"
+            app:rv_centered="true"
+            app:rv_rippleDuration="150"
+            app:rv_ripplePadding="5dp">
+
+            <net.iGap.module.MaterialDesignTextView
+              android:layout_width="@dimen/dp44"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:text="@string/md_file_video"
+              android:textAppearance="@style/TextIconAppearance_toolbar"
+              android:textColor="@color/whit_background"
+              android:textSize="@dimen/dp20" />
+
+          </net.iGap.libs.rippleeffect.RippleView>
+
+          <net.iGap.libs.rippleeffect.RippleView
             android:id="@+id/acp_ripple_call"
             rv_centered="true"
             android:layout_width="wrap_content"
@@ -195,7 +217,6 @@
               android:textAppearance="@style/TextIconAppearance_toolbar"
               android:textColor="@color/whit_background"
               android:textSize="@dimen/dp20" />
-
 
           </net.iGap.libs.rippleeffect.RippleView>
 
@@ -505,10 +526,16 @@
           style="?backgroundColorSettingTheme_2"
           android:scaleType="centerCrop" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
         <android.support.v7.widget.RecyclerView
           android:id="@+id/chl_recycler_view_chat"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
           android:background="@android:color/transparent"
           android:fadeScrollbars="true"
           android:scrollbarSize="@dimen/dp4"
@@ -518,6 +545,16 @@
           <!-- android:scrollbars="none"   android:overScrollMode="never"-->
         </android.support.v7.widget.RecyclerView>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcvDrBot"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_marginRight="@dimen/dp6"
+            android:layout_marginLeft="@dimen/dp6"
+            android:elevation="@dimen/dp10"
+            android:background="@android:color/transparent"
+            android:layout_height="@dimen/dp52"/>
+        </LinearLayout>
       </RelativeLayout>
 
       <FrameLayout
@@ -528,6 +565,7 @@
         android:layout_margin="@dimen/dp12"
         android:orientation="vertical"
         android:visibility="gone">
+
 
         <net.iGap.module.MaterialDesignTextView
           android:id="@+id/ac_txt_down_navigation"
@@ -662,6 +700,8 @@
            />
      </LinearLayout>-->
 
+
+
     <LinearLayout
       android:id="@+id/ac_ll_hash_navigation"
       android:layout_width="match_parent"
@@ -744,6 +784,14 @@
     <include
       android:id="@+id/layout_attach_file"
       layout="@layout/layout_attach_file" />
+
+    <include
+      android:id="@+id/layout_bot"
+      layout="@layout/bot_action_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:visibility="gone" />
 
     <LinearLayout
       android:id="@+id/ac_ll_join"

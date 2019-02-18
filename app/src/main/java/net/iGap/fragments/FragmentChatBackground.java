@@ -10,6 +10,7 @@
 
 package net.iGap.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,15 +24,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.adapter.AdapterChatBackground;
+import net.iGap.adapter.AdapterSolidChatBackground;
 import net.iGap.helper.ImageHelper;
 import net.iGap.interfaces.OnGetWallpaper;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AttachFile;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.TimeUtils;
 import net.iGap.proto.ProtoGlobal;
@@ -56,12 +62,17 @@ public class FragmentChatBackground extends BaseFragment {
     private RippleView rippleBack;
     private RippleView rippleSet;
     private RippleView rippleSetDefault;
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView, rcvSolidColor;
     private ImageView imgFullImage;
     private AdapterChatBackground adapterChatBackgroundSetting;
+    private AdapterSolidChatBackground adapterSolidChatbackground;
     private ArrayList<StructWallpaper> wList;
     private Realm realmChatBackground;
     private Fragment fragment;
+    private RippleView chB_ripple_menu_button;
+
+    ArrayList<String> solidList = new ArrayList<>();
+
 
     public static FragmentChatBackground newInstance() {
         return new FragmentChatBackground();
@@ -89,6 +100,60 @@ public class FragmentChatBackground extends BaseFragment {
         view.findViewById(R.id.stcb_backgroundToolbar).setBackgroundColor(Color.parseColor(G.appBarColor));
 
         rippleBack = (RippleView) view.findViewById(R.id.stcb_ripple_back);
+
+        chB_ripple_menu_button = (RippleView) view.findViewById(R.id.chB_ripple_menu_button);
+
+        chB_ripple_menu_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
+                View v = dialog.getCustomView();
+
+                DialogAnimation.animationUp(dialog);
+                dialog.show();
+
+                ViewGroup root1 = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+                ViewGroup root2 = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+
+                TextView txtSolidColors = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+                TextView txtWallpaper = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+
+                TextView iconSolidColor = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+                iconSolidColor.setText(G.fragmentActivity.getResources().getString(R.string.md_solid_colors));
+
+
+
+                TextView iconWallpaper = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+
+                iconWallpaper.setText(G.fragmentActivity.getResources().getString(R.string.md_wallpapers));
+
+                root1.setVisibility(View.VISIBLE);
+                root2.setVisibility(View.VISIBLE);
+
+                txtSolidColors.setText(getResources().getString(R.string.solid_colors));
+                txtWallpaper.setText(getResources().getString(R.string.wallpapers));
+
+                root1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        mRecyclerView.setVisibility(View.GONE);
+                        rcvSolidColor.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    }
+                });
+
+                root2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        rcvSolidColor.setVisibility(View.GONE);
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
         rippleBack.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
@@ -142,11 +207,16 @@ public class FragmentChatBackground extends BaseFragment {
         fillList(true);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rcvContent);
+        rcvSolidColor = (RecyclerView) view.findViewById(R.id.rcvSolidColor);
+
+
         adapterChatBackgroundSetting = new AdapterChatBackground(fragment, wList, new OnImageClick() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(String imagePath) {
 
                 G.imageLoader.displayImage(AndroidUtils.suitablePath(imagePath), imgFullImage);
+
 
                 savePath = imagePath;
 
@@ -154,9 +224,32 @@ public class FragmentChatBackground extends BaseFragment {
                 rippleSetDefault.setVisibility(View.GONE);
             }
         });
+
+        adapterSolidChatbackground = new AdapterSolidChatBackground(fragment, solidList, new OnImageClick() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onClick(String imagePath) {
+
+                //   G.imageLoader.displayImage(AndroidUtils.suitablePath(imagePath), imgFullImage);
+                imgFullImage.setImageDrawable(null);
+                imgFullImage.setBackgroundColor(Color.parseColor(imagePath));
+
+                savePath = imagePath;
+
+                rippleSet.setVisibility(View.VISIBLE);
+                rippleSetDefault.setVisibility(View.GONE);
+            }
+        });
+
+
         mRecyclerView.setAdapter(adapterChatBackgroundSetting);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(G.fragmentActivity, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.clearAnimation();
+
+
+        rcvSolidColor.setAdapter(adapterSolidChatbackground);
+        rcvSolidColor.setLayoutManager(new LinearLayoutManager(G.fragmentActivity, LinearLayoutManager.HORIZONTAL, false));
+        rcvSolidColor.clearAnimation();
 
 
     }
@@ -229,6 +322,7 @@ public class FragmentChatBackground extends BaseFragment {
                     public void run() {
                         fillList(false);
                         adapterChatBackgroundSetting.notifyDataSetChanged();
+                        adapterSolidChatbackground.notifyDataSetChanged();
                     }
                 });
             }
@@ -242,6 +336,7 @@ public class FragmentChatBackground extends BaseFragment {
         if (wList == null) wList = new ArrayList<>();
 
         wList.clear();
+
 
         //add item 0 add new background from local
         StructWallpaper sw = new StructWallpaper();
@@ -261,6 +356,7 @@ public class FragmentChatBackground extends BaseFragment {
                         _swl.setWallpaperType(WallpaperType.local);
                         _swl.setPath(localPath);
                         wList.add(_swl);
+
                     }
                 }
             }
@@ -271,6 +367,7 @@ public class FragmentChatBackground extends BaseFragment {
                     _swp.setWallpaperType(WallpaperType.proto);
                     _swp.setProtoWallpaper(wallpaper);
                     wList.add(_swp);
+                    solidList.add(_swp.getProtoWallpaper().getColor());
                 }
             }
 
@@ -308,6 +405,7 @@ public class FragmentChatBackground extends BaseFragment {
         private WallpaperType wallpaperType;
         private String path;
         private RealmWallpaperProto protoWallpaper;
+
 
         public WallpaperType getWallpaperType() {
             return wallpaperType;

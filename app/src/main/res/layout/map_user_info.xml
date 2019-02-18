@@ -74,6 +74,15 @@
           android:textAppearance="@style/TextIconAppearance_toolbar"
           android:textColor="@color/iGapColor" />
 
+        <net.iGap.module.MaterialDesignTextView
+          android:id="@+id/txt_video_call_map"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/dp4"
+          android:text="@string/md_file_video"
+          android:textAppearance="@style/TextIconAppearance_toolbar"
+          android:textColor="@color/iGapColor" />
+
         <View
           android:layout_width="0dip"
           android:layout_height="0dp"

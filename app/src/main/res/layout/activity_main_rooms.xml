@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <net.iGap.module.NotTouchableCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  style="?backgroundColorSettingTheme"
-  android:clickable="true"
-  tools:ignore="MissingPrefix">
-
-
-  <android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/activity_main_swipe_refresh_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?backgroundColorSettingTheme"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:ignore="MissingPrefix">
 
 
-    <android.support.v7.widget.RecyclerView
-      android:id="@+id/cl_recycler_view_contact"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:overScrollMode="never"
-      style="?backgroundColorSettingTheme" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/activity_main_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-  </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cl_recycler_view_contact"
+            style="?backgroundColorSettingTheme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
 
 
-  <ProgressBar
-    android:id="@+id/ac_progress_bar_waiting"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center|bottom"
-    android:indeterminate="true"
-    android:padding="@dimen/dp4"
-    android:visibility="gone" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-  <include
-    android:id="@+id/empty_icon"
-    layout="@layout/empty_layout"
-    android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/ac_progress_bar_waiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:indeterminate="true"
+        android:padding="@dimen/dp4"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/empty_icon"
+        layout="@layout/empty_layout"
+        android:visibility="visible" />
+
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+      android:layout_marginTop="160dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/dp4"
+        android:visibility="visible" />
 
 
 </net.iGap.module.NotTouchableCoordinatorLayout>

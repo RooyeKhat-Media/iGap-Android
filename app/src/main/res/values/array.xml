@@ -245,6 +245,11 @@
     <item>@string/Female</item>
   </string-array>
 
+  <string-array name="array_verifySms">
+    <item>@string/verify_register_sms</item>
+    <item>@string/verify_register_call</item>
+  </string-array>
+
   <string-array name="array_passCode">
     <item>@string/PIN</item>
     <item>@string/password</item>
@@ -273,6 +278,11 @@
   <string-array name="capture">
     <item>@string/capture_image</item>
     <item>@string/capture_video</item>
+  </string-array>
+
+  <string-array name="calls">
+    <item>@string/voice_calls</item>
+    <item>@string/video_calls</item>
   </string-array>
 
   <string-array name="securityRecoveryPassword">

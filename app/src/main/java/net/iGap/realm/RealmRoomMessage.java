@@ -823,6 +823,25 @@ public class RealmRoomMessage extends RealmObject {
                     roomMessage.setEdited(true);
                     RealmRoomMessage.addTimeIfNeed(roomMessage, realm);
                     RealmRoomMessage.isEmojiInText(roomMessage, message);
+
+                    switch (roomMessage.getMessageType()) {
+                        case IMAGE:
+                            roomMessage.setMessageType(ProtoGlobal.RoomMessageType.IMAGE_TEXT);
+                            break;
+                        case VIDEO:
+                            roomMessage.setMessageType(ProtoGlobal.RoomMessageType.VIDEO_TEXT);
+                            break;
+                        case AUDIO:
+                            roomMessage.setMessageType(ProtoGlobal.RoomMessageType.AUDIO_TEXT);
+                            break;
+                        case GIF:
+                            roomMessage.setMessageType(ProtoGlobal.RoomMessageType.GIF_TEXT);
+                            break;
+                        case FILE:
+                            roomMessage.setMessageType(ProtoGlobal.RoomMessageType.FILE_TEXT);
+                            break;
+                    }
+
                 }
             }
         });
@@ -1157,7 +1176,16 @@ public class RealmRoomMessage extends RealmObject {
     }
 
     public ProtoGlobal.RoomMessageType getMessageType() {
-        return ProtoGlobal.RoomMessageType.valueOf(messageType);
+
+        if (messageType == null) {
+            return ProtoGlobal.RoomMessageType.UNRECOGNIZED;
+        }
+        try {
+            return ProtoGlobal.RoomMessageType.valueOf(messageType);
+        } catch (RuntimeException e) {
+            return ProtoGlobal.RoomMessageType.UNRECOGNIZED;
+        }
+
     }
 
     public void setMessageType(ProtoGlobal.RoomMessageType messageType) {

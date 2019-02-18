@@ -1020,7 +1020,7 @@
             style="?lineColorSettingTheme"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
           <RelativeLayout
             android:layout_width="match_parent"
@@ -1029,8 +1029,9 @@
             android:paddingEnd="@dimen/dp16"
             android:paddingLeft="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
+            android:onClick="@{fragmentSettingViewModel::onClickAppBrowser}"
             android:paddingStart="@dimen/dp16"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
               android:layout_width="wrap_content"
@@ -1044,6 +1045,8 @@
                 android:layout_width="@dimen/dp44"
                 android:layout_height="@dimen/dp40"
                 android:background="@drawable/st_switch_button"
+                android:checked="@{safeUnbox(fragmentSettingViewModel.isInAppBrowser)}"
+                android:onCheckedChanged="@{(switch, checked) -> fragmentSettingViewModel.onCheckedAppBrowser(checked)}"
                 android:textOff=""
                 android:textOn="" />
 

@@ -56,39 +56,40 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
     @Override
     public void onOffer(final long called_userId, ProtoSignalingOffer.SignalingOffer.Type type, final String callerSdp) {
 
-        if (type != ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING) {
+        if (type == ProtoSignalingOffer.SignalingOffer.Type.SECRET_CHAT || type == ProtoSignalingOffer.SignalingOffer.Type.SCREEN_SHARING) {
             return;
         }
-
+        WebRTC.getInstance().setCallType(type);
         new RequestSignalingRinging().signalingRinging();
 
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                if (new WebRTC().peerConnectionInstance() != null) {
-                    new WebRTC().peerConnectionInstance().setRemoteDescription(new SdpObserver() {
-                        @Override
-                        public void onCreateSuccess(SessionDescription sessionDescription) {
 
-                        }
 
-                        @Override
-                        public void onSetSuccess() {
-                            FragmentCall.call(called_userId, true);
-                        }
+                WebRTC.getInstance().peerConnectionInstance().setRemoteDescription(new SdpObserver() {
+                    @Override
+                    public void onCreateSuccess(SessionDescription sessionDescription) {
 
-                        @Override
-                        public void onCreateFailure(String s) {
-                            Log.i("WWW", "onOffer onCreateFailure : " + s);
-                        }
+                    }
 
-                        @Override
-                        public void onSetFailure(String s) {
-                            Log.i("WWW", "onOffer onSetFailure : " + s);
-                        }
-                    }, new SessionDescription(OFFER, callerSdp));
-                }
+                    @Override
+                    public void onSetSuccess() {
+                        FragmentCall.call(called_userId, true, type);
+                    }
+
+                    @Override
+                    public void onCreateFailure(String s) {
+                        Log.i("WWW", "onOffer onCreateFailure : " + s);
+                    }
+
+                    @Override
+                    public void onSetFailure(String s) {
+                        Log.i("WWW", "onOffer onSetFailure : " + s);
+                    }
+                }, new SessionDescription(OFFER, callerSdp));
             }
+
         });
     }
 
@@ -97,9 +98,9 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
         G.handler.post(new Runnable() {
             @Override
             public void run() {
-                new WebRTC().setOfferLocalDescription();
+                WebRTC.getInstance().setOfferLocalDescription();
 
-                new WebRTC().peerConnectionInstance().setRemoteDescription(new SdpObserver() {
+                WebRTC.getInstance().peerConnectionInstance().setRemoteDescription(new SdpObserver() {
                     @Override
                     public void onCreateSuccess(SessionDescription sessionDescription) {
 
@@ -130,7 +131,7 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
             @Override
             public void run() {
                 Log.i("WWW_Candidate", "onCandidate server : " + peerCandidate);
-                new WebRTC().peerConnectionInstance().addIceCandidate(new IceCandidate(peerSdpMId, peerSdpMLineIndex, peerCandidate));
+                WebRTC.getInstance().peerConnectionInstance().addIceCandidate(new IceCandidate(peerSdpMId, peerSdpMLineIndex, peerCandidate));
             }
         });
     }
@@ -138,12 +139,12 @@ public class CallObserver implements ISignalingOffer, ISignalingErrore, ISignali
 
     @Override
     public void onLeave(final ProtoSignalingLeave.SignalingLeaveResponse.Type type) {
-        new WebRTC().close();
-        new WebRTC().dispose();
+        WebRTC.getInstance().close();
+        WebRTC.getInstance().dispose();
         /**
          * set peer connection null for try again
          */
-        new WebRTC().clearConnection();
+        WebRTC.getInstance().clearConnection();
 
         if (G.iSignalingCallBack != null) {
 

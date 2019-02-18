@@ -342,30 +342,17 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
 
                 @Override
                 public void onOpen(SwipeLayout layout) {
-                    MaterialDialog dialog = new MaterialDialog.Builder(G.currentActivity).content(R.string.un_block_user).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            new RequestUserContactsUnblock().userContactsUnblock(registeredInfo.getId());
-                        }
-                    }).negativeText(R.string.B_cancel).build();
 
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            viewHolder.swipeLayout.close();
-                        }
-                    });
-                    dialog.show();
                 }
 
                 @Override
                 public void onStartClose(SwipeLayout layout) {
 
-
                 }
 
                 @Override
                 public void onClose(SwipeLayout layout) {
+
                 }
 
                 @Override
@@ -376,6 +363,24 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
                 @Override
                 public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
 
+                    if (!viewHolder.isOpenDialog) {
+                        viewHolder.isOpenDialog = true;
+                        MaterialDialog dialog = new MaterialDialog.Builder(G.currentActivity).content(R.string.un_block_user).positiveText(R.string.B_ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                new RequestUserContactsUnblock().userContactsUnblock(registeredInfo.getId());
+                            }
+                        }).negativeText(R.string.B_cancel).build();
+
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                viewHolder.swipeLayout.close();
+                                viewHolder.isOpenDialog = false;
+                            }
+                        });
+                        dialog.show();
+                    }
                 }
             });
         }
@@ -388,6 +393,7 @@ public class FragmentBlockedUser extends BaseFragment implements OnBlockStateCha
             RealmRegisteredInfo realmRegisteredInfo;
             View bottomLine;
             private SwipeLayout swipeLayout;
+            private boolean isOpenDialog = false;
 
 
             public ViewHolder(View view) {

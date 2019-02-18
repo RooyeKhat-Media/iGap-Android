@@ -12,11 +12,14 @@ package net.iGap.helper;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -28,22 +31,27 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.G;
 import net.iGap.R;
+import net.iGap.fragments.FragmentAddContact;
 import net.iGap.fragments.FragmentChat;
 import net.iGap.fragments.FragmentContactsProfile;
 import net.iGap.interfaces.OnAvatarGet;
+import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnClientCheckInviteLink;
 import net.iGap.interfaces.OnClientGetRoomMessage;
 import net.iGap.interfaces.OnClientJoinByInviteLink;
 import net.iGap.interfaces.OnClientResolveUsername;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.CircleImageView;
+import net.iGap.module.DialogAnimation;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.proto.ProtoClientResolveUsername;
 import net.iGap.proto.ProtoGlobal;
@@ -52,6 +60,7 @@ import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 import net.iGap.realm.RealmRoomMessageFields;
+import net.iGap.request.RequestChatGetRoom;
 import net.iGap.request.RequestClientCheckInviteLink;
 import net.iGap.request.RequestClientGetRoomMessage;
 import net.iGap.request.RequestClientJoinByInviteLink;
@@ -59,6 +68,12 @@ import net.iGap.request.RequestClientResolveUsername;
 
 import org.chromium.customtabsclient.CustomTabsActivityHelper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +83,8 @@ import java.util.regex.Pattern;
 import io.realm.Realm;
 import me.zhanghai.android.customtabshelper.CustomTabsHelperFragment;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+import static net.iGap.G.context;
 import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 
 public class HelperUrl {
@@ -159,27 +176,50 @@ public class HelperUrl {
 
         ClickableSpan clickable = new ClickableSpan() {
             public void onClick(View view) {
+
+                new CountDownTimer(300, 100) {
+
+                    public void onTick(long millisUntilFinished) {
+                        view.setEnabled(false);
+                    }
+
+                    public void onFinish() {
+                        view.setEnabled(true);
+                    }
+                }.start();
+
                 if (withclickable) {
 
                     G.isLinkClicked = true;
                     boolean openLocalWebPage;
                     SharedPreferences sharedPreferences = G.context.getSharedPreferences(SHP_SETTING.FILE_NAME, G.context.MODE_PRIVATE);
 
-                    int checkedInappBrowser = sharedPreferences.getInt(SHP_SETTING.KEY_IN_APP_BROWSER, 0);
+                    int checkedInappBrowser = sharedPreferences.getInt(SHP_SETTING.KEY_IN_APP_BROWSER, 1);
 
-                    if (checkedInappBrowser == 1) {
-                        openLocalWebPage = true;
-                    } else {
-                        openLocalWebPage = false;
+                    String mUrl = strBuilder.toString().substring(start, end).trim();
+
+                    if (!mUrl.startsWith("https://") && !mUrl.startsWith("http://")) {
+                        mUrl = "http://" + mUrl;
                     }
 
-                    String url = strBuilder.toString().substring(start, end).trim();
-                    url = url.replaceAll("[^\\x00-\\x7F]", "");
-
-                    if (!url.startsWith("https://") && !url.startsWith("http://")) {
-                        url = "http://" + url;
+                    URL url = null;
+                    try {
+                        url = new URL(mUrl);
+                        URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+                        url = new URL(uri.toASCIIString());
+                        mUrl = url.toString();
+                        mUrl = mUrl.replaceAll("[^\\x00-\\x7F]", "");
+                        if (checkedInappBrowser == 1 && !isNeedOpenWithoutBrowser(mUrl)) {
+                            openBrowser(mUrl);
+                        } else {
+                            openWithoutBrowser(mUrl);
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
                     }
-                    openBrowser(url);
+
                 }
             }
 
@@ -200,8 +240,40 @@ public class HelperUrl {
         strBuilder.setSpan(clickable, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    public static void openBrowser(String url) {
+    private static boolean isNeedOpenWithoutBrowser(String url) {
+        ArrayList<String> listApps = new ArrayList<>();
+        listApps.add("facebook.com");
+        listApps.add("twitter.com");
+        listApps.add("instagram.com");
+        listApps.add("pinterest.com");
+        listApps.add("tumblr.com");
+        listApps.add("telegram.org");
+        listApps.add("flickr.com");
+        listApps.add("500px.com");
+        listApps.add("behance.net");
+        listApps.add("t.me");
 
+        for (String string : listApps) {
+            if(url.contains(string)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void openWithoutBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (intent.resolveActivity(G.fragmentActivity.getPackageManager()) != null) {
+            G.fragmentActivity.startActivity(intent);
+        } else {
+//            Toast.makeText(G.fragmentActivity, "", Toast.LENGTH_SHORT).show();
+            HelperError.showSnackMessage(G.context.getResources().getString(R.string.error),false);
+        }
+    }
+
+    public static void openBrowser(String url) {
         final CustomTabsHelperFragment mCustomTabsHelperFragment = CustomTabsHelperFragment.attachTo((FragmentActivity) G.currentActivity);
 
         int mColorPrimary = Color.parseColor(G.appBarColor);
@@ -270,6 +342,29 @@ public class HelperUrl {
         strBuilder.setSpan(clickable, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
+    private static void insertIgapBot(final SpannableStringBuilder strBuilder, final int start, final int end) {
+
+        ClickableSpan clickable = new ClickableSpan() {
+            public void onClick(View view) {
+                G.isLinkClicked = true;
+                String botCommandText = strBuilder.toString().substring(start, end);
+
+                if (G.onBotClick != null) {
+                    G.onBotClick.onBotCommandText(botCommandText);
+                }
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.linkColor = Color.parseColor(G.linkColor);
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+
+        strBuilder.setSpan(clickable, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
     private static void insertIgapResolveLink(final SpannableStringBuilder strBuilder, final int start, final int end) {
 
         ClickableSpan clickable = new ClickableSpan() {
@@ -298,6 +393,26 @@ public class HelperUrl {
 //                } else {
 //                    ds.linkColor = LinkColor;
 //                }
+                ds.linkColor = Color.parseColor(G.linkColor);
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+
+        strBuilder.setSpan(clickable, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+
+    private static void insertDigitLink(final SpannableStringBuilder strBuilder, final int start, final int end) {
+
+        ClickableSpan clickable = new ClickableSpan() {
+            public void onClick(View view) {
+                G.isLinkClicked = true;
+                String digitLink = strBuilder.toString().substring(start, end);
+                openDialogDigitClick(digitLink);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
                 ds.linkColor = Color.parseColor(G.linkColor);
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
@@ -358,7 +473,6 @@ public class HelperUrl {
             @Override
             public void onClick(View view) {
                 G.isLinkClicked = true;
-                ;
                 if (FragmentChat.hashListener != null) {
                     FragmentChat.hashListener.complete(true, "#" + text, messageID);
                 }
@@ -480,18 +594,29 @@ public class HelperUrl {
                 int end = Integer.parseInt(info[1]);
                 String type = info[2];
 
-
                 try {
-                    if (type.equals("hash")) {
-                        insertHashLink(text.substring(start + 1, end), strBuilder, start, messageID);
-                    } else if (type.equals("atSighn")) {
-                        insertAtSignLink(text.substring(start + 1, end), strBuilder, start);
-                    } else if (type.equals("igapLink")) {
-                        insertIgapLink(strBuilder, start, end);
-                    } else if (type.equals("igapResolve")) {
-                        insertIgapResolveLink(strBuilder, start, end);
-                    } else if (type.equals("webLink")) {
-                        insertLinkSpan(strBuilder, start, end, true);
+                    switch (type) {
+                        case "hash":
+                            insertHashLink(text.substring(start + 1, end), strBuilder, start, messageID);
+                            break;
+                        case "atSighn":
+                            insertAtSignLink(text.substring(start + 1, end), strBuilder, start);
+                            break;
+                        case "igapLink":
+                            insertIgapLink(strBuilder, start, end);
+                            break;
+                        case "igapResolve":
+                            insertIgapResolveLink(strBuilder, start, end);
+                            break;
+                        case "bot":
+                            insertIgapBot(strBuilder, start, end);
+                            break;
+                        case "webLink":
+                            insertLinkSpan(strBuilder, start, end, true);
+                            break;
+                        case "digitLink":
+                            insertDigitLink(strBuilder, start, end);
+                            break;
                     }
                 } catch (IndexOutOfBoundsException e) {
                     e.printStackTrace();
@@ -533,13 +658,25 @@ public class HelperUrl {
                 linkInfo += count + "_" + (count + str.length()) + "_" + linkType.igapLink.toString() + "@";
             } else if (str.contains(igapResolve)) {
                 linkInfo += count + "_" + (count + str.length()) + "_" + linkType.igapResolve.toString() + "@";
+            } else if (isBotLink(str)) {
+                linkInfo += count + "_" + (count + str.length()) + "_" + linkType.bot.toString() + "@";
             } else if (isTextLink(str)) {
                 linkInfo += count + "_" + (count + str.length()) + "_" + linkType.webLink.toString() + "@";
+            } else if (isDigitLink(str)) {
+                linkInfo += count + "_" + (count + str.length()) + "_" + linkType.digitLink.toString() + "@";
             }
             count += str.length() + 1;
         }
 
         return linkInfo;
+    }
+
+    private static boolean isDigitLink(String text) {
+        return text.matches("\\d{5,}");
+    }
+
+    private static boolean isBotLink(String text) {
+        return text.matches("^\\/\\w+");
     }
 
     private static String analysisAtSignLinkInfo(String text) {
@@ -785,9 +922,9 @@ public class HelperUrl {
                 @Override
                 public void onClientResolveUsername(ProtoClientResolveUsername.ClientResolveUsernameResponse.Type type, ProtoGlobal.RegisteredUser user, ProtoGlobal.Room room) {
                     if (messageId == 0 || type == ProtoClientResolveUsername.ClientResolveUsernameResponse.Type.USER) {
-                        openChat(username, type, user, room, chatEntry, messageId);
+                        openChat(username, type, user, room, user.getBot() ? ChatEntry.chat : chatEntry, messageId);
                     } else {
-                        resolveMessageAndOpenChat(messageId, username, chatEntry, type, user, room);
+                        resolveMessageAndOpenChat(messageId, username, user.getBot() ? ChatEntry.chat : chatEntry, type, user, room);
                     }
                 }
 
@@ -824,10 +961,10 @@ public class HelperUrl {
                 new RequestClientGetRoomMessage().clientGetRoomMessage(room.getId(), messageId);
                 G.onClientGetRoomMessage = new OnClientGetRoomMessage() {
                     @Override
-                    public void onClientGetRoomMessageResponse(final long messageId) {
-                        RealmRoomMessage.setGap(messageId);
+                    public void onClientGetRoomMessageResponse(ProtoGlobal.RoomMessage message) {
+                        RealmRoomMessage.setGap(message.getMessageId());
                         G.onClientGetRoomMessage = null;
-                        openChat(username, type, user, room, chatEntry, messageId);
+                        openChat(username, type, user, room, chatEntry, message.getMessageId());
                     }
                 };
             }
@@ -865,9 +1002,39 @@ public class HelperUrl {
 
         switch (chatEntry) {
             case chat:
-
                 if (roomId != FragmentChat.lastChatRoomId) {
-                    new GoToChatActivity(roomId).setMessageID(messageId).setPeerID(peerId).startActivity();
+                    final Realm realm = Realm.getDefaultInstance();
+                    final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.CHAT_ROOM.PEER_ID, peerId).findFirst();
+
+                    if (realmRoom != null) {
+                        new GoToChatActivity(realmRoom.getId()).setMessageID(messageId).startActivity();
+                    } else {
+                        G.onChatGetRoom = new OnChatGetRoom() {
+                            @Override
+                            public void onChatGetRoom(final ProtoGlobal.Room room) {
+                                RealmRoom.putOrUpdate(room);
+                                G.handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new GoToChatActivity(room.getId()).setPeerID(peerId).startActivity();
+                                        G.onChatGetRoom = null;
+                                    }
+                                },500);
+                            }
+                            @Override
+                            public void onChatGetRoomTimeOut() {
+
+                            }
+
+                            @Override
+                            public void onChatGetRoomError(int majorCode, int minorCode) {
+
+                            }
+                        };
+
+                        new RequestChatGetRoom().chatGetRoom(peerId);
+                    }
+                    realm.close();
                 }
 
                 break;
@@ -898,12 +1065,12 @@ public class HelperUrl {
         if (realmRoom != null) {
             closeDialogWaiting();
 
-            goToActivity(realmRoom.getId(), id, chatEntery, messageId);
+            goToActivity(realmRoom.getId(), id, user.getBot() ? ChatEntry.chat : chatEntery, messageId);
 
             realm.close();
         } else {
             if (G.userLogin) {
-                addChatToDatabaseAndGoToChat(user, 0, chatEntery);
+                addChatToDatabaseAndGoToChat(user, -1, user.getBot() ? ChatEntry.chat : chatEntery);
             } else {
                 closeDialogWaiting();
                 HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
@@ -951,7 +1118,7 @@ public class HelperUrl {
                     @Override
                     public void onSuccess() {
 
-                        goToActivity(roomId, user.getId(), chatEntery, 0);
+                        goToActivity(roomId, user.getId(), user.getBot() ? ChatEntry.chat : chatEntery, 0);
 
                         realm.close();
                     }
@@ -1061,6 +1228,110 @@ public class HelperUrl {
         }
     }
 
+    private static void openDialogDigitClick(String text) {
+
+        try {
+            if (G.fragmentActivity != null) {
+                G.fragmentActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MaterialDialog dialog = new MaterialDialog.Builder(G.fragmentActivity).customView(R.layout.chat_popup_dialog_custom, true).build();
+                        View v = dialog.getCustomView();
+                        if (v == null) {
+                            return;
+                        }
+
+                        DialogAnimation.animationDown(dialog);
+                        dialog.show();
+                        ViewGroup rootCopy = (ViewGroup) v.findViewById(R.id.dialog_root_item1_notification);
+                        TextView iconCopy = (TextView) v.findViewById(R.id.dialog_icon_item1_notification);
+                        iconCopy.setText(G.fragmentActivity.getResources().getString(R.string.md_copy));
+                        TextView txtItemCopy = (TextView) v.findViewById(R.id.dialog_text_item1_notification);
+                        txtItemCopy.setText(R.string.copy_item_dialog);
+
+                        rootCopy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                ClipboardManager clipboard = (ClipboardManager) G.fragmentActivity.getSystemService(CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText("Copied Text", text);
+                                clipboard.setPrimaryClip(clip);
+                                Toast.makeText(context, R.string.text_copied, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                        ViewGroup rootCall = (ViewGroup) v.findViewById(R.id.dialog_root_item2_notification);
+                        rootCall.setVisibility(View.VISIBLE);
+                        TextView iconCall = (TextView) v.findViewById(R.id.dialog_icon_item2_notification);
+                        iconCall.setText(G.fragmentActivity.getResources().getString(R.string.md_call_made));
+                        TextView txtCall = (TextView) v.findViewById(R.id.dialog_text_item2_notification);
+                        txtCall.setText(R.string.verify_register_call);
+
+                        rootCall.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                String uri = "tel:" + text;
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                intent.setData(Uri.parse(uri));
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                G.context.startActivity(intent);
+                            }
+                        });
+
+                        ViewGroup rootAddToContact = (ViewGroup) v.findViewById(R.id.dialog_root_item3_notification);
+                        rootAddToContact.setVisibility(View.VISIBLE);
+                        TextView iconAddToContact = (TextView) v.findViewById(R.id.dialog_icon_item3_notification);
+                        iconAddToContact.setText(G.fragmentActivity.getResources().getString(R.string.md_igap_contacts));
+                        TextView txtAddToContact = (TextView) v.findViewById(R.id.dialog_text_item3_notification);
+                        txtAddToContact.setText(R.string.add_to_contact);
+
+                        rootAddToContact.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                                FragmentAddContact fragment = FragmentAddContact.newInstance();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("TITLE", G.context.getString(R.string.fac_Add_Contact));
+                                bundle.putString("PHONE", text);
+                                fragment.setArguments(bundle);
+                                new HelperFragment(fragment).setReplace(false).load();
+                            }
+                        });
+
+                        ViewGroup rootSendSms = (ViewGroup) v.findViewById(R.id.dialog_root_item4_notification);
+                        rootSendSms.setVisibility(View.VISIBLE);
+                        TextView iconSendSms = (TextView) v.findViewById(R.id.dialog_icon_item4_notification);
+                        iconSendSms.setText(G.fragmentActivity.getResources().getString(R.string.md_email));
+                        TextView txtSendSms = (TextView) v.findViewById(R.id.dialog_text_item4_notification);
+                        txtSendSms.setText(R.string.verify_register_sms);
+
+                        rootSendSms.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                String uri = "smsto:" + text;
+                                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                intent.setData(Uri.parse(uri));
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                G.context.startActivity(intent);
+                            }
+                        });
+
+                    }
+                });
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+    }
+
+
     //************************************  go to room by urlLink   *********************************************************************
 
     private static void getToRoom(Uri path) {
@@ -1097,7 +1368,7 @@ public class HelperUrl {
     }
 
     enum linkType {
-        hash, atSighn, igapLink, igapResolve, webLink
+        hash, atSighn, igapLink, igapResolve, webLink, bot, digitLink
 
     }
 

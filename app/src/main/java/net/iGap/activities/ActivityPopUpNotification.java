@@ -12,8 +12,6 @@ package net.iGap.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +45,7 @@ import com.vanniktech.emoji.listeners.OnSoftKeyboardOpenListener;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.Theme;
+import net.iGap.helper.HelperNotification;
 import net.iGap.interfaces.IPopUpListener;
 import net.iGap.interfaces.OnVoiceRecord;
 import net.iGap.libs.rippleeffect.RippleView;
@@ -58,17 +57,12 @@ import net.iGap.module.MaterialDesignTextView;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.UploadService;
 import net.iGap.module.VoiceRecord;
-import net.iGap.module.enums.StructPopUp;
 import net.iGap.proto.ProtoGlobal;
-import net.iGap.realm.RealmChatRoom;
 import net.iGap.realm.RealmRegisteredInfo;
-import net.iGap.realm.RealmRoom;
-import net.iGap.realm.RealmRoomFields;
 import net.iGap.realm.RealmRoomMessage;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -76,14 +70,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class ActivityPopUpNotification extends AppCompatActivity {
 
     public static boolean isPopUpVisible = false;
-
     public static IPopUpListener popUpListener;
 
-    public static String ARGUMENTLIST = "argument_list";
 
     //////////////////////////////////////////   appbar component
     ViewPager viewPager;
-    ArrayList<StructPopUp> mList;
+    ArrayList<HelperNotification.StructNotification> mList;
     private TextView txtName;
     private TextView txtLastSeen;
 
@@ -104,58 +96,12 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     private boolean sendByEnter = false;
     private AdapterViewPagerClass mAdapter;
     private int listSize = 0;
-    private InitComponnet initComponnet;
 
     private String initialize;
     private String color;
-    private long chatPeerId;
 
     /////////////////////////////////////////////////////////////////////////////////////////
     private EmojiPopup emojiPopup;
-
-    public static String getTextOfMessageType(ProtoGlobal.RoomMessageType messageType) {
-
-        switch (messageType) {
-            case VOICE:
-                return G.context.getString(R.string.voice_message);
-            case VIDEO:
-                return G.context.getString(R.string.video_message);
-            case FILE:
-                return G.context.getString(R.string.file_message);
-            case AUDIO:
-                return G.context.getString(R.string.audio_message);
-            case IMAGE:
-                return G.context.getString(R.string.image_message);
-            case CONTACT:
-                return G.context.getString(R.string.contact_message);
-            case GIF:
-                return G.context.getString(R.string.gif_message);
-            case LOCATION:
-                return G.context.getString(R.string.location_message);
-        }
-
-        return "";
-    }
-
-    /**
-     * Checks if the application is being sent in the background (i.e behind
-     * another application's Activity).
-     *
-     * @param context the context
-     * @return <code>true</code> if another application will be above this one.
-     */
-    public static boolean isApplicationSentToBackground(Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        if (!tasks.isEmpty()) {
-            ComponentName topActivity = tasks.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(context.getPackageName())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     @Override
     protected void onResume() {
@@ -167,7 +113,6 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         isPopUpVisible = false;
-
     }
 
     @Override
@@ -186,26 +131,13 @@ public class ActivityPopUpNotification extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         super.onCreate(savedInstanceState);
-
-        if (getIntent() == null || getIntent().getExtras() == null) {
-            finish();
-            return;
-        }
-
-        mList = (ArrayList<StructPopUp>) getIntent().getExtras().getSerializable(ARGUMENTLIST);
-
-        if (mList == null) {
-            finish();
-            return;
-        }
-
         setContentView(R.layout.activity_popup_notification);
 
-        initComponnet = new InitComponnet();
+        mList = HelperNotification.getInstance().getMessageList();
+        new InitComponent();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -213,8 +145,6 @@ public class ActivityPopUpNotification extends AppCompatActivity {
     private void changeEmojiButtonImageResource(@StringRes int drawableResourceId) {
         btnSmileButton.setText(drawableResourceId);
     }
-
-
 
     private void setUpEmojiPopup() {
         switch (G.themeColor) {
@@ -229,16 +159,11 @@ public class ActivityPopUpNotification extends AppCompatActivity {
                 break;
             default:
                 setEmojiColor("#eceff1", "#61000000", "#61000000");
-
-
         }
-
     }
 
     private void setEmojiColor(String BackgroundColor, String iconColor, String dividerColor) {
-
-        emojiPopup =   emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.ac_ll_parent_notification)).setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
-
+        emojiPopup = EmojiPopup.Builder.fromRootView(findViewById(R.id.ac_ll_parent_notification)).setOnEmojiBackspaceClickListener(new OnEmojiBackspaceClickListener() {
             @Override
             public void onEmojiBackspaceClick(View v) {
 
@@ -268,66 +193,40 @@ public class ActivityPopUpNotification extends AppCompatActivity {
                 .setIconColor(Color.parseColor(iconColor))
                 .setDividerColor(Color.parseColor(dividerColor))
                 .build(edtChat);
-
     }
 
-
-
     private void setImageAndTextAppBar(int position) {
-        if (mList.isEmpty() || position > mList.size() - 1 || position < 0) {
-            return;
-        }
+
+        initialize = mList.get(position).initialize;
+        color = mList.get(position).color;
+        txtName.setText(mList.get(position).name);
 
         Realm realm = Realm.getDefaultInstance();
 
-        final RealmRoom realmRoom = realm.where(RealmRoom.class).equalTo(RealmRoomFields.ID, mList.get(position).getRoomId()).findFirst();
-
-        if (realmRoom != null) { // room exist
-
-            mList.get(position).setRoomType(realmRoom.getType().toString());
-
-            initialize = realmRoom.getInitials();
-            color = realmRoom.getColor();
-
-            txtName.setText(realmRoom.getTitle());
-            setLastSeen(realmRoom, realm);
-            setAvatar(realm);
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, mList.get(position).senderId);
+        if (realmRegisteredInfo != null) {
+            if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
+                txtLastSeen.setText(LastSeenTimeUtil.computeTime(realmRegisteredInfo.getId(), realmRegisteredInfo.getLastSeen(), false));
+            } else {
+                txtLastSeen.setText(realmRegisteredInfo.getStatus());
+            }
+        } else {
+            txtLastSeen.setText("");
         }
+
+        setAvatar(realmRegisteredInfo);
 
         realm.close();
-    }
 
-    private void setLastSeen(RealmRoom realmRoom, Realm realm) {
-        try {
-            RealmChatRoom realmChatRoom = realmRoom.getChatRoom();
-            if (realmRoom.getChatRoom() != null) {
-                RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, realmChatRoom.getPeerId());
-                if (realmRegisteredInfo != null) {
-                    if (realmRegisteredInfo.getStatus().equals(ProtoGlobal.RegisteredUser.Status.EXACTLY.toString())) {
-                        txtLastSeen.setText(LastSeenTimeUtil.computeTime(realmRegisteredInfo.getId(), realmRegisteredInfo.getLastSeen(), false));
-                    } else {
-                        txtLastSeen.setText(realmRegisteredInfo.getStatus());
-                    }
-                }
-            } else {
-                txtLastSeen.setText("");
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    private void setAvatar(Realm realm) {
+    private void setAvatar(RealmRegisteredInfo realmRegisteredInfo) {
 
         String avatarPath = null;
-
-        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, chatPeerId);
         if (realmRegisteredInfo != null && realmRegisteredInfo.getAvatars() != null && realmRegisteredInfo.getLastAvatar() != null) {
-
             String mainFilePath = realmRegisteredInfo.getLastAvatar().getFile().getLocalFilePath();
-
             if (mainFilePath != null && new File(mainFilePath).exists()) { // if main image is exist showing that
                 avatarPath = mainFilePath;
             } else {
@@ -342,15 +241,15 @@ public class ActivityPopUpNotification extends AppCompatActivity {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 imvUserPicture.setImageBitmap(myBitmap);
             } else {
-                if (realmRegisteredInfo != null && realmRegisteredInfo.getLastAvatar() != null && realmRegisteredInfo.getLastAvatar().getFile() != null) {
-                    // onRequestDownloadAvatar(realmRegisteredInfo.getLastAvatar().getFile());
-                }
+//                if (realmRegisteredInfo != null && realmRegisteredInfo.getLastAvatar() != null && realmRegisteredInfo.getLastAvatar().getFile() != null) {
+//                     onRequestDownloadAvatar(realmRegisteredInfo.getLastAvatar().getFile());
+//                }
                 imvUserPicture.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) imvUserPicture.getContext().getResources().getDimension(R.dimen.dp60), initialize, color));
             }
         } else {
-            if (realmRegisteredInfo != null && realmRegisteredInfo.getLastAvatar() != null && realmRegisteredInfo.getLastAvatar().getFile() != null) {
-                //  onRequestDownloadAvatar(realmRegisteredInfo.getLastAvatar().getFile());
-            }
+//            if (realmRegisteredInfo != null && realmRegisteredInfo.getLastAvatar() != null && realmRegisteredInfo.getLastAvatar().getFile() != null) {
+//                  onRequestDownloadAvatar(realmRegisteredInfo.getLastAvatar().getFile());
+//            }
             imvUserPicture.setImageBitmap(net.iGap.helper.HelperImageBackColor.drawAlphabetOnPicture((int) imvUserPicture.getContext().getResources().getDimension(R.dimen.dp60), initialize, color));
         }
     }
@@ -365,51 +264,41 @@ public class ActivityPopUpNotification extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    private void sendMessage(final String message, final long mRoomId, ProtoGlobal.Room.Type chatType) {
+    public static void sendMessage(final String message, final long mRoomId, ProtoGlobal.Room.Type chatType) {
         String identity = Long.toString(System.currentTimeMillis());
-
         RealmRoomMessage.makeTextMessage(mRoomId, Long.parseLong(identity), message);
-
         new ChatSendMessageUtil().newBuilder(chatType, ProtoGlobal.RoomMessageType.TEXT, mRoomId).message(message).sendMessage(identity);
     }
 
     private void goToChatActivity() {
-
         Intent intent = new Intent(ActivityPopUpNotification.this, ActivityMain.class);
-        intent.putExtra(ActivityMain.openChat, mList.get(viewPager.getCurrentItem()).getRoomId());
+        intent.putExtra(ActivityMain.openChat, mList.get(viewPager.getCurrentItem()).roomId);
         startActivity(intent);
-
         finish();
     }
 
-    private class InitComponnet {
+    private class InitComponent {
 
-        public InitComponnet() {
-
-            initMethode();
+        InitComponent() {
+            initMethod();
             initAppbar();
             initViewPager();
             initLayoutAttach();
-
             setUpEmojiPopup();
         }
 
-        private void initMethode() {
+        private void initMethod() {
 
             popUpListener = new IPopUpListener() {
                 @Override
-                public void onMessageRecive(final ArrayList<StructPopUp> list) {
+                public void onMessageReceive() {
 
                     viewPager.post(new Runnable() {
                         @Override
                         public void run() {
-
-                            mList.clear();
-                            mList = (ArrayList<StructPopUp>) list.clone();
-
+                            mList = HelperNotification.getInstance().getMessageList();
                             viewPager.setAdapter(mAdapter);
                             btnMessageCounter.setText(1 + "/" + mList.size());
-
                             setImageAndTextAppBar(viewPager.getCurrentItem());
                             listSize = mList.size();
                         }
@@ -424,10 +313,9 @@ public class ActivityPopUpNotification extends AppCompatActivity {
             voiceRecord = new VoiceRecord(ActivityPopUpNotification.this, viewMicRecorder, viewAttachFile, new OnVoiceRecord() {
                 @Override
                 public void onVoiceRecordDone(String savedPath) {
-
                     Intent uploadService = new Intent(ActivityPopUpNotification.this, UploadService.class);
                     uploadService.putExtra("Path", savedPath);
-                    uploadService.putExtra("Roomid", mList.get(viewPager.getCurrentItem()).getRoomId());
+                    uploadService.putExtra("Roomid", mList.get(viewPager.getCurrentItem()).roomId);
                     startService(uploadService);
 
                     // sendVoice(savedPath, unreadList.get(viewPager.getCurrentItem()).getRoomId());
@@ -620,7 +508,7 @@ public class ActivityPopUpNotification extends AppCompatActivity {
 
                     int position = viewPager.getCurrentItem();
 
-                    sendMessage(edtChat.getText().toString(), mList.get(position).getRoomId(), ProtoGlobal.Room.Type.valueOf(mList.get(position).getRoomType()));
+                    sendMessage(edtChat.getText().toString(), mList.get(position).roomId, ProtoGlobal.Room.Type.valueOf(mList.get(position).roomType.toString()));
 
                     edtChat.setText("");
 
@@ -649,7 +537,7 @@ public class ActivityPopUpNotification extends AppCompatActivity {
             ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.sub_layout_activity_popup_notification, (ViewGroup) container, false);
 
             TextView txtMessage = (TextView) layout.findViewById(R.id.slapn_txt_message);
-            txtMessage.setText(mList.get(position).getMessage());
+            txtMessage.setText(mList.get(position).message);
 
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override

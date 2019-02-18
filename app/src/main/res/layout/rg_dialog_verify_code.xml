@@ -1,112 +1,138 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:clickable="true"
-  style="?backgroundColorSettingTheme_2"
-  android:orientation="vertical">
+    style="?backgroundColorSettingTheme_2"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:orientation="vertical">
 
-  <!-- Pretty hint text, and maxLines -->
+    <!-- Pretty hint text, and maxLines -->
 
-  <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical">
-
-      <net.iGap.module.HeaderTextview
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp60"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp24"
-        android:layout_marginTop="@dimen/dp12"
-        android:gravity="start|center_vertical"
-        android:text="@string/Re_Phone_Verification"
-        android:textColor="@color/toolbar_background"
-        android:textSize="@dimen/dp15"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <net.iGap.module.HeaderTextview
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp60"
+                android:layout_marginLeft="@dimen/dp24"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginRight="@dimen/dp24"
+                android:gravity="start|center_vertical"
+                android:text="@string/Re_Phone_Verification"
+                android:textColor="@color/toolbar_background"
+                android:textSize="@dimen/dp15"
+                android:textStyle="bold" />
 
 
-      <TextView
-        android:id="@+id/txt_show_reason"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp24"
-        android:gravity="start"
-        android:lineSpacingExtra="0dp"
-        android:text="@string/verify_time_out_message"
-        style="?textSubColorSettingTheme"
-        android:textSize="@dimen/dp14" />
+            <TextView
+                android:id="@+id/txt_show_reason"
+                style="?textSubColorSettingTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/dp24"
+                android:layout_marginRight="@dimen/dp24"
+                android:gravity="start"
+                android:lineSpacingExtra="0dp"
+                android:text="@string/verify_time_out_message"
+                android:textSize="@dimen/dp14" />
 
 
-      <net.iGap.module.MEditText
-        android:id="@+id/rg_edt_dialog_verifyCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp24"
-        android:layout_marginTop="@dimen/dp20"
-        android:layout_marginBottom="0dp"
-        android:gravity="start"
-        android:hint="@string/Re_Enter_Verify_Code_Please"
-        android:inputType="number"
-        android:maxLength="6"
-        android:paddingBottom="@dimen/dp6"
-        style="?hintColorSettingTheme"
-        android:textSize="@dimen/dp14"
-        android:theme="@style/Setting_editText"
-        android:background="@android:color/transparent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-      <View
-          android:id="@+id/rg_borderButton"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_marginBottom="@dimen/dp6"
-          android:layout_marginLeft="@dimen/dp24"
-          android:layout_marginRight="@dimen/dp24"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-          style="?lineColorSettingTheme"
-          android:visibility="visible" />
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp52"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp8">
+                    <net.iGap.module.MEditText
+                        android:id="@+id/rg_edt_dialog_verifyCode"
+                        style="?hintColorSettingTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp24"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginRight="@dimen/dp24"
+                        android:layout_marginBottom="0dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="start"
+                        android:hint="@string/Re_Enter_Verify_Code_Please"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:paddingBottom="@dimen/dp6"
+                        android:textSize="@dimen/dp14"
+                        android:theme="@style/Setting_editText" />
 
-        <net.iGap.module.HeaderTextview
-          android:id="@+id/rg_btn_dialog_okVerifyCode"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/dp16"
-          android:layout_marginRight="@dimen/dp16"
-          android:background="@android:color/transparent"
-          android:gravity="center"
-          android:text="@string/rg_verify_dialog_resend_code"
-          android:textColor="@color/toolbar_background"
-          android:textSize="@dimen/dp14"
-          android:textStyle="bold" />
+                    <View
+                        android:id="@+id/rg_borderButton"
+                        style="?lineColorSettingTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/dp24"
+                        android:layout_marginRight="@dimen/dp24"
+                        android:layout_marginBottom="@dimen/dp6"
+                        android:visibility="visible" />
+                </LinearLayout>
 
-        <net.iGap.module.HeaderTextview
-          android:id="@+id/rg_btn_cancelVerifyCode"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/dp24"
-          android:layout_marginLeft="@dimen/dp24"
-          android:layout_marginRight="@dimen/dp24"
-          android:background="@android:color/transparent"
-          android:gravity="center"
-          android:text="@string/rg_verify_dialog_try_code"
-          android:textColor="@color/toolbar_background"
-          android:textSize="@dimen/dp14"
-          android:textStyle="bold" />
+                <net.iGap.module.HeaderTextview
+                    android:id="@+id/remindTime"
+                    android:layout_width="0dp"
+                    android:layout_weight=".2"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="60"
+                    android:paddingTop="@dimen/dp12"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/dp15" />
 
-      </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp52"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp8">
+
+                <net.iGap.module.HeaderTextview
+                    android:id="@+id/rg_btn_dialog_okVerifyCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginRight="@dimen/dp16"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:enabled="false"
+                    android:text="@string/rg_verify_dialog_resend_code"
+                    android:textColor="@color/gray_9d"
+                    android:textSize="@dimen/dp14"
+                    android:textStyle="bold" />
+
+                <net.iGap.module.HeaderTextview
+                    android:id="@+id/rg_btn_cancelVerifyCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp24"
+                    android:layout_marginRight="@dimen/dp24"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/rg_verify_dialog_try_code"
+                    android:textColor="@color/toolbar_background"
+                    android:textSize="@dimen/dp14"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

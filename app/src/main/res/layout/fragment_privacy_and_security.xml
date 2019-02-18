@@ -380,7 +380,7 @@
               android:paddingLeft="@dimen/dp8"
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
-              android:text="@string/who_is_allowed_to_call"
+              android:text="@string/who_is_allowed_to_voice_call"
               style="?textTitleColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal" />
@@ -395,6 +395,44 @@
               android:paddingRight="@dimen/dp8"
               android:paddingTop="@dimen/dp4"
               android:text="@{fragmentPrivacyAndSecurityViewModel.callbackVoiceCall , default=@string/everybody}"
+              style="?textSubColorSettingTheme"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal"
+
+              />
+          </LinearLayout>
+
+          <LinearLayout
+            android:id="@+id/stps_ll_who_can_video_call_to_me"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:onClick="@{fragmentPrivacyAndSecurityViewModel::onClickVideoCall}"
+            android:orientation="horizontal">
+
+            <TextView
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight=".5"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@string/who_is_allowed_to_video_call"
+              style="?textTitleColorSettingTheme"
+              android:textSize="@dimen/dp14"
+              android:textStyle="normal" />
+
+            <TextView
+              android:id="@+id/stps_txt_who_can_video_call_to_me"
+              fontPath="fonts/IRANSansMobile.ttf"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center_vertical|start"
+              android:paddingLeft="@dimen/dp8"
+              android:paddingRight="@dimen/dp8"
+              android:paddingTop="@dimen/dp4"
+              android:text="@{fragmentPrivacyAndSecurityViewModel.callbackVideoCall , default=@string/everybody}"
               style="?textSubColorSettingTheme"
               android:textSize="@dimen/dp14"
               android:textStyle="normal"

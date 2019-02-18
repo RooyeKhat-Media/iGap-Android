@@ -1,5 +1,5 @@
 /*
- * This is the source code of iGap for Android
+ * Thf is the source code of iGap for Android
  * It is licensed under GNU AGPL v3.0
  * You should have received a copy of the license in this archive (see LICENSE).
  * Copyright © 2017 , iGap - www.iGap.net
@@ -31,6 +31,9 @@ import org.webrtc.IceCandidate;
 import org.webrtc.MediaStream;
 import org.webrtc.PeerConnection;
 import org.webrtc.RtpReceiver;
+import org.webrtc.VideoFrame;
+import org.webrtc.VideoSink;
+import org.webrtc.VideoTrack;
 
 import static org.webrtc.PeerConnection.IceConnectionState.CHECKING;
 import static org.webrtc.PeerConnection.IceConnectionState.CLOSED;
@@ -91,11 +94,23 @@ public class PeerConnectionObserver implements PeerConnection.Observer {
             audioTrack.setEnabled(true);
         }
 
-        /*if (stream.videoTracks != null && stream.videoTracks.size() == 1) {
+        if (stream.videoTracks != null && stream.videoTracks.size() == 1) {
             VideoTrack videoTrack = stream.videoTracks.get(0);
             videoTrack.setEnabled(true);
-            videoTrack.addRenderer(new VideoRenderer(this));
-        }*/
+
+            videoTrack.addSink(new VideoSink() {
+                @Override
+                public void onFrame(VideoFrame videoFrame) {
+
+                    if (G.onVideoCallFrame != null) {
+                        G.onVideoCallFrame.onRemoteFrame(videoFrame);
+                    }
+                }
+            });
+
+        }
+
+
     }
 
     @Override

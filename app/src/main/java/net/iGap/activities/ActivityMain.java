@@ -10,6 +10,12 @@
 
 package net.iGap.activities;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -31,19 +37,21 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -52,6 +60,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -63,7 +72,6 @@ import net.iGap.eventbus.EventListener;
 import net.iGap.eventbus.EventManager;
 import net.iGap.eventbus.socketMessages;
 import net.iGap.fragments.FragmentCall;
-import net.iGap.fragments.FragmentIgapSearch;
 import net.iGap.fragments.FragmentLanguage;
 import net.iGap.fragments.FragmentMain;
 import net.iGap.fragments.FragmentMediaPlayer;
@@ -85,7 +93,7 @@ import net.iGap.helper.HelperGetDataFromOtherApp;
 import net.iGap.helper.HelperImageBackColor;
 import net.iGap.helper.HelperLog;
 import net.iGap.helper.HelperLogout;
-import net.iGap.helper.HelperNotificationAndBadge;
+import net.iGap.helper.HelperNotification;
 import net.iGap.helper.HelperPermission;
 import net.iGap.helper.HelperPublicMethod;
 import net.iGap.helper.HelperUrl;
@@ -121,6 +129,7 @@ import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.libs.tabBar.NavigationTabStrip;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.BotInit;
 import net.iGap.module.ContactUtils;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.FileUtils;
@@ -132,6 +141,7 @@ import net.iGap.module.SHP_SETTING;
 import net.iGap.module.enums.ConnectionState;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.proto.ProtoResponse;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmCallConfig;
 import net.iGap.realm.RealmRoom;
 import net.iGap.realm.RealmRoomFields;
@@ -416,7 +426,10 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         };
 
-
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.BRAND.equalsIgnoreCase("xiaomi") || Build.BRAND.equalsIgnoreCase("Honor") || Build.BRAND.equalsIgnoreCase("oppo"))
+                isChinesPhone();
+        }
 //        setTheme(R.style.AppThemeTranslucent);
 
         if (G.isFirstPassCode) {
@@ -644,6 +657,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         initComponent();
 
         G.onPayment = this;
+
         sharedPreferences = getSharedPreferences(SHP_SETTING.FILE_NAME, MODE_PRIVATE);
         boolean isGetContactList = sharedPreferences.getBoolean(SHP_SETTING.KEY_GET_CONTACT, false);
         /**
@@ -682,7 +696,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         }
 
-        G.helperNotificationAndBadge.cancelNotification();
+        HelperNotification.getInstance().cancelNotification();
         G.onGroupAvatarResponse = this;
 
         G.onConvertToGroup = new OpenFragment() {
@@ -746,6 +760,9 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                 });
             }
         };
+
+
+        // Log.i("#token",FirebaseInstanceId.getInstance().getToken().toString());
     }
 
 
@@ -1185,6 +1202,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
                     pages.add(FragmentMain.newInstance(FragmentMain.MainType.all));
                     sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager());
                     mViewPager.setAdapter(sampleFragmentPagerAdapter);
+                    mViewPager.setCurrentItem(4);
                     setViewPagerSelectedItem();
                     findViewById(R.id.loadingContent).setVisibility(View.GONE);
                 }
@@ -1266,6 +1284,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         //});
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //super.onSaveInstanceState(outState);
@@ -1415,21 +1434,21 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             }
         });
 
-        ViewGroup igapSearch = (ViewGroup) findViewById(R.id.lm_ll_igap_search);
-        igapSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Fragment fragment = FragmentIgapSearch.newInstance();
-                try {
-                    new HelperFragment(fragment).load();
-                } catch (Exception e) {
-                    e.getStackTrace();
-                }
-
-                lockNavigation();
-                closeDrawer();
-            }
-        });
+//        ViewGroup igapSearch = (ViewGroup) findViewById(R.id.lm_ll_igap_search);
+//        igapSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Fragment fragment = FragmentIgapSearch.newInstance();
+//                try {
+//                    new HelperFragment(fragment).load();
+//                } catch (Exception e) {
+//                    e.getStackTrace();
+//                }
+//
+//                lockNavigation();
+//                closeDrawer();
+//            }
+//        });
 
         ViewGroup itemNavContacts = (ViewGroup) findViewById(R.id.lm_ll_contacts);
         itemNavContacts.setOnClickListener(new View.OnClickListener() {
@@ -2077,7 +2096,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
     private void connectionState() {
         final TextView txtIgap = (TextView) findViewById(R.id.cl_txt_igap);
 
-        Typeface typeface =  G.typeface_IRANSansMobile;
+        Typeface typeface = G.typeface_IRANSansMobile;
 
         if (G.connectionState == ConnectionState.WAITING_FOR_NETWORK) {
             txtIgap.setText(R.string.waiting_for_network);
@@ -2328,6 +2347,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
         resume();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     }
 
     public void resume() {
@@ -2470,7 +2490,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
             return;
         }
 
-        HelperNotificationAndBadge.updateBadgeOnly(getRealm(), -1);
+        AppUtils.updateBadgeOnly(getRealm(), -1);
 
         G.onUnreadChange = null;
 
@@ -2548,7 +2568,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
 
     private void check(final long userId) {
         if (G.userLogin) {
-            FragmentCall.call(userId, false);
+            FragmentCall.call(userId, false, ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING);
         } else {
             G.handler.postDelayed(new Runnable() {
                 @Override
@@ -2927,6 +2947,7 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         });
     }
 
+
     public enum MainAction {
         downScrool, clinetCondition
     }
@@ -3037,4 +3058,82 @@ public class ActivityMain extends ActivityEnhanced implements OnUserInfoMyClient
         }
     }
 
+    private void isChinesPhone() {
+        final SharedPreferences settings = getSharedPreferences("ProtectedApps", Context.MODE_PRIVATE);
+        final String saveIfSkip = "skipProtectedAppsMessage";
+        boolean skipMessage = settings.getBoolean(saveIfSkip, false);
+        if (!skipMessage) {
+            final SharedPreferences.Editor editor = settings.edit();
+
+
+            new MaterialDialog.Builder(ActivityMain.this)
+                    .title(R.string.attention).titleColor(Color.parseColor("#1DE9B6"))
+                    .titleGravity(GravityEnum.CENTER)
+                    .buttonsGravity(GravityEnum.CENTER)
+                    .checkBoxPrompt(getString(R.string.dont_show_again), false, new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                          /*  if (isChecked) {
+                                editor.putBoolean(saveIfSkip, isChecked);
+                                editor.apply();
+
+                            }*/
+
+                        }
+                    })
+                    .content(R.string.permission_auto_start).contentGravity(GravityEnum.CENTER)
+                    .negativeText(R.string.ignore).onNegative(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    if (dialog.isPromptCheckBoxChecked()){
+                        editor.putBoolean(saveIfSkip, true);
+                        editor.apply();
+                    }
+                        dialog.dismiss();
+                }
+            })
+                    .positiveText(R.string.ok).onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                    if (dialog.isPromptCheckBoxChecked()){
+                        editor.putBoolean(saveIfSkip, true);
+                        editor.apply();
+                    }
+                    dialog.dismiss();
+                    try {
+
+                        if (Build.BRAND.equalsIgnoreCase("xiaomi")) {
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"));
+                            startActivity(intent);
+
+
+                        } else if (Build.BRAND.equalsIgnoreCase("oppo")) {
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName("com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"));
+
+                        } else if (Build.BRAND.equalsIgnoreCase("Letv")) {
+
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName("com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"));
+                            startActivity(intent);
+
+                        } else if (Build.BRAND.equalsIgnoreCase("Honor")) {
+
+                            Intent intent = new Intent();
+                            intent.setComponent(new ComponentName("com.huawei.systemmanager", "com.huawei.systemmanager.optimize.process.ProtectActivity"));
+                            startActivity(intent);
+
+                        }
+                    } catch (ActivityNotFoundException e) {
+                    } catch (Exception ee) {
+                    }
+
+
+                }
+            }).show();
+
+        }
+    }
 }

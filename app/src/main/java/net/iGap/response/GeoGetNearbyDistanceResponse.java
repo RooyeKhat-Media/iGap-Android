@@ -42,7 +42,7 @@ public class GeoGetNearbyDistanceResponse extends MessageHandler {
             if (G.userId != result.getUserId()) { // don't show my account
                 RealmRegisteredInfo.getRegistrationInfo(result.getUserId(), new OnInfo() {
                     @Override
-                    public void onInfo(RealmRegisteredInfo registeredInfo) {
+                    public void onInfo(Long registeredId) {
                         Realm realm = Realm.getDefaultInstance();
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override

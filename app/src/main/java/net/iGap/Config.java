@@ -16,7 +16,7 @@ public class Config {
 
     public static final int ACCEPT = 1;
     public static final int REJECT = 0;
-    public static final int REALM_SCHEMA_VERSION = 23;
+    public static final int REALM_SCHEMA_VERSION = 26;
     public static final int REALM_LATEST_MIGRATION_VERSION = REALM_SCHEMA_VERSION - 1;
     public static final int LOOKUP_MAP_RESPONSE_OFFSET = 30000;
     public static final int MAX_TEXT_ATTACHMENT_LENGTH = 200;
@@ -31,6 +31,7 @@ public class Config {
     public static final int FAST_START_PAGE_TIME = (int) 20;
     public static final int LOW_START_PAGE_TIME = (int) 25;
     public static final int PHONE_CONTACT_MAX_COUNT_LIMIT = 9999;
+    public static final long drIgapPeerId = 2297310;
 
     public static final int TIME_OUT_DELAY_MS = (int) (DateUtils.SECOND_IN_MILLIS);
     public static final int FAKE_PM_DELAY = (int) (10 * DateUtils.SECOND_IN_MILLIS);

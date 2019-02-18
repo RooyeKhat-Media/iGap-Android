@@ -30,22 +30,17 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.ThumbnailUtils;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -53,7 +48,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,13 +64,11 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import net.iGap.G;
 import net.iGap.R;
 import net.iGap.activities.ActivityMain;
-import net.iGap.adapter.items.chat.ViewMaker;
 import net.iGap.helper.HelperAvatar;
 import net.iGap.helper.HelperCalander;
 import net.iGap.helper.HelperError;
 import net.iGap.helper.HelperFragment;
 import net.iGap.helper.HelperImageBackColor;
-import net.iGap.helper.HelperLog;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnGeoCommentResponse;
 import net.iGap.interfaces.OnGeoGetComment;
@@ -87,7 +79,6 @@ import net.iGap.interfaces.OnMapClose;
 import net.iGap.interfaces.OnMapRegisterState;
 import net.iGap.interfaces.OnMapUsersGet;
 import net.iGap.libs.floatingAddButton.ArcMenu;
-import net.iGap.libs.floatingAddButton.MenuSideEnum;
 import net.iGap.libs.floatingAddButton.StateChangeListener;
 import net.iGap.libs.rippleeffect.RippleView;
 import net.iGap.module.AndroidUtils;
@@ -1574,7 +1565,7 @@ public class FragmentiGapMap extends BaseFragment implements OnLocationChanged, 
                     if (G.userId != result.getUserId()) { // don't show mine
                         RealmRegisteredInfo.getRegistrationInfo(result.getUserId(), new OnInfo() {
                             @Override
-                            public void onInfo(RealmRegisteredInfo registeredInfo) {
+                            public void onInfo(Long registeredId) {
                                 drawMark(result.getLat(), result.getLon(), result.getHasComment(), result.getUserId());
                             }
                         });

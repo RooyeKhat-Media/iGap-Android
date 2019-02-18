@@ -197,7 +197,6 @@ public class FragmentDeleteAccount extends BaseFragment {
         if (phone != null) txtPhoneNumber.setText("" + phone);
 
         txtSet = (RippleView) view.findViewById(R.id.stda_ripple_set);
-        txtSet.setEnabled(false);
         txtSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,7 +269,6 @@ public class FragmentDeleteAccount extends BaseFragment {
         });
 
         edtDeleteAccount = (EditTextAdjustPan) view.findViewById(R.id.stda_edt_dleteAccount);
-        edtDeleteAccount.setEnabled(false);
 
         final View viewLineBottom = view.findViewById(R.id.stda_line_below_editText);
         txtSet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -308,8 +306,7 @@ public class FragmentDeleteAccount extends BaseFragment {
 
                     @Override
                     public void onFinish() {
-                        edtDeleteAccount.setEnabled(true);
-                        txtSet.setEnabled(true);
+
                         ltTime.setVisibility(View.GONE);
                     }
                 };
@@ -323,8 +320,7 @@ public class FragmentDeleteAccount extends BaseFragment {
             countDownTimer.cancel();
             String verificationCode = HelperString.regexExtractValue(smsMessage, regex);
             if (verificationCode.length() > 0) {
-                edtDeleteAccount.setEnabled(true);
-                txtSet.setEnabled(true);
+
                 edtDeleteAccount.setText("" + verificationCode);
             }
         }

@@ -44,6 +44,7 @@ public class RealmRegisteredInfo extends RealmObject {
     private int avatarCount;
     private String bio;
     private boolean verified;
+    private boolean isBot;
     private boolean mutual;
     private boolean blockUser = false;
     private boolean DoNotshowSpamBar = false;
@@ -70,6 +71,7 @@ public class RealmRegisteredInfo extends RealmObject {
         registeredInfo.setUsername(input.getUsername());
         registeredInfo.setBio(input.getBio());
         registeredInfo.setVerified(input.getVerified());
+        registeredInfo.setBot(input.getBot());
 
         return registeredInfo;
     }
@@ -105,11 +107,11 @@ public class RealmRegisteredInfo extends RealmObject {
      *
      * @param onRegistrationInfo RealmRegisteredInfo will be returned with this interface
      */
-    public static void getRegistrationInfo(long userId, @Nullable String cacheId, final OnInfo onRegistrationInfo) {
-        Realm realm = Realm.getDefaultInstance();
-        final RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
+    public static void getRegistrationInfo(long userId, @Nullable String cacheId, Realm realm, final OnInfo onRegistrationInfo) {
+
+        RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm, userId);
         if (realmRegisteredInfo != null && (cacheId == null || realmRegisteredInfo.getCacheId().equals(cacheId))) {
-            onRegistrationInfo.onInfo(realmRegisteredInfo);
+            onRegistrationInfo.onInfo(realmRegisteredInfo.getId());
         } else {
             RequestUserInfo.infoHashMap.put(userId, onRegistrationInfo);
             G.onRegistrationInfo = new OnRegistrationInfo() {
@@ -120,7 +122,7 @@ public class RealmRegisteredInfo extends RealmObject {
                     if (InfoListener != null) {
                         RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(realm1, registeredInfo.getId());
                         if (realmRegisteredInfo != null) {
-                            InfoListener.onInfo(realmRegisteredInfo);
+                            InfoListener.onInfo(realmRegisteredInfo.getId());
                         }
                     }
                     RequestUserInfo.infoHashMap.remove(registeredInfo.getId());
@@ -129,11 +131,13 @@ public class RealmRegisteredInfo extends RealmObject {
             };
             new RequestUserInfo().userInfo(userId, RequestUserInfo.InfoType.JUST_INFO.toString());
         }
-        realm.close();
+
     }
 
     public static void getRegistrationInfo(long userId, final OnInfo onRegistrationInfo) {
-        getRegistrationInfo(userId, null, onRegistrationInfo);
+        Realm realm = Realm.getDefaultInstance();
+        getRegistrationInfo(userId, null, realm, onRegistrationInfo);
+        realm.close();
     }
 
     public static RealmRegisteredInfo getRegistrationInfo(Realm realm, long userId) {
@@ -182,6 +186,12 @@ public class RealmRegisteredInfo extends RealmObject {
 
     public static void updateBlock(final long userId, final boolean block) {
         Realm realm = Realm.getDefaultInstance();
+        updateBlock(userId, block, realm);
+        realm.close();
+    }
+
+    public static void updateBlock(final long userId, final boolean block, Realm realm) {
+
         final RealmRegisteredInfo registeredInfo = getRegistrationInfo(realm, userId);
         if (registeredInfo != null) {
             realm.executeTransaction(new Realm.Transaction() {
@@ -191,7 +201,7 @@ public class RealmRegisteredInfo extends RealmObject {
                 }
             });
         }
-        realm.close();
+
     }
 
     public static void updateMutual(final String phone, final boolean mutual) {
@@ -356,6 +366,14 @@ public class RealmRegisteredInfo extends RealmObject {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 
     public boolean isMutual() {

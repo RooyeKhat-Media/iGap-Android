@@ -24,8 +24,9 @@ public class RealmPrivacy extends RealmObject {
     private String whoCanInviteMeToGroup;
     private String whoCanSeeMyLastSeen;
     private String whoCanVoiceCallToMe;
+    private String whoCanVideoCallToMe;
 
-    public static void updatePrivacy(final String avatar, final String channel, final String Group, final String lastSeen, final String voiceCall) {
+    public static void updatePrivacy(final String avatar, final String channel, final String Group, final String lastSeen, final String voiceCall, final String videoCall) {
 
         Realm realm = Realm.getDefaultInstance();
         final RealmPrivacy realmPrivacy = realm.where(RealmPrivacy.class).findFirst();
@@ -41,6 +42,7 @@ public class RealmPrivacy extends RealmObject {
                     if (Group.length() > 0) realmPrivacy.setWhoCanInviteMeToGroup(Group);
                     if (lastSeen.length() > 0) realmPrivacy.setWhoCanSeeMyLastSeen(lastSeen);
                     if (voiceCall.length() > 0) realmPrivacy.setWhoCanVoiceCallToMe(voiceCall);
+                    if (videoCall.length() > 0) realmPrivacy.setWhoCanVideoCallToMe(videoCall);
                 }
             });
         } else {
@@ -55,7 +57,8 @@ public class RealmPrivacy extends RealmObject {
                     if (channel.length() > 0) realmPrivacy1.setWhoCanInviteMeToChannel(channel);
                     if (Group.length() > 0) realmPrivacy1.setWhoCanInviteMeToGroup(Group);
                     if (lastSeen.length() > 0) realmPrivacy1.setWhoCanSeeMyLastSeen(lastSeen);
-                    if (voiceCall.length() > 0) realmPrivacy.setWhoCanVoiceCallToMe(voiceCall);
+                    if (voiceCall.length() > 0) realmPrivacy1.setWhoCanVoiceCallToMe(voiceCall);
+                    if (videoCall.length() > 0) realmPrivacy1.setWhoCanVideoCallToMe(videoCall);
                 }
             });
         }
@@ -75,6 +78,7 @@ public class RealmPrivacy extends RealmObject {
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.GROUP_INVITE);
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.USER_STATUS);
         new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.VOICE_CALLING);
+        new RequestUserPrivacyGetRule().userPrivacyGetRule(ProtoGlobal.PrivacyType.VIDEO_CALLING);
     }
 
     public static void updateRealmPrivacy(ProtoGlobal.PrivacyType privacyType, ProtoGlobal.PrivacyLevel privacyLevel) {
@@ -82,19 +86,22 @@ public class RealmPrivacy extends RealmObject {
         switch (privacyType) {
 
             case AVATAR:
-                RealmPrivacy.updatePrivacy(privacyLevel.toString(), "", "", "", "");
+                RealmPrivacy.updatePrivacy(privacyLevel.toString(), "", "", "", "", "");
                 break;
             case CHANNEL_INVITE:
-                RealmPrivacy.updatePrivacy("", privacyLevel.toString(), "", "", "");
+                RealmPrivacy.updatePrivacy("", privacyLevel.toString(), "", "", "", "");
                 break;
             case GROUP_INVITE:
-                RealmPrivacy.updatePrivacy("", "", privacyLevel.toString(), "", "");
+                RealmPrivacy.updatePrivacy("", "", privacyLevel.toString(), "", "", "");
                 break;
             case USER_STATUS:
-                RealmPrivacy.updatePrivacy("", "", "", privacyLevel.toString(), "");
+                RealmPrivacy.updatePrivacy("", "", "", privacyLevel.toString(), "", "");
                 break;
             case VOICE_CALLING:
-                RealmPrivacy.updatePrivacy("", "", "", "", privacyLevel.toString());
+                RealmPrivacy.updatePrivacy("", "", "", "", privacyLevel.toString(), "");
+                break;
+            case VIDEO_CALLING:
+                RealmPrivacy.updatePrivacy("", "", "", "", "", privacyLevel.toString());
                 break;
 
         }
@@ -140,5 +147,13 @@ public class RealmPrivacy extends RealmObject {
 
     public void setWhoCanVoiceCallToMe(String whoCanVoiceCallToMe) {
         this.whoCanVoiceCallToMe = whoCanVoiceCallToMe;
+    }
+
+    public String getWhoCanVideoCallToMe() {
+        return whoCanVideoCallToMe;
+    }
+
+    public void setWhoCanVideoCallToMe(String whoCanVideoCallToMe) {
+        this.whoCanVideoCallToMe = whoCanVideoCallToMe;
     }
 }

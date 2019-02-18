@@ -10,7 +10,9 @@
 
 package net.iGap.module;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -143,6 +145,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
     private static ComponentName remoteComponentName;
     private static Realm mRealm;
     private static boolean isRegisterSensor = false;
+    public static final String musicChannelId = "music_channel";
 
     private static Realm getRealm() {
         if (mRealm == null || mRealm.isClosed()) {
@@ -156,8 +159,6 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
         if (remoteViews == null)
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.music_layout_notification);
-        if (notificationManager == null)
-            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (layoutTripMusic != null) {
             layoutTripMusic.setVisibility(View.GONE);
@@ -168,6 +169,15 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
         getAttribute();
 
         //getOrginallWallpaper();
+    }
+
+    private static NotificationManager getNotificationManager() {
+
+        if (notificationManager == null) {
+            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+
+        return notificationManager;
     }
 
     public static void repeatClick() {
@@ -317,7 +327,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
         if (!isVoice) {
             try {
                 remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
-                notificationManager.notify(notificationId, notification);
+                getNotificationManager().notify(notificationId, notification);
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -379,7 +389,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
         if (!isVoice) {
             try {
                 remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.pause_button);
-                notificationManager.notify(notificationId, notification);
+                getNotificationManager().notify(notificationId, notification);
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
@@ -431,9 +441,9 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
         if (!isVoice) {
             try {
-                if (remoteViews != null && mp !=null) {
+                if (remoteViews != null && mp != null) {
                     remoteViews.setImageViewResource(R.id.mln_btn_play_music, R.mipmap.play_button);
-                    notificationManager.notify(notificationId, notification);
+                    getNotificationManager().notify(notificationId, notification);
                 }
             } catch (RuntimeException e) {
                 e.printStackTrace();
@@ -624,11 +634,10 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
             context.startService(intent);
         } catch (RuntimeException e) {
 
-            if (notificationManager == null)
-                notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            try {
+                getNotificationManager().cancel(notificationId);
+            } catch (NullPointerException e1) {
 
-            if (notificationManager != null) {
-                notificationManager.cancel(notificationId);
             }
         }
 
@@ -940,7 +949,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
             PendingIntent pendingIntentClose = PendingIntent.getBroadcast(context, 4, intentClose, 0);
             remoteViews.setOnClickPendingIntent(R.id.mln_btn_close, pendingIntentClose);
 
-            notification = new NotificationCompat.Builder(context.getApplicationContext()).setTicker("music").setSmallIcon(R.mipmap.j_mp3).setContentTitle(musicName)
+            notification = new NotificationCompat.Builder(context.getApplicationContext()).setTicker("music").setSmallIcon(R.mipmap.j_mp3).setContentTitle(musicName).setChannelId(musicChannelId)
                     //  .setContentText(place)
                     .setContent(remoteViews).setContentIntent(pi).setDeleteIntent(pendingIntentClose).setAutoCancel(false).setOngoing(true).build();
         }
@@ -1220,7 +1229,7 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
 
                         result = true;
 
-                        HelperDownloadFile.getInstance().startDownload(rm.getMessageType(),rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
+                        HelperDownloadFile.getInstance().startDownload(rm.getMessageType(), rm.getMessageId() + "", _token, _url, _cacheId, _name, _size, selector, _path, 0, new HelperDownloadFile.UpdateListener() {
                             @Override
                             public void OnProgress(String path, int progress) {
                                 if (progress == 100) {
@@ -1485,7 +1494,20 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
                 if (action.equals(STARTFOREGROUND_ACTION)) {
 
                     if (notification != null) {
-                        startForeground(notificationId, notification);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            CharSequence name = G.context.getString(R.string.channel_name_notification);// The user-visible name of the channel.
+                            @SuppressLint("WrongConstant") NotificationChannel mChannel = new NotificationChannel(musicChannelId, name, NotificationManager.IMPORTANCE_HIGH);
+                            getNotificationManager().createNotificationChannel(mChannel);
+                        }
+
+                        try {
+                            startForeground(notificationId, notification);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
                         if (latestAudioFocusState != AudioManager.AUDIOFOCUS_GAIN) { // if do double "AUDIOFOCUS_GAIN", "AUDIOFOCUS_LOSS" will be called
                             latestAudioFocusState = AudioManager.AUDIOFOCUS_GAIN;
                             registerAudioFocus(AudioManager.AUDIOFOCUS_GAIN);
@@ -1508,10 +1530,9 @@ public class MusicPlayer extends Service implements AudioManager.OnAudioFocusCha
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (notificationManager == null)
-            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (notificationManager != null) {
+        try {
+            getNotificationManager().cancel(notificationId);
+        } catch (NullPointerException e) {
             notificationManager.cancel(notificationId);
         }
     }

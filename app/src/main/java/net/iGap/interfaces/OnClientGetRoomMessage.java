@@ -10,6 +10,8 @@
 
 package net.iGap.interfaces;
 
+import net.iGap.proto.ProtoGlobal;
+
 public interface OnClientGetRoomMessage {
-    void onClientGetRoomMessageResponse(long messageId);
+    void onClientGetRoomMessageResponse(ProtoGlobal.RoomMessage message);
 }

@@ -23,18 +23,19 @@ import android.os.SystemClock;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.iGap.activities.ActivityCustomError;
 import net.iGap.activities.ActivityMain;
 import net.iGap.helper.HelperCheckInternetConnection;
-import net.iGap.helper.HelperNotificationAndBadge;
 import net.iGap.interfaces.*;
 import net.iGap.module.ChatSendMessageUtil;
 import net.iGap.module.ChatUpdateStatusUtil;
@@ -82,7 +83,6 @@ public class G extends MultiDexApplication {
     public static Handler handler;
     public static long mLastClickTime = SystemClock.elapsedRealtime();
     public static LayoutInflater inflater;
-    public static HelperNotificationAndBadge helperNotificationAndBadge;
     public static ConcurrentHashMap<String, RequestWrapper> requestQueueMap = new ConcurrentHashMap<>();
     public static List<Long> smsNumbers = new ArrayList<>();
     public static AtomicBoolean pullRequestQueueRunned = new AtomicBoolean(false);
@@ -143,6 +143,7 @@ public class G extends MultiDexApplication {
     public static String textSubTheme;
     public static String tintImage;
     public static String lineBorder;
+    public static Ipromote ipromote;
     public static String menuBackgroundColor;
     public static String authorHash;
     public static String displayName;
@@ -258,6 +259,7 @@ public class G extends MultiDexApplication {
     public static OnUpdateUserStatusInChangePage onUpdateUserStatusInChangePage;
     public static OnLastSeenUpdateTiming onLastSeenUpdateTiming;
     public static OnSetAction onSetAction;
+    public static OnBotClick onBotClick;
     public static OnSetActionInRoom onSetActionInRoom;
     public static OnUserSessionGetActiveList onUserSessionGetActiveList;
     public static OnUserSessionTerminate onUserSessionTerminate;
@@ -318,6 +320,7 @@ public class G extends MultiDexApplication {
     public static OnBackgroundChanged onBackgroundChanged;
     public static IClientSearchUserName onClientSearchUserName;
     public static OnCallLeaveView onCallLeaveView;
+    public static OnVideoCallFrame onVideoCallFrame;
     public static ICallFinish iCallFinishChat;
     public static ICallFinish iCallFinishMain;
     public static IMainFinish iMainFinish;
@@ -361,6 +364,7 @@ public class G extends MultiDexApplication {
     public static OnNotifyTime onNotifyTime;
     public static OnPayment onPayment;
     public static OnMplResult onMplResult;
+    public static OnVersionCallBack onVersionCallBack;
     public static ISignalingOffer iSignalingOffer;
     public static ISignalingRinging iSignalingRinging;
     public static ISignalingAccept iSignalingAccept;
@@ -415,6 +419,7 @@ public class G extends MultiDexApplication {
         WebBase.apiKey = "5aa7e856ae7fbc00016ac5a01c65909797d94a16a279f46a4abb5faa";
 
         new StartupActions();
+
     }
 
     @Override

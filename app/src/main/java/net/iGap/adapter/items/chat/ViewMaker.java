@@ -1111,7 +1111,7 @@ public class ViewMaker {
         layoutParamsImage.rightMargin = 14;
         image.setId(R.id.image);
         image.setContentDescription(null);
-        AppUtils.setImageDrawable(image, R.drawable.user);
+        AppUtils.setImageDrawable(image, R.mipmap.user);
         image.setLayoutParams(layoutParamsImage);
 
         LinearLayout container3 = new LinearLayout(context);

@@ -45,7 +45,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -83,9 +82,11 @@ import net.iGap.module.MEditText;
 import net.iGap.module.SHP_SETTING;
 import net.iGap.module.structs.StructListOfContact;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmContacts;
 import net.iGap.realm.RealmContactsFields;
 import net.iGap.realm.RealmRegisteredInfo;
+import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestUserContactsDelete;
 import net.iGap.request.RequestUserContactsEdit;
 import net.iGap.request.RequestUserContactsGetList;
@@ -883,9 +884,9 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
 
             });
 
-            viewHolder.txtEdit.setOnClickListener(v->{
+            viewHolder.txtEdit.setOnClickListener(v -> {
 
-                dialogEditContact(header,contact.getPhone(),contact.getId());
+                dialogEditContact(header, contact.getPhone(), contact.getId());
 
 
             });
@@ -960,7 +961,6 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                 });
 
 
-
                 swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -969,13 +969,30 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
                             if (isCallAction) {
                                 //  G.fragmentActivity.getSupportFragmentManager().popBackStack();
 
-                                popBackStackFragment();
 
                                 long userId = realmContacts.getId();
                                 if (userId != 134 && G.userId != userId) {
-                                    FragmentCall.call(userId, false);
-                                }
 
+
+                                    new MaterialDialog.Builder(G.fragmentActivity).items(R.array.calls).itemsCallback(new MaterialDialog.ListCallback() {
+                                        @Override
+                                        public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+
+                                            switch (which) {
+                                                case 0:
+                                                    FragmentCall.call(userId, false, ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING);
+                                                    popBackStackFragment();
+                                                    break;
+                                                case 1:
+                                                    FragmentCall.call(userId, false, ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING);
+                                                    popBackStackFragment();
+                                                    break;
+                                            }
+
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
+                                }
 
                             } else {
                                 showProgress();
@@ -1003,7 +1020,7 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
         }
     }
 
-    private void dialogEditContact(String header, long phone,final long userId) {
+    private void dialogEditContact(String header, long phone, final long userId) {
 
         final LinearLayout layoutNickname = new LinearLayout(G.fragmentActivity);
         layoutNickname.setOrientation(LinearLayout.VERTICAL);
@@ -1254,7 +1271,8 @@ public class RegisteredContactsFragment extends BaseFragment implements OnUserCo
 
                                     Intent sendIntent = new Intent();
                                     sendIntent.setAction(Intent.ACTION_SEND);
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey Join iGap : https://www.igap.net/ I'm waiting for you!");
+                                    sendIntent.putExtra("address", phone);
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.invitation_message) + G.userId);
                                     sendIntent.setType("text/plain");
                                     sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     G.context.startActivity(sendIntent);

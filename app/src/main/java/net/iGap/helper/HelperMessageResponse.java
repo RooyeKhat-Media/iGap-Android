@@ -89,31 +89,7 @@ public class HelperMessageResponse {
                     if (!roomMessage.getAuthor().getHash().equals(authorHash) && (room.getLastMessage() == null || (room.getLastMessage() != null && room.getLastMessage().getMessageId() < roomMessage.getMessageId()))) {
                         room.setUnreadCount(room.getUnreadCount() + 1);
 
-                        if (!room.getMute()) {
-//                            if (G.isAppInFg || AttachFile.isInAttach) {
-//                                //  HelperNotificationAndBadge.updateBadgeOnly(realm,-1);
-//                            } else {
-
-                            if (roomType != ProtoGlobal.Room.Type.CHANNEL) {
-                                G.handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        G.helperNotificationAndBadge.checkAlert(true, roomType, roomId);
-                                    }
-                                }, 200);
-                            } else {
-                                G.handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        new HelperNotificationChannel().initSetting(roomId);
-                                    }
-                                }, 200);
-                            }
-
-//                            }
-                        }
-
-
+                        HelperNotification.getInstance().addMessage(roomId, roomMessage, roomType, room, realm);
                     }
 
                     /**

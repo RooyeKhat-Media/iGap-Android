@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +16,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import net.iGap.Config;
 import net.iGap.G;
@@ -50,8 +58,10 @@ import net.iGap.interfaces.OnNotifyTime;
 import net.iGap.interfaces.OnRemoveFragment;
 import net.iGap.interfaces.OnSelectMenu;
 import net.iGap.interfaces.OnSetActionInRoom;
+import net.iGap.interfaces.OnVersionCallBack;
 import net.iGap.module.AndroidUtils;
 import net.iGap.module.AppUtils;
+import net.iGap.module.BotInit;
 import net.iGap.module.CircleImageView;
 import net.iGap.module.EmojiTextViewE;
 import net.iGap.module.MaterialDesignTextView;
@@ -77,6 +87,7 @@ import net.iGap.request.RequestClientMuteRoom;
 import net.iGap.request.RequestClientPinRoom;
 import net.iGap.request.RequestGroupDelete;
 import net.iGap.request.RequestGroupLeft;
+import net.iGap.request.RequestUserContactsUnblock;
 
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +110,7 @@ import static net.iGap.proto.ProtoGlobal.Room.Type.GROUP;
 import static net.iGap.realm.RealmRoom.putChatToDatabase;
 
 
-public class FragmentMain extends BaseFragment implements OnComplete, OnSetActionInRoom, OnSelectMenu, OnRemoveFragment, OnDraftMessage, OnChatUpdateStatusResponse, OnChatDeleteInRoomList, OnGroupDeleteInRoomList, OnChannelDeleteInRoomList, OnChatSendMessageResponse, OnClearUnread, OnClientGetRoomResponseRoomList, OnMute, OnClearRoomHistory, OnDateChanged {
+public class FragmentMain extends BaseFragment implements OnVersionCallBack, OnComplete, OnSetActionInRoom, OnSelectMenu, OnRemoveFragment, OnDraftMessage, OnChatUpdateStatusResponse, OnChatDeleteInRoomList, OnGroupDeleteInRoomList, OnChannelDeleteInRoomList, OnChatSendMessageResponse, OnClearUnread, OnClientGetRoomResponseRoomList, OnMute, OnClearRoomHistory, OnDateChanged {
 
     public static final String STR_MAIN_TYPE = "STR_MAIN_TYPE";
     public static boolean isMenuButtonAddShown = false;
@@ -117,6 +128,11 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     private long tagId;
     private Realm realmFragmentMain;
     private RecyclerView.OnScrollListener onScrollListener;
+    private String tabId;
+    private View mView = null;
+    private String switcher;
+    private int channelSwitcher, allSwitcher, groupSwitcher, chatSwitcher, callSwitcher = 0;
+    private ProgressBar pbLoading;
 
     public static FragmentMain newInstance(MainType mainType) {
         Bundle bundle = new Bundle();
@@ -124,6 +140,40 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         FragmentMain fragment = new FragmentMain();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            switcher = String.valueOf(this.toString().charAt(this.toString().lastIndexOf(":") + 1));
+            //   if (HelperCalander.isPersianUnicode) {
+
+            if (switcher.equals("1") && channelSwitcher == 0) {
+                channelSwitcher = 1;
+                initRecycleView();
+                initListener();
+            } else if (switcher.equals("2") && groupSwitcher == 0) {
+                groupSwitcher = 1;
+                initRecycleView();
+                initListener();
+            } else if (switcher.equals("3") && chatSwitcher == 0) {
+                chatSwitcher = 1;
+                initRecycleView();
+                initListener();
+            } else if (switcher.equals("4") && allSwitcher == 0 && mView != null) {
+                allSwitcher = 1;
+                initRecycleView();
+                initListener();
+            } else if (switcher.equals("0") && allSwitcher == 0 && mView != null) {
+                allSwitcher = 1;
+                initRecycleView();
+                initListener();
+            }
+
+        }
+
     }
 
     @Nullable
@@ -136,7 +186,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        G.onVersionCallBack = this;
         realmFragmentMain = Realm.getDefaultInstance();
     }
 
@@ -144,6 +194,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //G.chatUpdateStatusUtil.setOnChatUpdateStatusResponse(this);
+        this.mView = view;
         mComplete = this;
         tagId = System.currentTimeMillis();
 
@@ -153,57 +204,78 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
         swipeRefreshLayout.setRefreshing(false);
         swipeRefreshLayout.setEnabled(false);
         viewById = view.findViewById(R.id.empty_icon);
+        pbLoading = view.findViewById(R.id.pbLoading);
+        // pbLoading.setVisibility(View.VISIBLE);
 
-        initRecycleView(view);
-        initListener();
+        switcher = String.valueOf(this.toString().charAt(this.toString().lastIndexOf(":") + 1));
+        if (switcher.equals("4") && allSwitcher == 0 && mView != null) {
+            allSwitcher = 1;
+            initRecycleView();
+            initListener();
+            pbLoading.setVisibility(View.GONE);
+        } else if (switcher.equals("0") && allSwitcher == 0 && mView != null) {
+            allSwitcher = 1;
+            initRecycleView();
+            initListener();
+            pbLoading.setVisibility(View.GONE);
+        }
+
+
     }
 
-    private void initRecycleView(View view) {
+    private void initRecycleView() {
 
-        if (view != null) {
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.cl_recycler_view_contact);
+        if (mView != null) {
+            mRecyclerView = (RecyclerView) mView.findViewById(R.id.cl_recycler_view_contact);
             // mRecyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0); // for avoid from show avatar and cloud view together
             mRecyclerView.setItemAnimator(null);
             mRecyclerView.setItemViewCacheSize(1000);
             mRecyclerView.setLayoutManager(new PreCachingLayoutManager(G.fragmentActivity, 3000));
         }
 
-
         RealmResults<RealmRoom> results = null;
         String[] fieldNames = {RealmRoomFields.IS_PINNED, RealmRoomFields.PIN_ID, RealmRoomFields.UPDATED_TIME};
         Sort[] sort = {Sort.DESCENDING, Sort.DESCENDING, Sort.DESCENDING};
-        switch (mainType) {
 
+        switch (mainType) {
             case all:
                 results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
+                    pbLoading.setVisibility(View.GONE);
                 } else {
                     viewById.setVisibility(View.VISIBLE);
+                    //        pbLoading.setVisibility(View.VISIBLE);
                 }
                 break;
             case chat:
                 results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHAT.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
+                    pbLoading.setVisibility(View.GONE);
                 } else {
                     viewById.setVisibility(View.VISIBLE);
+                    //        pbLoading.setVisibility(View.VISIBLE);
                 }
                 break;
             case group:
                 results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.GROUP.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
+                    pbLoading.setVisibility(View.GONE);
                 } else {
                     viewById.setVisibility(View.VISIBLE);
+                    //       pbLoading.setVisibility(View.VISIBLE);
                 }
                 break;
             case channel:
                 results = getRealmFragmentMain().where(RealmRoom.class).equalTo(RealmRoomFields.KEEP_ROOM, false).equalTo(RealmRoomFields.IS_DELETED, false).equalTo(RealmRoomFields.TYPE, RoomType.CHANNEL.toString()).findAll().sort(fieldNames, sort);
                 if (results.size() > 0) {
                     viewById.setVisibility(View.GONE);
+                    pbLoading.setVisibility(View.GONE);
                 } else {
                     viewById.setVisibility(View.VISIBLE);
+                    //              pbLoading.setVisibility(View.VISIBLE);
                 }
                 break;
         }
@@ -284,7 +356,7 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
             getChatsList();
         }
 
-        if (view != null) {
+        if (mView != null) {
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -329,7 +401,6 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
     //***************************************************************************************************************************
 
     private void initListener() {
-
         switch (mainType) {
 
             case all:
@@ -1034,6 +1105,45 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 }
             }
         }
+//        BotInit.checkDrIgap();
+    }
+
+    @Override
+    public void isDeprecated() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                new MaterialDialog.Builder(getActivity())
+                        .cancelable(false)
+                        .title(R.string.new_version_alert).titleGravity(GravityEnum.CENTER)
+                        .titleColor(Color.parseColor("#f44336"))
+                        .content(R.string.deprecated)
+                        .contentGravity(GravityEnum.CENTER)
+                        .show();
+            }
+        });
+
+    }
+
+    @Override
+    public void isUpdateAvailable() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                new MaterialDialog.Builder(G.fragmentActivity)
+                        .title(R.string.igap_update).titleColor(Color.parseColor("#1DE9B6"))
+                        .titleGravity(GravityEnum.CENTER)
+                        .buttonsGravity(GravityEnum.CENTER)
+                        .content(R.string.new_version_avilable).contentGravity(GravityEnum.CENTER)
+                        .positiveText(R.string.ignore).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+               .show();
+            }
+        });
     }
 
     public enum MainType {
@@ -1147,7 +1257,15 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
 
                 if (mInfo.isPinned()) {
                     holder.rootChat.setBackgroundColor(Color.parseColor(G.backgroundTheme_2));
-                    holder.txtPinIcon.setVisibility(View.VISIBLE);
+
+                    //if (mInfo.getChatRoom() != null && RealmRoom.isBot(mInfo.getChatRoom().getPeerId())) {
+
+                    if (mInfo != null && RealmRoom.isPromote(mInfo.getId())) {
+          //              holder.rootChat.setBackgroundColor(G.context.getResources().getColor(R.color.green_20));
+                        holder.txtPinIcon.setVisibility(View.GONE);
+                    } else {
+                        holder.txtPinIcon.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
                     holder.rootChat.setBackgroundColor(Color.parseColor(G.backgroundTheme));
@@ -1191,6 +1309,20 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                 holder.txtUnread.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtUnread.getText().toString()));
             }
         }
+
+
+   /*     private boolean isBot(long userId) {
+            RealmRegisteredInfo realmRegisteredInfo = RealmRegisteredInfo.getRegistrationInfo(getRealmFragmentMain(), userId);
+            if (realmRegisteredInfo != null) {
+                if (realmRegisteredInfo.isBot()) {
+                    return true;
+                } else
+                    return false;
+            } else
+                return false;
+        }*/
+
+
 
         private String subStringInternal(String text) {
             if (text == null || text.length() == 0) {
@@ -1248,7 +1380,16 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                         if (mInfo.getLastMessage().isAuthorMe()) {
 
                             holder.txtTic.setVisibility(View.VISIBLE);
-                            AppUtils.rightMessageStatus(holder.txtTic, ProtoGlobal.RoomMessageStatus.valueOf(mInfo.getLastMessage().getStatus()), mInfo.getLastMessage().isAuthorMe());
+
+                            ProtoGlobal.RoomMessageStatus status = ProtoGlobal.RoomMessageStatus.UNRECOGNIZED;
+                            if (mInfo.getLastMessage().getStatus() != null) {
+                                try {
+                                    status = ProtoGlobal.RoomMessageStatus.valueOf(mInfo.getLastMessage().getStatus());
+                                } catch (RuntimeException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            AppUtils.rightMessageStatus(holder.txtTic, status, mInfo.getLastMessage().isAuthorMe());
                         }
 
                         if (mInfo.getType() == GROUP) {
@@ -1549,12 +1690,15 @@ public class FragmentMain extends BaseFragment implements OnComplete, OnSetActio
                                     role = mInfo.getChannelRoom().getRole().toString();
                                 }
 
-                                MyDialog.showDialogMenuItemRooms(G.fragmentActivity, mInfo.getTitle(), mInfo.getType(), mInfo.getMute(), role, new OnComplete() {
-                                    @Override
-                                    public void complete(boolean result, String messageOne, String MessageTow) {
-                                        onSelectRoomMenu(messageOne, mInfo);
-                                    }
-                                }, mInfo.isPinned());
+                                if (!G.fragmentActivity.isFinishing()) {
+                                    long peerId = mInfo.getChatRoom() != null ? mInfo.getChatRoom().getPeerId() : 0;
+                                    MyDialog.showDialogMenuItemRooms(G.fragmentActivity, mInfo.getTitle(), mInfo.getType(), mInfo.getMute(), role, peerId,mInfo, new OnComplete() {
+                                        @Override
+                                        public void complete(boolean result, String messageOne, String MessageTow) {
+                                            onSelectRoomMenu(messageOne, mInfo);
+                                        }
+                                    }, mInfo.isPinned());
+                                }
                             }
                         }
                         return true;

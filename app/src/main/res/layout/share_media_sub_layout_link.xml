@@ -12,6 +12,7 @@
     android:layout_height="match_parent">
 
     <TextView
+      style="?textTitleColorSettingTheme"
       android:id="@+id/smsll_txt_shared_link"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

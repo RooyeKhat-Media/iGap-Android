@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import net.iGap.G;
+import net.iGap.R;
 import net.iGap.activities.ActivityMain;
 import net.iGap.interfaces.OnChatGetRoom;
 import net.iGap.interfaces.OnUserInfoResponse;
@@ -50,7 +51,7 @@ public class HelperPublicMethod {
                     if (onError != null) {
                         onError.error();
                     }
-
+                    RealmRoom.putOrUpdate(room);
                     getUserInfo(peerId, room.getId(), onComplete, onError);
 
                     G.onChatGetRoom = null;
@@ -76,12 +77,10 @@ public class HelperPublicMethod {
             if (G.userLogin) {
                 new RequestChatGetRoom().chatGetRoom(peerId);
             } else {
-                G.handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        goToChatRoom(peerId, onComplete, onError);
-                    }
-                }, 1000);
+                HelperError.showSnackMessage(G.context.getString(R.string.there_is_no_connection_to_server), false);
+                if (onError != null) {
+                    onError.error();
+                }
             }
         }
         realm.close();

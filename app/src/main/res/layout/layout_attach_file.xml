@@ -62,6 +62,17 @@
         app:emojiSize="@dimen/dp22" />
 
       <net.iGap.module.MaterialDesignTextView
+        android:id="@+id/chl_btn_show_bot_action"
+        style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp8"
+        android:text="@string/md_bot"
+        android:visibility="gone"
+        android:textAppearance="@style/TextIconAppearance.all"
+        android:textSize="@dimen/dp20" />
+
+      <net.iGap.module.MaterialDesignTextView
         android:id="@+id/chl_imv_send_button"
         style="@style/ChatMessages.MaterialDesignTextView.BottomIcon.SendBtn"
         android:layout_width="wrap_content"

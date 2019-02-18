@@ -60,14 +60,18 @@ public class SearchItem extends AbstractItem<SearchItem, SearchItem.ViewHolder> 
         setAvatar(holder);
 
         holder.name.setText(item.name);
-        holder.lastSeen.setText(item.comment);
+        if (item.comment.isEmpty()){
+            holder.lastSeen.setText(item.userName);
+        }else {
+            holder.lastSeen.setText(item.comment);
+        }
 
         //holder.txtTime.setText(TimeUtils.toLocal(item.time, G.CHAT_MESSAGE_TIME));
         holder.txtTime.setText(HelperCalander.getTimeForMainRoom(item.time));
 
         if (HelperCalander.isPersianUnicode) {
             //holder.name.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.name.getText().toString()));
-            holder.lastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastSeen.getText().toString()));
+//            holder.lastSeen.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.lastSeen.getText().toString()));
             holder.txtTime.setText(HelperCalander.convertToUnicodeFarsiNumber(holder.txtTime.getText().toString()));
         }
 

@@ -10,6 +10,7 @@
 
 package net.iGap.fragments.filterImage;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -103,10 +104,16 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
     public void prepareThumbnail(final Bitmap bitmap) {
         Runnable r = new Runnable() {
             public void run() {
+
+                Activity activity = getActivity();
+                if (activity == null) {
+                    return;
+                }
+
                 Bitmap thumbImage;
 
                 if (bitmap == null) {
-                    thumbImage = getBitmapFile(getActivity(), path, 100, 100);
+                    thumbImage = getBitmapFile(activity, path, 100, 100);
                 } else {
                     thumbImage = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
                 }
@@ -123,7 +130,7 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
                 thumbnailItem.filterName = getString(R.string.about);
                 ThumbnailsManager.addThumb(thumbnailItem);
 
-                List<Filter> filters = FilterPack.getFilterPack(getActivity());
+                List<Filter> filters = FilterPack.getFilterPack(activity);
 
                 for (Filter filter : filters) {
                     ThumbnailItem tI = new ThumbnailItem();
@@ -133,9 +140,9 @@ public class FiltersListFragment extends Fragment implements ThumbnailsAdapter.T
                     ThumbnailsManager.addThumb(tI);
                 }
 
-                thumbnailItemList.addAll(ThumbnailsManager.processThumbs(getActivity()));
+                thumbnailItemList.addAll(ThumbnailsManager.processThumbs(activity));
 
-                getActivity().runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter.notifyDataSetChanged();

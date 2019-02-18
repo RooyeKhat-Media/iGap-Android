@@ -38,12 +38,14 @@ import static net.iGap.module.AttachFile.getPathN;
 public class HelperGetDataFromOtherApp {
 
     public static boolean hasSharedData = false;
-    // after use intent set this to false
-    public static FileType messageType = null;
-    public static String message = "";
-    public static ArrayList<String> messageFileAddress;
-    public static ArrayList<FileType> fileTypeArray = new ArrayList<FileType>();
+    public static ArrayList<SharedData> sharedList = new ArrayList<SharedData>();
     private Intent intent;
+
+    public class SharedData {
+        public String message = "";
+        public String address = "";
+        public FileType fileType;
+    }
 
     public HelperGetDataFromOtherApp(Intent intent) {
 
@@ -92,8 +94,7 @@ public class HelperGetDataFromOtherApp {
      */
     private void checkData(Intent intent) {
 
-        messageType = null;
-        fileTypeArray.clear();
+        sharedList.clear();
 
         String action = intent.getAction();
         String type = intent.getType();
@@ -103,7 +104,7 @@ public class HelperGetDataFromOtherApp {
 
             if (type.equals("text/plain")) {
 
-                if ((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM)!=null)
+                if ((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM) != null)
                     SetOutPutSingleFile(FileType.file);
                 else
                     handleSendText(intent);
@@ -153,13 +154,12 @@ public class HelperGetDataFromOtherApp {
         Uri fileAddressUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM); // get file attachment
         //String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT); get text
         if (fileAddressUri != null) {
-            messageType = type;
             String extension = HelperString.dotSplit(fileAddressUri.getPath());
             /**
              * check mp4 because telegram sometimes send mp4 format with image type!!!
              */
             if (extension != null && extension.equals("mp4")) {
-                messageType = FileType.video;
+                type = FileType.video;
             }
 
             String _path = null;
@@ -167,20 +167,30 @@ public class HelperGetDataFromOtherApp {
 
             if (fileAddressUri.getScheme() != null && fileAddressUri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
                 if (_path == null) {
-                    _path = getPathN(fileAddressUri, messageType);
+                    _path = getPathN(fileAddressUri, type);
                 } else {
                     try {
                         FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(_path));
                     } catch (IllegalArgumentException e) {
-                        _path = getPathN(fileAddressUri, messageType);
+                        _path = getPathN(fileAddressUri, type);
                     }
                 }
             }
 
             if (_path != null) {
                 hasSharedData = true;
-                messageFileAddress = new ArrayList<String>();
-                messageFileAddress.add(_path);
+
+                SharedData _SharedData = new SharedData();
+                _SharedData.address = _path;
+                _SharedData.fileType = type;
+
+                String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if (sharedText != null) {
+                    _SharedData.message = sharedText;
+                }
+
+                sharedList.add(_SharedData);
+
             }
 
         }
@@ -193,9 +203,6 @@ public class HelperGetDataFromOtherApp {
         ArrayList<Uri> fileAddressUri = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         if (fileAddressUri != null) {
 
-            messageType = type;
-            messageFileAddress = new ArrayList<>();
-
             for (int i = 0; i < fileAddressUri.size(); i++) {
                 Uri _Uri = fileAddressUri.get(i);
                 String _path = null;
@@ -204,12 +211,12 @@ public class HelperGetDataFromOtherApp {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && _Uri.getScheme() != null && _Uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
                     if (_path == null) {
-                        _path = getPathN(_Uri, messageType);
+                        _path = getPathN(_Uri, type);
                     } else {
                         try {
                             FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(_path));
                         } catch (IllegalArgumentException e) {
-                            _path = getPathN(_Uri, messageType);
+                            _path = getPathN(_Uri, type);
                         }
                     }
                 }
@@ -217,13 +224,19 @@ public class HelperGetDataFromOtherApp {
                 if (_path != null) {
                     FileType fileType = getMimeType(fileAddressUri.get(i));
                     if (fileType != null) {
-                        messageFileAddress.add(_path);
-                        fileTypeArray.add(fileType);
+                        SharedData _SharedData = new SharedData();
+                        _SharedData.address = _path;
+                        _SharedData.fileType = fileType;
+                        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                        if (sharedText != null) {
+                            _SharedData.message = sharedText;
+                        }
+                        sharedList.add(_SharedData);
                     }
                 }
             }
 
-            if (messageFileAddress.size() > 0) {
+            if (sharedList.size() > 0) {
                 hasSharedData = true;
             }
         }
@@ -235,8 +248,10 @@ public class HelperGetDataFromOtherApp {
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
         if (sharedText != null) {
             hasSharedData = true;
-            messageType = FileType.message;
-            message = sharedText;
+            SharedData _SharedData = new SharedData();
+            _SharedData.fileType = FileType.message;
+            _SharedData.message = sharedText;
+            sharedList.add(_SharedData);
         } else {
             SetOutPutSingleFile(FileType.file);
         }
@@ -265,6 +280,6 @@ public class HelperGetDataFromOtherApp {
     //*****************************************************************************************************
 
     public enum FileType {
-        message, video, file, audio, image
+        message, video, file, audio, image,gif
     }
 }

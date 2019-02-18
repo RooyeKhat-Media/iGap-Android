@@ -28,6 +28,8 @@ import net.iGap.module.SHP_SETTING;
 import net.iGap.module.enums.LocalFileType;
 import net.iGap.module.enums.SendingStep;
 import net.iGap.proto.ProtoGlobal;
+import net.iGap.realm.RealmRoomMessage;
+import net.iGap.realm.RealmRoomMessageFields;
 
 import java.io.File;
 import java.util.List;
@@ -36,6 +38,7 @@ import io.realm.Realm;
 import pl.droidsonroids.gif.GifDrawable;
 
 import static android.content.Context.MODE_PRIVATE;
+import static net.iGap.fragments.FragmentChat.getRealmChat;
 
 public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTextItem.ViewHolder> {
 
@@ -50,7 +53,7 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
         MessageProgress progress = (MessageProgress) holder.itemView.findViewById(R.id.progress);
         AppUtils.setProgresColor(progress.progressBar);
 
-        progress.withDrawable(R.drawable.photogif, true);
+        progress.withDrawable(R.mipmap.photogif, true);
 
         GifDrawable gifDrawable = (GifDrawable) holder.image.getDrawable();
         if (gifDrawable != null) {
@@ -149,6 +152,14 @@ public class GifWithTextItem extends AbstractMessage<GifWithTextItem, GifWithTex
                                     onPlayPauseGIF(holder, mMessage.attachment.getLocalFilePath());
                                 } catch (ClassCastException e) {
                                     e.printStackTrace();
+                                }
+                            } else {
+                                if (mMessage.forwardedFrom != null) {
+                                    downLoadFile(holder, mMessage.forwardedFrom.getAttachment(), 0);
+                                } else {
+                                    RealmRoomMessage roomMessage = RealmRoomMessage.getFinalMessage(getRealmChat().where(RealmRoomMessage.class).
+                                            equalTo(RealmRoomMessageFields.MESSAGE_ID, Long.parseLong(mMessage.messageID)).findFirst());
+                                    downLoadFile(holder, roomMessage.getAttachment(), 0);
                                 }
                             }
                         }

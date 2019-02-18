@@ -1,12 +1,12 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.response;
 
@@ -24,6 +24,7 @@ import net.iGap.proto.ProtoError;
 import net.iGap.proto.ProtoGlobal;
 import net.iGap.realm.RealmRoom;
 import net.iGap.request.RequestClientGetRoom;
+import net.iGap.request.RequestClientJoinByUsername;
 
 import io.realm.Realm;
 
@@ -74,6 +75,25 @@ public class ClientGetRoomResponse extends MessageHandler {
                                 HelperLogMessage.updateLogMessageAfterGetUserInfo(clientGetRoom.getRoom().getId());
                             }
                         }, 500);
+                    }
+
+                    return;
+                }
+
+                if (roomMode != null && roomMode == RequestClientGetRoom.CreateRoomMode.getPromote) {
+                    if (!RealmRoom.isMainRoom(clientGetRoom.getRoom().getId())) {
+                        RealmRoom realmRoom = RealmRoom.putOrUpdate(clientGetRoom.getRoom(), realm);
+                        realmRoom.setFromPromote(true);
+                        realmRoom.setPromoteId(clientGetRoom.getRoom().getId());
+                        realmRoom.setDeleted(true);
+                        realmRoom.setKeepRoom(false);
+                        if (clientGetRoom.getRoom().hasChannelRoomExtra()) {
+                            new RequestClientJoinByUsername().clientJoinByUsername(clientGetRoom.getRoom().getChannelRoomExtra().getPublicExtra().getUsername(), clientGetRoom.getRoom().getId());
+                        } else {
+                            new RequestClientJoinByUsername().clientJoinByUsername(clientGetRoom.getRoom().getGroupRoomExtra().getPublicExtra().getUsername(), clientGetRoom.getRoom().getId());
+                        }
+
+                        //
                     }
 
                     return;

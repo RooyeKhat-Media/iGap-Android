@@ -165,13 +165,6 @@ public class FragmentEditImage extends BaseFragment {
          */
 
 
-        setViewPager();
-        setCheckBoxItem();
-        messageBox(view);
-
-
-//        G.imageLoader.displayImage(suitablePath(path), imgEditImage);
-
         updateImage = new UpdateImage() {
             @Override
             public void result(String pathImageFilter) {
@@ -183,12 +176,15 @@ public class FragmentEditImage extends BaseFragment {
                         mAdapter.notifyDataSetChanged();
                     }
                 });
-
-
-//                G.imageLoader.displayImage(suitablePath(path), imgEditImage);
             }
         };
 
+        setViewPager();
+        setCheckBoxItem();
+        messageBox(view);
+
+
+//        G.imageLoader.displayImage(suitablePath(path), imgEditImage);
 
         view.findViewById(R.id.pu_ripple_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -454,11 +450,6 @@ public class FragmentEditImage extends BaseFragment {
         void result(String path);
     }
 
-
-
-
-
-
     private void setUpEmojiPopup(View view) {
         switch (G.themeColor) {
             case Theme.BLUE_GREY_COMPLETE:
@@ -660,6 +651,9 @@ public class FragmentEditImage extends BaseFragment {
 
     private void goToCropPage(View v) {
         AndroidUtils.closeKeyboard(v);
+        if (itemGalleryList.size() == 0){
+            return;
+        }
         String newPath = "file://" + itemGalleryList.get(viewPager.getCurrentItem()).path;
         String fileNameWithOutExt = newPath.substring(newPath.lastIndexOf("/"));
         String extension = newPath.substring(newPath.lastIndexOf("."));

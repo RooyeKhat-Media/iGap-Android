@@ -12,7 +12,9 @@ package net.iGap.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -88,6 +90,18 @@ public class MessagesAdapter<Item extends AbstractMessage> extends FastItemAdapt
         withOnClickListener(new OnClickListener<Item>() {
             @Override
             public boolean onClick(View v, IAdapter<Item> adapter, Item item, int position) {
+
+                new CountDownTimer(300, 100) {
+
+                    public void onTick(long millisUntilFinished) {
+                        v.setEnabled(false);
+                    }
+
+                    public void onFinish() {
+                        v.setEnabled(true);
+                    }
+                }.start();
+
 
                 if ((item instanceof LogWallet)) {
                     return false;

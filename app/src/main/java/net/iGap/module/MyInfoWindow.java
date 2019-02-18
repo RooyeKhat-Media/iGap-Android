@@ -18,6 +18,7 @@ import net.iGap.helper.HelperPublicMethod;
 import net.iGap.interfaces.OnAvatarGet;
 import net.iGap.interfaces.OnGeoGetComment;
 import net.iGap.interfaces.OnInfo;
+import net.iGap.proto.ProtoSignalingOffer;
 import net.iGap.realm.RealmRegisteredInfo;
 import net.iGap.request.RequestGeoGetComment;
 
@@ -38,6 +39,8 @@ public class MyInfoWindow extends InfoWindow {
     private FragmentiGapMap fragmentiGapMap;
     private String comment;
     private Marker marker;
+    private boolean isCallEnable = false;
+    private boolean isVideoCallEnable = false;
 
     public MyInfoWindow(MapView mapView, Marker marker, long userId, boolean hasComment, FragmentiGapMap fragmentiGapMap, FragmentActivity mActivity) {
         super(R.layout.empty_info_map, mapView);
@@ -79,12 +82,18 @@ public class MyInfoWindow extends InfoWindow {
         if (realmRegisteredInfo == null) {
             RealmRegisteredInfo.getRegistrationInfo(userId, new OnInfo() {
                 @Override
-                public void onInfo(RealmRegisteredInfo registeredInfo) {
+                public void onInfo(Long registeredId) {
                     onOpen(arg);
                 }
             });
             return;
         }
+
+     /*   RealmCallConfig callConfig = realm.where(RealmCallConfig.class).findFirst();
+        if (callConfig != null) {
+            isCallEnable = callConfig.isVoice_calling();
+            isVideoCallEnable = callConfig.isVideo_calling();
+        }*/
 
         final MaterialDialog dialog = new MaterialDialog.Builder(mActivity).customView(R.layout.map_user_info, true).build();
         View view = dialog.getCustomView();
@@ -100,6 +109,9 @@ public class MyInfoWindow extends InfoWindow {
         final TextView txtOpenComment = (TextView) view.findViewById(R.id.txt_open_comment_map);
         final TextView txtChat = (TextView) view.findViewById(R.id.txt_chat_map);
         final TextView txtCall = (TextView) view.findViewById(R.id.txt_call_map);
+        txtCall.setVisibility(isCallEnable ? View.VISIBLE : View.GONE);
+        final TextView txtVideoCall = (TextView) view.findViewById(R.id.txt_video_call_map);
+        txtVideoCall.setVisibility(isVideoCallEnable ? View.VISIBLE : View.GONE);
         TextView txtName = (TextView) view.findViewById(R.id.txt_name_info_map);
         final TextView txtComment = (TextView) view.findViewById(R.id.txt_info_comment);
 
@@ -125,7 +137,14 @@ public class MyInfoWindow extends InfoWindow {
                 txtBack.setVisibility(View.GONE);
                 txtClose.setVisibility(View.VISIBLE);
                 txtChat.setVisibility(View.VISIBLE);
-                txtCall.setVisibility(View.VISIBLE);
+                if (isCallEnable) {
+                    txtCall.setVisibility(View.VISIBLE);
+                }
+
+                if (isVideoCallEnable) {
+                    txtVideoCall.setVisibility(View.VISIBLE);
+                }
+
                 txtOpenComment.setVisibility(View.VISIBLE);
                 txtComment.setMaxLines(1);
                 txtComment.setEllipsize(TextUtils.TruncateAt.END);
@@ -148,9 +167,18 @@ public class MyInfoWindow extends InfoWindow {
         txtCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentCall.call(userId, false);
+                FragmentCall.call(userId, false, ProtoSignalingOffer.SignalingOffer.Type.VOICE_CALLING);
             }
         });
+
+
+        txtVideoCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentCall.call(userId, false, ProtoSignalingOffer.SignalingOffer.Type.VIDEO_CALLING);
+            }
+        });
+
 
         txtComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +187,7 @@ public class MyInfoWindow extends InfoWindow {
                     txtClose.setVisibility(View.GONE);
                     txtChat.setVisibility(View.GONE);
                     txtCall.setVisibility(View.GONE);
+                    txtVideoCall.setVisibility(View.GONE);
                     txtOpenComment.setVisibility(View.GONE);
                     txtBack.setVisibility(View.VISIBLE);
                     txtComment.setMaxLines(Integer.MAX_VALUE);

@@ -10,8 +10,6 @@
 
 package net.iGap.response;
 
-import android.util.Log;
-
 import net.iGap.interfaces.OnInfo;
 import net.iGap.proto.ProtoUserContactsGetBlockedList;
 import net.iGap.realm.RealmContacts;
@@ -42,58 +40,45 @@ public class UserContactsGetBlockedListResponse extends MessageHandler {
     public void handler() {
         super.handler();
 
+        ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder builder = (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder) message;
+        List<ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User> list = builder.getUserList();
 
-        new Thread(new Runnable() {
+        Realm realm = Realm.getDefaultInstance();
+        /**
+         * reset blocked user in RealmRegisteredInfo and realm contact
+         */
+
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void run() {
-                ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder builder = (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.Builder) message;
-                final List<ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User> list = builder.getUserList();
-
-                Realm realm = Realm.getDefaultInstance();
-                /**
-                 * reset blocked user in RealmRegisteredInfo
-                 */
-                final RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
-                if (results != null) {
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            for (final RealmRegisteredInfo item : results) {
-                                item.setBlockUser(false);
-                            }
-                        }
-                    });
+            public void execute(Realm realm) {
+                RealmResults<RealmRegisteredInfo> results = realm.where(RealmRegisteredInfo.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
+                for (RealmRegisteredInfo item : results) {
+                    item.setBlockUser(false);
                 }
 
-                /**
-                 * reset blocked user in RealmContacts
-                 */
-                final RealmResults<RealmContacts> resultsContacts = realm.where(RealmContacts.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
-                if (resultsContacts != null) {
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            for (final RealmContacts item : resultsContacts) {
-                                item.setBlockUser(false);
-                            }
-                        }
-                    });
-                }
-                realm.close();
-
-                for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
-                    RealmRegisteredInfo.getRegistrationInfo(user.getUserId(), user.getCacheId(), new OnInfo() {
-                        @Override
-                        public void onInfo(final RealmRegisteredInfo registeredInfo) {
-                            RealmRegisteredInfo.updateBlock(registeredInfo.getId(), true);
-                            RealmContacts.updateBlock(registeredInfo.getId(), true);
-                        }
-                    });
+                RealmResults<RealmContacts> resultsContacts = realm.where(RealmContacts.class).equalTo(RealmRegisteredInfoFields.BLOCK_USER, true).findAll();
+                for (RealmContacts item : resultsContacts) {
+                    item.setBlockUser(false);
                 }
             }
-        }).start();
+        });
+
+
+        for (ProtoUserContactsGetBlockedList.UserContactsGetBlockedListResponse.User user : list) {
+            RealmRegisteredInfo.getRegistrationInfo(user.getUserId(), user.getCacheId(), realm, new OnInfo() {
+                @Override
+                public void onInfo(Long registeredId) {
+                    RealmRegisteredInfo.updateBlock(registeredId, true);
+                    RealmContacts.updateBlock(registeredId, true);
+                }
+            });
+        }
+
+        realm.close();
+
 
     }
+
 
     @Override
     public void timeOut() {

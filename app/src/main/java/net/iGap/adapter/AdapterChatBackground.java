@@ -1,15 +1,16 @@
 /*
-* This is the source code of iGap for Android
-* It is licensed under GNU AGPL v3.0
-* You should have received a copy of the license in this archive (see LICENSE).
-* Copyright © 2017 , iGap - www.iGap.net
-* iGap Messenger | Free, Fast and Secure instant messaging application
-* The idea of the RooyeKhat Media Company - www.RooyeKhat.co
-* All rights reserved.
-*/
+ * This is the source code of iGap for Android
+ * It is licensed under GNU AGPL v3.0
+ * You should have received a copy of the license in this archive (see LICENSE).
+ * Copyright © 2017 , iGap - www.iGap.net
+ * iGap Messenger | Free, Fast and Secure instant messaging application
+ * The idea of the RooyeKhat Media Company - www.RooyeKhat.co
+ * All rights reserved.
+ */
 
 package net.iGap.adapter;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,10 +47,13 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
     private FragmentChatBackground.OnImageClick onImageClick;
     private Fragment fragment;
 
+
     public AdapterChatBackground(Fragment fragment, ArrayList<FragmentChatBackground.StructWallpaper> List, FragmentChatBackground.OnImageClick onImageClick) {
         this.fragment = fragment;
         this.mList = List;
         this.onImageClick = onImageClick;
+
+        ;
     }
 
     @Override
@@ -80,10 +84,10 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             if (wallpaper.getWallpaperType() == FragmentChatBackground.WallpaperType.proto) {
                 RealmAttachment pf = wallpaper.getProtoWallpaper().getFile();
 
-                final String path = G.DIR_CHAT_BACKGROUND + "/" + "thumb_" + pf.getCacheId() + "_" + pf.getName();
 
+                final String path = G.DIR_CHAT_BACKGROUND + "/" + "thumb_" + pf.getCacheId() + "_" + pf.getName();
                 if (!new File(path).exists()) {
-                    HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE,System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
+                    HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE, System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSmallThumbnail().getSize(), ProtoFileDownload.FileDownload.Selector.SMALL_THUMBNAIL, path, 4, new HelperDownloadFile.UpdateListener() {
                         @Override
                         public void OnProgress(String mPath, int progress) {
                             if (progress == 100) {
@@ -107,6 +111,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             } else {
                 G.imageLoader.displayImage(AndroidUtils.suitablePath(wallpaper.getPath()), holder2.img);
+
             }
 
             String bigImagePath;
@@ -119,7 +124,9 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
 
             if (new File(bigImagePath).exists()) {
                 holder2.messageProgress.setVisibility(View.GONE);
-                holder2.mPath = bigImagePath;
+
+                        holder2.mPath = bigImagePath;
+
             } else {
                 holder2.mPath = "";
                 holder2.messageProgress.setVisibility(View.VISIBLE);
@@ -168,7 +175,7 @@ public class AdapterChatBackground extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
 
-        HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE,System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
+        HelperDownloadFile.getInstance().startDownload(ProtoGlobal.RoomMessageType.IMAGE, System.currentTimeMillis() + "", pf.getToken(), pf.getUrl(), pf.getCacheId(), pf.getName(), pf.getSize(), ProtoFileDownload.FileDownload.Selector.FILE, path, 2, new HelperDownloadFile.UpdateListener() {
             @Override
             public void OnProgress(String mPath, final int progress) {
                 messageProgress.post(new Runnable() {

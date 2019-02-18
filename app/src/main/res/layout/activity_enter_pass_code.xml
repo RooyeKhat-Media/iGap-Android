@@ -24,13 +24,14 @@
     android:orientation="vertical"
     tools:ignore="MissingPrefix">
 
-    <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
+    <!--<ScrollView-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="match_parent">-->
 
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+          android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -43,8 +44,7 @@
         <TextView
           android:id="@+id/setPassword_txtSetPassword"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/dp48"
-          android:layout_weight="1"
+          android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/dp8"
           android:gravity="center"
           android:text="@string/Unlock_with_your_passcode"
@@ -54,7 +54,7 @@
         <RelativeLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsPassCode)}"
+          android:visibility="@{safeUnbox(activityEnterPassCodeViewModel.vsRootIsPassCode), default=gone}"
             >
 
           <net.iGap.libs.rippleeffect.RippleView
@@ -120,8 +120,9 @@
         <com.andrognito.patternlockview.PatternLockView
             android:id="@+id/pattern_lock_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp300"
+            android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp24"
             android:layout_marginRight="@dimen/dp24"
             android:layout_marginTop="@dimen/dp4"
@@ -134,7 +135,7 @@
           android:layout_height="wrap_content"
           android:layout_marginLeft="@dimen/dp16"
           android:layout_marginRight="@dimen/dp16"
-          android:layout_marginTop="@dimen/dp24"
+          android:layout_marginTop="@dimen/dp16"
           android:gravity="start"
           android:onClick="@{activityEnterPassCodeViewModel::forgotPassword}"
           android:padding="@dimen/dp10"
@@ -145,6 +146,6 @@
           />
 
       </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
   </RelativeLayout>
 </layout>
